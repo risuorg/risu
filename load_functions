@@ -96,29 +96,35 @@ miss(){
     tput sgr0
 }
 
-check_config(){
+grep_file_rev(){
 
-  if grep -q "${2}.*=.*${3}" ${1} >/dev/null 2>&1
+  if [ -e "$1" ]
   then
-    good "Checking value ${2} is set to ${3} in ${1}"
-  else
-    if [ -e "$1" ]
+    if grep -q "${2}" ${1} >/dev/null 2>&1
     then
-      bad "Checking value ${2} is set to ${3} in ${1}"
+      bad "Checking ${2} is in ${1}"
     else
-      miss "Missing ${1}"
+      good "Checking ${2} is NOT in ${1}"
     fi
+  else
+    miss "Missing ${1}"
   fi
 	
 }
 
+
 grep_file(){
 
-  if grep -q "${2}" ${1} >/dev/null 2>&1
+  if [ -e "$1" ]
   then
-    good "Checking ${2} is in ${1}"
+    if grep -q "${2}" ${1} >/dev/null 2>&1
+    then
+      good "Checking ${2} is in ${1}"
+    else
+      bad "Checking ${2} is in ${1}"
+    fi
   else
-    bad "Checking ${2} is in ${1}"
+    miss "Missing ${1}"
   fi
 	
 }
