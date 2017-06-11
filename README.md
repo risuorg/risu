@@ -5,7 +5,7 @@ Citellus is a program that should help faster identify common pitfails of OpenSt
 ### Usage
 
 ```bash
-[root@undercloud-0 citellus]# ./citellus -h
+[root@undercloud-0 citellus]# ./citellus -h 
 _________ .__  __         .__  .__                
 \_   ___ \|__|/  |_  ____ |  | |  |  __ __  ______
 /    \  \/|  \   __\/ __ \|  | |  | |  |  \/  ___/
@@ -13,9 +13,11 @@ _________ .__  __         .__  .__
  \______  /__||__|  \___  >____/____/____//____  >
         \/              \/                     \/ 
 
-Usage: citellus [-h] [-d DIRECTORY]...
+Usage: citellus [-hv] [-f DIRECTORY]...
 Do stuff with sosreport and write the result to standard output.
 
               -h              display this help and exit
-              -d sosreport-*  opens a sosreport directory for analysis
+              -f sosreport-*  opens a sosreport directory for analysis
+              -v              verbose mode.
+[root@undercloud-0 citellus]# 
 ```
