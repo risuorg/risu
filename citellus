@@ -86,9 +86,14 @@ echo "Hostname: $(cat ${DIRECTORY}/hostname)"
 echo "Discovered node: ${DISCOVERED_NODE}"
 echo "Version: ${VERSION}"
 
-
+PYTHON="/usr/bin/python"
 # Go thru the all existing .conf files inside DISCOVERED_NODE.d directory/.
-for FILE in ./"${DISCOVERED_NODE}".d/*.conf; do
+for FILE in ./"${DISCOVERED_NODE}".d/*; do
     [ -e "$FILE" ] || continue
-    source "$FILE"
+    EXTENSION=${FILE##*.} 
+    case ${EXTENSION} in
+      sh) source ${FILE} ;;
+      py) ${PYTHON} ${FILE} ${DIRECTORY} ;;
+      *) echo "I don't recognize your language" ;;
+    esac
 done

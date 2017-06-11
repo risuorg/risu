@@ -96,24 +96,18 @@ warn(){
     tput sgr0
 }
 
-miss(){
-    tput setaf 3
-    echo "[MISSING] ${1}"
-    tput sgr0
-}
-
 grep_file_rev(){
 
   if [ -e "$1" ]
   then
-    if grep -q "${2}" ${1} >/dev/null 2>&1
+    if grep -q "${2}" ${1}
     then
       bad "Checking ${2} is in ${1}"
     else
       good "Checking ${2} is NOT in ${1}"
     fi
   else
-    miss "Missing file ${1}"
+    warn "Missing file ${1}"
   fi
 	
 }
@@ -133,7 +127,7 @@ count_lines(){
       bad "There are ${WC} occurences of word ${2} in ${1}"
     fi
   else
-    miss "Missing file ${1}"
+    warn "Missing file ${1}"
   fi
 	
 }
@@ -142,14 +136,14 @@ grep_file(){
 
   if [ -e "$1" ]
   then
-    if grep -q "${2}" ${1} >/dev/null 2>&1
+    if grep -q "${2}" ${1}
     then
       good "Checking ${2} is in ${1}"
     else
       bad "Checking ${2} is in ${1}"
     fi
   else
-    miss "Missing file ${1}"
+    warn "Missing file ${1}"
   fi
 	
 }
