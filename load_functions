@@ -25,11 +25,12 @@ show_help(){
   echo " \______  /__||__|  \___  >____/____/____//____  >"
   echo "        \/              \/                     \/ "
   echo ""
-  echo "Usage: ${0##*/} [-h] [-d DIRECTORY]..."
+  echo "Usage: ${0##*/} [-hv] [-f DIRECTORY]..."
   echo "Do stuff with sosreport and write the result to standard output."
   echo ""
   echo "              -h              display this help and exit"
-  echo "              -d sosreport-*  opens a sosreport directory for analysis"
+  echo "              -f sosreport-*  opens a sosreport directory for analysis"
+  echo "              -v              verbose mode."
   
 }
 

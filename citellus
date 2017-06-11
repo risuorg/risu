@@ -15,7 +15,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# set -x 
 # Load all necessary functions
 source load_functions
 
@@ -30,21 +29,24 @@ while :; do
             show_help
             exit
             ;;
-        -d|--directory)
+        -f|--file)
             if [ -n "$2" ]; then
                 DIRECTORY=$2
                 shift
             else
-                bad '"--directory" requires a non-empty option argument.' >&2
+                bad '"--file" requires a non-empty option argument.' >&2
                 exit 1
             fi
             ;;
-        --directory=?*)
+        --file=?*)
             DIRECTORY=${1#*=}
             ;;
-        --directory=)
-            bad '"--directory" requires a non-empty option argument.' >&2
+        --file=)
+            bad '"--file" requires a non-empty option argument.' >&2
             exit 1
+            ;;
+        -v|--verbose)
+            set -x
             ;;
         --)
             shift
@@ -84,7 +86,6 @@ echo "Hostname: $(cat ${DIRECTORY}/hostname)"
 echo "Discovered node: ${DISCOVERED_NODE}"
 echo "Version: ${VERSION}"
 
-echo ""
 
 # Go thru the all existing .conf files inside DISCOVERED_NODE.d directory/.
 for FILE in ./"${DISCOVERED_NODE}".d/*.conf; do
