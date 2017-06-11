@@ -90,6 +90,12 @@ bad(){
     tput sgr0
 }
 
+warn(){
+    tput setaf 3
+    echo "[WARN] ${1}"
+    tput sgr0
+}
+
 miss(){
     tput setaf 3
     echo "[MISSING] ${1}"
@@ -107,11 +113,30 @@ grep_file_rev(){
       good "Checking ${2} is NOT in ${1}"
     fi
   else
-    miss "Missing ${1}"
+    miss "Missing file ${1}"
   fi
 	
 }
 
+count_lines(){
+
+  if [ -e "$1" ]
+  then
+    WC=$(grep "${2}" ${1} | wc -l)
+    if [[ ${WC} -eq 0 ]]
+    then
+      good "No match for word ${2} in ${1}"
+    elif [[ ${WC} -gt 0 ]] && [[ ${WC} -lt 50 ]]
+    then
+      warn "There are ${WC} occurences of word ${2} in ${1}"
+    else
+      bad "There are ${WC} occurences of word ${2} in ${1}"
+    fi
+  else
+    miss "Missing file ${1}"
+  fi
+	
+}
 
 grep_file(){
 
@@ -124,7 +149,7 @@ grep_file(){
       bad "Checking ${2} is in ${1}"
     fi
   else
-    miss "Missing ${1}"
+    miss "Missing file ${1}"
   fi
 	
 }
