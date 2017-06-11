@@ -1,0 +1,93 @@
+#!/bin/bash
+
+# Copyright (C) 2017   Robin Cernin (rcernin@redhat.com)
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+# set -x 
+# Load all necessary functions
+source load_functions
+
+# Unset all variables that might be possibly set.
+DIRECTORY=
+DISCOVERED_NODE=
+VERSION=
+
+while :; do
+    case $1 in
+        -h|-\?|--help)
+            show_help
+            exit
+            ;;
+        -d|--directory)
+            if [ -n "$2" ]; then
+                DIRECTORY=$2
+                shift
+            else
+                bad '"--directory" requires a non-empty option argument.' >&2
+                exit 1
+            fi
+            ;;
+        --directory=?*)
+            DIRECTORY=${1#*=}
+            ;;
+        --directory=)
+            bad '"--directory" requires a non-empty option argument.' >&2
+            exit 1
+            ;;
+        --)
+            shift
+            break
+            ;;
+        -?*)
+            bad "Unknown option: ${1}" >&2
+            exit 1
+            ;;
+        *)
+            break
+    esac
+
+    shift
+done
+
+if [ ! -d "${DIRECTORY}" ]
+then
+  bad "Uh, oh, ${DIRECTORY} is not directory."
+  exit 1
+fi
+
+echo "_________ .__  __         .__  .__                "
+echo "\_   ___ \|__|/  |_  ____ |  | |  |  __ __  ______"
+echo "/    \  \/|  \   __\/ __ \|  | |  | |  |  \/  ___/"
+echo "\     \___|  ||  | \  ___/|  |_|  |_|  |  /\___ \ "
+echo " \______  /__||__|  \___  >____/____/____//____  >"
+echo "        \/              \/                     \/ "
+
+# Here we are going to discover which node type [director,controller,compute] we
+# are running against.
+discover_node
+get_version
+
+echo "SOSreport was created at $(cat ${DIRECTORY}/date)"
+echo "Hostname: $(cat ${DIRECTORY}/hostname)"
+echo "Discovered node: ${DISCOVERED_NODE}"
+echo "Version: ${VERSION}"
+
+echo ""
+
+# Go thru the all existing .conf files inside DISCOVERED_NODE.d directory/.
+for FILE in ./"${DISCOVERED_NODE}".d/*.conf; do
+    [ -e "$FILE" ] || continue
+    source "$FILE"
+done

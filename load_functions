@@ -1,0 +1,125 @@
+#!/bin/bash
+
+# Copyright (C) 2017   Robin Cernin (rcernin@redhat.com)
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+show_help(){
+  # Show usage info
+
+  echo "_________ .__  __         .__  .__                "
+  echo "\_   ___ \|__|/  |_  ____ |  | |  |  __ __  ______"
+  echo "/    \  \/|  \   __\/ __ \|  | |  | |  |  \/  ___/"
+  echo "\     \___|  ||  | \  ___/|  |_|  |_|  |  /\___ \ "
+  echo " \______  /__||__|  \___  >____/____/____//____  >"
+  echo "        \/              \/                     \/ "
+  echo ""
+  echo "Usage: ${0##*/} [-h] [-d DIRECTORY]..."
+  echo "Do stuff with sosreport and write the result to standard output."
+  echo ""
+  echo "              -h              display this help and exit"
+  echo "              -d sosreport-*  opens a sosreport directory for analysis"
+  
+}
+
+discover_node(){
+  # Check which node we are running against [director,controller,compute]
+
+  if grep -q "tripleo-heat-templates" "${DIRECTORY}/installed-rpms" && grep -q \
+  "python-tripleoclient" "${DIRECTORY}/installed-rpms"
+  then
+    # We have discovered this is with highest probability OSP-d
+    DISCOVERED_NODE="osp-director"
+  elif grep -q "nova-compute" "${DIRECTORY}/ps"
+    then
+      # We have discovered this is with highest probability compute node
+      DISCOVERED_NODE="compute"
+  else
+    # We have discovered this is with highest probability controller node
+    DISCOVERED_NODE="controller"
+  fi
+
+}
+
+get_version(){
+  # Check which version we are using
+
+  VERSION=$(grep "openstack-nova-common" "${DIRECTORY}/installed-rpms")
+  case ${VERSION} in
+    *12*) VERSION="Red Hat OpenStack Platform 8/Liberty" ;;
+    *13*) VERSION="Red Hat OpenStack Platform 9/Mitaka" ;;
+    *14*) VERSION="Red Hat OpenStack Platform 10/Newton" ;;
+    *15*) VERSION="Red Hat OpenStack Platform 11/Ocata" ;;
+    *16*) VERSION="Red Hat OpenStack Platform 12/Pike" ;;
+    *) echo "I don't recognize your version." ;;
+  esac
+
+}
+
+check_root(){
+
+  if [ ! "${USER}" = "root" ]
+  then
+    bad "You're not logged as root user. Who the hell are you, $USER?"
+    exit 1
+  fi
+
+}
+
+good(){
+    tput setaf 2
+    echo "[OK] ${1}"
+    tput sgr0
+}
+
+bad(){
+    tput setaf 1
+    echo "[WRONG] ${1}"
+    tput sgr0
+}
+
+miss(){
+    tput setaf 3
+    echo "[MISSING] ${1}"
+    tput sgr0
+}
+
+check_config(){
+
+  if grep -q "${2}.*=.*${3}" ${1} >/dev/null 2>&1
+  then
+    good "Checking value ${2} is set to ${3} in ${1}"
+  else
+    if [ -e "$1" ]
+    then
+      bad "Checking value ${2} is set to ${3} in ${1}"
+    else
+      miss "Missing ${1}"
+    fi
+  fi
+	
+}
+
+grep_file(){
+
+  if grep -q "${2}" ${1} >/dev/null 2>&1
+  then
+    good "Checking ${2} is in ${1}"
+  else
+    bad "Checking ${2} is in ${1}"
+  fi
+	
+}
+
+# vim: ts=2 sw=2 et
