@@ -22,6 +22,7 @@ source load_functions
 DIRECTORY=
 DISCOVERED_NODE=
 VERSION=
+TARGET_HOSTNAME=
 
 while :; do
     case $1 in
@@ -81,8 +82,9 @@ echo "        \/              \/                     \/ "
 discover_node
 get_version
 
+TARGET_HOSTNAME="$(cat ${DIRECTORY}/hostname)"
 echo "SOSreport was created at $(cat ${DIRECTORY}/date)"
-echo "Hostname: $(cat ${DIRECTORY}/hostname)"
+echo "Hostname: ${TARGET_HOSTNAME}"
 echo "Discovered node: ${DISCOVERED_NODE}"
 echo "Version: ${VERSION}"
 
