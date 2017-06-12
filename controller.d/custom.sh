@@ -24,7 +24,8 @@ echo "+--------------------------------------------+"
 
 
 # https://bugs.launchpad.net/keystone/+bug/1649616/
-count_lines "${DIRECTORY}/var/log/keystone/keystone.log" "Got error 5 during COMMIT"
+count_lines "${DIRECTORY}/var/log/keystone/keystone.log" "Got error 5 during COMMIT" \
+" \_ This is known bug in keystone-manage token_flush - Ref: https://bugs.launchpad.net/keystone/+bug/1649616/"
 
 # Check OpenStack services in undercloud are running and aren't failed
 

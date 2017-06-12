@@ -103,6 +103,10 @@ grep_file_rev(){
     if grep -q "${2}" ${1}
     then
       bad "Checking ${2} is in ${1}"
+      if [ -e "$3" ]
+      then
+        echo "${3}"
+      fi
     else
       good "Checking ${2} is NOT in ${1}"
     fi
@@ -123,8 +127,18 @@ count_lines(){
     elif [[ ${WC} -gt 0 ]] && [[ ${WC} -lt 50 ]]
     then
       warn "There are ${WC} occurences of word ${2} in ${1}"
+      if [ -n "$3" ]
+      then
+        echo "${3}"
+        echo ""
+      fi
     else
       bad "There are ${WC} occurences of word ${2} in ${1}"
+      if [ -n "$3" ]
+      then
+        echo "${3}"
+        echo ""
+      fi
     fi
   else
     warn "Missing file ${1}"
@@ -141,6 +155,11 @@ grep_file(){
       good "Checking ${2} is in ${1}"
     else
       bad "Checking ${2} is in ${1}"
+      if [ -n "$3" ]
+      then
+        echo "${3}"
+        echo ""
+      fi
     fi
   else
     warn "Missing file ${1}"
