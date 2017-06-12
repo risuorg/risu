@@ -95,7 +95,7 @@ for FILE in ./generic.d/*; do
     case ${EXTENSION} in
       sh) source ${FILE} ;;
       py) ${PYTHON} ${FILE} ${DIRECTORY} ;;
-      *) echo "I don't recognize your language" ;;
+      *) echo "File: ${FILE}. Usupported format." ;;
     esac
 done
 
