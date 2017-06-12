@@ -23,11 +23,35 @@ echo "|             Checking HA Cluster            |"
 echo "+--------------------------------------------+"
 
 # Checking the number of nodes in the cluster.
+# Check which directory for cluster exists it's either cluster or pacemaker
 
-NUM_NODES=$(cat ${DIRECTORY}/sos_commands/pacemaker/crm_mon_-1_-A_-n_-r_-t | sed -n -r -e 's/^([0-9])[ \t]+nodes.*/\1/p')
-if [ "${NUM_NODES}" -eq  "3" ]
+for CLUSTER_DIRECTORY in "pacemaker" "cluster"; do
+
+  if [ -d "${DIRECTORY}/sos_commands/${CLUSTER_DIRECTORY}" ]
+  then
+    PCS_DIRECTORY="${DIRECTORY}/sos_commands/${CLUSTER_DIRECTORY}"
+  fi
+done
+
+if [ -z "${PCS_DIRECTORY}" ]
 then
-  good "The nodes in cluster are equal to 3."
+  warn "Missing directory ${DIRECTORY}/sos_commands/${CLUSTER_DIRECTORY}"
 else
-  bad "There are ${NUM_NODES} in cluster."
+  NUM_NODES=$(sed -n -r -e 's/^([0-9])[ \t]+nodes.*/\1/p' "${PCS_DIRECTORY}/pcs_status")
+  if [ "${NUM_NODES}" -eq  "3" ]
+  then
+    good "The nodes in cluster are equal to 3."
+  else
+    bad "There are ${NUM_NODES} in cluster."
+  fi
+
+  # Checking for stonith-enabled: true
+  grep_file "${PCS_DIRECTORY}/pcs_config" "stonith-enabled:.*true"
+
+  # Checking if there are any "Failed Actions" in the pcs_status
+  grep_file_rev "${PCS_DIRECTORY}/pcs_status" "Failed Actions"
+
+  # Checking if there are any "Stopped" services
+  grep_file_rev "${PCS_DIRECTORY}/pcs_status" "Stopped"
+
 fi
