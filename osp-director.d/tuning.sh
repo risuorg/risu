@@ -61,10 +61,6 @@ grep_file "${DIRECTORY}/etc/my.cnf.d/server.cnf" "^[ \t]*innodb_max_purge_lag.*=
 # using a quad-core CPU and a single disk, use 10 threads. 
 grep_file ${DIRECTORY}"/etc/my.cnf.d/server.cnf" "^[ \t]*innodb_thread_concurrency.*=.*2"
 
-# Crontab check
-grep_file "${DIRECTORY}/var/spool/cron/keystone" "keystone-manage token_flush"
-grep_file "${DIRECTORY}/var/spool/cron/heat" "heat-manage purge_deleted"
-
 # Sometimes the director might not have enough resources to perform
 # concurrent node provisioning. The default is 10 nodes at the same time.
 # To reduce the number of concurrent nodes, set the max_concurrent_builds
