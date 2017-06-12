@@ -34,3 +34,11 @@ then
 else
   bad "There are ${FILE_DESCRIPTORS} file_descriptors available."
 fi
+
+LIST_OF_PROJECTS="ceilometer glance heat keystone neutron nova swift"
+for PROJECT in $LIST_OF_PROJECTS; do
+    for FILE in ${DIRECTORY}/var/log/${PROJECT}/*.log; do
+      [ -e "$FILE" ] || continue
+        count_lines "$FILE" "AMQP server on .* is unreachable"
+    done
+done
