@@ -28,9 +28,10 @@ show_help(){
   echo "Usage: ${0##*/} [-hv] [-f DIRECTORY]..."
   echo "Do stuff with sosreport and write the result to standard output."
   echo ""
-  echo "              -h              display this help and exit"
-  echo "              -f sosreport-*  opens a sosreport directory for analysis"
-  echo "              -v              verbose mode."
+  echo "              -h                  display this help and exit"
+  echo "              -f sosreport-*      opens a sosreport directory for analysis"
+  echo "              -d warn,good,bad    will display only filtered messages"
+  echo "              -v                  verbose mode."
   
 }
 
