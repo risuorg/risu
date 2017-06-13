@@ -71,32 +71,46 @@ get_version(){
 
 }
 
-check_root(){
-
-  if [ ! "${USER}" = "root" ]
-  then
-    bad "You're not logged as root user. Who the hell are you, $USER?"
-    exit 1
-  fi
-
-}
-
 good(){
-    tput setaf 2
-    echo "[OK] ${1}"
-    tput sgr0
+    if [ ${verbose_good} -eq "1" ]
+    then
+      tput setaf 2
+      echo "[OK] ${1}"
+      tput sgr0
+    fi
 }
 
 bad(){
-    tput setaf 1
-    echo "[WRONG] ${1}"
-    tput sgr0
+    if [ ${verbose_bad} -eq "1" ]
+    then
+      tput setaf 1
+      echo "[WRONG] ${1}"
+      tput sgr0
+    fi
 }
 
 warn(){
-    tput setaf 3
-    echo "[WARN] ${1}"
-    tput sgr0
+    if [ ${verbose_warn} -eq "1" ]
+    then
+      tput setaf 3
+      echo "[WARN] ${1}"
+      tput sgr0
+    fi
+}
+
+match_filter(){
+
+    FOUND=0
+    local filter=$1 j
+    shift
+    for j in ${@}
+    do
+    if [[ "${filter}" = $j ]]
+    then
+      FOUND=1
+      break
+    fi
+    done
 }
 
 grep_file_rev(){

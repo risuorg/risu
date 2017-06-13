@@ -25,6 +25,11 @@ VERSION=
 TARGET_HOSTNAME=
 PCS_DIRECTORY=
 
+# Set display filters
+verbose_good=0
+verbose_bad=0
+verbose_warn=0
+
 while :; do
     case $1 in
         -h|-\?|--help)
@@ -49,6 +54,15 @@ while :; do
             ;;
         -v|--verbose)
             set -x
+            ;;
+        -d|--display)
+            if [ -n "$2" ]; then
+                FILTER=$2
+                shift
+            else
+                bad '"--display" requires a non-empty option argument.' >&2
+                exit 1
+            fi
             ;;
         --)
             shift
@@ -77,6 +91,36 @@ echo "/    \  \/|  \   __\/ __ \|  | |  | |  |  \/  ___/"
 echo "\     \___|  ||  | \  ___/|  |_|  |_|  |  /\___ \ "
 echo " \______  /__||__|  \___  >____/____/____//____  >"
 echo "        \/              \/                     \/ "
+
+# Here we are going to set the display filter we want.
+# By default all filters are on unless specified explicitly.
+
+FILTER="$(echo ${FILTER} | tr ',' ' ')"
+if [ -z "${FILTER}" ]
+then 
+  # All filters are on if no filter was specified.
+  verbose_warn=1
+  verbose_good=1
+  verbose_bad=1
+fi
+
+if [ -n "${FILTER}" ]
+then
+  for filter in ${FILTER}
+  do
+    match_filter ${filter} "warn good bad"
+    if [[ "${FOUND}" -eq 1 ]] && [[ ${filter} = "good" ]]
+    then
+      verbose_good=1
+    elif [[ "${FOUND}" -eq 1 ]] && [[ ${filter} = "bad" ]]
+    then
+      verbose_bad=1
+    elif [[ "${FOUND}" -eq 1 ]] && [[ ${filter} = "warn" ]]
+    then
+      verbose_warn=1
+    fi
+  done
+fi
 
 # Here we are going to discover which node type [director,controller,compute] we
 # are running against.
