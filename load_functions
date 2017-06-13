@@ -25,7 +25,7 @@ show_help(){
   echo " \______  /__||__|  \___  >____/____/____//____  >"
   echo "        \/              \/                     \/ "
   echo ""
-  echo "Usage: ${0##*/} [-hv] [-f DIRECTORY]..."
+  echo "Usage: ${0##*/} [-hv] [-d warn,good,bad] [-f DIRECTORY]..."
   echo "Do stuff with sosreport and write the result to standard output."
   echo ""
   echo "              -h                  display this help and exit"
