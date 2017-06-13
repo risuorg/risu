@@ -88,6 +88,9 @@ echo "SOSreport was created at $(cat ${DIRECTORY}/date)"
 echo "Hostname: ${TARGET_HOSTNAME}"
 echo "Discovered node: ${DISCOVERED_NODE}"
 echo "Version: ${VERSION}"
+if [ -n "${PACKSTACK}" ]
+then echo "Type: POC-type environment installed with Packstack" 
+fi
 
 PYTHON="/usr/bin/python"
 
