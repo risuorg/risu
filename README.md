@@ -6,7 +6,7 @@ Please if you have any idea on any improvements please do not hesitate to open a
 
 ### Usage
 
-```bash
+```
 [root@undercloud-0 citellus]# ./citellus -h
 _________ .__  __         .__  .__                
 \_   ___ \|__|/  |_  ____ |  | |  |  __ __  ______
@@ -27,7 +27,7 @@ Do stuff with sosreport and write the result to standard output.
 
 ### Example filtered output
 
-```bash
+```
 [root@undercloud-0 citellus]# ./citellus -d warn,bad -f ../sosreport-testuser.12345-20170611185638
 _________ .__  __         .__  .__                
 \_   ___ \|__|/  |_  ____ |  | |  |  __ __  ______
@@ -72,7 +72,7 @@ Working directory is  ../sosreport-testuser.12345-20170611185638
 
 ### Example non-filtered output
 
-```bash
+```
 [root@undercloud-0 citellus]# ./citellus -f ../sosreport-testuser.12345-20170611185638
 _________ .__  __         .__  .__                
 \_   ___ \|__|/  |_  ____ |  | |  |  __ __  ______
