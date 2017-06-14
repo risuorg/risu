@@ -175,7 +175,8 @@ for FILE in ./generic.d/* ./"${DISCOVERED_NODE}".d/*; do
           echo ${line// /-}
           printf "| PASS: %-9s FAILED: %-6s WARNING: %-2s %-17s Result: %s %s\n" \
                  "${PASS}" "${FAIL}" "${WARNING}" "|" "${RESULT}" "|"
-          printf -v line "+%*s+" "77" && echo ${line// /-}
+          printf -v line "+%*s+" "77"
+          echo ${line// /-}
 
           $(which cat) "${TMPFILE}"
           $(which rm) -f "${TMPFILE}"
