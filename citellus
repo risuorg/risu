@@ -15,8 +15,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
 # Load all necessary functions
-source load_functions
+source ${DIR}/load_functions
 
 # Unset all variables that might be possibly set.
 DIRECTORY=
