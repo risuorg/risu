@@ -17,10 +17,7 @@
 
 # Checking Tuned Undercloud options
 # Ref: https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/8/html-single/director_installation_and_usage/#sect-Tuning_the_Undercloud
-
-echo "+--------------------------------------------+"
-echo "|           Checking Tuning options          |"
-echo "+--------------------------------------------+"
+REFNAME="Checking Tuning options"
 
 # Checking /etc/heat/heat.conf
 

@@ -17,10 +17,7 @@
 
 # Cluster check
 # Ref: 
-
-echo "+--------------------------------------------+"
-echo "|             Checking HA Cluster            |"
-echo "+--------------------------------------------+"
+REFNAME="Checking HA Cluster"
 
 # Checking the number of nodes in the cluster.
 # Check which directory for cluster exists it's either cluster or pacemaker

@@ -17,11 +17,7 @@
 
 # Checking Tracebacks
 # Ref: None
-
-echo "+--------------------------------------------+"
-echo "|                Kernel Module               |"
-echo "+--------------------------------------------+"
-
+REFNAME="Kernel Module"
 
 # Looks for the Kernel Out of Memory, panics and soft locks
 

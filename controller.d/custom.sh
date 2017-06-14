@@ -17,10 +17,7 @@
 
 # Checking ERRORS
 # Ref: None
-
-echo "+--------------------------------------------+"
-echo "|               My Custom Module             |"
-echo "+--------------------------------------------+"
+REFNAME="My Custom Module"
 
 
 # https://bugs.launchpad.net/keystone/+bug/1649616/

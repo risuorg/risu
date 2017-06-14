@@ -17,10 +17,7 @@
 
 # Checking cronjob
 # Ref: 
-
-echo "+--------------------------------------------+"
-echo "|               Checking cronjob             |"
-echo "+--------------------------------------------+"
+REFNAME="Checking cronjob"
 
 # Crontab check
 grep_file "${DIRECTORY}/var/spool/cron/keystone" "keystone-manage token_flush"

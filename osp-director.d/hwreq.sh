@@ -19,10 +19,7 @@
 # Ref: https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/8/html-single/director_installation_and_usage/#sect-Undercloud_Requirements
 
 # Red Hat Enterprise Linux 7.2 or later installed as the host operating system. 
-
-echo "+--------------------------------------------+"
-echo "|        Checking Hardware Requirements      |"
-echo "+--------------------------------------------+"
+REFNAME="Checking Hardware Requirements"
 
 # A minimum of 16 GB of RAM.
 if [ -e "${DIRECTORY}/proc/meminfo" ]

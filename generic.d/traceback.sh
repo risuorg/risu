@@ -17,18 +17,14 @@
 
 # Checking Tracebacks
 # Ref: None
-
-echo "+--------------------------------------------+"
-echo "|               Traceback Module             |"
-echo "+--------------------------------------------+"
-
+REFNAME="Traceback Module"
 
 # Tracebacks everywhere
 
 LIST_OF_PROJECTS="ceilometer glance heat keystone neutron nova swift"
 for PROJECT in $LIST_OF_PROJECTS; do
-    for FILE in ${DIRECTORY}/var/log/${PROJECT}/*.log; do
-      [ -e "$FILE" ] || continue
-        count_lines "$FILE" "Traceback"
+    for LOGFILE in ${DIRECTORY}/var/log/${PROJECT}/*.log; do
+      [ -e "$LOGFILE" ] || continue
+        count_lines "$LOGFILE" "Traceback"
     done
 done

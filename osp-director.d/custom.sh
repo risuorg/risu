@@ -17,10 +17,7 @@
 
 # Checking ERRORS
 # Ref: None
-
-echo "+--------------------------------------------+"
-echo "|               My Custom Module             |"
-echo "+--------------------------------------------+"
+REFNAME="My Custom Module"
 
 
 # Check for iptables -t nat -j REDIRECT rule for metadata server exists.

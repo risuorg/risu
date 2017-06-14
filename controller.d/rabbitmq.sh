@@ -17,10 +17,7 @@
 
 # RabbitMQ Module
 # Ref: 
-
-echo "+--------------------------------------------+"
-echo "|              Checking RabbitMQ             |"
-echo "+--------------------------------------------+"
+REFNAME="Checking RabbitMQ"
 
 # RabbitMQ
 
@@ -37,8 +34,8 @@ fi
 
 LIST_OF_PROJECTS="ceilometer glance heat keystone neutron nova swift"
 for PROJECT in $LIST_OF_PROJECTS; do
-    for FILE in ${DIRECTORY}/var/log/${PROJECT}/*.log; do
-      [ -e "$FILE" ] || continue
-        count_lines "$FILE" "AMQP server on .* is unreachable"
+    for LOGFILE in ${DIRECTORY}/var/log/${PROJECT}/*.log; do
+      [ -e "$LOGFILE" ] || continue
+        count_lines "$LOGFILE" "AMQP server on .* is unreachable"
     done
 done

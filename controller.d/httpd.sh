@@ -17,10 +17,7 @@
 
 # Checking httpd
 # Ref: None
-
-echo "+--------------------------------------------+"
-echo "|                 httpd Module               |"
-echo "+--------------------------------------------+"
+REFNAME="httpd Module"
 
 
 

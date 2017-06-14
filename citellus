@@ -139,13 +139,32 @@ then echo "Type: POC-type environment installed with Packstack"
 fi
 
 PYTHON="/usr/bin/python"
+TMPFILE="$(mktemp /tmp/cittelus-script.XXXXXX)"
 
 # Go thru the all existing .conf files inside DISCOVERED_NODE.d directory/.
 for FILE in ./generic.d/* ./"${DISCOVERED_NODE}".d/*; do
     [ -e "$FILE" ] || continue
     EXTENSION=${FILE##*.} 
     case ${EXTENSION} in
-      sh) source ${FILE} ;;
+      sh) 
+          source "${FILE}" > "${TMPFILE}"
+          PASS=$(grep ".*\[OK\]" "${TMPFILE}" | wc -l)
+          FAIL=$(grep ".*\[WRONG\]" "${TMPFILE}" | wc -l)
+          WARNING=$(grep ".*\[WARN\]" "${TMPFILE}" | wc -l)
+          if [[ "${FAIL}" -eq "0" ]] && [[ "${WARNING}" -eq "0" ]]
+          then RESULT=$(tput setaf 2; printf "%s" "PASSED"; tput sgr0)
+          else
+          RESULT=$(tput setaf 1; printf "%s" "FAILED"; tput sgr0)
+          fi
+          printf -v line "+%*s+" "77" && echo ${line// /-}
+          printf "| %-75s %s\n" "${REFNAME}" "|"
+          printf -v line "+%*s+ %-30s |" "44" && echo ${line// /-}
+          printf "| PASS: %-9s FAILED: %-6s WARNING: %-2s %-17s Result: %s %s\n" "${PASS}" "${FAIL}" "${WARNING}" "|" "${RESULT}" "|"
+          printf -v line "+%*s+" "77" && echo ${line// /-}
+          $(which cat) "${TMPFILE}"
+          $(which rm) -f "${TMPFILE}"
+          ;;
+
       py) ${PYTHON} ${FILE} ${DIRECTORY} ;;
       *) echo "File: ${FILE}. Usupported format." ;;
     esac
