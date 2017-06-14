@@ -27,154 +27,141 @@ Do stuff with sosreport and write the result to standard output.
 
 ### Example filtered output
 
-```
-[root@undercloud-0 citellus]# ./citellus -d warn,bad -f ../sosreport-testuser.12345-20170611185638
+```[root@undercloud-0 citellus]# ./citellus -f ../sosreport-testuser.12345-20170611105406 -d warn,bad
 _________ .__  __         .__  .__                
 \_   ___ \|__|/  |_  ____ |  | |  |  __ __  ______
 /    \  \/|  \   __\/ __ \|  | |  | |  |  \/  ___/
 \     \___|  ||  | \  ___/|  |_|  |_|  |  /\___ \ 
  \______  /__||__|  \___  >____/____/____//____  >
         \/              \/                     \/ 
-SOSreport was created at Sun Jun 11 18:56:46 UTC 2017
-Hostname: controller-0.localdomain
-Discovered node: controller
+SOSreport was created at Sun Jun 11 10:54:19 EDT 2017
+Hostname: undercloud-0.redhat.local
+Discovered node: osp-director
 Version: Red Hat OpenStack Platform 8/Liberty
-+--------------------------------------------+
-|               Traceback Module             |
-+--------------------------------------------+
-+--------------------------------------------+
-|             Checking HA Cluster            |
-+--------------------------------------------+
-[WRONG] Checking stonith-enabled:.*true is in ../sosreport-testuser.12345-20170611185638/sos_commands/pacemaker/pcs_config
-+--------------------------------------------+
-|               Checking cronjob             |
-+--------------------------------------------+
-+--------------------------------------------+
-|               My Custom Module             |
-+--------------------------------------------+
-+--------------------------------------------+
-|             Python Hello Module            |
-+--------------------------------------------+
-Hello from python module!
-Working directory is  ../sosreport-testuser.12345-20170611185638
-+--------------------------------------------+
-|                 httpd Module               |
-+--------------------------------------------+
-+--------------------------------------------+
-|        Checking Hardware Requirements      |
-+--------------------------------------------+
-[WRONG] Uh, oh, controller requires at least 32GB of RAM
-+--------------------------------------------+
-|              Checking RabbitMQ             |
-+--------------------------------------------+
++-----------------------------------------------------------------------------+
+| Kernel Module                                                               |
++--------------------------------------------+--------------------------------|
+| PASS: 0         FAILED: 0      WARNING: 0  |                 Result: PASSED |
++-----------------------------------------------------------------------------+
++-----------------------------------------------------------------------------+
+| Traceback Module                                                            |
++--------------------------------------------+--------------------------------|
+| PASS: 0         FAILED: 1      WARNING: 4  |                 Result: FAILED |
++-----------------------------------------------------------------------------+
+[WARN] There are 1 occurences of word Traceback in ../sosreport-testuser.12345-20170611105406/var/log/ceilometer/alarm-evaluator.log
+[WRONG] There are 92 occurences of word Traceback in ../sosreport-testuser.12345-20170611105406/var/log/ceilometer/central.log
+[WARN] There are 9 occurences of word Traceback in ../sosreport-testuser.12345-20170611105406/var/log/glance/api.log
+[WARN] There are 2 occurences of word Traceback in ../sosreport-testuser.12345-20170611105406/var/log/neutron/dhcp-agent.log
+[WARN] There are 6 occurences of word Traceback in ../sosreport-testuser.12345-20170611105406/var/log/nova/nova-api.log
++-----------------------------------------------------------------------------+
+| Checking cronjob                                                            |
++--------------------------------------------+--------------------------------|
+| PASS: 0         FAILED: 0      WARNING: 1  |                 Result: FAILED |
++-----------------------------------------------------------------------------+
+[WARN] Missing file ../sosreport-testuser.12345-20170611105406/var/spool/cron/keystone
++-----------------------------------------------------------------------------+
+| My Custom Module                                                            |
++--------------------------------------------+--------------------------------|
+| PASS: 0         FAILED: 0      WARNING: 0  |                 Result: PASSED |
++-----------------------------------------------------------------------------+
++-----------------------------------------------------------------------------+
+| Checking Hardware Requirements                                              |
++--------------------------------------------+--------------------------------|
+| PASS: 0         FAILED: 1      WARNING: 0  |                 Result: FAILED |
++-----------------------------------------------------------------------------+
+[WRONG] Undercloud requires minimum 8-core 64-bit x86 processor
++-----------------------------------------------------------------------------+
+| Checking Tuning options                                                     |
++--------------------------------------------+--------------------------------|
+| PASS: 0         FAILED: 6      WARNING: 0  |                 Result: FAILED |
++-----------------------------------------------------------------------------+
+[WRONG] Checking ^[ \t]*innodb_additional_mem_pool_size.*=.*20M is in ../sosreport-testuser.12345-20170611105406/etc/my.cnf.d/server.cnf
+[WRONG] Checking ^[ \t]*innodb_buffer_pool_size.*=.*1000M is in ../sosreport-testuser.12345-20170611105406/etc/my.cnf.d/server.cnf
+[WRONG] Checking ^[ \t]*innodb_flush_log_at_trx_commit.*=.*1 is in ../sosreport-testuser.12345-20170611105406/etc/my.cnf.d/server.cnf
+[WRONG] Checking ^[ \t]*innodb_lock_wait_timeout.*=.*50 is in ../sosreport-testuser.12345-20170611105406/etc/my.cnf.d/server.cnf
+[WRONG] Checking ^[ \t]*innodb_max_purge_lag.*=.*10000 is in ../sosreport-testuser.12345-20170611105406/etc/my.cnf.d/server.cnf
+[WRONG] Checking ^[ \t]*innodb_thread_concurrency.*=.*2 is in ../sosreport-testuser.12345-20170611105406/etc/my.cnf.d/server.cnf
 
 ```
 
 ### Example non-filtered output
 
 ```
-[root@undercloud-0 citellus]# ./citellus -f ../sosreport-testuser.12345-20170611185638
+[root@undercloud-0 citellus]# ./citellus -f ../sosreport-testuser.12345-20170611105406 
 _________ .__  __         .__  .__                
 \_   ___ \|__|/  |_  ____ |  | |  |  __ __  ______
 /    \  \/|  \   __\/ __ \|  | |  | |  |  \/  ___/
 \     \___|  ||  | \  ___/|  |_|  |_|  |  /\___ \ 
  \______  /__||__|  \___  >____/____/____//____  >
         \/              \/                     \/ 
-SOSreport was created at Sun Jun 11 18:56:46 UTC 2017
-Hostname: controller-0.localdomain
-Discovered node: controller
+SOSreport was created at Sun Jun 11 10:54:19 EDT 2017
+Hostname: undercloud-0.redhat.local
+Discovered node: osp-director
 Version: Red Hat OpenStack Platform 8/Liberty
-+--------------------------------------------+
-|               Traceback Module             |
-+--------------------------------------------+
-[OK] No match for word Traceback in ../sosreport-testuser.12345-20170611185638/var/log/ceilometer/agent-notification.log
-[OK] No match for word Traceback in ../sosreport-testuser.12345-20170611185638/var/log/ceilometer/alarm-evaluator.log
-[OK] No match for word Traceback in ../sosreport-testuser.12345-20170611185638/var/log/ceilometer/alarm-notifier.log
-[OK] No match for word Traceback in ../sosreport-testuser.12345-20170611185638/var/log/ceilometer/api.log
-[OK] No match for word Traceback in ../sosreport-testuser.12345-20170611185638/var/log/ceilometer/ceilometer-dbsync.log
-[OK] No match for word Traceback in ../sosreport-testuser.12345-20170611185638/var/log/ceilometer/central.log
-[OK] No match for word Traceback in ../sosreport-testuser.12345-20170611185638/var/log/ceilometer/collector.log
-[OK] No match for word Traceback in ../sosreport-testuser.12345-20170611185638/var/log/glance/api.log
-[OK] No match for word Traceback in ../sosreport-testuser.12345-20170611185638/var/log/glance/registry.log
-[OK] No match for word Traceback in ../sosreport-testuser.12345-20170611185638/var/log/heat/heat-api-cfn.log
-[OK] No match for word Traceback in ../sosreport-testuser.12345-20170611185638/var/log/heat/heat-api-cloudwatch.log
-[OK] No match for word Traceback in ../sosreport-testuser.12345-20170611185638/var/log/heat/heat-api.log
-[OK] No match for word Traceback in ../sosreport-testuser.12345-20170611185638/var/log/heat/heat-engine.log
-[OK] No match for word Traceback in ../sosreport-testuser.12345-20170611185638/var/log/keystone/keystone.log
-[OK] No match for word Traceback in ../sosreport-testuser.12345-20170611185638/var/log/neutron/dhcp-agent.log
-[OK] No match for word Traceback in ../sosreport-testuser.12345-20170611185638/var/log/neutron/l3-agent.log
-[OK] No match for word Traceback in ../sosreport-testuser.12345-20170611185638/var/log/neutron/metadata-agent.log
-[OK] No match for word Traceback in ../sosreport-testuser.12345-20170611185638/var/log/neutron/netns-cleanup.log
-[OK] No match for word Traceback in ../sosreport-testuser.12345-20170611185638/var/log/neutron/openvswitch-agent.log
-[OK] No match for word Traceback in ../sosreport-testuser.12345-20170611185638/var/log/nova/nova-api.log
-[OK] No match for word Traceback in ../sosreport-testuser.12345-20170611185638/var/log/nova/nova-conductor.log
-[OK] No match for word Traceback in ../sosreport-testuser.12345-20170611185638/var/log/nova/nova-consoleauth.log
-[OK] No match for word Traceback in ../sosreport-testuser.12345-20170611185638/var/log/nova/nova-manage.log
-[OK] No match for word Traceback in ../sosreport-testuser.12345-20170611185638/var/log/nova/nova-novncproxy.log
-[OK] No match for word Traceback in ../sosreport-testuser.12345-20170611185638/var/log/nova/nova-scheduler.log
-[OK] No match for word Traceback in ../sosreport-testuser.12345-20170611185638/var/log/swift/swift.log
-+--------------------------------------------+
-|             Checking HA Cluster            |
-+--------------------------------------------+
-[OK] The nodes in cluster are equal to 3.
-[WRONG] Checking stonith-enabled:.*true is in ../sosreport-testuser.12345-20170611185638/sos_commands/pacemaker/pcs_config
-[OK] Checking Failed Actions is NOT in ../sosreport-testuser.12345-20170611185638/sos_commands/pacemaker/pcs_status
-[OK] Checking Stopped is NOT in ../sosreport-testuser.12345-20170611185638/sos_commands/pacemaker/pcs_status
-+--------------------------------------------+
-|               Checking cronjob             |
-+--------------------------------------------+
-[OK] Checking keystone-manage token_flush is in ../sosreport-testuser.12345-20170611185638/var/spool/cron/keystone
-[OK] Checking heat-manage purge_deleted is in ../sosreport-testuser.12345-20170611185638/var/spool/cron/heat
-+--------------------------------------------+
-|               My Custom Module             |
-+--------------------------------------------+
-[OK] No match for word Got error 5 during COMMIT in ../sosreport-testuser.12345-20170611185638/var/log/keystone/keystone.log
-[OK] Checking neutron.*failed|openstack.*failed is NOT in ../sosreport-testuser.12345-20170611185638/sos_commands/systemd/systemctl_list-units_--all
-+--------------------------------------------+
-|             Python Hello Module            |
-+--------------------------------------------+
-Hello from python module!
-Working directory is  ../sosreport-testuser.12345-20170611185638
-+--------------------------------------------+
-|                 httpd Module               |
-+--------------------------------------------+
-[OK] No match for word MaxRequestWorkers in ../sosreport-testuser.12345-20170611185638/var/log/httpd/error_log
-[OK] Checking httpd.*failed is NOT in ../sosreport-testuser.12345-20170611185638/sos_commands/systemd/systemctl_list-units_--all
-+--------------------------------------------+
-|        Checking Hardware Requirements      |
-+--------------------------------------------+
-[WRONG] Uh, oh, controller requires at least 32GB of RAM
-[OK] Checking vmx\|svm is in ../sosreport-testuser.12345-20170611185638/proc/cpuinfo
++-----------------------------------------------------------------------------+
+| Kernel Module                                                               |
++--------------------------------------------+--------------------------------|
+| PASS: 2         FAILED: 0      WARNING: 0  |                 Result: PASSED |
++-----------------------------------------------------------------------------+
+[OK] Checking oom-killer is NOT in ../sosreport-testuser.12345-20170611105406/sos_commands/logs/journalctl_--no-pager_--boot
+[OK] Checking soft lockup is NOT in ../sosreport-testuser.12345-20170611105406/sos_commands/logs/journalctl_--no-pager_--boot
++-----------------------------------------------------------------------------+
+| Traceback Module                                                            |
++--------------------------------------------+--------------------------------|
+| PASS: 10        FAILED: 1      WARNING: 4  |                 Result: FAILED |
++-----------------------------------------------------------------------------+
+[OK] No match for word Traceback in ../sosreport-testuser.12345-20170611105406/var/log/ceilometer/agent-notification.log
+[WARN] There are 1 occurences of word Traceback in ../sosreport-testuser.12345-20170611105406/var/log/ceilometer/alarm-evaluator.log
+[OK] No match for word Traceback in ../sosreport-testuser.12345-20170611105406/var/log/ceilometer/alarm-notifier.log
+[OK] No match for word Traceback in ../sosreport-testuser.12345-20170611105406/var/log/ceilometer/api.log
+[OK] No match for word Traceback in ../sosreport-testuser.12345-20170611105406/var/log/ceilometer/ceilometer-dbsync.log
+[WRONG] There are 92 occurences of word Traceback in ../sosreport-testuser.12345-20170611105406/var/log/ceilometer/central.log
+[OK] No match for word Traceback in ../sosreport-testuser.12345-20170611105406/var/log/ceilometer/collector.log
+[WARN] There are 9 occurences of word Traceback in ../sosreport-testuser.12345-20170611105406/var/log/glance/api.log
+[OK] No match for word Traceback in ../sosreport-testuser.12345-20170611105406/var/log/glance/registry.log
+[OK] No match for word Traceback in ../sosreport-testuser.12345-20170611105406/var/log/heat/heat-api-cfn.log
+[OK] No match for word Traceback in ../sosreport-testuser.12345-20170611105406/var/log/heat/heat-engine.log
+[OK] No match for word Traceback in ../sosreport-testuser.12345-20170611105406/var/log/keystone/keystone.log
+[WARN] There are 2 occurences of word Traceback in ../sosreport-testuser.12345-20170611105406/var/log/neutron/dhcp-agent.log
+[OK] No match for word Traceback in ../sosreport-testuser.12345-20170611105406/var/log/neutron/openvswitch-agent.log
+[WARN] There are 6 occurences of word Traceback in ../sosreport-testuser.12345-20170611105406/var/log/nova/nova-api.log
++-----------------------------------------------------------------------------+
+| Checking cronjob                                                            |
++--------------------------------------------+--------------------------------|
+| PASS: 1         FAILED: 0      WARNING: 1  |                 Result: FAILED |
++-----------------------------------------------------------------------------+
+[WARN] Missing file ../sosreport-testuser.12345-20170611105406/var/spool/cron/keystone
+[OK] Checking heat-manage purge_deleted is in ../sosreport-testuser.12345-20170611105406/var/spool/cron/heat
++-----------------------------------------------------------------------------+
+| My Custom Module                                                            |
++--------------------------------------------+--------------------------------|
+| PASS: 2         FAILED: 0      WARNING: 0  |                 Result: PASSED |
++-----------------------------------------------------------------------------+
+[OK] Checking REDIRECT.*169.254.169.254 is in ../sosreport-testuser.12345-20170611105406/sos_commands/networking/iptables_-t_nat_-nvL
+[OK] Checking neutron.*failed|openstack.*failed is NOT in ../sosreport-testuser.12345-20170611105406/sos_commands/systemd/systemctl_list-units_--all
++-----------------------------------------------------------------------------+
+| Checking Hardware Requirements                                              |
++--------------------------------------------+--------------------------------|
+| PASS: 4         FAILED: 1      WARNING: 0  |                 Result: FAILED |
++-----------------------------------------------------------------------------+
+[OK] Memory is greater than or equal to 16GB
+[OK] Checking vmx\|svm is in ../sosreport-testuser.12345-20170611105406/proc/cpuinfo
+[WRONG] Undercloud requires minimum 8-core 64-bit x86 processor
 [OK] A minimum of 40GB of available disk space
-[OK] There is at least 5GB of free disk space
-+--------------------------------------------+
-|              Checking RabbitMQ             |
-+--------------------------------------------+
-[OK] There are currently 65436 file_descriptors available.
-[OK] No match for word AMQP server on .* is unreachable in ../sosreport-testuser.12345-20170611185638/var/log/ceilometer/agent-notification.log
-[OK] No match for word AMQP server on .* is unreachable in ../sosreport-testuser.12345-20170611185638/var/log/ceilometer/alarm-evaluator.log
-[OK] No match for word AMQP server on .* is unreachable in ../sosreport-testuser.12345-20170611185638/var/log/ceilometer/alarm-notifier.log
-[OK] No match for word AMQP server on .* is unreachable in ../sosreport-testuser.12345-20170611185638/var/log/ceilometer/api.log
-[OK] No match for word AMQP server on .* is unreachable in ../sosreport-testuser.12345-20170611185638/var/log/ceilometer/ceilometer-dbsync.log
-[OK] No match for word AMQP server on .* is unreachable in ../sosreport-testuser.12345-20170611185638/var/log/ceilometer/central.log
-[OK] No match for word AMQP server on .* is unreachable in ../sosreport-testuser.12345-20170611185638/var/log/ceilometer/collector.log
-[OK] No match for word AMQP server on .* is unreachable in ../sosreport-testuser.12345-20170611185638/var/log/glance/api.log
-[OK] No match for word AMQP server on .* is unreachable in ../sosreport-testuser.12345-20170611185638/var/log/glance/registry.log
-[OK] No match for word AMQP server on .* is unreachable in ../sosreport-testuser.12345-20170611185638/var/log/heat/heat-api-cfn.log
-[OK] No match for word AMQP server on .* is unreachable in ../sosreport-testuser.12345-20170611185638/var/log/heat/heat-api-cloudwatch.log
-[OK] No match for word AMQP server on .* is unreachable in ../sosreport-testuser.12345-20170611185638/var/log/heat/heat-api.log
-[OK] No match for word AMQP server on .* is unreachable in ../sosreport-testuser.12345-20170611185638/var/log/heat/heat-engine.log
-[OK] No match for word AMQP server on .* is unreachable in ../sosreport-testuser.12345-20170611185638/var/log/keystone/keystone.log
-[OK] No match for word AMQP server on .* is unreachable in ../sosreport-testuser.12345-20170611185638/var/log/neutron/dhcp-agent.log
-[OK] No match for word AMQP server on .* is unreachable in ../sosreport-testuser.12345-20170611185638/var/log/neutron/l3-agent.log
-[OK] No match for word AMQP server on .* is unreachable in ../sosreport-testuser.12345-20170611185638/var/log/neutron/metadata-agent.log
-[OK] No match for word AMQP server on .* is unreachable in ../sosreport-testuser.12345-20170611185638/var/log/neutron/netns-cleanup.log
-[OK] No match for word AMQP server on .* is unreachable in ../sosreport-testuser.12345-20170611185638/var/log/neutron/openvswitch-agent.log
-[OK] No match for word AMQP server on .* is unreachable in ../sosreport-testuser.12345-20170611185638/var/log/nova/nova-api.log
-[OK] No match for word AMQP server on .* is unreachable in ../sosreport-testuser.12345-20170611185638/var/log/nova/nova-conductor.log
-[OK] No match for word AMQP server on .* is unreachable in ../sosreport-testuser.12345-20170611185638/var/log/nova/nova-consoleauth.log
-[OK] No match for word AMQP server on .* is unreachable in ../sosreport-testuser.12345-20170611185638/var/log/nova/nova-manage.log
-[OK] No match for word AMQP server on .* is unreachable in ../sosreport-testuser.12345-20170611185638/var/log/nova/nova-novncproxy.log
-[OK] No match for word AMQP server on .* is unreachable in ../sosreport-testuser.12345-20170611185638/var/log/nova/nova-scheduler.log
-[OK] No match for word AMQP server on .* is unreachable in ../sosreport-testuser.12345-20170611185638/var/log/swift/swift.log
+[OK] A minimum of 10GB of free disk space
++-----------------------------------------------------------------------------+
+| Checking Tuning options                                                     |
++--------------------------------------------+--------------------------------|
+| PASS: 4         FAILED: 6      WARNING: 0  |                 Result: FAILED |
++-----------------------------------------------------------------------------+
+[OK] Checking ^[ \t]*max_resources_per_stack.*=.*-1 is in ../sosreport-testuser.12345-20170611105406/etc/heat/heat.conf
+[OK] Checking ^[ \t]*num_engine_workers.*=.*4 is in ../sosreport-testuser.12345-20170611105406/etc/heat/heat.conf
+[OK] Checking ^[ \t]*max_connections.*=.*4096 is in ../sosreport-testuser.12345-20170611105406/etc/my.cnf.d/server.cnf
+[WRONG] Checking ^[ \t]*innodb_additional_mem_pool_size.*=.*20M is in ../sosreport-testuser.12345-20170611105406/etc/my.cnf.d/server.cnf
+[WRONG] Checking ^[ \t]*innodb_buffer_pool_size.*=.*1000M is in ../sosreport-testuser.12345-20170611105406/etc/my.cnf.d/server.cnf
+[WRONG] Checking ^[ \t]*innodb_flush_log_at_trx_commit.*=.*1 is in ../sosreport-testuser.12345-20170611105406/etc/my.cnf.d/server.cnf
+[WRONG] Checking ^[ \t]*innodb_lock_wait_timeout.*=.*50 is in ../sosreport-testuser.12345-20170611105406/etc/my.cnf.d/server.cnf
+[WRONG] Checking ^[ \t]*innodb_max_purge_lag.*=.*10000 is in ../sosreport-testuser.12345-20170611105406/etc/my.cnf.d/server.cnf
+[WRONG] Checking ^[ \t]*innodb_thread_concurrency.*=.*2 is in ../sosreport-testuser.12345-20170611105406/etc/my.cnf.d/server.cnf
+[OK] Checking ^[ \t]*max_concurrent_builds.*=.*5 is in ../sosreport-testuser.12345-20170611105406/etc/nova/nova.conf
 ```
