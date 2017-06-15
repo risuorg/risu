@@ -21,7 +21,7 @@ REFNAME="Traceback Module"
 
 # Tracebacks everywhere
 
-LIST_OF_PROJECTS="ceilometer glance heat keystone neutron nova swift"
+LIST_OF_PROJECTS="ceilometer glance heat keystone neutron nova swift httpd"
 for PROJECT in $LIST_OF_PROJECTS; do
     for LOGFILE in ${DIRECTORY}/var/log/${PROJECT}/*.log; do
       [ -e "$LOGFILE" ] || continue
