@@ -24,8 +24,3 @@ Do stuff with sosreport and write the result to standard output.
               -v                  verbose mode.
 [root@undercloud-0 citellus]# 
 ```
-
-### Citellus Screenshot
-
-![Citellus Screenshot](https://github.com/zerodayz/citellus/blob/master/screen.png?raw=true "Citellus Screenshot")
- 
