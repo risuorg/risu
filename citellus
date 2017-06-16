@@ -26,6 +26,7 @@ DISCOVERED_NODE=
 VERSION=
 TARGET_HOSTNAME=
 PCS_DIRECTORY=
+VERSION_CHECK=
 
 # Set display filters
 verbose_good=0

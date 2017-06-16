@@ -52,3 +52,19 @@ else
   grep_file_rev "${PCS_DIRECTORY}/pcs_status" "Stopped"
 
 fi
+
+# Check packages version
+VERSION=$(sed -n -r -e 's/^pacemaker.*-1.1.([0-9]+)-.*$/\1/p' "${DIRECTORY}/installed-rpms")
+for package in ${VERSION}
+do
+  if [[ "${package}" -lt "15" ]]
+  then
+    VERSION_CHECK="1"
+  fi
+done
+if [[ "${VERSION_CHECK}" -eq "1" ]]
+then
+  bad "Pacemaker packages are older than 1.1.15."
+else
+  good "Pacemaker version is greater than or equal to 1.1.15."
+fi
