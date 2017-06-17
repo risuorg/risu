@@ -15,11 +15,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# Checking Tracebacks
-# Ref: None
-REFNAME="Kernel Module"
+# Checking cronjob
+# Ref: https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/11/html-single/director_installation_and_usage/#sect-Tuning_the_Undercloud
+REFNAME="Checking cronjob"
 
-# Looks for the Kernel Out of Memory, panics and soft locks
-
-grep_file_rev "${DIRECTORY}/sos_commands/logs/journalctl_--no-pager_--boot" "oom-killer"
-grep_file_rev "${DIRECTORY}/sos_commands/logs/journalctl_--no-pager_--boot" "soft lockup"
+# Crontab check
+grep_file "${DIRECTORY}/var/spool/cron/keystone" "keystone-manage token_flush"
+grep_file "${DIRECTORY}/var/spool/cron/heat" "heat-manage purge_deleted"

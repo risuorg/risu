@@ -27,6 +27,7 @@ VERSION=
 TARGET_HOSTNAME=
 PCS_DIRECTORY=
 VERSION_CHECK=
+PLUGIN=
 
 # Set display filters
 verbose_good=0
@@ -57,6 +58,15 @@ while :; do
             ;;
         -v|--verbose)
             set -x
+            ;;
+        -p|--plugin)
+            if [ -n "$2" ]; then
+                PLUGIN=$2
+                shift
+            else
+                bad '"--plugin" requires a non-empty option argument.' >&2
+                exit 1
+            fi
             ;;
         -d|--display)
             if [ -n "$2" ]; then
@@ -125,25 +135,30 @@ then
   done
 fi
 
-# Here we are going to discover which node type [director,controller,compute] we
-# are running against.
-discover_node
-get_version
-
 TARGET_HOSTNAME="$(cat ${DIRECTORY}/hostname)"
 echo "SOSreport was created at $(cat ${DIRECTORY}/date)"
 echo "Hostname: ${TARGET_HOSTNAME}"
-echo "Discovered node: ${DISCOVERED_NODE}"
-echo "Version: ${VERSION}"
-if [ -n "${PACKSTACK}" ]
-then echo "Type: POC-type environment installed with Packstack" 
+
+# Check if we are running openstack plugin if empty by default to openstack
+if [ -z "${PLUGIN}" ] || [ "${PLUGIN}" = "openstack" ]
+then 
+  PLUGIN="openstack"
+  # Here we are going to discover which node type [director,controller,compute] we
+  # are running against.
+  discover_node
+  get_version
+  echo "Discovered node: ${DISCOVERED_NODE}"
+  echo "Version: ${VERSION}"
+  if [ -n "${PACKSTACK}" ]
+  then echo "Type: POC-type environment installed with Packstack" 
+  fi
 fi
 
 PYTHON="/usr/bin/python"
 TMPFILE="$(mktemp /tmp/cittelus-script.XXXXXX)"
 
 # Go thru the all existing .conf files inside DISCOVERED_NODE.d directory/.
-for FILE in ./plugins/openstack/"${VERSION}"/generic/* ./plugins/openstack/"${VERSION}"/"${DISCOVERED_NODE}"/*; do
+for FILE in ./plugins/"${PLUGIN}"/generic/all/* ./plugins/"${PLUGIN}"/generic/"${DISCOVERED_NODE}"/* ./plugins/"${PLUGIN}"/"${VERSION}"/generic/* ./plugins/"${PLUGIN}"/"${VERSION}"/"${DISCOVERED_NODE}"/*; do
     [ -e "$FILE" ] || continue
     EXTENSION=${FILE##*.} 
     case ${EXTENSION} in
