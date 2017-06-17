@@ -47,13 +47,13 @@ then
     then
       good "Memory is greater than or equal to recommended minimum (1.5GB per core)."
   else
-    bad "Memory recommended minimum is not met."
+    bad "Memory recommended minimum (1.5GB per core) is not met."
   fi
   if [[ ${MEMTOTAL} -ge ${MEMRECOMMEND} ]]
     then
       good "Memory is greater than or equal to best recommended (3GB per core)."
   else
-    bad "Memory best recommended is not met."
+    bad "Memory best recommended (3GB per core) is not met."
   fi
 fi
 
