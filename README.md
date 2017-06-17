@@ -26,3 +26,67 @@ Do stuff with sosreport and write the result to standard output.
               -v                  verbose mode.
 
 ```
+
+### Folder structure
+```
+
+[root@undercloud-0 citellus]# tree
+.
+├── citellus
+├── load_functions
+├── plugins
+│   └── openstack
+│       ├── generic
+│       │   ├── all
+│       │   │   ├── kernel.sh
+│       │   │   └── traceback.sh
+│       │   ├── controller
+│       │   │   └── rabbitmq.sh
+│       │   └── director
+│       │       └── custom.sh
+│       ├── kilo
+│       │   ├── compute
+│       │   │   └── hwreq.sh
+│       │   └── controller
+│       │       └── hwreq.sh
+│       ├── liberty
+│       │   ├── compute
+│       │   │   └── hwreq.sh
+│       │   ├── controller
+│       │   │   ├── cluster.sh
+│       │   │   ├── cronjob.sh
+│       │   │   ├── custom.sh
+│       │   │   ├── httpd.sh
+│       │   │   └── hwreq.sh
+│       │   └── director
+│       │       ├── cronjob.sh
+│       │       ├── hwreq.sh
+│       │       └── tuning.sh
+│       ├── mitaka
+│       │   ├── compute
+│       │   │   └── hwreq.sh
+│       │   ├── controller
+│       │   │   └── hwreq.sh
+│       │   └── director
+│       │       ├── cronjob.sh
+│       │       └── tuning.sh
+│       ├── newton
+│       │   ├── compute
+│       │   │   └── hwreq.sh
+│       │   ├── controller
+│       │   │   └── hwreq.sh
+│       │   └── director
+│       │       ├── cronjob.sh
+│       │       └── tuning.sh
+│       └── ocata
+│           ├── compute
+│           │   └── hwreq.sh
+│           ├── controller
+│           │   └── hwreq.sh
+│           └── director
+│               ├── cronjob.sh
+│               └── tuning.sh
+└── README.md
+
+25 directories, 30 files
+```
