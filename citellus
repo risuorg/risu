@@ -143,7 +143,7 @@ PYTHON="/usr/bin/python"
 TMPFILE="$(mktemp /tmp/cittelus-script.XXXXXX)"
 
 # Go thru the all existing .conf files inside DISCOVERED_NODE.d directory/.
-for FILE in ./generic.d/* ./"${DISCOVERED_NODE}".d/*; do
+for FILE in ./plugins/openstack/"${VERSION}"/generic/* ./plugins/openstack/"${VERSION}"/"${DISCOVERED_NODE}"/*; do
     [ -e "$FILE" ] || continue
     EXTENSION=${FILE##*.} 
     case ${EXTENSION} in
