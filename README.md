@@ -28,6 +28,9 @@ Do stuff with sosreport and write the result to standard output.
 ```
 
 ### Folder structure
+
+This will try to explain how the scripts are executed, it all depends on the folder structure right now.
+
 ```
 
 [root@undercloud-0 citellus]# tree
@@ -37,20 +40,35 @@ Do stuff with sosreport and write the result to standard output.
 |-- plugins
 |   `-- openstack
 |       |-- generic
-|       |   |-- all  <-- These scripts are executed against all hosts. --/>
+
+<-------- These scripts are executed against all hosts. --------/>
+
+|       |   |-- all
 |       |   |   |-- kernel.sh
 |       |   |   |-- selinux.sh
 |       |   |   `-- traceback.sh
-|       |   |-- controller <-- These scripts are executed against all controller nodes. --/>
+
+<-------- These scripts are executed against all controller nodes. --------/>
+
+|       |   |-- controller
 |       |   |   |-- cluster.sh
 |       |   |   |-- cronjob.sh
 |       |   |   |-- custom.sh
 |       |   |   |-- httpd.sh
 |       |   |   `-- rabbitmq.sh
-|       |   `-- director  <-- These scripts are executed against all director nodes. --/>
+
+<-------- These scripts are executed against all director nodes. --------/>
+  
+|       |   `-- director
 |       |       `-- custom.sh
-|       |-- kilo  <-- The scripts in this directory are only checked against specific version --/>
-|       |   |-- compute  <-- These scripts are executed specific version and specific node type. --/>
+
+<-------- The scripts in this directory are only checked against specific version --------/>
+
+|       |-- kilo
+
+<-------- These scripts are executed specific version and specific node type. --------/>
+
+|       |   |-- compute
 |       |   |   `-- hwreq.sh
 |       |   |-- controller
 |       |   |   `-- hwreq.sh
