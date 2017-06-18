@@ -32,61 +32,76 @@ Do stuff with sosreport and write the result to standard output.
 
 [root@undercloud-0 citellus]# tree
 .
-├── citellus
-├── load_functions
-├── plugins
-│   └── openstack
-│       ├── generic
-│       │   ├── all
-│       │   │   ├── kernel.sh
-│       │   │   └── traceback.sh
-│       │   ├── controller
-│       │   │   └── rabbitmq.sh
-│       │   └── director
-│       │       └── custom.sh
-│       ├── kilo
-│       │   ├── compute
-│       │   │   └── hwreq.sh
-│       │   └── controller
-│       │       └── hwreq.sh
-│       ├── liberty
-│       │   ├── compute
-│       │   │   └── hwreq.sh
-│       │   ├── controller
-│       │   │   ├── cluster.sh
-│       │   │   ├── cronjob.sh
-│       │   │   ├── custom.sh
-│       │   │   ├── httpd.sh
-│       │   │   └── hwreq.sh
-│       │   └── director
-│       │       ├── cronjob.sh
-│       │       ├── hwreq.sh
-│       │       └── tuning.sh
-│       ├── mitaka
-│       │   ├── compute
-│       │   │   └── hwreq.sh
-│       │   ├── controller
-│       │   │   └── hwreq.sh
-│       │   └── director
-│       │       ├── cronjob.sh
-│       │       └── tuning.sh
-│       ├── newton
-│       │   ├── compute
-│       │   │   └── hwreq.sh
-│       │   ├── controller
-│       │   │   └── hwreq.sh
-│       │   └── director
-│       │       ├── cronjob.sh
-│       │       └── tuning.sh
-│       └── ocata
-│           ├── compute
-│           │   └── hwreq.sh
-│           ├── controller
-│           │   └── hwreq.sh
-│           └── director
-│               ├── cronjob.sh
-│               └── tuning.sh
-└── README.md
+|-- citellus
+|-- load_functions
+|-- plugins
+|   `-- openstack
+|       |-- generic
+|       |   |-- all  <-- These scripts are executed against all hosts. --/>
+|       |   |   |-- kernel.sh
+|       |   |   |-- selinux.sh
+|       |   |   `-- traceback.sh
+|       |   |-- controller <-- These scripts are executed against all controller nodes. --/>
+|       |   |   |-- cluster.sh
+|       |   |   |-- cronjob.sh
+|       |   |   |-- custom.sh
+|       |   |   |-- httpd.sh
+|       |   |   `-- rabbitmq.sh
+|       |   `-- director  <-- These scripts are executed against all director nodes. --/>
+|       |       `-- custom.sh
+|       |-- kilo  <-- The scripts in this directory are only checked against specific version --/>
+|       |   |-- compute  <-- These scripts are executed specific version and specific node type. --/>
+|       |   |   `-- hwreq.sh
+|       |   |-- controller
+|       |   |   `-- hwreq.sh
+|       |   |-- director
+|       |   `-- generic
+|       |-- liberty
+|       |   |-- compute
+|       |   |   `-- hwreq.sh
+|       |   |-- controller
+|       |   |   `-- hwreq.sh
+|       |   |-- director
+|       |   |   |-- cronjob.sh
+|       |   |   |-- hwreq.sh
+|       |   |   `-- tuning.sh
+|       |   `-- generic
+|       |-- mitaka
+|       |   |-- compute
+|       |   |   `-- hwreq.sh
+|       |   |-- controller
+|       |   |   `-- hwreq.sh
+|       |   |-- director
+|       |   |   |-- cronjob.sh
+|       |   |   |-- hwreq.sh
+|       |   |   `-- tuning.sh
+|       |   `-- generic
+|       |-- newton
+|       |   |-- compute
+|       |   |   `-- hwreq.sh
+|       |   |-- controller
+|       |   |   `-- hwreq.sh
+|       |   |-- director
+|       |   |   |-- cronjob.sh
+|       |   |   |-- hwreq.sh
+|       |   |   `-- tuning.sh
+|       |   `-- generic
+|       |-- ocata
+|       |   |-- compute
+|       |   |   `-- hwreq.sh
+|       |   |-- controller
+|       |   |   `-- hwreq.sh
+|       |   |-- director
+|       |   |   |-- cronjob.sh
+|       |   |   |-- hwreq.sh
+|       |   |   `-- tuning.sh
+|       |   `-- generic
+|       `-- pike
+|           |-- compute
+|           |-- controller
+|           |-- director
+|           `-- generic
+`-- README.md
 
-25 directories, 30 files
+36 directories, 34 files
 ```
