@@ -25,13 +25,13 @@ show_help(){
   echo " \______  /__||__|  \___  >____/____/____//____  >"
   echo "        \/              \/                     \/ "
   echo ""
-  echo "Usage: ${0##*/} [-hv] [-d warn,good,bad] [-p openstack] [-f DIRECTORY]..."
+  echo "Usage: ${0##*/} [-hv] [-d warn,good,bad] [-p openstack,other] [-f DIRECTORY]..."
   echo "Do stuff with sosreport and write the result to standard output."
   echo ""
   echo "              -h                  display this help and exit"
   echo "              -f sosreport-*      opens a sosreport directory for analysis"
   echo "              -d warn,good,bad    will display only filtered messages"
-  echo "              -p openstack        select plugin to run from plugins"
+  echo "              -p openstack,other  select plugin to run from plugins"
   echo "              -v                  verbose mode."
   
 }
