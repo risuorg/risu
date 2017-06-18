@@ -146,11 +146,6 @@ PLUGIN="$(echo ${PLUGIN} | tr ',' ' ')"
 if [ -z "${PLUGIN}" ]
 then 
   PLUGIN="openstack"
-  # Here we are going to discover which node type [director,controller,compute] we
-  # are running against.
-  discover_node
-  get_version
-  print_version
 fi
 if [ -n "${PLUGIN}" ]
 then
