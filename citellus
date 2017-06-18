@@ -139,78 +139,90 @@ TARGET_HOSTNAME="$(cat ${DIRECTORY}/hostname)"
 echo "SOSreport was created at $(cat ${DIRECTORY}/date)"
 echo "Hostname: ${TARGET_HOSTNAME}"
 
+PYTHON="/usr/bin/python"
+TMPFILE="$(mktemp /tmp/cittelus-script.XXXXXX)"
 # Check if we are running openstack plugin if empty by default to openstack
-if [ -z "${PLUGIN}" ] || [ "${PLUGIN}" = "openstack" ]
+PLUGIN="$(echo ${PLUGIN} | tr ',' ' ')"
+if [ -z "${PLUGIN}" ]
 then 
   PLUGIN="openstack"
   # Here we are going to discover which node type [director,controller,compute] we
   # are running against.
   discover_node
   get_version
-  echo "Discovered node: ${DISCOVERED_NODE}"
-  echo "Version: ${VERSION}"
-  if [ -n "${PACKSTACK}" ]
-  then echo "Type: POC-type environment installed with Packstack" 
-  fi
+  print_version
 fi
+if [ -n "${PLUGIN}" ]
+then
+  for plugin in ${PLUGIN}
+  do
+    match_filter "./plugins/${plugin}" "./plugins/*"
+    if [[ "${FOUND}" -eq "1" ]]
+    then
+      if [ "${plugin}" = "openstack" ]
+      then
+        discover_node
+	get_version
+	print_version
+      fi
+      # Go thru the all existing .conf files inside DISCOVERED_NODE.d directory/.
+      for FILE in ./plugins/"${plugin}"/generic/all/* ./plugins/"${plugin}"/generic/"${DISCOVERED_NODE}"/* ./plugins/"${plugin}"/"${VERSION}"/generic/* ./plugins/"${plugin}"/"${VERSION}"/"${DISCOVERED_NODE}"/*
+      do
+	  [ -e "$FILE" ] || continue
+	  EXTENSION=${FILE##*.} 
+	  case ${EXTENSION} in
+	    sh) 
+		source "${FILE}" > "${TMPFILE}"
 
-PYTHON="/usr/bin/python"
-TMPFILE="$(mktemp /tmp/cittelus-script.XXXXXX)"
+		PASS=$(grep ".*\[OK\]" "${TMPFILE}" | wc -l)
+		FAIL=$(grep ".*\[WRONG\]" "${TMPFILE}" | wc -l)
+		WARNING=$(grep ".*\[WARN\]" "${TMPFILE}" | wc -l)
 
-# Go thru the all existing .conf files inside DISCOVERED_NODE.d directory/.
-for FILE in ./plugins/"${PLUGIN}"/generic/all/* ./plugins/"${PLUGIN}"/generic/"${DISCOVERED_NODE}"/* ./plugins/"${PLUGIN}"/"${VERSION}"/generic/* ./plugins/"${PLUGIN}"/"${VERSION}"/"${DISCOVERED_NODE}"/*; do
-    [ -e "$FILE" ] || continue
-    EXTENSION=${FILE##*.} 
-    case ${EXTENSION} in
-      sh) 
-          source "${FILE}" > "${TMPFILE}"
+		if [[ "${FAIL}" -eq "0" ]] && [[ "${WARNING}" -eq "0" ]]
+		then
+		  RESULT=$(
+			   tput setaf 2
+			   printf "%s" "PASSED "
+			   tput sgr0
+			  )
+		elif [[ "${FAIL}" -eq "0" ]] && [[ ! "${WARNING}" -eq "0" ]]
+		then
+		  RESULT=$(
+			   tput setaf 3
+			   printf "%s" "WARNING"
+			   tput sgr0
+			  )
+		else
+		  RESULT=$(
+			   tput setaf 1 
+			   printf "%s" "FAILED "
+			   tput sgr0
+			  )
+		fi         
 
-          PASS=$(grep ".*\[OK\]" "${TMPFILE}" | wc -l)
-          FAIL=$(grep ".*\[WRONG\]" "${TMPFILE}" | wc -l)
-          WARNING=$(grep ".*\[WARN\]" "${TMPFILE}" | wc -l)
+		if [[ ${RESULT} =~ "PASS" ]] && [[ ${verbose_good} -eq "0" ]]
+		then
+		  continue
+		else
+		  printf -v line "+%*s+" "77"
+		  echo ${line// /-}
+		  printf "| %-75s %s\n" "${REFNAME}" "|"
+		  printf -v line "+%*s+ %-30s |" "44"
+		  echo ${line// /-}
+		  printf "| PASS: %-9s FAILED: %-6s WARNING: %-2s %-16s Result: %s %s\n" \
+			 "${PASS}" "${FAIL}" "${WARNING}" "|" "${RESULT}" "|"
+		  printf -v line "+%*s+" "77"
+		  echo ${line// /-}
 
-          if [[ "${FAIL}" -eq "0" ]] && [[ "${WARNING}" -eq "0" ]]
-          then
-            RESULT=$(
-                     tput setaf 2
-                     printf "%s" "PASSED "
-                     tput sgr0
-                    )
-          elif [[ "${FAIL}" -eq "0" ]] && [[ ! "${WARNING}" -eq "0" ]]
-          then
-            RESULT=$(
-                     tput setaf 3
-                     printf "%s" "WARNING"
-                     tput sgr0
-                    )
-          else
-            RESULT=$(
-                     tput setaf 1 
-                     printf "%s" "FAILED "
-                     tput sgr0
-                    )
-          fi         
+		  $(which cat) "${TMPFILE}"
+		  $(which rm) -f "${TMPFILE}"
+		fi
+		;;
 
-          if [[ ${RESULT} =~ "PASS" ]] && [[ ${verbose_good} -eq "0" ]]
-          then
-            continue
-          else
-	    printf -v line "+%*s+" "77"
-	    echo ${line// /-}
-	    printf "| %-75s %s\n" "${REFNAME}" "|"
-	    printf -v line "+%*s+ %-30s |" "44"
-	    echo ${line// /-}
-	    printf "| PASS: %-9s FAILED: %-6s WARNING: %-2s %-16s Result: %s %s\n" \
-		   "${PASS}" "${FAIL}" "${WARNING}" "|" "${RESULT}" "|"
-	    printf -v line "+%*s+" "77"
-	    echo ${line// /-}
-
-	    $(which cat) "${TMPFILE}"
-	    $(which rm) -f "${TMPFILE}"
-          fi
-          ;;
-
-      py) ${PYTHON} ${FILE} ${DIRECTORY} ;;
-      *) echo "File: ${FILE}. Usupported format." ;;
-    esac
-done
+	    py) ${PYTHON} ${FILE} ${DIRECTORY} ;;
+	    *) echo "File: ${FILE}. Usupported format." ;;
+	  esac
+      done
+    fi
+  done
+fi

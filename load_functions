@@ -73,6 +73,14 @@ get_version(){
 
 }
 
+print_version(){
+  echo "Discovered node: ${DISCOVERED_NODE}"
+  echo "Version: ${VERSION}"
+  if [ -n "${PACKSTACK}" ]
+    then echo "Type: POC-type environment installed with Packstack"
+  fi
+}
+
 good(){
     if [ ${verbose_good} -eq "1" ]
     then
