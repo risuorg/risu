@@ -59,7 +59,7 @@ get_version(){
   # Check which version we are using
 
   VERSION=$(grep "openstack-nova-common" "${DIRECTORY}/installed-rpms")
-  if [ -z ${VERSION} ]
+  if [ -z "${VERSION}" ]
     then
     PLUGIN="system"
   else
