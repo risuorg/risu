@@ -142,8 +142,8 @@ echo "Hostname: ${TARGET_HOSTNAME}"
 PYTHON="/usr/bin/python"
 TMPFILE="$(mktemp /tmp/cittelus-script.XXXXXX)"
 # Check if we are running openstack plugin if empty by default to openstack
-PLUGIN="$(echo ${PLUGIN} | tr ',' ' ')"
 get_version
+PLUGIN="$(echo ${PLUGIN} | tr ',' ' ')"
 if [ -n "${PLUGIN}" ]
 then
   for plugin in ${PLUGIN}
