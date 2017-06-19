@@ -143,6 +143,7 @@ PYTHON="/usr/bin/python"
 TMPFILE="$(mktemp /tmp/cittelus-script.XXXXXX)"
 # Check if we are running openstack plugin if empty by default to openstack
 get_version
+
 PLUGIN="$(echo ${PLUGIN} | tr ',' ' ')"
 if [ -n "${PLUGIN}" ]
 then
@@ -152,67 +153,35 @@ then
     if [[ "${FOUND}" -eq "1" ]]
     then
       if [ "${plugin}" = "openstack" ]
-      then
-        discover_node
-	print_version
+	then
+	  discover_node
+	  print_version
       fi
-      # Go thru the all existing .conf files inside DISCOVERED_NODE.d directory/.
-      for FILE in ./plugins/"${plugin}"/generic/all/* ./plugins/"${plugin}"/generic/"${DISCOVERED_NODE}"/* ./plugins/"${plugin}"/"${VERSION}"/generic/* ./plugins/"${plugin}"/"${VERSION}"/"${DISCOVERED_NODE}"/*
+      for FILE in ./plugins/"${plugin}"/*
       do
-	  [ -f "$FILE" ] || continue
-	  EXTENSION=${FILE##*.} 
-	  case ${EXTENSION} in
-	    sh) 
-		source "${FILE}" > "${TMPFILE}"
-
-		PASS=$(grep ".*\[OK\]" "${TMPFILE}" | wc -l)
-		FAIL=$(grep ".*\[WRONG\]" "${TMPFILE}" | wc -l)
-		WARNING=$(grep ".*\[WARN\]" "${TMPFILE}" | wc -l)
-
-		if [[ "${FAIL}" -eq "0" ]] && [[ "${WARNING}" -eq "0" ]]
-		then
-		  RESULT=$(
-			   tput setaf 2
-			   printf "%s" "PASSED "
-			   tput sgr0
-			  )
-		elif [[ "${FAIL}" -eq "0" ]] && [[ ! "${WARNING}" -eq "0" ]]
-		then
-		  RESULT=$(
-			   tput setaf 3
-			   printf "%s" "WARNING"
-			   tput sgr0
-			  )
-		else
-		  RESULT=$(
-			   tput setaf 1 
-			   printf "%s" "FAILED "
-			   tput sgr0
-			  )
-		fi         
-
-		if [[ ${RESULT} =~ "PASS" ]] && [[ ${verbose_good} -eq "0" ]]
-		then
-		  continue
-		else
-		  printf -v line "+%*s+" "77"
-		  echo ${line// /-}
-		  printf "| %-75s %s\n" "${REFNAME}" "|"
-		  printf -v line "+%*s+ %-30s |" "44"
-		  echo ${line// /-}
-		  printf "| PASS: %-9s FAILED: %-6s WARNING: %-2s %-16s Result: %s %s\n" \
-			 "${PASS}" "${FAIL}" "${WARNING}" "|" "${RESULT}" "|"
-		  printf -v line "+%*s+" "77"
-		  echo ${line// /-}
-
-		  $(which cat) "${TMPFILE}"
-		  $(which rm) -f "${TMPFILE}"
-		fi
-		;;
-
-	    py) ${PYTHON} ${FILE} ${DIRECTORY} ;;
-	    *) echo "File: ${FILE}. Usupported format." ;;
-	  esac
+        [ -f "${FILE}" ] || continue
+        EXTENSION=${FILE##*.}
+	if [ "${plugin}" = "openstack" ]
+	  then
+           if grep -q "^REFOSP_VERSION=.*${VERSION}.*$" "${FILE}" && grep -q "^REFNODE_TYPE=.*${DISCOVERED_NODE}.*$" "${FILE}"
+           then
+	     case ${EXTENSION} in
+	       sh) 
+                   run_sh
+                   ;;
+	       py) ${PYTHON} ${FILE} ${DIRECTORY} ;;
+	       *) echo "File: ${FILE}. Usupported format." ;;
+	     esac
+           fi
+         else
+           case ${EXTENSION} in
+             sh)
+                 run_sh
+                 ;;
+             py) ${PYTHON} ${FILE} ${DIRECTORY} ;;
+             *) echo "File: ${FILE}. Usupported format." ;;
+           esac
+         fi
       done
     fi
   done

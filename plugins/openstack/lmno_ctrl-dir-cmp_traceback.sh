@@ -15,10 +15,18 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# Checking cronjob
-# Ref: https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/11/html-single/director_installation_and_usage/#sect-Tuning_the_Undercloud
-REFNAME="Checking cronjob"
+# Checking Tracebacks
+# Ref: None
+REFNAME="Traceback Module"
+REFOSP_VERSION="liberty mitaka newton ocata"
+REFNODE_TYPE="controller director compute"
 
-# Crontab check
-grep_file "${DIRECTORY}/var/spool/cron/keystone" "keystone-manage token_flush"
-grep_file "${DIRECTORY}/var/spool/cron/heat" "heat-manage purge_deleted"
+# Tracebacks everywhere
+
+LIST_OF_PROJECTS="ceilometer glance heat keystone neutron nova swift httpd"
+for PROJECT in $LIST_OF_PROJECTS; do
+    for LOGFILE in ${DIRECTORY}/var/log/${PROJECT}/*.log; do
+      [ -e "$LOGFILE" ] || continue
+        count_lines "$LOGFILE" "Traceback"
+    done
+done

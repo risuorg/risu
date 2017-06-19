@@ -20,6 +20,8 @@
 
 # Red Hat Enterprise Linux 7.3 or later installed as the host operating system. 
 REFNAME="Checking Hardware Requirements"
+REFOSP_VERSION="newton ocata"
+REFNODE_TYPE="director"
 
 # A minimum of 16 GB of RAM.
 if [ -e "${DIRECTORY}/proc/meminfo" ]

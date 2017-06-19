@@ -19,6 +19,8 @@
 # Ref: https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/9/html/director_installation_and_usage/chap-requirements#sect-Controller_Node_Requirements
 # Red Hat Enterprise Linux 7.2 or later installed as the host operating system. 
 REFNAME="Checking Hardware Requirements"
+REFOSP_VERSION="mitaka newton ocata"
+REFNODE_TYPE="controller"
 
 # A minimum of 16 GB of RAM.
 if [ -e "${DIRECTORY}/proc/meminfo" ]

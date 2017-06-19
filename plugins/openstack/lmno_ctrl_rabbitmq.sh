@@ -18,6 +18,8 @@
 # RabbitMQ Module
 # Ref: 
 REFNAME="Checking RabbitMQ"
+REFOSP_VERSION="liberty mitaka newton ocata"
+REFNODE_TYPE="controller"
 
 # RabbitMQ
 

@@ -15,11 +15,18 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# Checking Tracebacks
+# Checking ERRORS
 # Ref: None
-REFNAME="SELinux Module"
+REFNAME="My Custom Module"
+REFOSP_VERSION="liberty mitaka newton ocata"
+REFNODE_TYPE="director"
 
-# SELinux is enabled on the host.
+# Check for iptables -t nat -j REDIRECT rule for metadata server exists.
+# Happens that when deployment is stuck without any FAILURE might be
+# caused by this.
 
-grep_file "${DIRECTORY}/sos_commands/selinux/sestatus_-b" "^Current mode.*enforcing"
-grep_file "${DIRECTORY}/sos_commands/selinux/sestatus_-b" "^Mode from config file:.*enforcing"
+grep_file "${DIRECTORY}/sos_commands/networking/iptables_-t_nat_-nvL" "REDIRECT.*169.254.169.254"
+
+# Check OpenStack services in undercloud are running and aren't failed
+
+grep_file_rev "${DIRECTORY}/sos_commands/systemd/systemctl_list-units_--all" "neutron.*failed|openstack.*failed"

@@ -15,17 +15,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# Checking ERRORS
-# Ref: None
-REFNAME="My Custom Module"
+# Checking cronjob
+# Ref: https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/8/html-single/director_installation_and_usage/#sect-Tuning_the_Undercloud 
+REFNAME="Checking cronjob"
+REFOSP_VERSION="liberty mitaka newton ocata"
+REFNODE_TYPE="director controller"
 
-
-# Check for iptables -t nat -j REDIRECT rule for metadata server exists.
-# Happens that when deployment is stuck without any FAILURE might be
-# caused by this.
-
-grep_file "${DIRECTORY}/sos_commands/networking/iptables_-t_nat_-nvL" "REDIRECT.*169.254.169.254"
-
-# Check OpenStack services in undercloud are running and aren't failed
-
-grep_file_rev "${DIRECTORY}/sos_commands/systemd/systemctl_list-units_--all" "neutron.*failed|openstack.*failed"
+# Crontab check
+grep_file "${DIRECTORY}/var/spool/cron/keystone" "keystone-manage token_flush"
+grep_file "${DIRECTORY}/var/spool/cron/heat" "heat-manage purge_deleted"

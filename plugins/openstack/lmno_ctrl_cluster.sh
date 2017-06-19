@@ -18,6 +18,8 @@
 # Cluster check
 # Ref: 
 REFNAME="Checking HA Cluster"
+REFOSP_VERSION="liberty mitaka newton ocata"
+REFNODE_TYPE="controller"
 
 # Checking the number of nodes in the cluster.
 # Check which directory for cluster exists it's either cluster or pacemaker
@@ -54,8 +56,8 @@ else
 fi
 
 # Check packages version
-VERSION=$(sed -n -r -e 's/^pacemaker.*-1.1.([0-9]+)-.*$/\1/p' "${DIRECTORY}/installed-rpms")
-for package in ${VERSION}
+PCS_VERSION=$(sed -n -r -e 's/^pacemaker.*-1.1.([0-9]+)-.*$/\1/p' "${DIRECTORY}/installed-rpms")
+for package in ${PCS_VERSION}
 do
   if [[ "${package}" -lt "15" ]]
   then

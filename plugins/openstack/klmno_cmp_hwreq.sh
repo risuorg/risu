@@ -16,27 +16,41 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 # Checking Hardware Requirements
-# Ref: https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/8/html-single/director_installation_and_usage/#sect-Controller_Node_Requirements
-# Red Hat Enterprise Linux 7.2 or later installed as the host operating system. 
+# Ref: https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/10/html/director_installation_and_usage/chap-requirements#sect-Compute_Node_Requirements
 REFNAME="Checking Hardware Requirements"
+REFOSP_VERSION="kilo liberty mitaka newton ocata"
+REFNODE_TYPE="compute"
 
-# A minimum of 32 GB of RAM.
+# A minimum of 6 GB of RAM.
 if [ -e "${DIRECTORY}/proc/meminfo" ]
 then
   MEMTOTAL=$(cat "${DIRECTORY}"/proc/meminfo | sed -n -r -e 's/MemTotal:[ \t]+([0-9]+).*/\1/p')
-  if [[ ${MEMTOTAL} -ge 32000000 ]]
+  if [[ ${MEMTOTAL} -ge 6000000 ]]
     then
-      good "Memory is greater than or equal to 32GB"
+      good "Memory is greater than or equal to 6GB"
   else
-    bad "Uh, oh, controller requires at least 32GB of RAM"
+    bad "Uh, oh, compute requires at least 6GB of RAM"
   fi
 else
   warn "Missing file ${DIRECTORY}/proc/meminfo"
 fi
 
-# 64-bit x86 processor with support for the Intel 64 or AMD64 CPU extensions.
+# At least 4-core 64-bit x86 processor with support for the Intel 64 or AMD64 CPU extensions.
 
 grep_file "${DIRECTORY}/proc/cpuinfo" "vmx\|svm"
+
+if [ -e "${DIRECTORY}/proc/cpuinfo" ]
+then
+  TOTALCPU=$(cat "${DIRECTORY}"/proc/cpuinfo | grep "processor" | sort -u | wc -l)
+  if [[ ${TOTALCPU} -ge 4 ]]
+  then
+    good "Checking minimum 4-core 64-bit x86 processor"
+  else
+    bad "Compute requires minimum 4-core 64-bit x86 processor"
+  fi
+else
+  warn "Missing file ${DIRECTORY}/proc/cpuinfo"
+fi
 
 # A minimum of 40 GB of available disk space.
 if [ -e "${DIRECTORY}/df" ]

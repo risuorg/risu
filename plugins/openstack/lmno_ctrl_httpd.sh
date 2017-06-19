@@ -18,8 +18,8 @@
 # Checking httpd
 # Ref: None
 REFNAME="httpd Module"
-
-
+REFOSP_VERSION="liberty mitaka newton ocata"
+REFNODE_TYPE="controller"
 
 count_lines "${DIRECTORY}/var/log/httpd/error_log" "MaxRequestWorkers" \
 " \_ Check /etc/httpd/prefork.conf values MaxClients and ServerLimit are set to value 512 - Ref: https://bugzilla.redhat.com/show_bug.cgi?id=1163516"

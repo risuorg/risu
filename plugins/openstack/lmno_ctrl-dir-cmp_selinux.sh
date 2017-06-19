@@ -15,10 +15,13 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# Checking cronjob
-# Ref: https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/8/html-single/director_installation_and_usage/#sect-Tuning_the_Undercloud 
-REFNAME="Checking cronjob"
+# Checking Tracebacks
+# Ref: None
+REFNAME="SELinux Module"
+REFOSP_VERSION="liberty mitaka newton ocata"
+REFNODE_TYPE="controller director compute"
 
-# Crontab check
-grep_file "${DIRECTORY}/var/spool/cron/keystone" "keystone-manage token_flush"
-grep_file "${DIRECTORY}/var/spool/cron/heat" "heat-manage purge_deleted"
+# SELinux is enabled on the host.
+
+grep_file "${DIRECTORY}/sos_commands/selinux/sestatus_-b" "^Current mode.*enforcing"
+grep_file "${DIRECTORY}/sos_commands/selinux/sestatus_-b" "^Mode from config file:.*enforcing"
