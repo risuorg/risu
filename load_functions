@@ -59,17 +59,23 @@ get_version(){
   # Check which version we are using
 
   VERSION=$(grep "openstack-nova-common" "${DIRECTORY}/installed-rpms")
-  PACKSTACK=$(grep "openstack-packstack-" "${DIRECTORY}/installed-rpms")
-  case ${VERSION} in
-    openstack-nova-common-2014.*) VERSION="juno" ;;
-    openstack-nova-common-2015.*) VERSION="kilo" ;;
-    openstack-nova-common-12.*) VERSION="liberty" ;;
-    openstack-nova-common-13.*) VERSION="mitaka" ;;
-    openstack-nova-common-14.*) VERSION="newton" ;;
-    openstack-nova-common-15.*) VERSION="ocata" ;;
-    openstack-nova-common-16.*) VERSION="pike" ;;
-    *) echo "I don't recognize your version." ;;
-  esac
+  if [ -z ${VERSION} ]
+    then
+    PLUGIN="system"
+  else
+    PACKSTACK=$(grep "openstack-packstack-" "${DIRECTORY}/installed-rpms")
+    case ${VERSION} in
+      openstack-nova-common-2014.*) VERSION="juno" ;;
+      openstack-nova-common-2015.*) VERSION="kilo" ;;
+      openstack-nova-common-12.*) VERSION="liberty" ;;
+      openstack-nova-common-13.*) VERSION="mitaka" ;;
+      openstack-nova-common-14.*) VERSION="newton" ;;
+      openstack-nova-common-15.*) VERSION="ocata" ;;
+      openstack-nova-common-16.*) VERSION="pike" ;;
+      *) echo "I don't recognize your version." ;;
+    esac
+    PLUGIN="openstack"
+  fi
 
 }
 
