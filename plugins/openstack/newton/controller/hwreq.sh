@@ -16,7 +16,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 # Checking Hardware Requirements
-# Ref: https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/10/html/director_installation_and_usage/chap-requirements#sect-Controller_Node_Requirements
+# Ref: https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/9/html/director_installation_and_usage/chap-requirements#sect-Controller_Node_Requirements
 # Red Hat Enterprise Linux 7.2 or later installed as the host operating system. 
 REFNAME="Checking Hardware Requirements"
 
