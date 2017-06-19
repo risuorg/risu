@@ -35,9 +35,9 @@ then
   warn "Missing directory ${DIRECTORY}/sos_commands/${CLUSTER_DIRECTORY}"
 else
   NUM_NODES=$(sed -n -r -e 's/^([0-9])[ \t]+nodes.*/\1/p' "${PCS_DIRECTORY}/pcs_status")
-  if [ "${NUM_NODES}" -eq  "3" ]
+  if [ "$echo $(( (NUM_NODES-1) % 2 ))" -eq  "0" ]
   then
-    good "The nodes in cluster are equal to 3."
+    good "The nodes in cluster are equal to ${NUM_NODES}."
   else
     bad "There are ${NUM_NODES} in cluster."
   fi
