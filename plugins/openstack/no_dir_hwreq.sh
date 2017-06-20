@@ -88,4 +88,5 @@ fi
 grep_file "${DIRECTORY}/sos_commands/selinux/sestatus_-b" "^Current mode.*enforcing"
 grep_file "${DIRECTORY}/sos_commands/selinux/sestatus_-b" "^Mode from config file:.*enforcing"
 
-
+# Check if we are running in the VM or bare metal
+detect_vm

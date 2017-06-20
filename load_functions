@@ -144,6 +144,31 @@ run_sh(){
 
 }
 
+detect_vm() {
+
+  # Checking that the node is Hardware or Virtual
+  if [ -e "${DIRECTORY}/sos_commands/hardware/dmidecode" ]
+  then
+    if grep -q "Product Name: VMware" "${DIRECTORY}/sos_commands/hardware/dmidecode"
+    then
+      bad "Detected virtual machine running on VMware."
+    elif grep -q "Product Name: VirtualBox" "${DIRECTORY}/sos_commands/hardware/dmidecode"
+    then
+      bad "Detected virtual machine running on Virtualbox."
+    elif grep -q "Product Name: KVM" "${DIRECTORY}/sos_commands/hardware/dmidecode"
+    then
+      bad "Detected virtual machine running on KVM."
+    elif grep -q "Product Name: Bochs" "${DIRECTORY}/sos_commands/hardware/dmidecode"
+    then
+      bad "Detected virtual machine running on Bosch."
+    else
+      good "Detected bare metal system. (Or virtualization we don't know how to detect)"
+    fi
+  fi
+
+
+}
+
 good(){
     if [ ${verbose_good} -eq "1" ]
     then

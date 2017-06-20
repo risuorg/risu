@@ -66,4 +66,7 @@ else
   warn "Missing file ${DIRECTORY}/df"
 fi
 
+# Check if we are running in the VM or bare metal
+detect_vm
+
 # A minimum of 2 x 1 Gbps Network Interface Cards. However, it is recommended to use a 10 Gbps interface for Provisioning network traffic, especially if provisioning a large number of nodes in your Overcloud environment.
