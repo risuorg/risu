@@ -98,12 +98,7 @@ then
   exit 1
 fi
 
-echo "_________ .__  __         .__  .__                "
-echo "\_   ___ \|__|/  |_  ____ |  | |  |  __ __  ______"
-echo "/    \  \/|  \   __\/ __ \|  | |  | |  |  \/  ___/"
-echo "\     \___|  ||  | \  ___/|  |_|  |_|  |  /\___ \ "
-echo " \______  /__||__|  \___  >____/____/____//____  >"
-echo "        \/              \/                     \/ "
+show_logo
 
 # Here we are going to set the display filter we want.
 # By default all filters are on unless specified explicitly.
