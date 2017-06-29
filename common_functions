@@ -52,87 +52,11 @@ print_version(){
 
 }
 
-run_sh(){
-
-  source "${FILE}" > "${TMPFILE}"
-
-  PASS=$(grep ".*\[OK\]" "${TMPFILE}" | wc -l)
-  FAIL=$(grep ".*\[WRONG\]" "${TMPFILE}" | wc -l)
-  WARNING=$(grep ".*\[WARN\]" "${TMPFILE}" | wc -l)
-
-  if [[ "${FAIL}" -eq "0" ]] && [[ "${WARNING}" -eq "0" ]]
-  then
-    RESULT=$(
-      tput setaf 2
-      printf "%s" "PASSED "
-      tput sgr0
-     )
-  elif [[ "${FAIL}" -eq "0" ]] && [[ ! "${WARNING}" -eq "0" ]]
-  then
-    RESULT=$(
-      tput setaf 3
-      printf "%s" "WARNING"
-      tput sgr0
-     )
-  else
-    RESULT=$(
-      tput setaf 1 
-      printf "%s" "FAILED "
-      tput sgr0
-     )
-  fi         
-
-  if [[ ${RESULT} =~ "PASS" ]] && [[ ${verbose_good} -eq "0" ]]
-  then
-    continue
-  else
-    printf -v line "+%*s+" "77"
-    echo ${line// /-}
-    printf "| %-75s %s\n" "${REFNAME}" "|"
-    printf -v line "+%*s+ %-30s |" "44"
-    echo ${line// /-}
-    printf "| PASS: %-9s FAILED: %-6s WARNING: %-2s %-16s Result: %s %s\n" \
-    "${PASS}" "${FAIL}" "${WARNING}" "|" "${RESULT}" "|"
-    printf -v line "+%*s+" "77"
-    echo ${line// /-}
-
-    $(which cat) "${TMPFILE}"
-    $(which rm) -f "${TMPFILE}"
-  fi
-
-
-}
-
-detect_vm() {
-
-  # Checking that the node is Hardware or Virtual
-  if [ -e "${DIRECTORY}/sos_commands/hardware/dmidecode" ]
-  then
-    if grep -q "Product Name: VMware" "${DIRECTORY}/sos_commands/hardware/dmidecode"
-    then
-      bad "Detected virtual machine running on VMware."
-    elif grep -q "Product Name: VirtualBox" "${DIRECTORY}/sos_commands/hardware/dmidecode"
-    then
-      bad "Detected virtual machine running on Virtualbox."
-    elif grep -q "Product Name: KVM" "${DIRECTORY}/sos_commands/hardware/dmidecode"
-    then
-      bad "Detected virtual machine running on KVM."
-    elif grep -q "Product Name: Bochs" "${DIRECTORY}/sos_commands/hardware/dmidecode"
-    then
-      bad "Detected virtual machine running on Bosch."
-    else
-      good "Detected bare metal system. (Or virtualization we don't know how to detect)"
-    fi
-  fi
-
-
-}
-
 good(){
     if [ ${verbose_good} -eq "1" ]
     then
       tput setaf 2
-      echo "[OK] ${1}"
+      echo "PASS:    ${1}"  
       tput sgr0
     fi
 }
@@ -141,7 +65,7 @@ bad(){
     if [ ${verbose_bad} -eq "1" ]
     then
       tput setaf 1
-      echo "[WRONG] ${1}"
+      echo "FAILED:  ${1}"  
       tput sgr0
     fi
 }
@@ -150,7 +74,7 @@ warn(){
     if [ ${verbose_warn} -eq "1" ]
     then
       tput setaf 3
-      echo "[WARN] ${1}"
+      echo "WARNING: ${1}"
       tput sgr0
     fi
 }
@@ -183,36 +107,6 @@ grep_file_rev(){
       fi
     else
       good "Checking ${2} is NOT in ${1}"
-    fi
-  else
-    warn "Missing file ${1}"
-  fi
-	
-}
-
-count_lines(){
-
-  if [ -e "$1" ]
-  then
-    WC=$(grep "${2}" ${1} | wc -l)
-    if [[ ${WC} -eq 0 ]]
-    then
-      good "No match for word ${2} in ${1}"
-    elif [[ ${WC} -gt 0 ]] && [[ ${WC} -lt 50 ]]
-    then
-      warn "There are ${WC} occurences of word ${2} in ${1}"
-      if [ -n "$3" ]
-      then
-        echo "${3}"
-        echo ""
-      fi
-    else
-      bad "There are ${WC} occurences of word ${2} in ${1}"
-      if [ -n "$3" ]
-      then
-        echo "${3}"
-        echo ""
-      fi
     fi
   else
     warn "Missing file ${1}"

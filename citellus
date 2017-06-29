@@ -180,25 +180,22 @@ then
         EXTENSION=${FILE##*.}
 	if [ "${plugin}" = "openstack" ]
 	  then
-           if grep -q "^REFOSP_VERSION=.*${VERSION}.*$" "${FILE}" && grep -q "^REFNODE_TYPE=.*${DISCOVERED_NODE}.*$" "${FILE}"
-           then
-	     case ${EXTENSION} in
-	       sh) 
-                   run_sh
-                   ;;
-	       py) ${PYTHON} ${FILE} ${DIRECTORY} ;;
-	       *) echo "File: ${FILE}. Usupported format." ;;
-	     esac
-           fi
-         else
-           case ${EXTENSION} in
-             sh)
+	    case ${EXTENSION} in
+	      sh) 
+                 source ${FILE}
+                 ;;
+	      py) ${PYTHON} ${FILE} ${DIRECTORY} ;;
+	      *) echo "File: ${FILE}. Usupported format." ;;
+	    esac
+          else
+            case ${EXTENSION} in
+              sh)
                  run_sh
                  ;;
-             py) ${PYTHON} ${FILE} ${DIRECTORY} ;;
-             *) echo "File: ${FILE}. Usupported format." ;;
-           esac
-         fi
+              py) ${PYTHON} ${FILE} ${DIRECTORY} ;;
+              *) echo "File: ${FILE}. Usupported format." ;;
+            esac
+        fi
       done
     fi
   done
