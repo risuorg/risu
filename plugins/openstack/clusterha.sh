@@ -17,6 +17,7 @@
 
 # Cluster check
 # Ref:
+REFNAME="ClusterHA module"
 
 function clusterha_check_live(){
   continue
@@ -25,9 +26,6 @@ function clusterha_check_live(){
 
 function clusterha_check_sosreport(){
 
-  echo ""
-  echo "Running ClusterHA module"
-  echo "------------------------"
   # Checking the number of nodes in the cluster.
   # Check which directory for cluster exists it's either cluster or pacemaker
 

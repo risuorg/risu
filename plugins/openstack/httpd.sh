@@ -17,6 +17,7 @@
 
 # Checking httpd
 # Ref: None
+REFNAME="Httpd module"
 
 # Add all needed functions
 function count_lines(){
@@ -56,10 +57,6 @@ function httpd_check_live(){
 }
 
 function httpd_check_sosreport(){
-
-  echo ""
-  echo "Running httpd module"
-  echo "--------------------"
 
   count_lines "${DIRECTORY}/var/log/httpd/error_log" "MaxRequestWorkers" \
   " \_ Check /etc/httpd/prefork.conf values MaxClients and ServerLimit are set to value 512 - Ref: https://bugzilla.redhat.com/show_bug.cgi?id=1163516"

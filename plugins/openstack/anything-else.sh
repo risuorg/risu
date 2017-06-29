@@ -17,6 +17,7 @@
 
 # Checking anything interesting
 # Ref: None
+REFNAME="Anything else module"
 
 # Add all needed functions
 function count_lines(){
@@ -57,9 +58,6 @@ function anything_check_live(){
 
 function anything_check_sosreport(){
 
-  echo ""
-  echo "Running Anything else module"
-  echo "----------------------------"
   # https://bugs.launchpad.net/keystone/+bug/1649616/
   count_lines "${DIRECTORY}/var/log/keystone/keystone.log" "Got error 5 during COMMIT" \
   " \_ This is known bug in keystone-manage token_flush - Ref: https://bugs.launchpad.net/keystone/+bug/1649616/"

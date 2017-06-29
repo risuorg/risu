@@ -14,6 +14,7 @@
 
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+REFNAME="Traceback module"
 
 
 # Add all needed functions
@@ -49,10 +50,6 @@ function count_lines(){
 
 function traceback_check_live(){
 
-  echo ""
-  echo "Running Traceback module"
-  echo "------------------------"
-
   LIST_OF_PROJECTS="ceilometer glance heat keystone neutron nova swift httpd"
   for PROJECT in $LIST_OF_PROJECTS; do
       for LOGFILE in /var/log/${PROJECT}/*.log; do
@@ -65,9 +62,6 @@ function traceback_check_live(){
 
 function traceback_check_sosreport(){
 
-  echo ""
-  echo "Running Traceback module"
-  echo "------------------------"
   LIST_OF_PROJECTS="ceilometer glance heat keystone neutron nova swift httpd"
   for PROJECT in $LIST_OF_PROJECTS; do
       for LOGFILE in ${DIRECTORY}/var/log/${PROJECT}/*.log; do

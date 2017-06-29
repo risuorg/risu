@@ -17,6 +17,7 @@
 
 # RabbitMQ Module
 # Ref: 
+REFNAME="RabbitMQ module"
 
 # Add all needed functions
 function count_lines(){
@@ -56,10 +57,6 @@ function rabbitmq_check_live(){
 }
 
 function rabbitmq_check_sosreport(){
-
-  echo ""
-  echo "Running RabbitMQ module"
-  echo "------------------------"
 
   FILE_DESCRIPTORS=$(awk -v target="${TARGET_HOSTNAME}" '$4 ~ target { flag = 1 } \
   flag = 1 && /file_descriptors/ { print ; exit }' \

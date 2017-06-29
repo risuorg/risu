@@ -149,6 +149,7 @@ init_program
 
 PYTHON="/usr/bin/python"
 PLUGIN="$(echo ${PLUGIN} | tr ',' ' ')"
+TMPFILE="$(mktemp /tmp/cittelus-script.XXXXXX)"
 
 # Here we check if any plugin was specified.
 if [ -n "${PLUGIN}" ]
@@ -182,7 +183,7 @@ then
 	  then
 	    case ${EXTENSION} in
 	      sh) 
-                 source ${FILE}
+                 execute_sh
                  ;;
 	      py) ${PYTHON} ${FILE} ${DIRECTORY} ;;
 	      *) echo "File: ${FILE}. Usupported format." ;;

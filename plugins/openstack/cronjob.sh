@@ -17,7 +17,7 @@
 
 # Checking cronjob
 # Ref: https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/8/html-single/director_installation_and_usage/#sect-Tuning_the_Undercloud 
-
+REFNAME="Cronjob module"
 
 function cronjob_check_live(){
    continue
@@ -25,9 +25,6 @@ function cronjob_check_live(){
 
 function cronjob_check_sosreport(){
 
-  echo ""
-  echo "Running cronjob module"
-  echo "------------------------"
   # Crontab check
   grep_file "${DIRECTORY}/var/spool/cron/keystone" "keystone-manage token_flush"
   grep_file "${DIRECTORY}/var/spool/cron/heat" "heat-manage purge_deleted"

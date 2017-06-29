@@ -20,6 +20,7 @@
 # Based on
 # https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/11/html-single/network_functions_virtualization_configuration_guide/
 # https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/Virtualization_Deployment_and_Administration_Guide/sect-SR_IOV-Troubleshooting_SR_IOV.html
+REFNAME="SR-IOV module"
 
 
 function sriov_check_live(){
@@ -28,9 +29,6 @@ function sriov_check_live(){
 
 function sriov_check_sosreport(){
 
-  echo ""
-  echo "Running SRIOV module"
-  echo "--------------------"
   # Looks for VF enabled
   grep_file "${DIRECTORY}/lspci" "Virtual Function"
 

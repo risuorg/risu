@@ -14,7 +14,7 @@
 
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
+REFNAME="Debug module"
 
 function debug_check_live(){
 
@@ -24,9 +24,6 @@ function debug_check_live(){
 
 function debug_check_sosreport(){
 
-  echo ""
-  echo "Running Debug module"
-  echo "------------------------"
   LIST_OF_PROJECTS="ceilometer glance heat keystone neutron nova swift httpd"
   for PROJECT in $LIST_OF_PROJECTS; do
       for LOGFILE in ${DIRECTORY}/etc/${PROJECT}/*.conf; do

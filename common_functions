@@ -52,6 +52,56 @@ print_version(){
 
 }
 
+execute_sh(){
+
+  source "${FILE}" > "${TMPFILE}"
+
+  PASS=$(grep ".*PASS:" "${TMPFILE}" | wc -l)
+  FAIL=$(grep ".*FAILED:" "${TMPFILE}" | wc -l)
+  WARNING=$(grep ".*WARNING:" "${TMPFILE}" | wc -l)
+
+  if [[ "${FAIL}" -eq "0" ]] && [[ "${WARNING}" -eq "0" ]]
+  then
+    RESULT=$(
+      tput setaf 2
+      printf "%s" "PASSED "
+      tput sgr0
+     )
+  elif [[ "${FAIL}" -eq "0" ]] && [[ ! "${WARNING}" -eq "0" ]]
+  then
+    RESULT=$(
+      tput setaf 3
+      printf "%s" "WARNING"
+      tput sgr0
+     )
+  else
+    RESULT=$(
+      tput setaf 1 
+      printf "%s" "FAILED "
+      tput sgr0
+     )
+  fi         
+
+  if [[ ${RESULT} =~ "PASS" ]] && [[ ${verbose_good} -eq "0" ]]
+  then
+    continue
+  else
+    printf -v line "+%*s+" "77"
+    echo ${line// /-}
+    printf "| %-75s %s\n" "${REFNAME}" "|"
+    printf -v line "+%*s+ %-30s |" "44"
+    echo ${line// /-}
+    printf "| PASS: %-9s FAILED: %-6s WARNING: %-2s %-16s Result: %s %s\n" \
+    "${PASS}" "${FAIL}" "${WARNING}" "|" "${RESULT}" "|"
+    printf -v line "+%*s+" "77"
+    echo ${line// /-}
+
+    $(which cat) "${TMPFILE}"
+    $(which rm) -f "${TMPFILE}"
+  fi
+
+}
+
 good(){
     if [ ${verbose_good} -eq "1" ]
     then

@@ -17,6 +17,7 @@
 
 # Checking Tuned Undercloud options
 # Ref: https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/8/html-single/director_installation_and_usage/#sect-Tuning_the_Undercloud
+REFNAME="Undercloud tuning module"
 
 function undercloud_tuning_check_live(){
 
@@ -26,11 +27,7 @@ function undercloud_tuning_check_live(){
 
 function undercloud_tuning_check_sosreport(){
 
-  echo ""
-  echo "Running Undercloud tuning module"
-  echo "--------------------------------"
   # Checking /etc/heat/heat.conf
-
   grep_file "${DIRECTORY}/etc/heat/heat.conf" "^[ \t]*max_resources_per_stack.*=.*-1"
   grep_file "${DIRECTORY}/etc/heat/heat.conf" "^[ \t]*num_engine_workers.*=.*4"
 

@@ -17,6 +17,7 @@
 
 # Checking Hardware Requirements
 # Red Hat Enterprise Linux 7.2 or later installed as the host operating system. 
+REFNAME="Hardware Requirements module"
 
 function hwreq_check_live(){
   continue
@@ -24,12 +25,8 @@ function hwreq_check_live(){
 
 function hwreq_check_sosreport(){
 
-echo ""
-echo "Running Hardware requirements module"
-echo "------------------------------------"
 echo "Adjusting HW Requirements to match composable roles in Bugzilla"
 echo " - https://bugzilla.redhat.com/show_bug.cgi?id=1466124"
-echo ""
 
 # A minimum of 16 GB of RAM.
 if [ -e "${DIRECTORY}/proc/meminfo" ]

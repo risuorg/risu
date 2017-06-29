@@ -17,6 +17,7 @@
 
 # Checking Kernel state
 # Ref: None
+REFNAME="Kernel module"
 
 function kernel_check_live(){
   continue
@@ -24,9 +25,6 @@ function kernel_check_live(){
 
 function kernel_check_sosreport(){
 
-echo ""
-echo "Running Kernel module"
-echo "---------------------"
 # Looks for the Kernel Out of Memory, panics and soft locks
 
 grep_file_rev "${DIRECTORY}/sos_commands/logs/journalctl_--no-pager_--boot" "oom-killer"
