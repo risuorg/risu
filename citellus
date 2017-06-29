@@ -190,7 +190,7 @@ then
           else
             case ${EXTENSION} in
               sh)
-                 run_sh
+                 source ${FILE}
                  ;;
               py) ${PYTHON} ${FILE} ${DIRECTORY} ;;
               *) echo "File: ${FILE}. Usupported format." ;;
