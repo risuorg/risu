@@ -98,7 +98,7 @@ grep_file_rev(){
 
   if [ -e "$1" ]
   then
-    if grep -q "${2}" ${1}
+    if grep -i -q "${2}" ${1}
     then
       bad "Checking ${2} is in ${1}"
       if [ -e "$3" ]
@@ -118,7 +118,7 @@ grep_file(){
 
   if [ -e "$1" ]
   then
-    if grep -q "${2}" ${1}
+    if grep -i -q "${2}" ${1}
     then
       good "Checking ${2} is in ${1}"
     else
