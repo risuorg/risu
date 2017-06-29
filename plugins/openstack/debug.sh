@@ -14,14 +14,25 @@
 
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+REFNAME="Debug module"
 
-# Checking Tracebacks
-# Ref: None
-REFNAME="Kernel Module"
-REFOSP_VERSION="liberty mitaka newton ocata"
-REFNODE_TYPE="controller director compute"
+function debug_check_live(){
 
-# Looks for the Kernel Out of Memory, panics and soft locks
+  continue
 
-grep_file_rev "${DIRECTORY}/sos_commands/logs/journalctl_--no-pager_--boot" "oom-killer"
-grep_file_rev "${DIRECTORY}/sos_commands/logs/journalctl_--no-pager_--boot" "soft lockup"
+}
+
+function debug_check_sosreport(){
+
+  LIST_OF_PROJECTS="ceilometer glance heat keystone neutron nova swift httpd"
+  for PROJECT in $LIST_OF_PROJECTS; do
+      for LOGFILE in ${DIRECTORY}/etc/${PROJECT}/*.conf; do
+	[ -e "$LOGFILE" ] || continue
+	  grep_file "${LOGFILE}" "^debug.*=.*true"
+      done
+  done
+
+}
+
+# Checks if the debug is enabled
+debug_check_${CHECK_MODE}

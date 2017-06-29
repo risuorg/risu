@@ -20,35 +20,44 @@
 # Based on
 # https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/11/html-single/network_functions_virtualization_configuration_guide/
 # https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/Virtualization_Deployment_and_Administration_Guide/sect-SR_IOV-Troubleshooting_SR_IOV.html
-
-REFNAME="SRIOV"
-REFOSP_VERSION="kilo liberty mitaka newton ocata"
-REFNODE_TYPE="compute controller"
+REFNAME="SR-IOV module"
 
 
+function sriov_check_live(){
+  continue
+}
 
-# Looks for VF enabled
-grep_file "${DIRECTORY}/lspci" "Virtual Function"
+function sriov_check_sosreport(){
 
-# Looks for VFIO_IOMMU enabled
-grep_file "${DIRECTORY}/proc/modules" "vfio_iommu_type1"
+  # Looks for VF enabled
+  grep_file "${DIRECTORY}/lspci" "Virtual Function"
 
-# Unsafe interrupts enabled (for HOTPLUG)
-grep_file "${DIRECTORY}/sys/module/vfio_iommu_type1/parameters/allow_unsafe_interrupts" "Y"
+  # Looks for VFIO_IOMMU enabled
+  grep_file "${DIRECTORY}/proc/modules" "vfio_iommu_type1"
 
-# Are we Intel or AMD?
-grep -iq intel "${DIRECTORY}/proc/cpuinfo"
-INTEL=$?
-if [ "#$INTEL" == "#0" ];
-then
-    # Check for IOMMU (VT-d) (INTEL)
-    grep_file "${DIRECTORY}/proc/cmdline" "intel_iommu=on"
-    grep_file "${DIRECTORY}/proc/cmdline" "iommu=pt"
-else
-    # Check for AMD
-    grep_file "${DIRECTORY}/cmdline" "amd_iommu=pt"
-fi
+  # Unsafe interrupts enabled (for HOTPLUG)
+  grep_file "${DIRECTORY}/sys/module/vfio_iommu_type1/parameters/allow_unsafe_interrupts" "Y"
 
-# Looks for the pci_pass_tru in Nova
-grep_file "${DIRECTORY}/etc/nova/nova.conf" "pci_passthrough_whitelist = "
+  # Are we Intel or AMD?
+  grep -iq intel "${DIRECTORY}/proc/cpuinfo"
+  INTEL=$?
+  if [ "#$INTEL" == "#0" ];
+  then
+      # Check for IOMMU (VT-d) (INTEL)
+      grep_file "${DIRECTORY}/proc/cmdline" "intel_iommu=on"
+      grep_file "${DIRECTORY}/proc/cmdline" "iommu=pt"
+  else
+      # Check for AMD
+      grep_file "${DIRECTORY}/cmdline" "amd_iommu=pt"
+  fi
 
+  # Looks for the pci_pass_tru in Nova
+  grep_file "${DIRECTORY}/etc/nova/nova.conf" "pci_passthrough_whitelist = "
+
+}
+
+# Hardware requirements
+sriov_check_${CHECK_MODE}
+
+
+# vim: ts=2 sw=2 et

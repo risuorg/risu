@@ -15,17 +15,24 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# Checking ERRORS
+# Checking Kernel state
 # Ref: None
-REFNAME="My Custom Module"
-REFOSP_VERSION="liberty mitaka newton ocata"
-REFNODE_TYPE="controller"
+REFNAME="Kernel module"
+
+function kernel_check_live(){
+  continue
+}
+
+function kernel_check_sosreport(){
+
+# Looks for the Kernel Out of Memory, panics and soft locks
+
+grep_file_rev "${DIRECTORY}/sos_commands/logs/journalctl_--no-pager_--boot" "oom-killer"
+grep_file_rev "${DIRECTORY}/sos_commands/logs/journalctl_--no-pager_--boot" "soft lockup"
+
+}
+
+# Kernel module
+kernel_check_${CHECK_MODE}
 
 
-# https://bugs.launchpad.net/keystone/+bug/1649616/
-count_lines "${DIRECTORY}/var/log/keystone/keystone.log" "Got error 5 during COMMIT" \
-" \_ This is known bug in keystone-manage token_flush - Ref: https://bugs.launchpad.net/keystone/+bug/1649616/"
-
-# Check OpenStack services in undercloud are running and aren't failed
-
-grep_file_rev "${DIRECTORY}/sos_commands/systemd/systemctl_list-units_--all" "neutron.*failed|openstack.*failed"

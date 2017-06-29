@@ -1,0 +1,73 @@
+#!/bin/bash
+
+# Copyright (C) 2017   Robin Cernin (rcernin@redhat.com)
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+init_program(){
+
+  TARGET_HOSTNAME="$(cat ${DIRECTORY}/hostname)"
+  echo "SOSreport was created at $(cat ${DIRECTORY}/date)"
+  echo "Hostname: ${TARGET_HOSTNAME}"
+
+}
+
+get_version(){
+
+  # Check which version we are using
+  VERSION=$(grep "openstack-nova-common" "${DIRECTORY}/installed-rpms")
+  if [ -z "${VERSION}" ] && [ -z "${PLUGIN}" ]
+    then
+    PLUGIN="system"
+  elif [ -n "${VERSION}" ]
+    then
+      PACKSTACK=$(grep "openstack-packstack-" "${DIRECTORY}/installed-rpms")
+      case ${VERSION} in
+	openstack-nova-common-2014.*) VERSION="juno" ;;
+	openstack-nova-common-2015.*) VERSION="kilo" ;;
+	openstack-nova-common-12.*) VERSION="liberty" ;;
+	openstack-nova-common-13.*) VERSION="mitaka" ;;
+	openstack-nova-common-14.*) VERSION="newton" ;;
+	openstack-nova-common-15.*) VERSION="ocata" ;;
+	openstack-nova-common-16.*) VERSION="pike" ;;
+	*) echo "I don't recognize your version." ;;
+      esac
+      if [ -z "${PLUGIN}" ]
+      then
+	PLUGIN="openstack"
+      fi
+  fi
+
+}
+
+discover_node(){
+
+  # Check which node we are running against [director,controller,compute]
+  if grep -q "tripleo-heat-templates" "${DIRECTORY}/installed-rpms" && grep -q \
+  "python-tripleoclient" "${DIRECTORY}/installed-rpms"
+  then
+    # We have discovered this is with highest probability OSP-d
+    DISCOVERED_NODE="director"
+  elif grep -q "nova-compute" "${DIRECTORY}/ps"
+    then
+      # We have discovered this is with highest probability compute node
+      DISCOVERED_NODE="compute"
+  else
+    # We have discovered this is with highest probability controller node
+    DISCOVERED_NODE="controller"
+  fi
+
+}
+
+#vim: ts=2 sw=2 et

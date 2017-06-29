@@ -18,21 +18,14 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # Load all necessary functions
-source ${DIR}/load_functions
+source ${DIR}/common_functions
 
 # Unset all variables that might be possibly set.
-DIRECTORY=
-DISCOVERED_NODE=
-VERSION=
-TARGET_HOSTNAME=
-PCS_DIRECTORY=
-VERSION_CHECK=
-PLUGIN=
 
-# Set display filters
+# By default turn off all filters.
+verbose_warn=0
 verbose_good=0
 verbose_bad=0
-verbose_warn=0
 
 while :; do
     case $1 in
@@ -45,7 +38,7 @@ while :; do
                 DIRECTORY=$2
                 shift
             else
-                bad '"--file" requires a non-empty option argument.' >&2
+                echo '[WRONG] "--file" requires a non-empty option argument.' >&2
                 exit 1
             fi
             ;;
@@ -53,18 +46,27 @@ while :; do
             DIRECTORY=${1#*=}
             ;;
         --file=)
-            bad '"--file" requires a non-empty option argument.' >&2
+            echo '[WRONG] "--file" requires a non-empty option argument.' >&2
             exit 1
             ;;
         -v|--verbose)
             set -x
+            ;;
+        -m|--mode)
+            if [ -n "$2" ]; then
+                CHECK_MODE=$2
+                shift
+            else
+                echo '[WRONG] "--mode" requires a non-empty option argument.' >&2
+                exit 1
+            fi
             ;;
         -p|--plugin)
             if [ -n "$2" ]; then
                 PLUGIN=$2
                 shift
             else
-                bad '"--plugin" requires a non-empty option argument.' >&2
+                echo '"[WRONG] --plugin" requires a non-empty option argument.' >&2
                 exit 1
             fi
             ;;
@@ -73,7 +75,7 @@ while :; do
                 FILTER=$2
                 shift
             else
-                bad '"--display" requires a non-empty option argument.' >&2
+                echo '[WRONG] "--display" requires a non-empty option argument.' >&2
                 exit 1
             fi
             ;;
@@ -82,7 +84,7 @@ while :; do
             break
             ;;
         -?*)
-            bad "Unknown option: ${1}" >&2
+            echo "[WRONG] Unknown option: ${1}" >&2
             exit 1
             ;;
         *)
@@ -92,12 +94,7 @@ while :; do
     shift
 done
 
-if [ ! -d "${DIRECTORY}" ]
-then
-  bad "Uh, oh, ${DIRECTORY} is not directory."
-  exit 1
-fi
-
+# Display logo
 show_logo
 
 # Here we are going to set the display filter we want.
@@ -130,53 +127,76 @@ then
   done
 fi
 
-TARGET_HOSTNAME="$(cat ${DIRECTORY}/hostname)"
-echo "SOSreport was created at $(cat ${DIRECTORY}/date)"
-echo "Hostname: ${TARGET_HOSTNAME}"
+if [ -z "${CHECK_MODE}" ] || { [ "${CHECK_MODE}" = "sosreport" ] && [ ! -d "${DIRECTORY}" ] ;} 
+then
+  bad "Check mode wasn't specified or sosreport directory is wrong." 
+  exit 1
+fi
+
+# Now we should already know if we are doing live or sosreport check, hence we source relevant file.
+if [ ${CHECK_MODE} = "live" ]
+then
+  source ${DIR}/live_functions
+elif [ ${CHECK_MODE} = "sosreport" ]
+then
+  source ${DIR}/sosreport_functions
+else
+  bad "Please specify correct check mode. Currently it is either sosreport or live."
+  exit 1
+fi
+
+init_program
 
 PYTHON="/usr/bin/python"
-TMPFILE="$(mktemp /tmp/cittelus-script.XXXXXX)"
-# Check if we are running openstack plugin if empty by default to openstack
-get_version
-
 PLUGIN="$(echo ${PLUGIN} | tr ',' ' ')"
+TMPFILE="$(mktemp /tmp/cittelus-script.XXXXXX)"
+
+# Here we check if any plugin was specified.
 if [ -n "${PLUGIN}" ]
 then
   for plugin in ${PLUGIN}
   do
+
+    # Go thru the list of plugins and check they have relevant folder in ./plugins
+    # and if we have found plugin in ./plugins then we will execute the scripts.
+
     match_filter "./plugins/${plugin}" "./plugins/*"
     if [[ "${FOUND}" -eq "1" ]]
     then
+
+      # This if clause is executed only if plugin was set to OpenStack.
+      # We are printing the node either controller, compute or director and
+      # its version.
+
       if [ "${plugin}" = "openstack" ]
 	then
+          get_version
 	  discover_node
 	  print_version
       fi
+
       for FILE in ./plugins/"${plugin}"/*
       do
         [ -f "${FILE}" ] || continue
         EXTENSION=${FILE##*.}
 	if [ "${plugin}" = "openstack" ]
 	  then
-           if grep -q "^REFOSP_VERSION=.*${VERSION}.*$" "${FILE}" && grep -q "^REFNODE_TYPE=.*${DISCOVERED_NODE}.*$" "${FILE}"
-           then
-	     case ${EXTENSION} in
-	       sh) 
-                   run_sh
-                   ;;
-	       py) ${PYTHON} ${FILE} ${DIRECTORY} ;;
-	       *) echo "File: ${FILE}. Usupported format." ;;
-	     esac
-           fi
-         else
-           case ${EXTENSION} in
-             sh)
-                 run_sh
+	    case ${EXTENSION} in
+	      sh) 
+                 execute_sh
                  ;;
-             py) ${PYTHON} ${FILE} ${DIRECTORY} ;;
-             *) echo "File: ${FILE}. Usupported format." ;;
-           esac
-         fi
+	      py) ${PYTHON} ${FILE} ${DIRECTORY} ;;
+	      *) echo "File: ${FILE}. Usupported format." ;;
+	    esac
+          else
+            case ${EXTENSION} in
+              sh)
+                 source ${FILE}
+                 ;;
+              py) ${PYTHON} ${FILE} ${DIRECTORY} ;;
+              *) echo "File: ${FILE}. Usupported format." ;;
+            esac
+        fi
       done
     fi
   done
