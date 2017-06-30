@@ -160,7 +160,7 @@ then
     # Go thru the list of plugins and check they have relevant folder in ./plugins
     # and if we have found plugin in ./plugins then we will execute the scripts.
 
-    match_filter "./plugins/${plugin}" "./plugins/*"
+    match_filter "${DIR}/plugins/${plugin}" "${DIR}/plugins/*"
     if [[ "${FOUND}" -eq "1" ]]
     then
 
@@ -175,7 +175,7 @@ then
 	  print_version
       fi
 
-      for FILE in ./plugins/"${plugin}"/*
+      for FILE in ${DIR}/plugins/"${plugin}"/*
       do
         [ -f "${FILE}" ] || continue
         EXTENSION=${FILE##*.}
