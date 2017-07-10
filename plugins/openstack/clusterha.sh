@@ -18,9 +18,68 @@
 # Cluster check
 # Ref:
 REFNAME="ClusterHA module"
+pacemaker_status=$(systemctl is-active pacemaker || :)
 
 function clusterha_check_live(){
-  continue
+
+  # Checking the number of nodes in the cluster.
+  # Check which directory for cluster exists it's either cluster or pacemaker
+
+  if [ "$pacemaker_status" = "active" ]
+  then
+    NUM_NODES=$(pcs status | sed -n -r -e 's/^([0-9])[ \t]+nodes.*/\1/p')
+    if [ "$echo $(( (NUM_NODES-1) % 2 ))" -eq  "0" ]
+    then
+      good "The nodes in cluster are equal to ${NUM_NODES}."
+    else
+      bad "There are ${NUM_NODES} in cluster."
+    fi
+
+    # Checking for stonith-enabled: true
+    if pcs config | grep -q "stonith-enabled:.*true"
+    then
+      good "Found stonith-enabled: true in pcs config"
+    else
+      bad "stonig-enabled NOT found in pcs config"
+    fi
+
+    # Checking if there are any "Failed Actions" in the pcs_status
+    if pcs status | grep -q "Failed Actions"
+    then
+      bad "Found Failed Actions in pcs status"
+    else
+      good "Failed Actions was NOT found in pcs status"
+    fi
+
+    # Checking if there are any "Stopped" services
+    if pcs status | grep -q "Stopped"
+    then
+      bad "Stopped Actions in pcs status"
+    else
+      good "Stopped was NOT found in pcs status"
+    fi
+
+    # Check packages version
+    PCS_VERSION=$(rpm -qa | sed -n -r -e 's/^pacemaker.*-1.1.([0-9]+)-.*$/\1/p')
+    for package in ${PCS_VERSION}
+    do
+      if [[ "${package}" -lt "15" ]]
+      then
+	VERSION_CHECK="1"
+      fi
+    done
+    if [[ "${VERSION_CHECK}" -eq "1" ]]
+    then
+      bad "Pacemaker packages are older than 1.1.15."
+    else
+      good "Pacemaker version is greater than or equal to 1.1.15."
+    fi
+  else
+    continue
+
+  fi
+
+
 }
 
 
@@ -39,8 +98,9 @@ function clusterha_check_sosreport(){
 
   if [ -z "${PCS_DIRECTORY}" ]
   then
-    warn "Missing directory ${DIRECTORY}/sos_commands/${CLUSTER_DIRECTORY}"
+    continue
   else
+
     NUM_NODES=$(sed -n -r -e 's/^([0-9])[ \t]+nodes.*/\1/p' "${PCS_DIRECTORY}/pcs_status")
     if [ "$echo $(( (NUM_NODES-1) % 2 ))" -eq  "0" ]
     then
@@ -58,23 +118,23 @@ function clusterha_check_sosreport(){
     # Checking if there are any "Stopped" services
     grep_file_rev "${PCS_DIRECTORY}/pcs_status" "Stopped"
 
+    # Check packages version
+    PCS_VERSION=$(sed -n -r -e 's/^pacemaker.*-1.1.([0-9]+)-.*$/\1/p' "${DIRECTORY}/installed-rpms")
+    for package in ${PCS_VERSION}
+    do
+      if [[ "${package}" -lt "15" ]]
+      then
+	VERSION_CHECK="1"
+      fi
+    done
+    if [[ "${VERSION_CHECK}" -eq "1" ]]
+    then
+      bad "Pacemaker packages are older than 1.1.15."
+    else
+      good "Pacemaker version is greater than or equal to 1.1.15."
+    fi
   fi
 
-  # Check packages version
-  PCS_VERSION=$(sed -n -r -e 's/^pacemaker.*-1.1.([0-9]+)-.*$/\1/p' "${DIRECTORY}/installed-rpms")
-  for package in ${PCS_VERSION}
-  do
-    if [[ "${package}" -lt "15" ]]
-    then
-      VERSION_CHECK="1"
-    fi
-  done
-  if [[ "${VERSION_CHECK}" -eq "1" ]]
-  then
-    bad "Pacemaker packages are older than 1.1.15."
-  else
-    good "Pacemaker version is greater than or equal to 1.1.15."
-  fi
 
 }
 

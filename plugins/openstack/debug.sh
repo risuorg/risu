@@ -16,20 +16,31 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 REFNAME="Debug module"
 
+LIST_OF_PROJECTS="ceilometer glance heat keystone neutron nova swift httpd"
+LIST_OF_CONFIGS="ceilometer.conf glance-api.conf heat.conf keystone.conf neutron.conf nova.conf swift.conf"
+
 function debug_check_live(){
 
-  continue
+  for PROJECT in $LIST_OF_PROJECTS; do
+    for CONFIG in $LIST_OF_CONFIGS; do 
+      for LOGFILE in /etc/${PROJECT}/${CONFIG}; do
+	[ -e "$LOGFILE" ] || continue
+	  grep_file "${LOGFILE}" "^debug.*=.*true"
+      done
+    done
+  done
 
 }
 
 function debug_check_sosreport(){
 
-  LIST_OF_PROJECTS="ceilometer glance heat keystone neutron nova swift httpd"
   for PROJECT in $LIST_OF_PROJECTS; do
-      for LOGFILE in ${DIRECTORY}/etc/${PROJECT}/*.conf; do
+    for CONFIG in $LIST_OF_CONFIGS; do 
+      for LOGFILE in ${DIRECTORY}/etc/${PROJECT}/${CONFIG}; do
 	[ -e "$LOGFILE" ] || continue
 	  grep_file "${LOGFILE}" "^debug.*=.*true"
       done
+    done
   done
 
 }

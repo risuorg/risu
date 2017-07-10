@@ -58,24 +58,34 @@ function rabbitmq_check_live(){
 
 function rabbitmq_check_sosreport(){
 
+if [ ${DISCOVERED_NODE} == "director" ]
+then
+  FILE_DESCRIPTORS=$(awk -v target="${TARGET_HOSTNAME}" '$4 ~ target { flag = 1 } \
+  flag = 1 && /file_descriptors/ { getline; print ; exit }' \
+  "${DIRECTORY}/sos_commands/rabbitmq/rabbitmqctl_report" | egrep -o '[0-9]+')
+elif [ ${DISCOVERED_NODE} == "controller" ]
+then
   FILE_DESCRIPTORS=$(awk -v target="${TARGET_HOSTNAME}" '$4 ~ target { flag = 1 } \
   flag = 1 && /file_descriptors/ { print ; exit }' \
   "${DIRECTORY}/sos_commands/rabbitmq/rabbitmqctl_report" | egrep -o '[0-9]+')
+else
+  continue
+fi
 
-  if [ "${FILE_DESCRIPTORS}" -ge  "65336" ]
-  then
-    good "There are currently ${FILE_DESCRIPTORS} file_descriptors available."
-  else
-    bad "There are ${FILE_DESCRIPTORS} file_descriptors available."
-  fi
+if [ "${FILE_DESCRIPTORS}" -ge  "65336" ]
+then
+  good "There are currently ${FILE_DESCRIPTORS} file_descriptors available."
+else
+  bad "There are ${FILE_DESCRIPTORS} file_descriptors available."
+fi
 
-  LIST_OF_PROJECTS="ceilometer glance heat keystone neutron nova swift"
-  for PROJECT in $LIST_OF_PROJECTS; do
-      for LOGFILE in ${DIRECTORY}/var/log/${PROJECT}/*.log; do
-	[ -e "$LOGFILE" ] || continue
-	  count_lines "$LOGFILE" "AMQP server on .* is unreachable"
-      done
-  done
+LIST_OF_PROJECTS="ceilometer glance heat keystone neutron nova swift"
+for PROJECT in $LIST_OF_PROJECTS; do
+    for LOGFILE in ${DIRECTORY}/var/log/${PROJECT}/*.log; do
+      [ -e "$LOGFILE" ] || continue
+	count_lines "$LOGFILE" "AMQP server on .* is unreachable"
+    done
+done
 
 }
 
