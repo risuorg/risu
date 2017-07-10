@@ -28,3 +28,97 @@ Do stuff with sosreport and write the result to standard output.
 
 
 ```
+### Doing a live check example
+> -m live,sosreport select check mode, either sosreport or live
+```
+[root@undercloud-0 citellus]# ./citellus -p openstack -m live
+_________ .__  __         .__  .__                
+\_   ___ \|__|/  |_  ____ |  | |  |  __ __  ______
+/    \  \/|  \   __\/ __ \|  | |  | |  |  \/  ___/
+\     \___|  ||  | \  ___/|  |_|  |_|  |  /\___ \ 
+ \______  /__||__|  \___  >____/____/____//____  >
+        \/              \/                     \/ 
+Live check executed at Thu Jun 29 10:40:29 EDT 2017
+Hostname: undercloud-0.redhat.local
+Discovered node: director
+Version: liberty
++-----------------------------------------------------------------------------+
+| Traceback module                                                            |
++--------------------------------------------+--------------------------------|
+| PASS: 23        FAILED: 1      WARNING: 8  |                Result: FAILED  |
++-----------------------------------------------------------------------------+
+WARNING: Traceback module: /var/log/ceilometer/agent-notification.log (1 times)
+WARNING: Traceback module: /var/log/ceilometer/alarm-evaluator.log (1 times)
+PASS:    Traceback module: /var/log/ceilometer/alarm-notifier.log (0 times)
+PASS:    Traceback module: /var/log/ceilometer/api.log (0 times)
+PASS:    Traceback module: /var/log/ceilometer/ceilometer-dbsync.log (0 times)
+FAILED:  Traceback module: /var/log/ceilometer/central.log (1175 times)
+PASS:    Traceback module: /var/log/ceilometer/collector.log (0 times)
+WARNING: Traceback module: /var/log/glance/api.log (9 times)
+PASS:    Traceback module: /var/log/glance/registry.log (0 times)
+PASS:    Traceback module: /var/log/heat/heat-api-cfn.log (0 times)
+PASS:    Traceback module: /var/log/heat/heat-api-cloudwatch.log (0 times)
+PASS:    Traceback module: /var/log/heat/heat-api.log (0 times)
+PASS:    Traceback module: /var/log/heat/heat-engine.log (0 times)
+PASS:    Traceback module: /var/log/keystone/keystone.log (0 times)
+WARNING: Traceback module: /var/log/neutron/dhcp-agent.log (4 times)
+WARNING: Traceback module: /var/log/neutron/openvswitch-agent.log (1 times)
+PASS:    Traceback module: /var/log/neutron/ovs-cleanup.log (0 times)
+PASS:    Traceback module: /var/log/neutron/server.log (0 times)
+WARNING: Traceback module: /var/log/nova/nova-api.log (41 times)
+PASS:    Traceback module: /var/log/nova/nova-cert.log (0 times)
+WARNING: Traceback module: /var/log/nova/nova-compute.log (2 times)
+WARNING: Traceback module: /var/log/nova/nova-conductor.log (1 times)
+PASS:    Traceback module: /var/log/nova/nova-manage.log (0 times)
+PASS:    Traceback module: /var/log/nova/nova-scheduler.log (0 times)
+PASS:    Traceback module: /var/log/swift/swift.log (0 times)
+PASS:    Traceback module: /var/log/httpd/default_error.log (0 times)
+PASS:    Traceback module: /var/log/httpd/ironic_access.log (0 times)
+PASS:    Traceback module: /var/log/httpd/ironic_error.log (0 times)
+PASS:    Traceback module: /var/log/httpd/keystone_wsgi_admin_access.log (0 times)
+PASS:    Traceback module: /var/log/httpd/keystone_wsgi_admin_error.log (0 times)
+PASS:    Traceback module: /var/log/httpd/keystone_wsgi_main_access.log (0 times)
+PASS:    Traceback module: /var/log/httpd/keystone_wsgi_main_error.log (0 times)
+```
+
+### Doing a sosreport check example
+
+```
+[root@undercloud-0 citellus]# ./citellus -p openstack -m sosreport -f ../sosreport-controller-1.localdomain-20170705201135/
+_________ .__  __         .__  .__                
+\_   ___ \|__|/  |_  ____ |  | |  |  __ __  ______
+/    \  \/|  \   __\/ __ \|  | |  | |  |  \/  ___/
+\     \___|  ||  | \  ___/|  |_|  |_|  |  /\___ \ 
+ \______  /__||__|  \___  >____/____/____//____  >
+        \/              \/                     \/ 
+SOSreport was created at Wed Jul  5 20:12:08 UTC 2017
+Hostname: controller-1.localdomain
+Discovered node: controller
+Version: mitaka
++-----------------------------------------------------------------------------+
+| Traceback module                                                            |
++--------------------------------------------+--------------------------------|
+| PASS: 13        FAILED: 2      WARNING: 6  |                Result: FAILED  |
++-----------------------------------------------------------------------------+
+PASS:    Traceback module: ../sosreport-controller-1.localdomain-20170705201135//var/log/ceilometer/agent-notification.log (0 times)
+FAILED:  Traceback module: ../sosreport-controller-1.localdomain-20170705201135//var/log/ceilometer/alarm-evaluator.log (1907 times)
+PASS:    Traceback module: ../sosreport-controller-1.localdomain-20170705201135//var/log/ceilometer/alarm-notifier.log (0 times)
+PASS:    Traceback module: ../sosreport-controller-1.localdomain-20170705201135//var/log/ceilometer/api.log (0 times)
+FAILED:  Traceback module: ../sosreport-controller-1.localdomain-20170705201135//var/log/ceilometer/central.log (125 times)
+PASS:    Traceback module: ../sosreport-controller-1.localdomain-20170705201135//var/log/glance/api.log (0 times)
+PASS:    Traceback module: ../sosreport-controller-1.localdomain-20170705201135//var/log/glance/registry.log (0 times)
+PASS:    Traceback module: ../sosreport-controller-1.localdomain-20170705201135//var/log/heat/heat-api-cfn.log (0 times)
+PASS:    Traceback module: ../sosreport-controller-1.localdomain-20170705201135//var/log/heat/heat-api-cloudwatch.log (0 times)
+PASS:    Traceback module: ../sosreport-controller-1.localdomain-20170705201135//var/log/heat/heat-api.log (0 times)
+WARNING: Traceback module: ../sosreport-controller-1.localdomain-20170705201135//var/log/heat/heat-engine.log (20 times)
+PASS:    Traceback module: ../sosreport-controller-1.localdomain-20170705201135//var/log/keystone/keystone.log (0 times)
+PASS:    Traceback module: ../sosreport-controller-1.localdomain-20170705201135//var/log/neutron/dhcp-agent.log (0 times)
+PASS:    Traceback module: ../sosreport-controller-1.localdomain-20170705201135//var/log/neutron/l3-agent.log (0 times)
+WARNING: Traceback module: ../sosreport-controller-1.localdomain-20170705201135//var/log/nova/nova-api.log (3 times)
+WARNING: Traceback module: ../sosreport-controller-1.localdomain-20170705201135//var/log/nova/nova-conductor.log (18 times)
+WARNING: Traceback module: ../sosreport-controller-1.localdomain-20170705201135//var/log/nova/nova-consoleauth.log (5 times)
+PASS:    Traceback module: ../sosreport-controller-1.localdomain-20170705201135//var/log/nova/nova-manage.log (0 times)
+PASS:    Traceback module: ../sosreport-controller-1.localdomain-20170705201135//var/log/nova/nova-novncproxy.log (0 times)
+WARNING: Traceback module: ../sosreport-controller-1.localdomain-20170705201135//var/log/nova/nova-scheduler.log (1 times)
+WARNING: Traceback module: ../sosreport-controller-1.localdomain-20170705201135//var/log/swift/swift.log (3 times)
+```
