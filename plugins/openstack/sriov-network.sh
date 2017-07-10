@@ -29,6 +29,10 @@ function sriov_check_live(){
 
 function sriov_check_sosreport(){
 
+if [ ${DISCOVERED_NODE} == "director" ]
+then
+  continue
+else
   # Looks for VF enabled
   grep_file "${DIRECTORY}/lspci" "Virtual Function"
 
@@ -53,6 +57,7 @@ function sriov_check_sosreport(){
 
   # Looks for the pci_pass_tru in Nova
   grep_file "${DIRECTORY}/etc/nova/nova.conf" "pci_passthrough_whitelist = "
+fi
 
 }
 
