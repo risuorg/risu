@@ -52,16 +52,12 @@ function count_lines(){
 
 function rabbitmq_check_live(){
 
-if [ ${DISCOVERED_NODE} == "director" ]
+if [ ${DISCOVERED_NODE} == "compute" ]
 then
-  FILE_DESCRIPTORS=$(rabbitmqctl report | awk -v target="${TARGET_HOSTNAME}" '$4 ~ target { flag = 1 } \
-  flag = 1 && /file_descriptors/ { getline; print }' | egrep -o '[0-9]+')
-elif [ ${DISCOVERED_NODE} == "controller" ]
-then
-  FILE_DESCRIPTORS=$(rabbitmqctl report | awk -v target="${TARGET_HOSTNAME}" '$4 ~ target { flag = 1 } \
-  flag = 1 && /file_descriptors/ { print }' | egrep -o '[0-9]+')
-else
   continue
+else
+  FILE_DESCRIPTORS=$(rabbitmqctl report | awk -v target="${TARGET_HOSTNAME}" '$4 ~ target { flag = 1 } \
+  flag = 1 && /total_limit/ { print }' | egrep -o '[0-9]+')
 fi
 
 if [ "${FILE_DESCRIPTORS}" -ge  "65336" ]
@@ -83,18 +79,13 @@ done
 
 function rabbitmq_check_sosreport(){
 
-if [ ${DISCOVERED_NODE} == "director" ]
+if [ ${DISCOVERED_NODE} == "compute" ]
 then
-  FILE_DESCRIPTORS=$(awk -v target="${TARGET_HOSTNAME}" '$4 ~ target { flag = 1 } \
-  flag = 1 && /file_descriptors/ { getline; print ; exit }' \
-  "${DIRECTORY}/sos_commands/rabbitmq/rabbitmqctl_report" | egrep -o '[0-9]+')
-elif [ ${DISCOVERED_NODE} == "controller" ]
-then
-  FILE_DESCRIPTORS=$(awk -v target="${TARGET_HOSTNAME}" '$4 ~ target { flag = 1 } \
-  flag = 1 && /file_descriptors/ { print ; exit }' \
-  "${DIRECTORY}/sos_commands/rabbitmq/rabbitmqctl_report" | egrep -o '[0-9]+')
-else
   continue
+else
+  FILE_DESCRIPTORS=$(awk -v target="${TARGET_HOSTNAME}" '$4 ~ target { flag = 1 } \
+  flag = 1 && /total_limit/ { print ; exit }' \
+  "${DIRECTORY}/sos_commands/rabbitmq/rabbitmqctl_report" | egrep -o '[0-9]+')
 fi
 
 if [ "${FILE_DESCRIPTORS}" -ge  "65336" ]
