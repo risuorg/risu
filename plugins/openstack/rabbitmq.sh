@@ -58,13 +58,23 @@ then
 else
   FILE_DESCRIPTORS=$(rabbitmqctl report | awk -v target="${TARGET_HOSTNAME}" '$4 ~ target { flag = 1 } \
   flag = 1 && /total_limit/ { print }' | egrep -o '[0-9]+')
+  USED_FILE_DESCRIPTORS=$(rabbitmqctl report | awk -v target="${TARGET_HOSTNAME}" '$4 ~ target { flag = 1 } \
+  flag = 1 && /total_used/ { print }' | egrep -o '[0-9]+')
 fi
 
 if [ "${FILE_DESCRIPTORS}" -ge  "65336" ]
 then
-  good "There are currently ${FILE_DESCRIPTORS} file_descriptors available."
+  good "There are currently ${FILE_DESCRIPTORS} total_limit file_descriptors."
 else
-  bad "There are ${FILE_DESCRIPTORS} file_descriptors available."
+  bad "There are ${FILE_DESCRIPTORS} total_limit file_descriptors."
+fi
+
+AVAILABLE_FILE_DESCRIPTORS=$(( FILE_DESCRIPTORS - USED_FILE_DESCRIPTORS ))
+if [ "${AVAILABLE_FILE_DESCRIPTORS}" -gt "1000" ]
+then
+  good "There are ${USED_FILE_DESCRIPTORS} total_used file_descriptors, ${FILE_DESCRIPTORS} total_limit and ${AVAILABLE_FILE_DESCRIPTORS} still unused."
+else
+  bad "There are ${USED_FILE_DESCRIPTORS} total_used file_descriptors, ${FILE_DESCRIPTORS} total_limit and ${AVAILABLE_FILE_DESCRIPTORS} still unused."
 fi
 
 LIST_OF_PROJECTS="ceilometer glance heat keystone neutron nova swift"
@@ -86,13 +96,24 @@ else
   FILE_DESCRIPTORS=$(awk -v target="${TARGET_HOSTNAME}" '$4 ~ target { flag = 1 } \
   flag = 1 && /total_limit/ { print ; exit }' \
   "${DIRECTORY}/sos_commands/rabbitmq/rabbitmqctl_report" | egrep -o '[0-9]+')
+  USED_FILE_DESCRIPTORS=$(awk -v target="${TARGET_HOSTNAME}" '$4 ~ target { flag = 1 } \
+  flag = 1 && /total_used/ { print ; exit }' \
+  "${DIRECTORY}/sos_commands/rabbitmq/rabbitmqctl_report" | egrep -o '[0-9]+')
 fi
 
 if [ "${FILE_DESCRIPTORS}" -ge  "65336" ]
 then
-  good "There are currently ${FILE_DESCRIPTORS} file_descriptors available."
+  good "There are currently ${FILE_DESCRIPTORS} total_limit file_descriptors."
 else
-  bad "There are ${FILE_DESCRIPTORS} file_descriptors available."
+  bad "There are ${FILE_DESCRIPTORS} total_limit file_descriptors."
+fi
+
+AVAILABLE_FILE_DESCRIPTORS=$(( FILE_DESCRIPTORS - USED_FILE_DESCRIPTORS ))
+if [ "${AVAILABLE_FILE_DESCRIPTORS}" -gt "1000" ]
+then
+  good "There are ${USED_FILE_DESCRIPTORS} total_used file_descriptors, ${FILE_DESCRIPTORS} total_limit and ${AVAILABLE_FILE_DESCRIPTORS} still unused."
+else
+  bad "There are ${USED_FILE_DESCRIPTORS} total_used file_descriptors, ${FILE_DESCRIPTORS} total_limit and ${AVAILABLE_FILE_DESCRIPTORS} still unused."
 fi
 
 LIST_OF_PROJECTS="ceilometer glance heat keystone neutron nova swift"
