@@ -52,6 +52,11 @@ function keystone_check_live(){
     good "There are currently ${TOKENS} expired tokens in MySQL." 
   fi
 
+  if [ ! -d "${DIRECTORY}/var/log/keystone" ]
+  then
+    continue
+  fi
+
   # Keystone cleanup last-run
   LASTRUN=$(awk '/Total expired tokens removed/ { print $1 " " $2 }' /var/log/keystone/keystone.log | tail -1)
   if [ -n "${LASTRUN}" ]
@@ -70,6 +75,10 @@ function keystone_check_sosreport(){
   grep_file "${DIRECTORY}/var/spool/cron/keystone" "keystone-manage token_flush"
   awk '/keystone-manage/ && /^[^#]/ { print $0 }' "${DIRECTORY}/var/spool/cron/keystone" 2>/dev/null
 
+  if [ ! -d "${DIRECTORY}/var/log/keystone" ]
+  then
+    continue
+  fi
   # Keystone cleanup last-run
   LASTRUN=$(awk '/Total expired tokens removed/ { print $1 " " $2 }' "${DIRECTORY}/var/log/keystone/keystone.log" | tail -1)
   if [ -n "${LASTRUN}" ]
