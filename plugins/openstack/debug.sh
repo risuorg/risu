@@ -14,36 +14,33 @@
 
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-REFNAME="Debug module"
 
-LIST_OF_PROJECTS="ceilometer glance heat keystone neutron nova swift httpd"
-LIST_OF_CONFIGS="ceilometer.conf glance-api.conf heat.conf keystone.conf neutron.conf nova.conf swift.conf"
+# if we are running against fs snapshot we check installed-rpms
 
-function debug_check_live(){
+if [ $CITELLUS_LIVE -eq 0 ];  then
+  config_files=$(
+  for i in $(sed -n -r -e 's/^openstack-([a-z]*)-.*$/\1/p' ${CITELLUS_ROOT}/installed-rpms \
+  | sort | uniq); do ls ${CITELLUS_ROOT}/etc/$i/*.conf 2>/dev/null | grep '/etc/[^/]*/[^/]*\.conf'; \
+  done)
+fi
+# if we are running against live system we can use rpm
 
-  for PROJECT in $LIST_OF_PROJECTS; do
-    for CONFIG in $LIST_OF_CONFIGS; do 
-      for LOGFILE in /etc/${PROJECT}/${CONFIG}; do
-	[ -e "$LOGFILE" ] || continue
-	  grep_file "${LOGFILE}" "^debug.*=.*true"
-      done
-    done
-  done
+if [ $CITELLUS_LIVE -eq 1 ];  then
+  config_files=$(rpm -qa -c 'openstack-*' | grep '/etc/[^/]*/[^/]*\.conf')
+fi
 
-}
+flag=0
+for config_file in $config_files; do
+  [ -f "$config_file" ] || continue
+  if grep -q '^debug[ \t]*=[ \t]*true' $config_file >&2; then
+    # to remove the ${CITELLUS_ROOT} from the stderr.
+    config_file=${config_file#$CITELLUS_ROOT}
+    echo "enabled in $config_file" >&2
+  else
+    config_file=${config_file#$CITELLUS_ROOT}
+    echo "disabled in $config_file" >&2
+    flag=1
+  fi
+done
 
-function debug_check_sosreport(){
-
-  for PROJECT in $LIST_OF_PROJECTS; do
-    for CONFIG in $LIST_OF_CONFIGS; do 
-      for LOGFILE in ${DIRECTORY}/etc/${PROJECT}/${CONFIG}; do
-	[ -e "$LOGFILE" ] || continue
-	  grep_file "${LOGFILE}" "^debug.*=.*true"
-      done
-    done
-  done
-
-}
-
-# Checks if the debug is enabled
-debug_check_${CHECK_MODE}
+[ "$flag" = 0 ]

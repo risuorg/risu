@@ -15,24 +15,13 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# Checking Kernel state
-# Ref: None
-REFNAME="Kernel module"
+# this can run against live and also any sort of snapshot of the filesystem
 
-function kernel_check_live(){
-  continue
-}
-
-function kernel_check_sosreport(){
-
-# Looks for the Kernel Out of Memory, panics and soft locks
-
-grep_file_rev "${DIRECTORY}/sos_commands/logs/journalctl_--no-pager_--boot" "oom-killer"
-grep_file_rev "${DIRECTORY}/sos_commands/logs/journalctl_--no-pager_--boot" "soft lockup"
-
-}
-
-# Kernel module
-kernel_check_${CHECK_MODE}
-
-
+if [ ! -f "${CITELLUS_ROOT}/var/spool/cron/keystone" ]; then
+  echo "file /var/spool/cron/keystone not found." >&2
+  exit 1
+fi
+if ! grep -q "keystone-manage token_flush" "${CITELLUS_ROOT}/var/spool/cron/keystone"; then
+  echo "crontab keystone cleanup is not set" >&2
+  exit 1
+fi
