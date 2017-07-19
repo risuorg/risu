@@ -1,10 +1,10 @@
-## Introduction
+# Introduction
 
 Citellus is a program that should help faster identify common pitfails of OpenStack deployments from sosreports.
 
 Please if you have any idea on any improvements please do not hesitate to open an issue.
 
-### Usage
+## Usage
 
 ```
 
@@ -28,8 +28,11 @@ Do stuff with sosreport and write the result to standard output.
 
 
 ```
-### Doing a live check example
+
+## Doing a live check example
+
 > -m live,sosreport select check mode, either sosreport or live
+
 ```
 [root@undercloud-0 citellus]# ./citellus -p openstack -m live
 _________ .__  __         .__  .__                
@@ -81,7 +84,7 @@ PASS:    Traceback module: /var/log/httpd/keystone_wsgi_main_access.log (0 times
 PASS:    Traceback module: /var/log/httpd/keystone_wsgi_main_error.log (0 times)
 ```
 
-### Doing a sosreport check example
+## Doing a sosreport check example
 
 ```
 [root@undercloud-0 citellus]# ./citellus -p openstack -m sosreport -f ../sosreport-controller-1.localdomain-20170705201135/
@@ -122,3 +125,31 @@ PASS:    Traceback module: ../sosreport-controller-1.localdomain-20170705201135/
 WARNING: Traceback module: ../sosreport-controller-1.localdomain-20170705201135//var/log/nova/nova-scheduler.log (1 times)
 WARNING: Traceback module: ../sosreport-controller-1.localdomain-20170705201135//var/log/swift/swift.log (3 times)
 ```
+
+## Writing checks
+
+Citellus tests should conform to the following standards:
+
+- The test script must be executable. Citellus will ignore tests for
+  which it does not have execute permission.
+
+- The test should return one of the following error codes to indicate
+  the test result:
+
+    - 0 -- success
+    - 1 -- failure
+    - 2 -- skipped
+
+A test may make use of the following standard environment variables:
+
+- `$CITELLUS_ROOT` -- tests that parse files should locate them
+  relative to this directory.  For example, if your script needs to
+  examine `/etc/sysctl.conf`, it might have something like:
+
+          if grep -q '^net.ipv4.ip_forward = 1' "${CITELLUS_ROOT}/etc/sysctl.conf"; then
+              ...
+          fi
+- `$CITELLUS_LIVE` -- if `0`, tests are running against a filesystem
+  snapshot of some sort.  Tests should not attempt to use commands
+  that interrogate the system on which it is running.  If this
+  variable is `1`, the tests are running on a live system.
