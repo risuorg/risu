@@ -44,17 +44,7 @@ show_logo(){
 }
 
 show_help(){
-  show_logo
-
-  echo ""
   echo "Usage: ${0##*/} [-hv] [--live] [DIRECTORY] [script folder] ... "
-  echo "Run collection of tests either on fs snapshot or on live system and writes the result to standard output."
-  echo ""
-  echo "              -h                  display this help and exit"
-  echo "              --live              run script collections on live system"
-  echo "              DIRECTORY           run script collections on directory"
-  echo "              -v                  verbose mode."
-  
 }
 
 export CITELLUS_LIVE="0"
