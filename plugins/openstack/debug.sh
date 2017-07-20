@@ -41,6 +41,8 @@ for config_file in $config_files; do
   else
     config_file=${config_file#$CITELLUS_ROOT}
     echo "disabled in $config_file" >&2
+    flag=1
   fi
 
 done
+[[ "x$flag" = "x" ]] || exit 1
