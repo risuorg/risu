@@ -7,21 +7,7 @@ Please if you have any idea on any improvements please do not hesitate to open a
 ## Usage help
 
 ```
-# ./citellus --help
-_________ .__  __         .__  .__                
-\_   ___ \|__|/  |_  ____ |  | |  |  __ __  ______
-/    \  \/|  \   __\/ __ \|  | |  | |  |  \/  ___/
-\     \___|  ||  | \  ___/|  |_|  |_|  |  /\___ \ 
- \______  /__||__|  \___  >____/____/____//____  >
-        \/              \/                     \/ 
-
 Usage: citellus [-hv] [--live] [DIRECTORY] [script folder] ... 
-Run collection of tests either on fs snapshot or on live system and writes the result to standard output.
-
-              -h                  display this help and exit
-              --live              run script collections on live system
-              DIRECTORY           run script collections on directory
-              -v                  verbose mode.
 ```
 
 ## Doing a live check example
