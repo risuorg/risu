@@ -27,7 +27,7 @@ scriptname() {
 }
 
 discover_tests() {
-    find . -type d -name .git -prune -o -type f -name ${0##*/} -prune -o -type f -perm /u+x -print
+    find $spec -type d -execdir test -f {}/.citellus_tests \; -exec find {} -type f -perm /u+x -print \;
 }
 
 show_stderr() {
@@ -47,12 +47,12 @@ show_help(){
   show_logo
 
   echo ""
-  echo "Usage: ${0##*/} [-hv] [--live] [--file DIRECTORY] ..."
+  echo "Usage: ${0##*/} [-hv] [--live] [DIRECTORY] [script folder] ... "
   echo "Run collection of tests either on fs snapshot or on live system and writes the result to standard output."
   echo ""
   echo "              -h                  display this help and exit"
   echo "              --live              run script collections on live system"
-  echo "              --file DIRECTORY    run script collections on directory"
+  echo "              DIRECTORY           run script collections on directory"
   echo "              -v                  verbose mode."
   
 }
@@ -64,15 +64,6 @@ while :; do
     case "$1" in
         --live) CITELLUS_LIVE="1"
                 shift
-                ;;
-        -f|--file)
-                if [ -n "$2" ]; then
-                    CITELLUS_ROOT=$2
-                    shift
-                else
-                    echo "--file requires a non-empty option argument." >&2
-                    exit 1
-                fi
                 ;;
         -v|--verbose)
                 set -x
@@ -97,6 +88,11 @@ done
 tmpdir=$(mktemp -d testsXXXXXX)
 tmpdir=$(readlink -f $tmpdir)
 trap "rm -rf $tmpdir" EXIT
+
+if [ "x${CITELLUS_LIVE}" = "x0" ]; then
+  CITELLUS_ROOT=$1
+  shift
+fi
 
 if [ -n "$*" ]; then
     specs=("$@")
