@@ -43,6 +43,20 @@ show_logo(){
   echo "        \/              \/                     \/ "
 }
 
+show_help(){
+  show_logo
+
+  echo ""
+  echo "Usage: ${0##*/} [-hv] [--live] [--file DIRECTORY] ..."
+  echo "Run collection of tests either on fs snapshot or on live system and writes the result to standard output."
+  echo ""
+  echo "              -h                  display this help and exit"
+  echo "              --live              run script collections on live system"
+  echo "              --file DIRECTORY    run script collections on directory"
+  echo "              -v                  verbose mode."
+  
+}
+
 export CITELLUS_LIVE="0"
 export CITELLUS_ROOT
 
@@ -63,6 +77,10 @@ while :; do
         -v|--verbose)
                 set -x
                 shift
+                ;;
+        -h|-\?|--help)
+                show_help
+                exit
                 ;;
 	--)	shift
 		break
