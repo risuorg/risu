@@ -25,8 +25,6 @@ mode: live
 # plugins/pacemaker/fence_device.sh: skipped 
 # plugins/pacemaker/nodes_number.sh: skipped 
 # plugins/pacemaker/stonith_enabled.sh: skipped 
-
-
 ```
 
 ## Doing a fs snapshot check example
