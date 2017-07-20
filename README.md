@@ -4,10 +4,31 @@ Citellus is a program that should help faster identify common pitfails of OpenSt
 
 Please if you have any idea on any improvements please do not hesitate to open an issue.
 
+## Usage help
+
+```
+# ./citellus -h
+_________ .__  __         .__  .__                
+\_   ___ \|__|/  |_  ____ |  | |  |  __ __  ______
+/    \  \/|  \   __\/ __ \|  | |  | |  |  \/  ___/
+\     \___|  ||  | \  ___/|  |_|  |_|  |  /\___ \ 
+ \______  /__||__|  \___  >____/____/____//____  >
+        \/              \/                     \/ 
+
+Usage: citellus [-hv] [--live] [--file DIRECTORY] ...
+Run collection of tests either on fs snapshot or on live system and writes the result to standard output.
+
+              -h                  display this help and exit
+              --live              run script collections on live system
+              --file DIRECTORY    run script collections on directory
+              -v                  verbose mode.
+
+```
+
 ## Doing a live check example
 
 ```
-[root@undercloud-0 citellus]# ./citellus --live
+# ./citellus --live
 _________ .__  __         .__  .__                
 \_   ___ \|__|/  |_  ____ |  | |  |  __ __  ______
 /    \  \/|  \   __\/ __ \|  | |  | |  |  \/  ___/
@@ -61,7 +82,7 @@ mode: live
 ## Doing a fs snapshot check example
 
 ```
-[root@undercloud-0 citellus]# ./citellus --file /root/sosreport-compute-0.localdomain-20170717184033/
+# ./citellus --file /root/sosreport-compute-0.localdomain-20170717184033/
 _________ .__  __         .__  .__                
 \_   ___ \|__|/  |_  ____ |  | |  |  __ __  ______
 /    \  \/|  \   __\/ __ \|  | |  | |  |  \/  ___/
