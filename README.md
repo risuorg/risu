@@ -1,6 +1,6 @@
 # Introduction
 
-Citellus is a program that should help faster identify common pitfails of OpenStack deployments from sosreports.
+Citellus is a program that should help faster identify common pitfails of OpenStack deployments from live system or any sort of snapshot of the filesystem.
 
 Please if you have any idea on any improvements please do not hesitate to open an issue.
 
