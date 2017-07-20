@@ -21,7 +21,7 @@ if [ $CITELLUS_LIVE -eq 1 ];  then
 
   config_files=$(rpm -qa -c 'openstack-*' | grep '/etc/[^/]*/[^/]*\.conf')
 
-elif [ $CITELLUS_LIVE -eq 0]; then
+elif [ $CITELLUS_LIVE -eq 0 ]; then
 
   config_files=$(
   for i in $(sed -n -r -e 's/^openstack-([a-z]*)-.*$/\1/p' ${CITELLUS_ROOT}/installed-rpms \
