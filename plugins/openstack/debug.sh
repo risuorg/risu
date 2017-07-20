@@ -17,11 +17,11 @@
 
 # if we are running against live system or fs snapshot
 
-if [ $CITELLUS_LIVE -eq 1 ];  then
+if [ "x$CITELLUS_LIVE" = "x1" ];  then
 
   config_files=$(rpm -qa -c 'openstack-*' | grep '/etc/[^/]*/[^/]*\.conf')
 
-elif [ $CITELLUS_LIVE -eq 0 ]; then
+elif [ "x$CITELLUS_LIVE" = "x0" ]; then
 
   config_files=$(
   for i in $(sed -n -r -e 's/^openstack-([a-z]*)-.*$/\1/p' ${CITELLUS_ROOT}/installed-rpms \
@@ -30,7 +30,6 @@ elif [ $CITELLUS_LIVE -eq 0 ]; then
 
 fi
 
-flag=0
 for config_file in $config_files; do
 
   [ -f "$config_file" ] || continue
@@ -42,9 +41,6 @@ for config_file in $config_files; do
   else
     config_file=${config_file#$CITELLUS_ROOT}
     echo "disabled in $config_file" >&2
-    flag=1
   fi
 
 done
-
-[ "$flag" = 0 ]

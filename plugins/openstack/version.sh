@@ -34,14 +34,14 @@ if [ ! -z $PACKSTACK ]; then
 fi
 }
 
-{ if [ $CITELLUS_LIVE -eq 0 ];  then
+{ if [ "x$CITELLUS_LIVE" = "x0" ];  then
   # Check which version we are using
   VERSION=$(grep "openstack-nova-common" "${CITELLUS_ROOT}/installed-rpms")
   PACKSTACK=$(grep "openstack-packstack-" "${CITELLUS_ROOT}/installed-rpms")
   discover_version
 fi } >&2
 
-{ if [ $CITELLUS_LIVE -eq 1 ];  then
+{ if [ "x$CITELLUS_LIVE" = "x1" ];  then
   # Check which version we are using
   VERSION=$(rpm -qa | grep "openstack-nova-common")
   PACKSTACK=$(rpm -qa | grep "openstack-packstack-")

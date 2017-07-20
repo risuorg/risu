@@ -43,12 +43,12 @@ show_logo(){
   echo "        \/              \/                     \/ "
 }
 
-export CITELLUS_LIVE=0
+export CITELLUS_LIVE="0"
 export CITELLUS_ROOT
 
 while :; do
     case "$1" in
-        --live) CITELLUS_LIVE=1
+        --live) CITELLUS_LIVE="1"
                 shift
                 ;;
         -f|--file)
