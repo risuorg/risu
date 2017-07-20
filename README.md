@@ -22,7 +22,6 @@ Run collection of tests either on fs snapshot or on live system and writes the r
               --live              run script collections on live system
               DIRECTORY           run script collections on directory
               -v                  verbose mode.
-
 ```
 
 ## Doing a live check example
