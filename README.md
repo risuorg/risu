@@ -17,7 +17,7 @@ _________ .__  __         .__  .__
 citellus: found 4 tests
 mode: live
 # ./plugins/openstack/crontab_keystone_cleanup.sh: okay 
-# ./plugins/openstack/debug.sh: failed 
+# ./plugins/openstack/debug.sh: okay 
     disabled in /etc/neutron/neutron.conf
     disabled in /etc/neutron/rootwrap.conf
     disabled in /etc/nova/nova.conf
@@ -54,14 +54,14 @@ mode: live
     disabled in /etc/heat/heat.conf
 # ./plugins/openstack/version.sh: okay 
     mitaka
-# ./plugins/system/kernel_panic.sh: okay 
+# ./plugins/system/kernel_panic.sh: okay
 
 ```
 
 ## Doing a fs snapshot check example
 
 ```
-[root@undercloud-0 citellus]# ./citellus --file ~/sosreport-undercloud-0.redhat.local-20170628164546/
+[root@undercloud-0 citellus]# ./citellus --file /root/sosreport-compute-0.localdomain-20170717184033/
 _________ .__  __         .__  .__                
 \_   ___ \|__|/  |_  ____ |  | |  |  __ __  ______
 /    \  \/|  \   __\/ __ \|  | |  | |  |  \/  ___/
@@ -69,22 +69,25 @@ _________ .__  __         .__  .__
  \______  /__||__|  \___  >____/____/____//____  >
         \/              \/                     \/ 
 citellus: found 4 tests
-mode: fs snapshot /root/sosreport-undercloud-0.redhat.local-20170628164546/
-# ./plugins/openstack/crontab_keystone_cleanup.sh: failed 
+mode: fs snapshot /root/sosreport-compute-0.localdomain-20170717184033/
+# ./plugins/openstack/crontab_keystone_cleanup.sh: skipped 
     file /var/spool/cron/keystone not found.
-# ./plugins/openstack/debug.sh: failed 
+# ./plugins/openstack/debug.sh: okay 
     disabled in /etc/ceilometer/ceilometer.conf
+    enabled in /etc/cinder/cinder.conf
+    disabled in /etc/cinder/rootwrap.conf
     disabled in /etc/glance/glance-api.conf
     disabled in /etc/glance/glance-cache.conf
+    disabled in /etc/glance/glance-glare.conf
     disabled in /etc/glance/glance-registry.conf
     disabled in /etc/glance/glance-scrubber.conf
     disabled in /etc/heat/heat.conf
-    disabled in /etc/ironic/ironic.conf
-    disabled in /etc/ironic/rootwrap.conf
     disabled in /etc/keystone/keystone.conf
     disabled in /etc/keystone/logging.conf
     disabled in /etc/neutron/neutron.conf
+    disabled in /etc/neutron/neutron_lbaas.conf
     disabled in /etc/neutron/rootwrap.conf
+    disabled in /etc/neutron/services_lbaas.conf
     disabled in /etc/nova/nova.conf
     disabled in /etc/nova/rootwrap.conf
     disabled in /etc/puppet/auth.conf
@@ -98,8 +101,9 @@ mode: fs snapshot /root/sosreport-undercloud-0.redhat.local-20170628164546/
     disabled in /etc/swift/proxy-server.conf
     disabled in /etc/swift/swift.conf
 # ./plugins/openstack/version.sh: okay 
-    liberty
-# ./plugins/system/kernel_panic.sh: okay 
+    mitaka
+# ./plugins/system/kernel_panic.sh: skipped 
+    file /sos_commands/logs/journalctl_--no-pager_--boot not found.
 ```
 
 ## Writing checks
