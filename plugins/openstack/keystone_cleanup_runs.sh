@@ -23,4 +23,12 @@ if [ ! -f "${CITELLUS_ROOT}/var/log/keystone/keystone.log" ]; then
 fi
 
 RUNS=$(grep 'Total expired tokens removed' "${CITELLUS_ROOT}/var/log/keystone/keystone.log" | wc -l)
-[[ "x${RUNS}" = "x" ]] && exit 1 || echo "${RUNS}" >&2 && exit 0
+
+[[ "x${RUNS}" = "x" ]] && exit 1
+
+if [[ "${RUNS}" -eq 0 ]]; then
+    exit 1
+elif [[ "${RUNS}" -ge 1 ]]; then
+    echo "${RUNS}" >&2
+    exit 0
+fi
