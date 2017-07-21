@@ -82,6 +82,10 @@ trap "rm -rf $tmpdir" EXIT
 
 if [ "x${CITELLUS_LIVE}" = "x0" ]; then
   CITELLUS_ROOT=$(cd $(dirname "$1") && pwd -P)/$(basename "$1")
+  if [ ! -d "${CITELLUS_ROOT}" ]; then
+    show_help
+    exit 1
+  fi 
   shift
 fi
 
