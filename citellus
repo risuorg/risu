@@ -44,8 +44,6 @@ show_logo(){
 }
 
 show_help(){
-  show_logo
-  echo ""
   echo "Usage: ${0##*/} [-hv] [--live] [DIRECTORY] [script folder] ... "
 }
 
