@@ -22,10 +22,4 @@ if [ ! -f "${CITELLUS_ROOT}/etc/redhat-release" ]; then
   exit 2
 fi
 
-if grep -q "^Red Hat.*7\.3.*$" "${CITELLUS_ROOT}/etc/redhat-release"
-then
-  exit 0
-else
-  cat /etc/redhat-release >&2
-  exit 1
-fi
+cat /etc/redhat-release >&2
