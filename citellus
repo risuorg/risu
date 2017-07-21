@@ -21,6 +21,7 @@ TEST_OKAY=$(tput setaf 2; echo "okay"; tput sgr0)
 TEST_SKIPPED=$(tput setaf 3; echo "skipped"; tput sgr0)
 TEST_FAILED=$(tput setaf 1; echo "failed"; tput sgr0)
 TEST_WTF=$(tput setaf 1; echo "unexpected result"; tput sgr0)
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 scriptname() {
     echo "${0##*/}: $1" >&2
@@ -80,14 +81,14 @@ tmpdir=$(readlink -f $tmpdir)
 trap "rm -rf $tmpdir" EXIT
 
 if [ "x${CITELLUS_LIVE}" = "x0" ]; then
-  CITELLUS_ROOT=$1
+  CITELLUS_ROOT=$(cd $(dirname "$1") && pwd -P)/$(basename "$1")
   shift
 fi
 
 if [ -n "$*" ]; then
     specs=("$@")
 else
-    specs=( $(find * -type d -execdir test -f {}/.citellus_tests \; -print) )
+    specs=( $(find "${DIR}" -type d -execdir test -f {}/.citellus_tests \; -print) )
 fi
 
 for spec in "${specs[@]}"; do
