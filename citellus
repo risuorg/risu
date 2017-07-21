@@ -91,10 +91,11 @@ else
 fi
 
 for spec in "${specs[@]}"; do
+    [ -d "$spec" ] || continue
     discover_tests "$spec" >> $tmpdir/tests-unsorted
 done
 
-sort -u $tmpdir/tests-unsorted > $tmpdir/tests
+[ -e "$tmpdir/tests-unsorted" ] && sort -u $tmpdir/tests-unsorted > $tmpdir/tests || exit 1
 
 
 show_logo
