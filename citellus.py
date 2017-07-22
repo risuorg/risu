@@ -104,14 +104,57 @@ def findplugins(folder):
             if os.access(script, os.X_OK):
                 plugins.append(script)
         for subfolder in dir:
-            plugins.extend(findplugins(os.path.join(folder,subfolder)))
+            plugins.extend(findplugins(os.path.join(folder, subfolder)))
     return plugins
+
+
+def runplugin(plugin):
+    """
+    Runs provided plugin and outputs message
+    :param plugin:  plugin to execute
+    :return: result, out, err
+    """
+    try:
+        p = subprocess.Popen(plugin, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        out, err = p.communicate()
+        returncode = p.returncode
+    except:
+        returncode = 3
+        out = ""
+        err = ""
+
+    for case in Switch(returncode):
+        if case(0):
+            # OK
+            text = bcolors.green + _("okay") + bcolors.end
+            break
+        if case(1):
+            # FAILED
+            text = bcolors.red + _("failed") + bcolors.end
+            break
+        if case(2):
+            # SKIPPED
+            text = bcolors.orange + _("skipped") + bcolors.end
+            break
+        if case():
+            # UNEXPECTED
+            text = bcolors.red + _("unexpected result") + bcolors.end
+            break
+
+    print "# %s: %s" % (plugin, text)
+
+    if returncode != 0 and returncode != 2:
+        if err != "":
+            print err
+        if out != "":
+            print out
+
+    return returncode, out, err
 
 
 def main():
 
-    description = _(
-        'Citellus allows to analyze a directory against common set of tests, useful for finding common configuration errors')
+    description = _('Citellus allows to analyze a directory against common set of tests, useful for finding common configuration errors')
 
     # Option parsing
     p = argparse.ArgumentParser("citellus.py [arguments]", description=description)
@@ -165,38 +208,8 @@ def main():
 
     # Do the actual execution of plugins
     for plugin in plugins:
-        try:
-            p = subprocess.Popen(plugin, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-            out, err = p.communicate()
-            returncode = p.returncode
-        except:
-            returncode = 3
-
-
-        for case in Switch(returncode):
-            if case(0):
-                # OK
-                text = bcolors.green + _("okay") + bcolors.end
-                break
-            if case(1):
-                # FAILED
-                text = bcolors.red + _("failed") + bcolors.end
-                break
-            if case(2):
-                # SKIPPED
-                text = bcolors.orange + _("skipped") + bcolors.end
-                break
-            if case():
-                # UNEXPECTED
-                text = bcolors.red + _("unexpected result") + bcolors.end
-                break
-
-        print "# %s: %s" % (plugin, text)
-        if returncode != 0 and returncode != 2:
-            if err != "":
-                print err
-            if out != "":
-                print out
+        # prepare functions for plugin
+        returncode, out, err = runplugin(plugin)
 
 
 if __name__ == "__main__":
