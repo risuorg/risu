@@ -24,6 +24,7 @@ import gettext
 import logging
 import os
 import subprocess
+from multiprocessing import Pool, cpu_count
 
 logger = logging.getLogger("citellus")
 logger.setLevel(logging.DEBUG)
@@ -206,10 +207,11 @@ def main():
     else:
         print _("mode: fs snapshot %s" % CITELLUS_ROOT)
 
-    # Do the actual execution of plugins
-    for plugin in plugins:
-        # prepare functions for plugin
-        returncode, out, err = runplugin(plugin)
+    # Set pool for same processes as CPU cores
+    p = Pool(cpu_count())
+
+    # Execute runplugin for each plugin found
+    p.map(runplugin, plugins)
 
 
 if __name__ == "__main__":
