@@ -15,23 +15,16 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# Checking cronjob
-# Ref: https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/8/html-single/director_installation_and_usage/#sect-Tuning_the_Undercloud 
-REFNAME="Cronjob module"
+# this can run against live
 
-function cronjob_check_live(){
-   continue
-}
+[[ "x$CITELLUS_LIVE" = "x1" ]] || exit 2
 
-function cronjob_check_sosreport(){
+TOKENS=$(mysql keystone -e 'select count(*) from token where token.expires < CURTIME();' | egrep -o '[0-9]+')
 
-  # Crontab check
-  grep_file "${DIRECTORY}/var/spool/cron/keystone" "keystone-manage token_flush"
-  grep_file "${DIRECTORY}/var/spool/cron/heat" "heat-manage purge_deleted"
+[ -z ${TOKENS} ] && exit 3
 
-}
-
-# Cluster module
-cronjob_check_${CHECK_MODE}
-
-
+if [[ "${TOKENS}" -ge 1000 ]]; then
+    exit 1
+elif [[ "${TOKENS}" -lt 1000 ]]; then
+    exit 0
+fi
