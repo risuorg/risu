@@ -25,10 +25,10 @@ import logging
 import os
 import subprocess
 from multiprocessing import Pool, cpu_count
+import traceback
 
-logger = logging.getLogger("citellus")
-logger.setLevel(logging.DEBUG)
 
+# Where are we?
 citellusdir = os.path.abspath(os.path.dirname(__file__))
 localedir = os.path.join(citellusdir, 'locale')
 
@@ -62,6 +62,33 @@ class Switch(object):
             return False
 
 
+def conflogging(verbosity=False):
+    """
+    This function configures the logging handlers for console and file
+    """
+
+    # Define logging settings
+    for case in Switch(verbosity):
+        # choices=["info", "debug", "warn", "critical"])
+        if case('debug'):
+            level = logging.DEBUG
+            break
+        if case('critical'):
+            level = logging.CRITICAL
+            break
+        if case('warn'):
+            level = logging.WARN
+            break
+        if case('info'):
+            level = logging.INFO
+            break
+        if case():
+            # Default to DEBUG log level
+            level = logging.INFO
+
+    return level
+
+
 class bcolors:
     black = '\033[30m'
     red = '\033[31m'
@@ -82,6 +109,11 @@ class bcolors:
 
 
 def show_logo():
+    """
+    Prints citellus Logo
+    :return:
+    """
+
     logo = "_________ .__  __         .__  .__                ", \
            "\_   ___ \|__|/  |_  ____ |  | |  |  __ __  ______", \
            "/    \  \/|  \   __\/ __ \|  | |  | |  |  \/  ___/", \
@@ -98,6 +130,9 @@ def findplugins(folder):
     :param folder: Folder to use as source for plugin search
     :return:
     """
+
+    logger = logging.getLogger(__name__)
+
     plugins = []
     for root, dir, files in os.walk(folder):
         for file in files:
@@ -106,6 +141,7 @@ def findplugins(folder):
                 plugins.append(script)
         for subfolder in dir:
             plugins.extend(findplugins(os.path.join(folder, subfolder)))
+    logger.debug(msg=_('Found plugins: %s') % plugins)
     return plugins
 
 
@@ -115,6 +151,10 @@ def runplugin(plugin):
     :param plugin:  plugin to execute
     :return: result, out, err
     """
+
+    logger = logging.getLogger(__name__)
+
+    logger.debug(msg=_('Running plugin: %s') % plugin)
     try:
         p = subprocess.Popen(plugin, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         out, err = p.communicate()
@@ -122,7 +162,7 @@ def runplugin(plugin):
     except:
         returncode = 3
         out = ""
-        err = ""
+        err = traceback.format_exc()
 
     for case in Switch(returncode):
         if case(0):
@@ -154,8 +194,13 @@ def runplugin(plugin):
 
 
 def main():
+    """
+    Main function for the program
+    :return: none
+    """
 
-    description = _('Citellus allows to analyze a directory against common set of tests, useful for finding common configuration errors')
+    description = _(
+        'Citellus allows to analyze a directory against common set of tests, useful for finding common configuration errors')
 
     # Option parsing
     p = argparse.ArgumentParser("citellus.py [arguments]", description=description)
@@ -163,8 +208,16 @@ def main():
                    action='store_true')
     p.add_argument("-v", "--verbose", dest="verbose", help=_("Execute in verbose mode"), default=False,
                    action='store_true')
+    p.add_argument('-d', "--verbosity", dest="verbosity",
+                   help=_("Set verbosity level for messages while running/logging"),
+                   default="info", choices=["info", "debug", "warn", "critical"])
 
     options, unknown = p.parse_known_args()
+
+    # Configure logging
+    logging.basicConfig(level=conflogging(verbosity=options.verbosity))
+
+    logger = logging.getLogger(__name__)
 
     # Enable LIVE mode if parameter passed
     if options.live:
@@ -177,11 +230,12 @@ def main():
 
     plugin_path = os.path.join(citellusdir, 'plugins')
 
+    logger.debug(msg=_('Additional parameters: %s') % unknown)
     if unknown:
         # We've additional arguments passed so it must be the folder to use or plugins
-        if len(unknown) == 1:
+        if len(unknown) > 0:
             CITELLUS_ROOT = unknown[0]
-        elif len(unknown) == 2:
+        if len(unknown) > 1:
             CITELLUS_PLUGINS = unknown[1]
     else:
         CITELLUS_ROOT = ""
@@ -191,6 +245,7 @@ def main():
     os.environ['CITELLUS_LIVE'] = "%s" % CITELLUS_LIVE
 
     if options.verbose:
+        logger.debug(msg=_('Verbose mode enabled at level: %s') % options.verbosity)
         # Enable verbose on scripts
         os.environ['CITELLUS_DEBUG'] = "%s" % options.verbose
 
@@ -201,7 +256,7 @@ def main():
     plugins = findplugins(plugin_path)
 
     show_logo()
-    print _("found %s tests at %s") % (len(plugins), plugin_path)
+    print _("found #%s tests at %s") % (len(plugins), plugin_path)
     if CITELLUS_LIVE == 1:
         print _("mode: live")
     else:
