@@ -15,8 +15,11 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# Checking Tracebacks
-# Ref: None
-REFNAME="Hello Module"
+# check redhat-release
 
-echo 'Hello world!'
+if [ ! -f "${CITELLUS_ROOT}/etc/redhat-release" ]; then
+  echo "file /etc/redhat-release not found." >&2
+  exit 2
+fi
+
+cat /etc/redhat-release >&2

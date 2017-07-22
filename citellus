@@ -1,6 +1,6 @@
 #!/bin/bash
-
 # Copyright (C) 2017   Robin Cernin (rcernin@redhat.com)
+#  Lars Kellogg-Stedman <lars@oddbit.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -15,189 +15,119 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+# this can run against live and also any sort of snapshot of the filesystem
+
+TEST_OKAY=$(tput setaf 2; echo "okay"; tput sgr0)
+TEST_SKIPPED=$(tput setaf 3; echo "skipped"; tput sgr0)
+TEST_FAILED=$(tput setaf 1; echo "failed"; tput sgr0)
+TEST_WTF=$(tput setaf 1; echo "unexpected result"; tput sgr0)
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-# Load all necessary functions
-source ${DIR}/common_functions
+scriptname() {
+    echo "${0##*/}: $1" >&2
+}
 
-# Unset all variables that might be possibly set.
+discover_tests() {
+    find $spec -type d -execdir test -f {}/.citellus_tests \; -exec find {} -type f -perm /u+x -print \;
+}
 
-# By default turn off all filters.
-verbose_warn=0
-verbose_good=0
-verbose_bad=0
+show_stderr() {
+    sed 's/^/    /' $tmpdir/stderr
+}
+
+show_logo(){
+  echo "_________ .__  __         .__  .__                "
+  echo "\_   ___ \|__|/  |_  ____ |  | |  |  __ __  ______"
+  echo "/    \  \/|  \   __\/ __ \|  | |  | |  |  \/  ___/"
+  echo "\     \___|  ||  | \  ___/|  |_|  |_|  |  /\___ \ "
+  echo " \______  /__||__|  \___  >____/____/____//____  >"
+  echo "        \/              \/                     \/ "
+}
+
+show_help(){
+  echo "Usage: ${0##*/} [-hv] [--live] [DIRECTORY] [script folder] ... "
+}
+
+export CITELLUS_LIVE="0"
+export CITELLUS_ROOT
 
 while :; do
-    case $1 in
-        -h|-\?|--help)
-            show_help
-            exit
-            ;;
-        -f|--file)
-            if [ -n "$2" ]; then
-                DIRECTORY=$2
+    case "$1" in
+        --live) CITELLUS_LIVE="1"
                 shift
-            else
-                echo '[WRONG] "--file" requires a non-empty option argument.' >&2
-                exit 1
-            fi
-            ;;
-        --file=?*)
-            DIRECTORY=${1#*=}
-            ;;
-        --file=)
-            echo '[WRONG] "--file" requires a non-empty option argument.' >&2
-            exit 1
-            ;;
+                ;;
         -v|--verbose)
-            set -x
-            ;;
-        -m|--mode)
-            if [ -n "$2" ]; then
-                CHECK_MODE=$2
+                set -x
                 shift
-            else
-                echo '[WRONG] "--mode" requires a non-empty option argument.' >&2
-                exit 1
-            fi
-            ;;
-        -p|--plugin)
-            if [ -n "$2" ]; then
-                PLUGIN=$2
-                shift
-            else
-                echo '"[WRONG] --plugin" requires a non-empty option argument.' >&2
-                exit 1
-            fi
-            ;;
-        -d|--display)
-            if [ -n "$2" ]; then
-                FILTER=$2
-                shift
-            else
-                echo '[WRONG] "--display" requires a non-empty option argument.' >&2
-                exit 1
-            fi
-            ;;
-        --)
-            shift
-            break
-            ;;
+                ;;
+        -h|-\?|--help)
+                show_help
+                exit
+                ;;
+	--)	shift
+		break
+		;;
         -?*)
-            echo "[WRONG] Unknown option: ${1}" >&2
-            exit 1
-            ;;
-        *)
-            break
+                echo "unknown option: ${1}" >&2
+                exit 1
+                ;;
+	*)	break
+		;;
     esac
-
-    shift
 done
 
-# Display logo
-show_logo
+tmpdir=$(mktemp -d testsXXXXXX)
+tmpdir=$(readlink -f $tmpdir)
+trap "rm -rf $tmpdir" EXIT
 
-# Here we are going to set the display filter we want.
-# By default all filters are on unless specified explicitly.
-
-FILTER="$(echo ${FILTER} | tr ',' ' ')"
-if [ -z "${FILTER}" ]
-then 
-  # All filters are on if no filter was specified.
-  verbose_warn=1
-  verbose_good=1
-  verbose_bad=1
+if [ "x${CITELLUS_LIVE}" = "x0" ]; then
+  CITELLUS_ROOT=$(cd $(dirname "$1") && pwd -P)/$(basename "$1")
+  if [ ! -d "${CITELLUS_ROOT}" ]; then
+    show_help
+    exit 1
+  fi 
+  shift
 fi
 
-if [ -n "${FILTER}" ]
-then
-  for filter in ${FILTER}
-  do
-    match_filter ${filter} "warn good bad"
-    if [[ "${FOUND}" -eq 1 ]] && [[ ${filter} = "good" ]]
-    then
-      verbose_good=1
-    elif [[ "${FOUND}" -eq 1 ]] && [[ ${filter} = "bad" ]]
-    then
-      verbose_bad=1
-    elif [[ "${FOUND}" -eq 1 ]] && [[ ${filter} = "warn" ]]
-    then
-      verbose_warn=1
-    fi
-  done
-fi
-
-if [ -z "${CHECK_MODE}" ] || { [ "${CHECK_MODE}" = "sosreport" ] && [ ! -d "${DIRECTORY}" ] ;} 
-then
-  bad "Check mode wasn't specified or sosreport directory is wrong." 
-  exit 1
-fi
-
-# Now we should already know if we are doing live or sosreport check, hence we source relevant file.
-if [ ${CHECK_MODE} = "live" ]
-then
-  source ${DIR}/live_functions
-elif [ ${CHECK_MODE} = "sosreport" ]
-then
-  source ${DIR}/sosreport_functions
+if [ -n "$*" ]; then
+    specs=("$@")
 else
-  bad "Please specify correct check mode. Currently it is either sosreport or live."
-  exit 1
+    specs=( $(find "${DIR}" -type d -execdir test -f {}/.citellus_tests \; -print) )
 fi
 
-init_program
+for spec in "${specs[@]}"; do
+    [ -d "$spec" ] || continue
+    discover_tests "$spec" >> $tmpdir/tests-unsorted
+done
 
-PYTHON="/usr/bin/python"
-PLUGIN="$(echo ${PLUGIN} | tr ',' ' ')"
-TMPFILE="$(mktemp /tmp/cittelus-script.XXXXXX)"
+[ -e "$tmpdir/tests-unsorted" ] && sort -u $tmpdir/tests-unsorted > $tmpdir/tests || exit 1
 
-# Here we check if any plugin was specified.
-if [ -n "${PLUGIN}" ]
-then
-  for plugin in ${PLUGIN}
-  do
 
-    # Go thru the list of plugins and check they have relevant folder in ./plugins
-    # and if we have found plugin in ./plugins then we will execute the scripts.
+show_logo
+test_count=$(wc -l < $tmpdir/tests)
+scriptname "found $test_count tests"
+[[ $CITELLUS_LIVE = 1 ]] && echo "mode: live" || echo "mode: fs snapshot $CITELLUS_ROOT"
 
-    match_filter "${DIR}/plugins/${plugin}" "${DIR}/plugins/*"
-    if [[ "${FOUND}" -eq "1" ]]
-    then
+while read test; do
+    echo -n "# $test: "
+    (
+    cd $(dirname $test)
+    ./$(basename $test) > $tmpdir/stdout 2> $tmpdir/stderr
+    )
+    result=$?
 
-      # This if clause is executed only if plugin was set to OpenStack.
-      # We are printing the node either controller, compute or director and
-      # its version.
-
-      if [ "${plugin}" = "openstack" ]
-	then
-          get_version
-	  discover_node
-	  print_version
-      fi
-
-      for FILE in ${DIR}/plugins/"${plugin}"/*
-      do
-        [ -f "${FILE}" ] || continue
-        EXTENSION=${FILE##*.}
-	if [ "${plugin}" = "openstack" ]
-	  then
-	    case ${EXTENSION} in
-	      sh) 
-                 execute_sh
-                 ;;
-	      py) ${PYTHON} ${FILE} ${DIRECTORY} ;;
-	      *) echo "File: ${FILE}. Usupported format." ;;
-	    esac
-          else
-            case ${EXTENSION} in
-              sh)
-                 source ${FILE}
-                 ;;
-              py) ${PYTHON} ${FILE} ${DIRECTORY} ;;
-              *) echo "File: ${FILE}. Usupported format." ;;
-            esac
-        fi
-      done
+    if [[ $result -eq 0 ]]; then
+        echo $TEST_OKAY
+	show_stderr
+    elif [[ $result -eq 2 ]]; then
+        echo $TEST_SKIPPED
+	show_stderr
+    elif [[ $result -eq 1 ]]; then
+        echo $TEST_FAILED
+        show_stderr
+    else
+        echo $TEST_WTF
+        show_stderr
     fi
-  done
-fi
+
+done < $tmpdir/tests

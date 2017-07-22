@@ -15,39 +15,29 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# Filesystem check
-REFNAME="Filesystem module"
+# disk usage is greater than 75%
 
-function filesystem_check_live(){
+if [ "x$CITELLUS_LIVE" = "x0" ];  then
+  if [ ! -f "${CITELLUS_ROOT}/df" ]; then
+    echo "file /df not found." >&2
+    exit 2
+  fi
 
-# Checking the ammount of disk space used.
+  DISK_USE=$(cat "${CITELLUS_ROOT}"/df | awk '/dev.*\/$/{print $5}')
+  if [[ ${DISK_USE%%%*} -ge "75" ]]
+  then
+    echo "${DISK_USE}" >&2
+    exit 1
+  fi
+fi
+
+if [ "x$CITELLUS_LIVE" = "x1" ]; then
+
   DISK_USE=$(read -d '' -ra df_arr < <(LC_ALL=C df -P /); echo "${df_arr[11]}")
   if [[ ${DISK_USE%%%*} -ge "75" ]]
   then
-    bad "Filesystem more than ${DISK_USE} full."
-  else
-    good "Filesystem is at ${DISK_USE}."
+    echo "${DISK_USE}" >&2
+    exit 1
   fi
-    
-}
 
-function filesystem_check_sosreport(){
-
-# A minimum of 40 GB of available disk space.
-if [ -e "${DIRECTORY}/df" ]
-then
-  DISK_USE=$(cat "${DIRECTORY}"/df | awk '/dev.*\/$/{print $5}')
-  if [[ ${DISK_USE%%%*} -ge "75" ]]
-  then
-    bad "Filesystem more than ${DISK_USE} full."
-  else
-    good "Filesystem is at ${DISK_USE}."
-  fi
-else
-  warn "Missing file ${DIRECTORY}/df"
 fi
-
-}
-
-# Filesystem check
-filesystem_check_${CHECK_MODE}

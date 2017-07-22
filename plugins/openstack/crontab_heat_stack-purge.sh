@@ -15,24 +15,16 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# Checking Kernel state
-# Ref: None
-REFNAME="Kernel module"
+# this can run against live and also any sort of snapshot of the filesystem
 
-function kernel_check_live(){
-  continue
-}
-
-function kernel_check_sosreport(){
-
-# Looks for the Kernel Out of Memory, panics and soft locks
-
-grep_file_rev "${DIRECTORY}/sos_commands/logs/journalctl_--no-pager_--boot" "oom-killer"
-grep_file_rev "${DIRECTORY}/sos_commands/logs/journalctl_--no-pager_--boot" "soft lockup"
-
-}
-
-# Kernel module
-kernel_check_${CHECK_MODE}
-
-
+if [ ! -f "${CITELLUS_ROOT}/var/spool/cron/heat" ]; then
+  echo "file /var/spool/cron/heat not found." >&2
+  exit 2
+fi
+if ! grep -q "heat-manage purge_deleted" "${CITELLUS_ROOT}/var/spool/cron/heat"; then
+  echo "crontab heat stack purge is not set" >&2
+  exit 1
+elif grep -q "heat-manage purge_deleted" "${CITELLUS_ROOT}/var/spool/cron/heat"; then
+  exit 0
+fi
+exit 3
