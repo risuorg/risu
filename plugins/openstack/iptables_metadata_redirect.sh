@@ -34,13 +34,19 @@ fi
 
 if [ "x$CITELLUS_LIVE" = "x0" ];  then
 
-  if [ ! -f "${CITELLUS_ROOT}/sos_commands/networking/iptables_-t_nat_-nvL" ]; then
-    echo "file /sos_commands/networking/iptables_-t_nat_-nvL not found." >&2
-    exit 2
-  fi
-  if grep -q "REDIRECT.*169.254.169.254" "${CITELLUS_ROOT}/sos_commands/networking/iptables_-t_nat_-nvL" ; then
-    exit 0
+  if grep -q "tripleo-heat-templates" "${CITELLUS_ROOT}/installed-rpms" && grep -q \
+  "python-tripleoclient" "${CITELLUS_ROOT}/installed-rpms"
+  then
+    if [ ! -f "${CITELLUS_ROOT}/sos_commands/networking/iptables_-t_nat_-nvL" ]; then
+      echo "file /sos_commands/networking/iptables_-t_nat_-nvL not found." >&2
+      exit 2
+    fi
+    if grep -q "REDIRECT.*169.254.169.254" "${CITELLUS_ROOT}/sos_commands/networking/iptables_-t_nat_-nvL" ; then
+      exit 0
+    else
+      exit 1
+    fi
   else
-    exit 1
+    exit 2
   fi
 fi
