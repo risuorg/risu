@@ -42,7 +42,7 @@ then
     flag=1
     fi
   else
-    echo "missing allow_unsafe_interrupts file - skipping" >&2
+    echo "missing allow_unsafe_interrupts file - skipped" >&2
   fi
 
   # Are we Intel or AMD?
