@@ -36,9 +36,13 @@ then
   fi
 
   # Unsafe interrupts enabled (for HOTPLUG)
-  if [ -e "${CITELLUS_ROOT}/sys/module/vfio_iommu_type1/parameters/allow_unsafe_interrupts" ] && ! grep -q "Y" "${CITELLUS_ROOT}/sys/module/vfio_iommu_type1/parameters/allow_unsafe_interrupts"; then
+  if [ -e "${CITELLUS_ROOT}/sys/module/vfio_iommu_type1/parameters/allow_unsafe_interrupts" ]; then
+    if ! grep -q "Y" "${CITELLUS_ROOT}/sys/module/vfio_iommu_type1/parameters/allow_unsafe_interrupts"; then
     echo "unsafe interrupts not enabled" >&2
     flag=1
+    fi
+  else
+    echo "missing allow_unsafe_interrupts file - skipping" >&2
   fi
 
   # Are we Intel or AMD?
