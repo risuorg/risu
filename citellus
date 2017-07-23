@@ -1,6 +1,7 @@
 #!/bin/bash
-# Copyright (C) 2017   Robin Cernin (rcernin@redhat.com)
-#  Lars Kellogg-Stedman <lars@oddbit.com>
+# Copyright (C) 2017 Robin Černín (rcernin@redhat.com)
+#                    Lars Kellogg-Stedman <lars@oddbit.com>
+#                    Pablo Iranzo Gómez (Pablo.Iranzo@redhat.com)
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
