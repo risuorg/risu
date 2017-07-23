@@ -5,7 +5,14 @@ Citellus is a program that should help faster identify common pitfails of OpenSt
 Please if you have any idea on any improvements please do not hesitate to open an issue.
 
 ## Usage help
+There are currently two frameworks developed, one is in python and another in bash. We are still tuning the python framework and we will move to only supported python framework in the future.
 
+**Python:**
+```
+usage: citellus.py [arguments] [-h] [-l] [-v] [-d {info,debug,warn,critical}]
+```
+
+**Bash:**
 ```
 Usage: citellus [-hv] [--live] [DIRECTORY] [script folder] ... 
 ```
