@@ -187,8 +187,6 @@ def runplugin(plugin):
     if returncode != 0 and returncode != 2:
         if err != "":
             print err
-        if out != "":
-            print out
 
     return returncode, out, err
 
