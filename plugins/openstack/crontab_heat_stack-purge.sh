@@ -21,10 +21,9 @@ if [ ! -f "${CITELLUS_ROOT}/var/spool/cron/heat" ]; then
   echo "file /var/spool/cron/heat not found." >&2
   exit 2
 fi
-if ! grep -q "heat-manage purge_deleted" "${CITELLUS_ROOT}/var/spool/cron/heat"; then
+if ! awk '/heat-manage purge_deleted/ && /^[^#]/ { print $0 }' "${CITELLUS_ROOT}/var/spool/cron/heat"; then
   echo "crontab heat stack purge is not set" >&2
   exit 1
-elif grep -q "heat-manage purge_deleted" "${CITELLUS_ROOT}/var/spool/cron/heat"; then
+elif awk '/heat-manage purge_deleted/ && /^[^#]/ { print $0 }' "${CITELLUS_ROOT}/var/spool/cron/heat"; then
   exit 0
 fi
-exit 3
