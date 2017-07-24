@@ -191,6 +191,34 @@ def runplugin(plugin):
     return returncode, out, err
 
 
+def getitems(var):
+    """
+    Returns list of items even if provided args are lists of lists
+    :param var: list or value to pass
+    :return: unique list of values
+    """
+
+    logger = logging.getLogger(__name__)
+
+    result = []
+    if not isinstance(var, list):
+        result.append(var)
+    else:
+        for elem in var:
+            result.extend(getitems(elem))
+
+    # Do cleanup of duplicates
+    final = []
+    for elem in result:
+        if elem not in final:
+            final.append(elem)
+
+    # As we call recursively, don't log calls for just one ID
+    if len(final) > 1:
+        logger.debug(msg=_("Final deduplicated list: %s") % final)
+    return final
+
+
 def main():
     """
     Main function for the program
@@ -229,14 +257,24 @@ def main():
     plugin_path = os.path.join(citellusdir, 'plugins')
 
     logger.debug(msg=_('Additional parameters: %s') % unknown)
-    if unknown:
-        # We've additional arguments passed so it must be the folder to use or plugins
+
+    if not options.live:
         if len(unknown) > 0:
+            # Live not specified, so we will use file snapshot as first arg and remaining cli arguments as plugins
             CITELLUS_ROOT = unknown[0]
-        if len(unknown) > 1:
-            CITELLUS_PLUGINS = unknown[1]
+            start = 1
+        else:
+            print _("When not running in Live mode, snapshot path is required")
+            sys.exit(1)
     else:
         CITELLUS_ROOT = ""
+        start = 0
+
+    if len(unknown) > start:
+        # We've more parameters defined, so they are for plugin paths
+        CITELLUS_PLUGINS = []
+        for path in unknown[start:]:
+            CITELLUS_PLUGINS.append(path)
 
     # Save environment variables for plugins executed
     os.environ['CITELLUS_ROOT'] = "%s" % CITELLUS_ROOT
@@ -251,10 +289,14 @@ def main():
     if CITELLUS_PLUGINS:
         plugin_path = CITELLUS_PLUGINS
 
-    plugins = findplugins(plugin_path)
+    plugins = []
+    for path in plugin_path:
+        plugins.append(findplugins(path))
+
+    plugins = getitems(plugins)
 
     show_logo()
-    print _("found #%s tests at %s") % (len(plugins), plugin_path)
+    print _("found #%s tests at %s") % (len(plugins), ", ".join(plugin_path))
     if CITELLUS_LIVE == 1:
         print _("mode: live")
     else:
