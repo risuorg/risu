@@ -23,10 +23,11 @@ import argparse
 import gettext
 import logging
 import os
+import os.path
 import subprocess
-from multiprocessing import Pool, cpu_count
+import sys
 import traceback
-
+from multiprocessing import Pool, cpu_count
 
 # Where are we?
 citellusdir = os.path.abspath(os.path.dirname(__file__))
@@ -182,13 +183,7 @@ def runplugin(plugin):
             text = bcolors.red + _("unexpected result") + bcolors.end
             break
 
-    print "# %s: %s" % (plugin, text)
-
-    if returncode != 0 and returncode != 2:
-        if err != "":
-            print err
-
-    return returncode, out, err
+    return {'plugin': plugin, 'output': {"rc": returncode, "out": out, "err": err, "text": text}}
 
 
 def getitems(var):
@@ -306,7 +301,33 @@ def main():
     p = Pool(cpu_count())
 
     # Execute runplugin for each plugin found
-    p.map(runplugin, plugins)
+    results = p.map(runplugin, plugins)
+
+    # Process plugin output from multiple plugins for result printing
+    new_dict = {}
+    for item in results:
+        name = item['plugin']
+        new_dict[name] = item
+
+    # Sort plugins based on path name
+    std = sorted(plugins, key=lambda file: (os.path.dirname(file), os.path.basename(file)))
+
+    # Print results based on the sorted order based on returned results from parallel execution
+    for i in range(1, len(std)):
+        plugin = new_dict[std[i]]
+
+        out = plugin['output']['out']
+        err = plugin['output']['err']
+        text = plugin['output']['text']
+        rc = plugin['output']['rc']
+        print "# %s: %s" % (plugin['plugin'], text)
+
+        # If not standard RC, print stderr
+        if rc != 0 and rc != 2:
+            if err != "":
+                print err
+
+        logger.debug(msg=_("Plugin: %s, output: %s") % (plugin['plugin'], plugin['output']))
 
 
 if __name__ == "__main__":
