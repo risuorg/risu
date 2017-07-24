@@ -11,3 +11,6 @@ will have already the way to fix it.
 Reddit post: https://redd.it/6gv0uf  
 Openstack-operators ML: http://lists.openstack.org/pipermail/openstack-operators/2017-June/013789.html
 
+### How to write tests
+
+Please reffer to [templates](https://github.com/zerodayz/citellus/tree/master/templates) folder including examples.
