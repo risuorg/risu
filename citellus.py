@@ -218,6 +218,20 @@ def getitems(var):
     return final
 
 
+def commonpath(folders):
+    commonroot = []
+    ls = [p.split('/') for p in folders]
+    minlenght = min(len(p) for p in ls )
+
+    for i in range(minlenght):
+        s = set( p[i] for p in ls )
+        if len(s) != 1:
+            break
+        commonroot.append(s.pop())
+
+    return '/'.join(commonroot)
+
+
 def main():
     """
     Main function for the program
@@ -325,6 +339,9 @@ def main():
     # Sort plugins based on path name
     std = sorted(plugins, key=lambda file: (os.path.dirname(file), os.path.basename(file)))
 
+    # Common path for plugins
+    common = commonpath(plugins)
+
     # Print results based on the sorted order based on returned results from parallel execution
     okay = []
     skipped = []
@@ -344,9 +361,9 @@ def main():
                     print "    %s" % line
         else:
             if 'okay' in text:
-                okay.append(plugin['plugin'])
+                okay.append(plugin['plugin'].replace(common,''))
             if 'skipped' in text:
-                skipped.append(plugin['plugin'])
+                skipped.append(plugin['plugin'].replace(common,''))
 
         logger.debug(msg=_("Plugin: %s, output: %s") % (plugin['plugin'], plugin['output']))
 
