@@ -15,32 +15,31 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# if we are running against live system or fs snapshot
+# we can run this against fs snapshot or live system
 
 if [ "x$CITELLUS_LIVE" = "x1" ];  then
 
-  config_files=$(rpm -qa -c 'openstack-*' | grep '/etc/[^/]*/[^/]*\.conf')
+  log_files=$(for i in $(rpm -qa | sed -n -r -e 's/^openstack-([a-z]*)-.*$/\1/p' | sort | uniq); do \
+  ls /var/log/$i/*.log 2>/dev/null | grep '/var/log/[^/]*/[^/]*\.log'; done)
 
 elif [ "x$CITELLUS_LIVE" = "x0" ]; then
 
-  config_files=$(
+  log_files=$(
   for i in $(sed -n -r -e 's/^openstack-([a-z]*)-.*$/\1/p' ${CITELLUS_ROOT}/installed-rpms \
-  | sort | uniq); do ls ${CITELLUS_ROOT}/etc/$i/*.conf 2>/dev/null | grep '/etc/[^/]*/[^/]*\.conf'; \
+  | sort | uniq); do ls ${CITELLUS_ROOT}/var/log/$i/*.log 2>/dev/null | grep '/var/log/[^/]*/[^/]*\.log'; \
   done)
 
 fi
 
-for config_file in $config_files; do
+for log_file in $log_files; do
 
-  [ -f "$config_file" ] || continue
+  [ -f "$log_file" ] || continue
 
-  if grep -q '^debug[ \t]*=[ \t]*true' $config_file >&2; then
+  wc=$(grep -i 'traceback' $log_file | wc -l)
+  if [[ ${wc} -gt 0 ]]; then
     # to remove the ${CITELLUS_ROOT} from the stderr.
-    config_file=${config_file#$CITELLUS_ROOT}
-    echo "enabled in $config_file" >&2
-  else
-    config_file=${config_file#$CITELLUS_ROOT}
-    echo "disabled in $config_file" >&2
+    log_file=${log_file#$CITELLUS_ROOT}
+    echo "$log_file (${wc} times)" >&2
     flag=1
   fi
 

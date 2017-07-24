@@ -1,124 +1,96 @@
-## Introduction
+# Introduction
 
-Citellus is a program that should help faster identify common pitfails of OpenStack deployments from sosreports.
+Citellus is a program that should help faster identify common pitfails of OpenStack deployments from live system or any sort of snapshot of the filesystem.
 
 Please if you have any idea on any improvements please do not hesitate to open an issue.
 
-### Usage
+## Usage help
+There are currently two frameworks developed, one is in python and another in bash. We are still tuning the python framework and we will move to only supported python framework in the future.
 
+**Python:**
+```
+usage: citellus.py [arguments] [-h] [-l] [-v] [-d {info,debug,warn,critical}]
 ```
 
-[root@undercloud-0 citellus]# ./citellus -h
+**Bash:**
+```
+Usage: citellus [-hv] [--live] [DIRECTORY] [script folder] ... 
+```
+
+## Doing a live check example
+
+This is an example of executing the **Bash** framework using ```plugins/pacemaker``` collections against live system.
+```
+# ./citellus --live plugins/pacemaker/
 _________ .__  __         .__  .__                
 \_   ___ \|__|/  |_  ____ |  | |  |  __ __  ______
 /    \  \/|  \   __\/ __ \|  | |  | |  |  \/  ___/
 \     \___|  ||  | \  ___/|  |_|  |_|  |  /\___ \ 
  \______  /__||__|  \___  >____/____/____//____  >
         \/              \/                     \/ 
-
-Usage: citellus [-hv] [-d warn,good,bad] [-m live,sosreport] [-p openstack,other] [-f DIRECTORY]...
-Do stuff with sosreport and write the result to standard output.
-
-              -h                  display this help and exit
-              -f sosreport-*      opens a sosreport directory for analysis
-              -d warn,good,bad    will display only filtered messages
-              -p openstack,other  select plugin to run from plugins
-              -m live,sosreport   select check mode, either sosreport or live
-              -v                  verbose mode.
-
-
+citellus: found 3 tests
+mode: live
+# plugins/pacemaker/fence_device.sh: skipped 
+# plugins/pacemaker/nodes_number.sh: skipped 
+# plugins/pacemaker/stonith_enabled.sh: skipped 
 ```
-### Doing a live check example
-> -m live,sosreport select check mode, either sosreport or live
+This is an example of executing the **Python** framework using all collections against live system.
 ```
-[root@undercloud-0 citellus]# ./citellus -p openstack -m live
+# ./citellus.py -l
 _________ .__  __         .__  .__                
 \_   ___ \|__|/  |_  ____ |  | |  |  __ __  ______
 /    \  \/|  \   __\/ __ \|  | |  | |  |  \/  ___/
 \     \___|  ||  | \  ___/|  |_|  |_|  |  /\___ \ 
  \______  /__||__|  \___  >____/____/____//____  >
         \/              \/                     \/ 
-Live check executed at Thu Jun 29 10:40:29 EDT 2017
-Hostname: undercloud-0.redhat.local
-Discovered node: director
-Version: liberty
-+-----------------------------------------------------------------------------+
-| Traceback module                                                            |
-+--------------------------------------------+--------------------------------|
-| PASS: 23        FAILED: 1      WARNING: 8  |                Result: FAILED  |
-+-----------------------------------------------------------------------------+
-WARNING: Traceback module: /var/log/ceilometer/agent-notification.log (1 times)
-WARNING: Traceback module: /var/log/ceilometer/alarm-evaluator.log (1 times)
-PASS:    Traceback module: /var/log/ceilometer/alarm-notifier.log (0 times)
-PASS:    Traceback module: /var/log/ceilometer/api.log (0 times)
-PASS:    Traceback module: /var/log/ceilometer/ceilometer-dbsync.log (0 times)
-FAILED:  Traceback module: /var/log/ceilometer/central.log (1175 times)
-PASS:    Traceback module: /var/log/ceilometer/collector.log (0 times)
-WARNING: Traceback module: /var/log/glance/api.log (9 times)
-PASS:    Traceback module: /var/log/glance/registry.log (0 times)
-PASS:    Traceback module: /var/log/heat/heat-api-cfn.log (0 times)
-PASS:    Traceback module: /var/log/heat/heat-api-cloudwatch.log (0 times)
-PASS:    Traceback module: /var/log/heat/heat-api.log (0 times)
-PASS:    Traceback module: /var/log/heat/heat-engine.log (0 times)
-PASS:    Traceback module: /var/log/keystone/keystone.log (0 times)
-WARNING: Traceback module: /var/log/neutron/dhcp-agent.log (4 times)
-WARNING: Traceback module: /var/log/neutron/openvswitch-agent.log (1 times)
-PASS:    Traceback module: /var/log/neutron/ovs-cleanup.log (0 times)
-PASS:    Traceback module: /var/log/neutron/server.log (0 times)
-WARNING: Traceback module: /var/log/nova/nova-api.log (41 times)
-PASS:    Traceback module: /var/log/nova/nova-cert.log (0 times)
-WARNING: Traceback module: /var/log/nova/nova-compute.log (2 times)
-WARNING: Traceback module: /var/log/nova/nova-conductor.log (1 times)
-PASS:    Traceback module: /var/log/nova/nova-manage.log (0 times)
-PASS:    Traceback module: /var/log/nova/nova-scheduler.log (0 times)
-PASS:    Traceback module: /var/log/swift/swift.log (0 times)
-PASS:    Traceback module: /var/log/httpd/default_error.log (0 times)
-PASS:    Traceback module: /var/log/httpd/ironic_access.log (0 times)
-PASS:    Traceback module: /var/log/httpd/ironic_error.log (0 times)
-PASS:    Traceback module: /var/log/httpd/keystone_wsgi_admin_access.log (0 times)
-PASS:    Traceback module: /var/log/httpd/keystone_wsgi_admin_error.log (0 times)
-PASS:    Traceback module: /var/log/httpd/keystone_wsgi_main_access.log (0 times)
-PASS:    Traceback module: /var/log/httpd/keystone_wsgi_main_error.log (0 times)
+found #20 tests at /root/citellus/plugins
+mode: live
+# /root/citellus/plugins/openstack/mysql_keystone_tokendb.sh: okay
+# /root/citellus/plugins/openstack/crontab_heat_stack-purge.sh: okay
+# /root/citellus/plugins/openstack/hardware_memory_recommendations.sh: okay
+# /root/citellus/plugins/system/kernel_panic.sh: okay
+# /root/citellus/plugins/system/disk_usage.sh: okay
+# /root/citellus/plugins/system/selinux_runtime.sh: okay
+# /root/citellus/plugins/system/selinux_config.sh: okay
+# /root/citellus/plugins/system/baremetal.sh: failed
+KVM
+(snip)
 ```
 
-### Doing a sosreport check example
-
+## Doing a fs snapshot check example
+This is an example of executing the **Bash** framework using ```plugins/pacemaker``` and ```plugins/system``` collections against fs snapshot ```/sosreport-controller-1.localdomain-20170705201135/```
 ```
-[root@undercloud-0 citellus]# ./citellus -p openstack -m sosreport -f ../sosreport-controller-1.localdomain-20170705201135/
+# ./citellus /root/sosreport-controller-1.localdomain-20170705201135/ plugins/system/ plugins/pacemaker/
 _________ .__  __         .__  .__                
 \_   ___ \|__|/  |_  ____ |  | |  |  __ __  ______
 /    \  \/|  \   __\/ __ \|  | |  | |  |  \/  ___/
 \     \___|  ||  | \  ___/|  |_|  |_|  |  /\___ \ 
  \______  /__||__|  \___  >____/____/____//____  >
         \/              \/                     \/ 
-SOSreport was created at Wed Jul  5 20:12:08 UTC 2017
-Hostname: controller-1.localdomain
-Discovered node: controller
-Version: mitaka
-+-----------------------------------------------------------------------------+
-| Traceback module                                                            |
-+--------------------------------------------+--------------------------------|
-| PASS: 13        FAILED: 2      WARNING: 6  |                Result: FAILED  |
-+-----------------------------------------------------------------------------+
-PASS:    Traceback module: ../sosreport-controller-1.localdomain-20170705201135//var/log/ceilometer/agent-notification.log (0 times)
-FAILED:  Traceback module: ../sosreport-controller-1.localdomain-20170705201135//var/log/ceilometer/alarm-evaluator.log (1907 times)
-PASS:    Traceback module: ../sosreport-controller-1.localdomain-20170705201135//var/log/ceilometer/alarm-notifier.log (0 times)
-PASS:    Traceback module: ../sosreport-controller-1.localdomain-20170705201135//var/log/ceilometer/api.log (0 times)
-FAILED:  Traceback module: ../sosreport-controller-1.localdomain-20170705201135//var/log/ceilometer/central.log (125 times)
-PASS:    Traceback module: ../sosreport-controller-1.localdomain-20170705201135//var/log/glance/api.log (0 times)
-PASS:    Traceback module: ../sosreport-controller-1.localdomain-20170705201135//var/log/glance/registry.log (0 times)
-PASS:    Traceback module: ../sosreport-controller-1.localdomain-20170705201135//var/log/heat/heat-api-cfn.log (0 times)
-PASS:    Traceback module: ../sosreport-controller-1.localdomain-20170705201135//var/log/heat/heat-api-cloudwatch.log (0 times)
-PASS:    Traceback module: ../sosreport-controller-1.localdomain-20170705201135//var/log/heat/heat-api.log (0 times)
-WARNING: Traceback module: ../sosreport-controller-1.localdomain-20170705201135//var/log/heat/heat-engine.log (20 times)
-PASS:    Traceback module: ../sosreport-controller-1.localdomain-20170705201135//var/log/keystone/keystone.log (0 times)
-PASS:    Traceback module: ../sosreport-controller-1.localdomain-20170705201135//var/log/neutron/dhcp-agent.log (0 times)
-PASS:    Traceback module: ../sosreport-controller-1.localdomain-20170705201135//var/log/neutron/l3-agent.log (0 times)
-WARNING: Traceback module: ../sosreport-controller-1.localdomain-20170705201135//var/log/nova/nova-api.log (3 times)
-WARNING: Traceback module: ../sosreport-controller-1.localdomain-20170705201135//var/log/nova/nova-conductor.log (18 times)
-WARNING: Traceback module: ../sosreport-controller-1.localdomain-20170705201135//var/log/nova/nova-consoleauth.log (5 times)
-PASS:    Traceback module: ../sosreport-controller-1.localdomain-20170705201135//var/log/nova/nova-manage.log (0 times)
-PASS:    Traceback module: ../sosreport-controller-1.localdomain-20170705201135//var/log/nova/nova-novncproxy.log (0 times)
-WARNING: Traceback module: ../sosreport-controller-1.localdomain-20170705201135//var/log/nova/nova-scheduler.log (1 times)
-WARNING: Traceback module: ../sosreport-controller-1.localdomain-20170705201135//var/log/swift/swift.log (3 times)
+citellus: found 4 tests
+mode: fs snapshot /root/sosreport-controller-1.localdomain-20170705201135/
+# plugins/pacemaker/fence_device.sh: skipped 
+# plugins/pacemaker/nodes_number.sh: okay 
+# plugins/pacemaker/stonith_enabled.sh: failed 
+# plugins/system/kernel_panic.sh: skipped 
+    file /sos_commands/logs/journalctl_--no-pager_--boot not found.
+```
+This is an example of executing the **Python** framework using all collections against fs snapshot ```/sosreport-compute-0.localdomain-20170717184033/```
+
+```
+# ./citellus.py /root/sosreport-compute-0.localdomain-20170717184033/
+_________ .__  __         .__  .__                
+\_   ___ \|__|/  |_  ____ |  | |  |  __ __  ______
+/    \  \/|  \   __\/ __ \|  | |  | |  |  \/  ___/
+\     \___|  ||  | \  ___/|  |_|  |_|  |  /\___ \ 
+ \______  /__||__|  \___  >____/____/____//____  >
+        \/              \/                     \/ 
+found #20 tests at /root/citellus/plugins
+mode: fs snapshot /root/sosreport-compute-0.localdomain-20170717184033/
+# /root/citellus/plugins/openstack/mysql_keystone_tokendb.sh: skipped
+# /root/citellus/plugins/openstack/keystone_cleanup_last-run.sh: skipped
+# /root/citellus/plugins/openstack/crontab_heat_stack-purge.sh: skipped
+# /root/citellus/plugins/openstack/version.sh: okay
+# /root/citellus/plugins/system/kernel_panic.sh: skipped
+(snip)
 ```
