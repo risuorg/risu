@@ -270,6 +270,8 @@ def main():
         CITELLUS_PLUGINS = []
         for path in unknown[start:]:
             CITELLUS_PLUGINS.append(path)
+    else:
+        CITELLUS_PLUGINS = [ plugin_path ]
 
     # Save environment variables for plugins executed
     os.environ['CITELLUS_ROOT'] = "%s" % CITELLUS_ROOT
