@@ -30,9 +30,8 @@ if [ "x$CITELLUS_LIVE" = "x1" ];  then
   else
     exit 2
   fi
-fi
 
-if [ "x$CITELLUS_LIVE" = "x0" ];  then
+elif [ "x$CITELLUS_LIVE" = "x0" ];  then
 
   if grep -q "tripleo-heat-templates" "${CITELLUS_ROOT}/installed-rpms" && grep -q \
   "python-tripleoclient" "${CITELLUS_ROOT}/installed-rpms"
@@ -49,4 +48,5 @@ if [ "x$CITELLUS_LIVE" = "x0" ];  then
   else
     exit 2
   fi
+
 fi
