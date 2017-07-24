@@ -325,7 +325,8 @@ def main():
         # If not standard RC, print stderr
         if rc != 0 and rc != 2:
             if err != "":
-                print err
+                for line in err.split('\n'):
+                    print "    %s" % line
 
         logger.debug(msg=_("Plugin: %s, output: %s") % (plugin['plugin'], plugin['output']))
 
