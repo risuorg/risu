@@ -326,6 +326,8 @@ def main():
     std = sorted(plugins, key=lambda file: (os.path.dirname(file), os.path.basename(file)))
 
     # Print results based on the sorted order based on returned results from parallel execution
+    okay = []
+    skipped = []
     for i in range(0, len(std)):
         plugin = new_dict[std[i]]
 
@@ -333,15 +335,25 @@ def main():
         err = plugin['output']['err']
         text = plugin['output']['text']
         rc = plugin['output']['rc']
-        print "# %s: %s" % (plugin['plugin'], text)
 
         # If not standard RC, print stderr
         if rc != 0 and rc != 2:
+            print "# %s: %s" % (plugin['plugin'], text)
             if err != "":
                 for line in err.split('\n'):
                     print "    %s" % line
+        else:
+            if 'okay' in text:
+                okay.append(plugin['plugin'])
+            if 'skipped' in text:
+                skipped.append(plugin['plugin'])
 
         logger.debug(msg=_("Plugin: %s, output: %s") % (plugin['plugin'], plugin['output']))
+
+    if okay:
+        print "# %s: %s" % (okay, bcolors.okay)
+    if skipped:
+        print "# %s: %s" % (skipped, bcolors.skipped)
 
 
 if __name__ == "__main__":
