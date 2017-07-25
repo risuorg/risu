@@ -315,7 +315,7 @@ def main():
     std = sorted(plugins, key=lambda file: (os.path.dirname(file), os.path.basename(file)))
 
     # Print results based on the sorted order based on returned results from parallel execution
-    for i in range(1, len(std)):
+    for i in range(0, len(std)):
         plugin = new_dict[std[i]]
 
         out = plugin['output']['out']
