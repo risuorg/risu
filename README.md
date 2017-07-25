@@ -22,7 +22,6 @@ optional arguments:
   -d {info,debug,warn,critical}, --verbosity {info,debug,warn,critical}
                         Set verbosity level for messages while running/logging
   -s, --silent          Enable silent mode, only errors on tests written
-
 ```
 
 ## Doing a live check example
