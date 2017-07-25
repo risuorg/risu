@@ -345,7 +345,10 @@ def main():
     std = sorted(plugins, key=lambda file: (os.path.dirname(file), os.path.basename(file)))
 
     # Common path for plugins
-    common = commonpath(plugins)
+    if len(plugins) > 1:
+        common = commonpath(plugins)
+    else:
+        common = ""
 
     # Print results based on the sorted order based on returned results from parallel execution
     okay = []
