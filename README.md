@@ -4,6 +4,9 @@ Citellus is a program that should help with system configuration validation on e
 
 Please if you have any idea on any improvements please do not hesitate to open an issue.
 
+## Vote For Sydney 2017 Presentation
+https://www.openstack.org/summit/sydney-2017/vote-for-speakers#/19095
+
 ## Usage help
 We are developing framework in python, the bash framework has been deprecated. Python framework is the only supported framework.
 
