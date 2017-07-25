@@ -107,6 +107,10 @@ class bcolors:
     pink = '\033[95m'
     lightcyan = '\033[96m'
     end = '\033[0m'
+    okay = green + _("okay") + end
+    failed = red + _("failed") + end
+    skipped = orange + _("skipped") + end
+    unexpected = red + _("unexpected result") + end
 
 
 def show_logo():
@@ -168,19 +172,19 @@ def runplugin(plugin):
     for case in Switch(returncode):
         if case(0):
             # OK
-            text = bcolors.green + _("okay") + bcolors.end
+            text = bcolors.okay
             break
         if case(1):
             # FAILED
-            text = bcolors.red + _("failed") + bcolors.end
+            text = bcolors.failed
             break
         if case(2):
             # SKIPPED
-            text = bcolors.orange + _("skipped") + bcolors.end
+            text = bcolors.skipped
             break
         if case():
             # UNEXPECTED
-            text = bcolors.red + _("unexpected result") + bcolors.end
+            text = bcolors.unexpected
             break
 
     return {'plugin': plugin, 'output': {"rc": returncode, "out": out, "err": err, "text": text}}
@@ -271,7 +275,7 @@ def main():
         for path in unknown[start:]:
             CITELLUS_PLUGINS.append(path)
     else:
-        CITELLUS_PLUGINS = [ plugin_path ]
+        CITELLUS_PLUGINS = [plugin_path]
 
     # Save environment variables for plugins executed
     os.environ['CITELLUS_ROOT'] = "%s" % CITELLUS_ROOT
@@ -294,6 +298,13 @@ def main():
 
     show_logo()
     print _("found #%s tests at %s") % (len(plugins), ", ".join(plugin_path))
+
+    if not plugins:
+        msg = _("Plugin folder empty, exitting")
+        logger.debug(msg=msg)
+        print msg
+        sys.exit(1)
+
     if CITELLUS_LIVE == 1:
         print _("mode: live")
     else:
