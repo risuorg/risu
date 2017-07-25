@@ -45,7 +45,7 @@ And exactly the same execution against the fs snapshot, with one difference, omi
 
 This is an example of execution of Citellus using ```plugins/pacemaker``` and ```plugins/system``` collections against fs snapshot ```sosreport-controller-1.localdomain-20170705201135```
 ```
-# ./citellus /root/sosreport-controller-1.localdomain-20170705201135/ plugins/system/ plugins/pacemaker/
+# ./citellus.py /root/sosreport-controller-1.localdomain-20170705201135/ plugins/system/ plugins/pacemaker/
 _________ .__  __         .__  .__                
 \_   ___ \|__|/  |_  ____ |  | |  |  __ __  ______
 /    \  \/|  \   __\/ __ \|  | |  | |  |  \/  ___/
