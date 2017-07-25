@@ -123,6 +123,7 @@ while read test; do
         echo $TEST_OKAY
     elif [[ $result -eq 2 ]]; then
         echo $TEST_SKIPPED
+	show_stderr
     elif [[ $result -eq 1 ]]; then
         echo $TEST_FAILED
         show_stderr
