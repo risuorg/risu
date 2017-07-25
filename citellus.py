@@ -250,6 +250,9 @@ def main():
     p.add_argument('-d', "--verbosity", dest="verbosity",
                    help=_("Set verbosity level for messages while running/logging"),
                    default="info", choices=["info", "debug", "warn", "critical"])
+    p.add_argument("-s", "--silent", dest="silent", help=_("Enable silent mode, only errors on tests written"), default=False,
+                   action='store_true')
+
 
     options, unknown = p.parse_known_args()
 
@@ -310,8 +313,9 @@ def main():
 
     plugins = getitems(plugins)
 
-    show_logo()
-    print _("found #%s tests at %s") % (len(plugins), ", ".join(plugin_path))
+    if not options.silent:
+        show_logo()
+        print _("found #%s tests at %s") % (len(plugins), ", ".join(plugin_path))
 
     if not plugins:
         msg = _("Plugin folder empty, exitting")
@@ -319,10 +323,11 @@ def main():
         print msg
         sys.exit(1)
 
-    if CITELLUS_LIVE == 1:
-        print _("mode: live")
-    else:
-        print _("mode: fs snapshot %s" % CITELLUS_ROOT)
+    if not options.silent:
+        if CITELLUS_LIVE == 1:
+            print _("mode: live")
+        else:
+            print _("mode: fs snapshot %s" % CITELLUS_ROOT)
 
     # Set pool for same processes as CPU cores
     p = Pool(cpu_count())
@@ -367,10 +372,11 @@ def main():
 
         logger.debug(msg=_("Plugin: %s, output: %s") % (plugin['plugin'], plugin['output']))
 
-    if okay:
-        print "# %s: %s" % (okay, bcolors.okay)
-    if skipped:
-        print "# %s: %s" % (skipped, bcolors.skipped)
+    if not options.silent:
+        if okay:
+            print "# %s: %s" % (okay, bcolors.okay)
+        if skipped:
+            print "# %s: %s" % (skipped, bcolors.skipped)
 
 
 if __name__ == "__main__":
