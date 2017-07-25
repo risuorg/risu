@@ -18,47 +18,39 @@
 # we can run this against fs snapshot or live system
 
 count_nodes(){
-
-  if [ ! "$echo $(( (NUM_NODES-1) % 2 ))" -eq  "0" ]
-  then
+  if [ ! "$echo $(( (NUM_NODES-1) % 2 ))" -eq  "0" ]; then
     echo "${NUM_NODES}" >&2
     exit 1
   else
     exit 0
   fi
-
 }
 
 if [ "x$CITELLUS_LIVE" = "x1" ];  then
-
   pacemaker_status=$(systemctl is-active pacemaker || :)
-
-  [[ "$pacemaker_status" = "active" ]] || exit 2
-  
-  NUM_NODES=$(pcs status | sed -n -r -e 's/^([0-9])[ \t]+nodes.*/\1/p')
-  count_nodes
-
-fi
-  
-if [ ! -f "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all" ]; then
-  echo "file /sos_commands/systemd/systemctl_list-units_--all not found." >&2
-  exit 2
-fi
-
-if [ "x$CITELLUS_LIVE" = "x0" ];  then
-
-  if ! grep -q "pacemaker.*active" "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all"; then
-  exit 2
+  if [ "$pacemaker_status" = "active" ]; then
+    NUM_NODES=$(pcs status | sed -n -r -e 's/^([0-9])[ \t]+nodes.*/\1/p')
+    count_nodes
+  else
+    echo "pacemaker is not running on this node" >&2
+    exit 2
   fi
-
-  for CLUSTER_DIRECTORY in "pacemaker" "cluster"; do
-    if [ -d "${CITELLUS_ROOT}/sos_commands/${CLUSTER_DIRECTORY}" ]
-    then
-      PCS_DIRECTORY="${CITELLUS_ROOT}/sos_commands/${CLUSTER_DIRECTORY}"
+elif [ "x$CITELLUS_LIVE" = "x0" ];  then
+  if [ ! -f "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all" ]; then
+    echo "file /sos_commands/systemd/systemctl_list-units_--all not found." >&2
+    exit 2
+  else
+    if grep -q "pacemaker.*active" "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all"; then
+      for CLUSTER_DIRECTORY in "pacemaker" "cluster"; do
+	if [ -d "${CITELLUS_ROOT}/sos_commands/${CLUSTER_DIRECTORY}" ]; then
+	  PCS_DIRECTORY="${CITELLUS_ROOT}/sos_commands/${CLUSTER_DIRECTORY}"
+	fi
+      done
+      NUM_NODES=$(sed -n -r -e 's/^([0-9])[ \t]+nodes.*/\1/p' "${PCS_DIRECTORY}/pcs_status")
+      count_nodes
+    else
+      echo "pacemaker is not running on this node" >&2
+      exit 2
     fi
-  done
-
-  NUM_NODES=$(sed -n -r -e 's/^([0-9])[ \t]+nodes.*/\1/p' "${PCS_DIRECTORY}/pcs_status")
-  count_nodes
-
+  fi
 fi

@@ -53,6 +53,7 @@ show_help(){
 
 export CITELLUS_LIVE="0"
 export CITELLUS_ROOT
+export CITELLUS_VERBOSE
 
 while :; do
     case "$1" in
@@ -60,7 +61,7 @@ while :; do
                 shift
                 ;;
         -v|--verbose)
-                set -x
+                CITELLUS_VERBOSE="1"
                 shift
                 ;;
         -h|-\?|--help)
@@ -123,7 +124,7 @@ while read test; do
         echo $TEST_OKAY
     elif [[ $result -eq 2 ]]; then
         echo $TEST_SKIPPED
-	show_stderr
+	[[ "x$CITELLUS_VERBOSE" = "x1" ]] && show_stderr
     elif [[ $result -eq 1 ]]; then
         echo $TEST_FAILED
         show_stderr

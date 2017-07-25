@@ -22,11 +22,8 @@ if [ "x$CITELLUS_LIVE" = "x0" ];  then
     echo "file /sos_commands/selinux/sestatus_-bnot found." >&2
     exit 2
   fi
-
   grep -q "^Current mode.*enforcing" "${CITELLUS_ROOT}/sos_commands/selinux/sestatus_-b" || exit 1
-fi
-
-if [ "x$CITELLUS_LIVE" = "x1" ]; then
+elif [ "x$CITELLUS_LIVE" = "x1" ]; then
   if ! sestatus -b | grep -q "^Current mode.*enforcing"; then
     exit 1
   fi

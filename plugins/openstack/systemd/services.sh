@@ -26,10 +26,7 @@ if [ "x$CITELLUS_LIVE" = "x1" ];  then
   else
     exit 0
   fi
-fi
-  
-
-if [ "x$CITELLUS_LIVE" = "x0" ];  then
+elif [ "x$CITELLUS_LIVE" = "x0" ];  then
 
   if [ ! -f "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all" ]; then
     echo "file /sos_commands/systemd/systemctl_list-units_--all not found." >&2

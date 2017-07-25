@@ -21,7 +21,6 @@ if [ ! -f "${CITELLUS_ROOT}/var/spool/cron/keystone" ]; then
   echo "file /var/spool/cron/keystone not found." >&2
   exit 2
 fi
-
 if ! awk '/keystone-manage token_flush/ && /^[^#]/ { print $0 }' "${CITELLUS_ROOT}/var/spool/cron/keystone"; then
   echo "crontab keystone cleanup is not set" >&2
   exit 1

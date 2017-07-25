@@ -22,22 +22,17 @@ if [ "x$CITELLUS_LIVE" = "x0" ];  then
     echo "file /df not found." >&2
     exit 2
   fi
-
   DISK_USE=$(cat "${CITELLUS_ROOT}"/df | awk '/dev.*\/$/{print $5}')
   if [[ ${DISK_USE%%%*} -ge "75" ]]
   then
     echo "${DISK_USE}" >&2
     exit 1
   fi
-fi
-
-if [ "x$CITELLUS_LIVE" = "x1" ]; then
-
+elif [ "x$CITELLUS_LIVE" = "x1" ]; then
   DISK_USE=$(read -d '' -ra df_arr < <(LC_ALL=C df -P /); echo "${df_arr[11]}")
   if [[ ${DISK_USE%%%*} -ge "75" ]]
   then
     echo "${DISK_USE}" >&2
     exit 1
   fi
-
 fi

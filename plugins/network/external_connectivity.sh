@@ -2,7 +2,10 @@
 
 : ${REMOTE_PING_TARGET:=8.8.8.8}
 
-[[ $CITELLUS_LIVE = 1 ]] || exit 2
+if [ ! "x$CITELLUS_LIVE" = "x1" ]; then 
+  echo "works on live-system only" >&2
+  exit 2
+fi
 
 gw=$(ip route | awk '$1 == "default" {print $3}')
 echo "default gateway is: $gw" >&2

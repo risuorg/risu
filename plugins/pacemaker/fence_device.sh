@@ -17,8 +17,16 @@
 
 # this can run against live
 
-[[ "x$CITELLUS_LIVE" = "x1" ]] || exit 2
-
-pacemaker_status=$(systemctl is-active pacemaker || :)
-[[ "$pacemaker_status" = "active" ]] || exit 2
-pcs stonith show | grep -q "NO stonith devices configured" && exit 1
+if [ "x$CITELLUS_LIVE" = "x0" ]; then
+  echo "works on live-system only" >&2
+  exit 2
+elif [ "x$CITELLUS_LIVE" = "x1" ]; then
+  pacemaker_status=$(systemctl is-active pacemaker || :)
+  if [ "$pacemaker_status" = "active" ]; then
+    pcs stonith show | grep -q "NO stonith devices configured"
+    exit 1
+  else
+    echo "pacemaker is not running on this node" >&2
+    exit 2
+  fi
+fi

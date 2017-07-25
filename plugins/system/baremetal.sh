@@ -41,10 +41,7 @@ if [ "x$CITELLUS_LIVE" = "x0" ];  then
   else
     exit 0
   fi
-fi
-
-
-if [ "x$CITELLUS_LIVE" = "x1" ]; then
+elif [ "x$CITELLUS_LIVE" = "x1" ]; then
   if dmidecode | grep -q "Product Name: VMware"
   then
     echo "VMware" >&2

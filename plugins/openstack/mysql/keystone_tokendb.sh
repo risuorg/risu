@@ -17,10 +17,12 @@
 
 # this can run against live
 
-[[ "x$CITELLUS_LIVE" = "x1" ]] || exit 2
+if [ ! "x$CITELLUS_LIVE" = "x1" ]; then 
+  echo "works on live-system only" >&2
+  exit 2
+fi
 
 TOKENS=$(mysql keystone -e 'select count(*) from token where token.expires < CURTIME();' | egrep -o '[0-9]+')
-
 [ -z ${TOKENS} ] && exit 3
 
 if [[ "${TOKENS}" -ge 1000 ]]; then

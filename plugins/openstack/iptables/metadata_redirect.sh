@@ -18,7 +18,6 @@
 # we can run this against fs snapshot or live system
 
 if [ "x$CITELLUS_LIVE" = "x1" ];  then
-
   if  rpm -qa | grep -q "tripleo-heat-templates" && rpm -qa | grep -q \
   "python-tripleoclient"
   then
@@ -28,11 +27,10 @@ if [ "x$CITELLUS_LIVE" = "x1" ];  then
       exit 1
     fi
   else
+    echo "works on director node only" >&2
     exit 2
   fi
-
 elif [ "x$CITELLUS_LIVE" = "x0" ];  then
-
   if grep -q "tripleo-heat-templates" "${CITELLUS_ROOT}/installed-rpms" && grep -q \
   "python-tripleoclient" "${CITELLUS_ROOT}/installed-rpms"
   then
@@ -46,7 +44,7 @@ elif [ "x$CITELLUS_LIVE" = "x0" ];  then
       exit 1
     fi
   else
+    echo "works on director node only" >&2
     exit 2
   fi
-
 fi

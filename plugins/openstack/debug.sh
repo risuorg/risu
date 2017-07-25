@@ -18,22 +18,16 @@
 # if we are running against live system or fs snapshot
 
 if [ "x$CITELLUS_LIVE" = "x1" ];  then
-
   config_files=$(rpm -qa -c 'openstack-*' | grep '/etc/[^/]*/[^/]*\.conf')
-
 elif [ "x$CITELLUS_LIVE" = "x0" ]; then
-
   config_files=$(
   for i in $(sed -n -r -e 's/^openstack-([a-z]*)-.*$/\1/p' ${CITELLUS_ROOT}/installed-rpms \
   | sort | uniq); do ls ${CITELLUS_ROOT}/etc/$i/*.conf 2>/dev/null | grep '/etc/[^/]*/[^/]*\.conf'; \
   done)
-
 fi
 
 for config_file in $config_files; do
-
   [ -f "$config_file" ] || continue
-
   if grep -q '^debug[ \t]*=[ \t]*true' $config_file >&2; then
     # to remove the ${CITELLUS_ROOT} from the stderr.
     config_file=${config_file#$CITELLUS_ROOT}
@@ -43,6 +37,5 @@ for config_file in $config_files; do
     echo "disabled in $config_file" >&2
     flag=1
   fi
-
 done
 [[ "x$flag" = "x" ]] || exit 1

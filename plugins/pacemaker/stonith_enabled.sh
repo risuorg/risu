@@ -18,29 +18,36 @@
 # we can run this against fs snapshot or live system
 
 if [ "x$CITELLUS_LIVE" = "x1" ];  then
-
   pacemaker_status=$(systemctl is-active pacemaker || :)
-  [[ "$pacemaker_status" = "active" ]] || exit 2
-  pcs config | grep -q "stonith-enabled:.*true" || exit 1
-
-fi
-  
-if [ ! -f "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all" ]; then
-  echo "file /sos_commands/systemd/systemctl_list-units_--all not found." >&2
-  exit 2
-fi
-
-if [ "x$CITELLUS_LIVE" = "x0" ];  then
-
-  grep -q "pacemaker.*active" "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all" || exit 2
-
-  for CLUSTER_DIRECTORY in "pacemaker" "cluster"; do
-    if [ -d "${CITELLUS_ROOT}/sos_commands/${CLUSTER_DIRECTORY}" ]
-    then
-      PCS_DIRECTORY="${CITELLUS_ROOT}/sos_commands/${CLUSTER_DIRECTORY}"
+  if [ "$pacemaker_status" = "active" ]; then
+    if pcs config | grep -q "stonith-enabled:.*true"; then
+      exit 0
+    else
+      exit 1
     fi
-  done
-
-  grep -q "stonith-enabled:.*true" "${PCS_DIRECTORY}/pcs_config" || exit 1
-
+  else
+    echo "pacemaker is not running on this node" >&2
+    exit 2
+  fi
+elif [ "x$CITELLUS_LIVE" = "x0" ];  then
+  if [ ! -f "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all" ]; then
+    echo "file /sos_commands/systemd/systemctl_list-units_--all not found." >&2
+    exit 2
+  else
+    if grep -q "pacemaker.*active" "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all"; then
+      for CLUSTER_DIRECTORY in "pacemaker" "cluster"; do
+        if [ -d "${CITELLUS_ROOT}/sos_commands/${CLUSTER_DIRECTORY}" ]; then
+          PCS_DIRECTORY="${CITELLUS_ROOT}/sos_commands/${CLUSTER_DIRECTORY}"
+        fi
+      done
+      if grep -q "stonith-enabled:.*true" "${PCS_DIRECTORY}/pcs_config"; then
+        exit 0
+      else
+        exit 1
+      fi
+    else
+      echo "pacemaker is not running on this node" >&2
+      exit 2
+    fi
+  fi
 fi

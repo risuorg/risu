@@ -18,29 +18,37 @@
 # we can run this against fs snapshot or live system
 
 if [ "x$CITELLUS_LIVE" = "x1" ];  then
-
   pacemaker_status=$(systemctl is-active pacemaker || :)
-  [[ "$pacemaker_status" = "active" ]] || exit 2
-  ! pcs status | grep -q "Stopped" || exit 1
-
-fi
-  
-if [ ! -f "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all" ]; then
-  echo "file /sos_commands/systemd/systemctl_list-units_--all not found." >&2
-  exit 2
-fi
-
-if [ "x$CITELLUS_LIVE" = "x0" ];  then
-
-  grep -q "pacemaker.*active" "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all" || exit 2
-
-  for CLUSTER_DIRECTORY in "pacemaker" "cluster"; do
-    if [ -d "${CITELLUS_ROOT}/sos_commands/${CLUSTER_DIRECTORY}" ]
-    then
-      PCS_DIRECTORY="${CITELLUS_ROOT}/sos_commands/${CLUSTER_DIRECTORY}"
+  if [ "$pacemaker_status" = "active" ]; then
+    if pcs status | grep -q "Stopped"; then
+      exit 1
+    else
+      exit 0
     fi
-  done
-
-  ! grep -q "Stopped" "${PCS_DIRECTORY}/pcs_status" || exit 1
-
+  else
+    echo "pacemaker is not running on this node" >&2
+    exit 2
+  fi
+elif [ "x$CITELLUS_LIVE" = "x0" ];  then
+  if [ ! -f "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all" ]; then
+    echo "file /sos_commands/systemd/systemctl_list-units_--all not found." >&2
+    exit 2
+  else
+    if grep -q "pacemaker.*active" "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all"; then
+      for CLUSTER_DIRECTORY in "pacemaker" "cluster"; do
+	if [ -d "${CITELLUS_ROOT}/sos_commands/${CLUSTER_DIRECTORY}" ]
+	then
+	  PCS_DIRECTORY="${CITELLUS_ROOT}/sos_commands/${CLUSTER_DIRECTORY}"
+	fi
+      done
+      if grep -q "Stopped" "${PCS_DIRECTORY}/pcs_status"; then
+	exit 1
+      else
+	exit 0
+      fi
+    else
+      echo "pacemaker is not running on this node" >&2
+      exit 2
+    fi
+  fi
 fi

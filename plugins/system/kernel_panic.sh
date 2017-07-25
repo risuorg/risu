@@ -31,9 +31,7 @@ if [ "x$CITELLUS_LIVE" = "x0" ];  then
     echo "soft lockup detected" >&2
     exit 1
   fi
-fi
-
-if [ "x$CITELLUS_LIVE" = "x1" ]; then
+elif [ "x$CITELLUS_LIVE" = "x1" ]; then
   if journalctl -u kernel --no-pager --boot | grep -q "oom-killer"; then
     echo "oom-killer detected" >&2
     exit 1
