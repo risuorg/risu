@@ -221,10 +221,10 @@ def getitems(var):
 def commonpath(folders):
     commonroot = []
     ls = [p.split('/') for p in folders]
-    minlenght = min(len(p) for p in ls )
+    minlenght = min(len(p) for p in ls)
 
     for i in range(minlenght):
-        s = set( p[i] for p in ls )
+        s = set(p[i] for p in ls)
         if len(s) != 1:
             break
         commonroot.append(s.pop())
@@ -252,7 +252,6 @@ def main():
                    default="info", choices=["info", "debug", "warn", "critical"])
     p.add_argument("-s", "--silent", dest="silent", help=_("Enable silent mode, only errors on tests written"), default=False,
                    action='store_true')
-
 
     options, unknown = p.parse_known_args()
 
@@ -297,6 +296,7 @@ def main():
     # Save environment variables for plugins executed
     os.environ['CITELLUS_ROOT'] = "%s" % CITELLUS_ROOT
     os.environ['CITELLUS_LIVE'] = "%s" % CITELLUS_LIVE
+    os.environ['LANG'] = "%s" % "C"
 
     if options.verbose:
         logger.debug(msg=_('Verbose mode enabled at level: %s') % options.verbosity)
@@ -362,16 +362,16 @@ def main():
         rc = plugin['output']['rc']
 
         # If not standard RC, print stderr
-        if rc != 0 and rc != 2:
+        if (rc != 0 and rc != 2) or (options.verbose and rc == 2):
             print "# %s: %s" % (plugin['plugin'], text)
             if err != "":
                 for line in err.split('\n'):
                     print "    %s" % line
         else:
             if 'okay' in text:
-                okay.append(plugin['plugin'].replace(common,''))
+                okay.append(plugin['plugin'].replace(common, ''))
             if 'skipped' in text:
-                skipped.append(plugin['plugin'].replace(common,''))
+                skipped.append(plugin['plugin'].replace(common, ''))
 
         logger.debug(msg=_("Plugin: %s, output: %s") % (plugin['plugin'], plugin['output']))
 
