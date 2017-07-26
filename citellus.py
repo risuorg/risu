@@ -289,6 +289,8 @@ def main():
                    default="info", choices=["info", "debug", "warn", "critical"])
     p.add_argument("-s", "--silent", dest="silent", help=_("Enable silent mode, only errors on tests written"), default=False,
                    action='store_true')
+    p.add_argument("-f", "--filter", dest="filter", help=_("Only include plugins that contains in full path that substring"),
+                   default=False)
 
     options, unknown = p.parse_known_args()
 
@@ -332,7 +334,18 @@ def main():
     for path in plugin_path:
         plugins.append(findplugins(path))
 
-    plugins = getitems(plugins)
+    candidates = getitems(plugins)
+
+    if not options.filter:
+        plugins = candidates
+    else:
+        logger.debug(msg=_('Filtering of plugins enabled for: %s') % options.filter)
+        plugins = []
+        for plugin in candidates:
+            if options.filter in plugin:
+                plugins.append(plugin)
+            else:
+                logger.debug(msg=_('Plugin %s does not pass filter') % plugin)
 
     if not options.silent:
         show_logo()
