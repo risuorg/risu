@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 # encoding: utf-8
 #
-# Description:
+# Description: Runs set of scripts against system or snapshot to
+#              detect common pitfalls in configuration/status
+#
 # Copyright (C) 2017 Robin Černín (rcernin@redhat.com)
 #                    Lars Kellogg-Stedman <lars@oddbit.com>
 #                    Pablo Iranzo Gómez (Pablo.Iranzo@redhat.com)
@@ -232,6 +234,41 @@ def commonpath(folders):
     return '/'.join(commonroot)
 
 
+def docitellus(live=False, path=False, plugins=False):
+    """
+    Runs citellus scripts on specified root folder
+    :param live:  Test is to be executed live or on snapshot/sosreport
+    :param CITELLUS_ROOT: Path for non live access
+    :param plugins:  plugins to execute against the system
+    :return: Dict of plugins and results
+    """
+    logger = logging.getLogger(__name__)
+    # Enable LIVE mode if parameter passed
+    if live:
+        CITELLUS_LIVE = 1
+    else:
+        CITELLUS_LIVE = 0
+
+    # Save environment variables for plugins executed
+    os.environ['CITELLUS_ROOT'] = "%s" % path
+    os.environ['CITELLUS_LIVE'] = "%s" % CITELLUS_LIVE
+    os.environ['LANG'] = "%s" % "C"
+
+    # Set pool for same processes as CPU cores
+    p = Pool(cpu_count())
+
+    # Execute runplugin for each plugin found
+    results = p.map(runplugin, plugins)
+
+    # Process plugin output from multiple plugins for result printing
+    new_dict = {}
+    for item in results:
+        name = item['plugin']
+        new_dict[name] = item
+
+    return new_dict
+
+
 def main():
     """
     Main function for the program
@@ -260,12 +297,6 @@ def main():
 
     logger = logging.getLogger(__name__)
 
-    # Enable LIVE mode if parameter passed
-    if options.live:
-        CITELLUS_LIVE = 1
-    else:
-        CITELLUS_LIVE = 0
-
     CITELLUS_PLUGINS = False
     CITELLUS_ROOT = False
 
@@ -293,16 +324,6 @@ def main():
     else:
         CITELLUS_PLUGINS = [plugin_path]
 
-    # Save environment variables for plugins executed
-    os.environ['CITELLUS_ROOT'] = "%s" % CITELLUS_ROOT
-    os.environ['CITELLUS_LIVE'] = "%s" % CITELLUS_LIVE
-    os.environ['LANG'] = "%s" % "C"
-
-    if options.verbose:
-        logger.debug(msg=_('Verbose mode enabled at level: %s') % options.verbosity)
-        # Enable verbose on scripts
-        os.environ['CITELLUS_DEBUG'] = "%s" % options.verbose
-
     # Find plugins available
     if CITELLUS_PLUGINS:
         plugin_path = CITELLUS_PLUGINS
@@ -324,7 +345,7 @@ def main():
         sys.exit(1)
 
     if not options.silent:
-        if CITELLUS_LIVE == 1:
+        if options.live:
             print _("mode: live")
         else:
             print _("mode: fs snapshot %s" % CITELLUS_ROOT)
@@ -333,13 +354,7 @@ def main():
     p = Pool(cpu_count())
 
     # Execute runplugin for each plugin found
-    results = p.map(runplugin, plugins)
-
-    # Process plugin output from multiple plugins for result printing
-    new_dict = {}
-    for item in results:
-        name = item['plugin']
-        new_dict[name] = item
+    new_dict = docitellus(live=options.live, path=CITELLUS_ROOT, plugins=plugins)
 
     # Sort plugins based on path name
     std = sorted(plugins, key=lambda file: (os.path.dirname(file), os.path.basename(file)))
