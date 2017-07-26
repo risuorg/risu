@@ -20,10 +20,10 @@
 if [ "x$CITELLUS_LIVE" = "x1" ];  then
   pacemaker_status=$(systemctl is-active pacemaker || :)
   if [ "$pacemaker_status" = "active" ]; then
-    if pcs config | grep -q "stonith-enabled:.*true"; then
-      exit 0
-    else
+    if pcs config | grep -q "stonith-enabled:.*false"; then
       exit 1
+    else
+      exit 0
     fi
   else
     echo "pacemaker is not running on this node" >&2
@@ -40,10 +40,10 @@ elif [ "x$CITELLUS_LIVE" = "x0" ];  then
           PCS_DIRECTORY="${CITELLUS_ROOT}/sos_commands/${CLUSTER_DIRECTORY}"
         fi
       done
-      if grep -q "stonith-enabled:.*true" "${PCS_DIRECTORY}/pcs_config"; then
-        exit 0
-      else
+      if grep -q "stonith-enabled:.*false" "${PCS_DIRECTORY}/pcs_config"; then
         exit 1
+      else
+        exit 0
       fi
     else
       echo "pacemaker is not running on this node" >&2
