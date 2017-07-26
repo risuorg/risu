@@ -13,7 +13,7 @@ We are developing framework in python, the bash framework has been deprecated. P
 ```
 # ./citellus.py -h
 usage: citellus.py [arguments] [-h] [-l] [-v] [-d {info,debug,warn,critical}]
-                               [-s]
+                               [-s] [-f FILTER]
 
 Citellus allows to analyze a directory against common set of tests, useful for
 finding common configuration errors
@@ -25,6 +25,9 @@ optional arguments:
   -d {info,debug,warn,critical}, --verbosity {info,debug,warn,critical}
                         Set verbosity level for messages while running/logging
   -s, --silent          Enable silent mode, only errors on tests written
+  -f FILTER, --filter FILTER
+                        Only include plugins that contains in full path that
+                        substring
 ```
 
 ## Doing a live check example
@@ -205,4 +208,26 @@ mode: fs snapshot /root/sosreport-controller-1.localdomain-20170705201135/
 # plugins/pacemaker/stonith_enabled.sh: failed
 # plugins/pacemaker/stopped_resources.sh: failed
 # ['/openstack/version.sh', '/openstack/crontab/heat_stack-purge.sh', '/openstack/crontab/keystone_cleanup.sh', '/openstack/keystone/cleanup_last-run.sh', '/openstack/keystone/cleanup_runs.sh', '/openstack/rabbitmq/file_descriptors.sh', '/openstack/systemd/services.sh', '/pacemaker/failed_actions.sh', '/pacemaker/nodes_number.sh']: okay 
+```
+And example execution using filters
+
+## Filters example
+
+This is an example of execution of Citellus using ```plugins/``` and filter ```pacemaker``` against fs snapshot ```sosreport-controller-1.localdomain-20170705201135```
+```
+# ./citellus.py -v /root/sosreport-controller-1.localdomain-20170705201135/ plugins/ -f pacemaker
+_________ .__  __         .__  .__                
+\_   ___ \|__|/  |_  ____ |  | |  |  __ __  ______
+/    \  \/|  \   __\/ __ \|  | |  | |  |  \/  ___/
+\     \___|  ||  | \  ___/|  |_|  |_|  |  /\___ \ 
+ \______  /__||__|  \___  >____/____/____//____  >
+        \/              \/                     \/ 
+found #5 tests at plugins/
+mode: fs snapshot /root/sosreport-controller-1.localdomain-20170705201135/
+# plugins/pacemaker/fence_device.sh: skipped
+    works on live-system only
+    
+# plugins/pacemaker/stonith_enabled.sh: failed
+# plugins/pacemaker/stopped_resources.sh: failed
+# ['/failed_actions.sh', '/nodes_number.sh']: okay
 ```
