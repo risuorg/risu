@@ -21,6 +21,9 @@ count_nodes(){
   if [ ! "$echo $(( (NUM_NODES-1) % 2 ))" -eq  "0" ]; then
     echo "${NUM_NODES}" >&2
     exit 1
+  elif [ "x$NUM_NODES" = "x1" ]; then
+    echo "${NUM_NODES}" >&2
+    exit 1
   else
     exit 0
   fi
