@@ -29,7 +29,7 @@ count_nodes(){
 if [ "x$CITELLUS_LIVE" = "x1" ];  then
   pacemaker_status=$(systemctl is-active pacemaker || :)
   if [ "$pacemaker_status" = "active" ]; then
-    NUM_NODES=$(pcs status | sed -n -r -e 's/^([0-9])[ \t]+nodes.*/\1/p')
+    NUM_NODES=$(pcs status | sed -n -r -e 's/^([0-9])[ \t]+node.*/\1/p')
     count_nodes
   else
     echo "pacemaker is not running on this node" >&2
@@ -46,7 +46,7 @@ elif [ "x$CITELLUS_LIVE" = "x0" ];  then
 	  PCS_DIRECTORY="${CITELLUS_ROOT}/sos_commands/${CLUSTER_DIRECTORY}"
 	fi
       done
-      NUM_NODES=$(sed -n -r -e 's/^([0-9])[ \t]+nodes.*/\1/p' "${PCS_DIRECTORY}/pcs_status")
+      NUM_NODES=$(sed -n -r -e 's/^([0-9])[ \t]+node.*/\1/p' "${PCS_DIRECTORY}/pcs_status")
       count_nodes
     else
       echo "pacemaker is not running on this node" >&2
