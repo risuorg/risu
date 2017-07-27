@@ -37,7 +37,7 @@ from multiprocessing import Pool, cpu_count
 maguidir = os.path.abspath(os.path.dirname(__file__))
 localedir = os.path.join(maguidir, 'locale')
 
-trad = gettext.translation('magui', localedir, fallback=True)
+trad = gettext.translation('citellus', localedir, fallback=True)
 _ = trad.ugettext
 
 
