@@ -193,25 +193,7 @@ def runplugin(plugin):
         out = ""
         err = traceback.format_exc()
 
-    for case in Switch(returncode):
-        if case(0):
-            # OK
-            text = bcolors.okay
-            break
-        if case(1):
-            # FAILED
-            text = bcolors.failed
-            break
-        if case(2):
-            # SKIPPED
-            text = bcolors.skipped
-            break
-        if case():
-            # UNEXPECTED
-            text = bcolors.unexpected
-            break
-
-    return {'plugin': plugin, 'output': {"rc": returncode, "out": out, "err": err, "text": text}}
+    return {'plugin': plugin, 'output': {"rc": returncode, "out": out, "err": err}}
 
 
 def getitems(var):
@@ -289,6 +271,32 @@ def docitellus(live=False, path=False, plugins=False):
         new_dict[name] = item
 
     return new_dict
+
+
+def formattext(returncode):
+    """
+    Returns print formating for return code
+    :param returncode: return code of plugin
+    :return: formatted text for printing
+    """
+    for case in Switch(returncode):
+        if case(0):
+            # OK
+            text = bcolors.okay
+            break
+        if case(1):
+            # FAILED
+            text = bcolors.failed
+            break
+        if case(2):
+            # SKIPPED
+            text = bcolors.skipped
+            break
+        if case():
+            # UNEXPECTED
+            text = bcolors.unexpected
+            break
+    return text
 
 
 def main():
@@ -385,8 +393,8 @@ def main():
 
         out = plugin['output']['out']
         err = plugin['output']['err']
-        text = plugin['output']['text']
         rc = plugin['output']['rc']
+        text = formattext(returncode=rc)
 
         # If not standard RC, print stderr
         if (rc != 0 and rc != 2) or (options.verbose and rc == 2):
