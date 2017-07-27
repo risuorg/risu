@@ -131,24 +131,46 @@ def show_logo():
         print line
 
 
-def findplugins(folder):
+def findplugins(folders=[], filter=False):
     """
     Finds plugins in path and returns array of them
-    :param folder: Folder to use as source for plugin search
+    :param folders: Folders to use as source for plugin search
+    :param filter: Filter to apply to plugins
     :return:
     """
 
     logger = logging.getLogger(__name__)
 
+    # If folders is empty, use default path
+    if folders == []:
+        folders = [os.path.join(citellusdir, 'plugins')]
+
     plugins = []
-    for root, dir, files in os.walk(folder):
-        for file in files:
-            script = os.path.join(folder, file)
-            if os.access(script, os.X_OK):
-                plugins.append(script)
-        for subfolder in dir:
-            plugins.extend(findplugins(os.path.join(folder, subfolder)))
+    for folder in folders:
+        for root, dir, files in os.walk(folder):
+            for file in files:
+                script = os.path.join(folder, file)
+                if os.access(script, os.X_OK):
+                    plugins.append(script)
+            for subfolder in dir:
+                # Find new plugins in the folder but do not filter as we'll do that later
+                plugins.extend(findplugins(folders=[os.path.join(folder, subfolder)]))
     logger.debug(msg=_('Found plugins: %s') % plugins)
+
+    # Remove lists of lists with getitems and duplicates with set
+    candidates = list(set(getitems(plugins)))
+    if filter:
+        logger.debug(msg=_('Filtering of plugins enabled for: %s') % filter)
+        plugins = []
+        for plugin in candidates:
+            if filter in plugin:
+                plugins.append(plugin)
+            else:
+                logger.debug(msg=_('Plugin %s does not pass filter') % plugin)
+    else:
+        # No filtering, return list
+        plugins = candidates
+
     return plugins
 
 
@@ -297,12 +319,8 @@ def main():
     # Configure logging
     logging.basicConfig(level=conflogging(verbosity=options.verbosity))
 
+    # Prepare our logger
     logger = logging.getLogger(__name__)
-
-    CITELLUS_PLUGINS = False
-    CITELLUS_ROOT = False
-
-    plugin_path = os.path.join(citellusdir, 'plugins')
 
     logger.debug(msg=_('Additional parameters: %s') % unknown)
 
@@ -318,34 +336,15 @@ def main():
         CITELLUS_ROOT = ""
         start = 0
 
+    plugin_path = []
     if len(unknown) > start:
         # We've more parameters defined, so they are for plugin paths
-        CITELLUS_PLUGINS = []
+
         for path in unknown[start:]:
-            CITELLUS_PLUGINS.append(path)
-    else:
-        CITELLUS_PLUGINS = [plugin_path]
+            plugin_path.append(path)
 
-    # Find plugins available
-    if CITELLUS_PLUGINS:
-        plugin_path = CITELLUS_PLUGINS
-
-    plugins = []
-    for path in plugin_path:
-        plugins.append(findplugins(path))
-
-    candidates = getitems(plugins)
-
-    if not options.filter:
-        plugins = candidates
-    else:
-        logger.debug(msg=_('Filtering of plugins enabled for: %s') % options.filter)
-        plugins = []
-        for plugin in candidates:
-            if options.filter in plugin:
-                plugins.append(plugin)
-            else:
-                logger.debug(msg=_('Plugin %s does not pass filter') % plugin)
+    # Find available plugins
+    plugins = findplugins(folders=plugin_path, filter=options.filter)
 
     if not options.silent:
         show_logo()
