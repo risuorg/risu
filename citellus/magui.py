@@ -28,7 +28,7 @@ import logging
 import os
 import os.path
 import pprint
-    
+
 import citellus
 
 # Where are we?
@@ -89,7 +89,6 @@ def main():
 
     plugin_path = os.path.join(maguidir, 'magplug')
 
-
     if not options.silent:
         show_logo()
 
@@ -100,7 +99,7 @@ def main():
     for sosreport in unknown:
         if not options.silent:
             print _("Gathering analysis for %s") % sosreport
-        results[sosreport] = citellus.docitellus(live=False, path=sosreport, plugins=citellus.findplugins(filter=options.filter))
+        results[sosreport] = citellus.docitellus(live=False, path=sosreport, plugins=citellus.findplugins(filters=options.filter))
 
     # Precreate multidimensional array
     grouped = {}
@@ -147,4 +146,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

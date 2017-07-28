@@ -131,7 +131,7 @@ def show_logo():
         print line
 
 
-def findplugins(folders=[], filter=False):
+def findplugins(folders=[], filters=[]):
     """
     Finds plugins in path and returns array of them
     :param folders: Folders to use as source for plugin search
@@ -159,14 +159,18 @@ def findplugins(folders=[], filter=False):
 
     # Remove lists of lists with getitems and duplicates with set
     candidates = list(set(getitems(plugins)))
-    if filter:
-        logger.debug(msg=_('Filtering of plugins enabled for: %s') % filter)
+    if filters:
+        if not isinstance(filters, list):
+            # We expect a list, so we can iterate, so if it's not, we wrap it
+            filters = [filters]
+
+        logger.debug(msg=_('Filtering of plugins enabled for: %s') % filters)
         plugins = []
         for plugin in candidates:
-            if filter in plugin:
-                plugins.append(plugin)
-            else:
-                logger.debug(msg=_('Plugin %s does not pass filter') % plugin)
+            for filter in filters:
+                if filter in plugin:
+                    plugins.append(plugin)
+                    logger.debug(msg=_('Plugin %s does pass filter') % plugin)
     else:
         # No filtering, return list
         plugins = candidates
@@ -270,6 +274,8 @@ def docitellus(live=False, path=False, plugins=False):
         name = item['plugin']
         new_dict[name] = item
 
+    logger.debug(msg=_("Plugins executed for %s: %s with result: %s") % (path, plugins, new_dict))
+
     return new_dict
 
 
@@ -320,7 +326,7 @@ def main():
     p.add_argument("-s", "--silent", dest="silent", help=_("Enable silent mode, only errors on tests written"), default=False,
                    action='store_true')
     p.add_argument("-f", "--filter", dest="filter", help=_("Only include plugins that contains in full path that substring"),
-                   default=False)
+                   default=[], action='append')
 
     options, unknown = p.parse_known_args()
 
@@ -352,7 +358,7 @@ def main():
             plugin_path.append(path)
 
     # Find available plugins
-    plugins = findplugins(folders=plugin_path, filter=options.filter)
+    plugins = findplugins(folders=plugin_path, filters=options.filter)
 
     if not options.silent:
         show_logo()
@@ -391,7 +397,8 @@ def main():
     for i in range(0, len(std)):
         plugin = new_dict[std[i]]
 
-        out = plugin['output']['out']
+        # We don't print stdout
+        # out = plugin['output']['out']
         err = plugin['output']['err']
         rc = plugin['output']['rc']
         text = formattext(returncode=rc)
