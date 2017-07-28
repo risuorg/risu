@@ -104,17 +104,41 @@ def main():
     # Precreate multidimensional array
     grouped = {}
     for sosreport in unknown:
+        plugins = []
         for plugin in results[sosreport]:
+            plugins.append(plugin)
             grouped[plugin] = {}
+
+    # Get commonpath for printing
+    commonpath = citellus.commonpath(plugins)
 
     # Fill the data
     for sosreport in unknown:
+        plugins = 0
         for plugin in results[sosreport]:
             grouped[plugin][sosreport] = results[sosreport][plugin]['output']
 
     # We've now a matrix of grouped[plugin][sosreport] and then [text] [out] [err] [rc]
-    pprint.pprint(grouped, width=1)
 
+    # For now, let's only print plugins that have rc ! 0
+
+    if options.silent:
+        toprint = {}
+        for plugin in grouped:
+            pplug = 0
+            for host in grouped[plugin]:
+                if grouped[plugin][host]['rc'] != 0 and grouped[plugin][host]['rc'] != 2:
+                    pplug = 1
+            if pplug == 1:
+                newplugin=plugin.replace(commonpath, '')
+                toprint[newplugin] = {}
+                for host in grouped[plugin]:
+                    toprint[newplugin][host] = {}
+                    toprint[newplugin][host]=grouped[plugin][host]
+    else:
+        toprint = grouped
+
+    pprint.pprint(toprint, width=1)
     # We need to run our plugins against that data
 
     # TODO(iranzo): write code for processing plugins once decided what to use and process (rather than feding above data outputed to the full scripts)
