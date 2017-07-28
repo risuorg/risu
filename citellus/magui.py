@@ -22,16 +22,14 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import citellus
 import argparse
 import gettext
 import logging
 import os
 import os.path
-import subprocess
-import sys
-import traceback
-from multiprocessing import Pool, cpu_count
+import pprint
+
+import citellus
 
 # Where are we?
 maguidir = os.path.abspath(os.path.dirname(__file__))
@@ -115,7 +113,7 @@ def main():
             grouped[plugin][sosreport] = results[sosreport][plugin]['output']
 
     # We've now a matrix of grouped[plugin][sosreport] and then [text] [out] [err] [rc]
-    print grouped
+    pprint.pprint(grouped, width=1)
 
     # We need to run our plugins against that data
 
