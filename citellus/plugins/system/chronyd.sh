@@ -29,7 +29,7 @@ if [ "x$CITELLUS_LIVE" = "x1" ]; then
   chronyc tracking
   result=$?
   if [ "x$result" = "x0" ]; then
-    echo "crhonyc active" >&2
+    echo "crhonyd is active" >&2
     # get offset
     offset=$(chronyc tracking | awk '/RMS offset/ {print $4}')
     echo "clock offset is ${offset:-unknown}" >&2
