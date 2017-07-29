@@ -15,12 +15,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# we can run this against fs snapshot or live system
+# we can run this on fs snapshot or live system
 
 if [ "x$CITELLUS_LIVE" = "x1" ];  then
 
   if ps -elf | grep [n]ova-compute; then
-    echo "works only against controller node" >&2
+    echo "works only on controller node" >&2
     exit 2
   else
     FILE_DESCRIPTORS=$(rabbitmqctl report | awk -v target="$(hostname)" '$4 ~ target { flag = 1 } \
@@ -44,7 +44,7 @@ if [ "x$CITELLUS_LIVE" = "x1" ];  then
 elif [ "x$CITELLUS_LIVE" = "x0" ]; then
 
   if grep [n]ova-compute "${CITELLUS_ROOT}/ps"; then
-    echo "works only against controller node" >&2
+    echo "works only on controller node" >&2
     exit 2
   else
     if [ -e "${CITELLUS_ROOT}/sos_commands/rabbitmq/rabbitmqctl_report" ]; then

@@ -42,7 +42,8 @@ if [ "x$CITELLUS_LIVE" = "x1" ]; then
     fi
   else
     exit 1
+  fi
 elif [ "x$CITELLUS_LIVE" = "x0" ]; then
-  echo "works on live-system only"
+  echo "works on live-system only" >&2
   exit 2
 fi

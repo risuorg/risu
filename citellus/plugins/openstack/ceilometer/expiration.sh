@@ -35,7 +35,7 @@ FILE=${CITELLUS_ROOT}/etc/ceilometer/ceilometer.conf
 if [ ! -f $FILE ];
 then
     # Skip test if file is missing
-    echo "$FILE does not exist" >&2
+    echo "${FILE#$CITELLUS_ROOT} does not exist" >&2
     exit 2
 fi
 
@@ -75,25 +75,32 @@ fi
 
 # Actually run the check
 
-{ if [ "x$CITELLUS_LIVE" = "x0" ];  then
+if [ "x$CITELLUS_LIVE" = "x0" ];  then
   # Check which version we are using
   if [ -f ${CITELLUS_ROOT}/installed-rpms ];
   then
     VERSION=$(grep "openstack-nova-common" "${CITELLUS_ROOT}/installed-rpms")
     RELEASE=$(discover_version)
+    if grep -q nova-compute "${CITELLUS_ROOT}/ps";
+    then
+      echo "works only on controller node" >&2
+      exit 2
+    fi
     checksettings
     exit $RC
   else
     echo "Missing required file /installed-rpms" >&2
     exit 2
   fi
-fi } >&2
-
-{ if [ "x$CITELLUS_LIVE" = "x1" ];  then
+elif [ "x$CITELLUS_LIVE" = "x1" ];  then
   # Check which version we are using
   VERSION=$(rpm -qa | grep "openstack-nova-common")
   discover_version
   RELEASE=$(discover_version)
+  if ps -elf | grep -q [n]ova-compute; then
+    echo "works only on controller node" >&2
+    exit 2
+  fi
   checksettings
   exit $RC
-fi } >&2
+fi
