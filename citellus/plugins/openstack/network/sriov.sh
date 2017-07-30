@@ -18,7 +18,7 @@
 # we can run this against fs snapshot or live system
 
 if [ "x$CITELLUS_LIVE" = "x0" ]; then
-  if ! grep -q "openstack-neutron-sriov-nic-agent" "${CITELLUS_ROOT}/installed-rpms"
+  if grep -q "openstack-neutron-sriov-nic-agent" "${CITELLUS_ROOT}/installed-rpms"
   then
     # Looks for VF enabled
     if ! grep -q "Virtual Function" "${CITELLUS_ROOT}/lspci"; then
@@ -67,7 +67,7 @@ if [ "x$CITELLUS_LIVE" = "x0" ]; then
       echo "missing /etc/nova/nova.conf - skipped" >&2
     fi
   else
-    echo "openstack-neutron-sriov-nic-agent package missing, probably not compute or controller with SRIOV" >&2
+    echo "openstack-neutron-sriov-nic-agent package missing" >&2
     exit 2
   fi
 else
