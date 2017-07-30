@@ -20,57 +20,51 @@
 if [ "x$CITELLUS_LIVE" = "x0" ]; then
   if ! grep -q "openstack-neutron-sriov-nic-agent" "${CITELLUS_ROOT}/installed-rpms"
   then
-    if grep openstack-neutron-sriov-nic-agent "${CITELLUS_ROOT}/installed-rpms";
-    then
-      # Looks for VF enabled
-      if ! grep -q "Virtual Function" "${CITELLUS_ROOT}/lspci"; then
-	echo "virtual function is disabled" >&2
-	flag=1
-      fi
-      # Looks for VFIO_IOMMU enabled
-      if ! grep -q "vfio_iommu_type1" "${CITELLUS_ROOT}/proc/modules"; then
-	echo "vfio_iommu module is not loaded" >&2
-	flag=1
-      fi
-      # Unsafe interrupts enabled (for HOTPLUG)
-      if [ -e "${CITELLUS_ROOT}/sys/module/vfio_iommu_type1/parameters/allow_unsafe_interrupts" ]; then
-	if ! grep -q "Y" "${CITELLUS_ROOT}/sys/module/vfio_iommu_type1/parameters/allow_unsafe_interrupts"; then
-	echo "unsafe interrupts not enabled" >&2
-	flag=1
-	fi
-      else
-	echo "missing allow_unsafe_interrupts file - skipped" >&2
-      fi
-      # Are we Intel or AMD?
-      grep -iq intel "${CITELLUS_ROOT}/proc/cpuinfo"
-      INTEL=$?
-      if [ "#$INTEL" == "#0" ];
-      then
-	  # Check for IOMMU (VT-d) (INTEL)
-	  if ! grep -q "intel_iommu=on" "${CITELLUS_ROOT}/proc/cmdline"; then
-	    echo "missing intel_iommu=on on cmdline" >&2
-	    flag=1
-	  fi
-	  if ! grep -q "iommu=pt" "${CITELLUS_ROOT}/proc/cmdline"; then
-	    echo "missing iommu=pt on cmdline" >&2
-	  fi
-      else
-	  # Check for AMD
-	  if ! grep -q "amd_iommu=pt" "${CITELLUS_ROOT}/cmdline"; then
-	    echo "missing amd_iommu=pt on cmdline" >&2
-	  fi
-      fi
-      # Looks for the pci_pass_tru in Nova
-      if [ -e "${CITELLUS_ROOT}/etc/nova/nova.conf" ]; then
-	if ! grep -q "pci_passthrough_whitelist = " "${CITELLUS_ROOT}/etc/nova/nova.conf"; then
-	  echo "missing pci_passthrough_whitelist in /etc/nova/nova.conf" >&2
-	fi
-      else
-	echo "missing /etc/nova/nova.conf - skipped" >&2
+    # Looks for VF enabled
+    if ! grep -q "Virtual Function" "${CITELLUS_ROOT}/lspci"; then
+      echo "virtual function is disabled" >&2
+      flag=1
+    fi
+    # Looks for VFIO_IOMMU enabled
+    if ! grep -q "vfio_iommu_type1" "${CITELLUS_ROOT}/proc/modules"; then
+      echo "vfio_iommu module is not loaded" >&2
+      flag=1
+    fi
+    # Unsafe interrupts enabled (for HOTPLUG)
+    if [ -e "${CITELLUS_ROOT}/sys/module/vfio_iommu_type1/parameters/allow_unsafe_interrupts" ]; then
+      if ! grep -q "Y" "${CITELLUS_ROOT}/sys/module/vfio_iommu_type1/parameters/allow_unsafe_interrupts"; then
+      echo "unsafe interrupts not enabled" >&2
+      flag=1
       fi
     else
-      echo "openstack-neutron-sriov-nic-agent is not installed" >&2
-      exit 2
+      echo "missing allow_unsafe_interrupts file - skipped" >&2
+    fi
+    # Are we Intel or AMD?
+    grep -iq intel "${CITELLUS_ROOT}/proc/cpuinfo"
+    INTEL=$?
+    if [ "#$INTEL" == "#0" ];
+    then
+	# Check for IOMMU (VT-d) (INTEL)
+	if ! grep -q "intel_iommu=on" "${CITELLUS_ROOT}/proc/cmdline"; then
+	  echo "missing intel_iommu=on on cmdline" >&2
+	  flag=1
+	fi
+	if ! grep -q "iommu=pt" "${CITELLUS_ROOT}/proc/cmdline"; then
+	  echo "missing iommu=pt on cmdline" >&2
+	fi
+    else
+	# Check for AMD
+	if ! grep -q "amd_iommu=pt" "${CITELLUS_ROOT}/cmdline"; then
+	  echo "missing amd_iommu=pt on cmdline" >&2
+	fi
+    fi
+    # Looks for the pci_pass_tru in Nova
+    if [ -e "${CITELLUS_ROOT}/etc/nova/nova.conf" ]; then
+      if ! grep -q "pci_passthrough_whitelist = " "${CITELLUS_ROOT}/etc/nova/nova.conf"; then
+        echo "missing pci_passthrough_whitelist in /etc/nova/nova.conf" >&2
+      fi
+    else
+      echo "missing /etc/nova/nova.conf - skipped" >&2
     fi
   else
     echo "openstack-neutron-sriov-nic-agent package missing, probably not compute or controller with SRIOV" >&2
