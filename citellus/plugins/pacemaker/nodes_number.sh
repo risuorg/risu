@@ -49,6 +49,10 @@ elif [ "x$CITELLUS_LIVE" = "x0" ];  then
 	  PCS_DIRECTORY="${CITELLUS_ROOT}/sos_commands/${CLUSTER_DIRECTORY}"
 	fi
       done
+      if [ ! -f "${PCS_DIRECTORY}/pcs_status" ]; then
+        echo "file pcs_status not found." >&2
+        exit 2
+      fi
       NUM_NODES=$(sed -n -r -e 's/^([0-9])[ \t]+node.*/\1/p' "${PCS_DIRECTORY}/pcs_status")
       count_nodes
     else
