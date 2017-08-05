@@ -141,41 +141,27 @@ def findplugins(folders=[], filters=[]):
     :return:
     """
 
-    # If folders is empty, use default path
-    if folders == []:
-        folders = [os.path.join(citellusdir, 'plugins')]
+    LOG.debug('starting plugin search in: %s', folders)
 
     plugins = []
     for folder in folders:
-        for root, dir, files in os.walk(folder):
-            for file in files:
-                script = os.path.join(folder, file)
-                if os.access(script, os.X_OK):
-                    plugins.append(script)
-            for subfolder in dir:
-                # Find new plugins in the folder but do not filter as we'll do that later
-                plugins.extend(findplugins(folders=[os.path.join(folder, subfolder)]))
+        for root, dirnames, filenames in os.walk(folder):
+            LOG.debug('looking for plugins in: %s', root)
+            for filename in filenames:
+                filepath = os.path.join(root, filename)
+                LOG.debug('considering: %s', filepath)
+                if os.access(filepath, os.X_OK):
+                    plugins.append(filepath)
+
     LOG.debug(msg=_('Found plugins: %s') % plugins)
 
-    # Remove lists of lists with getitems and duplicates with set
-    candidates = list(set(getitems(plugins)))
     if filters:
-        if not isinstance(filters, list):
-            # We expect a list, so we can iterate, so if it's not, we wrap it
-            filters = [filters]
+        plugins = [ plugin for plugin in plugins for filter in filters
+                   if filter in plugin ]
 
-        LOG.debug(msg=_('Filtering of plugins enabled for: %s') % filters)
-        plugins = []
-        for plugin in candidates:
-            for filter in filters:
-                if filter in plugin:
-                    plugins.append(plugin)
-                    LOG.debug(msg=_('Plugin %s does pass filter') % plugin)
-    else:
-        # No filtering, return list
-        plugins = candidates
-
-    return plugins
+    # this unique-ifies the list of plugins (and ensures consistent
+    # ordering).
+    return sorted(set(plugins))
 
 
 def runplugin(plugin):
@@ -196,32 +182,6 @@ def runplugin(plugin):
         err = traceback.format_exc()
 
     return {'plugin': plugin, 'output': {"rc": returncode, "out": out, "err": err}}
-
-
-def getitems(var):
-    """
-    Returns list of items even if provided args are lists of lists
-    :param var: list or value to pass
-    :return: unique list of values
-    """
-
-    result = []
-    if not isinstance(var, list):
-        result.append(var)
-    else:
-        for elem in var:
-            result.extend(getitems(elem))
-
-    # Do cleanup of duplicates
-    final = []
-    for elem in result:
-        if elem not in final:
-            final.append(elem)
-
-    # As we call recursively, don't log calls for just one ID
-    if len(final) > 1:
-        LOG.debug(msg=_("Final deduplicated list: %s") % final)
-    return final
 
 
 def commonpath(folders):
@@ -350,6 +310,10 @@ def main():
             sys.exit(1)
     else:
         CITELLUS_ROOT = ""
+
+    if not options.plugin_path:
+        LOG.debug('using default plugin path')
+        options.plugin_path = ['plugins']
 
     # Find available plugins
     plugins = findplugins(folders=options.plugin_path, filters=options.filter)
