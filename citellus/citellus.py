@@ -305,7 +305,7 @@ def main():
             # Live not specified, so we will use file snapshot as first arg and remaining cli arguments as plugins
             CITELLUS_ROOT = options.plugin_path.pop(0)
         else:
-            print _("When not running in Live mode, snapshot path is required")
+            LOG.error(_("When not running in Live mode, snapshot path is required"))
             sys.exit(1)
     else:
         CITELLUS_ROOT = ""
@@ -322,9 +322,7 @@ def main():
         print _("found #%s tests at %s") % (len(plugins), ", ".join(options.plugin_path))
 
     if not plugins:
-        msg = _("Plugin folder empty, exitting")
-        LOG.debug(msg=msg)
-        print msg
+        LOG.error(_("Plugin folder empty, exitting"))
         sys.exit(1)
 
     if not options.silent:
