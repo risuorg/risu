@@ -43,59 +43,6 @@ trad = gettext.translation('citellus', localedir, fallback=True)
 _ = trad.ugettext
 
 
-# Implement switch from http://code.activestate.com/recipes/410692/
-class Switch(object):
-    """
-    Defines a class that can be used easily as traditional switch commands
-    """
-
-    def __init__(self, value):
-        self.value = value
-        self.fall = False
-
-    def __iter__(self):
-        """Return the match method once, then stop"""
-        yield self.match
-        raise StopIteration
-
-    def match(self, *args):
-        """Indicate whether or not to enter a case suite"""
-        if self.fall or not args:
-            return True
-        elif self.value in args:  # changed for v1.5, see below
-            self.fall = True
-            return True
-        else:
-            return False
-
-
-def conflogging(verbosity=False):
-    """
-    This function configures the logging handlers for console and file
-    """
-
-    # Define logging settings
-    for case in Switch(verbosity):
-        # choices=["info", "debug", "warn", "critical"])
-        if case('debug'):
-            level = logging.DEBUG
-            break
-        if case('critical'):
-            level = logging.CRITICAL
-            break
-        if case('warn'):
-            level = logging.WARN
-            break
-        if case('info'):
-            level = logging.INFO
-            break
-        if case():
-            # Default to DEBUG log level
-            level = logging.INFO
-
-    return level
-
-
 class bcolors:
     black = '\033[30m'
     red = '\033[31m'
@@ -242,25 +189,8 @@ def formattext(returncode):
     :param returncode: return code of plugin
     :return: formatted text for printing
     """
-    for case in Switch(returncode):
-        if case(0):
-            # OK
-            text = bcolors.okay
-            break
-        if case(1):
-            # FAILED
-            text = bcolors.failed
-            break
-        if case(2):
-            # SKIPPED
-            text = bcolors.skipped
-            break
-        if case():
-            # UNEXPECTED
-            text = bcolors.unexpected
-            break
-    return text
-
+    colors = [bcolors.okay, bcolors.failed, bcolors.skipped, bcolors.unexpected]
+    return colors[returncode]
 
 def parse_args():
     description = _(
@@ -275,9 +205,11 @@ def parse_args():
                    help=_("Execute in verbose mode"),
                    default=False,
                    action='store_true')
-    p.add_argument('-d', "--verbosity",
-                   help=_("Set verbosity level for messages while running/logging"),
-                   default="info", choices=["info", "debug", "warn", "critical"])
+    p.add_argument('-d', "--loglevel",
+                   help=_("Set log level"),
+                   default="info",
+                   type=lambda x: x.upper(),
+                   choices=["INFO", "DEBUG", "WARNING", "ERROR", "CRITICAL"])
     p.add_argument("-s", "--silent",
                    help=_("Enable silent mode, only errors on tests written"),
                    action='store_true')
@@ -303,7 +235,7 @@ def main():
     options = parse_args()
 
     # Configure logging
-    logging.basicConfig(level=conflogging(verbosity=options.verbosity))
+    logging.basicConfig(level=options.loglevel)
 
     if not options.live:
         if len(options.plugin_path) > 0:
