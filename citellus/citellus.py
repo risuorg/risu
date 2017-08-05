@@ -273,9 +273,6 @@ def main():
         else:
             print(_("mode: fs snapshot %s" % CITELLUS_ROOT))
 
-    # Set pool for same processes as CPU cores
-    p = Pool(cpu_count())
-
     # Execute runplugin for each plugin found
     new_dict = docitellus(live=options.live, path=CITELLUS_ROOT, plugins=plugins)
 
