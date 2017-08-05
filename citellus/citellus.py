@@ -301,61 +301,62 @@ def formattext(returncode):
     return text
 
 
+def parse_args():
+    description = _(
+        'Citellus allows to analyze a directory against common set of tests, useful for finding common configuration errors')
+
+    # Option parsing
+    p = argparse.ArgumentParser("citellus.py [arguments]", description=description)
+    p.add_argument("-l", "--live",
+                   help=_("Work on a live system instead of a snapshot"),
+                   action='store_true')
+    p.add_argument("-v", "--verbose",
+                   help=_("Execute in verbose mode"),
+                   default=False,
+                   action='store_true')
+    p.add_argument('-d', "--verbosity",
+                   help=_("Set verbosity level for messages while running/logging"),
+                   default="info", choices=["info", "debug", "warn", "critical"])
+    p.add_argument("-s", "--silent",
+                   help=_("Enable silent mode, only errors on tests written"),
+                   action='store_true')
+    p.add_argument("-f", "--filter",
+                   help=_("Only include plugins that contains in full path that substring"),
+                   default=[],
+                   action='append')
+
+    p.add_argument('plugin_path', nargs='*')
+
+    return p.parse_args()
+
+
 def main():
     """
     Main function for the program
     :return: none
     """
 
-    description = _(
-        'Citellus allows to analyze a directory against common set of tests, useful for finding common configuration errors')
-
-    # Option parsing
-    p = argparse.ArgumentParser("citellus.py [arguments]", description=description)
-    p.add_argument("-l", "--live", dest="live", help=_("Work on a live system instead of a snapshot"), default=False,
-                   action='store_true')
-    p.add_argument("-v", "--verbose", dest="verbose", help=_("Execute in verbose mode"), default=False,
-                   action='store_true')
-    p.add_argument('-d', "--verbosity", dest="verbosity",
-                   help=_("Set verbosity level for messages while running/logging"),
-                   default="info", choices=["info", "debug", "warn", "critical"])
-    p.add_argument("-s", "--silent", dest="silent", help=_("Enable silent mode, only errors on tests written"), default=False,
-                   action='store_true')
-    p.add_argument("-f", "--filter", dest="filter", help=_("Only include plugins that contains in full path that substring"),
-                   default=[], action='append')
-
-    options, unknown = p.parse_known_args()
+    options = parse_args()
 
     # Configure logging
     logging.basicConfig(level=conflogging(verbosity=options.verbosity))
 
-    LOG.debug(msg=_('Additional parameters: %s') % unknown)
-
     if not options.live:
-        if len(unknown) > 0:
+        if len(options.plugin_path) > 0:
             # Live not specified, so we will use file snapshot as first arg and remaining cli arguments as plugins
-            CITELLUS_ROOT = unknown[0]
-            start = 1
+            CITELLUS_ROOT = options.plugin_path.pop(0)
         else:
             print _("When not running in Live mode, snapshot path is required")
             sys.exit(1)
     else:
         CITELLUS_ROOT = ""
-        start = 0
-
-    plugin_path = []
-    if len(unknown) > start:
-        # We've more parameters defined, so they are for plugin paths
-
-        for path in unknown[start:]:
-            plugin_path.append(path)
 
     # Find available plugins
-    plugins = findplugins(folders=plugin_path, filters=options.filter)
+    plugins = findplugins(folders=options.plugin_path, filters=options.filter)
 
     if not options.silent:
         show_logo()
-        print _("found #%s tests at %s") % (len(plugins), ", ".join(plugin_path))
+        print _("found #%s tests at %s") % (len(plugins), ", ".join(options.plugin_path))
 
     if not plugins:
         msg = _("Plugin folder empty, exitting")
