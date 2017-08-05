@@ -40,7 +40,11 @@ citellusdir = os.path.abspath(os.path.dirname(__file__))
 localedir = os.path.join(citellusdir, 'locale')
 
 trad = gettext.translation('citellus', localedir, fallback=True)
-_ = trad.ugettext
+
+try:
+    _ = trad.ugettext
+except AttributeError:
+    _ = trad.gettext
 
 
 class bcolors:
@@ -129,7 +133,10 @@ def runplugin(plugin):
         out = ""
         err = traceback.format_exc()
 
-    return {'plugin': plugin, 'output': {"rc": returncode, "out": out, "err": err}}
+    return {'plugin': plugin,
+            'output': {"rc": returncode,
+                       "out": out.decode('ascii', 'ignore'),
+                       "err": err.decode('ascii', 'ignore')}}
 
 
 def commonpath(folders):
@@ -301,7 +308,7 @@ def main():
         if (rc != 0 and rc != 2) or (options.verbose and rc == 2):
             print("# %s: %s" % (plugin['plugin'], text))
             if err != "":
-                for line in err.split('\n'):
+                for line in err.splitlines():
                     print("    %s" % line)
         else:
             if 'okay' in text:
