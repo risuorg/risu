@@ -129,8 +129,7 @@ def show_logo():
            "\     \___|  ||  | \  ___/|  |_|  |_|  |  /\___ \ ", \
            " \______  /__||__|  \___  >____/____/____//____  >", \
            "        \/              \/                     \/ "
-    for line in logo:
-        print line
+    print "\n".join(logo)
 
 
 def findplugins(folders=[], filters=[]):
