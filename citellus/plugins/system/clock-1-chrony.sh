@@ -17,35 +17,37 @@
 
 # adapted from https://github.com/larsks/platypus/blob/master/bats/system/test_clock.bats
 
+: ${CITELLUS_MAX_CLOCK_OFFSET:=1}
+
 is_active() {
     systemctl is-active "$@" > /dev/null 2>&1
 }
 
-if [ "x$CITELLUS_LIVE" = "x1" ]; then
-  if ! is_active ntpd; then
-    echo "ntpd is inactive" >&2
-    exit 2
-  fi
-  ntpq -c peers
-  result=$?
-  if [ "x$result" = "x0" ]; then
-    echo "ntpd active" >&2
-    # check that clock is synchronized
-    ntpq -c peers | awk '/^\*/ {sync=1} END {exit ! sync}'
-    # get offset
-    offset=$(ntpq -c peers | awk '/^\*/ {print $9}')
-    echo "clock offset is ${offset:-unknown}" >&2
-    # check offset is bigger than MAX_CLOCK_OFFSET +, MAX2_CLOCK_OFFSET -, default +/-1s
-    result=$((( $(echo "$offset<${MAX_CLOCK_OFFSET:-1} && $offset>${MAX2_CLOCK_OFFSET:--1}" | bc -l) )))
-    if [ "x$result" = "x1" ]; then
-      exit 0
-    else
-      exit 1
-    fi
-  else
-    exit 1
-  fi
-elif [ "x$CITELLUS_LIVE" = "x0" ]; then
+if [[ $CITELLUS_LIVE = 0 ]]; then
   echo "works on live-system only" >&2
   exit 2
 fi
+
+if ! is_active chronyd; then
+    echo "chronyd is not active"
+    exit 2
+fi
+
+if ! [[ -x /usr/bin/bc ]]; then
+    echo "this check requires /usr/bin/bc" >&2
+    exit 2
+fi
+
+
+if ! out=$(chronyc tracking); then
+    echo "clock is not synchronized" >&2
+    return 1
+fi
+
+offset=$(awk '/RMS offset/ {print $4}' <<<"$out")
+echo "clock offset is $offset" >&2
+
+((
+$(echo "$offset<${CITELLUS_MAX_CLOCK_OFFSET:-1} && \
+    $offset>-${CITELLUS_MAX_CLOCK_OFFSET:-1}" | bc -l)
+))

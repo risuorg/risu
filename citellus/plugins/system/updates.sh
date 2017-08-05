@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright (C) 2017   Robin Cernin (rcernin@redhat.com)
+# Copyright (C) 2017 Red Hat, Inc.
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -15,27 +15,17 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# error if disk usage is greater than $CITELLUS_DISK_MAX_PERCENT
-
-: ${CITELLUS_DISK_MAX_PERCENT=75}
-
-if [[ $CITELLUS_LIVE = 0 ]];  then
-  if [[ ! -f ${CITELLUS_ROOT}/df ]]; then
-    echo "file /df not found." >&2
-    exit 2
-  fi
-  DISK_USE_CMD="cat ${CITELLUS_ROOT}/df"
-else
-  DISK_USE_CMD="df -P"
+if [[ $CITELLUS_LIVE = 0 ]]; then
+  echo "works on live-system only" >&2
+  exit 2
 fi
 
-result=$($DISK_USE_CMD |
-	awk -vdisk_max_percent=$CITELLUS_DISK_MAX_PERCENT \
-	'/^\/dev/ && substr($5, 0, length($5)-1) > disk_max_percent {
-		print $6,$5
-	}')
+yum check-update 2> /dev/null
 
-if [ -n "$result" ]; then
-  echo "${result}" >&2
-  exit 1
+if [[ $? -eq 100 ]]; then
+    echo "there are available uninstalled upgrades" >&2
+    exit 1
+elif [[ $? -ne 0 ]]; then
+    echo "failed to check available updates" >&2
+    exit 1
 fi
