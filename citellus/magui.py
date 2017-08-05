@@ -88,7 +88,8 @@ def parse_args():
                    action='append')
     p.add_argument("-mf", "--mfilter", dest="mfilter",
                    help=_("Only include Magui plugins that contains in full path that substring"),
-                   default=False)
+                   default=False,
+                   action='append')
 
     p.add_argument('sosreports', nargs='*')
 
@@ -116,7 +117,7 @@ def main():
     for sosreport in options.sosreports:
         if not options.silent:
             print(_("Gathering analysis for %s") % sosreport)
-        results[sosreport] = citellus.docitellus(live=False, path=sosreport, plugins=citellus.findplugins(filters=options.filter))
+        results[sosreport] = citellus.docitellus(live=False, path=sosreport, plugins=citellus.findplugins(filters=options.filter, folders=options.pluginpath))
 
     # Precreate multidimensional array
     grouped = {}
