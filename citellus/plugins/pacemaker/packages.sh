@@ -17,44 +17,37 @@
 
 # we can run this against fs snapshot or live system
 
-count_nodes(){
-  if [ ! "$echo $(( (NUM_NODES-1) % 2 ))" -eq  "0" ]; then
-    echo "${NUM_NODES}" >&2
-    exit 1
-  elif [ "x$NUM_NODES" = "x1" ]; then
-    echo "${NUM_NODES}" >&2
-    exit 1
-  else
-    exit 0
-  fi
-}
-
 if [ "x$CITELLUS_LIVE" = "x1" ];  then
   pacemaker_status=$(systemctl is-active pacemaker || :)
   if [ "$pacemaker_status" = "active" ]; then
-    NUM_NODES=$(pcs status | sed -n -r -e 's/^([0-9])[ \t]+node.*/\1/p')
-    count_nodes
+    PCS_VERSION=$(rpm -qa pacemaker* | sed -n -r -e 's/^pacemaker.*-1.1.([0-9]+)-.*$/\1/p')
+    for package in ${PCS_VERSION}
+    do
+      if [[ "${package}" -lt "15" ]]
+      then
+	echo "outdated pacemaker packages <1.1.15" >&2
+	exit 1
+      fi
+    done
   else
     echo "pacemaker is not running on this node" >&2
     exit 2
   fi
 elif [ "x$CITELLUS_LIVE" = "x0" ];  then
-  if [ ! -f "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all" ]; then
-    echo "file /sos_commands/systemd/systemctl_list-units_--all not found." >&2
+  if [ ! -f "${CITELLUS_ROOT}/installed-rpms" ]; then
+    echo "file /installed-rpms not found." >&2
     exit 2
   else
+    PCS_VERSION=$(sed -n -r -e 's/^pacemaker.*-1.1.([0-9]+)-.*$/\1/p' "${CITELLUS_ROOT}/installed-rpms")
     if grep -q "pacemaker.*active" "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all"; then
-      for CLUSTER_DIRECTORY in "pacemaker" "cluster"; do
-	if [ -d "${CITELLUS_ROOT}/sos_commands/${CLUSTER_DIRECTORY}" ]; then
-	  PCS_DIRECTORY="${CITELLUS_ROOT}/sos_commands/${CLUSTER_DIRECTORY}"
+      for package in ${PCS_VERSION}
+      do
+	if [[ "${package}" -lt "15" ]]
+	then
+          echo "outdated pacemaker packages <1.1.15" >&2
+          exit 1
 	fi
       done
-      if [ ! -f "${PCS_DIRECTORY}/pcs_status" ]; then
-        echo "file pcs_status not found." >&2
-        exit 2
-      fi
-      NUM_NODES=$(sed -n -r -e 's/^([0-9])[ \t]+node.*/\1/p' "${PCS_DIRECTORY}/pcs_status")
-      count_nodes
     else
       echo "pacemaker is not running on this node" >&2
       exit 2
