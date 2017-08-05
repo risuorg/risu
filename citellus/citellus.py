@@ -91,6 +91,10 @@ def findplugins(folders=[], filters=[]):
 
     LOG.debug('starting plugin search in: %s', folders)
 
+    if not folders:
+        LOG.debug('using default plugin path')
+        folders=[os.path.join(citellusdir, 'plugins')]
+
     plugins = []
     for folder in folders:
         for root, dirnames, filenames in os.walk(folder):
@@ -249,10 +253,6 @@ def main():
             sys.exit(1)
     else:
         CITELLUS_ROOT = ""
-
-    if not options.plugin_path:
-        LOG.debug('using default plugin path')
-        options.plugin_path = [os.path.join(citellusdir, 'plugins')]
 
     # Find available plugins
     plugins = findplugins(folders=options.plugin_path, filters=options.filter)
