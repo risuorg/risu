@@ -21,6 +21,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import print_function
+
 import argparse
 import gettext
 import logging
@@ -129,7 +131,7 @@ def show_logo():
            "\     \___|  ||  | \  ___/|  |_|  |_|  |  /\___ \ ", \
            " \______  /__||__|  \___  >____/____/____//____  >", \
            "        \/              \/                     \/ "
-    print "\n".join(logo)
+    print("\n".join(logo))
 
 
 def findplugins(folders=[], filters=[]):
@@ -319,7 +321,7 @@ def main():
 
     if not options.silent:
         show_logo()
-        print _("found #%s tests at %s") % (len(plugins), ", ".join(options.plugin_path))
+        print(_("found #%s tests at %s") % (len(plugins), ", ".join(options.plugin_path)))
 
     if not plugins:
         LOG.error(_("Plugin folder empty, exitting"))
@@ -327,9 +329,9 @@ def main():
 
     if not options.silent:
         if options.live:
-            print _("mode: live")
+            print(_("mode: live"))
         else:
-            print _("mode: fs snapshot %s" % CITELLUS_ROOT)
+            print(_("mode: fs snapshot %s" % CITELLUS_ROOT))
 
     # Set pool for same processes as CPU cores
     p = Pool(cpu_count())
@@ -360,10 +362,10 @@ def main():
 
         # If not standard RC, print stderr
         if (rc != 0 and rc != 2) or (options.verbose and rc == 2):
-            print "# %s: %s" % (plugin['plugin'], text)
+            print("# %s: %s" % (plugin['plugin'], text))
             if err != "":
                 for line in err.split('\n'):
-                    print "    %s" % line
+                    print("    %s" % line)
         else:
             if 'okay' in text:
                 okay.append(plugin['plugin'].replace(common, ''))
@@ -374,9 +376,9 @@ def main():
 
     if not options.silent:
         if okay:
-            print "# %s: %s" % (okay, bcolors.okay)
+            print("# %s: %s" % (okay, bcolors.okay))
         if skipped:
-            print "# %s: %s" % (skipped, bcolors.skipped)
+            print("# %s: %s" % (skipped, bcolors.skipped))
 
 
 if __name__ == "__main__":
