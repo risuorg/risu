@@ -5,7 +5,7 @@
 #              detect common pitfalls in configuration/status
 #
 # Copyright (C) 2017 Robin Černín (rcernin@redhat.com)
-#                    Lars Kellogg-Stedman <lars@oddbit.com>
+#                    Lars Kellogg-Stedman <lars@redhat.com>
 #                    Pablo Iranzo Gómez (Pablo.Iranzo@redhat.com)
 #
 # This program is free software: you can redistribute it and/or modify
@@ -21,6 +21,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import print_function
+
 import argparse
 import gettext
 import logging
@@ -31,65 +33,14 @@ import sys
 import traceback
 from multiprocessing import Pool, cpu_count
 
+LOG = logging.getLogger('citellus')
+
 # Where are we?
 citellusdir = os.path.abspath(os.path.dirname(__file__))
 localedir = os.path.join(citellusdir, 'locale')
 
 trad = gettext.translation('citellus', localedir, fallback=True)
 _ = trad.ugettext
-
-
-# Implement switch from http://code.activestate.com/recipes/410692/
-class Switch(object):
-    """
-    Defines a class that can be used easily as traditional switch commands
-    """
-
-    def __init__(self, value):
-        self.value = value
-        self.fall = False
-
-    def __iter__(self):
-        """Return the match method once, then stop"""
-        yield self.match
-        raise StopIteration
-
-    def match(self, *args):
-        """Indicate whether or not to enter a case suite"""
-        if self.fall or not args:
-            return True
-        elif self.value in args:  # changed for v1.5, see below
-            self.fall = True
-            return True
-        else:
-            return False
-
-
-def conflogging(verbosity=False):
-    """
-    This function configures the logging handlers for console and file
-    """
-
-    # Define logging settings
-    for case in Switch(verbosity):
-        # choices=["info", "debug", "warn", "critical"])
-        if case('debug'):
-            level = logging.DEBUG
-            break
-        if case('critical'):
-            level = logging.CRITICAL
-            break
-        if case('warn'):
-            level = logging.WARN
-            break
-        if case('info'):
-            level = logging.INFO
-            break
-        if case():
-            # Default to DEBUG log level
-            level = logging.INFO
-
-    return level
 
 
 class bcolors:
@@ -127,8 +78,7 @@ def show_logo():
            "\     \___|  ||  | \  ___/|  |_|  |_|  |  /\___ \ ", \
            " \______  /__||__|  \___  >____/____/____//____  >", \
            "        \/              \/                     \/ "
-    for line in logo:
-        print line
+    print("\n".join(logo))
 
 
 def findplugins(folders=[], filters=[]):
@@ -139,43 +89,27 @@ def findplugins(folders=[], filters=[]):
     :return:
     """
 
-    logger = logging.getLogger(__name__)
-
-    # If folders is empty, use default path
-    if folders == []:
-        folders = [os.path.join(citellusdir, 'plugins')]
+    LOG.debug('starting plugin search in: %s', folders)
 
     plugins = []
     for folder in folders:
-        for root, dir, files in os.walk(folder):
-            for file in files:
-                script = os.path.join(folder, file)
-                if os.access(script, os.X_OK):
-                    plugins.append(script)
-            for subfolder in dir:
-                # Find new plugins in the folder but do not filter as we'll do that later
-                plugins.extend(findplugins(folders=[os.path.join(folder, subfolder)]))
-    logger.debug(msg=_('Found plugins: %s') % plugins)
+        for root, dirnames, filenames in os.walk(folder):
+            LOG.debug('looking for plugins in: %s', root)
+            for filename in filenames:
+                filepath = os.path.join(root, filename)
+                LOG.debug('considering: %s', filepath)
+                if os.access(filepath, os.X_OK):
+                    plugins.append(filepath)
 
-    # Remove lists of lists with getitems and duplicates with set
-    candidates = list(set(getitems(plugins)))
+    LOG.debug(msg=_('Found plugins: %s') % plugins)
+
     if filters:
-        if not isinstance(filters, list):
-            # We expect a list, so we can iterate, so if it's not, we wrap it
-            filters = [filters]
+        plugins = [ plugin for plugin in plugins for filter in filters
+                   if filter in plugin ]
 
-        logger.debug(msg=_('Filtering of plugins enabled for: %s') % filters)
-        plugins = []
-        for plugin in candidates:
-            for filter in filters:
-                if filter in plugin:
-                    plugins.append(plugin)
-                    logger.debug(msg=_('Plugin %s does pass filter') % plugin)
-    else:
-        # No filtering, return list
-        plugins = candidates
-
-    return plugins
+    # this unique-ifies the list of plugins (and ensures consistent
+    # ordering).
+    return sorted(set(plugins))
 
 
 def runplugin(plugin):
@@ -185,9 +119,7 @@ def runplugin(plugin):
     :return: result, out, err
     """
 
-    logger = logging.getLogger(__name__)
-
-    logger.debug(msg=_('Running plugin: %s') % plugin)
+    LOG.debug(msg=_('Running plugin: %s') % plugin)
     try:
         p = subprocess.Popen(plugin, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         out, err = p.communicate()
@@ -198,34 +130,6 @@ def runplugin(plugin):
         err = traceback.format_exc()
 
     return {'plugin': plugin, 'output': {"rc": returncode, "out": out, "err": err}}
-
-
-def getitems(var):
-    """
-    Returns list of items even if provided args are lists of lists
-    :param var: list or value to pass
-    :return: unique list of values
-    """
-
-    logger = logging.getLogger(__name__)
-
-    result = []
-    if not isinstance(var, list):
-        result.append(var)
-    else:
-        for elem in var:
-            result.extend(getitems(elem))
-
-    # Do cleanup of duplicates
-    final = []
-    for elem in result:
-        if elem not in final:
-            final.append(elem)
-
-    # As we call recursively, don't log calls for just one ID
-    if len(final) > 1:
-        logger.debug(msg=_("Final deduplicated list: %s") % final)
-    return final
 
 
 def commonpath(folders):
@@ -250,7 +154,7 @@ def docitellus(live=False, path=False, plugins=False):
     :param plugins:  plugins to execute against the system
     :return: Dict of plugins and results
     """
-    logger = logging.getLogger(__name__)
+
     # Enable LIVE mode if parameter passed
     if live:
         CITELLUS_LIVE = 1
@@ -274,7 +178,7 @@ def docitellus(live=False, path=False, plugins=False):
         name = item['plugin']
         new_dict[name] = item
 
-    logger.debug(msg=_("Plugins executed for %s: %s with result: %s") % (path, plugins, new_dict))
+    LOG.debug(msg=_("Plugins executed for %s: %s with result: %s") % (path, plugins, new_dict))
 
     return new_dict
 
@@ -285,24 +189,42 @@ def formattext(returncode):
     :param returncode: return code of plugin
     :return: formatted text for printing
     """
-    for case in Switch(returncode):
-        if case(0):
-            # OK
-            text = bcolors.okay
-            break
-        if case(1):
-            # FAILED
-            text = bcolors.failed
-            break
-        if case(2):
-            # SKIPPED
-            text = bcolors.skipped
-            break
-        if case():
-            # UNEXPECTED
-            text = bcolors.unexpected
-            break
-    return text
+    colors = [bcolors.okay, bcolors.failed, bcolors.skipped, bcolors.unexpected]
+    return colors[returncode]
+
+
+def parse_args():
+    description = _(
+        'Citellus allows to analyze a directory against common set of tests, useful for finding common configuration errors')
+
+    # Option parsing
+    p = argparse.ArgumentParser("citellus.py [arguments]", description=description)
+    p.add_argument("-l", "--live",
+                   help=_("Work on a live system instead of a snapshot"),
+                   action='store_true')
+    p.add_argument("-v", "--verbose",
+                   help=_("Execute in verbose mode"),
+                   default=False,
+                   action='store_true')
+    p.add_argument('-d', "--loglevel",
+                   help=_("Set log level"),
+                   default="info",
+                   type=lambda x: x.upper(),
+                   choices=["INFO", "DEBUG", "WARNING", "ERROR", "CRITICAL"])
+    p.add_argument("-s", "--silent",
+                   help=_("Enable silent mode, only errors on tests written"),
+                   action='store_true')
+    p.add_argument("-f", "--filter",
+                   help=_("Only include plugins that contains in full path that substring"),
+                   default=[],
+                   action='append')
+    p.add_argument("--list-plugins",
+                   action="store_true",
+                   help=_("Print a list of discovered plugins and exit"))
+
+    p.add_argument('plugin_path', nargs='*')
+
+    return p.parse_args()
 
 
 def main():
@@ -311,73 +233,45 @@ def main():
     :return: none
     """
 
-    description = _(
-        'Citellus allows to analyze a directory against common set of tests, useful for finding common configuration errors')
-
-    # Option parsing
-    p = argparse.ArgumentParser("citellus.py [arguments]", description=description)
-    p.add_argument("-l", "--live", dest="live", help=_("Work on a live system instead of a snapshot"), default=False,
-                   action='store_true')
-    p.add_argument("-v", "--verbose", dest="verbose", help=_("Execute in verbose mode"), default=False,
-                   action='store_true')
-    p.add_argument('-d', "--verbosity", dest="verbosity",
-                   help=_("Set verbosity level for messages while running/logging"),
-                   default="info", choices=["info", "debug", "warn", "critical"])
-    p.add_argument("-s", "--silent", dest="silent", help=_("Enable silent mode, only errors on tests written"), default=False,
-                   action='store_true')
-    p.add_argument("-f", "--filter", dest="filter", help=_("Only include plugins that contains in full path that substring"),
-                   default=[], action='append')
-
-    options, unknown = p.parse_known_args()
+    options = parse_args()
 
     # Configure logging
-    logging.basicConfig(level=conflogging(verbosity=options.verbosity))
-
-    # Prepare our logger
-    logger = logging.getLogger(__name__)
-
-    logger.debug(msg=_('Additional parameters: %s') % unknown)
+    logging.basicConfig(level=options.loglevel)
 
     if not options.live:
-        if len(unknown) > 0:
+        if len(options.plugin_path) > 0:
             # Live not specified, so we will use file snapshot as first arg and remaining cli arguments as plugins
-            CITELLUS_ROOT = unknown[0]
-            start = 1
+            CITELLUS_ROOT = options.plugin_path.pop(0)
         else:
-            print _("When not running in Live mode, snapshot path is required")
+            LOG.error(_("When not running in Live mode, snapshot path is required"))
             sys.exit(1)
     else:
         CITELLUS_ROOT = ""
-        start = 0
 
-    plugin_path = []
-    if len(unknown) > start:
-        # We've more parameters defined, so they are for plugin paths
-
-        for path in unknown[start:]:
-            plugin_path.append(path)
+    if not options.plugin_path:
+        LOG.debug('using default plugin path')
+        options.plugin_path = ['plugins']
 
     # Find available plugins
-    plugins = findplugins(folders=plugin_path, filters=options.filter)
+    plugins = findplugins(folders=options.plugin_path, filters=options.filter)
+
+    if options.list_plugins:
+        print("\n".join(plugins))
+        return
 
     if not options.silent:
         show_logo()
-        print _("found #%s tests at %s") % (len(plugins), ", ".join(plugin_path))
+        print(_("found #%s tests at %s") % (len(plugins), ", ".join(options.plugin_path)))
 
     if not plugins:
-        msg = _("Plugin folder empty, exitting")
-        logger.debug(msg=msg)
-        print msg
+        LOG.error(_("Plugin folder empty, exitting"))
         sys.exit(1)
 
     if not options.silent:
         if options.live:
-            print _("mode: live")
+            print(_("mode: live"))
         else:
-            print _("mode: fs snapshot %s" % CITELLUS_ROOT)
-
-    # Set pool for same processes as CPU cores
-    p = Pool(cpu_count())
+            print(_("mode: fs snapshot %s" % CITELLUS_ROOT))
 
     # Execute runplugin for each plugin found
     new_dict = docitellus(live=options.live, path=CITELLUS_ROOT, plugins=plugins)
@@ -405,23 +299,23 @@ def main():
 
         # If not standard RC, print stderr
         if (rc != 0 and rc != 2) or (options.verbose and rc == 2):
-            print "# %s: %s" % (plugin['plugin'], text)
+            print("# %s: %s" % (plugin['plugin'], text))
             if err != "":
                 for line in err.split('\n'):
-                    print "    %s" % line
+                    print("    %s" % line)
         else:
             if 'okay' in text:
                 okay.append(plugin['plugin'].replace(common, ''))
             if 'skipped' in text:
                 skipped.append(plugin['plugin'].replace(common, ''))
 
-        logger.debug(msg=_("Plugin: %s, output: %s") % (plugin['plugin'], plugin['output']))
+        LOG.debug(msg=_("Plugin: %s, output: %s") % (plugin['plugin'], plugin['output']))
 
     if not options.silent:
         if okay:
-            print "# %s: %s" % (okay, bcolors.okay)
+            print("# %s: %s" % (okay, bcolors.okay))
         if skipped:
-            print "# %s: %s" % (skipped, bcolors.skipped)
+            print("# %s: %s" % (skipped, bcolors.skipped))
 
 
 if __name__ == "__main__":
