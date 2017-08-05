@@ -93,7 +93,7 @@ def findplugins(folders=[], filters=[]):
 
     if not folders:
         LOG.debug('using default plugin path')
-        folders=[os.path.join(citellusdir, 'plugins')]
+        folders = [os.path.join(citellusdir, 'plugins')]
 
     plugins = []
     for folder in folders:
