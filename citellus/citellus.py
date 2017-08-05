@@ -285,6 +285,9 @@ def parse_args():
                    help=_("Only include plugins that contains in full path that substring"),
                    default=[],
                    action='append')
+    p.add_argument("--list-plugins",
+                   action="store_true",
+                   help=_("Print a list of discovered plugins and exit"))
 
     p.add_argument('plugin_path', nargs='*')
 
@@ -318,6 +321,10 @@ def main():
 
     # Find available plugins
     plugins = findplugins(folders=options.plugin_path, filters=options.filter)
+
+    if options.list_plugins:
+        print("\n".join(plugins))
+        return
 
     if not options.silent:
         show_logo()
