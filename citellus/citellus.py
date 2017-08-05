@@ -5,7 +5,7 @@
 #              detect common pitfalls in configuration/status
 #
 # Copyright (C) 2017 Robin Černín (rcernin@redhat.com)
-#                    Lars Kellogg-Stedman <lars@oddbit.com>
+#                    Lars Kellogg-Stedman <lars@redhat.com>
 #                    Pablo Iranzo Gómez (Pablo.Iranzo@redhat.com)
 #
 # This program is free software: you can redistribute it and/or modify
@@ -191,6 +191,7 @@ def formattext(returncode):
     """
     colors = [bcolors.okay, bcolors.failed, bcolors.skipped, bcolors.unexpected]
     return colors[returncode]
+
 
 def parse_args():
     description = _(
