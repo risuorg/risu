@@ -31,6 +31,8 @@ import sys
 import traceback
 from multiprocessing import Pool, cpu_count
 
+LOG = logging.getLogger('citellus')
+
 # Where are we?
 citellusdir = os.path.abspath(os.path.dirname(__file__))
 localedir = os.path.join(citellusdir, 'locale')
@@ -139,8 +141,6 @@ def findplugins(folders=[], filters=[]):
     :return:
     """
 
-    logger = logging.getLogger(__name__)
-
     # If folders is empty, use default path
     if folders == []:
         folders = [os.path.join(citellusdir, 'plugins')]
@@ -155,7 +155,7 @@ def findplugins(folders=[], filters=[]):
             for subfolder in dir:
                 # Find new plugins in the folder but do not filter as we'll do that later
                 plugins.extend(findplugins(folders=[os.path.join(folder, subfolder)]))
-    logger.debug(msg=_('Found plugins: %s') % plugins)
+    LOG.debug(msg=_('Found plugins: %s') % plugins)
 
     # Remove lists of lists with getitems and duplicates with set
     candidates = list(set(getitems(plugins)))
@@ -164,13 +164,13 @@ def findplugins(folders=[], filters=[]):
             # We expect a list, so we can iterate, so if it's not, we wrap it
             filters = [filters]
 
-        logger.debug(msg=_('Filtering of plugins enabled for: %s') % filters)
+        LOG.debug(msg=_('Filtering of plugins enabled for: %s') % filters)
         plugins = []
         for plugin in candidates:
             for filter in filters:
                 if filter in plugin:
                     plugins.append(plugin)
-                    logger.debug(msg=_('Plugin %s does pass filter') % plugin)
+                    LOG.debug(msg=_('Plugin %s does pass filter') % plugin)
     else:
         # No filtering, return list
         plugins = candidates
@@ -185,9 +185,7 @@ def runplugin(plugin):
     :return: result, out, err
     """
 
-    logger = logging.getLogger(__name__)
-
-    logger.debug(msg=_('Running plugin: %s') % plugin)
+    LOG.debug(msg=_('Running plugin: %s') % plugin)
     try:
         p = subprocess.Popen(plugin, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         out, err = p.communicate()
@@ -207,8 +205,6 @@ def getitems(var):
     :return: unique list of values
     """
 
-    logger = logging.getLogger(__name__)
-
     result = []
     if not isinstance(var, list):
         result.append(var)
@@ -224,7 +220,7 @@ def getitems(var):
 
     # As we call recursively, don't log calls for just one ID
     if len(final) > 1:
-        logger.debug(msg=_("Final deduplicated list: %s") % final)
+        LOG.debug(msg=_("Final deduplicated list: %s") % final)
     return final
 
 
@@ -250,7 +246,7 @@ def docitellus(live=False, path=False, plugins=False):
     :param plugins:  plugins to execute against the system
     :return: Dict of plugins and results
     """
-    logger = logging.getLogger(__name__)
+
     # Enable LIVE mode if parameter passed
     if live:
         CITELLUS_LIVE = 1
@@ -274,7 +270,7 @@ def docitellus(live=False, path=False, plugins=False):
         name = item['plugin']
         new_dict[name] = item
 
-    logger.debug(msg=_("Plugins executed for %s: %s with result: %s") % (path, plugins, new_dict))
+    LOG.debug(msg=_("Plugins executed for %s: %s with result: %s") % (path, plugins, new_dict))
 
     return new_dict
 
@@ -333,10 +329,7 @@ def main():
     # Configure logging
     logging.basicConfig(level=conflogging(verbosity=options.verbosity))
 
-    # Prepare our logger
-    logger = logging.getLogger(__name__)
-
-    logger.debug(msg=_('Additional parameters: %s') % unknown)
+    LOG.debug(msg=_('Additional parameters: %s') % unknown)
 
     if not options.live:
         if len(unknown) > 0:
@@ -366,7 +359,7 @@ def main():
 
     if not plugins:
         msg = _("Plugin folder empty, exitting")
-        logger.debug(msg=msg)
+        LOG.debug(msg=msg)
         print msg
         sys.exit(1)
 
@@ -415,7 +408,7 @@ def main():
             if 'skipped' in text:
                 skipped.append(plugin['plugin'].replace(common, ''))
 
-        logger.debug(msg=_("Plugin: %s, output: %s") % (plugin['plugin'], plugin['output']))
+        LOG.debug(msg=_("Plugin: %s, output: %s") % (plugin['plugin'], plugin['output']))
 
     if not options.silent:
         if okay:
