@@ -21,29 +21,23 @@ is_active() {
     systemctl is-active "$@" > /dev/null 2>&1
 }
 
-if [ "x$CITELLUS_LIVE" = "x1" ]; then
-  if ! is_active chronyd; then
-    echo "chronyd is inactive" >&2
-    exit 2
-  fi
-  chronyc tracking
-  result=$?
-  if [ "x$result" = "x0" ]; then
-    echo "crhonyd is active" >&2
-    # get offset
-    offset=$(chronyc tracking | awk '/RMS offset/ {print $4}')
-    echo "clock offset is ${offset:-unknown}" >&2
-    # check offset is bigger than MAX_CLOCK_OFFSET +, MAX2_CLOCK_OFFSET -, default +/-1s
-    result=$(( $($offset<${MAX_CLOCK_OFFSET:-1} && $offset>${MAX2_CLOCK_OFFSET:--1}) ))
-    if [ "x$result" = "x1" ]; then
-      exit 0
-    else
-      exit 1
-    fi
-  else
-    exit 1
-  fi
-elif [ "x$CITELLUS_LIVE" = "x0" ]; then
+if [[ $CITELLUS_LIVE = 0 ]]; then
   echo "works on live-system only" >&2
   exit 2
+fi
+
+! is_active chronyd
+chronyd_active=$?
+
+! is_active ntpd
+ntpd_active=$?
+
+if (( ! (ntpd_active || chronyd_active) )); then
+    echo "no ntp service is active" >&2
+    exit 1
+fi
+
+if (( ntpd_active && chronyd_active )); then
+    echo "both chrony and ntpd are active" >&2
+    exit 1
 fi

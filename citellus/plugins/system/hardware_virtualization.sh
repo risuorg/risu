@@ -22,4 +22,7 @@ if [ ! -f "${CITELLUS_ROOT}/proc/cpuinfo" ]; then
   exit 2
 fi
 
-grep -q "svm\|vmx" "${CITELLUS_ROOT}/proc/cpuinfo"
+if ! grep -q "svm\|vmx" "${CITELLUS_ROOT}/proc/cpuinfo"; then
+	echo "no hardware virt support found in /proc/cpuinfo" >&2
+	exit 1
+fi

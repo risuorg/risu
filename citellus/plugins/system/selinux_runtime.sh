@@ -17,14 +17,25 @@
 
 # selinux enforcing
 
-if [ "x$CITELLUS_LIVE" = "x0" ];  then
-  if [ ! -f "${CITELLUS_ROOT}/sos_commands/selinux/sestatus_-b" ]; then
-    echo "file /sos_commands/selinux/sestatus_-b not found." >&2
-    exit 2
-  fi
-  grep -q "^Current mode.*enforcing" "${CITELLUS_ROOT}/sos_commands/selinux/sestatus_-b" || exit 1
-elif [ "x$CITELLUS_LIVE" = "x1" ]; then
-  if ! sestatus -b | grep -q "^Current mode.*enforcing"; then
+if [[ $CITELLUS_LIVE = 0 ]];  then
+    path="${CITELLUS_ROOT}/sos_commands/selinux/sestatus_-b"
+
+    if [ ! -f "$path" ]; then
+        echo "file $path not found." >&2
+        exit 2
+    fi
+
+    mode=$(awk '/^Current mode:/ {print $3}' "$path")
+else
+    mode=$(sestatus -b | awk '/^Current mode:/ {print $3}')
+fi
+
+if ! [[ "$mode" ]]; then
+    echo "failed to determined runtime selinux mode" >&2
     exit 1
-  fi
+fi
+
+if [[ $mode != enforcing ]]; then
+    echo "runtime selinux mode is not enforcing (found $mode)" >&2
+    exit 1
 fi
