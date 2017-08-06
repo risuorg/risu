@@ -88,8 +88,8 @@ def show_logo():
 def findplugins(folders=[], filters=[]):
     """
     Finds plugins in path and returns array of them
+    :param filters: Defines array of filters to match against plugin path/name
     :param folders: Folders to use as source for plugin search
-    :param filter: Filter to apply to plugins
     :return:
     """
 
@@ -143,6 +143,11 @@ def runplugin(plugin):
 
 
 def commonpath(folders):
+    """
+    Checks the minimum common path in provided paths
+    :param folders: path array for folder
+    :return: string: common path
+    """
     if folders:
         commonroot = []
         ls = [p.split('/') for p in folders]
@@ -162,8 +167,8 @@ def commonpath(folders):
 def docitellus(live=False, path=False, plugins=False):
     """
     Runs citellus scripts on specified root folder
+    :param path: Path to analyze
     :param live:  Test is to be executed live or on snapshot/sosreport
-    :param CITELLUS_ROOT: Path for non live access
     :param plugins:  plugins to execute against the system
     :return: Dict of plugins and results
     """
@@ -207,6 +212,11 @@ def formattext(returncode):
 
 
 def parse_args():
+    """
+    Parses arguments on commandline
+    :return: parsed arguments
+    """
+
     description = _(
         'Citellus allows to analyze a directory against common set of tests, useful for finding common configuration errors')
 

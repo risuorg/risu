@@ -60,6 +60,10 @@ def show_logo():
 
 
 def parse_args():
+    """
+    Parses arguments on commandline
+    :return: parsed arguments
+    """
     description = _('Processes several generic archives/sosreports scripts in a uniform way, to interpret status that depend on several systems data')
 
     # Option parsing
@@ -92,7 +96,9 @@ def parse_args():
 
 
 def main():
-
+    """
+    Main code stub
+    """
     options = parse_args()
 
     # Configure logging
