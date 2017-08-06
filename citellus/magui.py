@@ -22,6 +22,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from __future__ import print_function
+
 import argparse
 import gettext
 import logging
@@ -30,6 +32,8 @@ import os.path
 import pprint
 
 import citellus
+
+LOG = logging.getLogger('magui')
 
 # Where are we?
 maguidir = os.path.abspath(os.path.dirname(__file__))
@@ -52,18 +56,19 @@ def show_logo():
            " \|      ", \
            "  |/     " \
 
-    for line in logo:
-        print line
+    print("\n".join(logo))
 
 
-def main():
+def parse_args():
     description = _('Processes several generic archives/sosreports scripts in a uniform way, to interpret status that depend on several systems data')
 
     # Option parsing
     p = argparse.ArgumentParser("magui.py [arguments]", description=description)
-    p.add_argument('-d', "--verbosity", dest="verbosity",
-                   help=_("Set verbosity level for messages while running/logging"),
-                   default="info", choices=["info", "debug", "warn", "critical"])
+    p.add_argument('-d', "--loglevel",
+                   help=_("Set log level"),
+                   default="info",
+                   type=lambda x: x.upper(),
+                   choices=["INFO", "DEBUG", "WARNING", "ERROR", "CRITICAL"])
     p.add_argument('-p', "--pluginpath", dest="pluginpath",
                    help=_("Set path for Citellus plugin location if not default"),
                    action='append')
@@ -75,35 +80,42 @@ def main():
                    action='store_true')
     p.add_argument("-f", "--filter", dest="filter",
                    help=_("Only include Citellus plugins that contains in full path that substring"),
-                   default=False)
+                   default=[],
+                   action='append')
     p.add_argument("-mf", "--mfilter", dest="mfilter",
                    help=_("Only include Magui plugins that contains in full path that substring"),
                    default=False)
 
-    options, unknown = p.parse_known_args()
+    p.add_argument('sosreports', nargs='*')
+
+    return p.parse_args()
+
+
+def main():
+
+    options = parse_args()
 
     # Configure logging
-    logging.basicConfig(level=citellus.conflogging(verbosity=options.verbosity))
-
-    logger = logging.getLogger(__name__)
+    logging.basicConfig(level=options.loglevel)
 
     plugin_path = os.path.join(maguidir, 'magplug')
 
     if not options.silent:
         show_logo()
 
-    # Each argument in unknown is a sosreport
+    # Each argument in sosreport is a sosreport
 
     # Grab data from citellus for the sosreports provided
     results = {}
-    for sosreport in unknown:
+    for sosreport in options.sosreports:
         if not options.silent:
-            print _("Gathering analysis for %s") % sosreport
+            print(_("Gathering analysis for %s") % sosreport)
         results[sosreport] = citellus.docitellus(live=False, path=sosreport, plugins=citellus.findplugins(filters=options.filter))
 
     # Precreate multidimensional array
     grouped = {}
-    for sosreport in unknown:
+    plugins = []
+    for sosreport in options.sosreports:
         plugins = []
         for plugin in results[sosreport]:
             plugins.append(plugin)
@@ -113,7 +125,7 @@ def main():
     commonpath = citellus.commonpath(plugins)
 
     # Fill the data
-    for sosreport in unknown:
+    for sosreport in options.sosreports:
         plugins = 0
         for plugin in results[sosreport]:
             grouped[plugin][sosreport] = results[sosreport][plugin]['output']
@@ -130,11 +142,11 @@ def main():
                 if grouped[plugin][host]['rc'] != 0 and grouped[plugin][host]['rc'] != 2:
                     pplug = 1
             if pplug == 1:
-                newplugin=plugin.replace(commonpath, '')
+                newplugin = plugin.replace(commonpath, '')
                 toprint[newplugin] = {}
                 for host in grouped[plugin]:
                     toprint[newplugin][host] = {}
-                    toprint[newplugin][host]=grouped[plugin][host]
+                    toprint[newplugin][host] = grouped[plugin][host]
     else:
         toprint = grouped
 
