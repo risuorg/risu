@@ -24,10 +24,10 @@
 from __future__ import print_function
 
 import argparse
+import datetime
 import gettext
 import logging
 import os
-import os.path
 import subprocess
 import sys
 import traceback
@@ -151,31 +151,9 @@ def runplugin(plugin):
         err = traceback.format_exc()
 
     return {'plugin': plugin,
-            'output': {"rc": returncode,
+            'result': {"rc": returncode,
                        "out": out.decode('ascii', 'ignore'),
                        "err": err.decode('ascii', 'ignore')}}
-
-
-def commonpath(folders):
-    """
-    Checks the minimum common path in provided paths
-    :param folders: path array for folder
-    :return: string: common path
-    """
-    if folders:
-        commonroot = []
-        ls = [p.split('/') for p in folders]
-        minlenght = min(len(p) for p in ls)
-
-        for i in range(minlenght):
-            s = set(p[i] for p in ls)
-            if len(s) != 1:
-                break
-            commonroot.append(s.pop())
-
-        return '/'.join(commonroot)
-    else:
-        return ""
 
 
 def docitellus(live=False, path=False, plugins=False):
@@ -204,15 +182,7 @@ def docitellus(live=False, path=False, plugins=False):
     # Execute runplugin for each plugin found
     results = p.map(runplugin, plugins)
 
-    # Process plugin output from multiple plugins for result printing
-    new_dict = {}
-    for item in results:
-        name = item['plugin']
-        new_dict[name] = item
-
-    LOG.debug(msg=_("Plugins executed for %s: %s with result: %s") % (path, plugins, new_dict))
-
-    return new_dict
+    return results
 
 
 def formattext(returncode):
@@ -233,6 +203,11 @@ def formattext(returncode):
         selected = ('unknown', 'magenta')
 
     return colorize(*selected)
+
+
+def indent(text, amount):
+    padding = ' ' * amount
+    return '\n'.join(padding+line for line in text.splitlines())
 
 
 def parse_args():
@@ -303,8 +278,12 @@ def main():
     else:
         CITELLUS_ROOT = ""
 
+    if not options.plugin_path:
+        LOG.info('using default plugin path %s', DEFAULT_PLUGIN_PATH)
+        options.plugin_path = DEFAULT_PLUGIN_PATH
+
     # Find available plugins
-    plugins = findplugins(folders=options.plugin_path,
+    plugins = findplugins(options.plugin_path,
                           include=options.include,
                           exclude=options.exclude)
 
@@ -317,7 +296,7 @@ def main():
         print(_("found #%s tests at %s") % (len(plugins), ", ".join(options.plugin_path)))
 
     if not plugins:
-        LOG.error(_("Plugin folder empty, exitting"))
+        LOG.error(_("did not discover any plugins, exiting"))
         sys.exit(1)
 
     if not options.silent:
@@ -327,49 +306,34 @@ def main():
             print(_("mode: fs snapshot %s" % CITELLUS_ROOT))
 
     # Execute runplugin for each plugin found
-    new_dict = docitellus(live=options.live, path=CITELLUS_ROOT, plugins=plugins)
+    results = docitellus(live=options.live, path=CITELLUS_ROOT, plugins=plugins)
 
-    # Sort plugins based on path name
-    std = sorted(plugins, key=lambda file: (os.path.dirname(file), os.path.basename(file)))
+    # Print results based on the sorted order based on returned results from
+    # parallel execution
+    for result in sorted(results, key=lambda r: r['plugin']):
+        out = result['result']['out']
+        err = result['result']['err']
+        rc = result['result']['rc']
+        text = formattext(rc)
 
-    # Common path for plugins
-    if len(plugins) > 1:
-        common = commonpath(plugins)
-    else:
-        common = ""
+        print("# %s: %s" % (result['plugin'], text))
 
-    # Print results based on the sorted order based on returned results from parallel execution
-    okay = []
-    skipped = []
-    for i in range(0, len(std)):
-        plugin = new_dict[std[i]]
+        show_err = (
+            (rc in [RC_FAILED])
+            or (rc not in [RC_OKAY, RC_FAILED, RC_SKIPPED])
+            or (rc in [RC_SKIPPED] and options.verbose > 0)
+            or (options.verbose > 1)
+        )
 
-        # We don't print stdout
-        # out = plugin['output']['out']
-        err = plugin['output']['err']
-        rc = plugin['output']['rc']
-        text = formattext(returncode=rc)
+        show_out = (
+            options.verbose > 1
+        )
 
-        # If not standard RC, print stderr
-        if (rc != 0 and rc != 2) or (options.verbose and rc == 2):
-            print("# %s: %s" % (plugin['plugin'], text))
-            if err != "":
-                for line in err.splitlines():
-                    print("    %s" % line)
-        else:
-            if 'okay' in text:
-                okay.append(plugin['plugin'].replace(common, ''))
-            if 'skipped' in text:
-                skipped.append(plugin['plugin'].replace(common, ''))
+        if show_out and out.strip():
+            print(indent(out, 4))
 
-        LOG.debug(msg=_("Plugin: %s, output: %s") % (plugin['plugin'], plugin['output']))
-
-    if not options.silent:
-        if okay:
-            print("# %s: %s" % (okay, formattext(0)))
-        if skipped:
-            print("# %s: %s" % (skipped, formattext(2)))
-
+        if show_err and err.strip():
+            print(indent(err, 4))
 
 if __name__ == "__main__":
     main()
