@@ -26,6 +26,7 @@ from __future__ import print_function
 import argparse
 import datetime
 import gettext
+import json
 import logging
 import os
 import subprocess
@@ -236,6 +237,12 @@ def parse_args():
     p.add_argument("-s", "--silent",
                    help=_("Enable silent mode, only errors on tests written"),
                    action='store_true')
+    p.add_argument("--output", "-o",
+                   metavar="FILENAME",
+                   help=_("Write results to JSON file FILENAME"))
+    p.add_argument("--list-plugins",
+                   action="store_true",
+                   help=_("Print a list of discovered plugins and exit"))
 
     g = p.add_argument_group('Filtering options')
     g.add_argument("-i", "--include",
@@ -248,13 +255,27 @@ def parse_args():
                    help=_("Exclude plugins that contain substring"),
                    default=[],
                    action='append')
-    p.add_argument("--list-plugins",
-                   action="store_true",
-                   help=_("Print a list of discovered plugins and exit"))
 
     p.add_argument('plugin_path', nargs='*')
 
     return p.parse_args()
+
+
+def write_results(results, filename,
+                  live=False, path=None):
+    data = {
+        'metadata': {
+            'when': datetime.datetime.utcnow().isoformat(),
+            'live': bool(live),
+        },
+        'results': sorted(results, key=lambda r: r['plugin']),
+    }
+
+    if path:
+        data['metadata']['path'] = path
+
+    with open(filename, 'w') as fd:
+        json.dump(data, fd, indent=2)
 
 
 def main():
@@ -307,6 +328,11 @@ def main():
 
     # Execute runplugin for each plugin found
     results = docitellus(live=options.live, path=CITELLUS_ROOT, plugins=plugins)
+
+    if options.output:
+        write_results(results, options.output,
+                      live=options.live,
+                      path=CITELLUS_ROOT)
 
     # Print results based on the sorted order based on returned results from
     # parallel execution
