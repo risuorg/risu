@@ -39,7 +39,6 @@ LOG = logging.getLogger('citellus')
 # Where are we?
 citellusdir = os.path.abspath(os.path.dirname(__file__))
 localedir = os.path.join(citellusdir, 'locale')
-
 trad = gettext.translation('citellus', localedir, fallback=True)
 
 try:
@@ -138,7 +137,7 @@ def runplugin(plugin):
     """
     Runs provided plugin and outputs message
     :param plugin:  plugin to execute
-    :return: result, out, err
+    :return: result, rc, out, err
     """
 
     LOG.debug(msg=_('Running plugin: %s') % plugin)
@@ -166,15 +165,9 @@ def docitellus(live=False, path=False, plugins=False):
     :return: Dict of plugins and results
     """
 
-    # Enable LIVE mode if parameter passed
-    if live:
-        CITELLUS_LIVE = 1
-    else:
-        CITELLUS_LIVE = 0
-
     # Save environment variables for plugins executed
     os.environ['CITELLUS_ROOT'] = "%s" % path
-    os.environ['CITELLUS_LIVE'] = "%s" % CITELLUS_LIVE
+    os.environ['CITELLUS_LIVE'] = "%s" % 1 if live else 0
     os.environ['LANG'] = "%s" % "C"
 
     # Set pool for same processes as CPU cores
@@ -225,24 +218,30 @@ def parse_args():
     p.add_argument("-l", "--live",
                    help=_("Work on a live system instead of a snapshot"),
                    action='store_true')
-    p.add_argument("-v", "--verbose",
-                   help=_("Execute in verbose mode"),
+    p.add_argument("--list-plugins",
+                   action="store_true",
+                   help=_("Print a list of discovered plugins and exit"))
+    p.add_argument("--output", "-o",
+                   metavar="FILENAME",
+                   help=_("Write results to JSON file FILENAME"))
+
+    g = p.add_argument_group('Output and logging options')
+    g.add_argument("--only-failed", "-F",
+                   action="store_true",
+                   help=_("Only show failed tests"))
+    g.add_argument("-v", "--verbose",
+                   help=_("Increase verbosity of output (may be "
+                          "specified more than once)"),
                    default=False,
-                   action='store_true')
-    p.add_argument('-d', "--loglevel",
+                   action='count')
+    g.add_argument('-d', "--loglevel",
                    help=_("Set log level"),
                    default="info",
                    type=lambda x: x.upper(),
                    choices=["INFO", "DEBUG", "WARNING", "ERROR", "CRITICAL"])
-    p.add_argument("-s", "--silent",
-                   help=_("Enable silent mode, only errors on tests written"),
+    g.add_argument("-q", "--quiet",
+                   help=_("Enable quiet mode"),
                    action='store_true')
-    p.add_argument("--output", "-o",
-                   metavar="FILENAME",
-                   help=_("Write results to JSON file FILENAME"))
-    p.add_argument("--list-plugins",
-                   action="store_true",
-                   help=_("Print a list of discovered plugins and exit"))
 
     g = p.add_argument_group('Filtering options')
     g.add_argument("-i", "--include",
@@ -312,7 +311,7 @@ def main():
         print("\n".join(plugins))
         return
 
-    if not options.silent:
+    if not options.quiet:
         show_logo()
         print(_("found #%s tests at %s") % (len(plugins), ", ".join(options.plugin_path)))
 
@@ -320,7 +319,7 @@ def main():
         LOG.error(_("did not discover any plugins, exiting"))
         sys.exit(1)
 
-    if not options.silent:
+    if not options.quiet:
         if options.live:
             print(_("mode: live"))
         else:
@@ -341,6 +340,9 @@ def main():
         err = result['result']['err']
         rc = result['result']['rc']
         text = formattext(rc)
+
+        if options.only_failed and rc in [RC_OKAY, RC_SKIPPED]:
+            continue
 
         print("# %s: %s" % (result['plugin'], text))
 
