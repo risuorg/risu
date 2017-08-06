@@ -96,7 +96,7 @@ def show_logo():
     print("\n".join(logo))
 
 
-def findplugins(folders=[], filters=[]):
+def findplugins(folders, include=None, exclude=None):
     """
     Finds plugins in path and returns array of them
     :param filters: Defines array of filters to match against plugin path/name
@@ -105,10 +105,6 @@ def findplugins(folders=[], filters=[]):
     """
 
     LOG.debug('starting plugin search in: %s', folders)
-
-    if not folders:
-        LOG.debug('using default plugin path')
-        folders = [os.path.join(citellusdir, 'plugins')]
 
     plugins = []
     for folder in folders:
@@ -122,8 +118,15 @@ def findplugins(folders=[], filters=[]):
 
     LOG.debug(msg=_('Found plugins: %s') % plugins)
 
-    if filters:
-        plugins = [plugin for plugin in plugins for filter in filters if filter in plugin]
+    if include:
+        plugins = [plugin for plugin in plugins
+                   for filter in include
+                   if filter in plugin]
+
+    if exclude:
+        plugins = [plugin for plugin in plugins
+                   for filter in exclude
+                   if filter not in plugin]
 
     # this unique-ifies the list of plugins (and ensures consistent
     # ordering).
@@ -258,8 +261,16 @@ def parse_args():
     p.add_argument("-s", "--silent",
                    help=_("Enable silent mode, only errors on tests written"),
                    action='store_true')
-    p.add_argument("-f", "--filter",
-                   help=_("Only include plugins that contains in full path that substring"),
+
+    g = p.add_argument_group('Filtering options')
+    g.add_argument("-i", "--include",
+                   metavar='SUBSTRING',
+                   help=_("Only include plugins that contain substring"),
+                   default=[],
+                   action='append')
+    g.add_argument("-x", "--exclude",
+                   metavar='SUBSTRING',
+                   help=_("Exclude plugins that contain substring"),
                    default=[],
                    action='append')
     p.add_argument("--list-plugins",
@@ -293,7 +304,9 @@ def main():
         CITELLUS_ROOT = ""
 
     # Find available plugins
-    plugins = findplugins(folders=options.plugin_path, filters=options.filter)
+    plugins = findplugins(folders=options.plugin_path,
+                          include=options.include,
+                          exclude=options.exclude)
 
     if options.list_plugins:
         print("\n".join(plugins))
