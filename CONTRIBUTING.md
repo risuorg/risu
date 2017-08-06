@@ -1,24 +1,57 @@
-### How to file a bug report
-Please if you have any idea on any improvements please do not hesitate to open an [issue](https://github.com/zerodayz/citellus/issues/new).
+# How to file a bug report
 
-### Future plans
+If you have any suggestions for improvements please do not hesitate to
+open an [issue](https://github.com/zerodayz/citellus/issues/new).
 
-The goal is to have a tool which collects all the rules across OpenStack operations.
+# How to contribute code
 
-When someone runs into an issue and fixes it, submits a patch so the next
-time a team runs into the same issue can quickly check if there's already known.
+We encourage you to contribute new plugins.  We use [gerrithub][] for
+reviewing proposed changes.  The submission process looking something
+like this:
 
-We're not targetting just OpenStack, the framework allows to write tests for whatever can be checked with a shell script:
-- System management
-- Kernel settings
-- Performance tunning
-- etc
+[gerrithub]: https://gerrithub.io/
 
-Please, do contribute your plugins for checking against new issues.
+1. Clone the citellus repository:
 
-Reddit post: <https://redd.it/6gv0uf>
-Openstack-operators ML: <http://lists.openstack.org/pipermail/openstack-operators/2017-June/013789.html>
+        git clone git@github.com:zerodayz/citellus.git
+
+2. Configure the `git review` tool:
+
+        git review -s
+
+3. Check out a branch in which to make your changes:
+
+        git checkout -b "your-new-branch"
+
+4. Edit your files.
+
+5. Update your local repository:
+
+        git add $modified_files
+        git commit -m "Messsage for the changes done"
+
+6. Submit your changes for review:
+
+        git review
+
+Then wait for your changes to be reviewed.  It is common for reviewers
+to request changes; when this happens:
+
+1. Edit your files.
+
+2. Update your existing commit. Do not create a new commit!
+
+        git add $modified_files
+        git commit --amend
+
+3. Resubmit the change:
+
+        git review
+
+You can see pending and already merged actual changes at: <https://review.gerrithub.io/#/q/project:zerodayz/citellus>
 
 ### How to write tests
 
-Please refer to [templates](https://github.com/zerodayz/citellus/tree/master/doc/templates) folder including examples.
+Please refer to the
+[templates](https://github.com/zerodayz/citellus/tree/master/doc/templates)
+folder for examples.
