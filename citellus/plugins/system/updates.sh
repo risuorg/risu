@@ -21,11 +21,12 @@ if [[ $CITELLUS_LIVE = 0 ]]; then
 fi
 
 yum check-update 2> /dev/null
+update_check=$?
 
-if [[ $? -eq 100 ]]; then
+if [[ $update_check -eq 100 ]]; then
     echo "there are available uninstalled upgrades" >&2
     exit 1
-elif [[ $? -ne 0 ]]; then
+elif [[ $update_check -ne 0 ]]; then
     echo "failed to check available updates" >&2
     exit 1
 fi
