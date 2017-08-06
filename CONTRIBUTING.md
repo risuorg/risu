@@ -14,7 +14,22 @@ We're not targetting just OpenStack, the framework allows to write tests for wha
 - Performance tunning
 - etc
 
-Please, do contribute your plugins for checking against new issues.
+Please, do contribute your plugins for checking against new issues:
+
+~~~
+git clone git@github.com:zerodayz/citellus.git
+git-review -s # to do setup
+git checkout -b "your-new-branch"
+# edit your files
+git add $modified/files
+git commit -m "Messsage for the changes done"
+git-review # to submit review to gerrithub.io
+~~~
+
+From here, Tag on gerrithub provided URL some of the authors for review or wait for it to be reviewed and commented.
+
+Check actual reviews at: <https://review.gerrithub.io/#/q/project:zerodayz/citellus>
+
 
 Reddit post: <https://redd.it/6gv0uf>
 Openstack-operators ML: <http://lists.openstack.org/pipermail/openstack-operators/2017-June/013789.html>
