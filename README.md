@@ -1,3 +1,8 @@
+[![License](https://img.shields.io/github/license/zerodayz/citellus.svg)](LICENSE)
+[![Build Status](https://travis-ci.org/zerodayz/citellus.svg?branch=master)](https://travis-ci.org/zerodayz/citellus)
+[![Coverage Status](https://coveralls.io/repos/github/zerodayz/citellus/badge.svg?branch=master)](https://coveralls.io/github/zerodayz/citellus?branch=master)
+[![Release status](https://img.shields.io/github/release/zerodayz/citellus.svg)](https://github.com/zerodayz/citellus/releases)
+
 # Vote For Sydney 2017 Presentation
 https://www.openstack.org/summit/sydney-2017/vote-for-speakers#/19095
 
