@@ -95,6 +95,10 @@ def findplugins(folders=[], filters=[]):
 
     LOG.debug('starting plugin search in: %s', folders)
 
+    if not folders:
+        LOG.debug('using default plugin path')
+        folders = [os.path.join(citellusdir, 'plugins')]
+
     plugins = []
     for folder in folders:
         for root, dirnames, filenames in os.walk(folder):
@@ -108,8 +112,7 @@ def findplugins(folders=[], filters=[]):
     LOG.debug(msg=_('Found plugins: %s') % plugins)
 
     if filters:
-        plugins = [ plugin for plugin in plugins for filter in filters
-                   if filter in plugin ]
+        plugins = [plugin for plugin in plugins for filter in filters if filter in plugin]
 
     # this unique-ifies the list of plugins (and ensures consistent
     # ordering).
@@ -140,17 +143,20 @@ def runplugin(plugin):
 
 
 def commonpath(folders):
-    commonroot = []
-    ls = [p.split('/') for p in folders]
-    minlenght = min(len(p) for p in ls)
+    if folders:
+        commonroot = []
+        ls = [p.split('/') for p in folders]
+        minlenght = min(len(p) for p in ls)
 
-    for i in range(minlenght):
-        s = set(p[i] for p in ls)
-        if len(s) != 1:
-            break
-        commonroot.append(s.pop())
+        for i in range(minlenght):
+            s = set(p[i] for p in ls)
+            if len(s) != 1:
+                break
+            commonroot.append(s.pop())
 
-    return '/'.join(commonroot)
+        return '/'.join(commonroot)
+    else:
+        return ""
 
 
 def docitellus(live=False, path=False, plugins=False):
@@ -254,10 +260,6 @@ def main():
             sys.exit(1)
     else:
         CITELLUS_ROOT = ""
-
-    if not options.plugin_path:
-        LOG.debug('using default plugin path')
-        options.plugin_path = ['plugins']
 
     # Find available plugins
     plugins = findplugins(folders=options.plugin_path, filters=options.filter)
