@@ -46,14 +46,19 @@ try:
 except AttributeError:
     _ = trad.gettext
 
+RC_OKAY = 0
+RC_FAILED = 1
+RC_SKIPPED = 2
+
+DEFAULT_PLUGIN_PATH = ['plugins']
 
 class bcolors:
     black = '\033[30m'
-    red = '\033[31m'
+    failed = red = '\033[31m'
     green = '\033[32m'
     orange = '\033[33m'
     blue = '\033[34m'
-    purple = '\033[35m'
+    magenta = purple = '\033[35m'
     cyan = '\033[36m'
     lightgrey = '\033[37m'
     darkgrey = '\033[90m'
@@ -64,10 +69,16 @@ class bcolors:
     pink = '\033[95m'
     lightcyan = '\033[96m'
     end = '\033[0m'
-    okay = green + _("okay") + end
-    failed = red + _("failed") + end
-    skipped = orange + _("skipped") + end
-    unexpected = red + _("unexpected result") + end
+
+
+def colorize(text, color, stream=sys.stdout, force=False):
+    if not force and (not hasattr(stream, 'isatty') or not stream.isatty()):
+        return text
+
+    color = getattr(bcolors, color)
+
+    return '{color}{text}{reset}'.format(
+        color=color, text=text, reset=bcolors.end)
 
 
 def show_logo():
@@ -207,8 +218,18 @@ def formattext(returncode):
     :param returncode: return code of plugin
     :return: formatted text for printing
     """
-    colors = [bcolors.okay, bcolors.failed, bcolors.skipped, bcolors.unexpected]
-    return colors[returncode]
+    colors = [
+        ('okay', 'green'),
+        ('failed', 'red'),
+        ('skipped', 'cyan'),
+    ]
+
+    try:
+        selected = colors[returncode]
+    except:
+        selected = ('unknown', 'magenta')
+
+    return colorize(*selected)
 
 
 def parse_args():
@@ -332,9 +353,9 @@ def main():
 
     if not options.silent:
         if okay:
-            print("# %s: %s" % (okay, bcolors.okay))
+            print("# %s: %s" % (okay, formattext(0)))
         if skipped:
-            print("# %s: %s" % (skipped, bcolors.skipped))
+            print("# %s: %s" % (skipped, formattext(2)))
 
 
 if __name__ == "__main__":
