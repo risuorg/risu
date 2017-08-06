@@ -3,7 +3,7 @@
 
 
 from unittest import TestCase
-import citellus
+from citellus import citellus
 
 
 class CitellusTest(TestCase):
