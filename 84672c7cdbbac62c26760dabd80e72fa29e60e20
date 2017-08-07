@@ -16,6 +16,24 @@
       "revId": "84672c7cdbbac62c26760dabd80e72fa29e60e20",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d4260cc1_a40299ac",
+        "filename": "test-requirements.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001152
+      },
+      "writtenOn": "2017-08-07T18:37:55Z",
+      "side": 0,
+      "message": "coveralls is installed in .travis.yml, since it\u0027s called outside of the tests. it\u0027s not used anywhere within tox.ini.",
+      "parentUuid": "302198c5_0070b824",
+      "revId": "84672c7cdbbac62c26760dabd80e72fa29e60e20",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
     }
   ]
 }
