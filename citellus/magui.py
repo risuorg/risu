@@ -105,8 +105,6 @@ def main():
     # Configure logging
     logging.basicConfig(level=options.loglevel)
 
-    plugin_path = os.path.join(maguidir, 'magplug')
-
     if not options.silent:
         show_logo()
 
