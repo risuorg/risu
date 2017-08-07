@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "302198c5_0070b824",
+        "filename": "test-requirements.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2017-08-07T18:33:11Z",
+      "side": 0,
+      "message": "coveralls is used to submit results to coveralls.io to report on coverage changes on new updates",
+      "revId": "84672c7cdbbac62c26760dabd80e72fa29e60e20",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
