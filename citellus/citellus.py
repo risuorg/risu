@@ -51,6 +51,8 @@ RC_OKAY = 0
 RC_FAILED = 1
 RC_SKIPPED = 2
 
+DEFAULT_PLUGIN_PATH = [os.path.join(citellusdir, 'plugins')]
+
 class bcolors:
     black = '\033[30m'
     failed = red = '\033[31m'
@@ -307,7 +309,8 @@ def main():
         CITELLUS_ROOT = ""
 
     if not options.plugin_path:
-        LOG.info('using default plugin path')
+        LOG.info(_('using default plugin path %s'), DEFAULT_PLUGIN_PATH)
+        options.plugin_path = DEFAULT_PLUGIN_PATH
 
     # Find available plugins
     plugins = findplugins(options.plugin_path,
