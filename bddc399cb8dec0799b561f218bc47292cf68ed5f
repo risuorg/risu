@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00471021_a28ceff9",
+        "filename": "citellus/citellus.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2017-08-07T10:42:36Z",
+      "side": 1,
+      "message": "This breaks magui.py if not updated properly",
+      "revId": "bddc399cb8dec0799b561f218bc47292cf68ed5f",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1f7eec17_ac578696",
+        "filename": "citellus/citellus.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2017-08-07T10:42:36Z",
+      "side": 1,
+      "message": "We need to update documentation to reflect this in the screenshoots or captures listed",
+      "revId": "bddc399cb8dec0799b561f218bc47292cf68ed5f",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
