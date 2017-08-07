@@ -51,8 +51,6 @@ RC_OKAY = 0
 RC_FAILED = 1
 RC_SKIPPED = 2
 
-DEFAULT_PLUGIN_PATH = ['plugins']
-
 class bcolors:
     black = '\033[30m'
     failed = red = '\033[31m'
@@ -104,6 +102,9 @@ def findplugins(folders, include=None, exclude=None):
     :param folders: Folders to use as source for plugin search
     :return:
     """
+
+    if not folders:
+        folders = [os.path.join(citellusdir, 'plugins')]
 
     LOG.debug('starting plugin search in: %s', folders)
 
@@ -306,8 +307,7 @@ def main():
         CITELLUS_ROOT = ""
 
     if not options.plugin_path:
-        LOG.info('using default plugin path %s', DEFAULT_PLUGIN_PATH)
-        options.plugin_path = DEFAULT_PLUGIN_PATH
+        LOG.info('using default plugin path')
 
     # Find available plugins
     plugins = findplugins(options.plugin_path,
