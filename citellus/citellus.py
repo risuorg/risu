@@ -24,10 +24,10 @@
 from __future__ import print_function
 
 import argparse
+import datetime
 import gettext
 import logging
 import os
-import os.path
 import subprocess
 import sys
 import traceback
@@ -46,14 +46,19 @@ try:
 except AttributeError:
     _ = trad.gettext
 
+RC_OKAY = 0
+RC_FAILED = 1
+RC_SKIPPED = 2
+
+DEFAULT_PLUGIN_PATH = ['plugins']
 
 class bcolors:
     black = '\033[30m'
-    red = '\033[31m'
+    failed = red = '\033[31m'
     green = '\033[32m'
     orange = '\033[33m'
     blue = '\033[34m'
-    purple = '\033[35m'
+    magenta = purple = '\033[35m'
     cyan = '\033[36m'
     lightgrey = '\033[37m'
     darkgrey = '\033[90m'
@@ -64,10 +69,16 @@ class bcolors:
     pink = '\033[95m'
     lightcyan = '\033[96m'
     end = '\033[0m'
-    okay = green + _("okay") + end
-    failed = red + _("failed") + end
-    skipped = orange + _("skipped") + end
-    unexpected = red + _("unexpected result") + end
+
+
+def colorize(text, color, stream=sys.stdout, force=False):
+    if not force and (not hasattr(stream, 'isatty') or not stream.isatty()):
+        return text
+
+    color = getattr(bcolors, color)
+
+    return '{color}{text}{reset}'.format(
+        color=color, text=text, reset=bcolors.end)
 
 
 def show_logo():
@@ -85,7 +96,7 @@ def show_logo():
     print("\n".join(logo))
 
 
-def findplugins(folders=[], filters=[]):
+def findplugins(folders, include=None, exclude=None):
     """
     Finds plugins in path and returns array of them
     :param filters: Defines array of filters to match against plugin path/name
@@ -94,10 +105,6 @@ def findplugins(folders=[], filters=[]):
     """
 
     LOG.debug('starting plugin search in: %s', folders)
-
-    if not folders:
-        LOG.debug('using default plugin path')
-        folders = [os.path.join(citellusdir, 'plugins')]
 
     plugins = []
     for folder in folders:
@@ -111,8 +118,15 @@ def findplugins(folders=[], filters=[]):
 
     LOG.debug(msg=_('Found plugins: %s') % plugins)
 
-    if filters:
-        plugins = [plugin for plugin in plugins for filter in filters if filter in plugin]
+    if include:
+        plugins = [plugin for plugin in plugins
+                   for filter in include
+                   if filter in plugin]
+
+    if exclude:
+        plugins = [plugin for plugin in plugins
+                   for filter in exclude
+                   if filter not in plugin]
 
     # this unique-ifies the list of plugins (and ensures consistent
     # ordering).
@@ -137,31 +151,9 @@ def runplugin(plugin):
         err = traceback.format_exc()
 
     return {'plugin': plugin,
-            'output': {"rc": returncode,
+            'result': {"rc": returncode,
                        "out": out.decode('ascii', 'ignore'),
                        "err": err.decode('ascii', 'ignore')}}
-
-
-def commonpath(folders):
-    """
-    Checks the minimum common path in provided paths
-    :param folders: path array for folder
-    :return: string: common path
-    """
-    if folders:
-        commonroot = []
-        ls = [p.split('/') for p in folders]
-        minlenght = min(len(p) for p in ls)
-
-        for i in range(minlenght):
-            s = set(p[i] for p in ls)
-            if len(s) != 1:
-                break
-            commonroot.append(s.pop())
-
-        return '/'.join(commonroot)
-    else:
-        return ""
 
 
 def docitellus(live=False, path=False, plugins=False):
@@ -190,15 +182,7 @@ def docitellus(live=False, path=False, plugins=False):
     # Execute runplugin for each plugin found
     results = p.map(runplugin, plugins)
 
-    # Process plugin output from multiple plugins for result printing
-    new_dict = {}
-    for item in results:
-        name = item['plugin']
-        new_dict[name] = item
-
-    LOG.debug(msg=_("Plugins executed for %s: %s with result: %s") % (path, plugins, new_dict))
-
-    return new_dict
+    return results
 
 
 def formattext(returncode):
@@ -207,8 +191,23 @@ def formattext(returncode):
     :param returncode: return code of plugin
     :return: formatted text for printing
     """
-    colors = [bcolors.okay, bcolors.failed, bcolors.skipped, bcolors.unexpected]
-    return colors[returncode]
+    colors = [
+        ('okay', 'green'),
+        ('failed', 'red'),
+        ('skipped', 'cyan'),
+    ]
+
+    try:
+        selected = colors[returncode]
+    except:
+        selected = ('unknown', 'magenta')
+
+    return colorize(*selected)
+
+
+def indent(text, amount):
+    padding = ' ' * amount
+    return '\n'.join(padding+line for line in text.splitlines())
 
 
 def parse_args():
@@ -237,8 +236,16 @@ def parse_args():
     p.add_argument("-s", "--silent",
                    help=_("Enable silent mode, only errors on tests written"),
                    action='store_true')
-    p.add_argument("-f", "--filter",
-                   help=_("Only include plugins that contains in full path that substring"),
+
+    g = p.add_argument_group('Filtering options')
+    g.add_argument("-i", "--include",
+                   metavar='SUBSTRING',
+                   help=_("Only include plugins that contain substring"),
+                   default=[],
+                   action='append')
+    g.add_argument("-x", "--exclude",
+                   metavar='SUBSTRING',
+                   help=_("Exclude plugins that contain substring"),
                    default=[],
                    action='append')
     p.add_argument("--list-plugins",
@@ -271,8 +278,14 @@ def main():
     else:
         CITELLUS_ROOT = ""
 
+    if not options.plugin_path:
+        LOG.info('using default plugin path %s', DEFAULT_PLUGIN_PATH)
+        options.plugin_path = DEFAULT_PLUGIN_PATH
+
     # Find available plugins
-    plugins = findplugins(folders=options.plugin_path, filters=options.filter)
+    plugins = findplugins(options.plugin_path,
+                          include=options.include,
+                          exclude=options.exclude)
 
     if options.list_plugins:
         print("\n".join(plugins))
@@ -283,7 +296,7 @@ def main():
         print(_("found #%s tests at %s") % (len(plugins), ", ".join(options.plugin_path)))
 
     if not plugins:
-        LOG.error(_("Plugin folder empty, exitting"))
+        LOG.error(_("did not discover any plugins, exiting"))
         sys.exit(1)
 
     if not options.silent:
@@ -293,49 +306,25 @@ def main():
             print(_("mode: fs snapshot %s" % CITELLUS_ROOT))
 
     # Execute runplugin for each plugin found
-    new_dict = docitellus(live=options.live, path=CITELLUS_ROOT, plugins=plugins)
+    results = docitellus(live=options.live, path=CITELLUS_ROOT, plugins=plugins)
 
-    # Sort plugins based on path name
-    std = sorted(plugins, key=lambda file: (os.path.dirname(file), os.path.basename(file)))
+    # Print results based on the sorted order based on returned results from
+    # parallel execution
+    for result in sorted(results, key=lambda r: r['plugin']):
+        err = result['result']['err']
+        rc = result['result']['rc']
+        text = formattext(rc)
 
-    # Common path for plugins
-    if len(plugins) > 1:
-        common = commonpath(plugins)
-    else:
-        common = ""
+        print("# %s: %s" % (result['plugin'], text))
 
-    # Print results based on the sorted order based on returned results from parallel execution
-    okay = []
-    skipped = []
-    for i in range(0, len(std)):
-        plugin = new_dict[std[i]]
+        show_err = (
+            (rc in [RC_FAILED])
+            or (rc not in [RC_OKAY, RC_FAILED, RC_SKIPPED])
+            or (rc in [RC_SKIPPED] and options.verbose)
+        )
 
-        # We don't print stdout
-        # out = plugin['output']['out']
-        err = plugin['output']['err']
-        rc = plugin['output']['rc']
-        text = formattext(returncode=rc)
-
-        # If not standard RC, print stderr
-        if (rc != 0 and rc != 2) or (options.verbose and rc == 2):
-            print("# %s: %s" % (plugin['plugin'], text))
-            if err != "":
-                for line in err.splitlines():
-                    print("    %s" % line)
-        else:
-            if 'okay' in text:
-                okay.append(plugin['plugin'].replace(common, ''))
-            if 'skipped' in text:
-                skipped.append(plugin['plugin'].replace(common, ''))
-
-        LOG.debug(msg=_("Plugin: %s, output: %s") % (plugin['plugin'], plugin['output']))
-
-    if not options.silent:
-        if okay:
-            print("# %s: %s" % (okay, bcolors.okay))
-        if skipped:
-            print("# %s: %s" % (skipped, bcolors.skipped))
-
+        if show_err and err.strip():
+            print(indent(err, 4))
 
 if __name__ == "__main__":
     main()
