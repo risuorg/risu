@@ -51,6 +51,7 @@ RC_OKAY = 0
 RC_FAILED = 1
 RC_SKIPPED = 2
 
+
 class bcolors:
     black = '\033[30m'
     failed = red = '\033[31m'
