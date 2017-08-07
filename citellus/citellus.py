@@ -209,7 +209,7 @@ def formattext(returncode):
 
 def indent(text, amount):
     padding = ' ' * amount
-    return '\n'.join(padding+line for line in text.splitlines())
+    return '\n'.join(padding + line for line in text.splitlines())
 
 
 def parse_args():
@@ -354,10 +354,10 @@ def main():
         print("# %s: %s" % (result['plugin'], text))
 
         show_err = (
-            (rc in [RC_FAILED])
-            or (rc not in [RC_OKAY, RC_FAILED, RC_SKIPPED])
-            or (rc in [RC_SKIPPED] and options.verbose > 0)
-            or (options.verbose > 1)
+            (rc in [RC_FAILED]) or
+            (rc not in [RC_OKAY, RC_FAILED, RC_SKIPPED]) or
+            (rc in [RC_SKIPPED] and options.verbose > 0) or
+            (options.verbose > 1)
         )
 
         show_out = (
@@ -369,6 +369,7 @@ def main():
 
         if show_err and err.strip():
             print(indent(err, 4))
+
 
 if __name__ == "__main__":
     main()
