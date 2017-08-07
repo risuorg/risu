@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01f510d9_e9a1abc8",
+        "filename": "citellus/citellus.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2017-08-07T10:45:08Z",
+      "side": 1,
+      "message": "This breaks importing of find plugins function.\n\nPath is valid only if executing citellus from its folder, where prior behaviour is that it will construct plugin path based on citellus python executable + \u0027plugin\u0027\n\nAll defined inside findplugins",
+      "revId": "dcd7e338409437c8c765449017954be173f22a9e",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
