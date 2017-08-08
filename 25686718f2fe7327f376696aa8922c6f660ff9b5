@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c766d6f_48b9cde7",
+        "filename": "citellus/magui.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1011950
+      },
+      "writtenOn": "2017-08-08T08:50:05Z",
+      "side": 1,
+      "message": "Python \u003c3.5:\n\nif folders:\n  return os.path.commonprefix(folders).rsplit(\u0027/\u0027, 1)[0]\n\nPython \u003e3.5:\n\nif folders:\n  return os.path.commonpath(folders)",
+      "range": {
+        "startLine": 115,
+        "startChar": 0,
+        "endLine": 125,
+        "endChar": 17
+      },
+      "revId": "25686718f2fe7327f376696aa8922c6f660ff9b5",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
