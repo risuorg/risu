@@ -1,6 +1,3 @@
-# Vote For Sydney 2017 Presentation
-https://www.openstack.org/summit/sydney-2017/vote-for-speakers#/19095
-
 # Introduction
 
 Magui is a wrapper that calls functions from the Python library of Citellus [README.md](README.md).
@@ -17,28 +14,42 @@ Magui aims to use Citellus for gathering the data and later, write plugins to an
 We are developing framework in python, and still no plugins created.
 
 ```
-usage: magui.py [arguments] [-h] [-d {info,debug,warn,critical}]
-                            [-p PLUGINPATH] [-m MPATH] [-s]
+usage: magui.py [arguments] [-h] [-d {INFO,DEBUG,WARNING,ERROR,CRITICAL}]
+                            [-p PLUGINPATH] [-m MPATH] [-s] [-i SUBSTRING]
+                            [-x SUBSTRING] [-mf MFILTER]
+                            [sosreports [sosreports ...]]
 
-M.A.G.U.I. Processes several generic archives/sosreports scripts in a uniform
-way, to interpret status that depend on several systems
+Processes several generic archives/sosreports scripts in a uniform way, to
+interpret status that depend on several systems data
+
+positional arguments:
+  sosreports
 
 optional arguments:
   -h, --help            show this help message and exit
-  -d {info,debug,warn,critical}, --verbosity {info,debug,warn,critical}
-                        Set verbosity level for messages while running/logging
+  -d {INFO,DEBUG,WARNING,ERROR,CRITICAL}, --loglevel {INFO,DEBUG,WARNING,ERROR,CRITICAL}
+                        Set log level
   -p PLUGINPATH, --pluginpath PLUGINPATH
                         Set path for Citellus plugin location if not default
   -m MPATH, --mpath MPATH
                         Set path for Magui plugin location if not default
   -s, --silent          Enable silent mode, only errors on tests written
+
+Filtering options:
+  -i SUBSTRING, --include SUBSTRING
+                        Only include plugins that contain substring
+  -x SUBSTRING, --exclude SUBSTRING
+                        Exclude plugins that contain substring
+  -mf MFILTER, --mfilter MFILTER
+                        Only include Magui plugins that contains in full path
+                        that substring
 ```
 
 ## Running a check
 
 This is an example of execution of Magui against a set of sosreports with `seqno` plugin of Citellus enabled.
 ```
-#magui.py * -f seqno # (filtering for ‘seqno’ plugins.
+#magui.py * -i seqno # (filtering for ‘seqno’ plugins.
 {'/home/remote/piranzo/citellus/citellus/plugins/openstack/mysql/seqno.sh': {'ctrl0.localdomain': {'err': '08a94e67-bae0-11e6-8239-9a6188749d23:36117633\n',
                                                                                                    'out': '',
                                                                                                    'rc': 0},
@@ -54,4 +65,3 @@ On this example, UUID and SEQNO is shown for each controller.
 ```
 
 Please if you have any idea on any improvements please do not hesitate to open an issue or submit your contributions.
-

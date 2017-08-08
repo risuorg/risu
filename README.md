@@ -3,9 +3,6 @@
 [![Coverage Status](https://coveralls.io/repos/github/zerodayz/citellus/badge.svg?branch=master)](https://coveralls.io/github/zerodayz/citellus?branch=master)
 [![Release status](https://img.shields.io/github/release/zerodayz/citellus.svg)](https://github.com/zerodayz/citellus/releases)
 
-# Vote For Sydney 2017 Presentation
-https://www.openstack.org/summit/sydney-2017/vote-for-speakers#/19095
-
 # Introduction
 
 Citellus is a program that should help with system configuration validation on either live system or any sort of snapshot of the filesystem.
@@ -16,23 +13,38 @@ Please if you have any idea on any improvements please do not hesitate to open a
 We are developing framework in python, the bash framework has been deprecated. Python framework is the only supported framework.
 
 ```
-# ./citellus.py -h
-usage: citellus.py [arguments] [-h] [-l] [-v] [-d {info,debug,warn,critical}]
-                               [-s] [-f FILTER]
+usage: citellus.py [arguments] [-h] [-l] [--list-plugins] [--output FILENAME]
+                               [--only-failed] [-v]
+                               [-d {INFO,DEBUG,WARNING,ERROR,CRITICAL}] [-q]
+                               [-i SUBSTRING] [-x SUBSTRING]
+                               [plugin_path [plugin_path ...]]
 
 Citellus allows to analyze a directory against common set of tests, useful for
 finding common configuration errors
 
+positional arguments:
+  plugin_path
+
 optional arguments:
   -h, --help            show this help message and exit
   -l, --live            Work on a live system instead of a snapshot
-  -v, --verbose         Execute in verbose mode
-  -d {info,debug,warn,critical}, --verbosity {info,debug,warn,critical}
-                        Set verbosity level for messages while running/logging
-  -s, --silent          Enable silent mode, only errors on tests written
-  -f FILTER, --filter FILTER
-                        Only include plugins that contains in full path that
-                        substring
+  --list-plugins        Print a list of discovered plugins and exit
+  --output FILENAME, -o FILENAME
+                        Write results to JSON file FILENAME
+
+Output and logging options:
+  --only-failed, -F     Only show failed tests
+  -v, --verbose         Increase verbosity of output (may be specified more
+                        than once)
+  -d {INFO,DEBUG,WARNING,ERROR,CRITICAL}, --loglevel {INFO,DEBUG,WARNING,ERROR,CRITICAL}
+                        Set log level
+  -q, --quiet           Enable quiet mode
+
+Filtering options:
+  -i SUBSTRING, --include SUBSTRING
+                        Only include plugins that contain substring
+  -x SUBSTRING, --exclude SUBSTRING
+                        Exclude plugins that contain substring
 ```
 
 ## Doing a live check example
@@ -220,7 +232,7 @@ And example execution using filters
 
 This is an example of execution of Citellus using ```plugins/``` and filter ```pacemaker``` against fs snapshot ```sosreport-controller-1.localdomain-20170705201135```
 ```
-# ./citellus.py -v /root/sosreport-controller-1.localdomain-20170705201135/ plugins/ -f pacemaker
+# ./citellus.py -v /root/sosreport-controller-1.localdomain-20170705201135/ plugins/ -i pacemaker
 _________ .__  __         .__  .__                
 \_   ___ \|__|/  |_  ____ |  | |  |  __ __  ______
 /    \  \/|  \   __\/ __ \|  | |  | |  |  \/  ___/
