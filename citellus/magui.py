@@ -82,11 +82,20 @@ def parse_args():
     p.add_argument("-s", "--silent", dest="silent", help=_("Enable silent mode, only errors on tests written"),
                    default=False,
                    action='store_true')
-    p.add_argument("-f", "--filter", dest="filter",
-                   help=_("Only include Citellus plugins that contains in full path that substring"),
+
+    g = p.add_argument_group('Filtering options')
+    g.add_argument("-i", "--include",
+                   metavar='SUBSTRING',
+                   help=_("Only include plugins that contain substring"),
                    default=[],
                    action='append')
-    p.add_argument("-mf", "--mfilter", dest="mfilter",
+    g.add_argument("-x", "--exclude",
+                   metavar='SUBSTRING',
+                   help=_("Exclude plugins that contain substring"),
+                   default=[],
+                   action='append')
+
+    g.add_argument("-mf", "--mfilter", dest="mfilter",
                    help=_("Only include Magui plugins that contains in full path that substring"),
                    default=False,
                    action='append')
@@ -94,6 +103,39 @@ def parse_args():
     p.add_argument('sosreports', nargs='*')
 
     return p.parse_args()
+
+
+def commonpath(folders):
+    """
+    Checks the minimum common path in provided paths
+    :param folders: path array for folder
+    :return: string: common path
+    """
+    if folders:
+        commonroot = []
+        ls = [p.split('/') for p in folders]
+        minlenght = min(len(p) for p in ls)
+        for i in range(minlenght):
+            s = set(p[i] for p in ls)
+            if len(s) != 1:
+                break
+            commonroot.append(s.pop())
+        return '/'.join(commonroot)
+    else:
+        return ""
+
+
+def callcitellus(path=False, pluginsdata=False):
+
+    # Call citellus to get actual results of analysis
+    results = citellus.docitellus(live=False, path=path, plugins=pluginsdata)
+
+    # Process plugin output from multiple plugins
+    new_dict = {}
+    for item in results:
+        name = item['plugin']
+        new_dict[name] = item
+    return new_dict
 
 
 def main():
@@ -115,7 +157,7 @@ def main():
     for sosreport in options.sosreports:
         if not options.silent:
             print(_("Gathering analysis for %s") % sosreport)
-        results[sosreport] = citellus.docitellus(live=False, path=sosreport, plugins=citellus.findplugins(filters=options.filter, folders=options.pluginpath))
+        results[sosreport] = callcitellus(path=sosreport, pluginsdata=citellus.findplugins(folders=options.pluginpath, include=options.include, exclude=options.exclude))
 
     # Precreate multidimensional array
     grouped = {}
@@ -127,13 +169,13 @@ def main():
             grouped[plugin] = {}
 
     # Get commonpath for printing
-    commonpath = citellus.commonpath(plugins)
+    cp = commonpath(plugins)
 
     # Fill the data
     for sosreport in options.sosreports:
         plugins = 0
         for plugin in results[sosreport]:
-            grouped[plugin][sosreport] = results[sosreport][plugin]['output']
+            grouped[plugin][sosreport] = results[sosreport][plugin]['result']
 
     # We've now a matrix of grouped[plugin][sosreport] and then [text] [out] [err] [rc]
 
@@ -147,7 +189,7 @@ def main():
                 if grouped[plugin][host]['rc'] != 0 and grouped[plugin][host]['rc'] != 2:
                     pplug = 1
             if pplug == 1:
-                newplugin = plugin.replace(commonpath, '')
+                newplugin = plugin.replace(cp, '')
                 toprint[newplugin] = {}
                 for host in grouped[plugin]:
                     toprint[newplugin][host] = {}
