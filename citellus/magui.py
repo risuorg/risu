@@ -39,7 +39,11 @@ maguidir = os.path.abspath(os.path.dirname(__file__))
 localedir = os.path.join(maguidir, 'locale')
 
 trad = gettext.translation('citellus', localedir, fallback=True)
-_ = trad.ugettext
+
+try:
+    _ = trad.ugettext
+except AttributeError:
+    _ = trad.gettext
 
 
 def show_logo():
