@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d97dcd5_b98177c7",
+        "filename": "tests/test_magui.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001152
+      },
+      "writtenOn": "2017-08-08T21:27:17Z",
+      "side": 1,
+      "message": "I prefer using a meaningful name here (e.g., \"__does_not_exist__\") to make it clear what you\u0027re doing.",
+      "revId": "9b980ca9f5d3382aec4ee96c5c752a26d5c96005",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "49e9f764_338cbc2a",
+        "filename": "tests/test_magui.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001152
+      },
+      "writtenOn": "2017-08-08T21:27:17Z",
+      "side": 1,
+      "message": "Why are you initializing plugins to an empty list, appending two lists, then taking the first one?  Why not just:\n\n  plugins \u003d citellus.findplugins(folders\u003d[testplugins], include\u003d\u0027exit_passed.sh\u0027)",
+      "revId": "9b980ca9f5d3382aec4ee96c5c752a26d5c96005",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
