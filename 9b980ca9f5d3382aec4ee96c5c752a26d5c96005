@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "824fa044_3c0a3341",
+        "filename": "tests/test_magui.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2017-08-09T06:39:05Z",
+      "side": 1,
+      "message": "fixed",
+      "parentUuid": "5d97dcd5_b98177c7",
+      "revId": "9b980ca9f5d3382aec4ee96c5c752a26d5c96005",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "49e9f764_338cbc2a",
         "filename": "tests/test_magui.py",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-08T21:27:17Z",
       "side": 1,
       "message": "Why are you initializing plugins to an empty list, appending two lists, then taking the first one?  Why not just:\n\n  plugins \u003d citellus.findplugins(folders\u003d[testplugins], include\u003d\u0027exit_passed.sh\u0027)",
+      "revId": "9b980ca9f5d3382aec4ee96c5c752a26d5c96005",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3dc0701b_5f31c37d",
+        "filename": "tests/test_magui.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2017-08-09T06:39:05Z",
+      "side": 1,
+      "message": "I want to use two different plugins, I can use include\u003d[a,b]\n\ndo you like that more?\nThx",
+      "parentUuid": "49e9f764_338cbc2a",
       "revId": "9b980ca9f5d3382aec4ee96c5c752a26d5c96005",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": false
