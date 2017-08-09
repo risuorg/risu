@@ -30,7 +30,7 @@ import logging
 import os.path
 import pprint
 
-import citellus
+from . import citellus
 
 LOG = logging.getLogger('magui')
 
@@ -118,17 +118,25 @@ def commonpath(folders):
     code = ""
     if folders:
         try:
+            # Python 3.x
             code = os.path.commonpath(folders)
         except AttributeError:
+            # Python 2.x
             code = os.path.commonprefix(folders).rsplit('/', 1)[0]
 
     return code
 
 
-def callcitellus(path=False, pluginsdata=False):
+def callcitellus(path=False, plugins=False):
+    """
+    Do actual execution of citellus against data
+    :param path: sosreport path
+    :param plugins: plugins enabled as provided to citellus
+    :return: dict with results
+    """
 
-    # Call citellus to get actual results of analysis
-    results = citellus.docitellus(live=False, path=path, plugins=pluginsdata)
+    # Call citellus and format data returned
+    results = citellus.docitellus(path=path, plugins=plugins)
 
     # Process plugin output from multiple plugins
     new_dict = {}
@@ -136,6 +144,63 @@ def callcitellus(path=False, pluginsdata=False):
         name = item['plugin']
         new_dict[name] = item
     return new_dict
+
+
+def domagui(sosreports, citellusplugins):
+    """
+    Do actual execution against sosreports
+    :return: dict of results
+    """
+
+    # Grab data from citellus for the sosreports provided
+    results = {}
+    for sosreport in sosreports:
+        results[sosreport] = callcitellus(path=sosreport, plugins=citellusplugins)
+
+    # Precreate multidimensional array
+    grouped = {}
+    for sosreport in sosreports:
+        plugins = []
+        for plugin in results[sosreport]:
+            plugins.append(plugin)
+            grouped[plugin] = {}
+
+    # Fill the data
+    for sosreport in sosreports:
+        for plugin in results[sosreport]:
+            grouped[plugin][sosreport] = results[sosreport][plugin]['result']
+
+    # We've now a matrix of grouped[plugin][sosreport] and then [text] [out] [err] [rc]
+    return grouped
+
+
+def maguiformat(data):
+    """
+    Formats the data from Magui for printing
+    :param data: Results from domagui
+    :return: dict with results for printing
+    """
+    toprint = {}
+
+    plugins = []
+    for plugin in data:
+        plugins.append(plugin)
+
+    # Calculate common path for later filtering for output print
+    cp = commonpath(plugins)
+
+    for plugin in data:
+        pplug = 0
+        for host in data[plugin]:
+            if data[plugin][host]['rc'] != 0 and data[plugin][host]['rc'] != 2:
+                pplug = 1
+        if pplug == 1:
+            newplugin = plugin.replace(cp, '')
+            toprint[newplugin] = {}
+            for host in data[plugin]:
+                toprint[newplugin][host] = {}
+                toprint[newplugin][host] = data[plugin][host]
+    return toprint
 
 
 def main():
@@ -152,46 +217,15 @@ def main():
 
     # Each argument in sosreport is a sosreport
 
-    # Grab data from citellus for the sosreports provided
-    results = {}
-    for sosreport in options.sosreports:
-        if not options.quiet:
-            print(_("Gathering analysis for %s") % sosreport)
-        results[sosreport] = callcitellus(path=sosreport, pluginsdata=citellus.findplugins(folders=options.pluginpath, include=options.include, exclude=options.exclude))
+    # Prefill enabled citellus plugins from args
+    citellusplugins = citellus.findplugins(folders=options.pluginpath, include=options.include, exclude=options.exclude)
 
-    # Precreate multidimensional array
-    grouped = {}
-    plugins = []
-    for sosreport in options.sosreports:
-        plugins = []
-        for plugin in results[sosreport]:
-            plugins.append(plugin)
-            grouped[plugin] = {}
-
-    # Get commonpath for printing
-    cp = commonpath(plugins)
-
-    # Fill the data
-    for sosreport in options.sosreports:
-        for plugin in results[sosreport]:
-            grouped[plugin][sosreport] = results[sosreport][plugin]['result']
-
-    # We've now a matrix of grouped[plugin][sosreport] and then [text] [out] [err] [rc]
+    # Grab the data
+    grouped = domagui(sosreports=options.sosreports, citellusplugins=citellusplugins)
 
     # For now, let's only print plugins that have rc ! 0 in quiet
     if options.quiet:
-        toprint = {}
-        for plugin in grouped:
-            pplug = 0
-            for host in grouped[plugin]:
-                if grouped[plugin][host]['rc'] != 0 and grouped[plugin][host]['rc'] != 2:
-                    pplug = 1
-            if pplug == 1:
-                newplugin = plugin.replace(cp, '')
-                toprint[newplugin] = {}
-                for host in grouped[plugin]:
-                    toprint[newplugin][host] = {}
-                    toprint[newplugin][host] = grouped[plugin][host]
+        toprint = maguiformat(grouped)
     else:
         toprint = grouped
 
