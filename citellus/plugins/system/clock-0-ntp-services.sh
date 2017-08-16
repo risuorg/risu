@@ -22,22 +22,32 @@ is_active() {
 }
 
 if [[ $CITELLUS_LIVE = 0 ]]; then
-  echo "works on live-system only" >&2
-  exit 2
-fi
+  if [ ! -f "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all" ]; then
+    echo "file /sos_commands/systemd/systemctl_list-units_--all not found." >&2
+    exit 2
+  else
+    if ! grep -q "ntpd.*active" "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all"; then
+      echo "no ntp service is active" >&2
+      exit 1
+    elif ! grep -q "chronyd.*active" "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all"; then
+      echo "no chrony service is active" >&2
+      exit 1
+    fi
+  fi
+else
+  ! is_active chronyd
+  chronyd_active=$?
 
-! is_active chronyd
-chronyd_active=$?
+  ! is_active ntpd
+  ntpd_active=$?
 
-! is_active ntpd
-ntpd_active=$?
+  if (( ! (ntpd_active || chronyd_active) )); then
+      echo "no ntp service is active" >&2
+      exit 1
+  fi
 
-if (( ! (ntpd_active || chronyd_active) )); then
-    echo "no ntp service is active" >&2
-    exit 1
-fi
-
-if (( ntpd_active && chronyd_active )); then
-    echo "both chrony and ntpd are active" >&2
-    exit 1
+  if (( ntpd_active && chronyd_active )); then
+      echo "both chrony and ntpd are not active" >&2
+      exit 1
+  fi
 fi
