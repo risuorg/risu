@@ -24,30 +24,53 @@ is_active() {
 }
 
 if [[ $CITELLUS_LIVE = 0 ]]; then
-  echo "works on live-system only" >&2
-  exit 2
-fi
-
-if ! is_active chronyd; then
-    echo "chronyd is not active"
+  if [ ! -f "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all" ]; then
+    echo "file /sos_commands/systemd/systemctl_list-units_--all not found." >&2
     exit 2
-fi
+  else
+    if ! grep -q "chronyd.*active" "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all"; then
+      echo "no chrony service is active" >&2
+      exit 1
+    fi
+  fi
 
-if ! [[ -x /usr/bin/bc ]]; then
-    echo "this check requires /usr/bin/bc" >&2
+  if [ ! -f "${CITELLUS_ROOT}/sos_commands/chrony/chronyc_tracking" ]; then
+    echo "file /sos_commands/chrony/chronyc_tracking not found." >&2
     exit 2
-fi
-
-
-if ! out=$(chronyc tracking); then
-    echo "clock is not synchronized" >&2
-    return 1
-fi
-
-offset=$(awk '/RMS offset/ {print $4}' <<<"$out")
-echo "clock offset is $offset" >&2
-
-((
-$(echo "$offset<${CITELLUS_MAX_CLOCK_OFFSET:-1} && \
+  else
+    if grep -q "Not synchronised" "${CITELLUS_ROOT}/sos_commands/chrony/chronyc_tracking"; then
+      echo "clock is not synchronized" >&2
+      exit 1
+    fi
+    offset=$(awk '/RMS offset/ {print $4}' "${CITELLUS_ROOT}/sos_commands/chrony/chronyc_tracking")
+    echo "clock offset is $offset" >&2
+    ((
+    $(echo "$offset<${CITELLUS_MAX_CLOCK_OFFSET:-1} && \
     $offset>-${CITELLUS_MAX_CLOCK_OFFSET:-1}" | bc -l)
-))
+    ))
+  fi
+else
+  if ! is_active chronyd; then
+      echo "chronyd is not active"
+      exit 2
+  fi
+
+  if ! [[ -x /usr/bin/bc ]]; then
+      echo "this check requires /usr/bin/bc" >&2
+      exit 2
+  fi
+
+
+  if ! out=$(chronyc tracking); then
+      echo "clock is not synchronized" >&2
+      return 1
+  fi
+
+  offset=$(awk '/RMS offset/ {print $4}' <<<"$out")
+  echo "clock offset is $offset" >&2
+
+  ((
+  $(echo "$offset<${CITELLUS_MAX_CLOCK_OFFSET:-1} && \
+      $offset>-${CITELLUS_MAX_CLOCK_OFFSET:-1}" | bc -l)
+  ))
+fi
