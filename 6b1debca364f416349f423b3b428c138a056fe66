@@ -16,6 +16,24 @@
       "revId": "6b1debca364f416349f423b3b428c138a056fe66",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1b3e24b0_18401dd1",
+        "filename": "citellus/plugins/system/clock-0-ntp-services.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1011950
+      },
+      "writtenOn": "2017-08-16T12:01:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c2f8a90_4c6cfb21",
+      "revId": "6b1debca364f416349f423b3b428c138a056fe66",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
     }
   ]
 }
