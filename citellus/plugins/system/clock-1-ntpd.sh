@@ -24,34 +24,63 @@ is_active() {
 }
 
 if [[ $CITELLUS_LIVE = 0 ]]; then
-  echo "works on live-system only" >&2
-  exit 2
-fi
-
-if ! is_active ntpd; then
-    echo "ntpd is not active" >&2
+  if [ ! -f "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all" ]; then
+    echo "file /sos_commands/systemd/systemctl_list-units_--all not found." >&2
     exit 2
-fi
+  else
+    if ! grep -q "ntpd.*active" "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all"; then
+      echo "no ntp service is active" >&2
+      exit 1
+    fi
+  fi
 
-if ! [[ -x /usr/bin/bc ]]; then
-    echo "this check requires /usr/bin/bc" >&2
+  if [ ! -f "${CITELLUS_ROOT}/sos_commands/ntp/ntpq_-p" ]; then
+    echo "file /sos_commands/ntp/ntpq_-p not found." >&2
     exit 2
+  else
+    if grep -q "Connection refused" "${CITELLUS_ROOT}/sos_commands/ntp/ntpq_-p"; then
+      echo "ntpq: read: Connection refused" >&2
+      exit 1
+    fi
+  fi
+  if [ ! -f "${CITELLUS_ROOT}/sos_commands/ntp/ntpstat" ]; then
+    echo "file /sos_commands/ntp/ntpstat not found." >&2
+    exit 2
+  else
+    if grep -q "time correct" "${CITELLUS_ROOT}/sos_commands/ntp/ntpstat"; then
+      offset=$(awk '/time correct/ {print $5}' "${CITELLUS_ROOT}/sos_commands/ntp/ntpstat")
+      if [ "${offset}" -gt  "100" ]; then
+        echo "clock offset is $offset ms" >&2
+        exit 1
+      fi
+    fi
+  fi
+else
+  if ! is_active ntpd; then
+      echo "ntpd is not active" >&2
+      exit 2
+  fi
+
+  if ! [[ -x /usr/bin/bc ]]; then
+      echo "this check requires /usr/bin/bc" >&2
+      exit 2
+  fi
+
+  if ! out=$(ntpq -c peers); then
+      echo "failed to contact ntpd" >&2
+      exit 1
+  fi
+
+  if ! awk '/^\*/ {sync=1} END {exit ! sync}' <<<"$out"; then
+      echo "clock is not synchronized" >&2
+      return 1
+  fi
+
+  offset=$(awk '/^\*/ {print $9/1000}' <<<"$out")
+  echo "clock offset is $offset" >&2
+
+  ((
+  $(echo "$offset<${CITELLUS_MAX_CLOCK_OFFSET:-1} && \
+      $offset>-${CITELLUS_MAX_CLOCK_OFFSET:-1}" | bc -l)
+  ))
 fi
-
-if ! out=$(ntpq -c peers); then
-    echo "failed to contact ntpd" >&2
-    exit 1
-fi
-
-if ! awk '/^\*/ {sync=1} END {exit ! sync}' <<<"$out"; then
-    echo "clock is not synchronized" >&2
-    return 1
-fi
-
-offset=$(awk '/^\*/ {print $9/1000}' <<<"$out")
-echo "clock offset is $offset" >&2
-
-((
-$(echo "$offset<${CITELLUS_MAX_CLOCK_OFFSET:-1} && \
-    $offset>-${CITELLUS_MAX_CLOCK_OFFSET:-1}" | bc -l)
-))
