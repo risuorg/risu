@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c2f8a90_4c6cfb21",
+        "filename": "citellus/plugins/system/clock-0-ntp-services.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2017-08-16T11:48:10Z",
+      "side": 1,
+      "message": "Not sure if missing something but as we\u0027re doing \u0027elif\u0027 we cannot have the var set on both cases, so check on #34 will always fail and go to #37 or #40 ?",
+      "revId": "6b1debca364f416349f423b3b428c138a056fe66",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
