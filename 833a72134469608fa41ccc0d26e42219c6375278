@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55d3cc7f_af256d6d",
+        "filename": "tests/UT-tests/stonith_enabled.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001152
+      },
+      "writtenOn": "2017-08-17T14:24:56Z",
+      "side": 1,
+      "message": "Why not just put this logic into the python test script?",
+      "revId": "833a72134469608fa41ccc0d26e42219c6375278",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cc4e1857_0cab5cb9",
+        "filename": "tests/test_tests.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001152
+      },
+      "writtenOn": "2017-08-17T14:24:56Z",
+      "side": 1,
+      "message": "These are available as constants in citellus. E.g.:\n\n  rcs \u003d {\"pass\": citellus.RC_OKAY,\n         \"fail\": citellus.RC_FAILED,\n         \"skipped\": citellus.RC_SKIPPED}",
+      "revId": "833a72134469608fa41ccc0d26e42219c6375278",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a3401c67_eb37c5c0",
+        "filename": "tests/test_tests.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001152
+      },
+      "writtenOn": "2017-08-17T14:24:56Z",
+      "side": 1,
+      "message": "If we\u0027re going to use a python testing framework, it doesn\u0027t really make sense to loop over tests like this.  There should be one test per plugin, so that if you only want to test pacemaker you can select only that test.\n\nIf we\u0027re going to do a loop like this, there\u0027s really no reason to structure it as a unittest.TestCase.",
+      "revId": "833a72134469608fa41ccc0d26e42219c6375278",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
