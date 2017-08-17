@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0e8e52df_d4af5640",
+        "filename": "tests/UT-tests/stonith_enabled.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2017-08-17T14:36:11Z",
+      "side": 1,
+      "message": "Do you mean in the calling command?",
+      "parentUuid": "55d3cc7f_af256d6d",
+      "revId": "833a72134469608fa41ccc0d26e42219c6375278",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc4e1857_0cab5cb9",
         "filename": "tests/test_tests.py",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "d28eb2a4_07663371",
+        "filename": "tests/test_tests.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2017-08-17T14:36:11Z",
+      "side": 1,
+      "message": "ack",
+      "parentUuid": "cc4e1857_0cab5cb9",
+      "revId": "833a72134469608fa41ccc0d26e42219c6375278",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3401c67_eb37c5c0",
         "filename": "tests/test_tests.py",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-17T14:24:56Z",
       "side": 1,
       "message": "If we\u0027re going to use a python testing framework, it doesn\u0027t really make sense to loop over tests like this.  There should be one test per plugin, so that if you only want to test pacemaker you can select only that test.\n\nIf we\u0027re going to do a loop like this, there\u0027s really no reason to structure it as a unittest.TestCase.",
+      "revId": "833a72134469608fa41ccc0d26e42219c6375278",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cabd7a98_66ba6d3e",
+        "filename": "tests/test_tests.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2017-08-17T14:36:11Z",
+      "side": 1,
+      "message": "The idea with this approach, is that the same user that submits a \u0027.sh\u0027 test file against the live or snapshoot mode, is able to write a \u0027bash\u0027 script for testing the proper behavior instead of having to code it in python.\n\nThis python wrapper takes care of running the bash scripts to setup the environment and later the test with the same name against.\n\nIdeal situation would be to have UT\u0027s in python to report that.\n\nAlternatively, a pre-script that could copy a template replacing the script name to setup/validate and in this way, they could fail/succeed individually",
+      "parentUuid": "a3401c67_eb37c5c0",
       "revId": "833a72134469608fa41ccc0d26e42219c6375278",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": false
