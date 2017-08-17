@@ -104,6 +104,24 @@
       "revId": "833a72134469608fa41ccc0d26e42219c6375278",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4ad196ac_f21985ac",
+        "filename": "tests/test_tests.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001152
+      },
+      "writtenOn": "2017-08-17T14:46:16Z",
+      "side": 1,
+      "message": "So, we already have a tool that can run a bunch of shell scripts and report their results.  What about using citellus to run the citellus tests?",
+      "parentUuid": "cabd7a98_66ba6d3e",
+      "revId": "833a72134469608fa41ccc0d26e42219c6375278",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
     }
   ]
 }
