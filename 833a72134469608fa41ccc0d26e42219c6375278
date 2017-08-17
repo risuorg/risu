@@ -122,6 +122,24 @@
       "revId": "833a72134469608fa41ccc0d26e42219c6375278",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e2b8883c_3b38135c",
+        "filename": "tests/test_tests.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2017-08-17T14:48:30Z",
+      "side": 1,
+      "message": "That\u0027s what we do on line 59 :)\n\ntestr, nosetests, etc is running this wrapper that uses citellus to run the tests\n\nIf we were willing to do a more citellus based approach, the way the \u0027tests\u0027 are written should be updated so they invoke citellus\n\nDo you have something in mind?",
+      "parentUuid": "4ad196ac_f21985ac",
+      "revId": "833a72134469608fa41ccc0d26e42219c6375278",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
     }
   ]
 }
