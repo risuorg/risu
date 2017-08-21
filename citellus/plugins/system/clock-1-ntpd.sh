@@ -43,6 +43,12 @@ if [[ $CITELLUS_LIVE = 0 ]]; then
       exit 1
     fi
   fi
+  if [ ! -f "${CITELLUS_ROOT}/etc/ntp.conf" ]; then
+    echo "file /etc/ntp.conf not found." >&2
+    exit 2
+  else
+    grep "^server" "${CITELLUS_ROOT}/etc/ntp.conf" >&2
+  fi
   if [ ! -f "${CITELLUS_ROOT}/sos_commands/ntp/ntpstat" ]; then
     echo "file /sos_commands/ntp/ntpstat not found." >&2
     exit 2
@@ -65,7 +71,12 @@ else
       echo "this check requires /usr/bin/bc" >&2
       exit 2
   fi
-
+  if [ ! -f "${CITELLUS_ROOT}/etc/ntp.conf" ]; then
+    echo "file /etc/ntp.conf not found." >&2
+    exit 2
+  else
+    grep "^server" "${CITELLUS_ROOT}/etc/ntp.conf" >&2
+  fi
   if ! out=$(ntpq -c peers); then
       echo "failed to contact ntpd" >&2
       exit 1
