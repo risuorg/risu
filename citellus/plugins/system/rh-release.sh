@@ -22,4 +22,4 @@ if [ ! -f "${CITELLUS_ROOT}/etc/redhat-release" ]; then
   exit 2
 fi
 
-cat /etc/redhat-release >&2
+cat "${CITELLUS_ROOT}/etc/redhat-release" >&2
