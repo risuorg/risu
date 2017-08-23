@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d1a86fa_0b078061",
+        "filename": "citellus/plugins/openstack/swift/ring-status.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1012182
+      },
+      "writtenOn": "2017-08-23T15:21:10Z",
+      "side": 1,
+      "message": "You guys don\u0027t do a component name in these? Like \"swift-ring-status: blah blah error\"? Otherwise it\u0027s going to be an annoying problem for someone to find out _what_ \"works on live-system only\". Not worth -1 maybe, but something that jumps on me by contrast with overall competency of the script (so many people forget to error to stderr in scripts, but this one is good).",
+      "revId": "5b1f30b8bf4ed20c43b423c622c24e0c4abbc1a5",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "de9a7cf7_e3a3da0e",
+        "filename": "citellus/plugins/openstack/swift/ring-status.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1012182
+      },
+      "writtenOn": "2017-08-23T15:21:10Z",
+      "side": 1,
+      "message": "just stick it on the bottom without else, come on. What if you have multiply checks one after another in the future?",
+      "revId": "5b1f30b8bf4ed20c43b423c622c24e0c4abbc1a5",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
