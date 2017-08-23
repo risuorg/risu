@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "66d82b59_84d433b2",
+        "filename": "citellus/plugins/openstack/swift/ring-status.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1011950
+      },
+      "writtenOn": "2017-08-23T16:16:53Z",
+      "side": 1,
+      "message": "please report any enhancement/bug to https://github.com/zerodayz/citellus/issues as this is in regarding to all scripts so far and was decided in the beginning",
+      "parentUuid": "6d1a86fa_0b078061",
+      "revId": "5b1f30b8bf4ed20c43b423c622c24e0c4abbc1a5",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de9a7cf7_e3a3da0e",
         "filename": "citellus/plugins/openstack/swift/ring-status.sh",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-23T15:21:10Z",
       "side": 1,
       "message": "just stick it on the bottom without else, come on. What if you have multiply checks one after another in the future?",
+      "revId": "5b1f30b8bf4ed20c43b423c622c24e0c4abbc1a5",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "82e36979_680244c5",
+        "filename": "citellus/plugins/openstack/swift/ring-status.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1011950
+      },
+      "writtenOn": "2017-08-23T16:16:53Z",
+      "side": 1,
+      "message": "Not sure if you mean just running swift-recon --md5 ? Then it can\u0027t be done because the exit code is 0 nevertheless there is an error or not.",
+      "parentUuid": "de9a7cf7_e3a3da0e",
       "revId": "5b1f30b8bf4ed20c43b423c622c24e0c4abbc1a5",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": false
