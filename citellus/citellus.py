@@ -127,9 +127,15 @@ def findplugins(folders, include=None, exclude=None):
                    if filter in plugin]
 
     if exclude:
-        plugins = [plugin for plugin in plugins
-                   for filter in exclude
-                   if filter not in plugin]
+        newplugins = []
+        for plugin in plugins:
+            addplugin = True
+            for filter in exclude:
+                if filter in plugin:
+                    addplugin = False
+            if addplugin:
+                newplugins.append(plugin)
+        plugins = newplugins[:]
 
     # this unique-ifies the list of plugins (and ensures consistent
     # ordering).
