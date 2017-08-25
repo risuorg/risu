@@ -119,8 +119,6 @@ def findplugins(folders, include=None, exclude=None):
                 if os.access(filepath, os.X_OK):
                     plugins.append(filepath)
 
-    LOG.debug(msg=_('Found plugins: %s') % plugins)
-
     if include:
         plugins = [plugin for plugin in plugins
                    for filter in include
@@ -130,6 +128,8 @@ def findplugins(folders, include=None, exclude=None):
         plugins = [plugin for plugin in plugins
                    for filter in exclude
                    if filter not in plugin]
+
+    LOG.debug(msg=_('Found plugins: %s') % plugins)
 
     # this unique-ifies the list of plugins (and ensures consistent
     # ordering).
