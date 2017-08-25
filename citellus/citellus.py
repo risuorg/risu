@@ -126,8 +126,7 @@ def findplugins(folders, include=None, exclude=None):
 
     if exclude:
         plugins = [plugin for plugin in plugins
-                   for filter in exclude
-                   if filter not in plugin]
+                   if not any(filter in plugin for filter in exclude)]
 
     LOG.debug(msg=_('Found plugins: %s') % plugins)
 

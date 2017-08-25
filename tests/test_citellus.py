@@ -36,10 +36,10 @@ class CitellusTest(TestCase):
 
     def test_findplugins_positive_filter_exclude(self):
         plugins = citellus.findplugins([testplugins],
-                                       exclude=['exit_passed'])
+                                       exclude=['exit_passed', 'exit_skipped'])
 
         for plugin in plugins:
-            assert 'exit_passed' not in plugin
+            assert ('exit_passed' not in plugin and 'exit_skipped' not in plugin)
 
     def test_findplugins_positive(self):
         assert len(citellus.findplugins([testplugins])) != 0
