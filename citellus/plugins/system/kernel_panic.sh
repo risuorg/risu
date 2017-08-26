@@ -17,17 +17,26 @@
 
 # Looks for the Kernel Out of Memory, panics and soft locks
 
+journal=( "${CITELLUS_ROOT}/sos_commands/logs/journalctl_--no-pager_--boot" \
+          "${CITELLUS_ROOT}/sos_commands/logs/journalctl_--all_--this-boot_--no-pager" )
+
 if [ "x$CITELLUS_LIVE" = "x0" ];  then
-  if [ ! -f "${CITELLUS_ROOT}/sos_commands/logs/journalctl_--no-pager_--boot" ]; then
+
+  for file in "${journal[@]}"; do
+    [[ -f "${file}" ]] && journal_file="${file}"
+  done
+
+  if [ -z "${journal_file}" ]; then
     echo "file /sos_commands/logs/journalctl_--no-pager_--boot not found." >&2
+    echo "file /sos_commands/logs/journalctl_--all_--this-boot_--no-pager not found." >&2
     exit 2
   fi
 
-  if grep -q "oom-killer" "${CITELLUS_ROOT}/sos_commands/logs/journalctl_--no-pager_--boot"; then
+  if grep -q "oom-killer" "${journal_file}"; then
     echo "oom-killer detected" >&2
     exit 1
   fi
-  if grep -q "soft lockup" "${CITELLUS_ROOT}/sos_commands/logs/journalctl_--no-pager_--boot"; then
+  if grep -q "soft lockup" "${journal_file}"; then
     echo "soft lockup detected" >&2
     exit 1
   fi
@@ -41,3 +50,4 @@ elif [ "x$CITELLUS_LIVE" = "x1" ]; then
     exit 1
   fi
 fi
+
