@@ -53,3 +53,17 @@ class CitellusTest(TestCase):
         results = citellus.docitellus(plugins=plugins)
         assert len(results) == 1
         assert results[0]['result']['rc'] == 0
+
+    def test_plugins_have_executable_bit(self):
+        pluginpath = [os.path.join(citellus.citellusdir, 'plugins')]
+        plugins = []
+        for folder in pluginpath:
+            for root, dirnames, filenames in os.walk(folder):
+                for filename in filenames:
+                    filepath = os.path.join(root, filename)
+                    if ".citellus_tests" not in filepath:
+                        plugins.append(filepath)
+        plugins = sorted(set(plugins))
+        plguinscit = citellus.findplugins(folders=pluginpath)
+
+        assert plugins == plguinscit
