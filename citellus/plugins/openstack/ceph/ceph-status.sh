@@ -18,18 +18,28 @@
 # Check if ceph was integrated, if yes then check it's health
 
 if [ "x$CITELLUS_LIVE" = "x0" ]; then
-  if [ -f "${CITELLUS_ROOT}/sos_commands/ceph/ceph_health_detail" ];
-  then
-    if grep -q "HEALTH_OK" "${CITELLUS_ROOT}/sos_commands/ceph/ceph_health_detail"
-    then
-      exit 0
-    else
-      cat "${CITELLUS_ROOT}/sos_commands/ceph/ceph_health_detail" >&2
-      exit 1
-    fi
-  else
-    echo "file sos_commands/ceph/ceph_health_detail not found." >&2
+  if [ ! -f "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all" ]; then
+    echo "file /sos_commands/systemd/systemctl_list-units_--all not found." >&2
     exit 2
+  else
+    if grep -q "ceph-mon.*active" "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all"; then
+      if [ -f "${CITELLUS_ROOT}/sos_commands/ceph/ceph_health_detail" ];
+      then
+        if grep -q "HEALTH_OK" "${CITELLUS_ROOT}/sos_commands/ceph/ceph_health_detail"
+        then
+          exit 0
+        else
+          cat "${CITELLUS_ROOT}/sos_commands/ceph/ceph_health_detail" >&2
+          exit 1
+        fi
+      else
+        echo "file sos_commands/ceph/ceph_health_detail not found." >&2
+        exit 2
+      fi
+    else
+        echo "no ceph integrated" >&2
+        exit 2
+    fi
   fi
 elif [ "x$CITELLUS_LIVE" = "x1" ]; then
   if hiera -c /etc/puppet/hiera.yaml enabled_services | egrep -sq ceph_mon; then
