@@ -23,7 +23,9 @@ like this:
 
         git checkout -b "your-new-branch"
 
-4. Edit your files.
+4. Edit your files and validate with tox:
+
+        tox # this will check the changes for some errors
 
 5. Update your local repository:
 
@@ -37,7 +39,9 @@ like this:
 Then wait for your changes to be reviewed.  It is common for reviewers
 to request changes; when this happens:
 
-1. Edit your files.
+1. Edit your files and revalidate with tox:
+        
+        tox # this will check the new changes for some errors
 
 2. Update your existing commit. Do not create a new commit!
 
@@ -49,6 +53,10 @@ to request changes; when this happens:
         git review
 
 You can see pending and already merged actual changes at: <https://review.gerrithub.io/#/q/project:zerodayz/citellus>
+
+4. Once the new plugin has been submitted you'll see some comments from 'Citellus Jenkins' which is running Unit tests against it (same ones that you run with `tox`)
+
+5. If Jenkins gives 'Verified +1', next step is wait for one reviewer to give final ACK and merge the change.
 
 ### How to write tests
 
