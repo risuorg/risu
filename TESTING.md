@@ -50,7 +50,6 @@ You'll need to adapt above code or use it as template for creating your own `set
 Once done, the actual `unittest` should be checked, for example (note that test is named test_$PLUGINNAME):
 
 ~~~py
-# import required libraries
 import os
 import subprocess
 from unittest import TestCase
@@ -59,8 +58,9 @@ import shutil
 
 from citellus import citellus
 
-# our name
+# To create your own test, update NAME with plugin name and copy this file to test_$NAME.py
 NAME = 'httpd_bug_1406417'
+
 testplugins = os.path.join(citellus.citellusdir, 'testplugins')
 plugins = os.path.join(citellus.citellusdir, 'plugins')
 folder = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'setup')
@@ -73,79 +73,55 @@ rcs = {"pass": citellus.RC_OKAY,
        "fail": citellus.RC_FAILED,
        "skipped": citellus.RC_SKIPPED}
 
-## Here we do start the tests, one for pass, one for fail and one for skipped
 
-# This part of the code should be very similar for other tests as in the end, it's setting up the env with the prior script and then, executing plain citellus against it with the plugin filter set to our name so we only run one test against
+def runtest(testtype='False'):
+    # testtype will be 'pass', 'fail', 'skipped'
+
+    # We're iterating against the different UT tests defined in UT-tests folder
+    tmpdir = tempfile.mkdtemp(prefix='citellus-tmp')
+
+    # Setup test for 'testtype'
+    subprocess.call([uttest, uttest, testtype, tmpdir])
+
+    # Run test against it
+    res = citellus.docitellus(path=tmpdir, plugins=citplugs)
+
+    # Get Return code
+    rc = res[0]['result']['rc']
+
+    # Remove tmp folder
+    shutil.rmtree(tmpdir)
+
+    # Check if it passed
+    return rc
+
 
 class CitellusTest(TestCase):
-    def test_bugzilla_httpd_bug_1406417_pass(self):
+    def test_pass(self):
         # testtype will be 'pass', 'fail', 'skipped'
         testtype = 'pass'
+        assert runtest(testtype='fail') == rcs[testtype]
 
-        # We're iterating against the different UT tests defined in UT-tests folder
-        tmpdir = tempfile.mkdtemp(prefix='citellus-tmp')
-
-        # Setup test for 'pass'
-        subprocess.call([uttest, uttest, testtype, tmpdir])
-
-        # Run test against it
-        res = citellus.docitellus(path=tmpdir, plugins=citplugs)
-
-        # Get Return code
-        rc = res[0]['result']['rc']
-
-        # Remove tmp folder
-        shutil.rmtree(tmpdir)
-
-        # Check if it passed
-        expected = rcs[testtype]
-        assert rc == expected
-
-    def test_bugzilla_httpd_bug_1406417_fail(self):
+    def test_fail(self):
         # testtype will be 'pass', 'fail', 'skipped'
         testtype = 'fail'
+        assert runtest(testtype=testtype) == rcs[testtype]
 
-        # We're iterating against the different UT tests defined in UT-tests folder
-        tmpdir = tempfile.mkdtemp(prefix='citellus-tmp')
-
-        # Setup test for 'fail'
-        subprocess.call([uttest, uttest, testtype, tmpdir])
-
-        # Run test against it
-        res = citellus.docitellus(path=tmpdir, plugins=citplugs)
-
-        # Get Return code
-        rc = res[0]['result']['rc']
-
-        # Remove tmp folder
-        shutil.rmtree(tmpdir)
-
-        # Check if it passed
-        expected = rcs[testtype]
-        assert rc == expected
-
-    def test_bugzilla_httpd_bug_1406417_skip(self):
+    def test_skip(self):
         # testtype will be 'pass', 'fail', 'skipped'
         testtype = 'skipped'
-
-        # We're iterating against the different UT tests defined in UT-tests folder
-        tmpdir = tempfile.mkdtemp(prefix='citellus-tmp')
-
-        # Setup test for 'skipped'
-        subprocess.call([uttest, uttest, testtype, tmpdir])
-
-        # Run test against it
-        res = citellus.docitellus(path=tmpdir, plugins=citplugs)
-
-        # Get Return code
-        rc = res[0]['result']['rc']
-
-        # Remove tmp folder
-        shutil.rmtree(tmpdir)
-
-        # Check if it passed
-        expected = rcs[testtype]
-        assert rc == expected
+        assert runtest(testtype=testtype) == rcs[testtype]
 ~~~
+
+# Briefing
+For a new plugin and test you'll then require:
+- `citellus/plugins/path-to-your-plugin/$NAME.sh`
+- `tests/plugins-unit-tests/setup/bugzilla/$NAME.sh`
+- `tests/plugins-unit-tests/test_$NAME.py`
+
+You'll still have to code your plugin and the setup, and for the test, copy one of the provided test_.py like `test_pacemaker_stonith_enabled.py`
+and edit the 'NAME' variable inside the python file to match your plugin.
+
+`tox` should now pick it up and report status.
 
 Let us know if you face any issue while creating them.

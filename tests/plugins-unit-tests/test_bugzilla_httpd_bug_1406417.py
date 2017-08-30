@@ -18,10 +18,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# TODO(Update name of script to test)
-# cat test_template.py|sed "s/NAME_OF_TEST/stonith_enabled/g" > test_NAME_OF_TEST.py
-#
-
 import os
 import subprocess
 from unittest import TestCase
@@ -30,7 +26,9 @@ import shutil
 
 from citellus import citellus
 
+# To create your own test, update NAME with plugin name and copy this file to test_$NAME.py
 NAME = 'httpd_bug_1406417'
+
 testplugins = os.path.join(citellus.citellusdir, 'testplugins')
 plugins = os.path.join(citellus.citellusdir, 'plugins')
 folder = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'setup')
@@ -44,72 +42,40 @@ rcs = {"pass": citellus.RC_OKAY,
        "skipped": citellus.RC_SKIPPED}
 
 
+def runtest(testtype='False'):
+    # testtype will be 'pass', 'fail', 'skipped'
+
+    # We're iterating against the different UT tests defined in UT-tests folder
+    tmpdir = tempfile.mkdtemp(prefix='citellus-tmp')
+
+    # Setup test for 'testtype'
+    subprocess.call([uttest, uttest, testtype, tmpdir])
+
+    # Run test against it
+    res = citellus.docitellus(path=tmpdir, plugins=citplugs)
+
+    # Get Return code
+    rc = res[0]['result']['rc']
+
+    # Remove tmp folder
+    shutil.rmtree(tmpdir)
+
+    # Check if it passed
+    return rc
+
+
 class CitellusTest(TestCase):
-    def test_bugzilla_httpd_bug_1406417_pass(self):
+    def test_pass(self):
         # testtype will be 'pass', 'fail', 'skipped'
         testtype = 'pass'
+        assert runtest(testtype=testtype) == rcs[testtype]
 
-        # We're iterating against the different UT tests defined in UT-tests folder
-        tmpdir = tempfile.mkdtemp(prefix='citellus-tmp')
-
-        # Setup test for 'pass'
-        subprocess.call([uttest, uttest, testtype, tmpdir])
-
-        # Run test against it
-        res = citellus.docitellus(path=tmpdir, plugins=citplugs)
-
-        # Get Return code
-        rc = res[0]['result']['rc']
-
-        # Remove tmp folder
-        shutil.rmtree(tmpdir)
-
-        # Check if it passed
-        expected = rcs[testtype]
-        assert rc == expected
-
-    def test_bugzilla_httpd_bug_1406417_fail(self):
+    def test_fail(self):
         # testtype will be 'pass', 'fail', 'skipped'
         testtype = 'fail'
+        assert runtest(testtype=testtype) == rcs[testtype]
 
-        # We're iterating against the different UT tests defined in UT-tests folder
-        tmpdir = tempfile.mkdtemp(prefix='citellus-tmp')
-
-        # Setup test for 'fail'
-        subprocess.call([uttest, uttest, testtype, tmpdir])
-
-        # Run test against it
-        res = citellus.docitellus(path=tmpdir, plugins=citplugs)
-
-        # Get Return code
-        rc = res[0]['result']['rc']
-
-        # Remove tmp folder
-        shutil.rmtree(tmpdir)
-
-        # Check if it passed
-        expected = rcs[testtype]
-        assert rc == expected
-
-    def test_bugzilla_httpd_bug_1406417_skip(self):
+    def test_skip(self):
         # testtype will be 'pass', 'fail', 'skipped'
         testtype = 'skipped'
-
-        # We're iterating against the different UT tests defined in UT-tests folder
-        tmpdir = tempfile.mkdtemp(prefix='citellus-tmp')
-
-        # Setup test for 'skipped'
-        subprocess.call([uttest, uttest, testtype, tmpdir])
-
-        # Run test against it
-        res = citellus.docitellus(path=tmpdir, plugins=citplugs)
-
-        # Get Return code
-        rc = res[0]['result']['rc']
-
-        # Remove tmp folder
-        shutil.rmtree(tmpdir)
-
-        # Check if it passed
-        expected = rcs[testtype]
-        assert rc == expected
+        assert runtest(testtype=testtype) == rcs[testtype]
