@@ -27,6 +27,16 @@ like this:
 
         tox # this will check the changes for some errors
 
+    1. NOTE: tox will run python 2.7, pep8 and python 3.5 tests, if your environment lacks for example python 3.5, do execute tox -l to see the available tests and skip that one, for example:
+
+        ~~~
+        tox -e pep8
+        tox -e py27
+        # We're skipping tox -e py35 which is also invoked by default when tox is executed without arguments.
+        ~~~
+
+    2. In this way, errors that might be relevant to the test environment can be skipped. For example this one reported at issue tracker as [104](https://github.com/zerodayz/citellus/issues/104))
+
 5. Update your local repository:
 
         git add $modified_files
