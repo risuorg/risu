@@ -73,3 +73,5 @@ You can see pending and already merged actual changes at: <https://review.gerrit
 Please refer to the
 [templates](https://github.com/zerodayz/citellus/tree/master/doc/templates)
 folder for examples.
+
+If you want to contribute also Unittests for your plugins, check [UT_for_PLUGINS.md](UT_for_PLUGINS.md)
