@@ -38,10 +38,11 @@ if [[ $CITELLUS_LIVE = 0 ]]; then
     echo "file /sos_commands/chrony/chronyc_tracking not found." >&2
     exit 2
   else
-    if grep -q "Not synchronised" "${CITELLUS_ROOT}/sos_commands/chrony/chronyc_tracking"; then
+    if grep -q "Not synchronised\|Cannot talk to daemon" "${CITELLUS_ROOT}/sos_commands/chrony/chronyc_tracking"; then
       echo "clock is not synchronized" >&2
       exit 1
     fi
+
     offset=$(awk '/RMS offset/ {print $4}' "${CITELLUS_ROOT}/sos_commands/chrony/chronyc_tracking")
     echo "clock offset is $offset" >&2
     ((
@@ -59,7 +60,6 @@ else
       echo "this check requires /usr/bin/bc" >&2
       exit 2
   fi
-
 
   if ! out=$(chronyc tracking); then
       echo "clock is not synchronized" >&2
