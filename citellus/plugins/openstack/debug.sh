@@ -24,11 +24,13 @@ elif [ "x$CITELLUS_LIVE" = "x0" ]; then
   for i in $(sed -n -r -e 's/^openstack-([a-z]*)-.*$/\1/p' ${CITELLUS_ROOT}/installed-rpms \
   | sort | uniq); do ls ${CITELLUS_ROOT}/etc/$i/*.conf 2>/dev/null | grep '/etc/[^/]*/[^/]*\.conf'; \
   done)
+  [ -e "${CITELLUS_ROOT}/etc/openstack-dashboard/local_settings" ] \
+  && config_files+=" ${CITELLUS_ROOT}/etc/openstack-dashboard/local_settings"
 fi
 
 for config_file in $config_files; do
   [ -f "$config_file" ] || continue
-  if grep -q '^debug[ \t]*=[ \t]*true' $config_file >&2; then
+  if grep -iq '^debug[ \t]*=[ \t]*true' $config_file >&2; then
     # to remove the ${CITELLUS_ROOT} from the stderr.
     config_file=${config_file#$CITELLUS_ROOT}
     echo "enabled in $config_file" >&2
