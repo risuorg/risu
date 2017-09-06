@@ -49,6 +49,9 @@ if [ "x$CITELLUS_LIVE" = "x0" ];  then
       else
         check_settings "${CITELLUS_ROOT}/sos_commands/ceph/ceph_osd_dump"
       fi
+    else
+      echo "no ceph integrated" >&2
+      exit 2
     fi
   fi
 elif [ "x$CITELLUS_LIVE" = "x1" ]; then
@@ -56,5 +59,8 @@ elif [ "x$CITELLUS_LIVE" = "x1" ]; then
     mktempfile
     ceph osd dump > $tmpfile
     check_settings $tmpfile
+  else
+    echo "no ceph integrated" >&2
+    exit 2
   fi
 fi
