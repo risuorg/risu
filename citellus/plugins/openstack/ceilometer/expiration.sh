@@ -89,13 +89,12 @@ if [ "x$CITELLUS_LIVE" = "x0" ];  then
     checksettings
     exit $RC
   else
-    echo "Missing required file /installed-rpms" >&2
+    echo "missing required file /installed-rpms" >&2
     exit 2
   fi
 elif [ "x$CITELLUS_LIVE" = "x1" ];  then
   # Check which version we are using
   VERSION=$(rpm -qa | grep "openstack-nova-common")
-  discover_version
   RELEASE=$(discover_version)
   if ps -elf | grep -q [n]ova-compute; then
     echo "works only on controller node" >&2
