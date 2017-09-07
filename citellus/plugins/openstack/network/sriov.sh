@@ -60,7 +60,7 @@ if [ "x$CITELLUS_LIVE" = "x0" ]; then
     fi
     # Looks for the pci_pass_tru in Nova
     if [ -e "${CITELLUS_ROOT}/etc/nova/nova.conf" ]; then
-      if ! grep -q "pci_passthrough_whitelist = " "${CITELLUS_ROOT}/etc/nova/nova.conf"; then
+      if ! egrep -q "^pci_passthrough_whitelist" "${CITELLUS_ROOT}/etc/nova/nova.conf"; then
         echo "missing pci_passthrough_whitelist in /etc/nova/nova.conf" >&2
       fi
     else
