@@ -53,20 +53,32 @@ then
             echo "$string missing on file" >&2
             RC=1
         else
-            if [ $(grep -e ^${string} $FILE|cut -d "=" -f2) -le 0 ];
+            if [ $(grep -c -e ^${string} $FILE) -ne "1" ];
             then
+                echo "$string is listed more than once on file" >&2
                 RC=1
-                grep -e ^${string} $FILE >&2
+            else
+                if [ $(grep -e ^${string} $FILE|cut -d "=" -f2) -le 0 ];
+                then
+                    RC=1
+                    grep -e ^${string} $FILE >&2
+                fi
             fi
         fi
     done
 else
     for string in time_to_live;
     do
-        if [ $(grep -e ^${string} $FILE|cut -d "=" -f2) -le 0 ];
+        if [ $(grep -c -e ^${string} $FILE) -ne "1" ];
         then
+            echo "$string is listed more than once on file" >&2
             RC=1
-            grep -e ^${string} $FILE >&2
+        else
+            if [ $(grep -e ^${string} $FILE|cut -d "=" -f2) -le 0 ];
+            then
+                RC=1
+                grep -e ^${string} $FILE >&2
+            fi
         fi
     done
 fi
