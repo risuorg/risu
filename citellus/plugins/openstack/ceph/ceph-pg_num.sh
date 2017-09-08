@@ -29,8 +29,8 @@ check_settings() {
   PGS=$(sed -n -r -e 's/^pool.*pg_num\s([0-9]+).*$/\1/p' $1 | awk '{sum+=$1} END {print sum}')
   OSDS=$(sed -n -r -e 's/.*osdmap.*\s([0-9]+)\sosds.*$/\1/p' $2)
   for pool in $(sed -n -r -e 's/^pool.*\x27(.*)\x27.*$/\1/p' $1); do
-    PG_NUM=$(sed -n -r -e "s/^pool.*$pool.*pg_num[ \t]([0-9]+).*$/\1/p" $1)
-    SIZE=$(sed -n -r -e "s/^pool.*$pool.*\ssize[ \t]([0-9]+).*$/\1/p" $1)
+    PG_NUM=$(sed -n -r -e "s/^pool.*'$pool'.*pg_num[ \t]([0-9]+).*$/\1/p" $1)
+    SIZE=$(sed -n -r -e "s/^pool.*'$pool'.*\ssize[ \t]([0-9]+).*$/\1/p" $1)
     _PG_NUM="$(( PG_NUM * SIZE ))"
     PG_TOTAL+=$_PG_NUM
   done

@@ -25,8 +25,8 @@ mktempfile() {
 
 check_settings() {
   for pool in $(sed -n -r -e 's/^pool.*\x27(.*)\x27.*$/\1/p' $1); do
-    MIN_SIZE=$(sed -n -r -e "s/^pool.*$pool.*min_size[ \t]([0-9]).*$/\1/p" $1)
-    SIZE=$(sed -n -r -e "s/^pool.*$pool.*\ssize[ \t]([0-9]).*$/\1/p" $1)
+    MIN_SIZE=$(sed -n -r -e "s/^pool.*'$pool'.*min_size[ \t]([0-9]).*$/\1/p" $1)
+    SIZE=$(sed -n -r -e "s/^pool.*'$pool'.*\ssize[ \t]([0-9]).*$/\1/p" $1)
     _MIN_SIZE="$(( (SIZE/2) + 1 ))"
 
     if [ "${MIN_SIZE}" -lt  "${_MIN_SIZE}" ]; then
