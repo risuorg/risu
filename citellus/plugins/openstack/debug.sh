@@ -40,4 +40,4 @@ for config_file in $config_files; do
     echo "disabled in $config_file" >&2
   fi
 done
-[[ "x$flag" = "x" ]] || exit 1
+[[ "x$flag" = "x" ]] || exit $RC_FAILED

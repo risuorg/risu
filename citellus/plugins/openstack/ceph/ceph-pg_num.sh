@@ -30,14 +30,14 @@ check_settings() {
   OSDS=$(sed -n -r -e 's/.*osdmap.*\s([0-9]+)\sosds.*$/\1/p' $2)
   if [ -z "$PGS" ] || [ -z "$OSDS" ]; then
     echo "error could not parse pg_num or osds." >&2
-    exit 1
+    exit $RC_FAILED
   fi
   for pool in $(sed -n -r -e 's/^pool.*\x27(.*)\x27.*$/\1/p' $1); do
     PG_NUM=$(sed -n -r -e "s/^pool.*'$pool'.*pg_num[ \t]([0-9]+).*$/\1/p" $1)
     SIZE=$(sed -n -r -e "s/^pool.*'$pool'.*\ssize[ \t]([0-9]+).*$/\1/p" $1)
     if [ -z "$PG_NUM" ] || [ -z "$SIZE" ]; then
       echo "error could not parse pg_num or size." >&2
-      exit 1
+      exit $RC_FAILED
     fi
     _PG_NUM="$(( PG_NUM * SIZE ))"
     PG_TOTAL+=$_PG_NUM
@@ -49,7 +49,7 @@ check_settings() {
       echo "pg_num count $_PG_NUM is not optimal" >&2
       flag=1
   fi
-  [[ "x$flag" = "x" ]] || exit 1
+  [[ "x$flag" = "x" ]] || exit $RC_FAILED
 }
 
 declare -i PG_TOTAL=0
@@ -57,23 +57,23 @@ declare -i PG_TOTAL=0
 if [ "x$CITELLUS_LIVE" = "x0" ];  then
   if [ ! -f "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all" ]; then
     echo "file /sos_commands/systemd/systemctl_list-units_--all not found." >&2
-    exit 2
+    exit $RC_SKIPPED
   else
     if grep -q "ceph-mon.*active" "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all"; then
       if [ ! -f "${CITELLUS_ROOT}/sos_commands/ceph/ceph_osd_dump" ]; then
         echo "file /sos_commands/ceph/ceph_osd_dump not found." >&2
-        exit 2
+        exit $RC_SKIPPED
       fi
       if [ ! -f "${CITELLUS_ROOT}/sos_commands/ceph/ceph_status" ]; then
         echo "file /sos_commands/ceph/ceph_status not found." >&2
-        exit 2
+        exit $RC_SKIPPED
       else
         check_settings "${CITELLUS_ROOT}/sos_commands/ceph/ceph_osd_dump" \
         "${CITELLUS_ROOT}/sos_commands/ceph/ceph_status"
       fi
     else
       echo "no ceph integrated" >&2
-      exit 2
+      exit $RC_SKIPPED
     fi
   fi
 elif [ "x$CITELLUS_LIVE" = "x1" ]; then
@@ -84,6 +84,6 @@ elif [ "x$CITELLUS_LIVE" = "x1" ]; then
     check_settings $tmpfile_osd_dump $tmpfile_status
   else
     echo "no ceph integrated" >&2
-    exit 2
+    exit $RC_SKIPPED
   fi
 fi

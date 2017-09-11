@@ -19,8 +19,8 @@
 
 if [ ! -f "${CITELLUS_ROOT}/var/log/keystone/keystone.log" ]; then
   echo "file /var/log/keystone/keystone.log not found." >&2
-  exit 2
+  exit $RC_SKIPPED
 fi
 
 LASTRUN=$(awk '/Total expired tokens removed/ { print $1 " " $2 }' "${CITELLUS_ROOT}/var/log/keystone/keystone.log" | tail -1)
-[[ "x${LASTRUN}" = "x" ]] && exit 1 || echo "${LASTRUN}" >&2 && exit 0
+[[ "x${LASTRUN}" = "x" ]] && exit $RC_FAILED || echo "${LASTRUN}" >&2 && exit $RC_OKAY

@@ -20,37 +20,37 @@
 if [ "x$CITELLUS_LIVE" = "x0" ]; then
   if [ ! -f "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all" ]; then
     echo "file /sos_commands/systemd/systemctl_list-units_--all not found." >&2
-    exit 2
+    exit $RC_SKIPPED
   else
     if grep -q "ceph-mon.*active" "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all"; then
       if [ -f "${CITELLUS_ROOT}/sos_commands/ceph/ceph_health_detail" ];
       then
         if grep -q "HEALTH_OK" "${CITELLUS_ROOT}/sos_commands/ceph/ceph_health_detail"
         then
-          exit 0
+          exit $RC_OKAY
         else
           cat "${CITELLUS_ROOT}/sos_commands/ceph/ceph_health_detail" >&2
-          exit 1
+          exit $RC_FAILED
         fi
       else
         echo "file sos_commands/ceph/ceph_health_detail not found." >&2
-        exit 2
+        exit $RC_SKIPPED
       fi
     else
         echo "no ceph integrated" >&2
-        exit 2
+        exit $RC_SKIPPED
     fi
   fi
 elif [ "x$CITELLUS_LIVE" = "x1" ]; then
   if hiera -c /etc/puppet/hiera.yaml enabled_services | egrep -sq ceph_mon; then
     if ceph -s | grep -q HEALTH_OK; then
-      exit 0
+      exit $RC_OKAY
     else
       ceph -s | grep health >&2
-      exit 1
+      exit $RC_FAILED
     fi
   else
     echo "no ceph integrated" >&2
-    exit 2
+    exit $RC_SKIPPED
   fi
 fi
