@@ -8,9 +8,9 @@ Citellus tests should conform to the following standards:
 - The test should return one of the following error codes to indicate
   the test result:
 
-    - 0 -- success
-    - 1 -- failure
-    - 2 -- skipped
+    - $RC_OKAY -- success
+    - $RC_FAILED -- failure
+    - $RC_SKIPPED -- skipped
 
 A test may make use of the following standard environment variables:
 

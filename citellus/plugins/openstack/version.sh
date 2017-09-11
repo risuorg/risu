@@ -30,7 +30,9 @@ case ${VERSION} in
 esac
 if [ ! -z $PACKSTACK ]; then
   echo "packstack detected"
-  exit 1
+  exit $RC_FAILED
+else
+  exit $RC_OKAY
 fi
 }
 

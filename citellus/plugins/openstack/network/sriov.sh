@@ -68,11 +68,11 @@ if [ "x$CITELLUS_LIVE" = "x0" ]; then
     fi
   else
     echo "openstack-neutron-sriov-nic-agent package missing" >&2
-    exit 2
+    exit $RC_SKIPPED
   fi
 else
   echo "works only against fs snapshot now" >&2
-  exit 2
+  exit $RC_SKIPPED
 fi
 
-[[ "x$flag" = "x" ]] || exit 1
+[[ "x$flag" = "x" ]] && exit $RC_OKAY || exit $RC_FAILED

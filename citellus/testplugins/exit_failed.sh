@@ -2,4 +2,4 @@
 
 echo $0 something on stdout
 echo $0 something on stderr >&2
-exit 1
+exit $RC_FAILED
