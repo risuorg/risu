@@ -15,15 +15,15 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-[[ "x$CITELLUS_LIVE" = "x1" ]] || exit 2
+[[ "x$CITELLUS_LIVE" = "x1" ]] || exit $RC_SKIPPED
 
 if true
 then
   if true ; then
-    exit 0
+    exit $RC_OKAY
   else
-    exit 1
+    exit $RC_FAILED
   fi
 else
-  exit 2
+  exit $RC_SKIPPED
 fi

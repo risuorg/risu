@@ -26,21 +26,21 @@ is_active() {
 if [[ $CITELLUS_LIVE = 0 ]]; then
   if [ ! -f "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all" ]; then
     echo "file /sos_commands/systemd/systemctl_list-units_--all not found." >&2
-    exit 2
+    exit $RC_SKIPPED
   else
     if ! grep -q "chronyd.*active" "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all"; then
       echo "no chrony service is active" >&2
-      exit 1
+      exit $RC_FAILED
     fi
   fi
 
   if [ ! -f "${CITELLUS_ROOT}/sos_commands/chrony/chronyc_tracking" ]; then
     echo "file /sos_commands/chrony/chronyc_tracking not found." >&2
-    exit 2
+    exit $RC_SKIPPED
   else
     if grep -q "Not synchronised\|Cannot talk to daemon" "${CITELLUS_ROOT}/sos_commands/chrony/chronyc_tracking"; then
       echo "clock is not synchronized" >&2
-      exit 1
+      exit $RC_FAILED
     fi
 
     offset=$(awk '/RMS offset/ {print $4}' "${CITELLUS_ROOT}/sos_commands/chrony/chronyc_tracking")
@@ -53,12 +53,12 @@ if [[ $CITELLUS_LIVE = 0 ]]; then
 else
   if ! is_active chronyd; then
       echo "chronyd is not active"
-      exit 2
+      exit $RC_SKIPPED
   fi
 
   if ! [[ -x /usr/bin/bc ]]; then
       echo "this check requires /usr/bin/bc" >&2
-      exit 2
+      exit $RC_SKIPPED
   fi
 
   if ! out=$(chronyc tracking); then
