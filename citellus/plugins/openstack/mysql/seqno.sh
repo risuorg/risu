@@ -21,8 +21,8 @@ if [ ! "x$CITELLUS_LIVE" = "x" ]; then
   if [ -f $CITELLUS_ROOT/var/log/mysqld.log ] ;
   then
     grep "WSREP: Found saved state"  ${CITELLUS_ROOT}/var/log/mysqld.log |tail -1|awk '{print $8}' >&2
-    exit 0
+    exit $RC_OKAY
   else
-    exit 2
+    exit $RC_SKIPPED
   fi
 fi

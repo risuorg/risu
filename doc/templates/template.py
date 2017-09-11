@@ -28,6 +28,7 @@ from __future__ import print_function
 
 import os
 import sys
+import citellus
 
 
 def errorprint(*args, **kwargs):
@@ -78,35 +79,35 @@ def main():
             # Example: File does exist, check file contents or other checks
             if True:
                 # Plugin tests passed
-                exitcitellus(code=0)
+                exitcitellus(code=citellus.RC_OKAY)
 
             else:
                 # Error with plugin tests
 
                 # Provide messages on STDERR
-                exitcitellus(code=1, msg="There was an error because of 'xxx'")
+                exitcitellus(code=citellus.RC_FAILED, msg="There was an error because of 'xxx'")
         else:
             # Plugin script skipped per conditions
 
             # Provide reason for skipping:
-            exitcitellus(code=2, msg="Required file 'xxx' not found")
+            exitcitellus(code=citellus.RC_SKIPPED, msg="Required file 'xxx' not found")
 
     elif not runninglive():
         # Running on snapshot/sosreport environment
         if True:
             if True:
                 # Plugin tests passed
-                exitcitellus(code=0)
+                exitcitellus(code=citellus.RC_OKAY)
             else:
                 # Error with plugin tests
 
                 # Provide messages on STDERR
-                exitcitellus(code=1, msg="There was an error because of 'xxx'")
+                exitcitellus(code=citellus.RC_FAILED, msg="There was an error because of 'xxx'")
         else:
             # Plugin script skipped per conditions
 
             # Provide reason for skipping:
-            exitcitellus(code=2, msg="Required file 'xxx' not found")
+            exitcitellus(code=citellus.RC_SKIPPED, msg="Required file 'xxx' not found")
 
 
 if __name__ == "__main__":

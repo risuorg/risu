@@ -22,7 +22,7 @@ if [ ! -f $FILE ];
 then
     # Skip test if file is missing
     echo "${FILE#$CITELLUS_ROOT} does not exist" >&2
-    exit 2
+    exit $RC_SKIPPED
 fi
 
 RC=0
@@ -57,20 +57,20 @@ if [ "x$CITELLUS_LIVE" = "x0" ];  then
     if grep -q nova-compute "${CITELLUS_ROOT}/ps";
     then
       echo "works only on controller node" >&2
-      exit 2
+      exit $RC_SKIPPED
     fi
     checksettings
     exit $RC
   else
     echo "Missing required file /installed-rpms" >&2
-    exit 2
+    exit $RC_SKIPPED
   fi
 elif [ "x$CITELLUS_LIVE" = "x1" ];  then
   # Check which version we are using
   if ps -elf | grep -q [n]ova-compute;
   then
     echo "works only on controller node" >&2
-    exit 2
+    exit $RC_SKIPPED
   fi
   checksettings
   exit $RC
