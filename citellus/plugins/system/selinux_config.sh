@@ -22,7 +22,7 @@ if [[ $CITELLUS_LIVE = 0 ]];  then
 
     if [ ! -f "$path" ]; then
         echo "file $path not found." >&2
-        exit 2
+        exit $RC_SKIPPED
     fi
 
     mode=$(awk '/^Mode from config file:/ {print $5}' "$path")
@@ -32,10 +32,12 @@ fi
 
 if ! [[ "$mode" ]]; then
     echo "failed to determined persistent selinux mode" >&2
-    exit 1
+    exit $RC_FAILED
 fi
 
 if [[ $mode != enforcing ]]; then
     echo "persistent selinux mode is not enforcing (found $mode)" >&2
-    exit 1
+    exit $RC_FAILED
+else
+    exit $RC_OKAY
 fi

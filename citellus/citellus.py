@@ -47,9 +47,10 @@ try:
 except AttributeError:
     _ = trad.gettext
 
-RC_OKAY = 0
-RC_FAILED = 1
-RC_SKIPPED = 2
+# Update in functions.sh if changed
+RC_OKAY = 10
+RC_FAILED = 20
+RC_SKIPPED = 30
 
 
 class bcolors:
@@ -177,6 +178,9 @@ def docitellus(live=False, path=False, plugins=False):
     os.environ['CITELLUS_ROOT'] = "%s" % path
     os.environ['CITELLUS_LIVE'] = "%s" % CITELLUS_LIVE
     os.environ['LANG'] = "%s" % "C"
+    os.environ['RC_OKAY'] = "%s" % RC_OKAY
+    os.environ['RC_FAILED'] = "%s" % RC_FAILED
+    os.environ['RC_SKIPPED'] = "%s" % RC_SKIPPED
 
     # Set pool for same processes as CPU cores
     p = Pool(cpu_count())
