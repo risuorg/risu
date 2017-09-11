@@ -19,11 +19,11 @@
 
 if [ ! -f "${CITELLUS_ROOT}/var/log/httpd/error_log" ]; then
   echo "file /var/log/httpd/error_log not found." >&2
-  exit 2
+  exit $RC_SKIPPED
 fi
 if grep -q "MaxRequestWorkers" "${CITELLUS_ROOT}/var/log/httpd/error_log"; then
   echo "https://bugzilla.redhat.com/show_bug.cgi?id=1406417" >&2
-  exit 1
+  exit $RC_FAILED
 else
-  exit 0
+  exit $RC_OKAY
 fi

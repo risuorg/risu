@@ -69,7 +69,7 @@ while :; do
 		;;
         -?*)
                 echo "unknown option: ${1}" >&2
-                exit 1
+                exit $RC_FAILED
                 ;;
 	*)	break
 		;;
@@ -84,7 +84,7 @@ if [ "x${CITELLUS_LIVE}" = "x0" ]; then
   CITELLUS_ROOT=$(cd $(dirname "$1") && pwd -P)/$(basename "$1")
   if [ ! -d "${CITELLUS_ROOT}" ]; then
     show_help
-    exit 1
+    exit $RC_FAILED
   fi 
   shift
 fi
@@ -100,7 +100,7 @@ for spec in "${specs[@]}"; do
     discover_tests "$spec" >> $tmpdir/tests-unsorted
 done
 
-[ -e "$tmpdir/tests-unsorted" ] && sort -u $tmpdir/tests-unsorted > $tmpdir/tests || exit 1
+[ -e "$tmpdir/tests-unsorted" ] && sort -u $tmpdir/tests-unsorted > $tmpdir/tests || exit $RC_FAILED
 
 
 show_logo

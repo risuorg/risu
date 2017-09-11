@@ -19,10 +19,12 @@
 
 if [ ! -f "${CITELLUS_ROOT}/proc/cpuinfo" ]; then
   echo "file /proc/cpuinfo not found." >&2
-  exit 2
+  exit $RC_SKIPPED
 fi
 
 if ! grep -q "svm\|vmx" "${CITELLUS_ROOT}/proc/cpuinfo"; then
 	echo "no hardware virt support found in /proc/cpuinfo" >&2
-	exit 1
+	exit $RC_FAILED
+else
+    exit $RC_OKAY
 fi

@@ -17,7 +17,7 @@
 
 if [[ $CITELLUS_LIVE = 0 ]]; then
   echo "works on live-system only" >&2
-  exit 2
+  exit $RC_SKIPPED
 fi
 
 yum check-update 2> /dev/null
@@ -25,8 +25,10 @@ update_check=$?
 
 if [[ $update_check -eq 100 ]]; then
     echo "there are available uninstalled upgrades" >&2
-    exit 1
+    exit $RC_FAILED
 elif [[ $update_check -ne 0 ]]; then
     echo "failed to check available updates" >&2
-    exit 1
+    exit $RC_FAILED
+else
+    exit $RC_OKAY
 fi
