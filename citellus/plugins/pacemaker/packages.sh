@@ -26,17 +26,17 @@ if [ "x$CITELLUS_LIVE" = "x1" ];  then
       if [[ "${package}" -lt "15" ]]
       then
 	echo "outdated pacemaker packages <1.1.15" >&2
-	exit 1
+	exit $RC_FAILED
       fi
     done
   else
     echo "pacemaker is not running on this node" >&2
-    exit 2
+    exit $RC_SKIPPED
   fi
 elif [ "x$CITELLUS_LIVE" = "x0" ];  then
   if [ ! -f "${CITELLUS_ROOT}/installed-rpms" ]; then
     echo "file /installed-rpms not found." >&2
-    exit 2
+    exit $RC_SKIPPED
   else
     PCS_VERSION=$(sed -n -r -e 's/^pacemaker.*-1.1.([0-9]+)-.*$/\1/p' "${CITELLUS_ROOT}/installed-rpms")
     if grep -q "pacemaker.*active" "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all"; then
@@ -45,12 +45,12 @@ elif [ "x$CITELLUS_LIVE" = "x0" ];  then
 	if [[ "${package}" -lt "15" ]]
 	then
           echo "outdated pacemaker packages <1.1.15" >&2
-          exit 1
+          exit $RC_FAILED
 	fi
       done
     else
       echo "pacemaker is not running on this node" >&2
-      exit 2
+      exit $RC_SKIPPED
     fi
   fi
 fi

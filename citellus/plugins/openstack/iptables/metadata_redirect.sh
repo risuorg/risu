@@ -22,13 +22,13 @@ if [ "x$CITELLUS_LIVE" = "x1" ];  then
   "python-tripleoclient"
   then
     if iptables -t nat -vnL | grep -q "REDIRECT.*169.254.169.254" ; then
-      exit 0
+      exit $RC_OKAY
     else
-      exit 1
+      exit $RC_FAILED
     fi
   else
     echo "works on director node only" >&2
-    exit 2
+    exit $RC_SKIPPED
   fi
 elif [ "x$CITELLUS_LIVE" = "x0" ];  then
   if grep -q "tripleo-heat-templates" "${CITELLUS_ROOT}/installed-rpms" && grep -q \
@@ -36,15 +36,15 @@ elif [ "x$CITELLUS_LIVE" = "x0" ];  then
   then
     if [ ! -f "${CITELLUS_ROOT}/sos_commands/networking/iptables_-t_nat_-nvL" ]; then
       echo "file /sos_commands/networking/iptables_-t_nat_-nvL not found." >&2
-      exit 2
+      exit $RC_SKIPPED
     fi
     if grep -q "REDIRECT.*169.254.169.254" "${CITELLUS_ROOT}/sos_commands/networking/iptables_-t_nat_-nvL" ; then
-      exit 0
+      exit $RC_OKAY
     else
-      exit 1
+      exit $RC_FAILED
     fi
   else
     echo "works on director node only" >&2
-    exit 2
+    exit $RC_SKIPPED
   fi
 fi

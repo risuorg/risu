@@ -23,19 +23,19 @@ if [ ! -f $FILE ];
 then
     # Skip test if file is missing
     echo "${FILE} does not exist" >&2
-    exit 2
+    exit $RC_SKIPPED
 fi
 }
 
 
 checksettings
 
-export RC=0
+export RC=$RC_OKAY
 COUNT=$(grep "^scheduler_default_filters" "${FILE}"|grep ComputeCapabilitiesFilter|grep AggregateInstanceExtraSpecsFilter|wc -l)
 if [ ${COUNT} -ne 0 ];
 then
     echo "Incompatible ComputeCapabilitiesFilter and AggregateInstanceExtraSpecsFilter in scheduler_default_filters at nova.conf" >&2
-    export RC=1
+    export RC=$RC_FAILED
 fi
 
 exit $RC

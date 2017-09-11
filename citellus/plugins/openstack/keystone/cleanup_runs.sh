@@ -19,16 +19,16 @@
 
 if [ ! -f "${CITELLUS_ROOT}/var/log/keystone/keystone.log" ]; then
   echo "file /var/log/keystone/keystone.log not found." >&2
-  exit 2
+  exit $RC_SKIPPED
 fi
 
 RUNS=$(grep 'Total expired tokens removed' "${CITELLUS_ROOT}/var/log/keystone/keystone.log" | wc -l)
 
-[[ "x${RUNS}" = "x" ]] && exit 1
+[[ "x${RUNS}" = "x" ]] && exit $RC_FAILED
 
 if [[ "${RUNS}" -eq 0 ]]; then
-    exit 1
+    exit $RC_FAILED
 elif [[ "${RUNS}" -ge 1 ]]; then
     echo "${RUNS}" >&2
-    exit 0
+    exit $RC_OKAY
 fi
