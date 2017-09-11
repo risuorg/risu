@@ -29,7 +29,7 @@ check_settings() {
     SIZE=$(sed -n -r -e "s/^pool.*'$pool'.*\ssize[ \t]([0-9]).*$/\1/p" $1)
     if [ -z "$SIZE" ] || [ -z "$MIN_SIZE" ]; then
       echo "error could not parse size or min_size." >&2
-      exit 1
+      exit $RC_FAILED
     fi
     _MIN_SIZE="$(( (SIZE/2) + 1 ))"
 
@@ -38,24 +38,24 @@ check_settings() {
       flag=1
     fi
   done
-  [[ "x$flag" = "x" ]] || exit 1
+  [[ "x$flag" = "x" ]] && exit $RC_OKAY || exit $RC_FAILED
 }
 
 if [ "x$CITELLUS_LIVE" = "x0" ];  then
   if [ ! -f "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all" ]; then
     echo "file /sos_commands/systemd/systemctl_list-units_--all not found." >&2
-    exit 2
+    exit $RC_SKIPPED
   else
     if grep -q "ceph-mon.*active" "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all"; then
       if [ ! -f "${CITELLUS_ROOT}/sos_commands/ceph/ceph_osd_dump" ]; then
         echo "file /sos_commands/ceph/ceph_osd_dump not found." >&2
-        exit 2
+        exit $RC_SKIPPED
       else
         check_settings "${CITELLUS_ROOT}/sos_commands/ceph/ceph_osd_dump"
       fi
     else
       echo "no ceph integrated" >&2
-      exit 2
+      exit $RC_SKIPPED
     fi
   fi
 elif [ "x$CITELLUS_LIVE" = "x1" ]; then
@@ -65,6 +65,6 @@ elif [ "x$CITELLUS_LIVE" = "x1" ]; then
     check_settings $tmpfile
   else
     echo "no ceph integrated" >&2
-    exit 2
+    exit $RC_SKIPPED
   fi
 fi

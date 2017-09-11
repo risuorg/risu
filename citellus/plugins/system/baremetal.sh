@@ -20,44 +20,44 @@
 if [ "x$CITELLUS_LIVE" = "x0" ];  then
   if [ ! -f "${CITELLUS_ROOT}/sos_commands/hardware/dmidecode" ]; then
     echo "file /sos_commands/hardware/dmidecode not found." >&2
-    exit 2
+    exit $RC_SKIPPED
   fi
 
   if grep -q "Product Name: VMware" "${CITELLUS_ROOT}/sos_commands/hardware/dmidecode"
   then
     echo "VMware" >&2
-    exit 1
+    exit $RC_FAILED
   elif grep -q "Product Name: VirtualBox" "${CITELLUS_ROOT}/sos_commands/hardware/dmidecode"
   then
     echo "Virtualbox" >&2
-    exit 1
+    exit $RC_FAILED
   elif grep -q "Product Name: KVM" "${CITELLUS_ROOT}/sos_commands/hardware/dmidecode"
   then
     echo "KVM" >&2
-    exit 1
+    exit $RC_FAILED
   elif grep -q "Product Name: Bochs" "${CITELLUS_ROOT}/sos_commands/hardware/dmidecode"
   then
     echo "Bosch" >&2
   else
-    exit 0
+    exit $RC_OKAY
   fi
 elif [ "x$CITELLUS_LIVE" = "x1" ]; then
   if dmidecode | grep -q "Product Name: VMware"
   then
     echo "VMware" >&2
-    exit 1
+    exit $RC_FAILED
   elif dmidecode | grep -q "Product Name: VirtualBox"
   then
     echo "Virtualbox" >&2
-    exit 1
+    exit $RC_FAILED
   elif dmidecode | grep -q "Product Name: KVM"
   then
     echo "KVM" >&2
-    exit 1
+    exit $RC_FAILED
   elif dmidecode | grep -q "Product Name: Bochs"
   then
     echo "Bosch" >&2
   else
-    exit 0
+    exit $RC_OKAY
   fi
 fi

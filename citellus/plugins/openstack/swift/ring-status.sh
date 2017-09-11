@@ -17,7 +17,7 @@
 
 if [ ! "x$CITELLUS_LIVE" = "x1" ]; then
   echo "works on live-system only" >&2
-  exit 2
+  exit $RC_SKIPPED
 fi
 
 # We are checking swift.conf and rings md5sum against multiple hosts
@@ -28,7 +28,7 @@ fi
 
 if swift-recon --md5 | grep -q "[^0] error"; then
   swift-recon --md5 | grep "[^0] error" >&2
-  exit 1
+  exit $RC_FAILED
 else
-  exit 0
+  exit $RC_OKAY
 fi
