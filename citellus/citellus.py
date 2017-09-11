@@ -300,7 +300,7 @@ def main():
         if len(options.plugin_path) > 0:
             # Live not specified, so we will use file snapshot as first arg and remaining cli arguments as plugins
             CITELLUS_ROOT = options.plugin_path.pop(0)
-        else:
+        elif not options.list_plugins:
             LOG.error(_("When not running in Live mode, snapshot path is required"))
             sys.exit(1)
     else:
