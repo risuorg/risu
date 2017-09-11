@@ -58,4 +58,4 @@ class CitellusTest(TestCase):
         for item in results:
             new_dict.append(item['result']['rc'])
 
-        assert sorted(set(new_dict)) == [0, 1, 2]
+        assert sorted(set(new_dict)) == sorted(set([citellus.RC_OKAY, citellus.RC_FAILED, citellus.RC_SKIPPED]))
