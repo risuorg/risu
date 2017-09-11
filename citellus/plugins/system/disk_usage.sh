@@ -22,7 +22,7 @@
 if [[ $CITELLUS_LIVE = 0 ]];  then
   if [[ ! -f ${CITELLUS_ROOT}/df ]]; then
     echo "file /df not found." >&2
-    exit 2
+    exit $RC_SKIPPED
   fi
   DISK_USE_CMD="cat ${CITELLUS_ROOT}/df"
 else
@@ -37,5 +37,5 @@ result=$($DISK_USE_CMD |
 
 if [ -n "$result" ]; then
   echo "${result}" >&2
-  exit 1
+  exit $RC_FAILED
 fi

@@ -19,11 +19,11 @@
 
 if [ ! -f "${CITELLUS_ROOT}/var/log/keystone/keystone.log" ]; then
   echo "file /var/log/keystone/keystone.log not found." >&2
-  exit 2
+  exit $RC_SKIPPED
 fi
 if grep -q "Got error 5 during COMMIT" "${CITELLUS_ROOT}/var/log/keystone/keystone.log"; then
   echo "https://bugs.launchpad.net/keystone/+bug/1649616/" >&2
-  exit 1
+  exit $RC_FAILED
 else
-  exit 0
+  exit $RC_OKAY
 fi

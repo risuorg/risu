@@ -19,7 +19,7 @@
 
 if [ ! -f "${CITELLUS_ROOT}/etc/glance/glance-api.conf" ]; then
   echo "file /etc/glance/glance-api.conf not found." >&2
-  exit 2
+  exit $RC_SKIPPED
 fi
 if grep -q "^image_size_cap" "${CITELLUS_ROOT}/etc/glance/glance-api.conf"; then
   IMAGE_SIZE_DEFAULT="1099511627776"
@@ -28,11 +28,11 @@ if grep -q "^image_size_cap" "${CITELLUS_ROOT}/etc/glance/glance-api.conf"; then
 
   if [ "${IMAGE_SIZE}" -lt  "${IMAGE_SIZE_DEFAULT}" ]; then
     echo "image_size_cap is less than 1TiB" >&2
-    exit 1
+    exit $RC_FAILED
   fi
   echo "image_size_cap is more than 1TiB" >&2
-  exit 0
+  exit $RC_OKAY
 else
   echo "image_size_cap set to 1 TiB" >&2
-  exit 0
+  exit $RC_OKAY
 fi
