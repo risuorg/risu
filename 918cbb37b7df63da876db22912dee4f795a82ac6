@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "e9f7b743_836cc144",
+        "filename": "citellus/plugins/openstack/crontab/keystone_cleanup.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2017-09-11T19:40:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aeafc676_f7591530",
+      "revId": "918cbb37b7df63da876db22912dee4f795a82ac6",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c74a901_e673eedd",
         "filename": "citellus/plugins/openstack/debug.sh",
         "patchSetId": 5
@@ -64,6 +82,24 @@
       "writtenOn": "2017-09-11T18:05:07Z",
       "side": 1,
       "message": "here again we are missing $RC_OKAY only exiting 0 after the echo.",
+      "revId": "918cbb37b7df63da876db22912dee4f795a82ac6",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a69fdc57_76015571",
+        "filename": "citellus/plugins/openstack/hardware/memory.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2017-09-11T19:40:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "969cc69c_6e79e836",
       "revId": "918cbb37b7df63da876db22912dee4f795a82ac6",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": false
