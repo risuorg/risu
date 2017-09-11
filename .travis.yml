@@ -1,14 +1,5 @@
 language: python
 
-matrix:
-    include:
-        - os: linux
-          python: 2.7
-          env: TOXENV=py27,pep8
-        - os: linux
-          python: 3.5
-          env: TOXENV=py35,pep8
-
 dist: trusty
 sudo: required
 
@@ -16,6 +7,7 @@ notifications:
     email: false
 
 before_install:
+    - pyenv global 2.7 3.5
     - pip install tox
     - pip install python-coveralls
 
