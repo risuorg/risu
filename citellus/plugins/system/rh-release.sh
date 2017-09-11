@@ -19,7 +19,7 @@
 
 if [ ! -f "${CITELLUS_ROOT}/etc/redhat-release" ]; then
   echo "file /etc/redhat-release not found." >&2
-  exit 2
+  exit $RC_SKIPPED
 fi
 
 cat "${CITELLUS_ROOT}/etc/redhat-release" >&2

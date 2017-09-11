@@ -44,4 +44,4 @@ for log_file in $log_files; do
   fi
 
 done
-[[ "x$flag" = "x" ]] || exit 1
+[[ "x$flag" = "x" ]] || exit $RC_FAILED

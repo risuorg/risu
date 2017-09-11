@@ -21,11 +21,11 @@ if [ "x$CITELLUS_LIVE" = "x1" ];  then
 
   if ps -elf | grep -q [n]ova-compute; then
     echo "works only on controller node" >&2
-    exit 2
+    exit $RC_SKIPPED
   else
     if rabbitmqctl report | grep -q nodedown; then
       echo "rabbitmq down" >&2
-      exit 1
+      exit $RC_FAILED
     fi
     FILE_DESCRIPTORS=$(rabbitmqctl report | awk -v target="$(hostname)" '$4 ~ target { flag = 1 } \
     flag = 1 && /total_limit/ { print }' | egrep -o '[0-9]+')
@@ -35,26 +35,26 @@ if [ "x$CITELLUS_LIVE" = "x1" ];  then
 
   if [ "${FILE_DESCRIPTORS}" -lt  "65336" ]; then 
     echo "total ${FILE_DESCRIPTORS}" >&2
-    flag=1
+    flag=$RC_FAILED
   fi
 
   AVAILABLE_FILE_DESCRIPTORS=$(( FILE_DESCRIPTORS - USED_FILE_DESCRIPTORS ))
   if [ "${AVAILABLE_FILE_DESCRIPTORS}" -lt "16000" ]; then
     echo "total_used ${USED_FILE_DESCRIPTORS}" >&2
     echo "available ${AVAILABLE_FILE_DESCRIPTORS}" >&2
-    flag=1
+    flag=$RC_FAILED
   fi
 
 elif [ "x$CITELLUS_LIVE" = "x0" ]; then
 
   if grep -q nova-compute "${CITELLUS_ROOT}/ps"; then
     echo "works only on controller node" >&2
-    exit 2
+    exit $RC_SKIPPED
   else
     if [ -e "${CITELLUS_ROOT}/sos_commands/rabbitmq/rabbitmqctl_report" ]; then
       if grep -q nodedown "${CITELLUS_ROOT}/sos_commands/rabbitmq/rabbitmqctl_report"; then
         echo "rabbitmq down" >&2
-        exit 1
+        exit $RC_FAILED
       fi
       FILE_DESCRIPTORS=$(awk -v target="$(cat ${CITELLUS_ROOT}/hostname)" '$4 ~ target { flag = 1 } \
       flag = 1 && /total_limit/ { print ; exit }' \
@@ -64,22 +64,22 @@ elif [ "x$CITELLUS_LIVE" = "x0" ]; then
       "${CITELLUS_ROOT}/sos_commands/rabbitmq/rabbitmqctl_report" | egrep -o '[0-9]+')
     else
       echo "file /sos_commands/rabbitmq/rabbitmqctl_report not found" >&2
-      exit 2
+      exit $RC_SKIPPED
     fi
   fi
 
   if [ "${FILE_DESCRIPTORS}" -lt  "65336" ]; then
     echo "total ${FILE_DESCRIPTORS}" >&2
-    flag=1
+    flag=$RC_FAILED
   fi
 
   AVAILABLE_FILE_DESCRIPTORS=$(( FILE_DESCRIPTORS - USED_FILE_DESCRIPTORS ))
   if [ "${AVAILABLE_FILE_DESCRIPTORS}" -lt "16000" ]; then
     echo "total_used ${USED_FILE_DESCRIPTORS}" >&2
     echo "available ${AVAILABLE_FILE_DESCRIPTORS}" >&2
-    flag=1
+    flag=$RC_FAILED
   fi
 
 fi
 
-[[ "x$flag" = "x" ]] || exit 1
+[[ "x$flag" = "x" ]] || exit $RC_FAILED

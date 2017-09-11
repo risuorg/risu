@@ -12,19 +12,19 @@ testplugins = os.path.join(citellus.citellusdir, 'testplugins')
 class CitellusTest(TestCase):
     def test_runplugin_pass(self):
         res = citellus.runplugin(os.path.join(testplugins, 'exit_passed.sh'))
-        assert res['result']['rc'] == 0
+        assert res['result']['rc'] == citellus.RC_OKAY
         assert res['result']['out'].endswith('something on stdout\n')
         assert res['result']['err'].endswith('something on stderr\n')
 
     def test_runplugin_fail(self):
         res = citellus.runplugin(os.path.join(testplugins, 'exit_failed.sh'))
-        assert res['result']['rc'] == 1
+        assert res['result']['rc'] == citellus.RC_FAILED
         assert res['result']['out'].endswith('something on stdout\n')
         assert res['result']['err'].endswith('something on stderr\n')
 
     def test_runplugin_skip(self):
         res = citellus.runplugin(os.path.join(testplugins, 'exit_skipped.sh'))
-        assert res['result']['rc'] == 2
+        assert res['result']['rc'] == citellus.RC_SKIPPED
         assert res['result']['out'].endswith('something on stdout\n')
         assert res['result']['err'].endswith('something on stderr\n')
 
@@ -52,7 +52,7 @@ class CitellusTest(TestCase):
                                        include=['exit_passed'])
         results = citellus.docitellus(plugins=plugins)
         assert len(results) == 1
-        assert results[0]['result']['rc'] == 0
+        assert results[0]['result']['rc'] == citellus.RC_OKAY
 
     def test_plugins_have_executable_bit(self):
         pluginpath = [os.path.join(citellus.citellusdir, 'plugins')]

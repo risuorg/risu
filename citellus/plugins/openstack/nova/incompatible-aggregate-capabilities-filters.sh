@@ -23,7 +23,7 @@ if [ ! -f $FILE ];
 then
     # Skip test if file is missing
     echo "${FILE} does not exist" >&2
-    exit 2
+    exit $RC_SKIPPED
 fi
 }
 
