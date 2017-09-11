@@ -36,10 +36,10 @@ if [ ! -f $FILE ];
 then
     # Skip test if file is missing
     echo "${FILE#$CITELLUS_ROOT} does not exist" >&2
-    exit 2
+    exit $RC_SKIPPED
 fi
 
-RC=0
+RC=$RC_OKAY
 
 if [ ${RELEASE} -gt 7 ];
 then
@@ -51,16 +51,16 @@ then
         if [ "$result" -ne "0" ];
         then
             echo "$string missing on file" >&2
-            RC=1
+            RC=$RC_FAILED
         else
             if [ $(grep -c -e ^${string} $FILE) -ne "1" ];
             then
                 echo "$string is listed more than once on file" >&2
-                RC=1
+                RC=$RC_FAILED
             else
                 if [ $(grep -e ^${string} $FILE|cut -d "=" -f2) -le 0 ];
                 then
-                    RC=1
+                    RC=$RC_FAILED
                     grep -e ^${string} $FILE >&2
                 fi
             fi
@@ -72,11 +72,11 @@ else
         if [ $(grep -c -e ^${string} $FILE) -ne "1" ];
         then
             echo "$string is listed more than once on file" >&2
-            RC=1
+            RC=$RC_FAILED
         else
             if [ $(grep -e ^${string} $FILE|cut -d "=" -f2) -le 0 ];
             then
-                RC=1
+                RC=$RC_FAILED
                 grep -e ^${string} $FILE >&2
             fi
         fi
@@ -96,13 +96,13 @@ if [ "x$CITELLUS_LIVE" = "x0" ];  then
     if grep -q nova-compute "${CITELLUS_ROOT}/ps";
     then
       echo "works only on controller node" >&2
-      exit 2
+      exit $RC_SKIPPED
     fi
     checksettings
     exit $RC
   else
     echo "missing required file /installed-rpms" >&2
-    exit 2
+    exit $RC_SKIPPED
   fi
 elif [ "x$CITELLUS_LIVE" = "x1" ];  then
   # Check which version we are using
@@ -110,7 +110,7 @@ elif [ "x$CITELLUS_LIVE" = "x1" ];  then
   RELEASE=$(discover_version)
   if ps -elf | grep -q [n]ova-compute; then
     echo "works only on controller node" >&2
-    exit 2
+    exit $RC_SKIPPED
   fi
   checksettings
   exit $RC

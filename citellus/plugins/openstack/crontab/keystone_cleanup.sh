@@ -40,7 +40,7 @@ if [ "x$CITELLUS_LIVE" = "x0" ];  then
     RELEASE=$(discover_version)
   else
     echo "missing required file /installed-rpms" >&2
-    exit 2
+    exit $RC_SKIPPED
   fi
 elif [ "x$CITELLUS_LIVE" = "x1" ];  then
   # Check which version we are using
@@ -50,11 +50,11 @@ fi
 
 if [ ! -f "${CITELLUS_ROOT}/var/spool/cron/keystone" ]; then
   echo "file /var/spool/cron/keystone not found." >&2
-  exit 2
+  exit $RC_SKIPPED
 fi
 if ! awk '/keystone-manage token_flush/ && /^[^#]/ { print $0 }' "${CITELLUS_ROOT}/var/spool/cron/keystone"; then
   echo "crontab keystone cleanup is not set" >&2
-  exit 1
+  exit $RC_FAILED
 elif awk '/keystone-manage token_flush/ && /^[^#]/ { print $0 }' "${CITELLUS_ROOT}/var/spool/cron/keystone"; then
   # Skip default crontab of 1 0 * * * as it might miss busy systems and fail to do later cleanups
   COUNT=$(awk '/keystone-manage token_flush/ && /^[^#]/ { print $0 }' "${CITELLUS_ROOT}/var/spool/cron/keystone" 2>&1|egrep  '^1 0'  -c)
@@ -69,8 +69,8 @@ elif awk '/keystone-manage token_flush/ && /^[^#]/ { print $0 }' "${CITELLUS_ROO
         10) echo "https://bugzilla.redhat.com/show_bug.cgi?id=1469457" >&2 ;;
         *) echo "" >&2 ;;
       esac
-      exit 1
+      exit $RC_FAILED
   fi
-  exit 0
+  exit $RC_OKAY
 fi
 exit 3
