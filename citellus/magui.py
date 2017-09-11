@@ -197,7 +197,7 @@ def maguiformat(data):
     for plugin in data:
         pplug = 0
         for host in data[plugin]:
-            if data[plugin][host]['rc'] != 0 and data[plugin][host]['rc'] != 2:
+            if data[plugin][host]['rc'] != citellus.RC_OKAY and data[plugin][host]['rc'] != citellus.RC_SKIPPED:
                 pplug = 1
         if pplug == 1:
             newplugin = plugin.replace(cp, '')
@@ -228,7 +228,7 @@ def main():
     # Grab the data
     grouped = domagui(sosreports=options.sosreports, citellusplugins=citellusplugins)
 
-    # For now, let's only print plugins that have rc ! 0 in quiet
+    # For now, let's only print plugins that have rc ! $RC_OKAY in quiet
     if options.quiet:
         toprint = maguiformat(grouped)
     else:

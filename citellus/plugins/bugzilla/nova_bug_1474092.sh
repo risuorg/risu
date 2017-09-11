@@ -19,11 +19,11 @@
 
 if [ ! -f "${CITELLUS_ROOT}/etc/nova/nova.conf" ]; then
   echo "file /etc/nova/nova.conf not found." >&2
-  exit 2
+  exit $RC_SKIPPED
 fi
 if grep -q "^host.*localhost" "${CITELLUS_ROOT}/etc/nova/nova.conf"; then
   echo "https://bugzilla.redhat.com/show_bug.cgi?id=1474092" >&2
-  exit 1
+  exit $RC_FAILED
 else
-  exit 0
+  exit $RC_OKAY
 fi
