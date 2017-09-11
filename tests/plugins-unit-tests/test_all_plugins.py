@@ -56,6 +56,9 @@ class CitellusTest(TestCase):
         # Process plugin output from multiple plugins
         new_dict = []
         for item in results:
-            new_dict.append(item['result']['rc'])
+            rc = item['result']['rc']
+            print(item)
+            assert rc in sorted(set([citellus.RC_OKAY, citellus.RC_FAILED, citellus.RC_SKIPPED]))
+            new_dict.append(rc)
 
-        assert sorted(set(new_dict)) == [0, 1, 2]
+        assert sorted(set(new_dict)) == sorted(set([citellus.RC_OKAY, citellus.RC_FAILED, citellus.RC_SKIPPED]))

@@ -19,14 +19,15 @@
 
 if [ ! "x$CITELLUS_LIVE" = "x1" ]; then 
   echo "works on live-system only" >&2
-  exit 2
+  exit $RC_SKIPPED
 fi
 
 TOKENS=$(mysql keystone -e 'select count(*) from token where token.expires < CURTIME();' | egrep -o '[0-9]+')
-[ -z ${TOKENS} ] && exit 3
-
-if [[ "${TOKENS}" -ge 1000 ]]; then
-    exit 1
-elif [[ "${TOKENS}" -lt 1000 ]]; then
-    exit 0
+if [ ! -z ${TOKENS} ]
+then
+    if [[ "${TOKENS}" -ge 1000 ]]; then
+        exit $RC_FAILED
+    elif [[ "${TOKENS}" -lt 1000 ]]; then
+        exit $RC_OKAY
+    fi
 fi

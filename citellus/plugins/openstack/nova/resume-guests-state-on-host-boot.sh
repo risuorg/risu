@@ -21,12 +21,12 @@
 if [ "x$CITELLUS_LIVE" = "x1" ];  then
   if ! ps -elf | grep -q [n]ova-compute; then
     echo "works only on compute node" >&2
-    exit 2
+    exit $RC_SKIPPED
   fi
 elif [ "x$CITELLUS_LIVE" = "x0" ]; then
   if ! grep -q nova-compute "${CITELLUS_ROOT}/ps"; then
     echo "works only on compute node" >&2
-    exit 2
+    exit $RC_SKIPPED
   fi
 fi
 
@@ -38,7 +38,7 @@ config_files=( "${CITELLUS_ROOT}/etc/nova/nova.conf" \
 for config_file in "${config_files[@]}"; do
   if [ ! -f "${config_file}" ]; then
     echo "file ${config_file#$CITELLUS_ROOT} not found." >&2
-    exit 2
+    exit $RC_SKIPPED
   fi
 done
 
@@ -54,8 +54,8 @@ NOVASTRING=$(awk -F "=" '/^resume_guests_state_on_host_boot/ {gsub (" ", "", $0)
 
 if [[ "$LIBVIRTBOOT" == "ignore" && "$LIBVIRTOFF" == "shutdown" && "$NOVASTRING" == "true" ]]; then
   echo "compute node is configured to restore guests state at startup" >&2
-  exit 0
+  exit $RC_OKAY
 else
   echo "compute node is NOT configured to restore guests state at startup" >&2
-  exit 1
+  exit $RC_FAILED
 fi
