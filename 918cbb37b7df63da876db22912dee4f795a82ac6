@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0b8a33c_2462b4e3",
+        "filename": "citellus/plugins/network/external_connectivity.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1011950
+      },
+      "writtenOn": "2017-09-11T18:05:07Z",
+      "side": 1,
+      "message": "in this script we are exitting after echo which is successful. We need to modify this or the script will fail with return code 0.",
+      "revId": "918cbb37b7df63da876db22912dee4f795a82ac6",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aeafc676_f7591530",
+        "filename": "citellus/plugins/openstack/crontab/keystone_cleanup.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1011950
+      },
+      "writtenOn": "2017-09-11T18:05:07Z",
+      "side": 1,
+      "message": "probably we can remove this now?",
+      "revId": "918cbb37b7df63da876db22912dee4f795a82ac6",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5c74a901_e673eedd",
+        "filename": "citellus/plugins/openstack/debug.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1011950
+      },
+      "writtenOn": "2017-09-11T18:05:07Z",
+      "side": 1,
+      "message": "don\u0027t we need to modify such tests in all scripts since we want $RC_OKAY instead of exit 0?",
+      "revId": "918cbb37b7df63da876db22912dee4f795a82ac6",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "969cc69c_6e79e836",
+        "filename": "citellus/plugins/openstack/hardware/memory.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1011950
+      },
+      "writtenOn": "2017-09-11T18:05:07Z",
+      "side": 1,
+      "message": "here again we are missing $RC_OKAY only exiting 0 after the echo.",
+      "revId": "918cbb37b7df63da876db22912dee4f795a82ac6",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
