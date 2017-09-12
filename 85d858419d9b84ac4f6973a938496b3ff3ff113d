@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5d8b47b_3f232833",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2017-09-12T18:24:38Z",
+      "side": 1,
+      "message": "Can we put some more information about the bug itself?",
+      "revId": "85d858419d9b84ac4f6973a938496b3ff3ff113d",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "680745d3_7cd1db13",
+        "filename": "citellus/plugins/bugzilla/httpd_bug_1478042.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2017-09-12T18:24:38Z",
+      "side": 1,
+      "message": "I would use the check for https conf files named like that or skip the test",
+      "revId": "85d858419d9b84ac4f6973a938496b3ff3ff113d",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
