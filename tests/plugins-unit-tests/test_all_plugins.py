@@ -39,7 +39,7 @@ rcs = {"pass": citellus.RC_OKAY,
 
 
 class CitellusTest(TestCase):
-    def test_pass(self):
+    def test_all_plugins_snapshot(self):
         tmpdir = tempfile.mkdtemp(prefix='citellus-tmp')
 
         # Setup folder for all tests
@@ -58,6 +58,21 @@ class CitellusTest(TestCase):
         for item in results:
             rc = item['result']['rc']
             print(item)
+            assert rc in sorted(set([citellus.RC_OKAY, citellus.RC_FAILED, citellus.RC_SKIPPED]))
+            new_dict.append(rc)
+
+        assert sorted(set(new_dict)) == sorted(set([citellus.RC_OKAY, citellus.RC_FAILED, citellus.RC_SKIPPED]))
+
+    def test_all_plugins_live(self):
+        # Run citellus once against them
+        results = citellus.docitellus(live=True, plugins=citplugs)
+
+        # Process plugin output from multiple plugins
+        new_dict = []
+        for item in results:
+            rc = item['result']['rc']
+            if rc not in sorted(set([citellus.RC_OKAY, citellus.RC_FAILED, citellus.RC_SKIPPED])):
+                print(item)
             assert rc in sorted(set([citellus.RC_OKAY, citellus.RC_FAILED, citellus.RC_SKIPPED]))
             new_dict.append(rc)
 
