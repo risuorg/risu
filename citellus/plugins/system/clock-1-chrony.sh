@@ -74,4 +74,4 @@ else
 fi
 
 # Check the return code from the offset calculation
-[[ "x$RC" = "x0" ]] && exit $RC_OKAY || $RC_FAILED
+[[ "x$RC" = "x0" ]] && exit $RC_OKAY || exit $RC_FAILED
