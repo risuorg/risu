@@ -1,0 +1,9 @@
+.tox
+.testrepository
+.coverage
+.eggs
+.history
+.idea
+*.pyc
+*.egg-info
+.coverage.*
