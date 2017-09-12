@@ -57,7 +57,8 @@ class CitellusTest(TestCase):
         new_dict = []
         for item in results:
             rc = item['result']['rc']
-            print(item)
+            if rc not in sorted(set([citellus.RC_OKAY, citellus.RC_FAILED, citellus.RC_SKIPPED])):
+                print(item)
             assert rc in sorted(set([citellus.RC_OKAY, citellus.RC_FAILED, citellus.RC_SKIPPED]))
             new_dict.append(rc)
 
