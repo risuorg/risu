@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "958c539b_b082d80a",
+        "filename": "citellus/plugins/pacemaker/failed_actions.sh",
+        "patchSetId": 9
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2017-09-12T08:20:43Z",
+      "side": 1,
+      "message": "Isn\u0027t this one *too much* indented?",
+      "revId": "3e778b0676c5fbbb44fda9015ae4f4cfc51349b5",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e9214f16_55e82212",
+        "filename": "citellus/plugins/pacemaker/stopped_resources.sh",
+        "patchSetId": 9
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2017-09-12T08:20:43Z",
+      "side": 1,
+      "message": "Same on indention here",
+      "revId": "3e778b0676c5fbbb44fda9015ae4f4cfc51349b5",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
