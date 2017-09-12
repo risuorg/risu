@@ -197,11 +197,11 @@ def formattext(returncode):
     :param returncode: return code of plugin
     :return: formatted text for printing
     """
-    colors = [
-        ('okay', 'green'),
-        ('failed', 'red'),
-        ('skipped', 'cyan'),
-    ]
+    colors = {
+        RC_OKAY: ('okay','green'),
+        RC_FAILED: ('failed', 'red'),
+        RC_SKIPPED: ('skipped','cyan')
+    }
 
     try:
         selected = colors[returncode]
