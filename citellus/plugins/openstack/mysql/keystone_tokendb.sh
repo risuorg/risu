@@ -22,7 +22,18 @@ if [ ! "x$CITELLUS_LIVE" = "x1" ]; then
   exit $RC_SKIPPED
 fi
 
-TOKENS=$(mysql keystone -e 'select count(*) from token where token.expires < CURTIME();' | egrep -o '[0-9]+')
+# This test requires mysql
+which mysql > /dev/null 2>&1
+RC=$?
+
+if [ "x$RC" == "x0" ];
+then
+    TOKENS=$(mysql keystone -e 'select count(*) from token where token.expires < CURTIME();' | egrep -o '[0-9]+')
+else
+    echo "missing mysql binaries" >&2
+    exit $RC_SKIPPED
+fi
+
 if [ ! -z ${TOKENS} ]
 then
     if [[ "${TOKENS}" -ge 1000 ]]; then
