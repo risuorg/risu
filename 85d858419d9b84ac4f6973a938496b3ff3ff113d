@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1e3fc407_f476ece6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2017-09-13T12:32:52Z",
+      "side": 1,
+      "message": "Can you also add \u0027Closes #122\u0027 in below the updated description?",
+      "parentUuid": "d5d8b47b_3f232833",
+      "revId": "85d858419d9b84ac4f6973a938496b3ff3ff113d",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "680745d3_7cd1db13",
         "filename": "citellus/plugins/bugzilla/httpd_bug_1478042.sh",
         "patchSetId": 1
