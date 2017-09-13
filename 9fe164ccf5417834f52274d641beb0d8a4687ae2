@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f0c4d50_5b915115",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2017-09-13T13:18:58Z",
+      "side": 1,
+      "message": "Can you add Closes #122 in that line?",
+      "revId": "9fe164ccf5417834f52274d641beb0d8a4687ae2",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "84de550d_6d39f6ef",
+        "filename": "citellus/plugins/bugzilla/httpd_bug_1478042.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2017-09-13T13:18:58Z",
+      "side": 1,
+      "message": "extra space after \u0027then\u0027",
+      "revId": "9fe164ccf5417834f52274d641beb0d8a4687ae2",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
