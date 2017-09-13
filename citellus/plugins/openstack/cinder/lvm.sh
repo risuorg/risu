@@ -25,7 +25,7 @@ then
     exit $RC_SKIPPED
 fi
 
-RC=0
+RC=$RC_OKAY
 substring=cinder.volume.drivers.lvm.LVM
 
 for string in volume_driver;
