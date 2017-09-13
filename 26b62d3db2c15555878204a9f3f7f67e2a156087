@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28b87746_f7b49c0b",
+        "filename": "citellus/plugins/openstack/mysql/keystone_tokendb.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1011950
+      },
+      "writtenOn": "2017-09-13T13:11:07Z",
+      "side": 1,
+      "message": "isn\u0027t that \u003d\u003d is only supported by [[?",
+      "range": {
+        "startLine": 33,
+        "startChar": 5,
+        "endLine": 33,
+        "endChar": 25
+      },
+      "revId": "26b62d3db2c15555878204a9f3f7f67e2a156087",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
