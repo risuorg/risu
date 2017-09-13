@@ -42,7 +42,7 @@ if [ "x$CITELLUS_LIVE" = "x0" ]; then
     # Are we Intel or AMD?
     grep -iq intel "${CITELLUS_ROOT}/proc/cpuinfo"
     INTEL=$?
-    if [ "#$INTEL" == "#0" ];
+    if [ "#$INTEL" = "#0" ];
     then
 	# Check for IOMMU (VT-d) (INTEL)
 	if ! grep -q "intel_iommu=on" "${CITELLUS_ROOT}/proc/cmdline"; then
