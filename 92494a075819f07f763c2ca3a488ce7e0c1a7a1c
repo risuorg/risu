@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d00a3dd6_65eecf85",
+        "filename": "citellus/plugins/bugzilla/httpd_bug_1478042.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1011950
+      },
+      "writtenOn": "2017-09-13T13:28:20Z",
+      "side": 1,
+      "message": "this run only against live system.",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 63
+      },
+      "revId": "92494a075819f07f763c2ca3a488ce7e0c1a7a1c",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
