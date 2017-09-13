@@ -18,6 +18,13 @@
 # we can run this on fs snapshot or live system
 
 if [ "x$CITELLUS_LIVE" = "x1" ];  then
+  which rabbitmqctl > /dev/null 2>&1
+  RC=$?
+  if [ "x$RC" != "x0" ];
+  then
+    echo "rabbitmqctl not found" >&2
+    exit $RC_SKIPPED
+  fi
 
   if ps -elf | grep -q [n]ova-compute; then
     echo "works only on controller node" >&2
