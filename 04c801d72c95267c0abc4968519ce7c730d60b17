@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7209ae39_354e6e68",
+        "filename": "citellus/plugins/openstack/mysql/keystone_tokendb.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1011950
+      },
+      "writtenOn": "2017-09-13T13:11:07Z",
+      "side": 1,
+      "message": "\u003d\u003d is only supported by [[ see below:\n\n➜  logs if [[ $a \u003d\u003d \"b\" ]]; then echo \"foo\"; else echo \"bar\"; fi\nfoo\n➜  logs if [[ $a \u003d \"b\" ]]; then echo \"foo\"; else echo \"bar\"; fi \nfoo\n➜  logs if [ $a \u003d \"b\" ]; then echo \"foo\"; else echo \"bar\"; fi \nfoo\n➜  logs if [ $a \u003d\u003d \"b\" ]; then echo \"foo\"; else echo \"bar\"; fi\n\nzsh: \u003d not found",
+      "range": {
+        "startLine": 33,
+        "startChar": 4,
+        "endLine": 33,
+        "endChar": 26
+      },
+      "revId": "04c801d72c95267c0abc4968519ce7c730d60b17",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
