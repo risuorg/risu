@@ -28,7 +28,15 @@ RC=$?
 
 if [ "x$RC" == "x0" ];
 then
-    TOKENS=$(mysql keystone -e 'select count(*) from token where token.expires < CURTIME();' | egrep -o '[0-9]+')
+    mysql keystone -e 'select count(*) from token where token.expires < CURTIME();' >/dev/null 2>&1
+    RC=$?
+    if [ "x$RC" == "x0" ];
+    then
+        TOKENS=$(mysql keystone -e 'select count(*) from token where token.expires < CURTIME();' | egrep -o '[0-9]+')
+    else
+        echo "no keystone database" > &2
+        exit $RC_SKIPPED
+    fi
 else
     echo "missing mysql binaries" >&2
     exit $RC_SKIPPED
