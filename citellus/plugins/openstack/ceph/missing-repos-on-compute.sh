@@ -35,7 +35,7 @@ elif [ "x$CITELLUS_LIVE" = "x0" ]; then
     echo "works only on compute node" >&2
     exit $RC_SKIPPED
   else
-    if [ "$(cat {$CITELLUS_ROOT}/sos_commands/yum/yum_-C_repolist |grep ceph|grep osd|wc -l)" -eq "0" ];
+    if [ "$(cat ${CITELLUS_ROOT}/sos_commands/yum/yum_-C_repolist |grep ceph|grep osd|wc -l)" -eq "0" ];
     then
       echo "librbd1 might be outdated if ceph repos are not enabled on compute" >&2
       exit $RC_FAILED
