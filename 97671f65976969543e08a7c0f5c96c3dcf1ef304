@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e56518d_f2105444",
+        "filename": "citellus/plugins/openstack/ceph/missing-repos-on-compute.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1011950
+      },
+      "writtenOn": "2017-09-14T21:29:13Z",
+      "side": 1,
+      "message": "1) Missing ${CITELLUS_ROOT}\n2) Using legacy backticks syntax required by very old non-POSIX-compatible bourne shells.\n\nPrefer to replace it with:\n\n$(cat file)",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 86
+      },
+      "revId": "97671f65976969543e08a7c0f5c96c3dcf1ef304",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
