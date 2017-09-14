@@ -40,7 +40,11 @@ like this:
 5. Update your local repository:
 
         git add $modified_files
-        git commit -m "Messsage for the changes done"
+        git commit
+        
+        For the message, please use a short line with the fix and the subject like [plugins][openstack][nova] Check nova configuration XXX
+        
+        If the commit fixes a github open issue, also use `Closes #$ISSUEID` gso github automatically closes it once merged referencing the commit.
 
 6. Submit your changes for review:
 
