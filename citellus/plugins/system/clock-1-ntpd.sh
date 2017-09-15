@@ -49,20 +49,17 @@ if [[ $CITELLUS_LIVE = 0 ]]; then
   else
     grep "^server" "${CITELLUS_ROOT}/etc/ntp.conf" >&2
   fi
-  if [ ! -f "${CITELLUS_ROOT}/sos_commands/ntp/ntpstat" ]; then
-    echo "file /sos_commands/ntp/ntpstat not found." >&2
+  if [ ! -f "${CITELLUS_ROOT}/sos_commands/ntp/ntpq_-p" ]; then
+    echo "file /sos_commands/ntp/ntpq_-p not found." >&2
     exit $RC_SKIPPED
-  else
-    if grep -q "time correct" "${CITELLUS_ROOT}/sos_commands/ntp/ntpstat"; then
-      offset=$(awk '/time correct/ {print $5}' "${CITELLUS_ROOT}/sos_commands/ntp/ntpstat")
-      if [ "${offset}" -gt  "100" ]; then
-        echo "clock offset is $offset ms" >&2
-        exit $RC_FAILED
-      else
-        exit $RC_OKAY
-      fi
-    fi
   fi
+  offset=$(awk '/^\*/ {print $9/1000}' "${CITELLUS_ROOT}/sos_commands/ntp/ntpq_-p")
+  echo "clock offset is $offset" >&2
+
+  RC=$(echo "$offset<${CITELLUS_MAX_CLOCK_OFFSET:-1} && \
+      $offset>-${CITELLUS_MAX_CLOCK_OFFSET:-1}" | bc -l)
+
+  [[ "x$RC" = "x0" ]] && exit $RC_OKAY || $RC_FAILED
 else
   if ! is_active ntpd; then
       echo "ntpd is not active" >&2
