@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "264e10b6_f41b8f7a",
+        "filename": "citellus/plugins/system/clock-1-ntpd.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2017-09-15T11:30:25Z",
+      "side": 1,
+      "message": "EXIT  $RC_FAILED\n\n\nIs missing the \u0027exit\u0027 before it, so it will instead execute the value",
+      "revId": "0f572786db47b1ddf6bbb53c51fc09a511e42206",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
