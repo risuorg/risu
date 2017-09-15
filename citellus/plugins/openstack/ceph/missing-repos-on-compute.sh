@@ -21,26 +21,24 @@ if [ "x$CITELLUS_LIVE" = "x1" ];  then
   if ! ps -elf | grep -q [n]ova-compute; then
     echo "works only on compute node" >&2
     exit $RC_SKIPPED
+  fi
+  if [ "$(yum -C repolist 2>&1 | grep "rhceph.*tools" | wc -l)" -eq "0" ];
+  then
+    echo "librbd1 might be outdated if rhceph repo is not enabled on compute" >&2
+    exit $RC_FAILED
   else
-    if [ "$(yum -C repolist 2>&1|grep ceph|grep osd|wc -l)" -eq "0" ];
-    then
-      echo "librbd1 might be outdated if ceph repos are not enabled on compute" >&2
-      exit $RC_FAILED
-    else
-      exit $RC_OKAY
-    fi
+    exit $RC_OKAY
   fi
 elif [ "x$CITELLUS_LIVE" = "x0" ]; then
   if ! grep -q nova-compute "${CITELLUS_ROOT}/ps"; then
     echo "works only on compute node" >&2
     exit $RC_SKIPPED
+  fi
+  if [ "$(cat ${CITELLUS_ROOT}/sos_commands/yum/yum_-C_repolist | grep "rhceph.*tools" | wc -l)" -eq "0" ];
+  then
+    echo "librbd1 might be outdated if rhceph repo is not enabled on compute" >&2
+    exit $RC_FAILED
   else
-    if [ "$(cat ${CITELLUS_ROOT}/sos_commands/yum/yum_-C_repolist |grep ceph|grep osd|wc -l)" -eq "0" ];
-    then
-      echo "librbd1 might be outdated if ceph repos are not enabled on compute" >&2
-      exit $RC_FAILED
-    else
-      exit $RC_OKAY
-    fi
+    exit $RC_OKAY
   fi
 fi
