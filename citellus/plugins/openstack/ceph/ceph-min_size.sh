@@ -23,6 +23,9 @@ mktempfile() {
   trap "rm $tmpfile" EXIT
 }
 
+# Load common functions
+[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
+
 check_settings() {
   for pool in $(sed -n -r -e 's/^pool.*\x27(.*)\x27.*$/\1/p' $1); do
     MIN_SIZE=$(sed -n -r -e "s/^pool.*'$pool'.*min_size[ \t]([0-9]).*$/\1/p" $1)
@@ -42,11 +45,11 @@ check_settings() {
 }
 
 if [ "x$CITELLUS_LIVE" = "x0" ];  then
-  if [ ! -f "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all" ]; then
-    echo "file /sos_commands/systemd/systemctl_list-units_--all not found." >&2
+  if [ ! -f "${UNITFILE}" ]; then
+    echo "file ${CITELLUS_ROOT} not found." >&2
     exit $RC_SKIPPED
   else
-    if grep -q "ceph-mon.*active" "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all"; then
+    if grep -q "ceph-mon.*active" "${UNITFILE}"; then
       if [ ! -f "${CITELLUS_ROOT}/sos_commands/ceph/ceph_osd_dump" ]; then
         echo "file /sos_commands/ceph/ceph_osd_dump not found." >&2
         exit $RC_SKIPPED
