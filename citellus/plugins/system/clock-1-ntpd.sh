@@ -23,12 +23,15 @@ is_active() {
     systemctl is-active "$@" > /dev/null 2>&1
 }
 
+# Load common functions
+[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
+
 if [[ $CITELLUS_LIVE = 0 ]]; then
-  if [ ! -f "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all" ]; then
-    echo "file /sos_commands/systemd/systemctl_list-units_--all not found." >&2
+  if [ ! -f "${UNITFILE}" ]; then
+    echo "file ${CITELLUS_ROOT} not found." >&2
     exit $RC_SKIPPED
   else
-    if ! grep -q "ntpd.*active" "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all"; then
+    if ! grep -q "ntpd.*active" "${UNITFILE}"; then
       echo "no ntp service is active" >&2
       exit $RC_FAILED
     fi

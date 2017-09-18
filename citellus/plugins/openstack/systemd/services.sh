@@ -17,6 +17,9 @@
 
 # we can run this against fs snapshot or live system
 
+# Load common functions
+[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
+
 if [ "x$CITELLUS_LIVE" = "x1" ];  then
 
   SERVICES=$(systemctl list-units --all | grep "neutron.*failed\|openstack.*failed\|openvswitch.*failed" | sed 's/*//' |awk '{print $1}')
@@ -28,12 +31,12 @@ if [ "x$CITELLUS_LIVE" = "x1" ];  then
   fi
 elif [ "x$CITELLUS_LIVE" = "x0" ];  then
 
-  if [ ! -f "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all" ]; then
-    echo "file /sos_commands/systemd/systemctl_list-units_--all not found." >&2
+  if [ ! -f "${UNITFILE}" ]; then
+    echo "file ${CITELLUS_ROOT} not found." >&2
     exit $RC_SKIPPED
   fi
-  SERVICES=$(grep "neutron.*failed\|openstack.*failed\|openvswitch.*failed" "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all" | sed 's/*//' | awk '{print $1}')
-  if grep -q "neutron.*failed\|openstack.*failed\|openvswitch.*failed" "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all"; then
+  SERVICES=$(grep "neutron.*failed\|openstack.*failed\|openvswitch.*failed" "${UNITFILE}" | sed 's/*//' | awk '{print $1}')
+  if grep -q "neutron.*failed\|openstack.*failed\|openvswitch.*failed" "${UNITFILE}"; then
     echo ${SERVICES} | tr ' ' '\n' >&2
     exit $RC_FAILED
   else

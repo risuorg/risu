@@ -21,15 +21,18 @@ is_active() {
     systemctl is-active "$@" > /dev/null 2>&1
 }
 
+# Load common functions
+[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
+
 if [[ $CITELLUS_LIVE = 0 ]]; then
-  if [ ! -f "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all" ]; then
-    echo "file /sos_commands/systemd/systemctl_list-units_--all not found." >&2
+  if [ ! -f "${UNITFILE}" ]; then
+    echo "file ${CITELLUS_ROOT} not found." >&2
     exit $RC_SKIPPED
   else
-    if ! grep -q "ntpd.*active" "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all"; then
+    if ! grep -q "ntpd.*active" "${UNITFILE}"; then
       ntpd=1
     fi
-    if ! grep -q "chronyd.*active" "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all"; then
+    if ! grep -q "chronyd.*active" "${UNITFILE}"; then
       chronyd=1
     fi
     if [[ "x$ntpd" = "x1" && "x$chrony" = "x1" ]]; then
