@@ -23,12 +23,21 @@ is_active() {
     systemctl is-active "$@" > /dev/null 2>&1
 }
 
+# Check which unitfile to use
+if [ "x$CITELLUS_LIVE" = "x0" ];  then
+  if [ -f "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units" ]; then
+    UNITFILE="${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units"
+  elif [ -f "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all" ]
+    UNITFILE="${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all"
+  fi
+fi
+
 if [[ $CITELLUS_LIVE = 0 ]]; then
-  if [ ! -f "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all" ]; then
-    echo "file /sos_commands/systemd/systemctl_list-units_--all not found." >&2
+  if [ ! -f "${UNITFILE}" ]; then
+    echo "file ${CITELLUS_ROOT} not found." >&2
     exit $RC_SKIPPED
   else
-    if ! grep -q "chronyd.*active" "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all"; then
+    if ! grep -q "chronyd.*active" "${UNITFILE}"; then
       echo "no chrony service is active" >&2
       exit $RC_FAILED
     fi

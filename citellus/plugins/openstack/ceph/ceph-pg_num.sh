@@ -17,6 +17,16 @@
 
 # Check if ceph pg_num is optimal
 
+# Check which unitfile to use
+if [ "x$CITELLUS_LIVE" = "x0" ];  then
+  if [ -f "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units" ]; then
+    UNITFILE="${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units"
+  elif [ -f "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all" ]
+    UNITFILE="${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all"
+  fi
+fi
+
+
 mktempfile() {
   tmpfile_status=$(mktemp testsXXXXXX)
   tmpfile_status=$(readlink -f $tmpfile_status)
@@ -55,11 +65,11 @@ check_settings() {
 declare -i PG_TOTAL=0
 
 if [ "x$CITELLUS_LIVE" = "x0" ];  then
-  if [ ! -f "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all" ]; then
-    echo "file /sos_commands/systemd/systemctl_list-units_--all not found." >&2
+  if [ ! -f "${UNITFILE}" ]; then
+    echo "file ${CITELLUS_ROOT} not found." >&2
     exit $RC_SKIPPED
   else
-    if grep -q "ceph-mon.*active" "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all"; then
+    if grep -q "ceph-mon.*active" "${UNITFILE}"; then
       if [ ! -f "${CITELLUS_ROOT}/sos_commands/ceph/ceph_osd_dump" ]; then
         echo "file /sos_commands/ceph/ceph_osd_dump not found." >&2
         exit $RC_SKIPPED

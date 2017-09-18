@@ -17,12 +17,22 @@
 
 # Check if ceph was integrated, if yes then check it's health
 
+# Check which unitfile to use
+if [ "x$CITELLUS_LIVE" = "x0" ];  then
+  if [ -f "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units" ]; then
+    UNITFILE="${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units"
+  elif [ -f "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all" ]
+    UNITFILE="${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all"
+  fi
+fi
+
+
 if [ "x$CITELLUS_LIVE" = "x0" ]; then
-  if [ ! -f "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all" ]; then
-    echo "file /sos_commands/systemd/systemctl_list-units_--all not found." >&2
+  if [ ! -f "${UNITFILE}" ]; then
+    echo "file ${CITELLUS_ROOT} not found." >&2
     exit $RC_SKIPPED
   else
-    if grep -q "ceph-mon.*active" "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all"; then
+    if grep -q "ceph-mon.*active" "${UNITFILE}"; then
       if [ -f "${CITELLUS_ROOT}/sos_commands/ceph/ceph_health_detail" ];
       then
         if grep -q "HEALTH_OK" "${CITELLUS_ROOT}/sos_commands/ceph/ceph_health_detail"

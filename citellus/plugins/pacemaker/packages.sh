@@ -17,6 +17,15 @@
 
 # we can run this against fs snapshot or live system
 
+# Check which unitfile to use
+if [ "x$CITELLUS_LIVE" = "x0" ];  then
+  if [ -f "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units" ]; then
+    UNITFILE="${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units"
+  elif [ -f "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all" ]
+    UNITFILE="${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all"
+  fi
+fi
+
 if [ "x$CITELLUS_LIVE" = "x1" ];  then
   pacemaker_status=$(systemctl is-active pacemaker || :)
   if [ "$pacemaker_status" = "active" ]; then
@@ -40,7 +49,7 @@ elif [ "x$CITELLUS_LIVE" = "x0" ];  then
     exit $RC_SKIPPED
   else
     PCS_VERSION=$(sed -n -r -e 's/^pacemaker.*-1.1.([0-9]+)-.*$/\1/p' "${CITELLUS_ROOT}/installed-rpms")
-    if grep -q "pacemaker.*active" "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all"; then
+    if grep -q "pacemaker.*active" "${UNITFILE}"; then
       for package in ${PCS_VERSION}
       do
         if [[ "${package}" -lt "15" ]]

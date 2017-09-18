@@ -17,6 +17,15 @@
 
 # we can run this against fs snapshot or live system
 
+# Check which unitfile to use
+if [ "x$CITELLUS_LIVE" = "x0" ];  then
+  if [ -f "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units" ]; then
+    UNITFILE="${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units"
+  elif [ -f "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all" ]
+    UNITFILE="${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all"
+  fi
+fi
+
 count_nodes(){
   if [ ! "$echo $(( (NUM_NODES-1) % 2 ))" -eq  "0" ]; then
     echo "${NUM_NODES}" >&2
@@ -39,11 +48,11 @@ if [ "x$CITELLUS_LIVE" = "x1" ];  then
     exit $RC_SKIPPED
   fi
 elif [ "x$CITELLUS_LIVE" = "x0" ];  then
-  if [ ! -f "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all" ]; then
-    echo "file /sos_commands/systemd/systemctl_list-units_--all not found." >&2
+  if [ ! -f "${UNITFILE}" ]; then
+    echo "file ${CITELLUS_ROOT} not found." >&2
     exit $RC_SKIPPED
   else
-    if grep -q "pacemaker.*active" "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all"; then
+    if grep -q "pacemaker.*active" "${UNITFILE}"; then
       for CLUSTER_DIRECTORY in "pacemaker" "cluster"; do
 	if [ -d "${CITELLUS_ROOT}/sos_commands/${CLUSTER_DIRECTORY}" ]; then
 	  PCS_DIRECTORY="${CITELLUS_ROOT}/sos_commands/${CLUSTER_DIRECTORY}"
