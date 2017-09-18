@@ -1,6 +1,7 @@
 #!/bin/bash
 
-# Copyright (C) 2017   Robin Cernin (rcernin@redhat.com)
+# Copyright (C) 2017 Robin Černín (rcernin@redhat.com)
+# Modifications by Pablo Iranzo Gómez (Pablo.Iranzo@redhat.com)
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -15,51 +16,93 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# adapted from https://github.com/larsks/platypus/blob/master/bats/system/test_clock.bats
+# we can run this against fs snapshot or live system
 
 is_active() {
     systemctl is-active "$@" > /dev/null 2>&1
 }
 
+# Load common functions
+[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
+
 if [[ $CITELLUS_LIVE = 0 ]]; then
-  if [ ! -f "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all" ]; then
-    echo "file /sos_commands/systemd/systemctl_list-units_--all not found." >&2
+  if [ ! -f "${UNITFILE}" ]; then
+    echo "file ${UNITFILE} not found." >&2
     exit $RC_SKIPPED
   else
-    if ! grep -q "ntpd.*active" "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all"; then
+    if grep -q "ntpd.*active" "${UNITFILE}"; then
       ntpd=1
     fi
-    if ! grep -q "chronyd.*active" "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all"; then
+    if grep -q "chronyd.*active" "${UNITFILE}"; then
       chronyd=1
     fi
     if [[ "x$ntpd" = "x1" && "x$chrony" = "x1" ]]; then
       echo "both chrony and ntpd are not active" >&2
       exit $RC_FAILED
-    elif [[ "x$ntpd" = "x1" ]]; then
-      echo "no ntpd service is active" >&2
-      exit $RC_FAILED
-    elif [[ "x$chronyd" = "x1" ]]; then
-      echo "no chrony service is active" >&2
-      exit $RC_FAILED
+    elif grep -q openstack- "${CITELLUS_ROOT}/installed-rpms"; then
+        # Node is OSP system
+        if [[ "x$chronyd" = "x1" ]]; then
+            echo "chrony service is active, and it should not on OSP node" >&2
+            exit $RC_FAILED
+        elif [[ "x$ntpd" = "x1" ]]; then
+            echo "no ntpd service is active" >&2
+            exit $RC_FAILED
+        else
+            # One of chrony or ntpd are active, and this is not an OSP system, run the more complete tests
+            if [[ "x$ntpd" = "x1" ]]; then
+                . ${PLUGIN_BASEDIR}/clock-1-ntpd.sh
+            elif [[ "x$chronyd" = "x1" ]]; then
+                . ${PLUGIN_BASEDIR}/clock-1-chrony.sh
+            fi
+            exit $RC_FAILED
+        fi
     else
-      exit $RC_OKAY
+        # This system has no openstack packages
+        if [[ "x$ntpd" = "x1" ]]; then
+            . ${PLUGIN_BASEDIR}/clock-1-ntpd.sh
+        elif [[ "x$chronyd" = "x1" ]]; then
+            . ${PLUGIN_BASEDIR}/clock-1-chrony.sh
+        else
+            echo "no chrony or ntpd services active" >&2
+            exit $RC_FAILED
+        fi
+
     fi
   fi
 else
-  ! is_active chronyd
-  chronyd_active=$?
+    ! is_active chronyd
+    chronyd_active=$?
 
-  ! is_active ntpd
-  ntpd_active=$?
+    ! is_active ntpd
+    ntpd_active=$?
 
-  if (( ! (ntpd_active || chronyd_active) )); then
-      echo "no ntp service is active" >&2
-      exit $RC_FAILED
-  fi
+    if rpm -qa *openstack*|grep -q openstack-; then
+        if [[ "x$ntpd_active" != "x0" ]]; then
+            echo "no ntpd service is active" >&2
+            exit $RC_FAILED
+        elif [[ "x$chronyd_active" != "x0" ]]; then
+            echo "chrony service is active, and it shoudln't on OSP node" >&2
+            exit $RC_FAILED
+        else
+            # One of chrony or ntpd are active, and this is not an OSP system
+            if [[ "x$ntpd_active" = "x0" ]]; then
+                . ${PLUGIN_BASEDIR}/clock-1-ntpd.sh
+            elif [[ "x$chronyd_active" = "x0" ]]; then
+                . ${PLUGIN_BASEDIR}/clock-1-chrony.sh
+            fi
+            exit $RC_OKAY
+        fi
+    else
+        # Non OSP node
+        if (( ! (ntpd_active || chronyd_active) )); then
+            echo "no ntp service is active" >&2
+            exit $RC_FAILED
+        fi
 
-  if (( ntpd_active && chronyd_active )); then
-      echo "both chrony and ntpd are not active" >&2
-      exit $RC_FAILED
-  fi
-  exit $RC_OKAY
+        if (( ntpd_active && chronyd_active )); then
+            echo "both chrony and ntpd are not active" >&2
+            exit $RC_FAILED
+        fi
+        exit $RC_OKAY
+    fi
 fi
