@@ -145,6 +145,7 @@ def runplugin(plugin):
 
     LOG.debug(msg=_('Running plugin: %s') % plugin)
     try:
+        os.environ['PLUGIN_BASEDIR'] = "%s" % os.path.abspath(os.path.dirname(plugin))
         p = subprocess.Popen(plugin, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         out, err = p.communicate()
         returncode = p.returncode
@@ -177,6 +178,7 @@ def docitellus(live=False, path=False, plugins=False):
     # Save environment variables for plugins executed
     os.environ['CITELLUS_ROOT'] = "%s" % path
     os.environ['CITELLUS_LIVE'] = "%s" % CITELLUS_LIVE
+    os.environ['CITELLUS_BASE'] = "%s" % citellusdir
     os.environ['LANG'] = "%s" % "C"
     os.environ['RC_OKAY'] = "%s" % RC_OKAY
     os.environ['RC_FAILED'] = "%s" % RC_FAILED
