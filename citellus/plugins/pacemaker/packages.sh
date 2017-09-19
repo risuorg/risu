@@ -15,6 +15,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+# Load common functions
+[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
+
 # we can run this against fs snapshot or live system
 
 if [ "x$CITELLUS_LIVE" = "x1" ];  then
@@ -40,19 +43,25 @@ elif [ "x$CITELLUS_LIVE" = "x0" ];  then
     exit $RC_SKIPPED
   else
     PCS_VERSION=$(sed -n -r -e 's/^pacemaker.*-1.1.([0-9]+)-.*$/\1/p' "${CITELLUS_ROOT}/installed-rpms")
-    if grep -q "pacemaker.*active" "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all"; then
-      for package in ${PCS_VERSION}
-      do
-        if [[ "${package}" -lt "15" ]]
-        then
-          echo "outdated pacemaker packages <1.1.15" >&2
-          exit $RC_FAILED
-        fi
-      done
-      exit $RC_OKAY
-    else
-      echo "pacemaker is not running on this node" >&2
+    if [ -z "${systemctl_list_units_file}" ]; then
+      echo "file /sos_commands/systemd/systemctl_list-units not found." >&2
+      echo "file /sos_commands/systemd/systemctl_list-units_--all not found." >&2
       exit $RC_SKIPPED
+    else
+      if grep -q "pacemaker.* active" "${systemctl_list_units_file}"; then
+        for package in ${PCS_VERSION}
+        do
+          if [[ "${package}" -lt "15" ]]
+          then
+            echo "outdated pacemaker packages <1.1.15" >&2
+            exit $RC_FAILED
+          fi
+        done
+        exit $RC_OKAY
+      else
+        echo "pacemaker is not running on this node" >&2
+        exit $RC_SKIPPED
+      fi
     fi
   fi
 fi
