@@ -16,12 +16,27 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+# Helper script to define location of various files.
 
-# Find the systemctl file that contains the units available as it changes depending on sosreport version
 if [ "x$CITELLUS_LIVE" = "x0" ];  then
-  if [ -f "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all" ]; then
-    UNITFILE="${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all"
-  elif [ -f "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units" ]; then
-    UNITFILE="${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units"
-  fi
+
+  # List of systemd/systemctl_list-units files
+  systemctl_list_units=( "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units" \
+                         "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all" )
+
+  # find available one and use it, the ones at back with highest priority
+  for file in ${systemctl_list_units[@]}; do
+    [[ -f "${file}" ]] && systemctl_list_units_file="${file}"
+  done
+
+  # List of logs/journalctl files
+  journal=( "${CITELLUS_ROOT}/sos_commands/logs/journalctl_--no-pager_--boot" \
+            "${CITELLUS_ROOT}/sos_commands/logs/journalctl_--all_--this-boot_--no-pager" )
+
+  # find available one and use it, the ones at back with highest priority
+  for file in "${journal[@]}"; do                          
+    [[ -f "${file}" ]] && journalctl_file="${file}"           
+  done                                              
+
 fi
+

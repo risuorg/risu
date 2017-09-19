@@ -15,7 +15,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# Check if ceph pools has correct min_size
+# Load common functions
+[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 
 mktempfile() {
   tmpfile=$(mktemp testsXXXXXX)
@@ -23,6 +24,7 @@ mktempfile() {
   trap "rm $tmpfile" EXIT
 }
 
+# Check if ceph pools has correct min_size
 check_settings() {
   for pool in $(sed -n -r -e 's/^pool.*\x27(.*)\x27.*$/\1/p' $1); do
     MIN_SIZE=$(sed -n -r -e "s/^pool.*'$pool'.*min_size[ \t]([0-9]).*$/\1/p" $1)
@@ -42,11 +44,12 @@ check_settings() {
 }
 
 if [ "x$CITELLUS_LIVE" = "x0" ];  then
-  if [ ! -f "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all" ]; then
+  if [ -z "${systemctl_list_units_file}" ]; then
+    echo "file /sos_commands/systemd/systemctl_list-units not found." >&2
     echo "file /sos_commands/systemd/systemctl_list-units_--all not found." >&2
     exit $RC_SKIPPED
   else
-    if grep -q "ceph-mon.*active" "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all"; then
+    if grep -q "ceph-mon.*active" "${systemctl_list_units_file}"; then
       if [ ! -f "${CITELLUS_ROOT}/sos_commands/ceph/ceph_osd_dump" ]; then
         echo "file /sos_commands/ceph/ceph_osd_dump not found." >&2
         exit $RC_SKIPPED

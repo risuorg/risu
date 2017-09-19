@@ -15,6 +15,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+# Load common functions
+[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
+
 # adapted from https://github.com/larsks/platypus/blob/master/bats/system/test_clock.bats
 
 is_active() {
@@ -22,14 +25,15 @@ is_active() {
 }
 
 if [[ $CITELLUS_LIVE = 0 ]]; then
-  if [ ! -f "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all" ]; then
+  if [ -z "${systemctl_list_units_file}" ]; then
+    echo "file /sos_commands/systemd/systemctl_list-units not found." >&2
     echo "file /sos_commands/systemd/systemctl_list-units_--all not found." >&2
     exit $RC_SKIPPED
   else
-    if ! grep -q "ntpd.*active" "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all"; then
+    if ! grep -q "ntpd.*active" "${systemctl_list_units_file}"; then
       ntpd=1
     fi
-    if ! grep -q "chronyd.*active" "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all"; then
+    if ! grep -q "chronyd.*active" "${systemctl_list_units_file}"; then
       chronyd=1
     fi
     if [[ "x$ntpd" = "x1" && "x$chrony" = "x1" ]]; then

@@ -15,6 +15,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+# Load common functions
+[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
+
 # we can run this against fs snapshot or live system
 
 if [ "x$CITELLUS_LIVE" = "x1" ];  then
@@ -27,13 +30,13 @@ if [ "x$CITELLUS_LIVE" = "x1" ];  then
     exit $RC_OKAY
   fi
 elif [ "x$CITELLUS_LIVE" = "x0" ];  then
-
-  if [ ! -f "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all" ]; then
+  if [ -z "${systemctl_list_units_file}" ]; then
+    echo "file /sos_commands/systemd/systemctl_list-units not found." >&2
     echo "file /sos_commands/systemd/systemctl_list-units_--all not found." >&2
     exit $RC_SKIPPED
   fi
-  SERVICES=$(grep "neutron.*failed\|openstack.*failed\|openvswitch.*failed" "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all" | sed 's/*//' | awk '{print $1}')
-  if grep -q "neutron.*failed\|openstack.*failed\|openvswitch.*failed" "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all"; then
+  SERVICES=$(grep "neutron.*failed\|openstack.*failed\|openvswitch.*failed" "${systemctl_list_units_file}" | sed 's/*//' | awk '{print $1}')
+  if grep -q "neutron.*failed\|openstack.*failed\|openvswitch.*failed" "${systemctl_list_units_file}"; then
     echo ${SERVICES} | tr ' ' '\n' >&2
     exit $RC_FAILED
   else

@@ -15,7 +15,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# Check if ceph pg_num is optimal
+# Load common functions
+[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 
 mktempfile() {
   tmpfile_status=$(mktemp testsXXXXXX)
@@ -25,6 +26,7 @@ mktempfile() {
   trap "rm $tmpfile_status $tmpfile_osd_dump" EXIT
 }
 
+# Check if ceph pg_num is optimal
 check_settings() {
   PGS=$(sed -n -r -e 's/^pool.*pg_num\s([0-9]+).*$/\1/p' $1 | awk '{sum+=$1} END {print sum}')
   OSDS=$(sed -n -r -e 's/.*osdmap.*\s([0-9]+)\sosds.*$/\1/p' $2)
@@ -55,11 +57,12 @@ check_settings() {
 declare -i PG_TOTAL=0
 
 if [ "x$CITELLUS_LIVE" = "x0" ];  then
-  if [ ! -f "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all" ]; then
+  if [ -z "${systemctl_list_units_file}" ]; then
+    echo "file /sos_commands/systemd/systemctl_list-units not found." >&2
     echo "file /sos_commands/systemd/systemctl_list-units_--all not found." >&2
     exit $RC_SKIPPED
   else
-    if grep -q "ceph-mon.*active" "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all"; then
+    if grep -q "ceph-mon.*active" "${systemctl_list_units_file}"; then      
       if [ ! -f "${CITELLUS_ROOT}/sos_commands/ceph/ceph_osd_dump" ]; then
         echo "file /sos_commands/ceph/ceph_osd_dump not found." >&2
         exit $RC_SKIPPED
