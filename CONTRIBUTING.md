@@ -29,7 +29,7 @@ like this:
 
     1. NOTE: tox will run python 2.7, pep8 and python 3.5 tests, if your environment lacks for example python 3.5, do execute tox -l to see the available tests and skip that one, for example:
 
-        ~~~
+        ~~~sh
         tox -e pep8
         tox -e py27
         # We're skipping tox -e py35 which is also invoked by default when tox is executed without arguments.
@@ -42,7 +42,7 @@ like this:
         git add $modified_files
         git commit
         
-        For the message, please use a short line with the fix and the subject like [plugins][openstack][nova] Check nova configuration XXX
+        For the message, please use a short line with the fix and the subject like `[plugins][openstack][nova] Check nova configuration XXX`
         
         If the commit fixes a github open issue, also use `Closes #$ISSUEID` so github automatically closes it once merged referencing the commit.
 

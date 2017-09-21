@@ -18,7 +18,7 @@ For example, for bugzilla_httpd_bug_1406417 we create:
 
 First file (in the `setup/` folder) does the proper setup of the fake root:
 
-~~~bash
+~~~sh
 # The way we're executed, $1 is the script name, $2 is the mode and $3 is the folder
 FOLDER=$3
 
@@ -116,7 +116,7 @@ class CitellusTest(TestCase):
 # Briefing
 For a new plugin and test you'll then require:
 - `citellus/plugins/path-to-your-plugin/$NAME.sh`
-- `tests/plugins-unit-tests/setup/bugzilla/$NAME.sh`
+- `tests/plugins-unit-tests/setup/bugzilla/$NAME.sh`    
 - `tests/plugins-unit-tests/test_$NAME.py`
 
 You'll still have to code your plugin and the setup, and for the test, copy one of the provided test_.py like `test_pacemaker_stonith_enabled.py`

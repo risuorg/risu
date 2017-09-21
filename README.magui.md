@@ -48,7 +48,7 @@ Filtering options:
 ## Running a check
 
 This is an example of execution of Magui against a set of sosreports with `seqno` plugin of Citellus enabled.
-```
+```sh
 #magui.py * -i seqno # (filtering for ‘seqno’ plugins.
 {'/home/remote/piranzo/citellus/citellus/plugins/openstack/mysql/seqno.sh': {'ctrl0.localdomain': {'err': '08a94e67-bae0-11e6-8239-9a6188749d23:36117633\n',
                                                                                                    'out': '',
