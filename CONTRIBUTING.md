@@ -42,7 +42,7 @@ like this:
         git add $modified_files
         git commit
         
-        For the message, please use a short line with the fix and the subject like [plugins][openstack][nova] Check nova configuration XXX
+        For the message, please use a short line with the fix and the subject like `[plugins][openstack][nova] Check nova configuration XXX`
         
         If the commit fixes a github open issue, also use `Closes #$ISSUEID` so github automatically closes it once merged referencing the commit.
 

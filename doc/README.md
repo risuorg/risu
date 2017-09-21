@@ -17,7 +17,7 @@ A test may make use of the following standard environment variables:
 - `$CITELLUS_ROOT` -- tests that parse files should locate them
   relative to this directory.  For example, if your script needs to
   examine `/etc/sysctl.conf`, it might have something like:
-```
+```sh
 if grep -q '^net.ipv4.ip_forward = 1' "${CITELLUS_ROOT}/etc/sysctl.conf"; then
   ...
 fi
@@ -35,7 +35,7 @@ fi
 We provide helper script `common-functions.sh` to help define
 location of various files. To use this script you can source it at the top:
 
-```
+```sh
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 ```
