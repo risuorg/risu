@@ -18,7 +18,7 @@
 # this can run against live and also any sort of snapshot of the filesystem
 
 if [ "x$CITELLUS_LIVE" = "x1" ];  then
-  VERSIONS=$(rpm -qa ceph-common* librbd1* python-rbd* librados2* python-rados* | sed -n -r -e 's/^pacemaker.*-1.1.([0-9]+)-.*$/\1/p'|sed -n -r -e 's/.*-0.([0-9]+).([0-9]+)-([0-9]+).*$/\1-\2-\3/p')
+  VERSIONS=$(rpm -qa ceph-common* librbd1* python-rbd* librados2* python-rados* | sed -n -r -e 's/.*-0.([0-9]+).([0-9]+)-([0-9]+).*$/\1-\2-\3/p')
 elif [ "x$CITELLUS_LIVE" = "x0" ];  then
   VERSIONS=$(egrep 'ceph-common|librbd1|python-rbd|librados2|python-rados' "${CITELLUS_ROOT}/installed-rpms"|awk '{print $1}'|sed -n -r -e 's/.*-0.([0-9]+).([0-9]+)-([0-9]+).*$/\1-\2-\3/p')
 fi
