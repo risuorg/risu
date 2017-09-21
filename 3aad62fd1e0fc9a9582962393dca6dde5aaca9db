@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8157d46d_ef2eaf9b",
+        "filename": "citellus/plugins/openstack/mysql/maxconn.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2017-09-21T19:16:20Z",
+      "side": 1,
+      "message": "Extra space after \u0027then\u0027",
+      "revId": "3aad62fd1e0fc9a9582962393dca6dde5aaca9db",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
