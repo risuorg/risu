@@ -48,7 +48,7 @@ if [[ $CITELLUS_LIVE = 0 ]]; then
     fi
 
     offset=$(awk '/RMS offset/ {print $4}' "${CITELLUS_ROOT}/sos_commands/chrony/chronyc_tracking")
-    echo "clock offset is $offset" >&2
+    echo "clock offset is $offset seconds" >&2
     
     RC=$(echo "$offset<${CITELLUS_MAX_CLOCK_OFFSET:-1} && \
     $offset>-${CITELLUS_MAX_CLOCK_OFFSET:-1}" | bc -l)
@@ -70,7 +70,7 @@ else
   fi
 
   offset=$(awk '/RMS offset/ {print $4}' <<<"$out")
-  echo "clock offset is $offset" >&2
+  echo "clock offset is $offset seconds" >&2
 
   
   RC=$(echo "$offset<${CITELLUS_MAX_CLOCK_OFFSET:-1} && \
@@ -78,4 +78,4 @@ else
 fi
 
 # Check the return code from the offset calculation
-[[ "x$RC" = "x0" ]] && exit $RC_OKAY || exit $RC_FAILED
+[[ "x$RC" = "x1" ]] && exit $RC_OKAY || exit $RC_FAILED
