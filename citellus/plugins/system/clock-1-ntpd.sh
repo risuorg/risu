@@ -20,7 +20,7 @@
 
 # adapted from https://github.com/larsks/platypus/blob/master/bats/system/test_clock.bats
 
-: ${CITELLUS_MAX_CLOCK_OFFSET:=1}
+: ${CITELLUS_MAX_CLOCK_OFFSET:=1000}
 
 is_active() {
     systemctl is-active "$@" > /dev/null 2>&1
@@ -57,13 +57,13 @@ if [[ $CITELLUS_LIVE = 0 ]]; then
     echo "file /sos_commands/ntp/ntpq_-p not found." >&2
     exit $RC_SKIPPED
   fi
-  offset=$(awk '/^\*/ {print $9/1000}' "${CITELLUS_ROOT}/sos_commands/ntp/ntpq_-p")
-  echo "clock offset is $offset" >&2
+  offset=$(awk '/^\*/ {print $9}' "${CITELLUS_ROOT}/sos_commands/ntp/ntpq_-p")
+  echo "clock offset is $offset ms" >&2
 
-  RC=$(echo "$offset<${CITELLUS_MAX_CLOCK_OFFSET:-1} && \
-      $offset>-${CITELLUS_MAX_CLOCK_OFFSET:-1}" | bc -l)
+  RC=$(echo "$offset<${CITELLUS_MAX_CLOCK_OFFSET:-1000} && \
+      $offset>-${CITELLUS_MAX_CLOCK_OFFSET:-1000}" | bc -l)
 
-  [[ "x$RC" = "x0" ]] && exit $RC_OKAY || exit $RC_FAILED
+  [[ "x$RC" = "x1" ]] && exit $RC_OKAY || exit $RC_FAILED
 else
   if ! is_active ntpd; then
       echo "ntpd is not active" >&2
@@ -90,11 +90,11 @@ else
       return 1
   fi
 
-  offset=$(awk '/^\*/ {print $9/1000}' <<<"$out")
-  echo "clock offset is $offset" >&2
+  offset=$(awk '/^\*/ {print $9}' <<<"$out")
+  echo "clock offset is $offset ms" >&2
 
-  RC=$(echo "$offset<${CITELLUS_MAX_CLOCK_OFFSET:-1} && \
-      $offset>-${CITELLUS_MAX_CLOCK_OFFSET:-1}" | bc -l)
+  RC=$(echo "$offset<${CITELLUS_MAX_CLOCK_OFFSET:-1000} && \
+      $offset>-${CITELLUS_MAX_CLOCK_OFFSET:-1000}" | bc -l)
 
-  [[ "x$RC" = "x0" ]] && exit $RC_OKAY || exit $RC_FAILED
+  [[ "x$RC" = "x1" ]] && exit $RC_OKAY || exit $RC_FAILED
 fi
