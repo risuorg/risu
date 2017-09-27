@@ -18,45 +18,21 @@
 
 # adapted from https://github.com/larsks/platypus/blob/master/bats/system/test_clock.bats
 
-is_active() {
-    systemctl is-active "$@" > /dev/null 2>&1
-}
-
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 
-if [[ $CITELLUS_LIVE = 0 ]]; then
-  if [ ! -f "${systemctl_list_units_file}" ]; then
-    echo "file ${systemctl_list_units_file} not found." >&2
-    exit $RC_SKIPPED
-  else
-    if grep -q "chronyd.* active" "${systemctl_list_units_file}"; then
-      chronyd=1
-    fi
-    if grep -q openstack- "${CITELLUS_ROOT}/installed-rpms"; then
-        # Node is OSP system
-        if [[ "x$chronyd" = "x1" ]]; then
-            echo "chrony service is active, and it should not on OSP node" >&2
-            exit $RC_FAILED
-        else
-            exit $RC_OKAY
-        fi
-    else
-        exit $RC_SKIPPED
-    fi
-  fi
-else
-    ! is_active chronyd
-    chronyd_active=$?
+if is_active chronyd ; then
+    chronyd=1
+fi
 
-    if rpm -qa *openstack*|grep -q openstack-; then
-        if [[ "x$chronyd_active" != "x0" ]]; then
-            echo "chrony service is active, and it should not on OSP node" >&2
-            exit $RC_FAILED
-        else
-            exit $RC_OKAY
-        fi
+if is_rpm openstack- ; then
+    # Node is OSP system
+    if [[ "x$chronyd" = "x1" ]]; then
+        echo "chrony service is active, and it should not on OSP node" >&2
+        exit $RC_FAILED
     else
-        exit $RC_SKIPPED
+        exit $RC_OKAY
     fi
+else
+    exit $RC_SKIPPED
 fi
