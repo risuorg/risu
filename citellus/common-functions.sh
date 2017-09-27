@@ -39,3 +39,10 @@ if [ "x$CITELLUS_LIVE" = "x0" ];  then
   done
 
 fi
+
+
+is_required() {
+  if [[ ! -f {$CITELLUS_ROOT}/$@} ]];  then
+    echo "required file $@ not found." >&2
+  fi
+}
