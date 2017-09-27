@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf47eb0b_56f4b7c4",
+        "filename": "citellus/common-functions.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1011950
+      },
+      "writtenOn": "2017-09-27T13:24:47Z",
+      "side": 1,
+      "message": "Missing fi.",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 1
+      },
+      "revId": "1d64c193bc6f44f53429ee485741e972f80a945f",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "80615c6e_f6329371",
+        "filename": "citellus/common-functions.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1011950
+      },
+      "writtenOn": "2017-09-27T13:24:47Z",
+      "side": 1,
+      "message": "indent",
+      "range": {
+        "startLine": 82,
+        "startChar": 0,
+        "endLine": 82,
+        "endChar": 4
+      },
+      "revId": "1d64c193bc6f44f53429ee485741e972f80a945f",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
