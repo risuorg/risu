@@ -37,5 +37,12 @@ if [ "x$CITELLUS_LIVE" = "x0" ];  then
   for file in "${journal[@]}"; do
     [[ -f "${file}" ]] && journalctl_file="${file}"
   done
-
 fi
+
+is_active() {
+  if [ "x$CITELLUS_LIVE" = "x1" ];  then
+    systemctl is-active "$@" > /dev/null 2>&1
+  elif [ "x$CITELLUS_LIVE" = "x0" ];  then
+    grep -q "$@.* active" "${systemctl_list_units_file}"
+  fi
+}
