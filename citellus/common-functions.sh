@@ -39,38 +39,38 @@ if [ "x$CITELLUS_LIVE" = "x0" ];  then
   done
 fi
 
-is_active() {
-  if [ "x$CITELLUS_LIVE" = "x1" ];  then
-    systemctl is-active "$1" > /dev/null 2>&1
-  elif [ "x$CITELLUS_LIVE" = "x0" ];  then
-    grep -q "$1.* active" "${systemctl_list_units_file}"
-  fi
-}
-
 is_required_file() {
   for file in "$@"; do
-    if [[ ! -f ${CITELLUS_ROOT}/$file ]];  then
+    if [[ ! -f $file ]];  then
       echo "required file $file not found." >&2
       exit $RC_SKIPPED
     fi
   done
 }
 
-is_required_rpm(){
+is_active() {
   if [ "x$CITELLUS_LIVE" = "x1" ];  then
-    if rpm -qa *$1*|grep -q "$1"; then
-      echo "required package $1 not found." >&2
-      exit $RC_SKIPPED
-    fi
+    systemctl is-active "$1" > /dev/null 2>&1
   elif [ "x$CITELLUS_LIVE" = "x0" ];  then
-    if grep -q "$1" "${CITELLUS_ROOT}/installed-rpms";
-    then
-      echo "required package $1 not found." >&2
-      exit $RC_SKIPPED
-    fi
+    is_required_file "${systemctl_list_units_file}"
+    grep -q "$1.* active" "${systemctl_list_units_file}"
   fi
 }
 
+is_rpm(){
+  if [ "x$CITELLUS_LIVE" = "x1" ];  then
+    rpm -qa *$1*|grep -q "$1"
+  elif [ "x$CITELLUS_LIVE" = "x0" ];  then
+    grep -q "$1" "${CITELLUS_ROOT}/installed-rpms";
+  fi
+}
+
+is_required_rpm(){
+  if ! is_rpm $1 ; then
+    echo "required package $1 not found." >&2
+    exit $RC_SKIPPED
+  fi
+}
 
 discover_osp_version(){
   case $1 in

@@ -22,47 +22,28 @@
 
 : ${CITELLUS_MAX_CLOCK_OFFSET:=1}
 
-is_active() {
-    systemctl is-active "$@" > /dev/null 2>&1
-}
+
+if ! is_active chronyd; then
+    echo "chronyd is not active" >&2
+    exit $RC_SKIPPED
+fi
 
 if [[ $CITELLUS_LIVE = 0 ]]; then
-  if [ -z "${systemctl_list_units_file}" ]; then
-    echo "file /sos_commands/systemd/systemctl_list-units not found." >&2
-    echo "file /sos_commands/systemd/systemctl_list-units_--all not found." >&2
-    exit $RC_SKIPPED
-  else
-    if ! grep -q "chronyd.* active" "${systemctl_list_units_file}"; then
-      echo "no chrony service is active" >&2
-      exit $RC_FAILED
-    fi
+  is_required_file ${CITELLUS_ROOT}/sos_commands/chrony/chronyc_tracking
+
+  if grep -q "Not synchronised\|Cannot talk to daemon" "${CITELLUS_ROOT}/sos_commands/chrony/chronyc_tracking"; then
+    echo "clock is not synchronized" >&2
+    exit $RC_FAILED
   fi
 
-  if [ ! -f "${CITELLUS_ROOT}/sos_commands/chrony/chronyc_tracking" ]; then
-    echo "file /sos_commands/chrony/chronyc_tracking not found." >&2
-    exit $RC_SKIPPED
-  else
-    if grep -q "Not synchronised\|Cannot talk to daemon" "${CITELLUS_ROOT}/sos_commands/chrony/chronyc_tracking"; then
-      echo "clock is not synchronized" >&2
-      exit $RC_FAILED
-    fi
+  offset=$(awk '/RMS offset/ {print $4}' "${CITELLUS_ROOT}/sos_commands/chrony/chronyc_tracking")
+  echo "clock offset is $offset seconds" >&2
 
-    offset=$(awk '/RMS offset/ {print $4}' "${CITELLUS_ROOT}/sos_commands/chrony/chronyc_tracking")
-    echo "clock offset is $offset seconds" >&2
+  RC=$(echo "$offset<${CITELLUS_MAX_CLOCK_OFFSET:-1} && \
+  $offset>-${CITELLUS_MAX_CLOCK_OFFSET:-1}" | bc -l)
 
-    RC=$(echo "$offset<${CITELLUS_MAX_CLOCK_OFFSET:-1} && \
-    $offset>-${CITELLUS_MAX_CLOCK_OFFSET:-1}" | bc -l)
-  fi
 else
-  if ! is_active chronyd; then
-      echo "chronyd is not active"
-      exit $RC_SKIPPED
-  fi
-
-  if ! [[ -x /usr/bin/bc ]]; then
-      echo "this check requires /usr/bin/bc" >&2
-      exit $RC_SKIPPED
-  fi
+  is_required_file /usr/bin/bc
 
   if ! out=$(chronyc tracking); then
       echo "clock is not synchronized" >&2
