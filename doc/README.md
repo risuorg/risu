@@ -47,3 +47,11 @@ location of various files. To use this script you can source it at the top:
 - `$journalctl_file` -- if tests are running against a filesystem
   snapshot of some sort. This variable can be used to easier identify the
   systemctl list units file.
+
+- `is_active $service` -- reports if service is active either based on live or snapshoot
+
+- `is_required_file $file` -- continues if file exists or exits `$RC_SKIPPED` if doesn't
+
+- `is_required_rpm $rpm` -- continues if rpm is installed or exits with `$RC_SKIPPED` if required rpm is missing
+
+- `discover_osp_version $openstack-nova-common-version_package` -- echos osp version based on `openstack-nova-common version`
