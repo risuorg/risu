@@ -45,11 +45,40 @@ is_active() {
   elif [ "x$CITELLUS_LIVE" = "x0" ];  then
     grep -q "$1.* active" "${systemctl_list_units_file}"
 
-is_required() {
+is_required_file() {
   for file in "$@"; do
     if [[ ! -f ${CITELLUS_ROOT}/$file ]];  then
       echo "required file $file not found." >&2
       exit $RC_SKIPPED
     fi
   done
+}
+
+is_required_rpm(){
+  if [ "x$CITELLUS_LIVE" = "x1" ];  then
+    if rpm -qa *$1*|grep -q "$1"; then
+      echo "required package $1 not found." >&2
+      exit $RC_SKIPPED
+    fi
+  elif [ "x$CITELLUS_LIVE" = "x0" ];  then
+    if grep -q "$1" "${CITELLUS_ROOT}/installed-rpms";
+    then
+      echo "required package $1 not found." >&2
+      exit $RC_SKIPPED
+    fi
+  fi
+}
+
+
+discover_osp_version(){
+case $1 in
+  openstack-nova-common-2014.*) echo 6 ;;
+  openstack-nova-common-2015.*) echo 7 ;;
+  openstack-nova-common-12.*) echo 8 ;;
+  openstack-nova-common-13.*) echo 9 ;;
+  openstack-nova-common-14.*) echo 10 ;;
+  openstack-nova-common-15.*) echo 11 ;;
+  openstack-nova-common-16.*) echo 12 ;;
+  *) echo 0 ;;
+esac
 }
