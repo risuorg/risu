@@ -44,5 +44,12 @@ is_active() {
     systemctl is-active "$@" > /dev/null 2>&1
   elif [ "x$CITELLUS_LIVE" = "x0" ];  then
     grep -q "$@.* active" "${systemctl_list_units_file}"
-  fi
+
+is_required() {
+  for file in "$@"; do
+    if [[ ! -f ${CITELLUS_ROOT}/$file} ]];  then
+      echo "required file $file not found." >&2
+      exit $RC_SKIPPED
+    fi
+  done
 }
