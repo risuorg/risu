@@ -32,6 +32,8 @@ fi
 - `$PLUGIN_BASEDIR` -- this contains the folder of the plugin that is being executed.
   The `$PLUGIN_BASEDIR` can be used to source files within the plugin folder.
 
+
+## Common Functions
 We provide helper script `common-functions.sh` to help define
 location of various files. To use this script you can source it at the top:
 
@@ -40,6 +42,7 @@ location of various files. To use this script you can source it at the top:
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 ```
 
+### List of implemented functions
 - `$systemctl_list_units_file` -- if tests are running against a filesystem
   snapshot of some sort. This variable can be used to easier identify the
   systemctl list units file.
@@ -49,9 +52,52 @@ location of various files. To use this script you can source it at the top:
   systemctl list units file.
 
 - `is_active $service` -- reports if service is active either based on live or snapshoot
+    - Example:
+        ~~~sh
+        if is_active ntpd; then echo "NTP Running";fi
+        ~~~
+
+- `is_active_required $service` -- continues if service is active or exits `$RC_SKIPPED` if doesn't
+    - Example:
+        ~~~sh
+        is_active_required ntpd
+        ~~~
+        
 
 - `is_required_file $file` -- continues if file exists or exits `$RC_SKIPPED` if doesn't
+    - Example:
+        ~~~sh
+        is_required_file "${CITELLUS_ROOT}/var/log/messages"
+        ~~~
+
+- `is_rpm $rpm` -- returns rpm name as installed on the system
+    - Example:
+        ~~~sh
+        # is_rpm sos
+        sos-3.2-15.el7.noarch
+        ~~~
 
 - `is_required_rpm $rpm` -- continues if rpm is installed or exits with `$RC_SKIPPED` if required rpm is missing
+    - Example:
+        ~~~sh
+        is_required_rpm sos
+        ~~~
 
 - `discover_osp_version $openstack-nova-common-version_package` -- echos osp version based on `openstack-nova-common version`
+    - Example:
+        ~~~sh
+        if [[ "$(discover_osp_version)" -eq "10" ]]; then echo "We're Newton";fi
+        ~~~
+
+- `name_osp_version $openstack-nova-common-version_package` -- echos osp version 'codename' based on `openstack-nova-common version`
+    - Example:
+        ~~~sh
+        if [[ "$(name_osp_version)" -eq "pike" ]]; then echo "We're Pike!";fi
+        ~~~
+
+
+- `is_process $process` -- returns if process exists on the system
+    - Example:
+        ~~~sh
+        if is_process ntpd; then echo "NTP Running!";fi
+        ~~~
