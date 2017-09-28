@@ -17,34 +17,26 @@
 
 # we can run this against fs snapshot or live system
 
-if [ "x$CITELLUS_LIVE" = "x1" ];  then
-  if  rpm -qa | grep -q "tripleo-heat-templates" && rpm -qa | grep -q \
-  "python-tripleoclient"
-  then
-    if iptables -t nat -vnL | grep -q "REDIRECT.*169.254.169.254" ; then
-      exit $RC_OKAY
-    else
-      exit $RC_FAILED
-    fi
-  else
+# Load common functions
+[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
+
+if [[ -z $(is_rpm tripleo-heat-templates) && -z $(is_rpm python-tripleoclient) ]];
+then
     echo "works on director node only" >&2
     exit $RC_SKIPPED
+fi
+
+if [ "x$CITELLUS_LIVE" = "x1" ];  then
+  if iptables -t nat -vnL | grep -q "REDIRECT.*169.254.169.254" ; then
+    exit $RC_OKAY
+  else
+    exit $RC_FAILED
   fi
 elif [ "x$CITELLUS_LIVE" = "x0" ];  then
-  if grep -q "tripleo-heat-templates" "${CITELLUS_ROOT}/installed-rpms" && grep -q \
-  "python-tripleoclient" "${CITELLUS_ROOT}/installed-rpms"
-  then
-    if [ ! -f "${CITELLUS_ROOT}/sos_commands/networking/iptables_-t_nat_-nvL" ]; then
-      echo "file /sos_commands/networking/iptables_-t_nat_-nvL not found." >&2
-      exit $RC_SKIPPED
-    fi
-    if grep -q "REDIRECT.*169.254.169.254" "${CITELLUS_ROOT}/sos_commands/networking/iptables_-t_nat_-nvL" ; then
-      exit $RC_OKAY
-    else
-      exit $RC_FAILED
-    fi
+  is_required_file "${CITELLUS_ROOT}/sos_commands/networking/iptables_-t_nat_-nvL"
+  if grep -q "REDIRECT.*169.254.169.254" "${CITELLUS_ROOT}/sos_commands/networking/iptables_-t_nat_-nvL" ; then
+    exit $RC_OKAY
   else
-    echo "works on director node only" >&2
-    exit $RC_SKIPPED
+    exit $RC_FAILED
   fi
 fi

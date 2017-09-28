@@ -17,10 +17,12 @@
 
 # this can run against live and also any sort of snapshot of the filesystem
 
-if [ ! -f "${CITELLUS_ROOT}/var/log/httpd/error_log" ]; then
-  echo "file /var/log/httpd/error_log not found." >&2
-  exit $RC_SKIPPED
-fi
+
+# Load common functions
+[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
+
+is_required_file "${CITELLUS_ROOT}/var/log/httpd/error_log"
+
 if grep -q "MaxRequestWorkers" "${CITELLUS_ROOT}/var/log/httpd/error_log"; then
   echo "https://bugzilla.redhat.com/show_bug.cgi?id=1406417" >&2
   exit $RC_FAILED
