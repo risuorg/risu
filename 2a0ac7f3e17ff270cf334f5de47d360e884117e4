@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a951f1b5_e6c3a633",
+        "filename": "citellus/plugins/system/clock-1-chrony.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1011950
+      },
+      "writtenOn": "2017-09-28T05:57:16Z",
+      "side": 1,
+      "message": "echo \"chronyd is not active\" \u003e\u00262",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 32
+      },
+      "revId": "2a0ac7f3e17ff270cf334f5de47d360e884117e4",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
