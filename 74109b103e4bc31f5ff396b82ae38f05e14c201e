@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3cbbc8d7_a0b7c435",
+        "filename": "citellus/plugins/openstack/iptables/metadata_redirect.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1011950
+      },
+      "writtenOn": "2017-09-28T14:25:45Z",
+      "side": 1,
+      "message": "if (( ! is_rpm tripleo-heat-templates \u0026\u0026 is_rpm python-tripleoclient ));",
+      "revId": "74109b103e4bc31f5ff396b82ae38f05e14c201e",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
