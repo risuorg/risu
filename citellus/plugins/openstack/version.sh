@@ -17,35 +17,15 @@
 
 # if we are running against fs snapshot we check installed-rpms
 
-discover_version(){
-case ${VERSION} in
-  openstack-nova-common-2014.*) echo "juno" ;;
-  openstack-nova-common-2015.*) echo "kilo" ;;
-  openstack-nova-common-12.*) echo "liberty" ;;
-  openstack-nova-common-13.*) echo "mitaka" ;;
-  openstack-nova-common-14.*) echo "newton" ;;
-  openstack-nova-common-15.*) echo "ocata" ;;
-  openstack-nova-common-16.*) echo "pike" ;;
-  *) echo "not recognized" ;;
-esac
+# Load common functions
+[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
+
+# Check which version we are using
+name_osp_version >&2
+PACKSTACK=$(is_rpm "openstack-packstack-")
 if [ ! -z $PACKSTACK ]; then
-  echo "packstack detected"
+  echo "packstack detected" >&2
   exit $RC_FAILED
 else
   exit $RC_OKAY
 fi
-}
-
-{ if [ "x$CITELLUS_LIVE" = "x0" ];  then
-  # Check which version we are using
-  VERSION=$(grep "openstack-nova-common" "${CITELLUS_ROOT}/installed-rpms")
-  PACKSTACK=$(grep "openstack-packstack-" "${CITELLUS_ROOT}/installed-rpms")
-  discover_version
-fi } >&2
-
-{ if [ "x$CITELLUS_LIVE" = "x1" ];  then
-  # Check which version we are using
-  VERSION=$(rpm -qa | grep "openstack-nova-common")
-  PACKSTACK=$(rpm -qa | grep "openstack-packstack-")
-  discover_version
-fi } >&2
