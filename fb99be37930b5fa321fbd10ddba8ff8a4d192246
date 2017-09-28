@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d9c4a0d_c26ddfa8",
+        "filename": "citellus/plugins/openstack/mysql/mysql_db_size.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2017-09-28T13:46:20Z",
+      "side": 1,
+      "message": "My concern here is that this test might run against the system where an offline sosreport is being in use, I would add something like:\n\nif [ \"x$CITELLUS_LIVE\" \u003d \"x1\" ];  then\n    ALL THE LINES IN YOUR SCRIPT\nelif [ \"x$CITELLUS_LIVE\" \u003d \"x0\" ];  then\n  echo \"only runs on live system\" \u003e\u00262\n  exit $RC_SKIPPED\nfi",
+      "revId": "fb99be37930b5fa321fbd10ddba8ff8a4d192246",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
