@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30dcaf8f_72cbc316",
+        "filename": "citellus/plugins/system/clock-0-ntp-services.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1011950
+      },
+      "writtenOn": "2017-09-28T06:07:35Z",
+      "side": 1,
+      "message": "What happens if chrony and ntpd are active at the same time ?\n\nif [[ 1 -eq 1 || 1 -eq 1 ]] ; then echo \"OK\"; else echo \"NOK\";fi\n\nOK\n\nBefore it failed. I agree there was a wrong text, it should be \"both chrony and ntpd are active.\n\nThen\nif (( ! ( ntpd_active || chronyd_active ) )) ; then echo \"NOK\"; fi\n\nThat checked if any of them is active.\n\nThen\nif (( ntpd_active \u0026\u0026 chronyd_active ))l then echo \"NOK\"; fi\n\nWhat we have now is OK with ||",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 2
+      },
+      "revId": "980f552c7e7cf4f283a08b910bd8cee08c2b578d",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
