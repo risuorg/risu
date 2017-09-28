@@ -22,41 +22,24 @@
 
 : ${CITELLUS_MAX_CLOCK_OFFSET:=1000}
 
-is_active() {
-    systemctl is-active "$@" > /dev/null 2>&1
-}
+if ! is_active ntpd ; then
+  echo "ntpd is not active" >&2
+  exit $RC_FAILED
+fi
+
+is_required_file "${CITELLUS_ROOT}/etc/ntp.conf"
+grep "^server" "${CITELLUS_ROOT}/etc/ntp.conf" >&2
 
 if [[ $CITELLUS_LIVE = 0 ]]; then
-  if [ -z "${systemctl_list_units_file}" ]; then
-    echo "file /sos_commands/systemd/systemctl_list-units not found." >&2
-    echo "file /sos_commands/systemd/systemctl_list-units_--all not found." >&2
-    exit $RC_SKIPPED
-  else
-    if ! grep -q "ntpd.* active" "${systemctl_list_units_file}"; then
-      echo "no ntp service is active" >&2
-      exit $RC_FAILED
-    fi
+  is_required_file "${CITELLUS_ROOT}/sos_commands/ntp/ntpq_-p"
+
+  if grep -q "Connection refused" "${CITELLUS_ROOT}/sos_commands/ntp/ntpq_-p"; then
+    echo "ntpq: read: Connection refused" >&2
+    exit $RC_FAILED
   fi
 
-  if [ ! -f "${CITELLUS_ROOT}/sos_commands/ntp/ntpq_-p" ]; then
-    echo "file /sos_commands/ntp/ntpq_-p not found." >&2
-    exit $RC_SKIPPED
-  else
-    if grep -q "Connection refused" "${CITELLUS_ROOT}/sos_commands/ntp/ntpq_-p"; then
-      echo "ntpq: read: Connection refused" >&2
-      exit $RC_FAILED
-    fi
-  fi
-  if [ ! -f "${CITELLUS_ROOT}/etc/ntp.conf" ]; then
-    echo "file /etc/ntp.conf not found." >&2
-    exit $RC_SKIPPED
-  else
-    grep "^server" "${CITELLUS_ROOT}/etc/ntp.conf" >&2
-  fi
-  if [ ! -f "${CITELLUS_ROOT}/sos_commands/ntp/ntpq_-p" ]; then
-    echo "file /sos_commands/ntp/ntpq_-p not found." >&2
-    exit $RC_SKIPPED
-  fi
+  is_required_file "${CITELLUS_ROOT}/sos_commands/ntp/ntpq_-p"
+
   offset=$(awk '/^\*/ {print $9}' "${CITELLUS_ROOT}/sos_commands/ntp/ntpq_-p")
   echo "clock offset is $offset ms" >&2
 
@@ -65,21 +48,9 @@ if [[ $CITELLUS_LIVE = 0 ]]; then
 
   [[ "x$RC" = "x1" ]] && exit $RC_OKAY || exit $RC_FAILED
 else
-  if ! is_active ntpd; then
-      echo "ntpd is not active" >&2
-      exit $RC_SKIPPED
-  fi
 
-  if ! [[ -x /usr/bin/bc ]]; then
-      echo "this check requires /usr/bin/bc" >&2
-      exit $RC_SKIPPED
-  fi
-  if [ ! -f "${CITELLUS_ROOT}/etc/ntp.conf" ]; then
-    echo "file /etc/ntp.conf not found." >&2
-    exit $RC_SKIPPED
-  else
-    grep "^server" "${CITELLUS_ROOT}/etc/ntp.conf" >&2
-  fi
+  is_required_file /usr/bin/bc
+
   if ! out=$(ntpq -c peers); then
       echo "failed to contact ntpd" >&2
       exit $RC_FAILED

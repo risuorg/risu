@@ -20,50 +20,26 @@
 
 # adapted from https://github.com/larsks/platypus/blob/master/bats/system/test_clock.bats
 
-is_active() {
-    systemctl is-active "$@" > /dev/null 2>&1
-}
-
-if [[ $CITELLUS_LIVE = 0 ]]; then
-  if [ -z "${systemctl_list_units_file}" ]; then
-    echo "file /sos_commands/systemd/systemctl_list-units not found." >&2
-    echo "file /sos_commands/systemd/systemctl_list-units_--all not found." >&2
-    exit $RC_SKIPPED
-  else
-    if ! grep -q "ntpd.* active" "${systemctl_list_units_file}"; then
-      ntpd=1
-    fi
-    if ! grep -q "chronyd.* active" "${systemctl_list_units_file}"; then
-      chronyd=1
-    fi
-    if [[ "x$ntpd" = "x1" && "x$chrony" = "x1" ]]; then
-      echo "both chrony and ntpd are not active" >&2
-      exit $RC_FAILED
-    elif [[ "x$ntpd" = "x1" ]]; then
-      echo "no ntpd service is active" >&2
-      exit $RC_FAILED
-    elif [[ "x$chronyd" = "x1" ]]; then
-      echo "no chrony service is active" >&2
-      exit $RC_FAILED
-    else
-      exit $RC_OKAY
-    fi
-  fi
+if is_active ntpd; then
+  ntpd=1
 else
-  ! is_active chronyd
-  chronyd_active=$?
-
-  ! is_active ntpd
-  ntpd_active=$?
-
-  if (( ! (ntpd_active || chronyd_active) )); then
-      echo "no ntp service is active" >&2
-      exit $RC_FAILED
-  fi
-
-  if (( ntpd_active && chronyd_active )); then
-      echo "both chrony and ntpd are not active" >&2
-      exit $RC_FAILED
-  fi
-  exit $RC_OKAY
+  ntpd=0
 fi
+
+if is_active chronyd ; then
+  chronyd=1
+else
+  chronyd=0
+fi
+
+if [[ ntpd -eq 1 && chronyd -eq 1 ]] ; then
+  echo "both ntpd and chrony are active" >&2
+  exit $RC_FAILED
+elif [[ ntpd -eq 1 || chronyd -eq 1 ]] ; then
+  exit $RC_OKAY
+else
+  echo "both chrony or ntpd are not active" >&2
+  exit $RC_FAILED
+fi
+
+exit $RC_SKIPPED
