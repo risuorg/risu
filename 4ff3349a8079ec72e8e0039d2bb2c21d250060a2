@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8917f18_7f9bf063",
+        "filename": "citellus/plugins/bugzilla/ceilometer_bug_1483456.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1005261
+      },
+      "writtenOn": "2017-09-28T10:37:19Z",
+      "side": 1,
+      "message": "I\u0027d use crudini for this, avoids the awkward shell calls.",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 85
+      },
+      "revId": "4ff3349a8079ec72e8e0039d2bb2c21d250060a2",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
