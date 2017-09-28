@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de459f6d_9ea92865",
+        "filename": "citellus/common-functions.sh",
+        "patchSetId": 7
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1011950
+      },
+      "writtenOn": "2017-09-28T14:25:45Z",
+      "side": 1,
+      "message": "typo discover_osP_version",
+      "range": {
+        "startLine": 99,
+        "startChar": 0,
+        "endLine": 99,
+        "endChar": 29
+      },
+      "revId": "18773bf5301924daa97628a0bbde517bd999a7c5",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
