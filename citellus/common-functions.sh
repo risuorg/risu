@@ -42,6 +42,8 @@ fi
 is_required_file() {
   for file in "$@"; do
     if [[ ! -f $file ]];  then
+      # to remove the ${CITELLUS_ROOT} from the stderr.
+      file=${file#$CITELLUS_ROOT}
       echo "required file $file not found." >&2
       exit $RC_SKIPPED
     fi
