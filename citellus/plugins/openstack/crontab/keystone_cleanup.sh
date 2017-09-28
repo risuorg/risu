@@ -17,41 +17,15 @@
 
 # this can run against live and also any sort of snapshot of the filesystem
 
-# Version function cloned from version.sh
-discover_version(){
-case ${VERSION} in
-  openstack-nova-common-2014.*) echo 6 ;;
-  openstack-nova-common-2015.*) echo 7 ;;
-  openstack-nova-common-12.*) echo 8 ;;
-  openstack-nova-common-13.*) echo 9 ;;
-  openstack-nova-common-14.*) echo 10 ;;
-  openstack-nova-common-15.*) echo 11 ;;
-  openstack-nova-common-16.*) echo 12 ;;
-  *) echo 0 ;;
-esac
-}
+
+# Load common functions
+[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 
 # Find release to report which bug to check
-if [ "x$CITELLUS_LIVE" = "x0" ];  then
-  # Check which version we are using
-  if [ -f ${CITELLUS_ROOT}/installed-rpms ];
-  then
-    VERSION=$(grep "openstack-nova-common" "${CITELLUS_ROOT}/installed-rpms")
-    RELEASE=$(discover_version)
-  else
-    echo "missing required file /installed-rpms" >&2
-    exit $RC_SKIPPED
-  fi
-elif [ "x$CITELLUS_LIVE" = "x1" ];  then
-  # Check which version we are using
-  VERSION=$(rpm -qa | grep "openstack-nova-common")
-  RELEASE=$(discover_version)
-fi
+RELEASE=$(discover_osp_version)
 
-if [ ! -f "${CITELLUS_ROOT}/var/spool/cron/keystone" ]; then
-  echo "file /var/spool/cron/keystone not found." >&2
-  exit $RC_SKIPPED
-fi
+is_required_file "${CITELLUS_ROOT}/var/spool/cron/keystone"
+
 if ! awk '/keystone-manage token_flush/ && /^[^#]/ { print $0 }' "${CITELLUS_ROOT}/var/spool/cron/keystone"; then
   echo "crontab keystone cleanup is not set" >&2
   exit $RC_FAILED
