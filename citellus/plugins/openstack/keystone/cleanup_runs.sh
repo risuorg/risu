@@ -17,6 +17,9 @@
 
 # this can run against live and also fs snapshot
 
+# Load common functions
+[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
+
 if [ "x$CITELLUS_LIVE" = "x0" ];  then
   if grep -q nova-compute "${CITELLUS_ROOT}/ps";
   then
@@ -30,10 +33,7 @@ elif [ "x$CITELLUS_LIVE" = "x1" ];  then
   fi
 fi
 
-if [ ! -f "${CITELLUS_ROOT}/var/log/keystone/keystone.log" ]; then
-  echo "file /var/log/keystone/keystone.log not found." >&2
-  exit $RC_SKIPPED
-fi
+is_required_file "${CITELLUS_ROOT}/var/log/keystone/keystone.log" 
 
 RUNS=$(grep 'Total expired tokens removed' "${CITELLUS_ROOT}/var/log/keystone/keystone.log" | wc -l)
 
