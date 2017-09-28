@@ -14,16 +14,13 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
+# Load common functions
+[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 
 checksettings(){
 FILE=${CITELLUS_ROOT}/etc/cinder/cinder.conf
 
-if [ ! -f $FILE ];
-then
-    # Skip test if file is missing
-    echo "${FILE#$CITELLUS_ROOT} does not exist" >&2
-    exit $RC_SKIPPED
-fi
+is_required_file $FILE
 
 RC=$RC_OKAY
 substring=cinder.volume.drivers.lvm.LVM
@@ -50,28 +47,11 @@ done
 
 # Actually run the check
 
-if [ "x$CITELLUS_LIVE" = "x0" ];  then
-  # Check which version we are using
-  if [ -f ${CITELLUS_ROOT}/installed-rpms ];
-  then
-    if grep -q nova-compute "${CITELLUS_ROOT}/ps";
-    then
-      echo "works only on controller node" >&2
-      exit $RC_SKIPPED
-    fi
-    checksettings
-    exit $RC
-  else
-    echo "Missing required file /installed-rpms" >&2
-    exit $RC_SKIPPED
-  fi
-elif [ "x$CITELLUS_LIVE" = "x1" ];  then
-  # Check which version we are using
-  if ps -elf | grep -q [n]ova-compute;
-  then
-    echo "works only on controller node" >&2
-    exit $RC_SKIPPED
-  fi
-  checksettings
-  exit $RC
+is_required_file ${CITELLUS_ROOT}/ps
+
+if is_process nova-compute; then
+  echo "works only on controller node" >&2
+  exit $RC_SKIPPED
 fi
+checksettings
+exit $RC
