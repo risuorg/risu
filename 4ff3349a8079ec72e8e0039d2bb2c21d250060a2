@@ -22,6 +22,30 @@
       "revId": "4ff3349a8079ec72e8e0039d2bb2c21d250060a2",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "273d3d4b_29a6b129",
+        "filename": "citellus/plugins/bugzilla/ceilometer_bug_1483456.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1011950
+      },
+      "writtenOn": "2017-09-28T11:20:42Z",
+      "side": 1,
+      "message": "How about doing\n\nawk -F \"\u003d\" \u0027/^host/ {gsub (\" \", \"\", $0); print tolower($2)}\u0027 \"${CITELLUS_ROOT}/etc/nova/nova.conf\"",
+      "parentUuid": "b8917f18_7f9bf063",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 85
+      },
+      "revId": "4ff3349a8079ec72e8e0039d2bb2c21d250060a2",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
     }
   ]
 }
