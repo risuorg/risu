@@ -17,10 +17,10 @@
 
 # this can run against live and also fs snapshot
 
-if [ ! -f "${CITELLUS_ROOT}/var/log/keystone/keystone.log" ]; then
-  echo "file /var/log/keystone/keystone.log not found." >&2
-  exit $RC_SKIPPED
-fi
+# Load common functions
+[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
+
+is_required_file "${CITELLUS_ROOT}/var/log/keystone/keystone.log"
 
 LASTRUN=$(awk '/Total expired tokens removed/ { print $1 " " $2 }' "${CITELLUS_ROOT}/var/log/keystone/keystone.log" | tail -1)
 [[ "x${LASTRUN}" = "x" ]] && exit $RC_FAILED || echo "${LASTRUN}" >&2 && exit $RC_OKAY
