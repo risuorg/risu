@@ -16,6 +16,74 @@
       "revId": "fb99be37930b5fa321fbd10ddba8ff8a4d192246",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9f0f36aa_18e592f5",
+        "filename": "citellus/plugins/openstack/mysql/mysql_db_size.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2017-09-28T13:48:41Z",
+      "side": 1,
+      "message": "move echo to next line?",
+      "revId": "fb99be37930b5fa321fbd10ddba8ff8a4d192246",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5da6a10c_1d9b2ccb",
+        "filename": "citellus/plugins/openstack/mysql/mysql_db_size.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2017-09-28T13:48:41Z",
+      "side": 1,
+      "message": "fix ident",
+      "revId": "fb99be37930b5fa321fbd10ddba8ff8a4d192246",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f8d68afe_dc39b725",
+        "filename": "citellus/plugins/openstack/mysql/mysql_db_size.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2017-09-28T13:48:41Z",
+      "side": 1,
+      "message": "move var to next line? and move \u0027then\u0027 to be same level as if?",
+      "revId": "fb99be37930b5fa321fbd10ddba8ff8a4d192246",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "91ba564e_331ee47e",
+        "filename": "citellus/plugins/openstack/mysql/mysql_db_size.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2017-09-28T13:48:41Z",
+      "side": 1,
+      "message": "identation",
+      "revId": "fb99be37930b5fa321fbd10ddba8ff8a4d192246",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
     }
   ]
 }
