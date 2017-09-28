@@ -17,11 +17,12 @@
 
 # this can run against live and also any sort of snapshot of the filesystem
 
-if ! ls "${CITELLUS_ROOT}/etc/httpd/conf.d/*-horizon_vhost.conf" >/dev/null 2>&1;
+if [[ $(ls ${CITELLUS_ROOT}/etc/httpd/conf.d/|grep horizon_vhost|wc -l) -eq "0" ]] ;
  then
   echo "No horizon-vhost httpd config found, skipped" >&2
   exit $RC_SKIPPED
-fi;
+fi
+
 if grep -Pq "WSGIApplicationGroup \%\{GLOBAL\}" "${CITELLUS_ROOT}/etc/httpd/conf.d/*-horizon_vhost.conf"; then
   echo "https://bugzilla.redhat.com/show_bug.cgi?id=1478042" >&2
   exit $RC_FAILED
