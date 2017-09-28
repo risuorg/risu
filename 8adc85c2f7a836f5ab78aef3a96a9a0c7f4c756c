@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5cfa6bc_6679ee0a",
+        "filename": "citellus/plugins/openstack/mysql/mysql_db_size.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1011950
+      },
+      "writtenOn": "2017-09-28T21:05:08Z",
+      "side": 1,
+      "message": "Is this necessary if we keep the table output with headers?",
+      "revId": "8adc85c2f7a836f5ab78aef3a96a9a0c7f4c756c",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
