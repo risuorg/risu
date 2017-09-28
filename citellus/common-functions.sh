@@ -61,9 +61,9 @@ is_active() {
 
 is_rpm(){
   if [ "x$CITELLUS_LIVE" = "x1" ];  then
-    rpm -qa *$1*|grep -q "$1"
+    rpm -qa *$1*|grep "$1"
   elif [ "x$CITELLUS_LIVE" = "x0" ];  then
-    grep -q "$1" "${CITELLUS_ROOT}/installed-rpms";
+    grep "$1" "${CITELLUS_ROOT}/installed-rpms"|awk '{print $1}';
   fi
 }
 
@@ -75,7 +75,8 @@ is_required_rpm(){
 }
 
 discover_osp_version(){
-  case $1 in
+  RPM=$(is_rpm openstack-nova-common)
+  case ${RPM} in
     openstack-nova-common-2014.*) echo 6 ;;
     openstack-nova-common-2015.*) echo 7 ;;
     openstack-nova-common-12.*) echo 8 ;;
@@ -85,4 +86,26 @@ discover_osp_version(){
     openstack-nova-common-16.*) echo 12 ;;
     *) echo 0 ;;
   esac
+}
+
+name_osp_version(){
+  RPM=$(is_rpm openstack-nova-common)
+  case ${RPM} in
+    openstack-nova-common-2014.*) echo "juno" ;;
+    openstack-nova-common-2015.*) echo "kilo" ;;
+    openstack-nova-common-12.*) echo "liberty" ;;
+    openstack-nova-common-13.*) echo "mitaka" ;;
+    openstack-nova-common-14.*) echo "newton" ;;
+    openstack-nova-common-15.*) echo "ocata" ;;
+    openstack-nova-common-16.*) echo "pike" ;;
+    *) echo "not recognized" ;;
+  esac
+}
+
+is_process(){
+  if [ "x$CITELLUS_LIVE" = "x1" ];  then
+    ps -elf | grep -q "$1"
+  elif [ "x$CITELLUS_LIVE" = "x0" ];  then
+    grep -q "$1" "${CITELLUS_ROOT}/ps";
+  fi
 }
