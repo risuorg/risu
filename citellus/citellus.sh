@@ -26,6 +26,15 @@ TEST_FAILED=$(tput setaf 1; echo "failed"; tput sgr0)
 TEST_WTF=$(tput setaf 1; echo "unexpected result"; tput sgr0)
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
+# Add the extra vars we added on citelus.py to keep some
+# level of compatibility for this script to keep working as fallback
+
+export CITELLUS_BASE=${DIR}
+export RC_OKAY=10
+export RC_FAILED=20
+export RC_SKIPPED=30
+
+
 scriptname() {
     echo "${0##*/}: $1" >&2
 }
@@ -116,11 +125,11 @@ while read test; do
     )
     result=$?
 
-    if [[ $result -eq 0 ]]; then
+    if [[ $result -eq $RC_OKAY ]]; then
         echo $TEST_OKAY
-    elif [[ $result -eq 2 ]]; then
+    elif [[ $result -eq $RC_SKIPPED ]]; then
         echo $TEST_SKIPPED
-    elif [[ $result -eq 1 ]]; then
+    elif [[ $result -eq $RC_FAILED ]]; then
         echo $TEST_FAILED
         show_stderr
     else
