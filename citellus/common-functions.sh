@@ -109,3 +109,9 @@ is_process(){
     grep -q "$1" "${CITELLUS_ROOT}/ps";
   fi
 }
+
+is_lineinfile(){
+  # $1: file
+  # $2: regexp
+  [ -f "$1"] && egrep -q "$2" "$1"
+}
