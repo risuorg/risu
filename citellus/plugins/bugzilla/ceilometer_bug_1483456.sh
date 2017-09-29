@@ -20,20 +20,26 @@
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 
-is_required_file "${CITELLUS_ROOT}/etc/nova/nova.conf"
+if is_process nova-compute;
+then
 
-if [ "x$CITELLUS_LIVE" = "x1" ];  then
-  HOST=$(hostname)
-elif [ "x$CITELLUS_LIVE" = "x0" ];  then
-  is_required_file "${CITELLUS_ROOT}/hostname"
-  HOST=$(cat "${CITELLUS_ROOT}/hostname")
-fi
+  is_required_file "${CITELLUS_ROOT}/etc/nova/nova.conf"
 
-NOVAHOST=$(grep ^host.* "${CITELLUS_ROOT}/etc/nova/nova.conf"|cut -d "=" -f2|tail -1)
+  if [ "x$CITELLUS_LIVE" = "x1" ];  then
+    HOST=$(hostname)
+  elif [ "x$CITELLUS_LIVE" = "x0" ];  then
+    is_required_file "${CITELLUS_ROOT}/hostname"
+    HOST=$(cat "${CITELLUS_ROOT}/hostname")
+  fi
 
-if [[ "$HOST" != "$NOVAHOST" ]]; then
-  echo "https://bugzilla.redhat.com/show_bug.cgi?id=1483456" >&2
-  exit $RC_FAILED
+  NOVAHOST=$(grep ^host.* "${CITELLUS_ROOT}/etc/nova/nova.conf"|cut -d "=" -f2|tail -1)
+
+  if [[ "$HOST" != "$NOVAHOST" ]]; then
+    echo "https://bugzilla.redhat.com/show_bug.cgi?id=1483456" >&2
+    exit $RC_FAILED
+  else
+    exit $RC_OKAY
+  fi
 else
-  exit $RC_OKAY
+  exit $RC_SKIPPED
 fi
