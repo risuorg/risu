@@ -89,7 +89,7 @@ discover_osp_version(){
 }
 
 name_osp_version(){
-  RPM=$(discover_osp_version)
+  VERSION=$(discover_osp_version)
   case ${VERSION} in
     6) echo "juno" ;;
     7) echo "kilo" ;;
