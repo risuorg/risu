@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "022b4ec3_fd1defc2",
+        "filename": "citellus/plugins/openstack/debug.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2017-10-02T19:03:06Z",
+      "side": 1,
+      "message": "What about using is_lineinfile here?",
+      "revId": "f8c282864fc19f8233deefe87c7bdd431a53a15e",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
