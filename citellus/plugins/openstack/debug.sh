@@ -15,6 +15,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+# Load common functions
+[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
+
 # if we are running against live system or fs snapshot
 
 if [ "x$CITELLUS_LIVE" = "x1" ];  then
@@ -34,10 +37,10 @@ for config_file in $config_files; do
     # to remove the ${CITELLUS_ROOT} from the stderr.
     config_file=${config_file#$CITELLUS_ROOT}
     echo "enabled in $config_file" >&2
-    flag=1
   else
     config_file=${config_file#$CITELLUS_ROOT}
     echo "disabled in $config_file" >&2
+    flag=1
   fi
 done
-[[ "x$flag" = "x" ]] && exit $RC_OKAY || exit $RC_FAILED
+[[ "x$flag" = "x1" ]] && exit $RC_FAILED || exit $RC_OKAY
