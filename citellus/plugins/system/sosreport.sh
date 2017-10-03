@@ -17,38 +17,41 @@
 
 # we can run this against fs snapshot or live system
 
-
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 
 is_required_rpm sos
 
-VERSIONS=$(is_rpm sos)
-
 exitoudated(){
-  echo "outdated sosreport packages: please do update sos package to ensure required info is collected" >&2
+  echo "outdated sosreport package <3.4-6: please do update sos package to ensure required info is collected" >&2
   exit $RC_FAILED
 }
 
 # Latest sos for el7.4 is 3.4-6.el7
-for package in ${VERSIONS}
-do
-  MAJOR=$(echo $package|cut -d "-" -f1)
-  MID=$(echo $package|cut -d "-" -f2)
-  MINOR=$(echo $package|cut -d "-" -f3)
-  if [[ "${MAJOR}" -ge "3" ]]
+if [ "x$CITELLUS_LIVE" = "x1" ]; then
+  MAJOR=$(rpm -qa sos | sed -n -r -e 's/^sos.*-([0-9]+).[0-9]+-[0-9]+.*$/\1/p')
+  MID=$(rpm -qa sos | sed -n -r -e 's/^sos.*-[0-9]+.([0-9]+)-[0-9]+.*$/\1/p')
+  MINOR=$(rpm -qa sos | sed -n -r -e 's/^sos.*-[0-9]+.[0-9]+-([0-9]+).*$/\1/p')
+elif [ "x$CITELLUS_LIVE" = "x0" ]; then
+  is_required_file "${CITELLUS_ROOT}/installed-rpms"
+
+  MAJOR=$(sed -n -r -e 's/^sos.*-([0-9]+).[0-9]+-[0-9]+.*$/\1/p' "${CITELLUS_ROOT}/installed-rpms")
+  MID=$(sed -n -r -e 's/^sos.*-[0-9]+.([0-9]+)-[0-9]+.*$/\1/p' "${CITELLUS_ROOT}/installed-rpms")
+  MINOR=$(sed -n -r -e 's/^sos.*-[0-9]+.[0-9]+-([0-9]+).*$/\1/p' "${CITELLUS_ROOT}/installed-rpms")
+fi
+
+if [[ "${MAJOR}" -ge "3" ]]
+then
+  if [[ "${MID}" -ge "4" ]]
   then
-    if [[ "${MID}" -ge "4" ]]
+    if [[ "${MINOR}" -lt "6" ]]
     then
-      if [[ "${MINOR}" -lt "6" ]]
-      then
-        exitoudated
-      fi
-    else
       exitoudated
     fi
   else
     exitoudated
   fi
-done
+else
+  exitoudated
+fi
 exit $RC_OKAY
