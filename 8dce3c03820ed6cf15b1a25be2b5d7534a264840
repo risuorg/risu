@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96ece10d_b4b02501",
+        "filename": "citellus/plugins/system/sosreport.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2017-10-03T15:35:18Z",
+      "side": 1,
+      "message": "what about if major \u003e 3, mid \u003d4, minor \u003d 7?? It will exit without RC_OKAY",
+      "revId": "8dce3c03820ed6cf15b1a25be2b5d7534a264840",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1fd7f5ea_f388f8fc",
+        "filename": "citellus/plugins/system/sosreport.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2017-10-03T15:35:18Z",
+      "side": 1,
+      "message": "same here...",
+      "revId": "8dce3c03820ed6cf15b1a25be2b5d7534a264840",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
