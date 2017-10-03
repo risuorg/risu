@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "38c11ad8_65e9e987",
+        "filename": "citellus/plugins/system/sosreport.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1011950
+      },
+      "writtenOn": "2017-10-03T17:53:36Z",
+      "side": 1,
+      "message": "I don\u0027t think that\u0027s right. Check this:\n\nsos-3.4-7.el7_3.noarch                                      Tue Feb 28 17:14:54 2017\n\n++ sed -n -r -e \u0027s/^sos.*-([0-9]+).[0-9]+-[0-9]+.*$/\\1/p\u0027 installed-rpms\n+ MAJOR\u003d3\n++ sed -n -r -e \u0027s/^sos.*-[0-9]+.([0-9]+)-[0-9]+.*$/\\1/p\u0027 installed-rpms\n+ MID\u003d4\n++ sed -n -r -e \u0027s/^sos.*-[0-9]+.[0-9]+-([0-9]+).*$/\\1/p\u0027 installed-rpms\n+ MINOR\u003d7\n+ [[ 3 -ge 3 ]]\n+ [[ 4 -ge 4 ]]\n+ [[ 7 -lt 6 ]]\n+ exit\n\n# /home/rcernin/Github/citellus/citellus/plugins/system/sosreport.sh: okay\n\nCan you verify this please and please post the reproducer.",
+      "parentUuid": "96ece10d_b4b02501",
+      "revId": "8dce3c03820ed6cf15b1a25be2b5d7534a264840",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1fd7f5ea_f388f8fc",
         "filename": "citellus/plugins/system/sosreport.sh",
         "patchSetId": 5
