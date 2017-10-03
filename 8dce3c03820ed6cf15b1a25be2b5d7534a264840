@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "d135df87_c139f144",
+        "filename": "citellus/plugins/system/sosreport.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2017-10-03T19:49:15Z",
+      "side": 1,
+      "message": "Doing rpm -qa three times takes a bit of time for processing.\n\nWhat about or using is_rpm sos which is valid for all LIVE and not:\n\n iranzo  ~  export CITELLUS_LIVE\u003d1\n iranzo  ~  is_rpm sos\nsos-3.4-1.fc26.noarch\n\nAnd use the output on a variable and parse that variable for \u0027seds\u0027 for Major, Minor and mid?\n\nWith that, we could unify the code for both and also make it \u0027faster\u0027",
+      "revId": "8dce3c03820ed6cf15b1a25be2b5d7534a264840",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "96ece10d_b4b02501",
         "filename": "citellus/plugins/system/sosreport.sh",
         "patchSetId": 5
@@ -31,6 +48,24 @@
       "side": 1,
       "message": "I don\u0027t think that\u0027s right. Check this:\n\nsos-3.4-7.el7_3.noarch                                      Tue Feb 28 17:14:54 2017\n\n++ sed -n -r -e \u0027s/^sos.*-([0-9]+).[0-9]+-[0-9]+.*$/\\1/p\u0027 installed-rpms\n+ MAJOR\u003d3\n++ sed -n -r -e \u0027s/^sos.*-[0-9]+.([0-9]+)-[0-9]+.*$/\\1/p\u0027 installed-rpms\n+ MID\u003d4\n++ sed -n -r -e \u0027s/^sos.*-[0-9]+.[0-9]+-([0-9]+).*$/\\1/p\u0027 installed-rpms\n+ MINOR\u003d7\n+ [[ 3 -ge 3 ]]\n+ [[ 4 -ge 4 ]]\n+ [[ 7 -lt 6 ]]\n+ exit\n\n# /home/rcernin/Github/citellus/citellus/plugins/system/sosreport.sh: okay\n\nCan you verify this please and please post the reproducer.",
       "parentUuid": "96ece10d_b4b02501",
+      "revId": "8dce3c03820ed6cf15b1a25be2b5d7534a264840",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "45a2ac79_e5689669",
+        "filename": "citellus/plugins/system/sosreport.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2017-10-03T19:49:15Z",
+      "side": 1,
+      "message": "Yup, sorry my bad.",
+      "parentUuid": "38c11ad8_65e9e987",
       "revId": "8dce3c03820ed6cf15b1a25be2b5d7534a264840",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": false
