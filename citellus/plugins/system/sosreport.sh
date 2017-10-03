@@ -17,37 +17,31 @@
 
 # we can run this against fs snapshot or live system
 
-
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 
 is_required_rpm sos
 
-VERSIONS=$(is_rpm sos)
-
 exitoudated(){
-  echo "outdated sosreport packages: please do update sos package to ensure required info is collected" >&2
+  echo "outdated sosreport package <3.4-6: please do update sos package to ensure required info is collected" >&2
   exit $RC_FAILED
 }
 
 # Latest sos for el7.4 is 3.4-6.el7
-for package in ${VERSIONS}
+if [ "x$CITELLUS_LIVE" = "x1" ]; then
+  SOS_VERSION=$(rpm -qa sos | sed -n -r -e 's/^sos.*-3.4-([0-9]+).*$/\1/p')
+elif [ "x$CITELLUS_LIVE" = "x0" ]; then
+  SOS_VERSION=$(sed -n -r -e 's/^sos.*-3.4-([0-9]+).*$/\1/p' "${CITELLUS_ROOT}/installed-rpms")
+fi
+
+if [[ -z ${SOS_VERSION} ]]; then
+  exitoudated
+fi
+
+for package in ${SOS_VERSION}
 do
-  MAJOR=$(echo $package|cut -d "-" -f1)
-  MID=$(echo $package|cut -d "-" -f2)
-  MINOR=$(echo $package|cut -d "-" -f3)
-  if [[ "${MAJOR}" -ge "3" ]]
+  if [[ "${package}" -lt "6" ]]
   then
-    if [[ "${MID}" -ge "4" ]]
-    then
-      if [[ "${MINOR}" -lt "6" ]]
-      then
-        exitoudated
-      fi
-    else
-      exitoudated
-    fi
-  else
     exitoudated
   fi
 done
