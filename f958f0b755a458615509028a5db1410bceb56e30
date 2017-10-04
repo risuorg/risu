@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28d6ea1c_6fbbc4d2",
+        "filename": "citellus/plugins/pacemaker/stopped_resources.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2017-10-04T05:54:43Z",
+      "side": 1,
+      "message": "extra spaces here",
+      "revId": "f958f0b755a458615509028a5db1410bceb56e30",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
