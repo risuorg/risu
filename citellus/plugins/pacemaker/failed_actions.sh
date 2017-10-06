@@ -33,27 +33,22 @@ if [ "x$CITELLUS_LIVE" = "x1" ];  then
     exit $RC_SKIPPED
   fi
 elif [ "x$CITELLUS_LIVE" = "x0" ];  then
-  if [ -z "${systemctl_list_units_file}" ]; then
-    echo "file /sos_commands/systemd/systemctl_list-units not found." >&2
-    echo "file /sos_commands/systemd/systemctl_list-units_--all not found." >&2
-    exit $RC_SKIPPED
-  else
-    if grep -q "pacemaker.* active" "${systemctl_list_units_file}"; then
-      for CLUSTER_DIRECTORY in "pacemaker" "cluster"; do
-        if [ -d "${CITELLUS_ROOT}/sos_commands/${CLUSTER_DIRECTORY}" ]
-        then
-          PCS_DIRECTORY="${CITELLUS_ROOT}/sos_commands/${CLUSTER_DIRECTORY}"
-        fi
-      done
-      if grep -q "Failed Actions" "${PCS_DIRECTORY}/pcs_status"; then
-        awk -F" " '/^\*/ {print $2}'  "${PCS_DIRECTORY}/pcs_status" >&2
-        exit $RC_FAILED
-      else
-        exit $RC_OKAY
+  if is_active "pacemaker"; then
+    for CLUSTER_DIRECTORY in "pacemaker" "cluster"; do
+      if [ -d "${CITELLUS_ROOT}/sos_commands/${CLUSTER_DIRECTORY}" ]
+      then
+        PCS_DIRECTORY="${CITELLUS_ROOT}/sos_commands/${CLUSTER_DIRECTORY}"
       fi
+    done
+    is_required_file "${PCS_DIRECTORY}/pcs_status"
+    if is_lineinfile "${PCS_DIRECTORY}/pcs_status" "Failed Actions"; then
+      awk -F" " '/^\*/ {print $2}'  "${PCS_DIRECTORY}/pcs_status" >&2
+      exit $RC_FAILED
     else
-      echo "pacemaker is not running on this node" >&2
-      exit $RC_SKIPPED
+      exit $RC_OKAY
     fi
+  else
+    echo "pacemaker is not running on this node" >&2
+    exit $RC_SKIPPED
   fi
 fi
