@@ -39,6 +39,8 @@ if [[ $CITELLUS_LIVE = 0 ]]; then
   fi
 
   is_required_file "${CITELLUS_ROOT}/sos_commands/ntp/ntpq_-p"
+  is_lineinfile "${CITELLUS_ROOT}/sos_commands/ntp/ntpq_-p" "timed out" && \
+      echo "localhost: timed out, nothing received" >&2 && exit $RC_FAILED
 
   offset=$(awk '/^\*/ {print $9}' "${CITELLUS_ROOT}/sos_commands/ntp/ntpq_-p")
   echo "clock offset is $offset ms" >&2
