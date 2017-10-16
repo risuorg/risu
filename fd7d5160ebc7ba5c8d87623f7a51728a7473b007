@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d5d04e3_af162dde",
+        "filename": "citellus/plugins/openstack/mysql/mysql_db_size.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2017-10-16T05:13:09Z",
+      "side": 1,
+      "message": "Shouldn\u0027t it be without \u0027$\u0027 so we output the name and size or do we want to set the vars for later usage?\n\nApplies to next lines as well until 39 and 52",
+      "range": {
+        "startLine": 36,
+        "startChar": 14,
+        "endLine": 36,
+        "endChar": 15
+      },
+      "revId": "fd7d5160ebc7ba5c8d87623f7a51728a7473b007",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
