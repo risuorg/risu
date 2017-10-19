@@ -40,7 +40,7 @@ elif [ "x$CITELLUS_LIVE" = "x0" ];  then
       fi
     done
     is_required_file "${PCS_DIRECTORY}/pcs_config"
-    if is_lineinfile "${PCS_DIRECTORY}/pcs_config" "stonith-enabled:.*false"; then
+    if is_lineinfile "stonith-enabled:.*false" "${PCS_DIRECTORY}/pcs_config"; then
       exit $RC_FAILED
     else
       exit $RC_OKAY

@@ -95,8 +95,8 @@ location of various files. To use this script you can source it at the top:
         if is_process ntpd; then echo "NTP Running!";fi
         ~~~
 
-- `is_lineinfile $file $pattern` -- returns if pattern match is found in file
+- `is_lineinfile $pattern $files` -- returns if pattern match is found in file
     - Example:
         ~~~sh
-        if is_lineinfile "$config_file" "^debug[ \t]*=[ \t]*true"; then echo "Debug enabled."; fi
+        if is_lineinfile "^debug[ \t]*=[ \t]*true" "$config_file"; then echo "Debug enabled."; fi
         ~~~

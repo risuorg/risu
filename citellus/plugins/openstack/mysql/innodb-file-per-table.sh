@@ -21,7 +21,7 @@
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 
 is_required_file "${CITELLUS_ROOT}/etc/my.cnf.d/galera.cnf"
-if is_lineinfile "${CITELLUS_ROOT}/etc/my.cnf.d/galera.cnf" "^innodb_file_per_table[ \t]*=[ \t]*(ON|1)$"
+if is_lineinfile "^innodb_file_per_table[ \t]*=[ \t]*(ON|1)$" "${CITELLUS_ROOT}/etc/my.cnf.d/galera.cnf"
 then
   exit $RC_OKAY
 else
