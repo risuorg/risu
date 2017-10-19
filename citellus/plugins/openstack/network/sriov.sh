@@ -34,7 +34,15 @@ fi
 is_rpm tuned-profiles-cpu-partitioning || echo "missing rpm tuned-profiles-cpu-partitioning" >&2 && flag=1
 is_lineinfile "${CITELLUS_ROOT}/etc/tuned/cpu-partitioning-variables.conf" "^isolated_cores=.*" || echo "missing isolated_cores in /etc/tuned/cpu-partitioning-variables.conf" >&2  && flag=1
 
-is_lineinfile "${CITELLUS_ROOT}/lspci" "Virtual Function" || echo "virtual function is disabled" >&2 && flag=1
+if [ "x$CITELLUS_LIVE" = "x1" ];  then
+  if [ "$(lspci|grep Virtual Function|wc -l)" -eq "0" ];
+  then
+    echo "virtual function is disabled" >&2 && flag=1
+  fi
+elif [ "x$CITELLUS_LIVE" = "x0" ];  then
+  is_lineinfile "${CITELLUS_ROOT}/lspci" "Virtual Function" || echo "virtual function is disabled" >&2 && flag=1
+fi
+
 is_lineinfile "${CITELLUS_ROOT}/proc/modules" "vfio_iommu_type1" || echo "vfio_iommu module is not loaded" >&2 && flag=1
 is_lineinfile "${CITELLUS_ROOT}/sys/module/vfio_iommu_type1/parameters/allow_unsafe_interrupts" 'Y' || echo "unsafe interrupts not enabled" >&2 && flag=1
 
