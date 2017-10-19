@@ -113,5 +113,6 @@ is_process(){
 is_lineinfile(){
   # $1: file
   # $2: regexp
-  [ -f "$1" ] && egrep -iq "$2" "$1"
+  # $3-$*: additional files to check
+  [ -f "$1" ] && egrep -iq "$2" "$1" "${@:3}"
 }
