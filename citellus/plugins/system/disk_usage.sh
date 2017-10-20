@@ -15,15 +15,14 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# error if disk usage is greater than $CITELLUS_DISK_MAX_PERCENT
+# Load common functions
+[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 
+# error if disk usage is greater than $CITELLUS_DISK_MAX_PERCENT
 : ${CITELLUS_DISK_MAX_PERCENT=75}
 
 if [[ $CITELLUS_LIVE = 0 ]];  then
-  if [[ ! -f ${CITELLUS_ROOT}/df ]]; then
-    echo "file /df not found." >&2
-    exit $RC_SKIPPED
-  fi
+  is_required_file "${CITELLUS_ROOT}/df"
   DISK_USE_CMD="cat ${CITELLUS_ROOT}/df"
 else
   DISK_USE_CMD="df -P"

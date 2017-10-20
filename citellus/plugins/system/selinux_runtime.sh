@@ -15,17 +15,14 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+# Load common functions
+[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
+
 # selinux enforcing
 
 if [[ $CITELLUS_LIVE = 0 ]];  then
-    path="${CITELLUS_ROOT}/sos_commands/selinux/sestatus_-b"
-
-    if [ ! -f "$path" ]; then
-        echo "file $path not found." >&2
-        exit $RC_SKIPPED
-    fi
-
-    mode=$(awk '/^Current mode:/ {print $3}' "$path")
+    is_required_file "${CITELLUS_ROOT}/sos_commands/selinux/sestatus_-b"
+    mode=$(awk '/^Current mode:/ {print $3}' "${CITELLUS_ROOT}/sos_commands/selinux/sestatus_-b")
 else
     mode=$(sestatus -b | awk '/^Current mode:/ {print $3}')
 fi

@@ -38,30 +38,26 @@ if [ "x$CITELLUS_LIVE" = "x1" ];  then
     exit $RC_SKIPPED
   fi
 elif [ "x$CITELLUS_LIVE" = "x0" ];  then
-  if [ ! -f "${CITELLUS_ROOT}/installed-rpms" ]; then
-    echo "file /installed-rpms not found." >&2
+  is_required_file "${CITELLUS_ROOT}/installed-rpms"
+  PCS_VERSION=$(sed -n -r -e 's/^pacemaker.*-1.1.([0-9]+)-.*$/\1/p' "${CITELLUS_ROOT}/installed-rpms")
+  if [ -z "${systemctl_list_units_file}" ]; then
+    echo "file /sos_commands/systemd/systemctl_list-units not found." >&2
+    echo "file /sos_commands/systemd/systemctl_list-units_--all not found." >&2
     exit $RC_SKIPPED
   else
-    PCS_VERSION=$(sed -n -r -e 's/^pacemaker.*-1.1.([0-9]+)-.*$/\1/p' "${CITELLUS_ROOT}/installed-rpms")
-    if [ -z "${systemctl_list_units_file}" ]; then
-      echo "file /sos_commands/systemd/systemctl_list-units not found." >&2
-      echo "file /sos_commands/systemd/systemctl_list-units_--all not found." >&2
-      exit $RC_SKIPPED
+    if grep -q "pacemaker.* active" "${systemctl_list_units_file}"; then
+      for package in ${PCS_VERSION}
+      do
+        if [[ "${package}" -lt "15" ]]
+        then
+          echo "outdated pacemaker packages <1.1.15" >&2
+          exit $RC_FAILED
+        fi
+      done
+      exit $RC_OKAY
     else
-      if grep -q "pacemaker.* active" "${systemctl_list_units_file}"; then
-        for package in ${PCS_VERSION}
-        do
-          if [[ "${package}" -lt "15" ]]
-          then
-            echo "outdated pacemaker packages <1.1.15" >&2
-            exit $RC_FAILED
-          fi
-        done
-        exit $RC_OKAY
-      else
-        echo "pacemaker is not running on this node" >&2
-        exit $RC_SKIPPED
-      fi
+      echo "pacemaker is not running on this node" >&2
+      exit $RC_SKIPPED
     fi
   fi
 fi
