@@ -28,6 +28,7 @@ ERROR=$RC_OKAY
 is_required_file "${CITELLUS_ROOT}/etc/nova/nova.conf"
 
 if [ "$(discover_osp_version)" -ne "11" ];
+then
   echo "works only on OSP 11" >&2
   exit $RC_SKIPPED
 fi
