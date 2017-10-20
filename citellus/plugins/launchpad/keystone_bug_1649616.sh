@@ -17,13 +17,10 @@
 
 # this can run against live and also any sort of snapshot of the filesystem
 
-if [ ! -f "${CITELLUS_ROOT}/var/log/keystone/keystone.log" ]; then
-  echo "file /var/log/keystone/keystone.log not found." >&2
-  exit $RC_SKIPPED
-fi
-if grep -q "Got error 5 during COMMIT" "${CITELLUS_ROOT}/var/log/keystone/keystone.log"; then
-  echo "https://bugs.launchpad.net/keystone/+bug/1649616/" >&2
-  exit $RC_FAILED
-else
-  exit $RC_OKAY
-fi
+# Load common functions
+[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
+
+is_required_file "${CITELLUS_ROOT}/var/log/keystone/keystone.log"
+
+is_lineinfile "Got error 5 during COMMIT" "${CITELLUS_ROOT}/var/log/keystone/keystone.log" && echo "https://bugs.launchpad.net/keystone/+bug/1649616/" >&2 && exit $RC_FAILED
+exit $RC_OKAY

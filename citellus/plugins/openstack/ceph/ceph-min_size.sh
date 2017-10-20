@@ -44,22 +44,13 @@ check_settings() {
 }
 
 if [ "x$CITELLUS_LIVE" = "x0" ];  then
-  if [ -z "${systemctl_list_units_file}" ]; then
-    echo "file /sos_commands/systemd/systemctl_list-units not found." >&2
-    echo "file /sos_commands/systemd/systemctl_list-units_--all not found." >&2
-    exit $RC_SKIPPED
+  if is_active ceph-mon;
+  then
+    is_required_file "${CITELLUS_ROOT}/sos_commands/ceph/ceph_osd_dump"
+    check_settings "${CITELLUS_ROOT}/sos_commands/ceph/ceph_osd_dump"
   else
-    if grep -q "ceph-mon.* active" "${systemctl_list_units_file}"; then
-      if [ ! -f "${CITELLUS_ROOT}/sos_commands/ceph/ceph_osd_dump" ]; then
-        echo "file /sos_commands/ceph/ceph_osd_dump not found." >&2
-        exit $RC_SKIPPED
-      else
-        check_settings "${CITELLUS_ROOT}/sos_commands/ceph/ceph_osd_dump"
-      fi
-    else
-      echo "no ceph integrated" >&2
-      exit $RC_SKIPPED
-    fi
+    echo "no ceph integrated" >&2
+    exit $RC_SKIPPED
   fi
 elif [ "x$CITELLUS_LIVE" = "x1" ]; then
   if hiera -c /etc/puppet/hiera.yaml enabled_services | egrep -sq ceph_mon; then

@@ -15,12 +15,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+# Load common functions
+[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
+
 # this can run against live and also any sort of snapshot of the filesystem
 
-if [ ! -f "${CITELLUS_ROOT}/var/spool/cron/heat" ]; then
-  echo "file /var/spool/cron/heat not found." >&2
-  exit $RC_SKIPPED
-fi
+is_required_file "${CITELLUS_ROOT}/var/spool/cron/heat"
 if ! awk '/heat-manage purge_deleted/ && /^[^#]/ { print $0 }' "${CITELLUS_ROOT}/var/spool/cron/heat"; then
   echo "crontab heat stack purge is not set" >&2
   exit $RC_FAILED

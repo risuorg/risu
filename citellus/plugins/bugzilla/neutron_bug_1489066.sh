@@ -19,18 +19,11 @@
 
 # Reference: https://bugzilla.redhat.com/show_bug.cgi?id=1489066
 
-ERROR=$RC_OKAY
+# Load common functions
+[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 
-if [ ! -f "${CITELLUS_ROOT}/var/log/neutron/dhcp-agent.log" ]; then
-  echo "file /var/log/neutron/dhcp-agent.log not found." >&2
-  ERROR=$RC_SKIPPED
-else
-  COUNT=$(egrep -c 'Another app is currently holding the xtables lock' "${CITELLUS_ROOT}/var/log/neutron/dhcp-agent.log")
-  if [ "x$COUNT" != "x0" ];
-  then
-    echo "errors on iptables xlock, check: https://bugzilla.redhat.com/show_bug.cgi?id=1489066" >&2
-    ERROR=$RC_FAILED
-  fi
-fi
+is_required_file "${CITELLUS_ROOT}/var/log/neutron/dhcp-agent.log"
 
-exit $ERROR
+is_lineinfile 'Another app is currently holding the xtables lock' "${CITELLUS_ROOT}/var/log/neutron/dhcp-agent.log" || echo "errors on iptables xlock, check: https://bugzilla.redhat.com/show_bug.cgi?id=1489066" >&2 &&  exit $RC_FAILED
+
+exit $RC_OKAY

@@ -17,15 +17,7 @@
 
 # check memory recommendations
 
-if [ ! -f "${CITELLUS_ROOT}/proc/cpuinfo" ]; then
-  echo "file /proc/cpuinfo not found." >&2
-  exit $RC_SKIPPED
-fi
-
-if [ ! -f "${CITELLUS_ROOT}/proc/meminfo" ]; then
-  echo "file /proc/meminfo not found." >&2
-  exit $RC_SKIPPED
-fi
+is_required_file "${CITELLUS_ROOT}/proc/cpuinfo""${CITELLUS_ROOT}/proc/meminfo"
 
 TOTALCPU=$(cat "${CITELLUS_ROOT}"/proc/cpuinfo | grep "processor" | sort -u | wc -l)
 MEMTOTAL=$(cat "${CITELLUS_ROOT}"/proc/meminfo | sed -n -r -e 's/MemTotal:[ \t]+([0-9]+).*/\1/p')
