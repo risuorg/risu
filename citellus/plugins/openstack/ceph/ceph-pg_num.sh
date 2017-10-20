@@ -56,8 +56,10 @@ check_settings() {
 
 declare -i PG_TOTAL=0
 
-if [ "x$CITELLUS_LIVE" = "x0" ];  then
-  if [ -z "${systemctl_list_units_file}" ]; then
+if [ "x$CITELLUS_LIVE" = "x0" ];
+then
+  if [ -z "${systemctl_list_units_file}" ];
+  then
     echo "file /sos_commands/systemd/systemctl_list-units not found." >&2
     echo "file /sos_commands/systemd/systemctl_list-units_--all not found." >&2
     exit $RC_SKIPPED
@@ -79,8 +81,10 @@ if [ "x$CITELLUS_LIVE" = "x0" ];  then
       exit $RC_SKIPPED
     fi
   fi
-elif [ "x$CITELLUS_LIVE" = "x1" ]; then
-  if hiera -c /etc/puppet/hiera.yaml enabled_services | egrep -sq ceph_mon; then
+elif [ "x$CITELLUS_LIVE" = "x1" ];
+then
+  if hiera -c /etc/puppet/hiera.yaml enabled_services | egrep -sq ceph_mon
+  then
     mktempfile
     ceph -s > $tmpfile_status
     ceph osd dump > $tmpfile_osd_dump

@@ -15,16 +15,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+# Load common functions
+[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
+
 # check baremetal node
 
-if [ ! -f "${CITELLUS_ROOT}/proc/cpuinfo" ]; then
-  echo "file /proc/cpuinfo not found." >&2
-  exit $RC_SKIPPED
-fi
+is_required_file "${CITELLUS_ROOT}/proc/cpuinfo"
 
-if ! grep -q "svm\|vmx" "${CITELLUS_ROOT}/proc/cpuinfo"; then
-	echo "no hardware virt support found in /proc/cpuinfo" >&2
-	exit $RC_FAILED
-else
-    exit $RC_OKAY
-fi
+is_lineinfile "svm|vmx" "${CITELLUS_ROOT}/proc/cpuinfo" || echo "no hardware virt support found in /proc/cpuinfo" >&2 && $RC_FAILED
+exit $RC_OKAY

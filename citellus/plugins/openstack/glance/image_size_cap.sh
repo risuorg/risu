@@ -17,11 +17,9 @@
 
 # this can run against live and also any sort of snapshot of the filesystem
 
-if [ ! -f "${CITELLUS_ROOT}/etc/glance/glance-api.conf" ]; then
-  echo "file /etc/glance/glance-api.conf not found." >&2
-  exit $RC_SKIPPED
-fi
-if grep -q "^image_size_cap" "${CITELLUS_ROOT}/etc/glance/glance-api.conf"; then
+is_required_file "${CITELLUS_ROOT}/etc/glance/glance-api.conf"
+
+if is_lineinfile "^image_size_cap" "${CITELLUS_ROOT}/etc/glance/glance-api.conf"; then
   IMAGE_SIZE_DEFAULT="1099511627776"
   IMAGE_SIZE=$(awk -F "=" '/^image_size_cap/ {gsub (" ", "", $0); print $2}' \
               "${CITELLUS_ROOT}/etc/glance/glance-api.conf")

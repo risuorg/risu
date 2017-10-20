@@ -17,12 +17,6 @@
 
 # this can run against live or snapshot mode
 
-if [ ! "x$CITELLUS_LIVE" = "x" ]; then 
-  if [ -f $CITELLUS_ROOT/var/log/mysqld.log ] ;
-  then
-    grep "WSREP: Found saved state"  ${CITELLUS_ROOT}/var/log/mysqld.log |tail -1|awk '{print $8}' >&2
-    exit $RC_OKAY
-  else
-    exit $RC_SKIPPED
-  fi
-fi
+is_required_file "${CITELLUS_ROOT}/var/log/mysqld.log"
+grep "WSREP: Found saved state"  ${CITELLUS_ROOT}/var/log/mysqld.log |tail -1|awk '{print $8}' >&2
+exit $RC_OKAY

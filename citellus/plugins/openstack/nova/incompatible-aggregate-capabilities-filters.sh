@@ -16,19 +16,10 @@
 
 # Base: https://bugs.launchpad.net/nova/+bug/1279719
 
-checksettings(){
-FILE=${CITELLUS_ROOT}/etc/nova/nova.conf
+# Load common functions
+[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 
-if [ ! -f $FILE ];
-then
-    # Skip test if file is missing
-    echo "${FILE} does not exist" >&2
-    exit $RC_SKIPPED
-fi
-}
-
-
-checksettings
+is_requireddile "${CITELLUS_ROOT}/etc/nova/nova.conf"
 
 RC=$RC_OKAY
 COUNT=$(grep "^scheduler_default_filters" "${FILE}"|grep ComputeCapabilitiesFilter|grep AggregateInstanceExtraSpecsFilter|wc -l)

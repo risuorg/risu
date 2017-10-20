@@ -31,16 +31,10 @@ elif [ "x$CITELLUS_LIVE" = "x0" ]; then
 fi
 
 # this can run against live and also any sort of snapshot of the filesystem
-
 config_files=( "${CITELLUS_ROOT}/etc/nova/nova.conf" \
           "${CITELLUS_ROOT}/etc/sysconfig/libvirt-guests" )
 
-for config_file in "${config_files[@]}"; do
-  if [ ! -f "${config_file}" ]; then
-    echo "file ${config_file#$CITELLUS_ROOT} not found." >&2
-    exit $RC_SKIPPED
-  fi
-done
+is_required_file ${config_files[@]}
 
 # check if nova is configured to resume guests power state at hypervisor startup
 # adapted from https://github.com/zerodayz/citellus/issues/59
