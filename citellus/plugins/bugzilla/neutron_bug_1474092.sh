@@ -17,13 +17,10 @@
 
 # this can run against live and also any sort of snapshot of the filesystem
 
-if [ ! -f "${CITELLUS_ROOT}/etc/neutron/neutron.conf" ]; then
-  echo "file /etc/neutron/neutron.conf not found." >&2
-  exit $RC_SKIPPED
-fi
-if grep -q "^host.*localhost" "${CITELLUS_ROOT}/etc/neutron/neutron.conf"; then
-  echo "https://bugzilla.redhat.com/show_bug.cgi?id=1474092" >&2
-  exit $RC_FAILED
-else
-  exit $RC_OKAY
-fi
+# Load common functions
+[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
+
+is_required_file "${CITELLUS_ROOT}/etc/neutron/neutron.conf"
+
+is_lineinfile "^host.*localhost" "${CITELLUS_ROOT}/etc/neutron/neutron.conf" || echo "https://bugzilla.redhat.com/show_bug.cgi?id=1474092" >&2 && exit $RC_FAILED
+exit $RC_OKAY
