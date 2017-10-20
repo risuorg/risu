@@ -50,12 +50,8 @@ if [ "x$CITELLUS_LIVE" = "x0" ];  then
     exit $RC_SKIPPED
   else
     if grep -q "ceph-mon.* active" "${systemctl_list_units_file}"; then
-      if [ ! -f "${CITELLUS_ROOT}/sos_commands/ceph/ceph_osd_dump" ]; then
-        echo "file /sos_commands/ceph/ceph_osd_dump not found." >&2
-        exit $RC_SKIPPED
-      else
-        check_settings "${CITELLUS_ROOT}/sos_commands/ceph/ceph_osd_dump"
-      fi
+      is_required_file "${CITELLUS_ROOT}/sos_commands/ceph/ceph_osd_dump"
+      check_settings "${CITELLUS_ROOT}/sos_commands/ceph/ceph_osd_dump"
     else
       echo "no ceph integrated" >&2
       exit $RC_SKIPPED
