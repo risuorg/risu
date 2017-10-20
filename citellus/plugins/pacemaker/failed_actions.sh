@@ -41,7 +41,7 @@ elif [ "x$CITELLUS_LIVE" = "x0" ];  then
       fi
     done
     is_required_file "${PCS_DIRECTORY}/pcs_status"
-    if is_lineinfile "${PCS_DIRECTORY}/pcs_status" "Failed Actions"; then
+    if is_lineinfile "Failed Actions" "${PCS_DIRECTORY}/pcs_status"; then
       awk -F" " '/^\*/ {print $2}'  "${PCS_DIRECTORY}/pcs_status" >&2
       exit $RC_FAILED
     else

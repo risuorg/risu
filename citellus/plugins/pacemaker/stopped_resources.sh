@@ -41,7 +41,7 @@ elif [ "x$CITELLUS_LIVE" = "x0" ];  then
       fi
     done
     is_required_file "${PCS_DIRECTORY}/pcs_status"
-    if is_lineinfile "${PCS_DIRECTORY}/pcs_status" "Stopped"; then
+    if is_lineinfile "Stopped" "${PCS_DIRECTORY}/pcs_status"; then
       exit $RC_FAILED
     else
       exit $RC_OKAY

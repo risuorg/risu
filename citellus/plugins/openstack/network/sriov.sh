@@ -32,34 +32,37 @@ then
 fi
 
 is_rpm tuned-profiles-cpu-partitioning || echo "missing rpm tuned-profiles-cpu-partitioning" >&2 && flag=1
-is_lineinfile "${CITELLUS_ROOT}/etc/tuned/cpu-partitioning-variables.conf" "^isolated_cores=.*" || echo "missing isolated_cores in /etc/tuned/cpu-partitioning-variables.conf" >&2  && flag=1
-
-is_lineinfile "${CITELLUS_ROOT}/lspci" "Virtual Function" || echo "virtual function is disabled" >&2 && flag=1
-is_lineinfile "${CITELLUS_ROOT}/proc/modules" "vfio_iommu_type1" || echo "vfio_iommu module is not loaded" >&2 && flag=1
-is_lineinfile "${CITELLUS_ROOT}/sys/module/vfio_iommu_type1/parameters/allow_unsafe_interrupts" 'Y' || echo "unsafe interrupts not enabled" >&2 && flag=1
+is_lineinfile "^isolated_cores=.*" "${CITELLUS_ROOT}/etc/tuned/cpu-partitioning-variables.conf" || echo "missing isolated_cores in /etc/tuned/cpu-partitioning-variables.conf" >&2  && flag=1
 
 
-if is_lineinfile "${CITELLUS_ROOT}/proc/cpuinfo" "Intel";
+is_lineinfile "Virtual Function" "${CITELLUS_ROOT}/lspci" || echo "virtual function is disabled" >&2 && flag=1
+
+
+is_lineinfile "vfio_iommu_type1" "${CITELLUS_ROOT}/proc/modules" || echo "vfio_iommu module is not loaded" >&2 && flag=1
+is_lineinfile 'Y' "${CITELLUS_ROOT}/sys/module/vfio_iommu_type1/parameters/allow_unsafe_interrupts" || echo "unsafe interrupts not enabled" >&2 && flag=1
+
+
+if is_lineinfile "Intel" "${CITELLUS_ROOT}/proc/cpuinfo";
 then
-  is_lineinfile "${CITELLUS_ROOT}/proc/cmdline" "intel_iommu=on" || echo "missing intel_iommu=on on kernel cmdline" >&2  && flag=1
-  is_lineinfile "${CITELLUS_ROOT}/proc/cmdline" "iommu=pt" || echo "missing iommu=pt on kernel cmdline" >&2  && flag=1
+  is_lineinfile "intel_iommu=on" "${CITELLUS_ROOT}/proc/cmdline" || echo "missing intel_iommu=on on kernel cmdline" >&2  && flag=1
+  is_lineinfile "iommu=pt" "${CITELLUS_ROOT}/proc/cmdline" || echo "missing iommu=pt on kernel cmdline" >&2  && flag=1
 else
-  is_lineinfile "${CITELLUS_ROOT}/proc/cmdline" "amd_iommu=pt" || echo "missing amd_iommu=pt on kernel cmdline" >&2  && flag=1
+  is_lineinfile "amd_iommu=pt" "${CITELLUS_ROOT}/proc/cmdline" || echo "missing amd_iommu=pt on kernel cmdline" >&2  && flag=1
 fi
 
-is_lineinfile "${CITELLUS_ROOT}/proc/cmdline" "hugepagesz=" || echo "missing hugepagesz on kernel cmdline" >&2  && flag=1
-is_lineinfile "${CITELLUS_ROOT}/proc/cmdline" "hugepages=" || echo "missing hugepages= on kernel cmdline" >&2  && flag=1
-is_lineinfile "${CITELLUS_ROOT}/proc/cmdline" "isolcpus=" || echo "missing isolcpus= on kernel cmdline" >&2  && flag=1
+is_lineinfile "hugepagesz=" "${CITELLUS_ROOT}/proc/cmdline" || echo "missing hugepagesz on kernel cmdline" >&2  && flag=1
+is_lineinfile "hugepages=" "${CITELLUS_ROOT}/proc/cmdline" || echo "missing hugepages= on kernel cmdline" >&2  && flag=1
+is_lineinfile "isolcpus=" "${CITELLUS_ROOT}/proc/cmdline" || echo "missing isolcpus= on kernel cmdline" >&2  && flag=1
 
-is_lineinfile "${CITELLUS_ROOT}/etc/neutron/plugins/ml2/ml2_conf.ini" "mechanism_drivers.*sriovnicswitch" || echo "missing sriovnicswitch in ml2_conf.ini" >&2  && flag=1
+is_lineinfile "mechanism_drivers.*sriovnicswitch" "${CITELLUS_ROOT}/etc/neutron/plugins/ml2/ml2_conf.ini" || echo "missing sriovnicswitch in ml2_conf.ini" >&2  && flag=1
 
-is_lineinfile "${CITELLUS_ROOT}/etc/nova/nova.conf" "^scheduler_defaults.*PciPassthroughtFilter" || echo "missing PciPassthroughFilter in nova.conf" >&2 && flag=1
-is_lineinfile "${CITELLUS_ROOT}/etc/nova/nova.conf" "^vcpu_pin_set.*" || echo "missing vcpu_pin_set in nova.conf" >&2 && flag=1
-is_lineinfile "${CITELLUS_ROOT}/etc/nova/nova.conf" "^pci_passthrough_whitelist" || echo "missing pci_passthrough_whitelist in /etc/nova/nova.conf" >&2 && flag=1
+is_lineinfile "^scheduler_defaults.*PciPassthroughtFilter" "${CITELLUS_ROOT}/etc/nova/nova.conf" || echo "missing PciPassthroughFilter in nova.conf" >&2 && flag=1
+is_lineinfile "^vcpu_pin_set.*" "${CITELLUS_ROOT}/etc/nova/nova.conf" || echo "missing vcpu_pin_set in nova.conf" >&2 && flag=1
+is_lineinfile "^pci_passthrough_whitelist" "${CITELLUS_ROOT}/etc/nova/nova.conf" || echo "missing pci_passthrough_whitelist in /etc/nova/nova.conf" >&2 && flag=1
 
 if is_process nova-compute;
 then
-  is_lineinfile "${CITELLUS_ROOT}/etc/neutron/plugins/ml2/sriov_agent.ini" "^physical_device_mappings.*" || echo "missing physical_device_mappings in /etc/neutron/plugins/ml2/sriov_agent.ini" >&2 && flag=1
+  is_lineinfile "^physical_device_mappings.*" "${CITELLUS_ROOT}/etc/neutron/plugins/ml2/sriov_agent.ini" || echo "missing physical_device_mappings in /etc/neutron/plugins/ml2/sriov_agent.ini" >&2 && flag=1
 fi
 # NeutronSriovNumVFs
 
