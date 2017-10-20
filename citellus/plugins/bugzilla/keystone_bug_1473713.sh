@@ -19,18 +19,15 @@
 
 # Reference: https://bugzilla.redhat.com/show_bug.cgi?id=1473713
 
-ERROR=$RC_OKAY
+# Load common functions
+[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 
-if [ ! -f "${CITELLUS_ROOT}/var/log/keystone/keystone.log" ]; then
-  echo "file /var/log/keystone/keystone.log not found." >&2
-  ERROR=$RC_SKIPPED
-else
-  COUNT=$(egrep -c 'ERROR keystone DBDeadlock: .*pymysql.err.Internal.* try restarting transaction.*DELETE FROM token WHERE token.expires.*' "${CITELLUS_ROOT}/var/log/keystone/keystone.log")
-  if [ "x$COUNT" != "x0" ];
-  then
+is_requiredfile "${CITELLUS_ROOT}/var/log/keystone/keystone.log"
+
+if is_lineinfile 'ERROR keystone DBDeadlock: .*pymysql.err.Internal.* try restarting transaction.*DELETE FROM token WHERE token.expires.*' "${CITELLUS_ROOT}/var/log/keystone/keystone.log";
+then
     echo "errors on token expiration, check: https://bugzilla.redhat.com/show_bug.cgi?id=1473713" >&2
     ERROR=$RC_FAILED
-  fi
 fi
 
-exit $ERROR
+exit $RC_OKAY
