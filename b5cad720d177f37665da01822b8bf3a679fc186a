@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "896c71d7_ffc26801",
+        "filename": "citellus/plugins/openstack/mysql/mysql_db_size.sh",
+        "patchSetId": 13
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2017-10-21T20:24:31Z",
+      "side": 1,
+      "message": "If we want to check DB connectivity, wouldn\u0027t a simple sql query be enough? (in order to reduce execution time?)",
+      "revId": "b5cad720d177f37665da01822b8bf3a679fc186a",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
