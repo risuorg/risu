@@ -28,15 +28,18 @@ RC=$?
 
 if [ "x$RC" = "x0" ];
 then
-    # databases  larger than 10 rounded size in GB unit
-    mysql -t -u root -e 'SELECT table_schema "database",round((data_length+index_length)/(1024 * 1024 * 1024),2) database_size_in_GB \
-                         FROM  information_schema.TABLES WHERE (DATA_LENGTH+INDEX_LENGTH)/ ( 1024 * 1024 * 1024 ) > 10;'
+    # quick test to the db before nothing
+    (
+    mysql -t -u root -e 'SHOW DATABASES;'
+    )  >/dev/null
     RC=$?
     if [ "x$RC" = "x0" ];
     then
         # Databases tables larger than 10 GB
-        mysql -t -u root -e 'SELECT table_schema AS DB_NAME, table_name, ROUND(( data_length + index_length ) / ( 1024 * 1024 * 1024 ), 2) AS table_size_in_GB \
+        (
+        mysql -t -u root -e 'SELECT table_schema AS db_name, table_name, ROUND(( data_length + index_length ) / ( 1024 * 1024 * 1024 ), 2) AS table_size_in_GB \
                              FROM information_schema.TABLES WHERE (DATA_LENGTH+INDEX_LENGTH)/ ( 1024 * 1024 * 1024 ) > 10;'
+        )  >&2
     else
         echo "no connection to the database" >&2
         exit $RC_SKIPPED
@@ -48,8 +51,10 @@ fi
 
 if [ -d "${MYSQL_DIR}" ];
 then
-    #Db disk usage for galera cache, ibdata and ib_log kinds - gb unit size kinds could be associate with perfomance degradation and a potential need of table truncate operations
-    du -h --threshold=10G ${MYSQL_DIR}/* | sort -nr  | egrep -i "galera.cache|ibdata|ib_log"
+    #Db disk usage for ibdata and ib_log kinds - gb unit size kinds could be associate with perfomance degradation and a potential need of table truncate operations
+    (
+    du -h --threshold=10G ${MYSQL_DIR}/* | sort -nr  | egrep -i "ibdata|ib_log"
+    )  >&2
     exit $RC_OKAY
 else
     echo "$MYSQL_DIR doesn't exists" >&2
