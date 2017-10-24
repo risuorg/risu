@@ -20,26 +20,18 @@
 
 # adapted from https://github.com/larsks/platypus/blob/master/bats/system/test_clock.bats
 
-if is_active ntpd; then
-  ntpd=1
-else
-  ntpd=0
-fi
 
-if is_active chronyd ; then
-  chronyd=1
-else
-  chronyd=0
-fi
+is_active httpd && ntpd=1 || ntpd=0
+is_active chronyd && chronyd=1 || chronyd=0
 
 if [[ ntpd -eq 1 && chronyd -eq 1 ]] ; then
-  echo "both ntpd and chrony are active" >&2
-  exit $RC_FAILED
+    echo "both ntpd and chrony are active" >&2
+    exit $RC_FAILED
 elif [[ ntpd -eq 1 || chronyd -eq 1 ]] ; then
-  exit $RC_OKAY
+    exit $RC_OKAY
 else
-  echo "both chrony or ntpd are not active" >&2
-  exit $RC_FAILED
+    echo "both chrony or ntpd are not active" >&2
+    exit $RC_FAILED
 fi
 
 exit $RC_SKIPPED

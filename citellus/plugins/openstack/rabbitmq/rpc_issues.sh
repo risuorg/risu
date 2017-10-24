@@ -18,30 +18,29 @@
 # we can run this against fs snapshot or live system
 
 if [ "x$CITELLUS_LIVE" = "x1" ];  then
-
-  log_files=$(for i in $(rpm -qa | sed -n -r -e 's/^openstack-([a-z]*)-.*$/\1/p' | sort | uniq); do \
-  ls /var/log/$i/*.log 2>/dev/null | grep '/var/log/[^/]*/[^/]*\.log'; done)
-
+    log_files=$(
+        for i in $(rpm -qa | sed -n -r -e 's/^openstack-([a-z]*)-.*$/\1/p' | sort | uniq); do
+        ls /var/log/$i/*.log 2>/dev/null | grep '/var/log/[^/]*/[^/]*\.log';
+        done
+    )
 elif [ "x$CITELLUS_LIVE" = "x0" ]; then
-
-  log_files=$(
-  for i in $(sed -n -r -e 's/^openstack-([a-z]*)-.*$/\1/p' ${CITELLUS_ROOT}/installed-rpms \
-  | sort | uniq); do ls ${CITELLUS_ROOT}/var/log/$i/*.log 2>/dev/null | grep '/var/log/[^/]*/[^/]*\.log'; \
-  done)
+    log_files=$(
+        for i in $(sed -n -r -e 's/^openstack-([a-z]*)-.*$/\1/p' ${CITELLUS_ROOT}/installed-rpms | sort | uniq); do
+            ls ${CITELLUS_ROOT}/var/log/$i/*.log 2>/dev/null | grep '/var/log/[^/]*/[^/]*\.log';
+        done
+    )
 
 fi
 
 for log_file in $log_files; do
+    [ -f "$log_file" ] || continue
 
-  [ -f "$log_file" ] || continue
-
-  wc=$(grep -i 'AMQP server on .* is unreachable' $log_file | wc -l)
-  if [[ ${wc} -gt 0 ]]; then
-    # to remove the ${CITELLUS_ROOT} from the stderr.
-    log_file=${log_file#$CITELLUS_ROOT}
-    echo "$log_file (${wc} times)" >&2
-    flag=1
-  fi
-
+    wc=$(grep -i 'AMQP server on .* is unreachable' $log_file | wc -l)
+    if [[ ${wc} -gt 0 ]]; then
+        # to remove the ${CITELLUS_ROOT} from the stderr.
+        log_file=${log_file#$CITELLUS_ROOT}
+        echo "$log_file (${wc} times)" >&2
+        flag=1
+    fi
 done
 [[ "x$flag" = "x" ]] && exit $RC_OKAY || exit $RC_FAILED

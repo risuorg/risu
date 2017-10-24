@@ -25,34 +25,30 @@ RELEASE=$(discover_osp_version)
 
 flag=0
 
-if [ "$RELEASE" -gt 7 ];
-then
-  is_rpm openstack-neutron-sriov-nic-agent || echo "missing rpm openstack-neutron-sriov-nic-agent" >&2 && flag=1
-  is_process neutron-sriov-nic-agent || echo "neutron-sriouv-nic-agent not running" >&1 && flag=1
+if [ "$RELEASE" -gt 7 ]; then
+    is_rpm openstack-neutron-sriov-nic-agent || echo "missing rpm openstack-neutron-sriov-nic-agent" >&2 && flag=1
+    is_process neutron-sriov-nic-agent || echo "neutron-sriouv-nic-agent not running" >&1 && flag=1
 fi
 
 is_rpm tuned-profiles-cpu-partitioning || echo "missing rpm tuned-profiles-cpu-partitioning" >&2 && flag=1
 is_lineinfile "^isolated_cores=.*" "${CITELLUS_ROOT}/etc/tuned/cpu-partitioning-variables.conf" || echo "missing isolated_cores in /etc/tuned/cpu-partitioning-variables.conf" >&2  && flag=1
 
 if [ "x$CITELLUS_LIVE" = "x1" ];  then
-  if [ "$(lspci|grep Virtual Function|wc -l)" -eq "0" ];
-  then
-    echo "virtual function is disabled" >&2 && flag=1
-  fi
-elif [ "x$CITELLUS_LIVE" = "x0" ];  then
-  is_lineinfile "Virtual Function" "${CITELLUS_ROOT}/lspci" || echo "virtual function is disabled" >&2 && flag=1
+    if [ "$(lspci|grep Virtual Function|wc -l)" -eq "0" ]; then
+        echo "virtual function is disabled" >&2 && flag=1
+    fi
+elif [ "x$CITELLUS_LIVE" = "x0" ]; then
+    is_lineinfile "Virtual Function" "${CITELLUS_ROOT}/lspci" || echo "virtual function is disabled" >&2 && flag=1
 fi
 
 is_lineinfile "vfio_iommu_type1" "${CITELLUS_ROOT}/proc/modules" || echo "vfio_iommu module is not loaded" >&2 && flag=1
 is_lineinfile 'Y' "${CITELLUS_ROOT}/sys/module/vfio_iommu_type1/parameters/allow_unsafe_interrupts" || echo "unsafe interrupts not enabled" >&2 && flag=1
 
-
-if is_lineinfile "Intel" "${CITELLUS_ROOT}/proc/cpuinfo";
-then
-  is_lineinfile "intel_iommu=on" "${CITELLUS_ROOT}/proc/cmdline" || echo "missing intel_iommu=on on kernel cmdline" >&2  && flag=1
-  is_lineinfile "iommu=pt" "${CITELLUS_ROOT}/proc/cmdline" || echo "missing iommu=pt on kernel cmdline" >&2  && flag=1
+if is_lineinfile "Intel" "${CITELLUS_ROOT}/proc/cpuinfo"; then
+    is_lineinfile "intel_iommu=on" "${CITELLUS_ROOT}/proc/cmdline" || echo "missing intel_iommu=on on kernel cmdline" >&2  && flag=1
+    is_lineinfile "iommu=pt" "${CITELLUS_ROOT}/proc/cmdline" || echo "missing iommu=pt on kernel cmdline" >&2  && flag=1
 else
-  is_lineinfile "amd_iommu=pt" "${CITELLUS_ROOT}/proc/cmdline" || echo "missing amd_iommu=pt on kernel cmdline" >&2  && flag=1
+    is_lineinfile "amd_iommu=pt" "${CITELLUS_ROOT}/proc/cmdline" || echo "missing amd_iommu=pt on kernel cmdline" >&2  && flag=1
 fi
 
 is_lineinfile "hugepagesz=" "${CITELLUS_ROOT}/proc/cmdline" || echo "missing hugepagesz on kernel cmdline" >&2  && flag=1
@@ -65,15 +61,13 @@ is_lineinfile "^scheduler_defaults.*PciPassthroughtFilter" "${CITELLUS_ROOT}/etc
 is_lineinfile "^vcpu_pin_set.*" "${CITELLUS_ROOT}/etc/nova/nova.conf" || echo "missing vcpu_pin_set in nova.conf" >&2 && flag=1
 is_lineinfile "^pci_passthrough_whitelist" "${CITELLUS_ROOT}/etc/nova/nova.conf" || echo "missing pci_passthrough_whitelist in /etc/nova/nova.conf" >&2 && flag=1
 
-if is_process nova-compute;
-then
-  is_lineinfile "^physical_device_mappings.*" "${CITELLUS_ROOT}/etc/neutron/plugins/ml2/sriov_agent.ini" || echo "missing physical_device_mappings in /etc/neutron/plugins/ml2/sriov_agent.ini" >&2 && flag=1
+if is_process nova-compute; then
+    is_lineinfile "^physical_device_mappings.*" "${CITELLUS_ROOT}/etc/neutron/plugins/ml2/sriov_agent.ini" || echo "missing physical_device_mappings in /etc/neutron/plugins/ml2/sriov_agent.ini" >&2 && flag=1
 fi
 # NeutronSriovNumVFs
 
-if [[ $flag -eq '1' ]];
-then
-  exit $RC_FAILED
+if [[ $flag -eq '1' ]]; then
+    exit $RC_FAILED
 else
-  exit $RC_OKAY
+    exit $RC_OKAY
 fi

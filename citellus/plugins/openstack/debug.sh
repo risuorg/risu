@@ -21,26 +21,26 @@
 # if we are running against live system or fs snapshot
 
 if [ "x$CITELLUS_LIVE" = "x1" ];  then
-  config_files=$(rpm -qa -c 'openstack-*' | grep '/etc/[^/]*/[^/]*\.conf')
+    config_files=$(rpm -qa -c 'openstack-*' | grep '/etc/[^/]*/[^/]*\.conf')
 elif [ "x$CITELLUS_LIVE" = "x0" ]; then
-  config_files=$(
-  for i in $(sed -n -r -e 's/^openstack-([a-z]*)-.*$/\1/p' ${CITELLUS_ROOT}/installed-rpms \
-  | sort | uniq); do ls ${CITELLUS_ROOT}/etc/$i/*.conf 2>/dev/null | grep '/etc/[^/]*/[^/]*\.conf'; \
-  done)
-  [ -e "${CITELLUS_ROOT}/etc/openstack-dashboard/local_settings" ] \
-  && config_files+=" ${CITELLUS_ROOT}/etc/openstack-dashboard/local_settings"
+    config_files=$(
+        for i in $(sed -n -r -e 's/^openstack-([a-z]*)-.*$/\1/p' ${CITELLUS_ROOT}/installed-rpms | sort | uniq); do
+            ls ${CITELLUS_ROOT}/etc/$i/*.conf 2>/dev/null | grep '/etc/[^/]*/[^/]*\.conf';
+        done
+    )
+    [ -e "${CITELLUS_ROOT}/etc/openstack-dashboard/local_settings" ] && config_files+=" ${CITELLUS_ROOT}/etc/openstack-dashboard/local_settings"
 fi
 
 for config_file in $config_files; do
-  [ -f "$config_file" ] || continue
-  if is_lineinfile "^debug[ \t]*=[ \t]*true" "$config_file"; then
-    # to remove the ${CITELLUS_ROOT} from the stderr.
-    config_file=${config_file#$CITELLUS_ROOT}
-    echo "enabled in $config_file" >&2
-  else
-    config_file=${config_file#$CITELLUS_ROOT}
-    echo "disabled in $config_file" >&2
-    flag=1
-  fi
+    [ -f "$config_file" ] || continue
+    if is_lineinfile "^debug[ \t]*=[ \t]*true" "$config_file"; then
+        # to remove the ${CITELLUS_ROOT} from the stderr.
+        config_file=${config_file#$CITELLUS_ROOT}
+        echo "enabled in $config_file" >&2
+    else
+        config_file=${config_file#$CITELLUS_ROOT}
+        echo "disabled in $config_file" >&2
+        flag=1
+    fi
 done
 [[ "x$flag" = "x1" ]] && exit $RC_FAILED || exit $RC_OKAY

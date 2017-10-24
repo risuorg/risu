@@ -23,8 +23,7 @@ is_requireddile "${CITELLUS_ROOT}/etc/nova/nova.conf"
 
 RC=$RC_OKAY
 COUNT=$(grep "^scheduler_default_filters" "${FILE}"|grep ComputeCapabilitiesFilter|grep AggregateInstanceExtraSpecsFilter|wc -l)
-if [ ${COUNT} -ne 0 ];
-then
+if [ ${COUNT} -ne 0 ]; then
     echo "Incompatible ComputeCapabilitiesFilter and AggregateInstanceExtraSpecsFilter in scheduler_default_filters at nova.conf" >&2
     RC=$RC_FAILED
 fi

@@ -27,23 +27,22 @@ RELEASE=$(discover_osp_version)
 is_required_file "${CITELLUS_ROOT}/var/spool/cron/keystone"
 
 if ! awk '/keystone-manage token_flush/ && /^[^#]/ { print $0 }' "${CITELLUS_ROOT}/var/spool/cron/keystone"; then
-  echo "crontab keystone cleanup is not set" >&2
-  exit $RC_FAILED
+    echo "crontab keystone cleanup is not set" >&2
+    exit $RC_FAILED
 elif awk '/keystone-manage token_flush/ && /^[^#]/ { print $0 }' "${CITELLUS_ROOT}/var/spool/cron/keystone"; then
-  # Skip default crontab of 1 0 * * * as it might miss busy systems and fail to do later cleanups
-  COUNT=$(awk '/keystone-manage token_flush/ && /^[^#]/ { print $0 }' "${CITELLUS_ROOT}/var/spool/cron/keystone" 2>&1|egrep  '^1 0'  -c)
-  if [ "x$COUNT" = "x1" ];
-  then
-      echo -n "token flush not running every hour " >&2
-      case ${RELEASE} in
-        6) echo "https://bugzilla.redhat.com/show_bug.cgi?id=1470230" >&2 ;;
-        7) echo "https://bugzilla.redhat.com/show_bug.cgi?id=1470227" >&2 ;;
-        8) echo "https://bugzilla.redhat.com/show_bug.cgi?id=1470226" >&2 ;;
-        9) echo "https://bugzilla.redhat.com/show_bug.cgi?id=1470221" >&2 ;;
-        10) echo "https://bugzilla.redhat.com/show_bug.cgi?id=1469457" >&2 ;;
-        *) echo "" >&2 ;;
-      esac
-      exit $RC_FAILED
-  fi
-  exit $RC_OKAY
+    # Skip default crontab of 1 0 * * * as it might miss busy systems and fail to do later cleanups
+    COUNT=$(awk '/keystone-manage token_flush/ && /^[^#]/ { print $0 }' "${CITELLUS_ROOT}/var/spool/cron/keystone" 2>&1|egrep  '^1 0'  -c)
+    if [ "x$COUNT" = "x1" ]; then
+        echo -n "token flush not running every hour " >&2
+        case ${RELEASE} in
+            6) echo "https://bugzilla.redhat.com/show_bug.cgi?id=1470230" >&2 ;;
+            7) echo "https://bugzilla.redhat.com/show_bug.cgi?id=1470227" >&2 ;;
+            8) echo "https://bugzilla.redhat.com/show_bug.cgi?id=1470226" >&2 ;;
+            9) echo "https://bugzilla.redhat.com/show_bug.cgi?id=1470221" >&2 ;;
+            10) echo "https://bugzilla.redhat.com/show_bug.cgi?id=1469457" >&2 ;;
+            *) echo "" >&2 ;;
+        esac
+        exit $RC_FAILED
+    fi
+    exit $RC_OKAY
 fi

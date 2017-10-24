@@ -27,9 +27,8 @@ flag=0
 is_required_rpm openstack-
 
 # Run this code on controllers, not on computes nor director
-if ! is_process nova-compute;
-then
-  is_lineinfile "^scheduler_defaults.*NUMATopologyFilter"  "${CITELLUS_ROOT}/etc/nova/nova.conf"|| echo "missing NUMATopologyFilter in nova.conf" >&2 && flag=1
+if ! is_process nova-compute; then
+    is_lineinfile "^scheduler_defaults.*NUMATopologyFilter"  "${CITELLUS_ROOT}/etc/nova/nova.conf"|| echo "missing NUMATopologyFilter in nova.conf" >&2 && flag=1
 fi
 is_lineinfile "iommu=pt" "${CITELLUS_ROOT}/proc/cmdline" || echo "missing iommu=pt on kernel cmdline" >&2  && flag=1
 
@@ -65,9 +64,8 @@ is_lineinfile "DPDK_OPTIONS.*-n [0-9].*" "${CITELLUS_ROOT}/etc/sysconfig/openvsw
 # ifaces with dpdk$NUM
 
 
-if [[ $flag -eq '1' ]];
-then
-  exit $RC_FAILED
+if [[ $flag -eq '1' ]]; then
+    exit $RC_FAILED
 else
-  exit $RC_OKAY
+    exit $RC_OKAY
 fi

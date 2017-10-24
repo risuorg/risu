@@ -21,30 +21,29 @@
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 
 if [ "x$CITELLUS_LIVE" = "x0" ];  then
+    if [ -z "${journalctl_file}" ]; then
+        echo "file /sos_commands/logs/journalctl_--no-pager_--boot not found." >&2
+        echo "file /sos_commands/logs/journalctl_--all_--this-boot_--no-pager not found." >&2
+        exit $RC_SKIPPED
+    fi
 
-  if [ -z "${journalctl_file}" ]; then
-    echo "file /sos_commands/logs/journalctl_--no-pager_--boot not found." >&2
-    echo "file /sos_commands/logs/journalctl_--all_--this-boot_--no-pager not found." >&2
-    exit $RC_SKIPPED
-  fi
-
-  if grep -q "oom-killer" "${journalctl_file}"; then
-    echo "oom-killer detected" >&2
-    exit $RC_FAILED
-  fi
-  if grep -q "soft lockup" "${journalctl_file}"; then
-    echo "soft lockup detected" >&2
-    exit $RC_FAILED
-  fi
+    if grep -q "oom-killer" "${journalctl_file}"; then
+        echo "oom-killer detected" >&2
+        exit $RC_FAILED
+    fi
+    if grep -q "soft lockup" "${journalctl_file}"; then
+        echo "soft lockup detected" >&2
+        exit $RC_FAILED
+    fi
 elif [ "x$CITELLUS_LIVE" = "x1" ]; then
-  if journalctl -u kernel --no-pager --boot | grep -q "oom-killer"; then
-    echo "oom-killer detected" >&2
-    exit $RC_FAILED
-  fi
-  if journalctl -u kernel --no-pager --boot | grep -q "soft lockup"; then
-    echo "soft lockup detected" >&2
-    exit $RC_FAILED
-  fi
+    if journalctl -u kernel --no-pager --boot | grep -q "oom-killer"; then
+        echo "oom-killer detected" >&2
+        exit $RC_FAILED
+    fi
+    if journalctl -u kernel --no-pager --boot | grep -q "soft lockup"; then
+        echo "soft lockup detected" >&2
+        exit $RC_FAILED
+    fi
 fi
 
 # If the above conditions did not trigger RC_FAILED we are good.

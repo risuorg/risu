@@ -15,30 +15,26 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+
+# Load common functions
+[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
+
 # check if we are running against compute
 
-if [ "x$CITELLUS_LIVE" = "x1" ];  then
-  if ! ps -elf | grep -q [n]ova-compute; then
-    echo "works only on compute node" >&2
-    exit $RC_SKIPPED
-  fi
-  if [ "$(yum -C repolist 2>&1 | grep "rhceph.*tools" | wc -l)" -eq "0" ];
-  then
-    echo "librbd1 might be outdated if rhceph repo is not enabled on compute" >&2
-    exit $RC_FAILED
-  else
-    exit $RC_OKAY
-  fi
+is_process nova-compute || echo "works only on compute node" >&2 && exit $RC_SKIPPED
+
+if [ "x$CITELLUS_LIVE" = "x1" ]; then
+    if [ "$(yum -C repolist 2>&1 | grep "rhceph.*tools" | wc -l)" -eq "0" ]; then
+        echo "librbd1 might be outdated if rhceph repo is not enabled on compute" >&2
+        exit $RC_FAILED
+    else
+        exit $RC_OKAY
+    fi
 elif [ "x$CITELLUS_LIVE" = "x0" ]; then
-  if ! grep -q nova-compute "${CITELLUS_ROOT}/ps"; then
-    echo "works only on compute node" >&2
-    exit $RC_SKIPPED
-  fi
-  if [ "$(cat ${CITELLUS_ROOT}/sos_commands/yum/yum_-C_repolist | grep "rhceph.*tools" | wc -l)" -eq "0" ];
-  then
-    echo "librbd1 might be outdated if rhceph repo is not enabled on compute" >&2
-    exit $RC_FAILED
-  else
-    exit $RC_OKAY
-  fi
+    if [ "$(cat ${CITELLUS_ROOT}/sos_commands/yum/yum_-C_repolist | grep "rhceph.*tools" | wc -l)" -eq "0" ]; then
+        echo "librbd1 might be outdated if rhceph repo is not enabled on compute" >&2
+        exit $RC_FAILED
+    else
+        exit $RC_OKAY
+    fi
 fi
