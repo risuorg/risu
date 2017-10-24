@@ -24,8 +24,8 @@
 name_osp_version >&2
 PACKSTACK=$(is_rpm "openstack-packstack-")
 if [ ! -z $PACKSTACK ]; then
-  echo "packstack detected" >&2
-  exit $RC_FAILED
+    echo "packstack detected" >&2
+    exit $RC_FAILED
 else
-  exit $RC_OKAY
+    exit $RC_OKAY
 fi

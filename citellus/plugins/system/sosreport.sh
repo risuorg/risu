@@ -21,8 +21,8 @@
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 
 exitoudated(){
-  echo "outdated sosreport package ${VERSION}: please do update sos package to ensure required info is collected" >&2
-  exit $RC_FAILED
+    echo "outdated sosreport package ${VERSION}: please do update sos package to ensure required info is collected" >&2
+    exit $RC_FAILED
 }
 
 # Latest sos for el7.4 is 3.4-6.el7
@@ -34,18 +34,15 @@ MAJOR=$(echo ${VERSION} | sed -n -r -e 's/^sos.*-([0-9]+).[0-9]+-[0-9]+.*$/\1/p'
 MID=$(echo ${VERSION} | sed -n -r -e 's/^sos.*-[0-9]+.([0-9]+)-[0-9]+.*$/\1/p')
 MINOR=$(echo ${VERSION} | sed -n -r -e 's/^sos.*-[0-9]+.[0-9]+-([0-9]+).*$/\1/p')
 
-if [[ "${MAJOR}" -ge "3" ]]
-then
-  if [[ "${MID}" -ge "4" ]]
-  then
-    if [[ "${MINOR}" -lt "6" ]]
-    then
-      exitoudated
+if [[ "${MAJOR}" -ge "3" ]]; then
+    if [[ "${MID}" -ge "4" ]]; then
+        if [[ "${MINOR}" -lt "6" ]]; then
+            exitoudated
+        fi
+    else
+        exitoudated
     fi
-  else
-    exitoudated
-  fi
 else
-  exitoudated
+    exitoudated
 fi
 exit $RC_OKAY

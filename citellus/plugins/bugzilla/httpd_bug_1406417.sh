@@ -24,8 +24,8 @@
 is_required_file "${CITELLUS_ROOT}/var/log/httpd/error_log"
 
 if grep -q "MaxRequestWorkers" "${CITELLUS_ROOT}/var/log/httpd/error_log"; then
-  echo "https://bugzilla.redhat.com/show_bug.cgi?id=1406417" >&2
-  exit $RC_FAILED
+    echo "https://bugzilla.redhat.com/show_bug.cgi?id=1406417" >&2
+    exit $RC_FAILED
 else
-  exit $RC_OKAY
+    exit $RC_OKAY
 fi

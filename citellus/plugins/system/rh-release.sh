@@ -18,10 +18,10 @@
 # check redhat-release
 
 if [ ! -f "${CITELLUS_ROOT}/etc/redhat-release" ]; then
-  echo "this is not RHEL distribution" >&2
-  exit $RC_FAILED
+    echo "this is not RHEL distribution" >&2
+    exit $RC_FAILED
 else
-  cat "${CITELLUS_ROOT}/etc/redhat-release" >&2
-  exit $RC_OKAY
+    cat "${CITELLUS_ROOT}/etc/redhat-release" >&2
+    exit $RC_OKAY
 fi
 

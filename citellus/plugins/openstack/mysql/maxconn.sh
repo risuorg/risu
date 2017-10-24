@@ -18,44 +18,41 @@
 # this can run against live
 
 if [ ! "x$CITELLUS_LIVE" = "x1" ]; then
-  echo "works on live-system only" >&2
-  exit $RC_SKIPPED
+    echo "works on live-system only" >&2
+    exit $RC_SKIPPED
 fi
 
 # This test requires mysql
 which mysql > /dev/null 2>&1
 RC=$?
 
-if [ "x$RC" = "x0" ];
-then
-  # Collect information from THREADS_CONNECTED
-  mysql -u root -e 'SELECT * FROM INFORMATION_SCHEMA.GLOBAL_STATUS where VARIABLE_NAME="THREADS_CONNECTED";'
-  RC=$?
-  if [ "x$RC" = "x0" ];
-  then
-    THREADS_CONNECTED=$(mysql -u root -e 'SELECT * FROM INFORMATION_SCHEMA.GLOBAL_STATUS where VARIABLE_NAME="THREADS_CONNECTED";' | egrep -o '[0-9]+')
-  else
-    echo "no connection to the database" >&2
-    exit $RC_SKIPPED
-  fi
-  # Check for HAproxy topic in haproxy.cfg and pick the maxconn value
-  HAPROXY_MYSQL=$(awk '/listen mysql/,/^$/' /etc/haproxy/haproxy.cfg | grep maxconn | egrep -o '[0-9]+')
-  HAPROXY_DEFAULTS=$(awk '/defaults/,/^$/' /etc/haproxy/haproxy.cfg | grep maxconn | egrep -o '[0-9]+')
+if [ "x$RC" = "x0" ]; then
+    # Collect information from THREADS_CONNECTED
+    mysql -u root -e 'SELECT * FROM INFORMATION_SCHEMA.GLOBAL_STATUS where VARIABLE_NAME="THREADS_CONNECTED";'
+    RC=$?
+    if [ "x$RC" = "x0" ]; then
+        THREADS_CONNECTED=$(mysql -u root -e 'SELECT * FROM INFORMATION_SCHEMA.GLOBAL_STATUS where VARIABLE_NAME="THREADS_CONNECTED";' | egrep -o '[0-9]+')
+    else
+        echo "no connection to the database" >&2
+        exit $RC_SKIPPED
+    fi
+    # Check for HAproxy topic in haproxy.cfg and pick the maxconn value
+    HAPROXY_MYSQL=$(awk '/listen mysql/,/^$/' /etc/haproxy/haproxy.cfg | grep maxconn | egrep -o '[0-9]+')
+    HAPROXY_DEFAULTS=$(awk '/defaults/,/^$/' /etc/haproxy/haproxy.cfg | grep maxconn | egrep -o '[0-9]+')
 
-  # If the HAproxy mysql is empty assign the value from defaults
-  if [[ -z ${HAPROXY_MYSQL} ]]; then
-    HAPROXY_MYSQL=${HAPROXY_DEFAULTS}
-  fi
+    # If the HAproxy mysql is empty assign the value from defaults
+    if [[ -z ${HAPROXY_MYSQL} ]]; then
+        HAPROXY_MYSQL=${HAPROXY_DEFAULTS}
+    fi
 else
-  echo "missing mysql binaries" >&2
-  exit $RC_SKIPPED
+    echo "missing mysql binaries" >&2
+    exit $RC_SKIPPED
 fi
 # Now that we have all needed compare the value from HAproxy and database.
-if [[ ! -z ${THREADS_CONNECTED} ]]
-then
-  if [[ "${THREADS_CONNECTED}" -ge ${HAPROXY_MYSQL} ]]; then
-    exit $RC_FAILED
-  elif [[ "${THREADS_CONNECTED}" -lt ${HAPROXY_MYSQL} ]]; then
-    exit $RC_OKAY
-  fi
+if [[ ! -z ${THREADS_CONNECTED} ]]; then
+    if [[ "${THREADS_CONNECTED}" -ge ${HAPROXY_MYSQL} ]]; then
+        exit $RC_FAILED
+    elif [[ "${THREADS_CONNECTED}" -lt ${HAPROXY_MYSQL} ]]; then
+        exit $RC_OKAY
+    fi
 fi

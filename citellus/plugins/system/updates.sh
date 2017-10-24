@@ -16,8 +16,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 if [[ $CITELLUS_LIVE = 0 ]]; then
-  echo "works on live-system only" >&2
-  exit $RC_SKIPPED
+    echo "works on live-system only" >&2
+    exit $RC_SKIPPED
 fi
 
 yum check-update 2> /dev/null

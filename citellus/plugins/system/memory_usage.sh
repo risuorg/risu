@@ -25,10 +25,10 @@
 is_required_file "/usr/bin/bc"
 
 if [[ "x$CITELLUS_LIVE" = "x0" ]];  then
-  is_required_file "${CITELLUS_ROOT}/free"
-  MEMORY_USE_CMD=$(grep Mem ${CITELLUS_ROOT}/free | sed 's/[ \t]\+/ /g')
+    is_required_file "${CITELLUS_ROOT}/free"
+    MEMORY_USE_CMD=$(grep Mem ${CITELLUS_ROOT}/free | sed 's/[ \t]\+/ /g')
 elif [[ "x$CITELLUS_LIVE" = "x1" ]];  then
-  MEMORY_USE_CMD=$(free | grep Mem | sed 's/[ \t]\+/ /g')
+    MEMORY_USE_CMD=$(free | grep Mem | sed 's/[ \t]\+/ /g')
 fi
 
 MEMORY_TOTAL=$(echo $MEMORY_USE_CMD | cut -d" " -f2)
@@ -39,8 +39,8 @@ RC=$(echo "$MEMORY_USED_PERCENT>${CITELLUS_MEMORY_MAX_PERCENT:-90}" | bc -l)
 
 
 if [[ "x$RC" = "x1" ]]; then
-  echo "${MEMORY_USED_PERCENT%%.*}%" >&2
-  exit $RC_FAILED
+    echo "${MEMORY_USED_PERCENT%%.*}%" >&2
+    exit $RC_FAILED
 else
-  exit $RC_OKAY
+    exit $RC_OKAY
 fi

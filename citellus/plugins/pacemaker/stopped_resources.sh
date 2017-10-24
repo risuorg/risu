@@ -21,33 +21,32 @@
 # we can run this against fs snapshot or live system
 
 if [ "x$CITELLUS_LIVE" = "x1" ];  then
-  pacemaker_status=$(systemctl is-active pacemaker || :)
-  if [ "$pacemaker_status" = "active" ]; then
-    if pcs status | grep -q "Stopped"; then
-      exit $RC_FAILED
+    pacemaker_status=$(systemctl is-active pacemaker || :)
+    if [ "$pacemaker_status" = "active" ]; then
+        if pcs status | grep -q "Stopped"; then
+            exit $RC_FAILED
+        else
+            exit $RC_OKAY
+        fi
     else
-      exit $RC_OKAY
+        echo "pacemaker is not running on this node" >&2
+        exit $RC_SKIPPED
     fi
-  else
-    echo "pacemaker is not running on this node" >&2
-    exit $RC_SKIPPED
-  fi
 elif [ "x$CITELLUS_LIVE" = "x0" ];  then
-  if is_active "pacemaker"; then
-    for CLUSTER_DIRECTORY in "pacemaker" "cluster"; do
-      if [ -d "${CITELLUS_ROOT}/sos_commands/${CLUSTER_DIRECTORY}" ]
-      then
-        PCS_DIRECTORY="${CITELLUS_ROOT}/sos_commands/${CLUSTER_DIRECTORY}"
-      fi
-    done
-    is_required_file "${PCS_DIRECTORY}/pcs_status"
-    if is_lineinfile "Stopped" "${PCS_DIRECTORY}/pcs_status"; then
-      exit $RC_FAILED
+    if is_active "pacemaker"; then
+        for CLUSTER_DIRECTORY in "pacemaker" "cluster"; do
+            if [ -d "${CITELLUS_ROOT}/sos_commands/${CLUSTER_DIRECTORY}" ]; then
+                PCS_DIRECTORY="${CITELLUS_ROOT}/sos_commands/${CLUSTER_DIRECTORY}"
+            fi
+        done
+        is_required_file "${PCS_DIRECTORY}/pcs_status"
+        if is_lineinfile "Stopped" "${PCS_DIRECTORY}/pcs_status"; then
+            exit $RC_FAILED
+        else
+            exit $RC_OKAY
+        fi
     else
-      exit $RC_OKAY
+        echo "pacemaker is not running on this node" >&2
+        exit $RC_SKIPPED
     fi
-  else
-    echo "pacemaker is not running on this node" >&2
-    exit $RC_SKIPPED
-  fi
 fi

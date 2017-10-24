@@ -21,38 +21,38 @@
 # we can run this against fs snapshot or live system
 
 count_nodes(){
-  if [ ! "$echo $(( (NUM_NODES-1) % 2 ))" -eq  "0" ]; then
-    echo "${NUM_NODES}" >&2
-    exit $RC_FAILED
-  elif [ "x$NUM_NODES" = "x1" ]; then
-    echo "${NUM_NODES}" >&2
-    exit $RC_FAILED
-  else
-    exit $RC_OKAY
-  fi
+    if [ ! "$echo $(( (NUM_NODES-1) % 2 ))" -eq  "0" ]; then
+        echo "${NUM_NODES}" >&2
+        exit $RC_FAILED
+    elif [ "x$NUM_NODES" = "x1" ]; then
+        echo "${NUM_NODES}" >&2
+        exit $RC_FAILED
+    else
+        exit $RC_OKAY
+    fi
 }
 
 if [ "x$CITELLUS_LIVE" = "x1" ];  then
-  pacemaker_status=$(systemctl is-active pacemaker || :)
-  if [ "$pacemaker_status" = "active" ]; then
-    NUM_NODES=$(pcs status | sed -n -r -e 's/^([0-9])[ \t]+node.*/\1/p')
-    count_nodes
-  else
-    echo "pacemaker is not running on this node" >&2
-    exit $RC_SKIPPED
-  fi
-elif [ "x$CITELLUS_LIVE" = "x0" ];  then
-  if is_active "pacemaker"; then
-    for CLUSTER_DIRECTORY in "pacemaker" "cluster"; do
-    if [ -d "${CITELLUS_ROOT}/sos_commands/${CLUSTER_DIRECTORY}" ]; then
-      PCS_DIRECTORY="${CITELLUS_ROOT}/sos_commands/${CLUSTER_DIRECTORY}"
+    pacemaker_status=$(systemctl is-active pacemaker || :)
+    if [ "$pacemaker_status" = "active" ]; then
+        NUM_NODES=$(pcs status | sed -n -r -e 's/^([0-9])[ \t]+node.*/\1/p')
+        count_nodes
+    else
+        echo "pacemaker is not running on this node" >&2
+        exit $RC_SKIPPED
     fi
-    done
-    is_required_file "${PCS_DIRECTORY}/pcs_status"
-    NUM_NODES=$(sed -n -r -e 's/^([0-9])[ \t]+node.*/\1/p' "${PCS_DIRECTORY}/pcs_status")
-    count_nodes
-  else
-    echo "pacemaker is not running on this node" >&2
-    exit $RC_SKIPPED
-  fi
+elif [ "x$CITELLUS_LIVE" = "x0" ];  then
+    if is_active "pacemaker"; then
+        for CLUSTER_DIRECTORY in "pacemaker" "cluster"; do
+            if [ -d "${CITELLUS_ROOT}/sos_commands/${CLUSTER_DIRECTORY}" ]; then
+                PCS_DIRECTORY="${CITELLUS_ROOT}/sos_commands/${CLUSTER_DIRECTORY}"
+            fi
+        done
+        is_required_file "${PCS_DIRECTORY}/pcs_status"
+        NUM_NODES=$(sed -n -r -e 's/^([0-9])[ \t]+node.*/\1/p' "${PCS_DIRECTORY}/pcs_status")
+        count_nodes
+    else
+        echo "pacemaker is not running on this node" >&2
+        exit $RC_SKIPPED
+    fi
 fi

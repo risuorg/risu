@@ -21,22 +21,18 @@
 # error if disk usage is greater than $CITELLUS_DISK_MAX_PERCENT
 : ${CITELLUS_DISK_MAX_PERCENT=75}
 
-if [[ $CITELLUS_LIVE = 0 ]];  then
-  is_required_file "${CITELLUS_ROOT}/df"
-  DISK_USE_CMD="cat ${CITELLUS_ROOT}/df"
+if [[ $CITELLUS_LIVE = 0 ]]; then
+    is_required_file "${CITELLUS_ROOT}/df"
+    DISK_USE_CMD="cat ${CITELLUS_ROOT}/df"
 else
-  DISK_USE_CMD="df -P"
+    DISK_USE_CMD="df -P"
 fi
 
-result=$($DISK_USE_CMD |
-	awk -vdisk_max_percent=$CITELLUS_DISK_MAX_PERCENT \
-	'/^\/dev/ && substr($5, 0, length($5)-1) > disk_max_percent {
-		print $6,$5
-	}')
+result=$($DISK_USE_CMD |awk -vdisk_max_percent=$CITELLUS_DISK_MAX_PERCENT '/^\/dev/ && substr($5, 0, length($5)-1) > disk_max_percent { print $6,$5 }')
 
 if [ -n "$result" ]; then
-  echo "${result}" >&2
-  exit $RC_FAILED
+    echo "${result}" >&2
+    exit $RC_FAILED
 else
-  exit $RC_OKAY
+    exit $RC_OKAY
 fi

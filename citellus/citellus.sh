@@ -49,16 +49,16 @@ show_stderr() {
 }
 
 show_logo(){
-  echo "_________ .__  __         .__  .__                "
-  echo "\_   ___ \|__|/  |_  ____ |  | |  |  __ __  ______"
-  echo "/    \  \/|  \   __\/ __ \|  | |  | |  |  \/  ___/"
-  echo "\     \___|  ||  | \  ___/|  |_|  |_|  |  /\___ \ "
-  echo " \______  /__||__|  \___  >____/____/____//____  >"
-  echo "        \/              \/                     \/ "
+    echo "_________ .__  __         .__  .__                "
+    echo "\_   ___ \|__|/  |_  ____ |  | |  |  __ __  ______"
+    echo "/    \  \/|  \   __\/ __ \|  | |  | |  |  \/  ___/"
+    echo "\     \___|  ||  | \  ___/|  |_|  |_|  |  /\___ \ "
+    echo " \______  /__||__|  \___  >____/____/____//____  >"
+    echo "        \/              \/                     \/ "
 }
 
 show_help(){
-  echo "Usage: ${0##*/} [-h] [--live] [DIRECTORY] [script folder] ... "
+    echo "Usage: ${0##*/} [-h] [--live] [DIRECTORY] [script folder] ... "
 }
 
 export CITELLUS_LIVE="0"
@@ -73,15 +73,15 @@ while :; do
                 show_help
                 exit
                 ;;
-	--)	shift
-		break
-		;;
-        -?*)
+        --) shift
+            break
+            ;;
+            -?*)
                 echo "unknown option: ${1}" >&2
                 exit $RC_FAILED
                 ;;
-	*)	break
-		;;
+        *) break
+        ;;
     esac
 done
 
@@ -90,12 +90,12 @@ tmpdir=$(readlink -f $tmpdir)
 trap "rm -rf $tmpdir" EXIT
 
 if [ "x${CITELLUS_LIVE}" = "x0" ]; then
-  CITELLUS_ROOT=$(cd $(dirname "$1") && pwd -P)/$(basename "$1")
-  if [ ! -d "${CITELLUS_ROOT}" ]; then
-    show_help
-    exit $RC_FAILED
-  fi 
-  shift
+    CITELLUS_ROOT=$(cd $(dirname "$1") && pwd -P)/$(basename "$1")
+    if [ ! -d "${CITELLUS_ROOT}" ]; then
+        show_help
+        exit $RC_FAILED
+    fi
+    shift
 fi
 
 if [ -n "$*" ]; then

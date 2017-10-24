@@ -23,15 +23,14 @@
 RELEASE=$(discover_osp_version)
 
 # Containerized deployment is only supported option starting in OSP 12
-if [ ${RELEASE} -ge 12 ];
-then
-  if [ -d "${CITELLUS_ROOT}/var/log/containers" ] && [ -d "${CITELLUS_ROOT}/var/lib/config-data" ]; then
-    exit $RC_OKAY
-  else
-    echo "the OSP 12 deployment seems to not be containerized" >&2
-    exit $RC_FAILED
-  fi
+if [ ${RELEASE} -ge 12 ]; then
+    if [ -d "${CITELLUS_ROOT}/var/log/containers" ] && [ -d "${CITELLUS_ROOT}/var/lib/config-data" ]; then
+        exit $RC_OKAY
+    else
+        echo "the OSP 12 deployment seems to not be containerized" >&2
+        exit $RC_FAILED
+    fi
 else
-  echo "works only on OSP 12 and later" >&2
-  exit $RC_SKIPPED
+    echo "works only on OSP 12 and later" >&2
+    exit $RC_SKIPPED
 fi
