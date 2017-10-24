@@ -4,3 +4,4 @@ pytest-cov>=2.5.1 # MIT
 pymarkdownlint
 flake8
 setuptools>=30
+bashate
