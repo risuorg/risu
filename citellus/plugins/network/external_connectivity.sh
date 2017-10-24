@@ -2,9 +2,9 @@
 
 : ${REMOTE_PING_TARGET:=8.8.8.8}
 
-if [ ! "x$CITELLUS_LIVE" = "x1" ]; then 
-  echo "works on live-system only" >&2
-  RC=$RC_SKIPPED
+if [ ! "x$CITELLUS_LIVE" = "x1" ]; then
+    echo "works on live-system only" >&2
+    RC=$RC_SKIPPED
 fi
 
 gw=$(ip route | awk '$1 == "default" {print $3}')

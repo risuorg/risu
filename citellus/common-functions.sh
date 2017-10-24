@@ -20,98 +20,96 @@
 
 if [ "x$CITELLUS_LIVE" = "x0" ];  then
 
-  # List of systemd/systemctl_list-units files
-  systemctl_list_units=( "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units" \
-                         "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all" )
+    # List of systemd/systemctl_list-units files
+    systemctl_list_units=( "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units" "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all" )
 
-  # find available one and use it, the ones at back with highest priority
-  for file in ${systemctl_list_units[@]}; do
-    [[ -f "${file}" ]] && systemctl_list_units_file="${file}"
-  done
+    # find available one and use it, the ones at back with highest priority
+    for file in ${systemctl_list_units[@]}; do
+        [[ -f "${file}" ]] && systemctl_list_units_file="${file}"
+    done
 
-  # List of logs/journalctl files
-  journal=( "${CITELLUS_ROOT}/sos_commands/logs/journalctl_--no-pager_--boot" \
-            "${CITELLUS_ROOT}/sos_commands/logs/journalctl_--all_--this-boot_--no-pager" )
+    # List of logs/journalctl files
+    journal=( "${CITELLUS_ROOT}/sos_commands/logs/journalctl_--no-pager_--boot" "${CITELLUS_ROOT}/sos_commands/logs/journalctl_--all_--this-boot_--no-pager" )
 
-  # find available one and use it, the ones at back with highest priority
-  for file in "${journal[@]}"; do
-    [[ -f "${file}" ]] && journalctl_file="${file}"
-  done
+    # find available one and use it, the ones at back with highest priority
+    for file in "${journal[@]}"; do
+        [[ -f "${file}" ]] && journalctl_file="${file}"
+    done
 fi
 
 is_required_file() {
-  for file in "$@"; do
-    if [[ ! -f $file ]];  then
-      # to remove the ${CITELLUS_ROOT} from the stderr.
-      file=${file#$CITELLUS_ROOT}
-      echo "required file $file not found." >&2
-      exit $RC_SKIPPED
-    fi
-  done
+    for file in "$@"; do
+        if [[ ! -f $file ]];  then
+            # to remove the ${CITELLUS_ROOT} from the stderr.
+            file=${file#$CITELLUS_ROOT}
+            echo "required file $file not found." >&2
+            exit $RC_SKIPPED
+        fi
+    done
 }
 
 is_active() {
-  if [ "x$CITELLUS_LIVE" = "x1" ];  then
-    systemctl is-active "$1" > /dev/null 2>&1
-  elif [ "x$CITELLUS_LIVE" = "x0" ];  then
-    is_required_file "${systemctl_list_units_file}"
-    grep -q "$1.* active" "${systemctl_list_units_file}"
-  fi
+    if [ "x$CITELLUS_LIVE" = "x1" ]; then
+        systemctl is-active "$1" > /dev/null 2>&1
+    elif [ "x$CITELLUS_LIVE" = "x0" ]; then
+        is_required_file "${systemctl_list_units_file}"
+        grep -q "$1.* active" "${systemctl_list_units_file}"
+    fi
 }
 
 is_rpm(){
-  if [ "x$CITELLUS_LIVE" = "x1" ];  then
-    rpm -qa *$1*|egrep ^"$1"-[0-9]
-  elif [ "x$CITELLUS_LIVE" = "x0" ];  then
-    awk '{print $1}' "${CITELLUS_ROOT}/installed-rpms"|egrep ^"$1"-[0-9]
-  fi
+    if [ "x$CITELLUS_LIVE" = "x1" ]; then
+        rpm -qa *$1*|egrep ^"$1"-[0-9]
+    elif [ "x$CITELLUS_LIVE" = "x0" ]; then
+        awk '{print $1}' "${CITELLUS_ROOT}/installed-rpms"|egrep ^"$1"-[0-9]
+    fi
 }
 
 is_required_rpm(){
-  if ! is_rpm $1 ; then
-    echo "required package $1 not found." >&2
-    exit $RC_SKIPPED
-  fi
+    if ! is_rpm $1 ; then
+        echo "required package $1 not found." >&2
+        exit $RC_SKIPPED
+    fi
 }
 
 discover_osp_version(){
-  RPM=$(is_rpm openstack-nova-common)
-  case ${RPM} in
-    openstack-nova-common-2014.*) echo 6 ;;
-    openstack-nova-common-2015.*) echo 7 ;;
-    openstack-nova-common-12.*) echo 8 ;;
-    openstack-nova-common-13.*) echo 9 ;;
-    openstack-nova-common-14.*) echo 10 ;;
-    openstack-nova-common-15.*) echo 11 ;;
-    openstack-nova-common-16.*) echo 12 ;;
-    *) echo 0 ;;
-  esac
+    RPM=$(is_rpm openstack-nova-common)
+    case ${RPM} in
+        openstack-nova-common-2014.*) echo 6 ;;
+        openstack-nova-common-2015.*) echo 7 ;;
+        openstack-nova-common-12.*) echo 8 ;;
+        openstack-nova-common-13.*) echo 9 ;;
+        openstack-nova-common-14.*) echo 10 ;;
+        openstack-nova-common-15.*) echo 11 ;;
+        openstack-nova-common-16.*) echo 12 ;;
+        *) echo 0 ;;
+    esac
 }
 
 name_osp_version(){
-  VERSION=$(discover_osp_version)
-  case ${VERSION} in
-    6) echo "juno" ;;
-    7) echo "kilo" ;;
-    8) echo "liberty" ;;
-    9) echo "mitaka" ;;
-    10) echo "newton" ;;
-    11) echo "ocata" ;;
-    12) echo "pike" ;;
-    *) echo "not recognized" ;;
-  esac
+    VERSION=$(discover_osp_version)
+    case ${VERSION} in
+        6) echo "juno" ;;
+        7) echo "kilo" ;;
+        8) echo "liberty" ;;
+        9) echo "mitaka" ;;
+        10) echo "newton" ;;
+        11) echo "ocata" ;;
+        12) echo "pike" ;;
+        *) echo "not recognized" ;;
+    esac
 }
 
 is_process(){
-  if [ "x$CITELLUS_LIVE" = "x1" ];  then
-    ps -elf | grep -q "$1"
-  elif [ "x$CITELLUS_LIVE" = "x0" ];  then
-    grep -q "$1" "${CITELLUS_ROOT}/ps";
-  fi
+    if [ "x$CITELLUS_LIVE" = "x1" ];  then
+        ps -elf | grep -q "$1"
+    elif [ "x$CITELLUS_LIVE" = "x0" ];  then
+        grep -q "$1" "${CITELLUS_ROOT}/ps";
+    fi
 }
 
 is_lineinfile(){
-  # $1: regexp
-  # $*: files
-  [ -f "$2" ] && egrep -iq "$1" "${@:2}"
+    # $1: regexp
+    # $*: files
+    [ -f "$2" ] && egrep -iq "$1" "${@:2}"
 }

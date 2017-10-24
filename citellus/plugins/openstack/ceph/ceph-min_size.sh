@@ -19,46 +19,46 @@
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 
 mktempfile() {
-  tmpfile=$(mktemp testsXXXXXX)
-  tmpfile=$(readlink -f $tmpfile)
-  trap "rm $tmpfile" EXIT
+    tmpfile=$(mktemp testsXXXXXX)
+    tmpfile=$(readlink -f $tmpfile)
+    trap "rm $tmpfile" EXIT
 }
 
 # Check if ceph pools has correct min_size
 check_settings() {
-  for pool in $(sed -n -r -e 's/^pool.*\x27(.*)\x27.*$/\1/p' $1); do
-    MIN_SIZE=$(sed -n -r -e "s/^pool.*'$pool'.*min_size[ \t]([0-9]).*$/\1/p" $1)
-    SIZE=$(sed -n -r -e "s/^pool.*'$pool'.*\ssize[ \t]([0-9]).*$/\1/p" $1)
-    if [ -z "$SIZE" ] || [ -z "$MIN_SIZE" ]; then
-      echo "error could not parse size or min_size." >&2
-      exit $RC_FAILED
-    fi
-    _MIN_SIZE="$(( (SIZE/2) + 1 ))"
+    for pool in $(sed -n -r -e 's/^pool.*\x27(.*)\x27.*$/\1/p' $1); do
+        MIN_SIZE=$(sed -n -r -e "s/^pool.*'$pool'.*min_size[ \t]([0-9]).*$/\1/p" $1)
+        SIZE=$(sed -n -r -e "s/^pool.*'$pool'.*\ssize[ \t]([0-9]).*$/\1/p" $1)
+        if [ -z "$SIZE" ] || [ -z "$MIN_SIZE" ]; then
+            echo "error could not parse size or min_size." >&2
+            exit $RC_FAILED
+        fi
+        _MIN_SIZE="$(( (SIZE/2) + 1 ))"
 
-    if [ "${MIN_SIZE}" -lt  "${_MIN_SIZE}" ]; then
-      echo "pool '$pool' min_size ${MIN_SIZE}" >&2
-      flag=1
-    fi
-  done
-  [[ "x$flag" = "x" ]] && exit $RC_OKAY || exit $RC_FAILED
+        if [ "${MIN_SIZE}" -lt  "${_MIN_SIZE}" ]; then
+            echo "pool '$pool' min_size ${MIN_SIZE}" >&2
+            flag=1
+        fi
+    done
+    [[ "x$flag" = "x" ]] && exit $RC_OKAY || exit $RC_FAILED
 }
 
 if [ "x$CITELLUS_LIVE" = "x0" ];  then
-  if is_active ceph-mon;
-  then
-    is_required_file "${CITELLUS_ROOT}/sos_commands/ceph/ceph_osd_dump"
-    check_settings "${CITELLUS_ROOT}/sos_commands/ceph/ceph_osd_dump"
-  else
-    echo "no ceph integrated" >&2
-    exit $RC_SKIPPED
-  fi
+    if is_active ceph-mon;
+    then
+        is_required_file "${CITELLUS_ROOT}/sos_commands/ceph/ceph_osd_dump"
+        check_settings "${CITELLUS_ROOT}/sos_commands/ceph/ceph_osd_dump"
+    else
+        echo "no ceph integrated" >&2
+        exit $RC_SKIPPED
+    fi
 elif [ "x$CITELLUS_LIVE" = "x1" ]; then
-  if hiera -c /etc/puppet/hiera.yaml enabled_services | egrep -sq ceph_mon; then
-    mktempfile
-    ceph osd dump > $tmpfile
-    check_settings $tmpfile
-  else
-    echo "no ceph integrated" >&2
-    exit $RC_SKIPPED
-  fi
+    if hiera -c /etc/puppet/hiera.yaml enabled_services | egrep -sq ceph_mon; then
+        mktempfile
+        ceph osd dump > $tmpfile
+        check_settings $tmpfile
+    else
+        echo "no ceph integrated" >&2
+        exit $RC_SKIPPED
+    fi
 fi

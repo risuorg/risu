@@ -21,29 +21,29 @@
 # Check if ceph was integrated, if yes then check it's health
 
 if [ "x$CITELLUS_LIVE" = "x0" ]; then
-  if [ -z "${systemctl_list_units_file}" ]; then
-    echo "file /sos_commands/systemd/systemctl_list-units not found." >&2
-    echo "file /sos_commands/systemd/systemctl_list-units_--all not found." >&2
-    exit $RC_SKIPPED
-  else
-    if grep -q "ceph-mon.* active" "${systemctl_list_units_file}"; then
-      is_required_file "${CITELLUS_ROOT}/sos_commands/ceph/ceph_health_detail"
-      is_lineinfile "HEALTH_OK" "${CITELLUS_ROOT}/sos_commands/ceph/ceph_health_detail" && exit $RC_OKAY || cat "${CITELLUS_ROOT}/sos_commands/ceph/ceph_health_detail" >&2 && exit $RC_FAILED
+    if [ -z "${systemctl_list_units_file}" ]; then
+        echo "file /sos_commands/systemd/systemctl_list-units not found." >&2
+        echo "file /sos_commands/systemd/systemctl_list-units_--all not found." >&2
+        exit $RC_SKIPPED
+    else
+        if grep -q "ceph-mon.* active" "${systemctl_list_units_file}"; then
+            is_required_file "${CITELLUS_ROOT}/sos_commands/ceph/ceph_health_detail"
+            is_lineinfile "HEALTH_OK" "${CITELLUS_ROOT}/sos_commands/ceph/ceph_health_detail" && exit $RC_OKAY || cat "${CITELLUS_ROOT}/sos_commands/ceph/ceph_health_detail" >&2 && exit $RC_FAILED
+        else
+            echo "no ceph integrated" >&2
+            exit $RC_SKIPPED
+        fi
+    fi
+elif [ "x$CITELLUS_LIVE" = "x1" ]; then
+    if hiera -c /etc/puppet/hiera.yaml enabled_services | egrep -sq ceph_mon; then
+        if ceph -s | grep -q HEALTH_OK; then
+            exit $RC_OKAY
+        else
+            ceph -s | grep health >&2
+            exit $RC_FAILED
+        fi
     else
         echo "no ceph integrated" >&2
         exit $RC_SKIPPED
     fi
-  fi
-elif [ "x$CITELLUS_LIVE" = "x1" ]; then
-  if hiera -c /etc/puppet/hiera.yaml enabled_services | egrep -sq ceph_mon; then
-    if ceph -s | grep -q HEALTH_OK; then
-      exit $RC_OKAY
-    else
-      ceph -s | grep health >&2
-      exit $RC_FAILED
-    fi
-  else
-    echo "no ceph integrated" >&2
-    exit $RC_SKIPPED
-  fi
 fi

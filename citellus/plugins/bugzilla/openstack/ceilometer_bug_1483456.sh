@@ -23,23 +23,23 @@
 if is_process nova-compute;
 then
 
-  is_required_file "${CITELLUS_ROOT}/etc/nova/nova.conf"
+    is_required_file "${CITELLUS_ROOT}/etc/nova/nova.conf"
 
-  if [ "x$CITELLUS_LIVE" = "x1" ];  then
-    HOST=$(hostname)
-  elif [ "x$CITELLUS_LIVE" = "x0" ];  then
-    is_required_file "${CITELLUS_ROOT}/hostname"
-    HOST=$(cat "${CITELLUS_ROOT}/hostname")
-  fi
+    if [ "x$CITELLUS_LIVE" = "x1" ];  then
+        HOST=$(hostname)
+    elif [ "x$CITELLUS_LIVE" = "x0" ];  then
+        is_required_file "${CITELLUS_ROOT}/hostname"
+        HOST=$(cat "${CITELLUS_ROOT}/hostname")
+    fi
 
-  NOVAHOST=$(grep ^host.* "${CITELLUS_ROOT}/etc/nova/nova.conf"|cut -d "=" -f2|tail -1)
+    NOVAHOST=$(grep ^host.* "${CITELLUS_ROOT}/etc/nova/nova.conf"|cut -d "=" -f2|tail -1)
 
-  if [[ "$HOST" != "$NOVAHOST" ]]; then
-    echo "https://bugzilla.redhat.com/show_bug.cgi?id=1483456" >&2
-    exit $RC_FAILED
-  else
-    exit $RC_OKAY
-  fi
+    if [[ "$HOST" != "$NOVAHOST" ]]; then
+        echo "https://bugzilla.redhat.com/show_bug.cgi?id=1483456" >&2
+        exit $RC_FAILED
+    else
+        exit $RC_OKAY
+    fi
 else
-  exit $RC_SKIPPED
+    exit $RC_SKIPPED
 fi
