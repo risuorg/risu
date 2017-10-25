@@ -22,7 +22,7 @@
 
 is_required_file "${CITELLUS_ROOT}/var/spool/cron/heat"
 if ! awk '/heat-manage purge_deleted/ && /^[^#]/ { print $0 }' "${CITELLUS_ROOT}/var/spool/cron/heat"; then
-    echo "crontab heat stack purge is not set" >&2
+    echo $"crontab heat stack purge is not set" >&2
     exit $RC_FAILED
 elif awk '/heat-manage purge_deleted/ && /^[^#]/ { print $0 }' "${CITELLUS_ROOT}/var/spool/cron/heat"; then
     exit $RC_OKAY

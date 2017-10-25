@@ -38,9 +38,9 @@ LIBVIRTOFF=$(awk -F "=" '/^ON_SHUTDOWN/ {gsub (" ", "", $0); print tolower($2)}'
 NOVASTRING=$(awk -F "=" '/^resume_guests_state_on_host_boot/ {gsub (" ", "", $0); print tolower($2)}' $NOVACONF)
 
 if [[ "$LIBVIRTBOOT" == "ignore" && "$LIBVIRTOFF" == "shutdown" && "$NOVASTRING" == "true" ]]; then
-    echo "compute node is configured to restore guests state at startup" >&2
+    echo $"compute node is configured to restore guests state at startup" >&2
     exit $RC_OKAY
 else
-    echo "compute node is NOT configured to restore guests state at startup" >&2
+    echo $"compute node is NOT configured to restore guests state at startup" >&2
     exit $RC_FAILED
 fi

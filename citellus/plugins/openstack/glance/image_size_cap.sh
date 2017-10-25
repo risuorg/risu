@@ -25,7 +25,7 @@ if is_lineinfile "^image_size_cap" "${CITELLUS_ROOT}/etc/glance/glance-api.conf"
                 "${CITELLUS_ROOT}/etc/glance/glance-api.conf")
 
     if [ "${IMAGE_SIZE}" -lt  "${IMAGE_SIZE_DEFAULT}" ]; then
-        echo "image_size_cap is less than 1TiB" >&2
+        echo $"image_size_cap is less than 1TiB" >&2
         exit $RC_FAILED
     fi
     echo "image_size_cap is more than 1TiB" >&2

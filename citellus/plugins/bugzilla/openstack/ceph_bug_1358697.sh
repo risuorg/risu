@@ -24,7 +24,7 @@ elif [ "x$CITELLUS_LIVE" = "x0" ];  then
 fi
 
 exitoudated(){
-    echo "outdated ceph packages: https://bugzilla.redhat.com/show_bug.cgi?id=1358697" >&2
+    echo $"outdated ceph packages: https://bugzilla.redhat.com/show_bug.cgi?id=1358697" >&2
     exit $RC_FAILED
 }
 
