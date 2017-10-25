@@ -15,20 +15,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+# Load common functions
+[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 
 # check if we are running against compute
 
-if [ "x$CITELLUS_LIVE" = "x1" ];  then
-  if ! ps -elf | grep -q [n]ova-compute; then
-    echo "works only on compute node" >&2
-    exit $RC_SKIPPED
-  fi
-elif [ "x$CITELLUS_LIVE" = "x0" ]; then
-  if ! grep -q nova-compute "${CITELLUS_ROOT}/ps"; then
-    echo "works only on compute node" >&2
-    exit $RC_SKIPPED
-  fi
-fi
+is_processs nova-compute || echo "works only on compute node" >&2 && exit $RC_SKIPPED
 
 # this can run against live and also any sort of snapshot of the filesystem
 config_files=( "${CITELLUS_ROOT}/etc/nova/nova.conf" \
