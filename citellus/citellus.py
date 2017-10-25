@@ -40,6 +40,7 @@ LOG = logging.getLogger('citellus')
 citellusdir = os.path.abspath(os.path.dirname(__file__))
 localedir = os.path.join(citellusdir, 'locale')
 
+# This will use system defined LANGUAGE
 trad = gettext.translation('citellus', localedir, fallback=True)
 
 try:
@@ -47,7 +48,7 @@ try:
 except AttributeError:
     _ = trad.gettext
 
-# Update in functions.sh if changed
+# Return codes to use (not to mask bash or other and catch other errors)
 RC_OKAY = 10
 RC_FAILED = 20
 RC_SKIPPED = 30
@@ -93,7 +94,8 @@ def show_logo():
            "/    \  \/|  \   __\/ __ \|  | |  | |  |  \/  ___/", \
            "\     \___|  ||  | \  ___/|  |_|  |_|  |  /\___ \ ", \
            " \______  /__||__|  \___  >____/____/____//____  >", \
-           "        \/              \/                     \/ "
+           "        \/              \/                     \/ ", \
+           _("                                                  ")
     print("\n".join(logo))
 
 
@@ -305,6 +307,11 @@ def main():
 
     options = parse_args()
 
+    global _
+
+    # Configure ENV language before anything else
+    os.environ['LANG'] = "%s" % options.lang
+
     # Configure logging
     logging.basicConfig(level=options.loglevel)
 
@@ -329,6 +336,14 @@ def main():
     if options.list_plugins:
         print("\n".join(plugins))
         return
+
+    # Reinstall language in case it has changed
+    trad = gettext.translation('citellus', localedir, fallback=True, languages=[options.lang])
+
+    try:
+        _ = trad.ugettext
+    except AttributeError:
+        _ = trad.gettext
 
     if not options.quiet:
         show_logo()
