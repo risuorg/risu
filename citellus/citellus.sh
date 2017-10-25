@@ -18,7 +18,7 @@
 
 # this can run against live and also any sort of snapshot of the filesystem
 
-export LANG=C
+export LANG=en_US
 
 TEST_OKAY=$(tput setaf 2; echo "okay"; tput sgr0)
 TEST_SKIPPED=$(tput setaf 3; echo "skipped"; tput sgr0)
