@@ -160,7 +160,7 @@ def runplugin(plugin):
                        "err": err.decode('ascii', 'ignore')}}
 
 
-def docitellus(live=False, path=False, plugins=False):
+def docitellus(live=False, path=False, plugins=False, lang='en_US'):
     """
     Runs citellus scripts on specified root folder
     :param path: Path to analyze
@@ -179,7 +179,7 @@ def docitellus(live=False, path=False, plugins=False):
     os.environ['CITELLUS_ROOT'] = "%s" % path
     os.environ['CITELLUS_LIVE'] = "%s" % CITELLUS_LIVE
     os.environ['CITELLUS_BASE'] = "%s" % citellusdir
-    os.environ['LANG'] = "%s" % "C"
+    os.environ['LANG'] = "%s" % lang
     os.environ['RC_OKAY'] = "%s" % RC_OKAY
     os.environ['RC_FAILED'] = "%s" % RC_FAILED
     os.environ['RC_SKIPPED'] = "%s" % RC_SKIPPED
@@ -240,6 +240,10 @@ def parse_args():
                    help=_("Write results to JSON file FILENAME"))
 
     g = p.add_argument_group('Output and logging options')
+    g.add_argument("--lang",
+                   action="store_true",
+                   help=_("Define locale to use"),
+                   default='en_US')
     g.add_argument("--only-failed", "-F",
                    action="store_true",
                    help=_("Only show failed tests"))
