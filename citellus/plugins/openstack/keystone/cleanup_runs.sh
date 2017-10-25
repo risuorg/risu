@@ -20,17 +20,7 @@
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 
-if [ "x$CITELLUS_LIVE" = "x0" ];  then
-    if grep -q nova-compute "${CITELLUS_ROOT}/ps"; then
-        echo "works only on controller node" >&2
-        exit $RC_SKIPPED
-    fi
-elif [ "x$CITELLUS_LIVE" = "x1" ];  then
-    if ps -elf | grep -q [n]ova-compute; then
-        echo "works only on controller node" >&2
-        exit $RC_SKIPPED
-    fi
-fi
+is_process nova-compute && echo "works only on controller node" >&2 && exit $RC_SKIPPED
 
 is_required_file "${CITELLUS_ROOT}/var/log/keystone/keystone.log"
 

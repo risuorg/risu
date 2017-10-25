@@ -18,12 +18,15 @@
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 
+STONITHNOTENABLED=$"stonith is not enabled"
+
 # we can run this against fs snapshot or live system
 
 if [ "x$CITELLUS_LIVE" = "x1" ];  then
     pacemaker_status=$(systemctl is-active pacemaker || :)
     if [ "$pacemaker_status" = "active" ]; then
         if pcs config | grep -q "stonith-enabled:.*false"; then
+            echo "$STONITHNOTENABLED" >&2
             exit $RC_FAILED
         else
             exit $RC_OKAY
@@ -41,6 +44,7 @@ elif [ "x$CITELLUS_LIVE" = "x0" ];  then
         done
         is_required_file "${PCS_DIRECTORY}/pcs_config"
         if is_lineinfile "stonith-enabled:.*false" "${PCS_DIRECTORY}/pcs_config"; then
+            echo "$STONITHNOTENABLED" >&2
             exit $RC_FAILED
         else
             exit $RC_OKAY
