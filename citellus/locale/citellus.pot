@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: citellus 0.0.1.dev227\n"
+"Project-Id-Version: citellus 0.0.1.dev493\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-07-27 20:46+0200\n"
+"POT-Creation-Date: 2017-10-25 22:37+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,129 +17,288 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.3.4\n"
 
-#: citellus/citellus.py:112
-msgid "okay"
-msgstr ""
-
-#: citellus/citellus.py:113
-msgid "failed"
-msgstr ""
-
-#: citellus/citellus.py:114
-msgid "skipped"
-msgstr ""
-
-#: citellus/citellus.py:115
-msgid "unexpected result"
-msgstr ""
-
-#: citellus/citellus.py:158
+#: citellus/citellus.py:132
 #, python-format
 msgid "Found plugins: %s"
 msgstr ""
 
-#: citellus/citellus.py:163
-#, python-format
-msgid "Filtering of plugins enabled for: %s"
-msgstr ""
-
-#: citellus/citellus.py:169
-#, python-format
-msgid "Plugin %s does not pass filter"
-msgstr ""
-
-#: citellus/citellus.py:186
+#: citellus/citellus.py:146
 #, python-format
 msgid "Running plugin: %s"
 msgstr ""
 
-#: citellus/citellus.py:223
-#, python-format
-msgid "Final deduplicated list: %s"
-msgstr ""
-
-#: citellus/citellus.py:308
+#: citellus/citellus.py:229
 msgid ""
 "Citellus allows to analyze a directory against common set of tests, "
 "useful for finding common configuration errors"
 msgstr ""
 
-#: citellus/citellus.py:313
+#: citellus/citellus.py:235
 msgid "Work on a live system instead of a snapshot"
 msgstr ""
 
-#: citellus/citellus.py:315
-msgid "Execute in verbose mode"
+#: citellus/citellus.py:239
+msgid "Print a list of discovered plugins and exit"
 msgstr ""
 
-#: citellus/citellus.py:318 citellus/magui.py:67
-msgid "Set verbosity level for messages while running/logging"
+#: citellus/citellus.py:242
+msgid "Write results to JSON file FILENAME"
 msgstr ""
 
-#: citellus/citellus.py:320 citellus/magui.py:75
-msgid "Enable silent mode, only errors on tests written"
+#: citellus/citellus.py:247
+msgid "Define locale to use"
 msgstr ""
 
-#: citellus/citellus.py:322
-msgid "Only include plugins that contains in full path that substring"
+#: citellus/citellus.py:251
+msgid "Only show failed tests"
 msgstr ""
 
-#: citellus/citellus.py:333
-#, python-format
-msgid "Additional parameters: %s"
+#: citellus/citellus.py:253
+msgid "Increase verbosity of output (may be specified more than once)"
 msgstr ""
 
-#: citellus/citellus.py:341
+#: citellus/citellus.py:258 citellus/magui.py:80
+msgid "Set log level"
+msgstr ""
+
+#: citellus/citellus.py:263 citellus/magui.py:93
+msgid "Enable quiet mode"
+msgstr ""
+
+#: citellus/citellus.py:269 citellus/magui.py:97
+msgid "Only include plugins that contain substring"
+msgstr ""
+
+#: citellus/citellus.py:274 citellus/magui.py:102
+msgid "Exclude plugins that contain substring"
+msgstr ""
+
+#: citellus/citellus.py:316
 msgid "When not running in Live mode, snapshot path is required"
 msgstr ""
 
-#: citellus/citellus.py:359
+#: citellus/citellus.py:335
 #, python-format
 msgid "found #%s tests at %s"
 msgstr ""
 
-#: citellus/citellus.py:362
-msgid "Plugin folder empty, exitting"
+#: citellus/citellus.py:338
+msgid "did not discover any plugins, exiting"
 msgstr ""
 
-#: citellus/citellus.py:369
+#: citellus/citellus.py:343
 msgid "mode: live"
 msgstr ""
 
-#: citellus/citellus.py:371
+#: citellus/citellus.py:345
 #, python-format
 msgid "mode: fs snapshot %s"
 msgstr ""
 
-#: citellus/citellus.py:411
-#, python-format
-msgid "Plugin: %s, output: %s"
-msgstr ""
-
-#: citellus/magui.py:62
+#: citellus/magui.py:75
 msgid ""
 "Processes several generic archives/sosreports scripts in a uniform way, "
 "to interpret status that depend on several systems data"
 msgstr ""
 
-#: citellus/magui.py:70
+#: citellus/magui.py:85
 msgid "Set path for Citellus plugin location if not default"
 msgstr ""
 
-#: citellus/magui.py:73
+#: citellus/magui.py:88
 msgid "Set path for Magui plugin location if not default"
 msgstr ""
 
-#: citellus/magui.py:79
-msgid "Only include Citellus plugins that contains in full path that substring"
-msgstr ""
-
-#: citellus/magui.py:82
+#: citellus/magui.py:107
 msgid "Only include Magui plugins that contains in full path that substring"
 msgstr ""
 
-#: citellus/magui.py:104
-#, python-format
-msgid "Gathering analysis for %s"
+#: citellus/plugins/pacemaker/packages.sh:29
+msgid "outdated pacemaker packages <1.1.15"
 msgstr ""
-
+#: citellus/plugins/pacemaker/packages.sh:49
+msgid "outdated pacemaker packages <1.1.15"
+msgstr ""
+#: citellus/plugins/pacemaker/stonith_enabled.sh:27
+msgid "stonith is not enabled"
+msgstr ""
+#: citellus/plugins/pacemaker/stonith_enabled.sh:45
+msgid "stonith is not enabled"
+msgstr ""
+#: citellus/plugins/network/external_connectivity.sh:14
+msgid "default gateway is unreachable"
+msgstr ""
+#: citellus/plugins/bugzilla/httpd_bug_1406417.sh:26
+msgid "https://bugzilla.redhat.com/show_bug.cgi?id=1406417"
+msgstr ""
+#: citellus/plugins/bugzilla/openstack/neutron_bug_1489066.sh:27
+msgid "errors on iptables xlock, check: https://bugzilla.redhat.com/show_bug.cgi?id=1489066"
+msgstr ""
+#: citellus/plugins/bugzilla/openstack/httpd_bug_1478042.sh:25
+msgid "https://bugzilla.redhat.com/show_bug.cgi?id=1478042"
+msgstr ""
+#: citellus/plugins/bugzilla/openstack/nova_bug_1474092.sh:25
+msgid "https://bugzilla.redhat.com/show_bug.cgi?id=1474092"
+msgstr ""
+#: citellus/plugins/bugzilla/openstack/keystone_bug_1473713.sh:27
+msgid "errors on token expiration, check: https://bugzilla.redhat.com/show_bug.cgi?id=1473713"
+msgstr ""
+#: citellus/plugins/bugzilla/openstack/neutron_bug_1474092.sh:25
+msgid "https://bugzilla.redhat.com/show_bug.cgi?id=1474092"
+msgstr ""
+#: citellus/plugins/bugzilla/openstack/neutron_bug_1450223.sh:40
+msgid "possible python-ryu bug in ovs-agent https://bugzilla.redhat.com/show_bug.cgi?id=1450223"
+msgstr ""
+#: citellus/plugins/bugzilla/openstack/ceilometer_bug_1483456.sh:38
+msgid "https://bugzilla.redhat.com/show_bug.cgi?id=1483456"
+msgstr ""
+#: citellus/plugins/bugzilla/openstack/ceph_bug_1358697.sh:27
+msgid "outdated ceph packages: https://bugzilla.redhat.com/show_bug.cgi?id=1358697"
+msgstr ""
+#: citellus/plugins/openstack/iptables/metadata_redirect.sh:39
+msgid "No iptables rule defined for metadata access"
+msgstr ""
+#: citellus/plugins/openstack/ceph/ceph-pg_num.sh:51
+msgid "pg_num count $_PG_NUM is not optimal"
+msgstr ""
+#: citellus/plugins/openstack/ceph/missing-repos-on-compute.sh:28
+msgid "librbd1 might be outdated if rhceph repo is not enabled on compute"
+msgstr ""
+#: citellus/plugins/openstack/ceph/missing-repos-on-compute.sh:35
+msgid "librbd1 might be outdated if rhceph repo is not enabled on compute"
+msgstr ""
+#: citellus/plugins/openstack/crontab/keystone_cleanup.sh:30
+msgid "crontab keystone cleanup is not set"
+msgstr ""
+#: citellus/plugins/openstack/crontab/keystone_cleanup.sh:36
+msgid "token flush not running every hour "
+msgstr ""
+#: citellus/plugins/openstack/crontab/heat_stack-purge.sh:25
+msgid "crontab heat stack purge is not set"
+msgstr ""
+#: citellus/plugins/openstack/network/dpdk.sh:31
+msgid "missing NUMATopologyFilter in nova.conf"
+msgstr ""
+#: citellus/plugins/openstack/network/dpdk.sh:33
+msgid "missing iommu=pt on kernel cmdline"
+msgstr ""
+#: citellus/plugins/openstack/network/dpdk.sh:36
+msgid "missing socket-mem in DPDK_OPTIONS in /etc/sysconfig/openvswitch"
+msgstr ""
+#: citellus/plugins/openstack/network/dpdk.sh:37
+msgid "missing -l (Core list) in DPDK_OPTIONS in /etc/sysconfig/openvswitch"
+msgstr ""
+#: citellus/plugins/openstack/network/dpdk.sh:38
+msgid "missing -n (Memory channels) in DPDK_OPTIONS in /etc/sysconfig/openvswitch"
+msgstr ""
+#: citellus/plugins/openstack/network/sriov.sh:29
+msgid "missing rpm openstack-neutron-sriov-nic-agent"
+msgstr ""
+#: citellus/plugins/openstack/network/sriov.sh:30
+msgid "neutron-sriov-nic-agent not running"
+msgstr ""
+#: citellus/plugins/openstack/network/sriov.sh:33
+msgid "missing rpm tuned-profiles-cpu-partitioning"
+msgstr ""
+#: citellus/plugins/openstack/network/sriov.sh:34
+msgid "missing isolated_cores in /etc/tuned/cpu-partitioning-variables.conf"
+msgstr ""
+#: citellus/plugins/openstack/network/sriov.sh:38
+msgid "virtual function is disabled"
+msgstr ""
+#: citellus/plugins/openstack/network/sriov.sh:41
+msgid "virtual function is disabled"
+msgstr ""
+#: citellus/plugins/openstack/network/sriov.sh:44
+msgid "vfio_iommu module is not loaded"
+msgstr ""
+#: citellus/plugins/openstack/network/sriov.sh:45
+msgid "unsafe interrupts not enabled"
+msgstr ""
+#: citellus/plugins/openstack/network/sriov.sh:48
+msgid "missing intel_iommu=on on kernel cmdline"
+msgstr ""
+#: citellus/plugins/openstack/network/sriov.sh:49
+msgid "missing iommu=pt on kernel cmdline"
+msgstr ""
+#: citellus/plugins/openstack/network/sriov.sh:51
+msgid "missing amd_iommu=pt on kernel cmdline"
+msgstr ""
+#: citellus/plugins/openstack/network/sriov.sh:54
+msgid "missing hugepagesz on kernel cmdline"
+msgstr ""
+#: citellus/plugins/openstack/network/sriov.sh:55
+msgid "missing hugepages= on kernel cmdline"
+msgstr ""
+#: citellus/plugins/openstack/network/sriov.sh:56
+msgid "missing isolcpus= on kernel cmdline"
+msgstr ""
+#: citellus/plugins/openstack/network/sriov.sh:58
+msgid "missing sriovnicswitch in ml2_conf.ini"
+msgstr ""
+#: citellus/plugins/openstack/network/sriov.sh:60
+msgid "missing PciPassthroughFilter in nova.conf"
+msgstr ""
+#: citellus/plugins/openstack/network/sriov.sh:61
+msgid "missing vcpu_pin_set in nova.conf"
+msgstr ""
+#: citellus/plugins/openstack/network/sriov.sh:62
+msgid "missing pci_passthrough_whitelist in /etc/nova/nova.conf"
+msgstr ""
+#: citellus/plugins/openstack/network/sriov.sh:65
+msgid "missing physical_device_mappings in /etc/neutron/plugins/ml2/sriov_agent.ini"
+msgstr ""
+#: citellus/plugins/openstack/hardware/memory.sh:32
+msgid "memory is lower than 16gb ram"
+msgstr ""
+#: citellus/plugins/openstack/hardware/memory.sh:38
+msgid "memory is lower than (1.5gb per core)"
+msgstr ""
+#: citellus/plugins/openstack/hardware/memory.sh:45
+msgid "memory is lower than (3gb per core)"
+msgstr ""
+#: citellus/plugins/openstack/mysql/innodb-file-per-table.sh:27
+msgid "innodb_file_per_table not set in /etc/my.cnf.d/galera.cnf or /etc/my.cnf"
+msgstr ""
+#: citellus/plugins/openstack/containers/containerized_deployment.sh:30
+msgid "the OSP 12 deployment seems to not be containerized"
+msgstr ""
+#: citellus/plugins/openstack/version.sh:27
+msgid "packstack detected"
+msgstr ""
+#: citellus/plugins/openstack/system/clock-chronyd-disabled.sh:31
+msgid "chrony service is active, and it should not on OSP node"
+msgstr ""
+#: citellus/plugins/openstack/glance/image_size_cap.sh:28
+msgid "image_size_cap is less than 1TiB"
+msgstr ""
+#: citellus/plugins/openstack/nova/resume-guests-state-on-host-boot.sh:41
+msgid "compute node is configured to restore guests state at startup"
+msgstr ""
+#: citellus/plugins/openstack/nova/resume-guests-state-on-host-boot.sh:44
+msgid "compute node is NOT configured to restore guests state at startup"
+msgstr ""
+#: citellus/plugins/openstack/nova/incompatible-aggregate-capabilities-filters.sh:27
+msgid "Incompatible ComputeCapabilitiesFilter and AggregateInstanceExtraSpecsFilter in scheduler_default_filters at nova.conf"
+msgstr ""
+#: citellus/plugins/openstack/nova/osp11-versioned-notifications.sh:35
+msgid "missing notification_format=unversioned in nova.conf"
+msgstr ""
+#: citellus/plugins/launchpad/openstack/keystone_bug_1649616.sh:25
+msgid "https://bugs.launchpad.net/keystone/+bug/1649616/"
+msgstr ""
+#: citellus/plugins/system/hardware_virtualization.sh:25
+msgid "no hardware virt support found in /proc/cpuinfo"
+msgstr ""
+#: citellus/plugins/system/selinux_runtime.sh:31
+msgid "failed to determined runtime selinux mode"
+msgstr ""
+#: citellus/plugins/system/selinux_runtime.sh:36
+msgid "runtime selinux mode is not enforcing"
+msgstr ""
+#: citellus/plugins/system/clock-0-ntp-services.sh:28
+msgid "both ntpd and chrony are active"
+msgstr ""
+#: citellus/plugins/system/clock-0-ntp-services.sh:33
+msgid "both chrony or ntpd are not active"
+msgstr ""

@@ -28,12 +28,13 @@ else
 fi
 
 if ! [[ "$mode" ]]; then
-    echo "failed to determined runtime selinux mode" >&2
+    echo $"failed to determined runtime selinux mode" >&2
     exit $RC_FAILED
 fi
 
 if [[ $mode != enforcing ]]; then
-    echo "runtime selinux mode is not enforcing (found $mode)" >&2
+    echo -n $"runtime selinux mode is not enforcing" >&2
+    echo " (found $mode)" >&2
     exit $RC_FAILED
 else
     exit $RC_OKAY

@@ -26,7 +26,7 @@ if [ "x$CITELLUS_LIVE" = "x1" ];  then
         PCS_VERSION=$(rpm -qa pacemaker* | sed -n -r -e 's/^pacemaker.*-1.1.([0-9]+)-.*$/\1/p')
         for package in ${PCS_VERSION}; do
             if [[ "${package}" -lt "15" ]]; then
-                echo "outdated pacemaker packages <1.1.15" >&2
+                echo $"outdated pacemaker packages <1.1.15" >&2
                 exit $RC_FAILED
             fi
         done
@@ -46,7 +46,7 @@ elif [ "x$CITELLUS_LIVE" = "x0" ];  then
         if grep -q "pacemaker.* active" "${systemctl_list_units_file}"; then
             for package in ${PCS_VERSION}; do
                 if [[ "${package}" -lt "15" ]]; then
-                    echo "outdated pacemaker packages <1.1.15" >&2
+                    echo $"outdated pacemaker packages <1.1.15" >&2
                     exit $RC_FAILED
                 fi
             done

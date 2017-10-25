@@ -37,6 +37,6 @@ fi
 is_required_file "${CITELLUS_ROOT}/var/log/neutron/openvswitch-agent.log"
 
 # Here we look for a traceback from python-ryu with the KeyError message no more than 10 lines below
-grep -Pzo "(?s)ERROR[\s]+ryu.lib.hub\N*Traceback\N*(\n\N*){2,10}KeyError: 'ofctl_service'" "${CITELLUS_ROOT}/var/log/neutron/openvswitch-agent.log" && echo "possible python-ryu bug in ovs-agent https://bugzilla.redhat.com/show_bug.cgi?id=1450223" >&2 && exit $RC_FAILED
+grep -Pzo "(?s)ERROR[\s]+ryu.lib.hub\N*Traceback\N*(\n\N*){2,10}KeyError: 'ofctl_service'" "${CITELLUS_ROOT}/var/log/neutron/openvswitch-agent.log" && echo $"possible python-ryu bug in ovs-agent https://bugzilla.redhat.com/show_bug.cgi?id=1450223" >&2 && exit $RC_FAILED
 
 exit $RC_OKAY

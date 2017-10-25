@@ -11,7 +11,7 @@ gw=$(ip route | awk '$1 == "default" {print $3}')
 echo "default gateway is: $gw" >&2
 
 if ! ping -c1 $gw; then
-    echo "default gateway is unreachable" >&2
+    echo $"default gateway is unreachable" >&2
     RC=$RC_FAILED
 else
     echo "default gateway is reachable" >&2
