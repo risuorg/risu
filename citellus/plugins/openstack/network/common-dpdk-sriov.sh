@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright (C) 2017   Robin Černín (rcernin@redhat.com)
+# Copyright (C) 2017   Pablo Iranzo Gómez (Pablo.Iranzo@redhat.com)
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -15,26 +15,19 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+# we can run this against fs snapshot or live system
+
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 
-# selinux enforcing
-
-if [[ $CITELLUS_LIVE = 0 ]];  then
-    is_required_file "${CITELLUS_ROOT}/sos_commands/selinux/sestatus_-b"
-    mode=$(awk '/^Current mode:/ {print $3}' "${CITELLUS_ROOT}/sos_commands/selinux/sestatus_-b")
+if is_lineinfile "Intel" "${CITELLUS_ROOT}/proc/cpuinfo"; then
+    is_lineinfile "intel_iommu=on" "${CITELLUS_ROOT}/proc/cmdline" || echo $"missing intel_iommu=on on kernel cmdline" >&2  && flag=1
+    is_lineinfile "iommu=pt" "${CITELLUS_ROOT}/proc/cmdline" || echo $"missing iommu=pt on kernel cmdline" >&2  && flag=1
 else
-    mode=$(sestatus -b | awk '/^Current mode:/ {print $3}')
+    is_lineinfile "amd_iommu=pt" "${CITELLUS_ROOT}/proc/cmdline" || echo $"missing amd_iommu=pt on kernel cmdline" >&2  && flag=1
 fi
 
-if ! [[ "$mode" ]]; then
-    echo $"failed to determined runtime selinux mode" >&2
-    exit $RC_FAILED
-fi
-
-if [[ $mode != enforcing ]]; then
-    echo -n $"runtime selinux mode is not enforcing" >&2
-    echo " (found $mode)" >&2
+if [[ $flag -eq '1' ]]; then
     exit $RC_FAILED
 else
     exit $RC_OKAY

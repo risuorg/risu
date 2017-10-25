@@ -48,7 +48,7 @@ check_settings() {
     if [ $_PG_NUM -gt "100" ] && [ $_PG_NUM -lt "300" ]; then
         echo "pg_num count $_PG_NUM is optimal" >&2
     else
-        echo "pg_num count $_PG_NUM is not optimal" >&2
+        echo $"pg_num count $_PG_NUM is not optimal" >&2
         flag=1
     fi
     [[ "x$flag" = "x" ]] && exit $RC_OKAY || exit $RC_FAILED
