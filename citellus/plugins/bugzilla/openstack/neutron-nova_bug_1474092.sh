@@ -22,5 +22,15 @@
 
 is_required_file "${CITELLUS_ROOT}/etc/neutron/neutron.conf"
 
-is_lineinfile "^host.*localhost" "${CITELLUS_ROOT}/etc/neutron/neutron.conf" && echo "https://bugzilla.redhat.com/show_bug.cgi?id=1474092" >&2 && exit $RC_FAILED
+
+flag=0
+
+is_lineinfile "^host.*localhost" "${CITELLUS_ROOT}/etc/neutron/neutron.conf" && flag=1
+is_lineinfile "^host.*localhost" "${CITELLUS_ROOT}/etc/nova/nova.conf" && flag=1
+
+if [ flag -eq "1" ]; then
+    echo $"https://bugzilla.redhat.com/show_bug.cgi?id=1474092"
+    exit $RC_FAILED
+fi
+
 exit $RC_OKAY

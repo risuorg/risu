@@ -25,12 +25,12 @@ is_active httpd && ntpd=1 || ntpd=0
 is_active chronyd && chronyd=1 || chronyd=0
 
 if [[ ntpd -eq 1 && chronyd -eq 1 ]] ; then
-    echo "both ntpd and chrony are active" >&2
+    echo $"both ntpd and chrony are active" >&2
     exit $RC_FAILED
 elif [[ ntpd -eq 1 || chronyd -eq 1 ]] ; then
     exit $RC_OKAY
 else
-    echo "both chrony or ntpd are not active" >&2
+    echo $"both chrony or ntpd are not active" >&2
     exit $RC_FAILED
 fi
 

@@ -36,6 +36,7 @@ elif [ "x$CITELLUS_LIVE" = "x0" ]; then
     if grep -q "REDIRECT.*169.254.169.254" "${CITELLUS_ROOT}/sos_commands/networking/iptables_-t_nat_-nvL" ; then
         exit $RC_OKAY
     else
+        echo $"No iptables rule defined for metadata access"
         exit $RC_FAILED
     fi
 fi

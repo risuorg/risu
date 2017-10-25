@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright (C) 2017   Robin Černín (rcernin@redhat.com)
+# Copyright (C) 2017   Pablo Iranzo Gómez (Pablo.Iranzo@redhat.com)
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -15,12 +15,15 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# this can run against live and also any sort of snapshot of the filesystem
+# we can run this against fs snapshot or live system
 
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 
-is_required_file "${CITELLUS_ROOT}/etc/nova/nova.conf"
+if is_lineinfile "Intel" "${CITELLUS_ROOT}/proc/cpuinfo"; then
+    is_lineinfile "intel_iommu=on" "${CITELLUS_ROOT}/proc/cmdline" || echo $"missing intel_iommu=on on kernel cmdline" >&2  && flag=1
+    is_lineinfile "iommu=pt" "${CITELLUS_ROOT}/proc/cmdline" || echo $"missing iommu=pt on kernel cmdline" >&2  && flag=1
+else
+    is_lineinfile "amd_iommu=pt" "${CITELLUS_ROOT}/proc/cmdline" || echo $"missing amd_iommu=pt on kernel cmdline" >&2  && flag=1
+fi
 
-is_lineinfile "^host.*localhost" "${CITELLUS_ROOT}/etc/nova/nova.conf" && echo "https://bugzilla.redhat.com/show_bug.cgi?id=1474092" >&2 && exit $RC_FAILED
-exit $RC_OKAY

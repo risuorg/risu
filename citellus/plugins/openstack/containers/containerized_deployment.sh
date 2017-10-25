@@ -27,7 +27,7 @@ if [ ${RELEASE} -ge 12 ]; then
     if [ -d "${CITELLUS_ROOT}/var/log/containers" ] && [ -d "${CITELLUS_ROOT}/var/lib/config-data" ]; then
         exit $RC_OKAY
     else
-        echo "the OSP 12 deployment seems to not be containerized" >&2
+        echo $"the OSP 12 deployment seems to not be containerized" >&2
         exit $RC_FAILED
     fi
 else
