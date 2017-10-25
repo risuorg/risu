@@ -22,6 +22,6 @@
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 
 is_required_file ${CITELLUS_ROOT}/etc/httpd/conf.d/*-horizon_vhost.conf
-is_lineinfile "WSGIApplicationGroup %{GLOBAL}" ${CITELLUS_ROOT}/etc/httpd/conf.d/*-horizon_vhost.conf && echo "https://bugzilla.redhat.com/show_bug.cgi?id=1478042" >&2 && exit $RC_FAILED
+is_lineinfile "WSGIApplicationGroup %{GLOBAL}" ${CITELLUS_ROOT}/etc/httpd/conf.d/*-horizon_vhost.conf && echo $"https://bugzilla.redhat.com/show_bug.cgi?id=1478042" >&2 && exit $RC_FAILED
 
 exit $RC_OKAY

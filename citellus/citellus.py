@@ -47,7 +47,7 @@ try:
 except AttributeError:
     _ = trad.gettext
 
-# Update in functions.sh if changed
+# Return codes to use (not to mask bash or other and catch other errors)
 RC_OKAY = 10
 RC_FAILED = 20
 RC_SKIPPED = 30
@@ -93,7 +93,8 @@ def show_logo():
            "/    \  \/|  \   __\/ __ \|  | |  | |  |  \/  ___/", \
            "\     \___|  ||  | \  ___/|  |_|  |_|  |  /\___ \ ", \
            " \______  /__||__|  \___  >____/____/____//____  >", \
-           "        \/              \/                     \/ "
+           "        \/              \/                     \/ ", \
+           _("                                                  ")
     print("\n".join(logo))
 
 
@@ -329,6 +330,15 @@ def main():
     if options.list_plugins:
         print("\n".join(plugins))
         return
+
+    os.environ['LANG'] = "%s" % options.lang
+
+    # Reinstall language in case it has changed
+    trad = gettext.translation('citellus', localedir, fallback=True)
+    try:
+        _ = trad.ugettext
+    except AttributeError:
+        _ = trad.gettext
 
     if not options.quiet:
         show_logo()

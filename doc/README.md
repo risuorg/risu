@@ -3,7 +3,7 @@
 Citellus tests should conform to the following standards:
 
 - The test script must be executable. Citellus will ignore tests for
-  which it does not have execute permission.
+  which it does not have execute permission (and report CI errors if there's a file which has not +x set in the plugins folder)
 
 - The test should return one of the following error codes to indicate
   the test result:
@@ -11,6 +11,20 @@ Citellus tests should conform to the following standards:
     - $RC_OKAY -- success
     - $RC_FAILED -- failure
     - $RC_SKIPPED -- skipped
+
+- Plugin output should we written to STDERR, for example with:
+
+    ~~~
+    echo "This test has failed" >&2
+    ~~~
+
+    - Additionally strings that would be interesting to 'translate', should be preceded by $ like:
+
+        ~~~
+        echo $"This test has failed" >&2
+        ~~~
+    - In the same way that for python scripts using i18n you'll be using `_("string")`
+    - This will allow `extractpot.sh` to use bash to dump strings in bash scripts that could be later translated with `poedit`.
 
 A test may make use of the following standard environment variables:
 

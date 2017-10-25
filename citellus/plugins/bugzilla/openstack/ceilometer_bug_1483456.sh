@@ -35,7 +35,7 @@ then
     NOVAHOST=$(grep ^host.* "${CITELLUS_ROOT}/etc/nova/nova.conf"|cut -d "=" -f2|tail -1)
 
     if [[ "$HOST" != "$NOVAHOST" ]]; then
-        echo "https://bugzilla.redhat.com/show_bug.cgi?id=1483456" >&2
+        echo $"https://bugzilla.redhat.com/show_bug.cgi?id=1483456" >&2
         exit $RC_FAILED
     else
         exit $RC_OKAY
