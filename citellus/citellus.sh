@@ -33,7 +33,8 @@ export CITELLUS_BASE=${DIR}
 export RC_OKAY=10
 export RC_FAILED=20
 export RC_SKIPPED=30
-
+export TEXTDOMAIN='citellus'
+export TEXTDOMAINDIR=${CITELLUS_BASE}/locale
 
 scriptname() {
     echo "${0##*/}: $1" >&2

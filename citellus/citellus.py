@@ -183,6 +183,8 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US'):
     os.environ['RC_OKAY'] = "%s" % RC_OKAY
     os.environ['RC_FAILED'] = "%s" % RC_FAILED
     os.environ['RC_SKIPPED'] = "%s" % RC_SKIPPED
+    os.environ['TEXTDOMAIN'] = 'citellus'
+    os.environ['TEXTDOMAINDIR'] = "%s/locale" % citellusdir
 
     # Set pool for same processes as CPU cores
     p = Pool(cpu_count())
