@@ -15,6 +15,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+# Load common functions
+[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
+
 # check memory recommendations
 
 is_required_file "${CITELLUS_ROOT}/proc/cpuinfo""${CITELLUS_ROOT}/proc/meminfo"
