@@ -27,14 +27,9 @@ if [ "x$CITELLUS_LIVE" = "x0" ];  then
         exit $RC_SKIPPED
     fi
 
-    if grep -q "oom-killer" "${journalctl_file}"; then
-        echo "oom-killer detected" >&2
-        exit $RC_FAILED
-    fi
-    if grep -q "soft lockup" "${journalctl_file}"; then
-        echo "soft lockup detected" >&2
-        exit $RC_FAILED
-    fi
+    is_lineinfile "oom-killer" "${journalctl_file}" && echo "oom-killer detected" >&2 && exit $RC_FAILED
+    is_lineinfile "soft lockup" "${journalctl_file}" && echo "soft lockup detected" >&2 && exit $RC_FAILED
+
 elif [ "x$CITELLUS_LIVE" = "x1" ]; then
     if journalctl -u kernel --no-pager --boot | grep -q "oom-killer"; then
         echo "oom-killer detected" >&2
