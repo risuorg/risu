@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: citellus 0.0.1.dev494\n"
+"Project-Id-Version: citellus 0.0.1.dev496\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-10-26 12:32+0200\n"
+"POT-Creation-Date: 2017-10-26 16:40+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -305,6 +305,12 @@ msgstr ""
 #: citellus/plugins/openstack/network/sriov.sh:60
 msgid ""
 "missing physical_device_mappings in /etc/neutron/plugins/ml2/sriov_agent.ini"
+msgstr ""
+
+#: citellus/plugins/openstack/nova/consolelog-permissions-on-enforcing-selinux.sh:25
+msgid ""
+"AVC denial for console.log: https://bugzilla.redhat.com/show_bug.cgi?"
+"id=1501957 https://bugzilla.redhat.com/show_bug.cgi?id=1491767"
 msgstr ""
 
 #: citellus/plugins/openstack/nova/incompatible-aggregate-capabilities-filters.sh:27

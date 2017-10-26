@@ -21,7 +21,7 @@
 
 # check if we are running against compute
 
-is_process nova-compute || echo "works only on compute node" >&2 && exit $RC_SKIPPED
+is_process nova-compute || (echo "works only on compute node" >&2 && exit $RC_SKIPPED)
 OUTDATED=$"librbd1 might be outdated if rhceph repo is not enabled on compute"
 
 if [ "x$CITELLUS_LIVE" = "x1" ]; then
