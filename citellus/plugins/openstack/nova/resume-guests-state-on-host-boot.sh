@@ -20,7 +20,7 @@
 
 # check if we are running against compute
 
-is_processs nova-compute || (echo "works only on compute node" >&2 && exit $RC_SKIPPED)
+is_process nova-compute || (echo "works only on compute node" >&2 && exit $RC_SKIPPED)
 
 # this can run against live and also any sort of snapshot of the filesystem
 config_files=( "${CITELLUS_ROOT}/etc/nova/nova.conf" "${CITELLUS_ROOT}/etc/sysconfig/libvirt-guests" )
