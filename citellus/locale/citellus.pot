@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: citellus 0.0.1.dev496\n"
+"Project-Id-Version: citellus 0.0.1.dev500\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-10-26 16:40+0200\n"
+"POT-Creation-Date: 2017-10-27 12:05+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -166,6 +166,14 @@ msgstr ""
 
 #: citellus/plugins/network/external_connectivity.sh:14
 msgid "default gateway is unreachable"
+msgstr ""
+
+#: citellus/plugins/openstack/ceilometer/expiration.sh:25
+msgid "is listed more than once on file"
+msgstr ""
+
+#: citellus/plugins/openstack/ceilometer/expiration.sh:37
+msgid "ceilometer.conf setting must be updated:"
 msgstr ""
 
 #: citellus/plugins/openstack/ceph/ceph-pg_num.sh:51
