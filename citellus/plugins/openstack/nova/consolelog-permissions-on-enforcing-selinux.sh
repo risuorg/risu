@@ -20,7 +20,10 @@
 
 # check if we are running against compute
 
-is_process nova-compute || ( echo "works only on compute node" >&2 && exit $RC_SKIPPED )
+if is_process nova-compute; then
+    echo "works only on controller node" >&2
+    exit $RC_SKIPPED
+fi
 
 MESSAGE=$"AVC denial for console.log: https://bugzilla.redhat.com/show_bug.cgi?id=1501957 https://bugzilla.redhat.com/show_bug.cgi?id=1491767"
 

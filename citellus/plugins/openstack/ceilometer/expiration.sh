@@ -28,9 +28,9 @@ checksettings(){
         for string in alarm_history_time_to_live event_time_to_live metering_time_to_live; do
             # check for string
             is_lineinfile ${string} $FILE || (echo "$string missing on file" >&2 && RC=$RC_FAILED)
-            if [ $(grep -c -e ^${string} $FILE) -ne "1" ]; then
+            if [ $(grep -c -e ^${string} $FILE) -gt 1 ]; then
                 echo -n "$string" >&2
-                echo "$MORETHANONCE" >&2
+                echo " $MORETHANONCE" >&2
                 RC=$RC_FAILED
             else
                 if [ $(grep -e ^${string} $FILE|cut -d "=" -f2) -le 0 ]; then
@@ -42,9 +42,9 @@ checksettings(){
         done
     else
         for string in time_to_live; do
-            if [ $(grep -c -e ^${string} $FILE) -ne "1" ]; then
+            if [ $(grep -c -e ^${string} $FILE) -gt 1 ]; then
                 echo -n "$string" >&2
-                echo "$MORETHANONCE" >&2
+                echo " $MORETHANONCE" >&2
                 RC=$RC_FAILED
             else
                 if [ $(grep -e ^${string} $FILE|cut -d "=" -f2) -le 0 ]; then
@@ -61,6 +61,10 @@ checksettings(){
 
 RELEASE=$(discover_osp_version)
 
-is_process nova-compute && echo "works only on controller node" >&2 && exit $RC_SKIPPED
+if is_process nova-compute; then
+    echo "works only on controller node" >&2
+    exit $RC_SKIPPED
+fi
+
 checksettings
 exit $RC

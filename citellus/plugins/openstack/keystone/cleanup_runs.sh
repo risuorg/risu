@@ -20,7 +20,10 @@
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 
-is_process nova-compute && echo "works only on controller node" >&2 && exit $RC_SKIPPED
+if is_process nova-compute; then
+    echo "works only on controller node" >&2
+    exit $RC_SKIPPED
+fi
 
 is_required_file "${CITELLUS_ROOT}/var/log/keystone/keystone.log"
 
