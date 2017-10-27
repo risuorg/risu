@@ -21,7 +21,7 @@
 # adapted from https://github.com/larsks/platypus/blob/master/bats/system/test_clock.bats
 
 
-is_active httpd && ntpd=1 || ntpd=0
+is_active ntpd && ntpd=1 || ntpd=0
 is_active chronyd && chronyd=1 || chronyd=0
 
 if [[ ntpd -eq 1 && chronyd -eq 1 ]] ; then
