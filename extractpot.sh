@@ -18,7 +18,4 @@
 # This program extracts language strings from python and bash files and
 # combines them into one POT file to be used by translation tools
 
-python setup.py extract_messages -F babel.cfg -k _L
-find citellus -name "*.sh" -exec bash --dump-po-strings "{}" \; > citellus/locale/citellus-plugins.pot
-msgcat -F citellus/locale/citellus.pot citellus/locale/citellus-plugins.pot > citellus/locale/citellus-new.pot
-cat citellus/locale/citellus-new.pot > citellus/locale/citellus.pot
+python setup.py extract_messages -F babel.cfg -k _L && find citellus -name "*.sh" -exec bash --dump-po-strings "{}" \; > citellus/locale/citellus-plugins.pot && msgcat -F citellus/locale/citellus.pot citellus/locale/citellus-plugins.pot > citellus/locale/citellus-new.pot && cat citellus/locale/citellus-new.pot > citellus/locale/citellus.pot
