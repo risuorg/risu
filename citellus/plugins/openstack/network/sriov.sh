@@ -25,8 +25,6 @@ RELEASE=$(discover_osp_version)
 
 flag=0
 
-VIRTUALFUNCTIONNOTENABLED=$"virtual function is disabled"
-
 if [ "$RELEASE" -gt 7 ]; then
     is_rpm openstack-neutron-sriov-nic-agent || echo $"missing rpm openstack-neutron-sriov-nic-agent" >&2 && flag=1
     is_process neutron-sriov-nic-agent || echo $"neutron-sriov-nic-agent not running" >&1 && flag=1
@@ -37,10 +35,14 @@ is_lineinfile "^isolated_cores=.*" "${CITELLUS_ROOT}/etc/tuned/cpu-partitioning-
 
 if [ "x$CITELLUS_LIVE" = "x1" ];  then
     if [ "$(lspci|grep Virtual Function|wc -l)" -eq "0" ]; then
-        echo "$VIRTUALFUNCTIONNOTENABLED" >&2 && flag=1
+        flag=1
     fi
 elif [ "x$CITELLUS_LIVE" = "x0" ]; then
-    is_lineinfile "Virtual Function" "${CITELLUS_ROOT}/lspci" || echo "$VIRTUALFUNCTIONNOTENABLE" >&2 && flag=1
+    is_lineinfile "Virtual Function" "${CITELLUS_ROOT}/lspci" || flag=1
+fi
+
+if [ "x$flag" = "x1" ]; then
+    echo $"virtual function is disabled" >&2 
 fi
 
 is_lineinfile "vfio_iommu_type1" "${CITELLUS_ROOT}/proc/modules" || echo $"vfio_iommu module is not loaded" >&2 && flag=1
