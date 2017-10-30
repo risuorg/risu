@@ -22,7 +22,10 @@
 
 : ${CITELLUS_MAX_CLOCK_OFFSET:=1}
 
-is_active chronyd || echo "chronyd is not active" >&2 && exit $RC_FAILED
+if ! is_active chronyd;then
+    echo "chronyd is not active" >&2
+    exit $RC_FAILED
+fi
 
 if [[ $CITELLUS_LIVE = 0 ]]; then
     is_required_file ${CITELLUS_ROOT}/sos_commands/chrony/chronyc_tracking

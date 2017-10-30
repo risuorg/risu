@@ -22,7 +22,10 @@
 
 : ${CITELLUS_MAX_CLOCK_OFFSET:=1000}
 
-is_active ntpd || echo "ntpd is not active" >&2 && exit $RC_FAILED
+if ! is_active ntpd;then
+    echo "ntpd is not active" >&2
+    exit $RC_FAILED
+fi
 
 is_required_file "${CITELLUS_ROOT}/etc/ntp.conf"
 grep "^server" "${CITELLUS_ROOT}/etc/ntp.conf" >&2
