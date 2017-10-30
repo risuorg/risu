@@ -21,10 +21,19 @@
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 
 if is_lineinfile "Intel" "${CITELLUS_ROOT}/proc/cpuinfo"; then
-    is_lineinfile "intel_iommu=on" "${CITELLUS_ROOT}/proc/cmdline" || echo $"missing intel_iommu=on on kernel cmdline" >&2  && flag=1
-    is_lineinfile "iommu=pt" "${CITELLUS_ROOT}/proc/cmdline" || echo $"missing iommu=pt on kernel cmdline" >&2  && flag=1
+    if ! is_lineinfile "intel_iommu=on" "${CITELLUS_ROOT}/proc/cmdline"; then
+        echo $"missing intel_iommu=on on kernel cmdline" >&2
+        flag=1
+    fi
+    if ! is_lineinfile "iommu=pt" "${CITELLUS_ROOT}/proc/cmdline"; then
+        echo $"missing iommu=pt on kernel cmdline" >&2
+        flag=1
+    fi
 else
-    is_lineinfile "amd_iommu=pt" "${CITELLUS_ROOT}/proc/cmdline" || echo $"missing amd_iommu=pt on kernel cmdline" >&2  && flag=1
+    if ! is_lineinfile "amd_iommu=pt" "${CITELLUS_ROOT}/proc/cmdline"; then
+        echo $"missing amd_iommu=pt on kernel cmdline" >&2
+        flag=1
+    fi
 fi
 
 if [[ $flag -eq '1' ]]; then
