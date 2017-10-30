@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: citellus 0.0.1.dev500\n"
+"Project-Id-Version: citellus 0.0.1.dev506\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-10-27 12:05+0200\n"
+"POT-Creation-Date: 2017-10-30 14:07+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -160,6 +160,10 @@ msgstr ""
 msgid "nova.conf https://bugzilla.redhat.com/show_bug.cgi?id=1474092"
 msgstr ""
 
+#: citellus/plugins/bugzilla/openstack/swift_bug_1500607.sh:25
+msgid "swift expirer https://bugzilla.redhat.com/show_bug.cgi?id=1500607"
+msgstr ""
+
 #: citellus/plugins/launchpad/openstack/keystone_bug_1649616.sh:25
 msgid "https://bugs.launchpad.net/keystone/+bug/1649616/"
 msgstr ""
@@ -180,7 +184,7 @@ msgstr ""
 msgid "pg_num count $_PG_NUM is not optimal"
 msgstr ""
 
-#: citellus/plugins/openstack/ceph/missing-repos-on-compute.sh:25
+#: citellus/plugins/openstack/ceph/missing-repos-on-compute.sh:28
 msgid "librbd1 might be outdated if rhceph repo is not enabled on compute"
 msgstr ""
 
@@ -225,97 +229,97 @@ msgid ""
 "innodb_file_per_table not set in /etc/my.cnf.d/galera.cnf or /etc/my.cnf"
 msgstr ""
 
-#: citellus/plugins/openstack/network/common-dpdk-sriov.sh:24
+#: citellus/plugins/openstack/network/common-dpdk-sriov.sh:25
 msgid "missing intel_iommu=on on kernel cmdline"
 msgstr ""
 
-#: citellus/plugins/openstack/network/common-dpdk-sriov.sh:25
+#: citellus/plugins/openstack/network/common-dpdk-sriov.sh:29
 msgid "missing iommu=pt on kernel cmdline"
 msgstr ""
 
-#: citellus/plugins/openstack/network/common-dpdk-sriov.sh:27
+#: citellus/plugins/openstack/network/common-dpdk-sriov.sh:34
 msgid "missing amd_iommu=pt on kernel cmdline"
 msgstr ""
 
-#: citellus/plugins/openstack/network/dpdk.sh:31
+#: citellus/plugins/openstack/network/dpdk.sh:32
 msgid "missing NUMATopologyFilter in nova.conf"
 msgstr ""
 
-#: citellus/plugins/openstack/network/dpdk.sh:35
+#: citellus/plugins/openstack/network/dpdk.sh:42
 msgid "missing socket-mem in DPDK_OPTIONS in /etc/sysconfig/openvswitch"
 msgstr ""
 
-#: citellus/plugins/openstack/network/dpdk.sh:36
+#: citellus/plugins/openstack/network/dpdk.sh:46
 msgid "missing -l (Core list) in DPDK_OPTIONS in /etc/sysconfig/openvswitch"
 msgstr ""
 
-#: citellus/plugins/openstack/network/dpdk.sh:37
+#: citellus/plugins/openstack/network/dpdk.sh:50
 msgid ""
 "missing -n (Memory channels) in DPDK_OPTIONS in /etc/sysconfig/openvswitch"
 msgstr ""
 
-#: citellus/plugins/openstack/network/sriov.sh:28
-msgid "virtual function is disabled"
-msgstr ""
-
-#: citellus/plugins/openstack/network/sriov.sh:31
+#: citellus/plugins/openstack/network/sriov.sh:30
 msgid "missing rpm openstack-neutron-sriov-nic-agent"
 msgstr ""
 
-#: citellus/plugins/openstack/network/sriov.sh:32
+#: citellus/plugins/openstack/network/sriov.sh:34
 msgid "neutron-sriov-nic-agent not running"
 msgstr ""
 
-#: citellus/plugins/openstack/network/sriov.sh:35
+#: citellus/plugins/openstack/network/sriov.sh:40
 msgid "missing rpm tuned-profiles-cpu-partitioning"
 msgstr ""
 
-#: citellus/plugins/openstack/network/sriov.sh:36
+#: citellus/plugins/openstack/network/sriov.sh:44
 msgid "missing isolated_cores in /etc/tuned/cpu-partitioning-variables.conf"
 msgstr ""
 
-#: citellus/plugins/openstack/network/sriov.sh:46
+#: citellus/plugins/openstack/network/sriov.sh:61
+msgid "virtual function is disabled"
+msgstr ""
+
+#: citellus/plugins/openstack/network/sriov.sh:65
 msgid "vfio_iommu module is not loaded"
 msgstr ""
 
-#: citellus/plugins/openstack/network/sriov.sh:47
+#: citellus/plugins/openstack/network/sriov.sh:70
 msgid "unsafe interrupts not enabled"
 msgstr ""
 
-#: citellus/plugins/openstack/network/sriov.sh:49
+#: citellus/plugins/openstack/network/sriov.sh:75
 msgid "missing hugepagesz on kernel cmdline"
 msgstr ""
 
-#: citellus/plugins/openstack/network/sriov.sh:50
+#: citellus/plugins/openstack/network/sriov.sh:80
 msgid "missing hugepages= on kernel cmdline"
 msgstr ""
 
-#: citellus/plugins/openstack/network/sriov.sh:51
+#: citellus/plugins/openstack/network/sriov.sh:85
 msgid "missing isolcpus= on kernel cmdline"
 msgstr ""
 
-#: citellus/plugins/openstack/network/sriov.sh:53
+#: citellus/plugins/openstack/network/sriov.sh:90
 msgid "missing sriovnicswitch in ml2_conf.ini"
 msgstr ""
 
-#: citellus/plugins/openstack/network/sriov.sh:55
+#: citellus/plugins/openstack/network/sriov.sh:95
 msgid "missing PciPassthroughFilter in nova.conf"
 msgstr ""
 
-#: citellus/plugins/openstack/network/sriov.sh:56
+#: citellus/plugins/openstack/network/sriov.sh:100
 msgid "missing vcpu_pin_set in nova.conf"
 msgstr ""
 
-#: citellus/plugins/openstack/network/sriov.sh:57
+#: citellus/plugins/openstack/network/sriov.sh:105
 msgid "missing pci_passthrough_whitelist in /etc/nova/nova.conf"
 msgstr ""
 
-#: citellus/plugins/openstack/network/sriov.sh:60
+#: citellus/plugins/openstack/network/sriov.sh:111
 msgid ""
 "missing physical_device_mappings in /etc/neutron/plugins/ml2/sriov_agent.ini"
 msgstr ""
 
-#: citellus/plugins/openstack/nova/consolelog-permissions-on-enforcing-selinux.sh:25
+#: citellus/plugins/openstack/nova/consolelog-permissions-on-enforcing-selinux.sh:28
 msgid ""
 "AVC denial for console.log: https://bugzilla.redhat.com/show_bug.cgi?"
 "id=1501957 https://bugzilla.redhat.com/show_bug.cgi?id=1491767"
@@ -331,11 +335,11 @@ msgstr ""
 msgid "missing notification_format=unversioned in nova.conf"
 msgstr ""
 
-#: citellus/plugins/openstack/nova/resume-guests-state-on-host-boot.sh:41
+#: citellus/plugins/openstack/nova/resume-guests-state-on-host-boot.sh:44
 msgid "compute node is configured to restore guests state at startup"
 msgstr ""
 
-#: citellus/plugins/openstack/nova/resume-guests-state-on-host-boot.sh:44
+#: citellus/plugins/openstack/nova/resume-guests-state-on-host-boot.sh:47
 msgid "compute node is NOT configured to restore guests state at startup"
 msgstr ""
 
