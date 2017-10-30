@@ -28,13 +28,28 @@ is_required_rpm openstack-
 
 # Run this code on controllers, not on computes nor director
 if ! is_process nova-compute; then
-    is_lineinfile "^scheduler_defaults.*NUMATopologyFilter"  "${CITELLUS_ROOT}/etc/nova/nova.conf"|| echo $"missing NUMATopologyFilter in nova.conf" >&2 && flag=1
+    if ! is_lineinfile "^scheduler_defaults.*NUMATopologyFilter" "${CITELLUS_ROOT}/etc/nova/nova.conf"; then
+        echo $"missing NUMATopologyFilter in nova.conf" >&2
+        flag=1
+    fi
 fi
 
-is_lineinfile "DPDK_OPTIONS.*" "${CITELLUS_ROOT}/etc/sysconfig/openvswitch" || echo "missing DPDK_OPTIONS in /etc/sysconfig/openvswitch" >&2 && flag=1
-is_lineinfile "DPDK_OPTIONS.*socket-mem.*" "${CITELLUS_ROOT}/etc/sysconfig/openvswitch" || echo $"missing socket-mem in DPDK_OPTIONS in /etc/sysconfig/openvswitch" >&2 && flag=1
-is_lineinfile "DPDK_OPTIONS.*-l [0-9].*" "${CITELLUS_ROOT}/etc/sysconfig/openvswitch"  || echo $"missing -l (Core list) in DPDK_OPTIONS in /etc/sysconfig/openvswitch" >&2 && flag=1
-is_lineinfile "DPDK_OPTIONS.*-n [0-9].*" "${CITELLUS_ROOT}/etc/sysconfig/openvswitch" || echo $"missing -n (Memory channels) in DPDK_OPTIONS in /etc/sysconfig/openvswitch" >&2 && flag=1
+if ! is_lineinfile "DPDK_OPTIONS.*" "${CITELLUS_ROOT}/etc/sysconfig/openvswitch";then
+    echo "missing DPDK_OPTIONS in /etc/sysconfig/openvswitch" >&2
+    flag=1
+fi
+if ! is_lineinfile "DPDK_OPTIONS.*socket-mem.*" "${CITELLUS_ROOT}/etc/sysconfig/openvswitch";then
+    echo $"missing socket-mem in DPDK_OPTIONS in /etc/sysconfig/openvswitch" >&2
+    flag=1
+fi
+if !is_lineinfile "DPDK_OPTIONS.*-l [0-9].*" "${CITELLUS_ROOT}/etc/sysconfig/openvswitch";then
+    echo $"missing -l (Core list) in DPDK_OPTIONS in /etc/sysconfig/openvswitch" >&2
+    flag=1
+fi
+if !is_lineinfile "DPDK_OPTIONS.*-n [0-9].*" "${CITELLUS_ROOT}/etc/sysconfig/openvswitch";then
+    echo $"missing -n (Memory channels) in DPDK_OPTIONS in /etc/sysconfig/openvswitch" >&2
+    flag=1
+fi
 
 
 
