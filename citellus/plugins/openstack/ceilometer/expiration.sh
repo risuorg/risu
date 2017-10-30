@@ -27,8 +27,10 @@ checksettings(){
     if [ ${RELEASE} -gt 7 ]; then
         for string in alarm_history_time_to_live event_time_to_live metering_time_to_live; do
             # check for string
-            is_lineinfile ${string} $FILE || (echo "$string missing on file" >&2 && RC=$RC_FAILED)
-            if [ $(grep -c -e ^${string} $FILE) -gt 1 ]; then
+            if ! is_lineinfile ${string} $FILE;then
+                echo "$string missing on file" >&2
+                RC=$RC_FAILED
+            elif [ $(grep -c -e ^${string} $FILE) -gt 1 ]; then
                 echo -n "$string" >&2
                 echo " $MORETHANONCE" >&2
                 RC=$RC_FAILED
