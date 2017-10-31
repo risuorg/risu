@@ -17,39 +17,25 @@
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 
-checksettings(){
-FILE=${CITELLUS_ROOT}/etc/cinder/cinder.conf
-
-is_required_file $FILE
-
-RC=$RC_OKAY
-substring=cinder.volume.drivers.lvm.LVM
-
-for string in volume_driver; do
-    # check for string
-    grep -qe ^${string} $FILE
-    result=$?
-    if [ "$result" -ne "0" ]; then
-        echo "$string missing on file" >&2
-        RC=$RC_FAILED
-    else
-        if [ $(grep -e ^${string} $FILE|cut -d "=" -f2|grep ${substring}|wc -l) -gt 0 ]; then
-            RC=$RC_FAILED
-            grep -e ^${string} $FILE >&2
-        fi
-    fi
-done
-}
-
-
 # Actually run the check
-
 is_required_file ${CITELLUS_ROOT}/ps
 
 if is_process nova-compute; then
     echo "works only on controller node" >&2
     exit $RC_SKIPPED
 fi
+FILE=${CITELLUS_ROOT}/etc/cinder/cinder.conf
+string=volume_driver
+substring=cinder.volume.drivers.lvm.LVM
+RC=$RC_OKAY
 
-checksettings
+is_required_file $FILE
+
+if is_lineinfile ${string} $FILE;then
+    if [ $(grep -e ^${string} $FILE|cut -d "=" -f2|grep ${substring}|wc -l) -gt 0 ]; then
+        grep -e ^${string} $FILE >&2
+        RC=$RC_FAILED
+    fi
+fi
+
 exit $RC
