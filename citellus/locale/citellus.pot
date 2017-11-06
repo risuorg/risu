@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: citellus 0.0.1.dev506\n"
+"Project-Id-Version: citellus 0.0.1.dev514\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-10-30 14:07+0100\n"
+"POT-Creation-Date: 2017-11-06 16:09+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -121,6 +121,10 @@ msgstr ""
 msgid "https://bugzilla.redhat.com/show_bug.cgi?id=1406417"
 msgstr ""
 
+#: citellus/plugins/bugzilla/libvirt-systemd_bug_1172387.sh:44
+msgid "systemd https://bugzilla.redhat.com/show_bug.cgi?id=1172387"
+msgstr ""
+
 #: citellus/plugins/bugzilla/openstack/ceilometer_bug_1483456.sh:38
 msgid "https://bugzilla.redhat.com/show_bug.cgi?id=1483456"
 msgstr ""
@@ -176,7 +180,7 @@ msgstr ""
 msgid "is listed more than once on file"
 msgstr ""
 
-#: citellus/plugins/openstack/ceilometer/expiration.sh:37
+#: citellus/plugins/openstack/ceilometer/expiration.sh:39
 msgid "ceilometer.conf setting must be updated:"
 msgstr ""
 
