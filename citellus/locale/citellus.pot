@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: citellus 0.0.1.dev506\n"
+"Project-Id-Version: citellus 0.0.1.dev515\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-10-30 14:07+0100\n"
+"POT-Creation-Date: 2017-11-06 17:29+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -176,7 +176,7 @@ msgstr ""
 msgid "is listed more than once on file"
 msgstr ""
 
-#: citellus/plugins/openstack/ceilometer/expiration.sh:37
+#: citellus/plugins/openstack/ceilometer/expiration.sh:39
 msgid "ceilometer.conf setting must be updated:"
 msgstr ""
 
@@ -245,17 +245,16 @@ msgstr ""
 msgid "missing NUMATopologyFilter in nova.conf"
 msgstr ""
 
-#: citellus/plugins/openstack/network/dpdk.sh:42
-msgid "missing socket-mem in DPDK_OPTIONS in /etc/sysconfig/openvswitch"
+#: citellus/plugins/openstack/network/dpdk.sh:49
+msgid "missing dpdk-socket-mem in ovs-vsctl"
 msgstr ""
 
-#: citellus/plugins/openstack/network/dpdk.sh:46
-msgid "missing -l (Core list) in DPDK_OPTIONS in /etc/sysconfig/openvswitch"
+#: citellus/plugins/openstack/network/dpdk.sh:53
+msgid "missing dpdk-lcore-mask= (Core list) in ovs-vsctl"
 msgstr ""
 
-#: citellus/plugins/openstack/network/dpdk.sh:50
-msgid ""
-"missing -n (Memory channels) in DPDK_OPTIONS in /etc/sysconfig/openvswitch"
+#: citellus/plugins/openstack/network/dpdk.sh:57
+msgid "missing pmd-cpu-mask= (pmd cpu mask) in ovs-vsctl"
 msgstr ""
 
 #: citellus/plugins/openstack/network/sriov.sh:30
