@@ -24,7 +24,7 @@
 flag=0
 
 # Execute only on OSP nodes
-is_required_rpm openstack-
+is_required_rpm openstack.*common
 
 # Run this code on controllers, not on computes nor director
 if ! is_process nova-compute; then
@@ -34,33 +34,34 @@ if ! is_process nova-compute; then
     fi
 fi
 
-if ! is_lineinfile "DPDK_OPTIONS.*" "${CITELLUS_ROOT}/etc/sysconfig/openvswitch";then
-    echo "missing DPDK_OPTIONS in /etc/sysconfig/openvswitch" >&2
-    flag=1
-fi
-if ! is_lineinfile "DPDK_OPTIONS.*socket-mem.*" "${CITELLUS_ROOT}/etc/sysconfig/openvswitch";then
-    echo $"missing socket-mem in DPDK_OPTIONS in /etc/sysconfig/openvswitch" >&2
-    flag=1
-fi
-if ! is_lineinfile "DPDK_OPTIONS.*-l [0-9].*" "${CITELLUS_ROOT}/etc/sysconfig/openvswitch";then
-    echo $"missing -l (Core list) in DPDK_OPTIONS in /etc/sysconfig/openvswitch" >&2
-    flag=1
-fi
-if ! is_lineinfile "DPDK_OPTIONS.*-n [0-9].*" "${CITELLUS_ROOT}/etc/sysconfig/openvswitch";then
-    echo $"missing -n (Memory channels) in DPDK_OPTIONS in /etc/sysconfig/openvswitch" >&2
-    flag=1
+if [ $CITELLUS_LIVE -eq 0 ]; then
+    FILE="${CITELLUS_ROOT}/sos_commands/openvswitch/ovs-vsctl_-t_5_get_Open_vSwitch_._other_config"
+elif [ $CITELLUS_LIVE -eq 1 ];then
+    FILE=$(mktemp)
+    trap "rm $FILE" EXIT
+    ovs-vsctl -t 5 get Open_vSwitch . other_config > $FILE
 fi
 
+if is_lineinfile "dpdk-init.*true" "${FILE}";then
+    # DPDK is supposedly enabled, do further checks
 
+    if ! is_lineinfile "dpdk-socket-mem=" "${FILE}";then
+        echo $"missing dpdk-socket-mem in ovs-vsctl" >&2
+        flag=1
+    fi
+    if ! is_lineinfile "dpdk-lcore-mask=" "${FILE}";then
+        echo $"missing dpdk-lcore-mask= (Core list) in ovs-vsctl" >&2
+        flag=1
+    fi
+    if ! is_lineinfile "pmd-cpu-mask=" "${FILE}";then
+        echo $"missing pmd-cpu-mask= (pmd cpu mask) in ovs-vsctl" >&2
+        flag=1
+    fi
+fi
 
 # TODO(iranzo)
 # ./sos_commands/openvswitch/ovs-vsctl_-t_5_show
 # type: dpdk
-
-# [piranzo@]$ cat ./sos_commands/openvswitch/ovs-vsctl_-t_5_get_Open_vSwitch_._other_config 
-# {dpdk-init="true", dpdk-lcore-mask="f0000000000f", dpdk-socket-mem="2048,2048", pmd-cpu-mask="fc000300000fc00030"}
-
-
 
 # DPDK: NeutronBridgeMappings: 'dpdk:br-link'
 #  NeutronDpdkCoreList: "'4,6,20,22'"
@@ -71,8 +72,6 @@ fi
 # HostCpusList
 # NovaReservedHostMemory
 
-# $ cat etc/sysconfig/openvswitch
-# DPDK_OPTIONS = "-l 12,40,13,41 -n 4 --socket-mem 40964096 -w 0000:05:00.0 -w 0000:08:00.0"
 # DPDK upstream: https://github.com/openvswitch/ovs/blob/v2.5.0/INSTALL.DPDK.md
 # ovs-vswitchd --dpdk
 # ifaces with dpdk$NUM
