@@ -37,33 +37,101 @@ if ! is_process nova-compute; then
 fi
 
 if [ $CITELLUS_LIVE -eq 0 ]; then
-    FILE="${CITELLUS_ROOT}/sos_commands/openvswitch/ovs-vsctl_-t_5_get_Open_vSwitch_._other_config"
+    FILEOVSVSCTL="${CITELLUS_ROOT}/sos_commands/openvswitch/ovs-vsctl_-t_5_get_Open_vSwitch_._other_config"
 elif [ $CITELLUS_LIVE -eq 1 ];then
-    FILE=$(mktemp)
-    trap "rm $FILE" EXIT
+    FILEOVSVSCTL=$(mktemp)
+    trap "rm $FILEOVSVSCTL" EXIT
     ovs-vsctl -t 5 get Open_vSwitch . other_config > $FILE
 fi
 
-if is_lineinfile "dpdk-init.*true" "${FILE}";then
+if is_lineinfile "dpdk-init.*true" "${FILEOVSVSCTL}";then
     # DPDK is supposedly enabled, do further checks
 
-    if ! is_lineinfile "dpdk-socket-mem=" "${FILE}";then
+    if ! is_lineinfile "dpdk-socket-mem=" "${FILEOVSVSCTL}";then
         echo $"missing dpdk-socket-mem in ovs-vsctl" >&2
         flag=1
     fi
-    if ! is_lineinfile "dpdk-lcore-mask=" "${FILE}";then
+    if ! is_lineinfile "dpdk-lcore-mask=" "${FILEOVSVSCTL}";then
         echo $"missing dpdk-lcore-mask= (Core list) in ovs-vsctl" >&2
         flag=1
     fi
-    if ! is_lineinfile "pmd-cpu-mask=" "${FILE}";then
+    if ! is_lineinfile "pmd-cpu-mask=" "${FILEOVSVSCTL}";then
         echo $"missing pmd-cpu-mask= (pmd cpu mask) in ovs-vsctl" >&2
         flag=1
     fi
 fi
 
-# TODO(iranzo)
-# ./sos_commands/openvswitch/ovs-vsctl_-t_5_show
-# type: dpdk
+if ! is_lineinfile "isolcpus" "${CITELLUS_ROOT}/proc/cmdline"; then
+    # Check Systemd as alternative:
+    # The only step required is hence to configure the CPUAffinity option in /etc/systemd/system.conf.
+    # Systemd CPUAffinity should be 'negative' of ISOLCPU's so need to get all CPU's and reverse
+    END=$(grep ^processor ${CITELLUS_ROOT}/proc/cpuinfo|sort|tail -1|cut -d ":" -f 2)
+    procids=$(seq 0 $END)
+    systemdaffinity=$(grep CPUAffinity ${CITELLUS_ROOT}/etc/systemd/system.conf|cut -d "=" -f 2)
+
+    # Loop for getting reversed array (items not in)
+    isolated=""
+    for i in ${procids[@]}; do
+        present=0
+        for j in ${systemdaffinity[@]}; do
+            if [ $i -eq $j ];then
+                present=1
+            fi
+        done
+        if [ $present -eq 0 ];then
+            isolated="$isolated $i"
+        fi
+    done
+    ISOLCPUS=$isolated
+elif is_lineinfile isolcpus ${CITELLUS_ROOT}/proc/cmdline; then
+    ISOLCPUS=$(cat ${CITELLUS_ROOT}/proc/cmdline|tr " " "\n"|grep isolcpus|cut -d "=" -f 2-)
+else
+    unset ISOLCPUS
+fi
+
+
+# Nova CPU PIN SET
+VCPUPINSET=$(grep vcpu_pin_set ${CITELLUS_ROOT}/etc/nova/nova.conf)
+
+# cat overcloud-compute-0/sos_commands/openvswitch/ovs-vsctl_-t_5_get_Open_vSwitch_._other_config
+# {dpdk-init="true", dpdk-lcore-mask="41041", dpdk-socket-mem="2048,2048", pmd-cpu-mask="082082"}
+
+# Mask provided is 00041041 hex, which translates to binary:
+# H rL
+# 1000001000001000001
+
+# Expand MASK to binary
+DPDK-LCORE-MASK=$(cat ${FILEOVSVSCTL}|tr " ," "\n"|grep dpdk-lcore-mask|cut -d "=" -f 2)
+echo "obase=2; ibase=16; $DPDK-LCORE-MASK" | bc
+
+LCORECPUS=""
+# Expand LCORE MASK into CPU numbers in string
+for CPU in $(seq 1 ${#DPDK-LCORE-MASK});do
+    CPU=$(((CPU -1)))
+    if [ ${DPDK-LCORE-MASK:$CPU:1} -eq 1 ];then
+        LCORECPUS="$LCORECPUS $CPU"
+    fi
+done
+
+
+# The pmd-cpu-mask is 082082, meaning:
+# 1000 0010 0000 1000 0010
+
+# CPU 1, CPU 7, CPU 13, CPU 19
+
+# Expand MASK to binary
+DPDK-PMD-MASK=$(cat ${FILEOVSVSCTL}|tr " ," "\n"|grep pmd-cpu-mask|cut -d "=" -f 2)
+echo "obase=2; ibase=16; $DPDK-LCORE-MASK" | bc
+
+PMDCPUS=""
+# Expand PMD MASK into CPU numbers in string
+for CPU in $(seq 1 ${#DPDK-PMD-MASK});do
+    CPU=$(((CPU -1)))
+    if [ ${DPDK-PMD-MASK:$CPU:1} -eq 1 ];then
+        PMDCPUS="$PMDCPUS $CPU"
+    fi
+done
+
 
 # DPDK: NeutronBridgeMappings: 'dpdk:br-link'
 #  NeutronDpdkCoreList: "'4,6,20,22'"
