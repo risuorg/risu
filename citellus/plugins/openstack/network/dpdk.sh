@@ -53,6 +53,36 @@ fi
 
 
 
+# Check Systemd as alternative:
+# The only step required is hence to configure the CPUAffinity option in /etc/systemd/system.conf.
+
+# For example:
+
+# NUMA node0 CPU(s): 0-5,12-17
+# NUMA node1 CPU(s): 6-11,18-23
+
+# [root@overcloud-compute-0 ~]# cat /proc/cmdline
+# isolcpus=1,2,3,4,5,7,8,9,10,11,13,14,15,16,17,19,20,21,22,23 nohz=on nohz_full=1,2,3,4,5,7,8,9,10,11,13,14,15,16,17,19,20,21,22,23 rcu_nocbs=1,2,3,4,5,7,8,9,10,11,13,14,15,16,17,19,20,21,22,23 tuned.non_isolcpus=00041041 intel_pstate=disable nosoftlockup
+
+# [overcloud-compute-0]$ grep vcpu_pin_set etc/nova/nova.conf
+# vcpu_pin_set=2,3,4,5,8,9,10,11,14,15,16,17,20,21,22,23
+
+# cat overcloud-compute-0/sos_commands/openvswitch/ovs-vsctl_-t_5_get_Open_vSwitch_._other_config
+# {dpdk-init="true", dpdk-lcore-mask="41041", dpdk-socket-mem="2048,2048", pmd-cpu-mask="082082"}
+
+# Mask provided is 00041041 hex, which translates to binary:
+
+# H L
+# 1000001000001000001
+
+# So, first processor (0) is assigned, then 5 unused ones, and next one (6) is enabled, then 5 more unused, then next one is enabled (12), then 5 unused, then one enabled (18), being H the highest processor count and L the lowest (0), so this is coherent with the isolcpus list
+
+# The pmd-cpu-mask is 082082, meaning:
+# 1000 0010 0000 1000 0010
+
+# CPU 1, CPU 7, CPU 13, CPU 19
+
+
 # TODO(iranzo)
 # ./sos_commands/openvswitch/ovs-vsctl_-t_5_show
 # type: dpdk
