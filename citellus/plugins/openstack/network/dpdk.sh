@@ -59,6 +59,60 @@ if is_lineinfile "dpdk-init.*true" "${FILE}";then
     fi
 fi
 
+if ! is_lineinfile "isolcpus" "${CITELLUS_ROOT}/proc/cmdline"; then
+    # Check Systemd as alternative:
+    # The only step required is hence to configure the CPUAffinity option in /etc/systemd/system.conf.
+    # Systemd CPUAffinity should be 'negative' of ISOLCPU's so need to get all CPU's and reverse
+    END=$(grep ^processor ${CITELLUS_ROOT}/proc/cpuinfo|sort|tail -1|cut -d ":" -f 2)
+    procids=$(seq 0 $END)
+    systemdaffinity=$(grep CPUAffinity ${CITELLUS_ROOT}/etc/systemd/system.conf|cut -d "=" -f 2)
+
+    # Loop for getting reversed array (items not in)
+    isolated=""
+    for i in ${procids[@]}; do
+        present=0
+        for j in ${systemdaffinity[@]}; do
+            if [ $i -eq $j ];then
+                present=1
+            fi
+        done
+        if [ $present -eq 0 ];then
+            isolated="$isolated $i"
+        fi
+    done
+    ISOLCPUS=$isolated
+elif is_lineinfile isolcpus ${CITELLUS_ROOT}/proc/cmdline;
+    ISOLCPUS=$(cat ${CITELLUS_ROOT}/proc/cmdline|tr " " "\n"|grep isolcpus|cut -d "=" -f 2-)
+else
+    unset ISOLCPUS
+fi
+
+
+# For example:
+
+# NUMA node0 CPU(s): 0-5,12-17
+# NUMA node1 CPU(s): 6-11,18-23
+
+
+VCPUPINSET=$(grep vcpu_pin_set ${CITELLUS_ROOT}/etc/nova/nova.conf)
+
+
+# cat overcloud-compute-0/sos_commands/openvswitch/ovs-vsctl_-t_5_get_Open_vSwitch_._other_config
+# {dpdk-init="true", dpdk-lcore-mask="41041", dpdk-socket-mem="2048,2048", pmd-cpu-mask="082082"}
+
+# Mask provided is 00041041 hex, which translates to binary:
+
+# H rL
+# 1000001000001000001
+
+# So, first processor (0) is assigned, then 5 unused ones, and next one (6) is enabled, then 5 more unused, then next one is enabled (12), then 5 unused, then one enabled (18), being H the highest processor count and L the lowest (0), so this is coherent with the isolcpus list
+
+# The pmd-cpu-mask is 082082, meaning:
+# 1000 0010 0000 1000 0010
+
+# CPU 1, CPU 7, CPU 13, CPU 19
+
+
 # TODO(iranzo)
 # ./sos_commands/openvswitch/ovs-vsctl_-t_5_show
 # type: dpdk
