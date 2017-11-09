@@ -17,6 +17,8 @@
 
 # we can run this against fs snapshot or live system
 
+# description: Checks for various SRIOV configuration parameters
+
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 

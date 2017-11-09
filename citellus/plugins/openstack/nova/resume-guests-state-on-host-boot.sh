@@ -18,6 +18,8 @@
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 
+# description: Check if compute is configured to restore guests running after reboot
+
 # check if we are running against compute
 
 if is_process nova-compute; then

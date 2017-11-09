@@ -18,6 +18,8 @@
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 
+
+# description: Determines SELinux status on configuration
 # selinux enforcing
 
 if [[ $CITELLUS_LIVE = 0 ]];  then

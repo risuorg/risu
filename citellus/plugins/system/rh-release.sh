@@ -17,6 +17,8 @@
 
 # check redhat-release
 
+# description: Detects RHEL release
+
 if [ ! -f "${CITELLUS_ROOT}/etc/redhat-release" ]; then
     echo "this is not RHEL distribution" >&2
     exit $RC_FAILED
