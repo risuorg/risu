@@ -3,6 +3,9 @@
 
 
 import os
+import pytest
+import re
+
 from unittest import TestCase
 from citellus import citellus
 
@@ -64,6 +67,22 @@ class CitellusTest(TestCase):
                     if ".citellus_tests" not in filepath:
                         plugins.append(filepath)
         plugins = sorted(set(plugins))
-        plguinscit = citellus.findplugins(folders=pluginpath)
+        pluginscit = citellus.findplugins(folders=pluginpath)
 
-        assert plugins == plguinscit
+        assert plugins == pluginscit
+
+    @pytest.mark.last
+    def test_plugins_have_description(self):
+        pluginpath = [os.path.join(citellus.citellusdir, 'plugins')]
+        pluginscit = citellus.findplugins(folders=pluginpath)
+
+        REGEX = '\A# description:'
+
+        plugins = []
+        for file in pluginscit:
+            with open(file, 'r') as f:
+                for line in f:
+                    if re.match(REGEX, line):
+                        plugins.append(file)
+        f.close()
+        assert plugins == pluginscit
