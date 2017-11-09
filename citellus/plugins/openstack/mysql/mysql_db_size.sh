@@ -13,6 +13,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+# description: Checks for mysql database sizes
+
 # this can run against live
 
 if [ ! "x$CITELLUS_LIVE" = "x1" ]; then

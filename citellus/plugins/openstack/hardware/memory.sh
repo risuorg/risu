@@ -18,6 +18,8 @@
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 
+# description: Checks for hypervisor memory vs the recommended values
+
 # check memory recommendations
 
 is_required_file "${CITELLUS_ROOT}/proc/cpuinfo""${CITELLUS_ROOT}/proc/meminfo"
