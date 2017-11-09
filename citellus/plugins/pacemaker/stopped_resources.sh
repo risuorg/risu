@@ -20,6 +20,8 @@
 
 # we can run this against fs snapshot or live system
 
+# description: Check if there are pacemaker resources stopped
+
 if [ "x$CITELLUS_LIVE" = "x1" ];  then
     pacemaker_status=$(systemctl is-active pacemaker || :)
     if [ "$pacemaker_status" = "active" ]; then

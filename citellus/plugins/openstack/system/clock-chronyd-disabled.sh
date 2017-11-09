@@ -18,6 +18,8 @@
 
 # adapted from https://github.com/larsks/platypus/blob/master/bats/system/test_clock.bats
 
+# description: Reports if chrony is used on an OpenStack node
+
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 
@@ -25,7 +27,7 @@ if is_active chronyd ; then
     chronyd=1
 fi
 
-if is_rpm openstack- ; then
+if is_rpm openstack-.* ; then
     # Node is OSP system
     if [[ "x$chronyd" = "x1" ]]; then
         echo $"chrony service is active, and it should not on OSP node" >&2

@@ -20,9 +20,11 @@
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 
+# description: Report OSP version
+
 # Check which version we are using
 name_osp_version >&2
-PACKSTACK=$(is_rpm "openstack-packstack-")
+PACKSTACK=$(is_rpm "openstack-packstack-.*")
 if [ ! -z $PACKSTACK ]; then
     echo $"packstack detected" >&2
     exit $RC_FAILED
