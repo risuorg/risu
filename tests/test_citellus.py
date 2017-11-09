@@ -64,6 +64,6 @@ class CitellusTest(TestCase):
                     if ".citellus_tests" not in filepath:
                         plugins.append(filepath)
         plugins = sorted(set(plugins))
-        plguinscit = citellus.findplugins(folders=pluginpath)
+        pluginscit = citellus.findplugins(folders=pluginpath)
 
-        assert plugins == plguinscit
+        assert plugins == pluginscit
