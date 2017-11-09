@@ -17,6 +17,8 @@
 
 # we can run this against fs snapshot or live system
 
+# description: this plugin checks for outdated sosreport package
+
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 

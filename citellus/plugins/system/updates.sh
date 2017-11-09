@@ -15,6 +15,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+# description: This plugin checks for unapplied updates to the system
+
 if [[ $CITELLUS_LIVE = 0 ]]; then
     echo "works on live-system only" >&2
     exit $RC_SKIPPED

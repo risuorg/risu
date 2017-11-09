@@ -17,6 +17,8 @@
 
 # we can run this against fs snapshot or live system
 
+# description: This plugin reports missing systat that might be later needed for perf issues diagnostics
+
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 
