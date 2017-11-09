@@ -4,6 +4,7 @@
 
 import os
 from unittest import TestCase
+
 from citellus import citellus
 
 testplugins = os.path.join(citellus.citellusdir, 'testplugins')
@@ -64,6 +65,6 @@ class CitellusTest(TestCase):
                     if ".citellus_tests" not in filepath:
                         plugins.append(filepath)
         plugins = sorted(set(plugins))
-        plguinscit = citellus.findplugins(folders=pluginpath)
+        pluginscit = citellus.findplugins(folders=pluginpath)
 
-        assert plugins == plguinscit
+        assert plugins == pluginscit
