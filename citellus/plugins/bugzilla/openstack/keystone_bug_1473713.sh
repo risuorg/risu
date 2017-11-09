@@ -19,6 +19,8 @@
 
 # Reference: https://bugzilla.redhat.com/show_bug.cgi?id=1473713
 
+# description: Checks for keystone transaction errors on cleanup
+
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 

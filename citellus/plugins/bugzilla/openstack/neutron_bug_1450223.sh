@@ -20,6 +20,8 @@
 # Reference: https://bugzilla.redhat.com/show_bug.cgi?id=1450223
 #            https://bugs.launchpad.net/neutron/+bug/1589746
 
+# description: Checks python-ryu tracebacks
+
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 

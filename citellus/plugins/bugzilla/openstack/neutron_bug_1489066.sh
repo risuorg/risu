@@ -17,6 +17,7 @@
 
 # this can run against live and also any sort of snapshot of the filesystem
 
+# description: Checks for iptables xlock errors
 # Reference: https://bugzilla.redhat.com/show_bug.cgi?id=1489066
 
 # Load common functions

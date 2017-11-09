@@ -17,6 +17,8 @@
 
 # we can run this on fs snapshot or live system
 
+# description: Check File Descriptors in RabbitMQ
+
 if [ "x$CITELLUS_LIVE" = "x1" ];  then
     which rabbitmqctl > /dev/null 2>&1
     RC=$?

@@ -15,6 +15,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+# description: Checks Swift ring status
+
 if [ ! "x$CITELLUS_LIVE" = "x1" ]; then
     echo "works on live-system only" >&2
     exit $RC_SKIPPED

@@ -18,6 +18,8 @@
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 
+# description: Check if services are configured for logging in DEBUG level
+
 # if we are running against live system or fs snapshot
 
 if [ "x$CITELLUS_LIVE" = "x1" ];  then

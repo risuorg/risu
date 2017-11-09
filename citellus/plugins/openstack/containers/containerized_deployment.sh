@@ -22,6 +22,8 @@
 # Find release
 RELEASE=$(discover_osp_version)
 
+# description: Checks if OSP12 deployment is using containers
+
 # Containerized deployment is only supported option starting in OSP 12
 if [ ${RELEASE} -ge 12 ]; then
     if [ -d "${CITELLUS_ROOT}/var/log/containers" ] && [ -d "${CITELLUS_ROOT}/var/lib/config-data" ]; then

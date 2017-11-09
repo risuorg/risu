@@ -18,6 +18,8 @@
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 
+# description: Checks if crontab for heat stack purge is in place
+
 # this can run against live and also any sort of snapshot of the filesystem
 
 is_required_file "${CITELLUS_ROOT}/var/spool/cron/heat"

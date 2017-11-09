@@ -15,6 +15,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+# description: Checks pacemaker stonith devices configured
+
 # this can run against live
 
 if [ "x$CITELLUS_LIVE" = "x0" ]; then

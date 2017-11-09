@@ -17,12 +17,12 @@
 
 # this can run against live and also any sort of snapshot of the filesystem
 
+# description: Checks missconfigured host in nova vs hostname
+
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 
-if is_process nova-compute;
-then
-
+if is_process nova-compute; then
     is_required_file "${CITELLUS_ROOT}/etc/nova/nova.conf"
 
     if [ "x$CITELLUS_LIVE" = "x1" ];  then

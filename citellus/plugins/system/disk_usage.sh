@@ -18,7 +18,7 @@
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 
-# error if disk usage is greater than $CITELLUS_DISK_MAX_PERCENT
+# description: error if disk usage is greater than $CITELLUS_DISK_MAX_PERCENT
 : ${CITELLUS_DISK_MAX_PERCENT=75}
 
 if [[ $CITELLUS_LIVE = 0 ]]; then

@@ -17,6 +17,8 @@
 
 # we can run this against fs snapshot or live system
 
+# description: Check for RPC issues in OpenStack services
+
 if [ "x$CITELLUS_LIVE" = "x1" ];  then
     log_files=$(
         for i in $(rpm -qa | sed -n -r -e 's/^openstack-([a-z]*)-.*$/\1/p' | sort | uniq); do

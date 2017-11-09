@@ -15,6 +15,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+# description: Checks for token cleanup expired tokens removal
+
 # this can run against live and also fs snapshot
 
 # Load common functions

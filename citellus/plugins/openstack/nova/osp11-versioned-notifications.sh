@@ -17,6 +17,8 @@
 
 # this can run against live and also any sort of snapshot of the filesystem
 
+# description: Checks if nova on OSP11 is using only unversioned notifications
+
 # Reference: https://bugzilla.redhat.com/show_bug.cgi?id=1478274
 
 
