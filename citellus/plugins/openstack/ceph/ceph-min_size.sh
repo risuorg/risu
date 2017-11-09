@@ -18,6 +18,8 @@
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 
+# description: Checks Ceph min_size
+
 mktempfile() {
     tmpfile=$(mktemp testsXXXXXX)
     tmpfile=$(readlink -f $tmpfile)

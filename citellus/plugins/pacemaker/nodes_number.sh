@@ -18,6 +18,8 @@
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 
+# description: Checks number of pacemaker nodes
+
 # we can run this against fs snapshot or live system
 
 count_nodes(){
@@ -32,15 +34,14 @@ count_nodes(){
     fi
 }
 
+if ! is_active pacemaker; then
+    echo "pacemaker is not running on this node" >&2
+    exit $RC_SKIPPED
+fi
+
 if [ "x$CITELLUS_LIVE" = "x1" ];  then
-    pacemaker_status=$(systemctl is-active pacemaker || :)
-    if [ "$pacemaker_status" = "active" ]; then
-        NUM_NODES=$(pcs status | sed -n -r -e 's/^([0-9])[ \t]+node.*/\1/p')
-        count_nodes
-    else
-        echo "pacemaker is not running on this node" >&2
-        exit $RC_SKIPPED
-    fi
+    NUM_NODES=$(pcs status | sed -n -r -e 's/^([0-9])[ \t]+node.*/\1/p')
+    count_nodes
 elif [ "x$CITELLUS_LIVE" = "x0" ];  then
     if is_active "pacemaker"; then
         for CLUSTER_DIRECTORY in "pacemaker" "cluster"; do
@@ -51,8 +52,5 @@ elif [ "x$CITELLUS_LIVE" = "x0" ];  then
         is_required_file "${PCS_DIRECTORY}/pcs_status"
         NUM_NODES=$(sed -n -r -e 's/^([0-9])[ \t]+node.*/\1/p' "${PCS_DIRECTORY}/pcs_status")
         count_nodes
-    else
-        echo "pacemaker is not running on this node" >&2
-        exit $RC_SKIPPED
     fi
 fi

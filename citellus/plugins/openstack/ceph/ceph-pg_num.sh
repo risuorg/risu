@@ -18,6 +18,8 @@
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 
+# description: Checks Ceph pg_num
+
 mktempfile() {
     tmpfile_status=$(mktemp testsXXXXXX)
     tmpfile_status=$(readlink -f $tmpfile_status)

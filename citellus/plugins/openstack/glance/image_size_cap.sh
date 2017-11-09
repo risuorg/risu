@@ -17,6 +17,8 @@
 
 # this can run against live and also any sort of snapshot of the filesystem
 
+# description: Report on low glance image_size_cap that might affect big image uploads
+
 is_required_file "${CITELLUS_ROOT}/etc/glance/glance-api.conf"
 
 if is_lineinfile "^image_size_cap" "${CITELLUS_ROOT}/etc/glance/glance-api.conf"; then

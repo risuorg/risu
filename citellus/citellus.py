@@ -29,6 +29,7 @@ import gettext
 import json
 import logging
 import os
+import re
 import subprocess
 import sys
 import traceback
@@ -218,6 +219,12 @@ def formattext(returncode):
 
 
 def indent(text, amount):
+    """
+    Idents text by amount
+    :param text:  text to ident
+    :param amount:  spaces to use
+    :return:
+    """
     padding = ' ' * amount
     return '\n'.join(padding + line for line in text.splitlines())
 
@@ -239,6 +246,9 @@ def parse_args():
     p.add_argument("--list-plugins",
                    action="store_true",
                    help=_("Print a list of discovered plugins and exit"))
+    p.add_argument("--description",
+                   action="store_true",
+                   help=_("With list-plugins, also outputs plugin description"))
     p.add_argument("--output", "-o",
                    metavar="FILENAME",
                    help=_("Write results to JSON file FILENAME"))
@@ -284,6 +294,14 @@ def parse_args():
 
 def write_results(results, filename,
                   live=False, path=None):
+    """
+    Writes result
+    :param results: Data to write
+    :param filename: File to use
+    :param live: Metadata
+    :param path: Path to write to file metadata
+    :return:
+    """
     data = {
         'metadata': {
             'when': datetime.datetime.utcnow().isoformat(),
@@ -297,6 +315,23 @@ def write_results(results, filename,
 
     with open(filename, 'w') as fd:
         json.dump(data, fd, indent=2)
+
+
+def get_description(plugin=False):
+    """
+    Gets description for provided plugin
+    :param plugin:  plugin
+    :return: Description text
+    """
+
+    regexp = '\A# description:'
+    description = False
+    with open(plugin, 'r') as f:
+        for line in f:
+            if re.match(regexp, line):
+                description = line
+
+    return description
 
 
 def main():
@@ -334,7 +369,12 @@ def main():
                           exclude=options.exclude)
 
     if options.list_plugins:
-        print("\n".join(plugins))
+        for each in plugins:
+            print(each)
+            if options.description:
+                desc = get_description(plugin=each)
+                if desc:
+                    print(desc)
         return
 
     # Reinstall language in case it has changed

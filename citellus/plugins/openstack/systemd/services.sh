@@ -20,6 +20,8 @@
 
 # we can run this against fs snapshot or live system
 
+# description: Checks for failed OSP services
+
 if [ "x$CITELLUS_LIVE" = "x1" ];  then
 
     SERVICES=$(systemctl list-units --all | grep "neutron.*failed\|openstack.*failed\|openvswitch.*failed" | sed 's/*//' |awk '{print $1}')

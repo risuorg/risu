@@ -17,6 +17,8 @@
 
 # this can run against live and also any sort of snapshot of the filesystem
 
+# description: Checks for transaction size exceeded on keystone token purge
+
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 

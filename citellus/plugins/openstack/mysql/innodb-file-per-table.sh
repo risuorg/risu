@@ -17,6 +17,8 @@
 
 # we can run this against fs snapshot or live system
 
+# description: Checks if mysql is configured to use one file per table for innodb
+
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 

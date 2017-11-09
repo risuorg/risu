@@ -15,6 +15,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+# description: Checks latest seqno in MySQL/Galera
+
 # this can run against live or snapshot mode
 
 # Load common functions
