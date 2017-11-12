@@ -60,6 +60,9 @@ class CitellusTest(TestCase):
             if rc not in sorted(set([citellus.RC_OKAY, citellus.RC_FAILED, citellus.RC_SKIPPED])):
                 print(item)
             assert rc in sorted(set([citellus.RC_OKAY, citellus.RC_FAILED, citellus.RC_SKIPPED]))
+            if rc == citellus.RC_FAILED or rc == citellus.RC_SKIPPED:
+                print(item)
+                assert item['result']['err'] != ""
             new_dict.append(rc)
 
         assert sorted(set(new_dict)) == sorted(set([citellus.RC_OKAY, citellus.RC_FAILED, citellus.RC_SKIPPED]))
@@ -75,6 +78,10 @@ class CitellusTest(TestCase):
             if rc not in sorted(set([citellus.RC_OKAY, citellus.RC_FAILED, citellus.RC_SKIPPED])):
                 print(item)
             assert rc in sorted(set([citellus.RC_OKAY, citellus.RC_FAILED, citellus.RC_SKIPPED]))
+            if rc == citellus.RC_FAILED or rc == citellus.RC_SKIPPED:
+                print(item)
+                assert item['result']['err'] != ""
+
             new_dict.append(rc)
 
         assert sorted(set(new_dict)) == sorted(set([citellus.RC_OKAY, citellus.RC_FAILED, citellus.RC_SKIPPED]))
