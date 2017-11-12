@@ -36,5 +36,6 @@ if is_rpm openstack-.* ; then
         exit $RC_OKAY
     fi
 else
+    echo "works only on osp node" >&2
     exit $RC_SKIPPED
 fi

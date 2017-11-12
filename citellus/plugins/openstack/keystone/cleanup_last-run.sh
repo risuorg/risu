@@ -25,4 +25,10 @@
 is_required_file "${CITELLUS_ROOT}/var/log/keystone/keystone.log"
 
 LASTRUN=$(awk '/Total expired tokens removed/ { print $1 " " $2 }' "${CITELLUS_ROOT}/var/log/keystone/keystone.log" | tail -1)
-[[ "x${LASTRUN}" = "x" ]] && exit $RC_FAILED || echo "${LASTRUN}" >&2 && exit $RC_OKAY
+if [[ "x${LASTRUN}" = "x" ]];then
+    echo "no recorded last run of token removal" >&2
+    exit $RC_FAILED
+else
+    echo "${LASTRUN}" >&2
+    exit $RC_OKAY
+fi
