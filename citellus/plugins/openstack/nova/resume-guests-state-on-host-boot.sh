@@ -22,8 +22,8 @@
 
 # check if we are running against compute
 
-if is_process nova-compute; then
-    echo "works only on controller node" >&2
+if ! is_process nova-compute; then
+    echo "works only on compute node" >&2
     exit $RC_SKIPPED
 fi
 
