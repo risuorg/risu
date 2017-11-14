@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf5f05ef_4daa54fb",
+        "filename": "citellus/plugins/openstack/ceilometer/out-of-sync-host.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2017-11-14T12:36:46Z",
+      "side": 1,
+      "message": "Consider inverting if:\n\nif ! is_process nova-compute; then\n    echo $\"works only con compute node\" \u003e\u00262\n    exit $RC_SKIPPED\nfi\n\n# And leave all the other coude out of the if, to make it easier to read",
+      "revId": "fb74865d0cc439bdeec57bd5f55fbc04b7d1913d",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
