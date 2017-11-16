@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # Copyright (C) 2017   Robin Černín (rcernin@redhat.com)
 
 # This program is free software: you can redistribute it and/or modify
