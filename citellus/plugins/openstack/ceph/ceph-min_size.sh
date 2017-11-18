@@ -49,6 +49,7 @@ if [ "x$CITELLUS_LIVE" = "x0" ];  then
     if is_active ceph-mon;
     then
         is_required_file "${CITELLUS_ROOT}/sos_commands/ceph/ceph_osd_dump"
+        is_required_file "${CITELLUS_ROOT}/etc/ceph/ceph.conf"
         check_settings "${CITELLUS_ROOT}/sos_commands/ceph/ceph_osd_dump"
     else
         echo "no ceph integrated" >&2
