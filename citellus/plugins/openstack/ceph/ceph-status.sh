@@ -30,6 +30,7 @@ if [ "x$CITELLUS_LIVE" = "x0" ]; then
     else
         if grep -q "ceph-mon.* active" "${systemctl_list_units_file}"; then
             is_required_file "${CITELLUS_ROOT}/sos_commands/ceph/ceph_health_detail"
+            is_required_file "${CITELLUS_ROOT}/etc/ceph/ceph.conf"
             is_lineinfile "HEALTH_OK" "${CITELLUS_ROOT}/sos_commands/ceph/ceph_health_detail" && exit $RC_OKAY || cat "${CITELLUS_ROOT}/sos_commands/ceph/ceph_health_detail" >&2 && exit $RC_FAILED
         else
             echo "no ceph integrated" >&2
