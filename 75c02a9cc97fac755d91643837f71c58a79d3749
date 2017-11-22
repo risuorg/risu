@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ce28dad_8dbecb3a",
+        "filename": "citellus/plugins/openstack/network/dpdk.sh",
+        "patchSetId": 9
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1011950
+      },
+      "writtenOn": "2017-11-22T06:52:44Z",
+      "side": 1,
+      "message": "it would be good to add check for is_required ?",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 99
+      },
+      "revId": "75c02a9cc97fac755d91643837f71c58a79d3749",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
