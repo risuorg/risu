@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3aeb2aa_6b1283c5",
+        "filename": "citellus/plugins/virtualization/.citellus_tests",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2017-11-29T07:49:44Z",
+      "side": 1,
+      "message": "Why create this file/folder when no tests are commited inside?",
+      "revId": "d2d169661f3842cabbb74009289a72c2534d55cc",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
