@@ -34,7 +34,11 @@ import re
 import subprocess
 import sys
 import traceback
+import exts
 from multiprocessing import Pool, cpu_count
+
+global extensions
+extensions = []
 
 LOG = logging.getLogger('citellus')
 
@@ -101,7 +105,7 @@ def show_logo():
     print("\n".join(logo))
 
 
-def findplugins(folders, include=None, exclude=None):
+def findplugins(folders, include=None, exclude=None, executables=True):
     """
     Finds plugins in path and returns array of them
     :param filters: Defines array of filters to match against plugin path/name
@@ -121,7 +125,10 @@ def findplugins(folders, include=None, exclude=None):
             for filename in filenames:
                 filepath = os.path.join(root, filename)
                 LOG.debug('considering: %s', filepath)
-                if os.access(filepath, os.X_OK):
+                if executables:
+                    if os.access(filepath, os.X_OK):
+                        plugins.append(filepath)
+                else:
                     plugins.append(filepath)
 
     if include:
@@ -152,7 +159,7 @@ def runplugin(plugin):
 
     try:
         os.environ['PLUGIN_BASEDIR'] = "%s" % os.path.abspath(os.path.dirname(plugin))
-        p = subprocess.Popen(plugin, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        p = subprocess.Popen(plugin.split(" "), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         out, err = p.communicate()
         returncode = p.returncode
     except:
@@ -378,11 +385,21 @@ def main():
                           include=options.include,
                           exclude=options.exclude)
 
+    # Process Citellus extensions
+    global extensions
+    extensions = exts.initExtensions()
+
     if options.list_plugins:
         for each in plugins:
             print(each)
             if options.description:
                 desc = get_description(plugin=each)
+                if desc:
+                    print(desc)
+        for each in extensions:
+            print("#PYEXT: %s" % each.__name__.split(".")[-1])
+            if options.description:
+                desc = each.help()
                 if desc:
                     print(desc)
         return
@@ -397,11 +414,16 @@ def main():
 
     if not options.quiet:
         show_logo()
-        print(_("found #%s tests at %s") % (len(plugins), ", ".join(options.plugin_path)))
+        
+        if not options.plugin_path:
+            plugpath=["default path"]
+        else:
+            plugpath=options.plugin_path
 
-    if not plugins:
-        LOG.error(_("did not discover any plugins, exiting"))
-        sys.exit(1)
+        print(_("found #%s extensions") % len(extensions), "/", _("found #%s tests at %s") % (len(plugins), ", ".join(plugpath)))
+
+    if not plugins and not extensions:
+        LOG.error(_("did not discover any plugins, or were filtered"))
 
     if not options.quiet:
         if options.live:
@@ -411,6 +433,15 @@ def main():
 
     # Execute runplugin for each plugin found
     results = docitellus(live=options.live, path=CITELLUS_ROOT, plugins=plugins)
+
+    # Process Citellus extensions
+    extensions = exts.initExtensions()
+
+    for i in extensions:
+        name = i.__name__.split(".")[-1]
+        result = i.run(options)
+
+    sys.exit(0)
 
     if options.output:
         write_results(results, options.output,
