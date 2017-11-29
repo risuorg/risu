@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dbee7d4b_81ac36b3",
+        "filename": "citellus/plugins/openstack/network/sriov.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1011950
+      },
+      "writtenOn": "2017-11-29T11:32:08Z",
+      "side": 1,
+      "message": "if [ \"$(discover_osp_version)\" -lt \"11\" ]; then",
+      "range": {
+        "startLine": 97,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 39
+      },
+      "revId": "a7769890d3777bc04ccdb84a5500be714dbab430",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "82252922_01a9e6ac",
+        "filename": "citellus/plugins/openstack/network/sriov.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1011950
+      },
+      "writtenOn": "2017-11-29T11:32:08Z",
+      "side": 1,
+      "message": "- PciPassthroughtFilter\n+ PciPassthroughFilter",
+      "range": {
+        "startLine": 98,
+        "startChar": 45,
+        "endLine": 98,
+        "endChar": 66
+      },
+      "revId": "a7769890d3777bc04ccdb84a5500be714dbab430",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d088752b_240a9afb",
+        "filename": "citellus/plugins/openstack/network/sriov.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1011950
+      },
+      "writtenOn": "2017-11-29T11:32:08Z",
+      "side": 1,
+      "message": "- PciPassthroughtFilter\n+ PciPassthroughFilter",
+      "range": {
+        "startLine": 104,
+        "startChar": 42,
+        "endLine": 104,
+        "endChar": 63
+      },
+      "revId": "a7769890d3777bc04ccdb84a5500be714dbab430",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
