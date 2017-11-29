@@ -26,6 +26,7 @@ from __future__ import print_function
 import argparse
 import datetime
 import gettext
+import time
 import json
 import logging
 import os
@@ -147,6 +148,8 @@ def runplugin(plugin):
     """
 
     LOG.debug(msg=_('Running plugin: %s') % plugin)
+    start_time = time.clock()
+
     try:
         os.environ['PLUGIN_BASEDIR'] = "%s" % os.path.abspath(os.path.dirname(plugin))
         p = subprocess.Popen(plugin, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -160,7 +163,8 @@ def runplugin(plugin):
     return {'plugin': plugin,
             'result': {"rc": returncode,
                        "out": out.decode('ascii', 'ignore'),
-                       "err": err.decode('ascii', 'ignore')}}
+                       "err": err.decode('ascii', 'ignore')},
+            'time': time.clock() - start_time}
 
 
 def docitellus(live=False, path=False, plugins=False, lang='en_US'):
@@ -254,6 +258,10 @@ def parse_args():
                    help=_("Write results to JSON file FILENAME"))
 
     g = p.add_argument_group('Output and logging options')
+    g.add_argument("--blame",
+                   action="store_true",
+                   help=_("Report time spent on each plugin"),
+                   default=False)
     g.add_argument("--lang",
                    action="store_true",
                    help=_("Define locale to use"),
@@ -340,6 +348,8 @@ def main():
     :return: none
     """
 
+    start_time = time.clock()
+
     options = parse_args()
 
     global _
@@ -418,7 +428,10 @@ def main():
         if options.only_failed and rc in [RC_OKAY, RC_SKIPPED]:
             continue
 
-        print("# %s: %s" % (result['plugin'], text))
+        if not options.blame:
+            print("# %s: %s" % (result['plugin'], text))
+        else:
+            print("# %s (%s): %s" % (result['plugin'], result['time'], text))
 
         show_err = (
             (rc in [RC_FAILED]) or
@@ -436,6 +449,9 @@ def main():
 
         if show_err and err.strip():
             print(indent(err, 4))
+
+    if options.blame:
+        print("# Total execution time: %s seconds" % (time.clock() - start_time))
 
 
 if __name__ == "__main__":
