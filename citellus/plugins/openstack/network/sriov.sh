@@ -48,7 +48,7 @@ if ! is_lineinfile "^isolated_cores=.*" "${CITELLUS_ROOT}/etc/tuned/cpu-partitio
 fi
 
 if [ "x$CITELLUS_LIVE" = "x1" ];  then
-    if [ "$(lspci|grep Virtual Function|wc -l)" -eq "0" ]; then
+    if [ "$(lspci|grep "Virtual Function"|wc -l)" -eq "0" ]; then
         vfflag=1
         flag=1
     fi
@@ -93,9 +93,22 @@ if ! is_lineinfile "mechanism_drivers.*sriovnicswitch" "${CITELLUS_ROOT}/etc/neu
     flag=1
 fi
 
-if ! is_lineinfile "^scheduler_defaults.*PciPassthroughtFilter" "${CITELLUS_ROOT}/etc/nova/nova.conf";then
-    echo $"missing PciPassthroughFilter in nova.conf" >&2
-    flag=1
+
+if [ discover_osp_version -lt 11 ];then
+    if ! is_lineinfile "^scheduler_defaults.*PciPassthroughtFilter" "${CITELLUS_ROOT}/etc/nova/nova.conf";then
+        missingpcipasstru=1
+        flag=1
+    fi
+else
+    # Ocata and higher
+    if ! is_lineinfile "^enabled_filters.*PciPassthroughtFilter" "${CITELLUS_ROOT}/etc/nova/nova.conf";then
+        missingpcipasstru=1
+        flag=1
+    fi
+fi
+
+if [ missingpcipasstru -eq "1" ];then
+    echo $"missing PciPassthroughtFilter in nova.conf" >&2
 fi
 
 if ! is_lineinfile "^vcpu_pin_set.*" "${CITELLUS_ROOT}/etc/nova/nova.conf";then
