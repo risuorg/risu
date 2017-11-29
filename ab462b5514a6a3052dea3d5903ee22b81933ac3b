@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9d9f19f3_dbe1009d",
+        "filename": "citellus/plugins/openstack/db-reference-error.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1011950
+      },
+      "writtenOn": "2017-11-29T11:45:55Z",
+      "side": 1,
+      "message": "We use:\n\nawk \u0027{print $1}\u0027 installed-rpms | egrep ^\"$1\"-[0-9]\n\nMeaning when I want to iterate over the list of openstack packages I would have to use awk, egrep and lasty sed to again strip of all what I need. This works just with sed.\n\nIts more efficient this way.",
+      "parentUuid": "0527629a_3d488558",
+      "range": {
+        "startLine": 24,
+        "startChar": 3,
+        "endLine": 24,
+        "endChar": 89
+      },
+      "revId": "ab462b5514a6a3052dea3d5903ee22b81933ac3b",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed92e6ff_08e48c14",
         "filename": "citellus/plugins/openstack/db-reference-error.sh",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-29T07:47:29Z",
       "side": 1,
       "message": "same here, and that would allow to unify the conditional when using common-scripts",
+      "range": {
+        "startLine": 30,
+        "startChar": 3,
+        "endLine": 30,
+        "endChar": 100
+      },
+      "revId": "ab462b5514a6a3052dea3d5903ee22b81933ac3b",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e76ae147_940e39e2",
+        "filename": "citellus/plugins/openstack/db-reference-error.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1011950
+      },
+      "writtenOn": "2017-11-29T11:45:55Z",
+      "side": 1,
+      "message": "We use:\n\nawk \u0027{print $1}\u0027 installed-rpms | egrep ^\"$1\"-[0-9]\n\nMeaning when I want to iterate over the list of openstack packages I would have to use awk, egrep and lasty sed to again strip of all what I need. This works just with sed.\n\nIts more efficient this way.",
+      "parentUuid": "ed92e6ff_08e48c14",
       "range": {
         "startLine": 30,
         "startChar": 3,
