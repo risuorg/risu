@@ -1,0 +1,16 @@
+---
+- hosts: overcloud
+  user: heat-admin
+  vars:
+    metadata:
+      name: Verify all deployed nodes have their clock synchronised.
+      description: >
+        Each overcloud node should have their clocks synchronised.
+        The deployment should configure and run ntpd. This validation verifies
+        that it is indeed running and connected to an NPT server on all nodes.
+      groups:
+      - post-deployment
+  tasks:
+  - name: Run ntpstat
+    # ntpstat returns 0 if synchronised and non-zero otherwise
+    command: ntpstat
