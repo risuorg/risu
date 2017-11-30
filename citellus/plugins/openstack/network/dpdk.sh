@@ -23,6 +23,7 @@
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 
 expand_ranges(){
+    (
     for CPU in $(echo $*|tr "," "\n");do
         if [[ "$CPU" == *"-"* ]];then
             echo $CPU|awk -F "-" '{print $1" "$2}'|xargs seq
@@ -30,12 +31,14 @@ expand_ranges(){
             echo "$CPU"
         fi
     done
+    )|xargs echo
 }
 
 expand_and_remove_excludes(){
     RANGE=$(expand_ranges $*)
     CPUs=$(echo $RANGE|tr " " "\n"|egrep -v "\^.*")
     EXCLUDES=$(echo $RANGE|tr " " "\n"|egrep "\^.*")
+    (
     for CPU in $CPUs; do
         exclude=0
         for EXCL in $EXCLUDES;do
@@ -47,6 +50,7 @@ expand_and_remove_excludes(){
             echo $CPU
         fi
     done
+    )|xargs echo
 }
 
 # Actual code execution
@@ -92,11 +96,11 @@ if [ -f "$FILE" ]; then
 
     procids=$(grep ^processor ${CITELLUS_ROOT}/proc/cpuinfo|cut -d ":" -f 2|xargs echo)
 
-    if ! is_lineinfile "isolcpus" "${CITELLUS_ROOT}/proc/cmdline"; then
+    if is_lineinfile "^CPUAffinity.*" "${CITELLUS_ROOT}/etc/systemd/system.conf"; then
         # Check Systemd as alternative:
         # The only step required is hence to configure the CPUAffinity option in /etc/systemd/system.conf.
         # Systemd CPUAffinity should be 'negative' of ISOLCPU's so need to get all CPU's and reverse
-        systemdaffinity=$(grep CPUAffinity ${CITELLUS_ROOT}/etc/systemd/system.conf|cut -d "=" -f 2)
+        systemdaffinity=$(grep ^CPUAffinity ${CITELLUS_ROOT}/etc/systemd/system.conf|cut -d "=" -f 2)
         systemdaffinity=$(expand_ranges $systemdaffinity)
 
         # Loop for getting reversed array (items not in)
@@ -113,39 +117,41 @@ if [ -f "$FILE" ]; then
             fi
         done
         ISOLCPUS=$isolated
+        USEDBYKERNEL=$systemdaffinity
     elif is_lineinfile isolcpus ${CITELLUS_ROOT}/proc/cmdline; then
         ISOLCPUS=$(cat ${CITELLUS_ROOT}/proc/cmdline|tr " " "\n"|grep ^isolcpus|cut -d "=" -f 2-|tr ",\'\"" "\n")
         ISOLCPUS=$(expand_ranges $ISOLCPUS)
+        USEDBYKERNEL=""
+        # Check CPU's not isolated:
+        for i in ${procids[@]}; do
+            present=1
+            for j in ${ISOLCPUS[@]}; do
+                if [ $i -eq $j ];then
+                    present=0
+                fi
+            done
+            if [ $present -eq 1 ];then
+                USEDBYKERNEL="$USEDBYKERNEL $i"
+            fi
+        done
     else
         unset ISOLCPUS
     fi
 
-    USEDBYKERNEL=""
-    # Check CPU's not isolated:
-    for i in ${procids[@]}; do
-        present=1
-        for j in ${ISOLCPUS[@]}; do
-            if [ $i -eq $j ];then
-                present=0
-            fi
-        done
-        if [ $present -eq 1 ];then
-            USEDBYKERNEL="$USEDBYKERNEL $i"
-        fi
-
-    done
-
     echo "KERNEL used CPU's: $USEDBYKERNEL" >&2
 
-    FREECPUS=$(echo "$ISOLCPUS"|xargs echo)
+    FREECPUS=$(echo "$ISOLCPUS")
     echo "CPU's isolated from kernel scheduler $FREECPUS" >&2
 
     # List of CPU's that other components can use
     VCPUPINSET=$(grep ^vcpu_pin_set ${CITELLUS_ROOT}/etc/nova/nova.conf|cut -d "=" -f 2-|tr ",\'\"" "\n")
     VCPUPINSET=$(expand_and_remove_excludes $VCPUPINSET)
 
+    echo "CPU's pinned in nova $VCPUPINSET" >&2
+
     USEDBYNOVA=""
     # Check that NOVA is configured for using CPU's in isolated
+    usedcpu=0
     for i in ${VCPUPINSET[@]}; do
         case $i in
             ^*)
@@ -160,15 +166,22 @@ if [ -f "$FILE" ]; then
                     fi
                 done
                 if [ $present -eq 0 ];then
-                    echo -n $"Nova VCPU in vcpu_pin_set not in Isolated CPU's " >&2
-                    echo "CPU $i" >&2
+                    if [ $usedcpu -eq 0 ]; then
+                        echo -n $"Nova VCPU in vcpu_pin_set not in Isolated CPU's:" >&2
+                        usedcpu=1
+                    fi
+                    echo -n " $i" >&2
                     flag=1
                 fi
                 ;;
         esac
     done
 
-    echo "Nova used CPU's: $USEDBYNOVA" >&2
+    if [ $usedcpu -eq 1 ]; then
+        echo "" >&2
+    fi
+
+    echo "Nova used CPU's (from isolated pool): $USEDBYNOVA" >&2
 
     # Update the actual list of 'Free' CPU's
     NEWFREE=""
@@ -185,6 +198,8 @@ if [ -f "$FILE" ]; then
     done
 
     FREECPUS="$NEWFREE"
+
+    echo "-- available CPU's after this step from isolated pool: $FREECPUS" >&2
 
     # So, first processor (0) is assigned, then 5 unused ones, and next one (6) is enabled, then 5 more unused,
     # then next one is enabled (12), then 5 unused, then one enabled (18), being H the highest processor count
@@ -215,6 +230,7 @@ if [ -f "$FILE" ]; then
 
     # Remove from FREE CPU's the ones used by DPDK PMD
     NEWFREE=""
+    usedcpu=0
     for i in ${FREECPUS[@]}; do
         present=0
         for j in ${PMDCPUS[@]}; do
@@ -222,13 +238,25 @@ if [ -f "$FILE" ]; then
                 present=1
             fi
         done
-        if [ $present -eq 0 ];then
-            NEWFREE="$NEWFREE $i"
-            echo -n $"DPDK PMD CPU was already used by Nova " >&2
-            echo "CPU $i" >&2
+        if [ $present -eq 1 ];then
+            if [ $usedcpu -eq 0 ]; then
+                echo -n $"DPDK PMD CPU was already used by Nova:" >&2
+                usedcpu=1
+            fi
+            echo -n " $i" >&2
             flag=1
+        else
+            NEWFREE="$NEWFREE $i"
         fi
     done
+
+    if [ $usedcpu -eq 1 ]; then
+        echo "" >&2
+    fi
+
+    FREECPUS="$NEWFREE"
+    echo "-- available CPU's after this step from isolated pool: $FREECPUS" >&2
+
 
     # cat overcloud-compute-0/sos_commands/openvswitch/ovs-vsctl_-t_5_get_Open_vSwitch_._other_config
     # {dpdk-init="true", dpdk-lcore-mask="41041", dpdk-socket-mem="2048,2048", pmd-cpu-mask="082082"}
@@ -260,18 +288,35 @@ if [ -f "$FILE" ]; then
     echo "DPDK CORE used CPU's: $CORECPUS" >&2
 
     # Remove from FREE CPU's the ones used by DPDK COREMASK
-    NEWFREE=""
-    USEDCPUS="$PMDCPUS $USEDBYNOVA $USEDBYKERNEL"
-
-    for i in ${USEDBYKERNEL[@]}; do
+    USEDCPUS="$(echo $PMDCPUS $USEDBYNOVA $USEDBYKERNEL|tr " " "\n"|sort|uniq|xargs echo)"
+    usedcpu=0
+    for i in ${USEDCPUS[@]}; do
         present=0
         for j in ${CORECPUS[@]}; do
             if [ $i -eq $j ];then
                 present=1
-                echo -n $"DPDK CORE CPU was already used by Kernel, Nova or DPDK PMD " >&2
-                echo "CPU $i" >&2
+                if [ $usedcpu -eq 0 ]; then
+                    echo -n $"DPDK CORE CPU was already used by Kernel, Nova or DPDK PMD: " >&2
+                    usedcpu=1
+                fi
+                echo -n " $i" >&2
                 # NOTE: DPDK CORE CPU's are not mandatory to be isolated, so don't flag
                 # flag=1
+            fi
+        done
+    done
+
+    if [ $usedcpu -eq 1 ]; then
+        echo "" >&2
+    fi
+
+    USEDCPUS="$(echo $PMDCPUS $USEDBYNOVA $USEDBYKERNEL $CORECPUS|tr " " "\n"|sort|uniq|xargs echo)"
+    NEWFREE=""
+    for i in ${procids[@]}; do
+        present=0
+        for j in ${USEDCPUS[@]}; do
+            if [ $i -eq $j ];then
+                present=1
             fi
         done
         if [ $present -eq 0 ];then
