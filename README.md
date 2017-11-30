@@ -3,6 +3,8 @@
 [![Coverage Status](https://coveralls.io/repos/github/zerodayz/citellus/badge.svg?branch=master)](https://coveralls.io/github/zerodayz/citellus?branch=master)
 [![Release status](https://img.shields.io/github/release/zerodayz/citellus.svg)](https://github.com/zerodayz/citellus/releases)
 
+<img src="doc/citellus.png" width="20%" border=0 align="right">
+
 # Introduction
 
 Citellus is a program that should help with system configuration validation on either live system or any sort of snapshot of the filesystem.
@@ -14,9 +16,10 @@ We are developing framework in python, the bash framework has been deprecated. P
 
 ```
 usage: citellus.py [arguments] [-h] [-l] [--list-plugins] [--description]
-                               [--output FILENAME] [--lang] [--only-failed]
-                               [-v] [-d {INFO,DEBUG,WARNING,ERROR,CRITICAL}]
-                               [-q] [-i SUBSTRING] [-x SUBSTRING]
+                               [--output FILENAME] [--blame] [--lang]
+                               [--only-failed] [-v]
+                               [-d {INFO,DEBUG,WARNING,ERROR,CRITICAL}] [-q]
+                               [-i SUBSTRING] [-x SUBSTRING]
                                [plugin_path [plugin_path ...]]
 
 Citellus allows to analyze a directory against common set of tests, useful for
@@ -34,6 +37,7 @@ optional arguments:
                         Write results to JSON file FILENAME
 
 Output and logging options:
+  --blame               Report time spent on each plugin
   --lang                Define locale to use
   --only-failed, -F     Only show failed tests
   -v, --verbose         Increase verbosity of output (may be specified more

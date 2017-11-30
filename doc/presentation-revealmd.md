@@ -8,8 +8,11 @@ author     : Pablo Iranzo Gómez
 mode : selfcontained
 ---
 
+
 # [Citellus](https://github.com/zerodayz/citellus):
 ## Detecting common pitfalls of deployments
+
+<img src="citellus.png" width="20%" border=0>
 
 <small>Presented by: [Pablo Iranzo Gómez](https://iranzo.github.io)</small>
 
