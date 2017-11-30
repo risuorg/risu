@@ -3,6 +3,8 @@
 [![Coverage Status](https://coveralls.io/repos/github/zerodayz/citellus/badge.svg?branch=master)](https://coveralls.io/github/zerodayz/citellus?branch=master)
 [![Release status](https://img.shields.io/github/release/zerodayz/citellus.svg)](https://github.com/zerodayz/citellus/releases)
 
+<img src="doc/citellus.png" width="20%" border=0 align="right"> 
+
 # Introduction
 
 Citellus is a program that should help with system configuration validation on either live system or any sort of snapshot of the filesystem.
