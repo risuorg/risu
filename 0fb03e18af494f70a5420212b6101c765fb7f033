@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eeb1006b_18b9ba13",
+        "filename": "citellus/plugins/virtualization/libvirt-qemu-kernel-compatibility.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2017-12-01T07:40:41Z",
+      "side": 1,
+      "message": "what about approach in \u0027dpdk.sh\u0027:\n\nhttps://github.com/zerodayz/citellus/blob/master/citellus/plugins/openstack/network/dpdk.sh#L70-L76",
+      "revId": "0fb03e18af494f70a5420212b6101c765fb7f033",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f259993e_b3443dcb",
+        "filename": "citellus/plugins/virtualization/libvirt-qemu-kernel-compatibility.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2017-12-01T07:40:41Z",
+      "side": 1,
+      "message": "This will fail in \"LIVE\" environment, but if using above approach defining instead the file, it will work for both",
+      "revId": "0fb03e18af494f70a5420212b6101c765fb7f033",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
