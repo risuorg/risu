@@ -45,10 +45,17 @@ if [[ $CITELLUS_LIVE = 0 ]]; then
         echo "localhost: timed out, nothing received" >&2 && exit $RC_FAILED
 
     offset=$(awk '/^\*/ {print $9}' "${CITELLUS_ROOT}/sos_commands/ntp/ntpq_-p")
-    echo "clock offset is $offset ms" >&2
-
-    RC=$(echo "$offset<${CITELLUS_MAX_CLOCK_OFFSET:-1000} && \
-        $offset>-${CITELLUS_MAX_CLOCK_OFFSET:-1000}" | bc -l)
+    if [[ -z "$offset" ]]; then
+        echo "currently not synchronized to any clock" >&2
+        candidates=$(awk '/^\+/ {print $1" ("$9"ms)"}' "${CITELLUS_ROOT}/sos_commands/ntp/ntpq_-p" | tr '\n' ' ')
+        if [[ ! -z "$candidates" ]]; then
+            echo "possible candidates: ${candidates}" >&2
+        fi
+    else
+        echo "clock offset is $offset ms" >&2
+        RC=$(echo "$offset<${CITELLUS_MAX_CLOCK_OFFSET:-1000} && \
+            $offset>-${CITELLUS_MAX_CLOCK_OFFSET:-1000}" | bc -l)
+    fi
 
     [[ "x$RC" = "x1" ]] && exit $RC_OKAY || exit $RC_FAILED
 else
