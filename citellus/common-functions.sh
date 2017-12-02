@@ -52,8 +52,12 @@ is_active() {
     if [ "x$CITELLUS_LIVE" = "x1" ]; then
         systemctl is-active "$1" > /dev/null 2>&1
     elif [ "x$CITELLUS_LIVE" = "x0" ]; then
-        is_required_file "${systemctl_list_units_file}"
-        grep -q "$1.* active" "${systemctl_list_units_file}"
+        if [[ -f "${systemctl_list_units_file}" ]]; then
+            grep -q "$1.* active" "${systemctl_list_units_file}"
+        else
+            echo "required systemd files not found." >&2
+            exit $RC_SKIPPED
+        fi
     fi
 }
 
