@@ -20,7 +20,9 @@
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 
-is_required_file "${CITELLUS_ROOT}/etc/nova/nova.conf"
+
+FILE="${CITELLUS_ROOT}/etc/nova/nova.conf"
+is_required_file ${FILE}
 
 RC=$RC_OKAY
 COUNT=$(grep "^scheduler_default_filters" "${FILE}"|grep ComputeCapabilitiesFilter|grep AggregateInstanceExtraSpecsFilter|wc -l)
