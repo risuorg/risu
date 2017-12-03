@@ -24,5 +24,9 @@
 
 is_required_file "${CITELLUS_ROOT}/proc/cpuinfo"
 
-is_lineinfile "svm|vmx" "${CITELLUS_ROOT}/proc/cpuinfo" || echo $"no hardware virt support found in /proc/cpuinfo" >&2 && exit $RC_FAILED
-exit $RC_OKAY
+if ! is_lineinfile "svm|vmx" "${CITELLUS_ROOT}/proc/cpuinfo"; then
+    echo $"no hardware virt support found in /proc/cpuinfo" >&2
+    exit $RC_FAILED
+else
+    exit $RC_OKAY
+fi
