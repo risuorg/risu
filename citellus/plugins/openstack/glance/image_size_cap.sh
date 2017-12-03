@@ -19,6 +19,10 @@
 
 # description: Report on low glance image_size_cap that might affect big image uploads
 
+
+# Load common functions
+[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
+
 is_required_file "${CITELLUS_ROOT}/etc/glance/glance-api.conf"
 
 if is_lineinfile "^image_size_cap" "${CITELLUS_ROOT}/etc/glance/glance-api.conf"; then
