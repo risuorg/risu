@@ -233,7 +233,7 @@ def indent(text, amount):
     return '\n'.join(padding + line for line in text.splitlines())
 
 
-def parse_args():
+def parse_args(default=False, parse=False):
     """
     Parses arguments on commandline
     :return: parsed arguments
@@ -294,10 +294,66 @@ def parse_args():
                    help=_("Exclude plugins that contain substring"),
                    default=[],
                    action='append')
+    s = p.add_argument_group('Config options')
+    s.add_argument("--dump-config", help=_("Dump config to console to be saved into file"), default=False, action="store_true")
+    s.add_argument("--read-config", default=True, help=_("Read configuration from file %s or ~/.citellus.conf" % os.path.join(citellusdir, "citellus.conf")), action="store_true")
 
     p.add_argument('plugin_path', nargs='*')
 
-    return p.parse_args()
+    if not default and not parse:
+        return p.parse_args()
+    else:
+        # Return default settings or custom ones
+        if default:
+            # Return defaults
+            return p.parse_args([])
+        if parse:
+            # Parse defined settings
+            print("parsing custom options")
+            return p.parse_args(parse)
+
+
+def read_config(options):
+
+    # Order for options will be:
+    #   - First program defaults
+    #   - Overwritten with citellus folder options
+    #   - Overwritten with citellus user options
+    #   - Overwritten with citellus CLI options
+
+    # check for valid config files
+    valid = []
+    for file in [os.path.join(citellusdir, 'citellus.conf'), os.path.expanduser("~/.citellus.conf")]:
+        if os.path.exists(file):
+            # File exists, so read and overwrite options
+            with open(file, 'r') as f:
+                for line in f:
+                    if "=" in line:
+                        keypair = line.strip().split("=")
+                        key = "--%s" % keypair[0]
+                        value = keypair[1]
+                        valid.append(key)
+                        valid.append(value)
+    return parse_args(parse=valid)
+
+
+def diff_config(options, defaults=parse_args(default=True)):
+    config = {}
+    for key in vars(options):
+        keydef = vars(defaults)[key]
+        keyset = vars(options)[key]
+        if keyset != keydef and key != 'dump_config' and key != 'read_config':
+            # argparse replaces "-" by "_" on keys so we revert
+            key = key.replace("_", "-")
+            config[key] = keyset
+    return config
+
+
+def dump_config(options):
+    differences = diff_config(options=options)
+    for key in differences.iterkeys():
+        print("%s=%s" % (key, differences[key]))
+    sys.exit(0)
 
 
 def write_results(results, filename,
@@ -351,6 +407,13 @@ def main():
     start_time = time.clock()
 
     options = parse_args()
+
+    if options.dump_config:
+        dump_config(options)
+
+    if options.read_config:
+        # Should be default always
+        options = read_config(options)
 
     global _
 
