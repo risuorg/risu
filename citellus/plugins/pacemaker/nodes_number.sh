@@ -23,7 +23,7 @@
 # we can run this against fs snapshot or live system
 
 count_nodes(){
-    if [ ! "$echo $(( (NUM_NODES-1) % 2 ))" -eq  "0" ]; then
+    if [ ! "$(echo $(( (NUM_NODES-1) % 2 )))" -eq  "0" ]; then
         echo "${NUM_NODES}" >&2
         exit $RC_FAILED
     elif [ "x$NUM_NODES" = "x1" ]; then
