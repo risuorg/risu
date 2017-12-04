@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <title>Citellus</title>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css">
+  <style>
+    pre {
+         white-space: pre-wrap;
+    }
+  </style
+ </head>
+ <body>
+  <div class="container">
+   <nav class="navbar navbar-expand-lg navbar-light bg-danger">
+    <a class="navbar-brand" href="#">Citellus</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+     <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+     <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" target="_blank" href="https://github.com/zerodayz/citellus">Usage Doc</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" target="_blank" href="https://github.com/zerodayz/citellus/tree/master/doc">Plugin Development</a>
+      </li>
+      <li class="nav-item">
+       <a class="nav-link" target="_blank" href="https://github.com/zerodayz/citellus/blob/master/CONTRIBUTING.md">Contribute</a>
+      </li>
+     </ul>
+     <form class="form-inline my-2 my-lg-0">
+	  <input type="search" class="form-control mr-sm-2" id='search-plugin' placeholder="Search for plugin" aria-label="Search for plugin">
+     </form>
+    </div>
+   </nav>
+   <div class="row">
+	<div class="col-sm">
+     <table id="metadata_table" class="table table-hover table-bordered">
+      <thead>
+       <tr><th colspan=2 class='text-center'>Runtime Metadata</th></tr>
+      </thead>
+      <tbody>
+      </tbody>
+     </table>
+    </div> <!-- /col -->
+   </div> <!-- /row -->
+   <div class="row">
+    <div class="col-sm">
+	 <div class="btn-group" role="group" aria-label="Filters">
+	  <button type="button" class="btn btn-success filters" data-filter="okay">okay</button>
+	  <button type="button" class="btn btn-danger filters" data-filter="failed">failed</button>
+	  <button type="button" class="btn btn-warning filters" data-filter="skipped">skipped</button>
+      <button type="button" class="btn btn-dark filters" data-filter="all">all</button>
+	 </div><!-- /btn-group -->
+    </div><!-- /col -->
+    <div class="col-sm">
+     <button type="button" class="btn btn-secondary" id="expandAll">Expand All</button>
+    </div><!-- /col -->
+   </div><!-- /row -->
+   <div id="accordion" role="tablist"></div>
+  </div> <!-- /container -->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+  <script>
+   $(document).ready(function() {
+    $("#expandAll").click(function(e) {
+       $('.collapse').each(function(i,o) {
+		console.log($(this));
+		$(this).collapse('show');
+	   });
+    });
+    $(".filters").click(function(e){
+        var clicked = $(this);
+		$("#accordion > div").each(function(i,j) {
+			if (clicked.data('filter') == "all") {
+				$(this).show();
+			} else if ($(this).data('state') != clicked.data('filter')) {
+				$(this).hide();
+			} else {
+				$(this).show();
+			}
+		});
+    });
+	$("#search-plugin").keyup(function(e) {
+		var txt = $(this).val();
+		if (txt.length < 3) {
+			$(".card").show();
+		} else {
+	  	  $(".card").find(".card-body").each(function(i) {
+			var domtxt = $(this).text();
+			var pluginname = $(this).data('plugin-name');
+			if (domtxt.toLowerCase().indexOf(txt) != -1 || pluginname.toLowerCase().indexOf(txt) != -1) {
+				$(this).parents(".card").show();
+			} else {
+                 $(this).parents(".card").hide();
+			}
+		 });
+       }
+	});
+    $.ajax({
+       url: 'citellus.json', 
+       dataType: 'json',
+       async: true,
+       success: function(data) {
+        // We need to generate some kind of plugin id with the filename
+        var plugin_re = /\/([^\/]+)\.[a-z0-9]+$/;
+        var bz_re = /\_([0-9]{7})$/;
+        $.each(data.metadata, function(i, item) {
+            var row = '<tr><th>'+i+'</th><td>'+item+'</td></tr>\n';
+            console.log(i);
+            $("#metadata_table > tbody:last-child").append(row);
+        });
+        $.each(data.results, function(i, item) {
+            var plugin_name = plugin_re.exec(item.plugin)[1];
+            var plugin_icon, plugin_state;
+
+            // We set some variables depending on the result of the plugins
+            if (item.result.rc == 30) {
+                plugin_icon = "warning"; plugin_state = "skipped"; plugin_class = "warning"; plugin_text = "text-black";
+            } else if (item.result.rc == 10) {
+                plugin_icon = "circle-check"; plugin_state = "okay"; plugin_class = "success"; plugin_text = "text-black";
+            } else {
+                plugin_icon = "ban"; plugin_state = "failed"; plugin_class = "danger"; plugin_text = "text-black";
+            }
+
+            // Converting the links to html
+	     	error_text = item.result.err.replace(/\bhttp[s]*:\/\/([^\s]+)+\b/gi,'<a href="$&" target="_blank">$&</a>');
+
+            // we built the text that is going to be appended to the container
+            var row = '<div data-state="'+plugin_state+'" class="card">\n';
+            row += '<div class="card-header" role="tab" id="head-'+plugin_name+'">\n';
+            row += ' <div class="row">\n';
+            row += '  <div class="col-sm"><a data-toggle="collapse" href="#'+plugin_name+'" aria-expanded="true" aria-controls="'+plugin_name+'" class="'+plugin_text+'">'+plugin_name+'</a></div>\n';
+            row += '  <div class="col-sm"><span class="badge badge-pill badge-'+plugin_class+'">'+plugin_state+'</span></div>\n';
+            row += ' </div>\n'; // /row
+            row += '</div>\n'; // /header
+            row += '<div id="'+plugin_name+'" class="collapse" role="tabpanel" aria-labelledby="head-'+plugin_name+'" data-parent="#accordion">\n';
+            row += ' <div data-plugin-name="'+plugin_name+'" class="card-body"><pre><code>'+error_text+'</code></pre></div>'; // /body
+            row += ' <div class="card-footer">';
+            row += '  <span class="badge badge-pill badge-'+plugin_class+'">'+plugin_state+'</span> ';
+            if (bz_re.test(plugin_name)) {
+                 row += '<a href="https://bugzilla.redhat.com/show_bug.cgi?id='+bz_re.exec(plugin_name)[1]+'" target="_blank" class="badge badge-danger">Bugzilla</a>';
+            }
+            row += ' </div>\n'; // /footer
+            row += '</div>\n'; // /tabpanel
+            row += '</div>\n'; //card
+            $("#accordion").append(row);
+        });
+       }
+    });
+
+   });
+  </script>
+ </body>
+</html>
