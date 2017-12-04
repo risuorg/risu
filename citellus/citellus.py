@@ -85,6 +85,14 @@ class bcolors:
 
 
 def colorize(text, color, stream=sys.stdout, force=False):
+    """
+    Returns color for text
+    :param text: test to colorize
+    :param color: color to use
+    :param stream: where to output
+    :param force: force
+    :return: string for setting/resetting format
+    """
     if not force and (not hasattr(stream, 'isatty') or not stream.isatty()):
         return text
 
@@ -113,9 +121,10 @@ def show_logo():
 def findplugins(folders, include=None, exclude=None, executables=True, extension=False):
     """
     Finds plugins in path and returns array of them
-    :param filters: Defines array of filters to match against plugin path/name
+    :param exclude: exclude string in filter path
+    :param include: include string in filter path
     :param folders: Folders to use as source for plugin search
-    :return:
+    :return: list of plugins found
     """
 
     if not folders:
@@ -190,6 +199,7 @@ def runplugin(plugin):
 def docitellus(live=False, path=False, plugins=False, lang='en_US'):
     """
     Runs citellus scripts on specified root folder
+    :param lang: language to use on shell
     :param path: Path to analyze
     :param live:  Test is to be executed live or on snapshot/sosreport
     :param plugins:  plugins to execute against the system
@@ -253,7 +263,7 @@ def indent(text, amount):
     return '\n'.join(padding + line for line in text.splitlines())
 
 
-def parse_args():
+def parse_args(default=False, parse=False):
     """
     Parses arguments on commandline
     :return: parsed arguments
@@ -314,10 +324,88 @@ def parse_args():
                    help=_("Exclude plugins that contain substring"),
                    default=[],
                    action='append')
+    s = p.add_argument_group('Config options')
+    s.add_argument("--dump-config", help=_("Dump config to console to be saved into file"), default=False, action="store_true")
+    s.add_argument("--read-config", default=True, help=_("Read configuration from file %s or ~/.citellus.conf" % os.path.join(citellusdir, "citellus.conf")), action="store_true")
 
     p.add_argument('plugin_path', nargs='*')
 
-    return p.parse_args()
+    if not default and not parse:
+        return p.parse_args()
+    else:
+        # Return default settings or custom ones
+        if default:
+            # Return defaults
+            return p.parse_args([])
+        if parse:
+            # Parse defined settings
+            return p.parse_args(parse)
+
+
+def read_config(options):
+    """
+    Reads configuration options
+    :param options: options passed
+    :return: modified options based on config read
+    """
+    # Order for options will be:
+    #   - First program defaults
+    #   - Overwritten with citellus folder options
+    #   - Overwritten with citellus user options
+    #   - Overwritten with citellus CLI options
+
+    # check for valid config files
+
+    for file in [os.path.join(citellusdir, 'citellus.conf'), os.path.expanduser("~/.citellus.conf")]:
+        if os.path.exists(file):
+            # File exists, so read and overwrite options
+            with open(file, 'r') as f:
+                for line in f:
+                    if len(line) > 0:
+                        config = (json.loads(line))
+    valid = []
+    for key in config.iterkeys():
+        values = config[key]
+        if isinstance(values, list):
+            for value in values:
+                valid.append("--%s" % key.encode('ascii', 'ignore'))
+                if value is not True and value != "True":
+                    valid.append(value)
+        else:
+            valid.append("--%s" % key)
+            if values is not True and values != "True":
+                valid.append(values)
+
+    return parse_args(parse=valid)
+
+
+def diff_config(options, defaults=parse_args(default=True)):
+    """
+    Diffs between default configuration and provided one
+    :param options: options provided
+    :param defaults: default configuration options
+    :return: dict with different values to defaults
+    """
+    config = {}
+    for key in vars(options):
+        keydef = vars(defaults)[key]
+        keyset = vars(options)[key]
+        if keyset != keydef and key != 'dump_config' and key != 'read_config' and key != 'plugin_path':
+            # argparse replaces "-" by "_" on keys so we revert
+            key = key.replace("_", "-")
+            config[key] = keyset
+    return config
+
+
+def dump_config(options):
+    """
+    Dumps config options that differ from defaults
+    :param options: options used
+    """
+    differences = diff_config(options=options)
+    # Output config to stdout
+    print(json.dumps(differences))
+    sys.exit(0)
 
 
 def write_results(results, filename,
@@ -383,6 +471,21 @@ def main():
     start_time = time.clock()
 
     options = parse_args()
+
+    if options.dump_config:
+        options.read_config = False
+        dump_config(options)
+
+    if options.read_config:
+        # Should be default always to read config
+        try:
+            savedconfig = read_config(options)
+        except:
+            savedconfig = {}
+        # Check that saved config is not empty
+        if diff_config(options=savedconfig) != {}:
+            options = savedconfig
+            print("Using saved options: %s" % diff_config(options=options))
 
     global _
 
