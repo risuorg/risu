@@ -473,7 +473,8 @@ def main():
         result = i.run(options)
 
         # Add extension results to citellus results
-        results.extend(result)
+        if result:
+            results.extend(result)
 
     if options.output:
         write_results(results, options.output,
