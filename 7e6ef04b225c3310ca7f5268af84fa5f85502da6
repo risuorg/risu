@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18a854ec_6e02d36f",
+        "filename": "citellus/plugins/pacemaker/disabled_resources.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1011950
+      },
+      "writtenOn": "2017-12-05T05:25:30Z",
+      "side": 1,
+      "message": "Note that you should put your name;)",
+      "revId": "7e6ef04b225c3310ca7f5268af84fa5f85502da6",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c869ceb8_91c0b969",
+        "filename": "citellus/plugins/pacemaker/disabled_resources.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1011950
+      },
+      "writtenOn": "2017-12-05T05:25:30Z",
+      "side": 1,
+      "message": "My understanding of this is that you will miss all resources that are not Clones such as redis-master, galera-master etc..",
+      "revId": "7e6ef04b225c3310ca7f5268af84fa5f85502da6",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
