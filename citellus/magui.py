@@ -29,6 +29,8 @@ import gettext
 import logging
 import os.path
 import pprint
+import datetime
+import json
 
 try:
     # Python 3
@@ -87,7 +89,9 @@ def parse_args():
     p.add_argument('-m', "--mpath", dest="mpath",
                    help=_("Set path for Magui plugin location if not default"),
                    action='append')
-
+    p.add_argument("--output", "-o",
+                   metavar="FILENAME",
+                   help=_("Write results to JSON file FILENAME"))
     g = p.add_argument_group('Filtering options')
     g.add_argument("-q", "--quiet",
                    help=_("Enable quiet mode"),
@@ -179,6 +183,25 @@ def domagui(sosreports, citellusplugins):
     return grouped
 
 
+def write_results(results, filename):
+    """
+    Writes result
+    :param results: Data to write
+    :param filename: File to use
+    :param path: Path to write to file metadata
+    :return:
+    """
+    data = {
+        'metadata': {
+            'when': datetime.datetime.utcnow().isoformat(),
+        },
+        'results': results,
+    }
+
+    with open(filename, 'w') as fd:
+        json.dump(data, fd, indent=2)
+
+
 def maguiformat(data):
     """
     Formats the data from Magui for printing
@@ -233,6 +256,9 @@ def main():
         toprint = maguiformat(grouped)
     else:
         toprint = grouped
+
+    if options.output:
+        write_results(results=grouped, filename=options.output)
 
     pprint.pprint(toprint, width=1)
     # We need to run our plugins against that data
