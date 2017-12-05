@@ -34,6 +34,7 @@ import re
 import subprocess
 import sys
 import traceback
+import shutil
 
 try:
     import exts
@@ -276,6 +277,9 @@ def parse_args():
     p.add_argument("--output", "-o",
                    metavar="FILENAME",
                    help=_("Write results to JSON file FILENAME"))
+    p.add_argument("--web",
+                   action="store_true",
+                   help=_("Write results to JSON file citellus.json and copy html interface in path defined in --output"))
 
     g = p.add_argument_group('Output and logging options')
     g.add_argument("--blame",
@@ -477,9 +481,19 @@ def main():
             results.extend(result)
 
     if options.output:
-        write_results(results, options.output,
-                      live=options.live,
-                      path=CITELLUS_ROOT)
+        if not options.web:
+            write_results(results, options.output,
+                        live=options.live,
+                        path=CITELLUS_ROOT)
+        else:
+            basefolder = os.path.dirname(options.output)
+            if basefolder == '':
+                basefolder = './'
+            newfile = os.path.join(basefolder, 'citellus.json')
+            write_results(results, newfile,
+                        live=options.live,
+                        path=CITELLUS_ROOT)
+            shutil.copy2(os.path.join(citellusdir,'../tools/www/citellus.html'), basefolder)
 
     # Print results based on the sorted order based on returned results from
     # parallel execution
