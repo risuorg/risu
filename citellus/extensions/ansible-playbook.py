@@ -103,7 +103,7 @@ def run(options):  # do not edit this line
     commands = []
     ansible = which("ansible-playbook")
     for playbook in playbooks:
-        commands.append("%s -i localhost, %s" % (ansible, playbook))
+        commands.append("%s -i localhost --connection=local, %s" % (ansible, playbook))
 
     # Actually run the tests
     results = citellus.docitellus(live=options.live, path=None, plugins=commands, lang='en_US')
@@ -121,7 +121,7 @@ def run(options):  # do not edit this line
         result['result']['out'] = ''
 
         # Remove ansible-playbook command and just leave yml file
-        result['plugin'] = result['plugin'].replace(which('ansible-playbook'), '').replace(' -i localhost, ', '')
+        result['plugin'] = result['plugin'].replace(which('ansible-playbook'), '').replace(' -i localhost --connection=local, ', '')
 
     # Now, fake 'skipped' for all the plugins which were tied to the mode we're not running in:
     for playbook in playbookskipped:
