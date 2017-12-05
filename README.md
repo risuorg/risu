@@ -51,6 +51,7 @@ Filtering options:
                         Only include plugins that contain substring
   -x SUBSTRING, --exclude SUBSTRING
                         Exclude plugins that contain substring
+
 ```
 
 ## Plugins and their descriptions
@@ -133,3 +134,42 @@ INFO:citellus:using default plugin path
     ceilometer.conf setting must be updated:
     metering_time_to_live = -1
 ```
+
+## Ansible playbooks
+Citellus can also run Ansible playbooks
+
+The are some additional conventions that are detailed in [ansible-playbooks.md](doc/ansible-playbooks.md) that determine how to code them to be executed in live or snapshoot mode.
+
+Commands have been extended to allow '--list-plugins' to list them and include /exclude filters to work with them.
+
+All of them must end in `.yml`.
+
+~~~
+found #1 extensions / found #0 tests at default path
+mode: fs snapshot .
+# Running extension ansible-playbook
+# /home/iranzo/DEVEL/citellus/citellus/playbooks/system/clock-ntpstat.yml: skipped
+    Skipped for incompatible operating mode
+~~~
+
+vs
+
+~~~
+found #1 extensions / found #0 tests at .
+mode: live
+# Running extension ansible-playbook
+# /home/iranzo/DEVEL/citellus/citellus/playbooks/system/clock-ntpstat.yml: failed
+    
+    PLAY [all] ***********************************************************************************************************
+    
+    TASK [Gathering Facts] ***********************************************************************************************
+    ok: [localhost]
+    
+    TASK [Run ntpstat] ***************************************************************************************************
+    fatal: [localhost]: FAILED! => {"changed": false, "cmd": "ntpstat", "failed": true, "msg": "[Errno 2] No such file or directory", "rc": 2}
+    	to retry, use: --limit @/home/iranzo/DEVEL/citellus/citellus/playbooks/system/clock-ntpstat.retry
+    
+    PLAY RECAP ***********************************************************************************************************
+    localhost                  : ok=1    changed=0    unreachable=0    failed=1   
+    
+~~~
