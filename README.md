@@ -11,6 +11,13 @@ Citellus is a program that should help with system configuration validation on e
 
 Please if you have any idea on any improvements please do not hesitate to open an issue.
 
+## Highlights
+- Plugins in your language of choice.
+- Allows to dump output to json file to be processed by other tools.
+    - Allow to visualize html from json output.
+- Ansible playbook support.
+- Save / restore default settings
+
 ## Usage help
 We are developing framework in python, the bash framework has been deprecated. Python framework is the only supported framework.
 
@@ -135,6 +142,11 @@ INFO:citellus:using default plugin path
     metering_time_to_live = -1
 ```
 
+## HTML Interface
+- Create by using --output and --web, open the generated `citellus.html`.
+
+<img src="doc/images/www.png" height="40%" border=0>
+
 ## Ansible playbooks
 Citellus can also run Ansible playbooks
 
@@ -173,3 +185,4 @@ mode: live
     localhost                  : ok=1    changed=0    unreachable=0    failed=1   
     
 ~~~
+
