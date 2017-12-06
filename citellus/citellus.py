@@ -45,6 +45,11 @@ from multiprocessing import Pool, cpu_count
 
 global extensions
 extensions = []
+global exttriggers
+exttriggers = {}
+
+global CITELLUS_LIVE
+CITELLUS_LIVE = 0
 
 LOG = logging.getLogger('citellus')
 
@@ -103,6 +108,34 @@ def colorize(text, color, stream=sys.stdout, force=False):
         color=color, text=text, reset=bcolors.end)
 
 
+def which(binary):
+    """
+    Locates where a binary is located within path
+    :param binary: Binary to locate/executable
+    :return: path or None if not found
+    """
+
+    def is_executable(filename):
+        """
+        Returns True if filename is executable, False otherwise
+        :param filename: File to check
+        :return: True or False if executable or not
+        """
+        return os.path.isfile(filename) and os.access(filename, os.X_OK)
+
+    path, filename = os.path.split(binary)
+    if path:
+        if is_executable(binary):
+            return binary
+    else:
+        for path in os.environ["PATH"].split(os.pathsep):
+            executable = os.path.join(path, binary)
+            if is_executable(executable):
+                return executable
+
+    return None
+
+
 def show_logo():
     """
     Prints citellus Logo
@@ -119,7 +152,7 @@ def show_logo():
     print("\n".join(logo))
 
 
-def findplugins(folders, include=None, exclude=None, executables=True, extension=False):
+def findplugins(folders, include=None, exclude=None, executables=True, fileextension=False, extension='core'):
     """
     Finds plugins in path and returns array of them
     :param exclude: exclude string in filter path
@@ -141,8 +174,8 @@ def findplugins(folders, include=None, exclude=None, executables=True, extension
                 filepath = os.path.join(root, filename)
                 LOG.debug('considering: %s', filepath)
                 passesextension = False
-                if extension:
-                    if os.path.splitext(filepath)[1] == extension:
+                if fileextension:
+                    if os.path.splitext(filepath)[1] == fileextension:
                         passesextension = True
                 else:
                     passesextension = True
@@ -156,18 +189,25 @@ def findplugins(folders, include=None, exclude=None, executables=True, extension
 
     if include:
         plugins = [plugin for plugin in plugins
-                   for filter in include
-                   if filter in plugin]
+                   for filters in include
+                   if filters in plugin]
 
     if exclude:
         plugins = [plugin for plugin in plugins
-                   if not any(filter in plugin for filter in exclude)]
+                   if not any(filters in plugin for filters in exclude)]
 
     LOG.debug(msg=_('Found plugins: %s') % plugins)
 
     # this unique-ifies the list of plugins (and ensures consistent
     # ordering).
-    return sorted(set(plugins))
+
+    plugins = sorted(set(plugins))
+
+    metaplugins = []
+    for plugin in plugins:
+        metaplugins.append({'plugin': plugin, 'backend': extension})
+
+    return metaplugins
 
 
 def runplugin(plugin):
@@ -179,22 +219,41 @@ def runplugin(plugin):
 
     LOG.debug(msg=_('Running plugin: %s') % plugin)
     start_time = time.clock()
+    os.environ['PLUGIN_BASEDIR'] = "%s" % os.path.abspath(os.path.dirname(plugin['plugin']))
 
-    try:
-        os.environ['PLUGIN_BASEDIR'] = "%s" % os.path.abspath(os.path.dirname(plugin))
-        p = subprocess.Popen(plugin.split(" "), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        out, err = p.communicate()
-        returncode = p.returncode
-    except:
-        returncode = 3
-        out = ""
-        err = traceback.format_exc()
+    # TODO write function call to each extension based on plugin wrapper to execute it properly
 
-    return {'plugin': plugin,
+    returncode = 3
+    out = ''
+    err = 'Error finding extension to run plugin'
+
+    for extension in extensions:
+        name = extension.__name__.split(".")[-1]
+        if plugin['backend'] == name:
+            returncode, out, err = extension.run(plugin)
+
+    return {'plugin': plugin['plugin'], 'backend': plugin['backend'],
             'result': {"rc": returncode,
                        "out": out.decode('ascii', 'ignore'),
                        "err": err.decode('ascii', 'ignore')},
             'time': time.clock() - start_time}
+
+
+def execonshell(filename):
+    """
+    Executes command on shell
+    :param filename: command to run or script name
+    :return: returncode, out, err
+    """
+    #try:
+    p = subprocess.Popen(filename.split(" "), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    out, err = p.communicate()
+    returncode = p.returncode
+    #except:
+    # returncode = 3
+    # out = ""
+    # err = traceback.format_exc()
+    return returncode, out, err
 
 
 def docitellus(live=False, path=False, plugins=False, lang='en_US'):
@@ -208,6 +267,7 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US'):
     """
 
     # Enable LIVE mode if parameter passed
+    global CITELLUS_LIVE
     if live:
         CITELLUS_LIVE = 1
     else:
@@ -332,7 +392,7 @@ def parse_args(default=False, parse=False):
     s.add_argument("--dump-config", help=_("Dump config to console to be saved into file"), default=False, action="store_true")
     s.add_argument("--no-config", default=False, help=_("Do not read configuration from file %s or ~/.citellus.conf" % os.path.join(citellusdir, "citellus.conf")), action="store_true")
 
-    p.add_argument('plugin_path', nargs='*')
+    p.add_argument('sosreport', nargs='*')
 
     if not default and not parse:
         return p.parse_args()
@@ -347,6 +407,12 @@ def parse_args(default=False, parse=False):
 
 
 def array_to_config(config, path=False):
+    """
+    Converts dictionary into argparse options
+    :param config: dictionary
+    :param path: extra path
+    :return: argparse options object
+    """
     valid = []
     if isinstance(config, dict):
         for key in config:
@@ -355,7 +421,7 @@ def array_to_config(config, path=False):
                 values = values.encode('ascii', 'ignore')
             if isinstance(values, list):
                 for value in values:
-                    if key == 'plugin_path':
+                    if key == 'sosreport':
                         valid.append("%s" % key.encode('ascii', 'ignore'))
                     else:
                         valid.append("--%s" % key.encode('ascii', 'ignore'))
@@ -409,11 +475,11 @@ def diff_config(options, defaults=parse_args(default=True), path=False):
     for key in vars(options):
         keydef = vars(defaults)[key]
         keyset = vars(options)[key]
-        if keyset != keydef and key != 'dump_config' and key != 'no_config' and key != 'plugin_path':
+        if keyset != keydef and key != 'dump_config' and key != 'no_config' and key != 'sosreport':
             # argparse replaces "-" by "_" on keys so we revert
             key = key.replace("_", "-")
             config[key] = keyset
-        if path and key == 'plugin_path':
+        if path and key == 'sosreport':
             # If we tell to return path, do put in the list of config options
             config[key] = keyset
 
@@ -427,7 +493,7 @@ def dump_config(options, path=False):
     """
     differences = diff_config(options=options, path=path)
     # Output config to stdout
-    return(json.dumps(differences))
+    return json.dumps(differences)
 
 
 def write_results(results, filename,
@@ -455,7 +521,7 @@ def write_results(results, filename,
         json.dump(data, fd, indent=2)
 
 
-def regexpfile(file=False, regexp=False):
+def regexpfile(filename=False, regexp=False):
     """
     Checks for string in file
     :param file: file to check
@@ -466,7 +532,7 @@ def regexpfile(file=False, regexp=False):
     if not regexp:
         return False
 
-    with open(file, 'r') as f:
+    with open(filename, 'r') as f:
         for line in f:
             if re.match(regexp, line):
                 # Return earlier if match found
@@ -481,7 +547,14 @@ def get_description(plugin=False):
     :param plugin:  plugin
     :return: Description text
     """
-    return regexpfile(file=plugin, regexp='\A# description:')
+
+    description = ""
+    for extension in extensions:
+        name = extension.__name__.split(".")[-1]
+        if plugin['backend'] == name:
+            return extension.get_description(plugin)
+
+    return description
 
 
 def main():
@@ -518,8 +591,8 @@ def main():
             newconfig.update(cliconfig)
 
             # remove plugin path from dictionary and have array_to_config to append it
-            path = newconfig['plugin_path']
-            del newconfig['plugin_path']
+            path = newconfig['sosreport']
+            del newconfig['sosreport']
             # Generate to options like if they were all parsed via CLI
             options = array_to_config(config=newconfig, path=path)
     else:
@@ -538,44 +611,34 @@ def main():
     LOG.debug("# Effective options for this run: %s" % diff_config(options=options, path=True))
 
     if not options.live:
-        if len(options.plugin_path) > 0:
-            # Live not specified, so we will use file snapshot as first arg and remaining cli arguments as plugins
-            CITELLUS_ROOT = options.plugin_path.pop(0)
+        if len(options.sosreport) > 0:
+            # Live not specified, so we will use file snapshot as first arg
+            CITELLUS_ROOT = options.sosreport.pop(0)
         elif not options.list_plugins:
             LOG.error(_("When not running in Live mode, snapshot path is required"))
             sys.exit(1)
     else:
         CITELLUS_ROOT = ""
 
-    if not options.plugin_path:
-        LOG.info('using default plugin path')
-
-    # Find available plugins
-    plugins = findplugins(options.plugin_path,
-                          include=options.include,
-                          exclude=options.exclude)
-
     # Process Citellus extensions
     global extensions
-    extensions = exts.initExtensions()
+    global triggers
+    extensions, exttriggers = exts.initExtensions()
 
+    # Prefill plugin list as we'll be still using it for execution
+    plugins = []
+    for extension in extensions:
+        plugins.extend(extension.listplugins(options))
+
+    # Print plugin list and description if requested
     if options.list_plugins:
-        for each in plugins:
-            print(each)
-            if options.description:
-                desc = get_description(plugin=each)
-                if desc:
-                    print(desc)
-        for each in extensions:
-            print("#PYEXT: %s" % each.__name__.split(".")[-1])
-            if options.description:
-                desc = each.help()
-                if desc:
-                    print(desc)
-            # print the list of each extension additional files (i.e. playbooks for ansible, etc)
-            for extlist in each.list(options):
-                print(extlist)
-
+        for extension in plugins:
+            for plugin in extension:
+                print(plugin)
+                if options.description:
+                    desc = get_description(plugin)
+                    if desc:
+                        print(desc)
         return
 
     # Reinstall language in case it has changed
@@ -588,16 +651,12 @@ def main():
 
     if not options.quiet:
         show_logo()
+        totalplugs = 0
+        for extension in plugins:
+            totalplugs = totalplugs + len(extension)
+        print(_("found #%s extensions with #%s plugins") % (len(extensions), totalplugs))
 
-        if not options.plugin_path:
-            plugpath = ["default path"]
-        else:
-            plugpath = options.plugin_path
-
-        print(_("found #%s extensions") % len(extensions), "/",
-              _("found #%s tests at %s") % (len(plugins), ", ".join(plugpath)))
-
-    if not plugins and not extensions:
+    if not extensions:
         LOG.error(_("did not discover any plugins, or were filtered"))
 
     if not options.quiet:
@@ -606,20 +665,16 @@ def main():
         else:
             print(_("mode: fs snapshot %s" % CITELLUS_ROOT))
 
-    # Execute runplugin for each plugin found
-    results = docitellus(live=options.live, path=CITELLUS_ROOT, plugins=plugins)
-
     # Process Citellus extensions
-    extensions = exts.initExtensions()
 
-    for i in extensions:
-        name = i.__name__.split(".")[-1]
-        print("# Running extension %s" % name)
-        result = i.run(options)
+    # By default
+    newplugins = []
+    for each in plugins:
+        newplugins.extend(each)
 
-        # Add extension results to citellus results
-        if result:
-            results.extend(result)
+    plugins = newplugins
+    results = []
+    results = docitellus(live=CITELLUS_LIVE, path=CITELLUS_ROOT, plugins=plugins, lang=options.lang)
 
     if options.output:
         if not options.web:

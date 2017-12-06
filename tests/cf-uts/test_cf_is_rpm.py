@@ -30,9 +30,9 @@ from citellus import citellus
 NAME = "test_cf_is_rpm"
 
 testplugins = os.path.join(citellus.citellusdir, 'testplugins')
-plugins = os.path.join(citellus.citellusdir, 'plugins')
+plugins = os.path.join(citellus.citellusdir, 'plugins', 'core')
 folder = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'setup')
-uttest = citellus.findplugins(folders=[folder], include=[NAME])[0]
+uttest = citellus.findplugins(folders=[folder], include=[NAME])[0]['plugin']
 us = os.path.basename(uttest)
 citplugs = citellus.findplugins(folders=[folder], include=[us])
 
