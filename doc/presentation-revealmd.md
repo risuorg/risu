@@ -51,7 +51,7 @@ mode : selfcontained
     - missing parameters in expired ceilometer data, which can lead to filling up your hard drive.
     - unsynced ntp.
     - outdated packages that have known critical issues.
-    - etc (69 plugins as of this writting some of them with more than one issue detected)
+    - etc (77 plugins as of this writting some of them with more than one issue detected)
 - Whatever else you can imagine or code 😉
 
 ---
@@ -71,6 +71,48 @@ As easy as it could:
 ~~~sh
 citellus/citellus/citellus.py /folder/containing/sosreport
 ~~~
+
+Example:
+
+~~~
+_________ .__  __         .__  .__                
+\_   ___ \|__|/  |_  ____ |  | |  |  __ __  ______
+/    \  \/|  \   __\/ __ \|  | |  | |  |  \/  ___/
+\     \___|  ||  | \  ___/|  |_|  |_|  |  /\___ \ 
+ \______  /__||__|  \___  >____/____/____//____  >
+        \/              \/                     \/ 
+                                                  
+found #1 extensions / found #77 tests at default path
+mode: fs snapshot .
+# Running extension ansible-playbook
+# skipping ansible per missing ansible-playbook binary.
+# /git/citellus/citellus/plugins/bugzilla/httpd_bug_1406417.sh: skipped
+# /git/citellus/citellus/plugins/bugzilla/libvirt-systemd_bug_1172387.sh: okay
+# /git/citellus/citellus/plugins/bugzilla/openstack/ceilometer_bug_1483456.sh: okay
+# /git/citellus/citellus/plugins/bugzilla/openstack/ceph_bug_1358697.sh: skipped
+# /git/citellus/citellus/plugins/bugzilla/openstack/httpd_bug_1478042.sh: skipped
+# /git/citellus/citellus/plugins/bugzilla/openstack/keystone_bug_1473713.sh: skipped
+# /git/citellus/citellus/plugins/bugzilla/openstack/neutron_bug_1450223.sh: skipped
+# /git/citellus/citellus/plugins/bugzilla/openstack/neutron_bug_1474092.sh: okay
+# /git/citellus/citellus/plugins/bugzilla/openstack/neutron_bug_1489066.sh: skipped
+# /git/citellus/citellus/plugins/bugzilla/openstack/nova_bug_1474092.sh: okay
+~~~
+
+---
+
+## Highlights
+- Plugins in your language of choice.
+- Allows to dump output to json file to be processed by other tools.
+    - Allow to visualize html from json output.
+- Ansible playbook support.
+- Save / restore default settings
+
+----
+
+## HTML Interface
+- Create by using --output and --web, open the generated `citellus.html`.
+<img src="images/www.png" height="40%" border=0>
+
 
 ---
 

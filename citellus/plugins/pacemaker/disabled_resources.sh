@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright (C) 2017   Robin Černín (rcernin@redhat.com)
+# Copyright (C) 2017   Chen Chen (cchen@redhat.com)
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -43,7 +43,7 @@ elif [ "x$CITELLUS_LIVE" = "x0" ];  then
         done
         is_required_file "${PCS_DIRECTORY}/pcs_config"
         if is_lineinfile "target-role=Stopped" "${PCS_DIRECTORY}/pcs_config"; then
-            egrep -i "Clone|target-role=Stopped" "${PCS_DIRECTORY}/pcs_config" |grep "target-role=Stopped" -B1 >&2
+            egrep -i "Clone|master|target-role=Stopped" "${PCS_DIRECTORY}/pcs_config" |grep "target-role=Stopped" -B1 >&2
             exit $RC_FAILED
         else
             exit $RC_OKAY
