@@ -1,0 +1,5 @@
+- Create function on each extension for:
+    - List plugins in citellusdir/plugin/$EXTENSIONTRIGGER/
+    - Get plugin description
+    - Run plugin
+    - Initialize extension or disable (for example if ansible-playbook is missing, return no playbooks
