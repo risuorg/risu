@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # encoding: utf-8
 #
-# Description: Extension for processing ansible playbooks
+# Description: Extension for processing classic Citellus plugins
 # Author: Pablo Iranzo Gomez (Pablo.Iranzo@gmail.com)
 
 from __future__ import print_function
@@ -15,7 +15,7 @@ except ValueError:
     # Python 2
     import citellus
 
-PlaybooksFolder = "playbooks"
+PlaybooksFolder = "core"
 
 
 def which(binary):
@@ -46,12 +46,12 @@ def init():
     Initializes module
     :return: List of triggers for plugin
     """
-    triggers = []
+    triggers = ['core']
     return triggers
 
 
 def list(options):
-    playbooksdir = os.path.join(citellus.citellusdir,'plugins', PlaybooksFolder)
+    playbooksdir = os.path.join(citellus.citellusdir, 'plugins', PlaybooksFolder)
     playbooks = citellus.findplugins(folders=[playbooksdir], include=options.include, exclude=options.exclude,
                                      executables=False, extension=".yml")
     return playbooks
