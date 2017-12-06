@@ -10,26 +10,27 @@ from unittest import TestCase
 from citellus import citellus
 
 testplugins = os.path.join(citellus.citellusdir, 'testplugins')
+citellusdir = citellus.citellusdir
 
 
 class CitellusTest(TestCase):
     def test_runplugin_pass(self):
-        res = citellus.runplugin(os.path.join(testplugins, 'exit_passed.sh'))
-        assert res['result']['rc'] == citellus.RC_OKAY
-        assert res['result']['out'].endswith('something on stdout\n')
-        assert res['result']['err'].endswith('something on stderr\n')
+        returncode, out, err = citellus.execonshell(os.path.join(testplugins, 'exit_passed.sh'))
+        returncode == citellus.RC_OKAY
+        out.endswith(b'something on stdout\n')
+        err.endswith(b'something on stderr\n')
 
     def test_runplugin_fail(self):
-        res = citellus.runplugin(os.path.join(testplugins, 'exit_failed.sh'))
-        assert res['result']['rc'] == citellus.RC_FAILED
-        assert res['result']['out'].endswith('something on stdout\n')
-        assert res['result']['err'].endswith('something on stderr\n')
+        returncode, out, err = citellus.execonshell(os.path.join(testplugins, 'exit_failed.sh'))
+        returncode == citellus.RC_FAILED
+        out.endswith(b'something on stdout\n')
+        err.endswith(b'something on stderr\n')
 
     def test_runplugin_skip(self):
-        res = citellus.runplugin(os.path.join(testplugins, 'exit_skipped.sh'))
-        assert res['result']['rc'] == citellus.RC_SKIPPED
-        assert res['result']['out'].endswith('something on stdout\n')
-        assert res['result']['err'].endswith('something on stderr\n')
+        returncode, out, err = citellus.execonshell(os.path.join(testplugins, 'exit_skipped.sh'))
+        returncode == citellus.RC_SKIPPED
+        out.endswith(b'something on stdout\n')
+        err.endswith(b'something on stderr\n')
 
     def test_findplugins_positive_filter_include(self):
         plugins = citellus.findplugins([testplugins],
@@ -50,15 +51,8 @@ class CitellusTest(TestCase):
     def test_findplugins_negative(self):
         assert citellus.findplugins('__does_not_exist__') == []
 
-    def test_docitellus(self):
-        plugins = citellus.findplugins([testplugins],
-                                       include=['exit_passed'])
-        results = citellus.docitellus(plugins=plugins)
-        assert len(results) == 1
-        assert results[0]['result']['rc'] == citellus.RC_OKAY
-
     def test_plugins_have_executable_bit(self):
-        pluginpath = [os.path.join(citellus.citellusdir, 'plugins')]
+        pluginpath = [os.path.join(citellus.citellusdir, 'plugins', 'core')]
         plugins = []
         for folder in pluginpath:
             for root, dirnames, filenames in os.walk(folder):
@@ -67,14 +61,22 @@ class CitellusTest(TestCase):
                     if ".citellus_tests" not in filepath:
                         plugins.append(filepath)
         plugins = sorted(set(plugins))
-        pluginscit = citellus.findplugins(folders=pluginpath)
+        pluginscit = []
+        for plugin in citellus.findplugins(folders=pluginpath):
+            pluginscit.append(plugin['plugin'])
+
+        pluginscit = sorted(set(pluginscit))
 
         assert plugins == pluginscit
 
     @pytest.mark.last
     def test_plugins_have_description(self):
-        pluginpath = [os.path.join(citellus.citellusdir, 'plugins')]
-        pluginscit = citellus.findplugins(folders=pluginpath)
+        pluginpath = [os.path.join(citellus.citellusdir, 'plugins', 'core')]
+        pluginscit = []
+        for plugin in citellus.findplugins(folders=pluginpath):
+            pluginscit.append(plugin['plugin'])
+
+        pluginscit = sorted(set(pluginscit))
 
         regexp = '\A# description:'
 
