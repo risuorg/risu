@@ -15,30 +15,7 @@ except ValueError:
     # Python 2
     import citellus
 
-PlaybooksFolder = "playbooks"
-
-
-def which(binary):
-    """
-    Locates where a binary is located within path
-    :param binary: Binary to locate/executable
-    :return: path or None if not found
-    """
-
-    def is_executable(file):
-        return os.path.isfile(file) and os.access(file, os.X_OK)
-
-    path, file = os.path.split(binary)
-    if path:
-        if is_executable(binary):
-            return binary
-    else:
-        for path in os.environ["PATH"].split(os.pathsep):
-            executable = os.path.join(path, binary)
-            if is_executable(executable):
-                return executable
-
-    return None
+PlaybooksFolder = "ansible"
 
 
 def init():
@@ -51,7 +28,7 @@ def init():
 
 
 def list(options):
-    playbooksdir = os.path.join(citellus.citellusdir, PlaybooksFolder)
+    playbooksdir = os.path.join(citellus.citellusdir,'plugins', PlaybooksFolder)
     playbooks = citellus.findplugins(folders=[playbooksdir], include=options.include, exclude=options.exclude,
                                      executables=False, extension=".yml")
     return playbooks
@@ -64,11 +41,11 @@ def run(options):  # do not edit this line
     :return:
     """
 
-    if not which("ansible-playbook"):
+    if not citellus.which("ansible-playbook"):
         print("# skipping ansible per missing ansible-playbook binary.")
         return
 
-    playbooksdir = os.path.join(citellus.citellusdir, PlaybooksFolder)
+    playbooksdir = os.path.join(citellus.citellusdir, 'plugins', PlaybooksFolder)
     playbooks = citellus.findplugins(folders=[playbooksdir], include=options.include, exclude=options.exclude,
                                      executables=False, extension=".yml")
     playbooklive = []
@@ -101,7 +78,7 @@ def run(options):  # do not edit this line
                 playbookskipped.remove(playbook)
 
     commands = []
-    ansible = which("ansible-playbook")
+    ansible = citellus.which("ansible-playbook")
     for playbook in playbooks:
         commands.append("%s -i localhost --connection=local, %s" % (ansible, playbook))
 
@@ -121,7 +98,7 @@ def run(options):  # do not edit this line
         result['result']['out'] = ''
 
         # Remove ansible-playbook command and just leave yml file
-        result['plugin'] = result['plugin'].replace(which('ansible-playbook'), '').replace(' -i localhost --connection=local, ', '')
+        result['plugin'] = result['plugin'].replace(citellus.which('ansible-playbook'), '').replace(' -i localhost --connection=local, ', '')
 
     # Now, fake 'skipped' for all the plugins which were tied to the mode we're not running in:
     for playbook in playbookskipped:
