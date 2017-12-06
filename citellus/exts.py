@@ -53,7 +53,12 @@ def initExtensions():
     """
 
     exts = []
+    exttriggers = {}
     for i in getExtensions():
         newplug = loadExtension(i)
         exts.append(newplug)
-    return exts
+        triggers = []
+        for each in newplug.init():
+            triggers.append(each)
+        exttriggers[i["name"]] = triggers
+    return exts, exttriggers

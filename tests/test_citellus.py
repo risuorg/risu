@@ -58,7 +58,7 @@ class CitellusTest(TestCase):
         assert results[0]['result']['rc'] == citellus.RC_OKAY
 
     def test_plugins_have_executable_bit(self):
-        pluginpath = [os.path.join(citellus.citellusdir, 'plugins')]
+        pluginpath = [os.path.join(citellus.citellusdir, 'plugins', 'core')]
         plugins = []
         for folder in pluginpath:
             for root, dirnames, filenames in os.walk(folder):
@@ -73,7 +73,7 @@ class CitellusTest(TestCase):
 
     @pytest.mark.last
     def test_plugins_have_description(self):
-        pluginpath = [os.path.join(citellus.citellusdir, 'plugins')]
+        pluginpath = [os.path.join(citellus.citellusdir, 'plugins', 'core')]
         pluginscit = citellus.findplugins(folders=pluginpath)
 
         regexp = '\A# description:'
