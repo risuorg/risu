@@ -103,6 +103,29 @@ def colorize(text, color, stream=sys.stdout, force=False):
         color=color, text=text, reset=bcolors.end)
 
 
+def which(binary):
+    """
+    Locates where a binary is located within path
+    :param binary: Binary to locate/executable
+    :return: path or None if not found
+    """
+
+    def is_executable(file):
+        return os.path.isfile(file) and os.access(file, os.X_OK)
+
+    path, file = os.path.split(binary)
+    if path:
+        if is_executable(binary):
+            return binary
+    else:
+        for path in os.environ["PATH"].split(os.pathsep):
+            executable = os.path.join(path, binary)
+            if is_executable(executable):
+                return executable
+
+    return None
+
+
 def show_logo():
     """
     Prints citellus Logo
@@ -119,7 +142,7 @@ def show_logo():
     print("\n".join(logo))
 
 
-def findplugins(folders, include=None, exclude=None, executables=True, extension=False):
+def findplugins(folders, include=None, exclude=None, executables=True, fileextension=False, extension='core'):
     """
     Finds plugins in path and returns array of them
     :param exclude: exclude string in filter path
@@ -141,8 +164,8 @@ def findplugins(folders, include=None, exclude=None, executables=True, extension
                 filepath = os.path.join(root, filename)
                 LOG.debug('considering: %s', filepath)
                 passesextension = False
-                if extension:
-                    if os.path.splitext(filepath)[1] == extension:
+                if fileextension:
+                    if os.path.splitext(filepath)[1] == fileextension:
                         passesextension = True
                 else:
                     passesextension = True
@@ -167,7 +190,14 @@ def findplugins(folders, include=None, exclude=None, executables=True, extension
 
     # this unique-ifies the list of plugins (and ensures consistent
     # ordering).
-    return sorted(set(plugins))
+
+    plugins = sorted(set(plugins))
+
+    metaplugins=[]
+    for plugin in plugins:
+        metaplugins.append({'plugin': plugin, 'backend': extension})
+
+    return metaplugins
 
 
 def runplugin(plugin):
@@ -181,8 +211,8 @@ def runplugin(plugin):
     start_time = time.clock()
 
     try:
-        os.environ['PLUGIN_BASEDIR'] = "%s" % os.path.abspath(os.path.dirname(plugin))
-        p = subprocess.Popen(plugin.split(" "), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        os.environ['PLUGIN_BASEDIR'] = "%s" % os.path.abspath(os.path.dirname(plugin['plugin']))
+        p = subprocess.Popen(plugin['plugin'].split(" "), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         out, err = p.communicate()
         returncode = p.returncode
     except:
@@ -190,7 +220,7 @@ def runplugin(plugin):
         out = ""
         err = traceback.format_exc()
 
-    return {'plugin': plugin,
+    return {'plugin': plugin['plugin'],
             'result': {"rc": returncode,
                        "out": out.decode('ascii', 'ignore'),
                        "err": err.decode('ascii', 'ignore')},
@@ -332,7 +362,7 @@ def parse_args(default=False, parse=False):
     s.add_argument("--dump-config", help=_("Dump config to console to be saved into file"), default=False, action="store_true")
     s.add_argument("--no-config", default=False, help=_("Do not read configuration from file %s or ~/.citellus.conf" % os.path.join(citellusdir, "citellus.conf")), action="store_true")
 
-    p.add_argument('plugin_path', nargs='*')
+    p.add_argument('sosreport', nargs='*')
 
     if not default and not parse:
         return p.parse_args()
@@ -355,7 +385,7 @@ def array_to_config(config, path=False):
                 values = values.encode('ascii', 'ignore')
             if isinstance(values, list):
                 for value in values:
-                    if key == 'plugin_path':
+                    if key == 'sosreport':
                         valid.append("%s" % key.encode('ascii', 'ignore'))
                     else:
                         valid.append("--%s" % key.encode('ascii', 'ignore'))
@@ -409,11 +439,11 @@ def diff_config(options, defaults=parse_args(default=True), path=False):
     for key in vars(options):
         keydef = vars(defaults)[key]
         keyset = vars(options)[key]
-        if keyset != keydef and key != 'dump_config' and key != 'no_config' and key != 'plugin_path':
+        if keyset != keydef and key != 'dump_config' and key != 'no_config' and key != 'sosreport':
             # argparse replaces "-" by "_" on keys so we revert
             key = key.replace("_", "-")
             config[key] = keyset
-        if path and key == 'plugin_path':
+        if path and key == 'sosreport':
             # If we tell to return path, do put in the list of config options
             config[key] = keyset
 
@@ -518,8 +548,8 @@ def main():
             newconfig.update(cliconfig)
 
             # remove plugin path from dictionary and have array_to_config to append it
-            path = newconfig['plugin_path']
-            del newconfig['plugin_path']
+            path = newconfig['sosreport']
+            del newconfig['sosreport']
             # Generate to options like if they were all parsed via CLI
             options = array_to_config(config=newconfig, path=path)
     else:
@@ -538,34 +568,22 @@ def main():
     LOG.debug("# Effective options for this run: %s" % diff_config(options=options, path=True))
 
     if not options.live:
-        if len(options.plugin_path) > 0:
+        if len(options.sosreport) > 0:
             # Live not specified, so we will use file snapshot as first arg and remaining cli arguments as plugins
-            CITELLUS_ROOT = options.plugin_path.pop(0)
+            CITELLUS_ROOT = options.sosreport.pop(0)
         elif not options.list_plugins:
             LOG.error(_("When not running in Live mode, snapshot path is required"))
             sys.exit(1)
     else:
         CITELLUS_ROOT = ""
 
-    if not options.plugin_path:
-        LOG.info('using default plugin path')
-
-    # Find available plugins
-    plugins = findplugins(options.plugin_path,
-                          include=options.include,
-                          exclude=options.exclude)
+    LOG.info('using default plugin path')
 
     # Process Citellus extensions
     global extensions
     extensions = exts.initExtensions()
 
     if options.list_plugins:
-        for each in plugins:
-            print(each)
-            if options.description:
-                desc = get_description(plugin=each)
-                if desc:
-                    print(desc)
         for each in extensions:
             print("#PYEXT: %s" % each.__name__.split(".")[-1])
             if options.description:
@@ -589,15 +607,11 @@ def main():
     if not options.quiet:
         show_logo()
 
-        if not options.plugin_path:
-            plugpath = ["default path"]
-        else:
-            plugpath = options.plugin_path
+        plugpath = ["default path"]
+        
+        print(_("found #%s extensions") % len(extensions))
 
-        print(_("found #%s extensions") % len(extensions), "/",
-              _("found #%s tests at %s") % (len(plugins), ", ".join(plugpath)))
-
-    if not plugins and not extensions:
+    if not extensions:
         LOG.error(_("did not discover any plugins, or were filtered"))
 
     if not options.quiet:
@@ -606,11 +620,10 @@ def main():
         else:
             print(_("mode: fs snapshot %s" % CITELLUS_ROOT))
 
-    # Execute runplugin for each plugin found
-    results = docitellus(live=options.live, path=CITELLUS_ROOT, plugins=plugins)
-
     # Process Citellus extensions
     extensions = exts.initExtensions()
+
+    results = []
 
     for i in extensions:
         name = i.__name__.split(".")[-1]
