@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bfb0298b_7d48044d",
+        "filename": "citellus/plugins/pacemaker/disabled_resources.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1011950
+      },
+      "writtenOn": "2017-12-06T03:14:18Z",
+      "side": 1,
+      "message": "egrep -i \"Clone|master|Resource|target-role\u003dStopped\" \"${PCS_DIRECTORY}/pcs_config\" | grep -i \"target-role\u003dStopped\" -B1 \u003e\u00262                                                                                                     \n\nIPAddr is just another resource, if we check for Resource here, we check for IPAddr as well as for OpenStack services which are missed right now.",
+      "revId": "ac2ae0e29bcb5b50af85c102ac013f578bab0531",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
