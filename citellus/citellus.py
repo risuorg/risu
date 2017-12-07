@@ -634,7 +634,9 @@ def main():
             write_results(results, newfile,
                           live=options.live,
                           path=CITELLUS_ROOT)
-            shutil.copy2(os.path.join(citellusdir, '../tools/www/citellus.html'), basefolder)
+            src = os.path.join(citellusdir, '../tools/www/citellus.html')
+            if os.path.isfile(src):
+                shutil.copyfile(src, os.path.join(basefolder, os.path.basename(src)))
 
     # Print results based on the sorted order based on returned results from
     # parallel execution
