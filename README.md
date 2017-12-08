@@ -22,26 +22,30 @@ Please if you have any idea on any improvements please do not hesitate to open a
 We are developing framework in python, the bash framework has been deprecated. Python framework is the only supported framework.
 
 ```
-usage: citellus.py [arguments] [-h] [-l] [--list-plugins] [--description]
-                               [--output FILENAME] [--blame] [--lang]
-                               [--only-failed] [-v]
+usage: citellus.py [arguments] [-h] [-l] [--list-plugins] [--list-extensions]
+                               [--description] [--output FILENAME] [--web]
+                               [--blame] [--lang] [--only-failed] [-v]
                                [-d {INFO,DEBUG,WARNING,ERROR,CRITICAL}] [-q]
-                               [-i SUBSTRING] [-x SUBSTRING]
-                               [plugin_path [plugin_path ...]]
+                               [-i SUBSTRING] [-x SUBSTRING] [--dump-config]
+                               [--no-config]
+                               [sosreport]
 
 Citellus allows to analyze a directory against common set of tests, useful for
 finding common configuration errors
 
 positional arguments:
-  plugin_path
+  sosreport
 
 optional arguments:
   -h, --help            show this help message and exit
   -l, --live            Work on a live system instead of a snapshot
   --list-plugins        Print a list of discovered plugins and exit
+  --list-extensions     Print a list of discovered extensions and exit
   --description         With list-plugins, also outputs plugin description
   --output FILENAME, -o FILENAME
                         Write results to JSON file FILENAME
+  --web                 Write results to JSON file citellus.json and copy html
+                        interface in path defined in --output
 
 Output and logging options:
   --blame               Report time spent on each plugin
@@ -59,6 +63,11 @@ Filtering options:
   -x SUBSTRING, --exclude SUBSTRING
                         Exclude plugins that contain substring
 
+Config options:
+  --dump-config         Dump config to console to be saved into file
+  --no-config           Do not read configuration from file
+                        /home/iranzo/DEVEL/citellus/citellus/citellus.conf or
+                        ~/.citellus.conf
 ```
 
 ## Plugins and their descriptions
