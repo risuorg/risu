@@ -29,7 +29,7 @@ import citellusclient.shell as citellus
 # To create your own test, update NAME with plugin name and copy this file to test_$NAME.py
 NAME = "test_cf_is_required_file"
 
-testplugins = os.path.join(citellus.citellusdir, 'testplugins')
+testplugins = os.path.join(citellus.citellusdir, 'plugins', 'test')
 plugins = os.path.join(citellus.citellusdir, 'plugins', 'core')
 folder = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'setup')
 uttest = citellus.findplugins(folders=[folder], include=[NAME])[0]['plugin']

@@ -61,7 +61,7 @@ from citellus import citellus
 # To create your own test, update NAME with plugin name and copy this file to test_$NAME.py
 NAME = 'httpd_bug_1406417'
 
-testplugins = os.path.join(citellus.citellusdir, 'testplugins')
+testplugins = os.path.join(citellus.citellusdir, 'plugins', 'test')
 plugins = os.path.join(citellus.citellusdir, 'plugins')
 folder = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'setup')
 uttest = citellus.findplugins(folders=[folder], include=[NAME])[0]

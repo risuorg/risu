@@ -26,7 +26,7 @@ import shutil
 
 import citellusclient.shell as citellus
 
-testplugins = os.path.join(citellus.citellusdir, 'testplugins')
+testplugins = os.path.join(citellus.citellusdir, 'plugins', 'test')
 plugins = os.path.join(citellus.citellusdir, 'plugins', 'core')
 folder = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'setup')
 uttest = citellus.findplugins(folders=[folder])
