@@ -7,14 +7,10 @@
 from __future__ import print_function
 
 import os
-import citellus
-
+import citellusclient.citellus as citellus
 
 extension = "core"
-try:
-    pluginsdir = os.path.join(citellus.citellusdir, 'plugins', extension)
-except:
-    pluginsdir = os.path.join(citellus.citellus.citellusdir, 'plugins', extension)
+pluginsdir = os.path.join(citellus.citellusdir, 'plugins', extension)
 
 
 def init():
@@ -50,10 +46,7 @@ def run(plugin):  # do not edit this line
     Executes plugin
     :return: returncode, out, err
     """
-    try:
-        return citellus.execonshell(filename=plugin['plugin'])
-    except:
-        return citellus.citellus.execonshell(filename=plugin['plugin'])
+    return citellus.execonshell(filename=plugin['plugin'])
 
 
 def help():  # do not edit this line
