@@ -687,6 +687,10 @@ def main():
     if options.list_extensions:
         for extension in extensions:
             print(extension.__name__.split(".")[-1])
+            if options.description:
+                desc = extension.help()
+                if desc:
+                    print(indent(text=desc, amount=4))
         return
 
     # Prefill plugin list as we'll be still using it for execution
@@ -702,7 +706,7 @@ def main():
                 if options.description:
                     desc = get_description(plugin)
                     if desc:
-                        print(desc)
+                        print(indent(text=desc, amount=4))
         return
 
     # Reinstall language in case it has changed
