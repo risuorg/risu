@@ -25,7 +25,7 @@ import subprocess
 import tempfile
 from unittest import TestCase
 
-from citellus import citellus
+import citellusclient.citellus as citellus
 
 # To create your own test, update NAME with plugin name and copy this file to test_$NAME.py
 NAME = 'stonith_enabled'
