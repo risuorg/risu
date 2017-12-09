@@ -267,7 +267,7 @@ def runplugin(plugin):
     """
 
     LOG.debug(msg=_('Running plugin: %s') % plugin)
-    start_time = time.clock()
+    start_time = time.time()
     os.environ['PLUGIN_BASEDIR'] = "%s" % os.path.abspath(os.path.dirname(plugin['plugin']))
 
     # By default prepare 'error' in case of failed mapping from plugin to extension
@@ -290,7 +290,7 @@ def runplugin(plugin):
             'result': {"rc": returncode,
                        "out": out.decode('ascii', 'ignore'),
                        "err": err.decode('ascii', 'ignore')},
-            'time': time.clock() - start_time}
+            'time': time.time() - start_time}
 
 
 def execonshell(filename):
@@ -620,7 +620,7 @@ def main():
     :return: none
     """
 
-    start_time = time.clock()
+    start_time = time.time()
 
     # Store CLI options for reporting later
     clioptions = parse_args()
@@ -795,7 +795,7 @@ def main():
             print(indent(err, 4))
 
     if options.blame:
-        print("# Total execution time: %s seconds" % (time.clock() - start_time))
+        print("# Total execution time: %s seconds" % (time.time() - start_time))
 
 
 if __name__ == "__main__":
