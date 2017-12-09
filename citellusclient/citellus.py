@@ -339,7 +339,7 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US'):
     os.environ['TEXTDOMAINDIR'] = "%s/locale" % citellusdir
 
     # Set pool for same processes as CPU cores
-    p = Pool(cpu_count())
+    p = Pool(1)
 
     # Execute runplugin for each plugin found
     results = p.map(runplugin, plugins)
