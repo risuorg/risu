@@ -69,7 +69,7 @@ def run(plugin):  # do not edit this line
     if skipped == 1:
         return citellus.RC_SKIPPED, '', 'Plugin does satisfies conditions for running'
 
-    command = "%s -i localhost --connection=local, %s" % (ansible, plugin['plugin'])
+    command = "%s -i localhost, --connection=local %s" % (ansible, plugin['plugin'])
 
     # Call exec to run playbook
     returncode, out, err = citellus.execonshell(filename=command)
