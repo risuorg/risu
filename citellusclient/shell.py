@@ -26,17 +26,16 @@ from __future__ import print_function
 import argparse
 import datetime
 import gettext
-import time
+import imp
 import json
 import logging
 import os
 import re
+import shutil
 import subprocess
 import sys
+import time
 import traceback
-import shutil
-import imp
-
 from multiprocessing import Pool, cpu_count
 
 LOG = logging.getLogger('citellus')
@@ -204,6 +203,9 @@ def show_logo():
 def findplugins(folders, include=None, exclude=None, executables=True, fileextension=False, extension='core'):
     """
     Finds plugins in path and returns array of them
+    :param executables: Enable to find only executable files
+    :param fileextension: Extension to match for plugins found
+    :param extension: Extension that will handle this plugin
     :param exclude: exclude string in filter path
     :param include: include string in filter path
     :param folders: Folders to use as source for plugin search
@@ -502,8 +504,7 @@ def array_to_config(config, path=False):
 def read_config():
     """
     Reads configuration options
-    :param options: options passed
-    :return: json with options stored on file
+    :return: with options stored on file
     """
     # Order for options will be:
     #   - First program defaults
@@ -524,6 +525,7 @@ def read_config():
 def diff_config(options, defaults=parse_args(default=True), path=False):
     """
     Diffs between default configuration and provided one
+    :param path: Keep or purge path from returned options
     :param options: options provided
     :param defaults: default configuration options
     :return: dict with different values to defaults
@@ -546,6 +548,7 @@ def diff_config(options, defaults=parse_args(default=True), path=False):
 def dump_config(options, path=False):
     """
     Dumps config options that differ from defaults
+    :param path: print or not path for sosreports
     :param options: options used
     """
     differences = diff_config(options=options, path=path)
@@ -581,7 +584,7 @@ def write_results(results, filename,
 def regexpfile(filename=False, regexp=False):
     """
     Checks for string in file
-    :param file: file to check
+    :param filename: filename to regexp for matches
     :param regexp: String to check
     :return: found match or False
     """
@@ -721,7 +724,7 @@ def main():
         show_logo()
         totalplugs = 0
         for extension in plugins:
-            totalplugs = totalplugs + len(extension)
+            totalplugs += len(extension)
         print(_("found #%s extensions with #%s plugins") % (len(extensions), totalplugs))
 
     if not extensions:
