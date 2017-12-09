@@ -7,7 +7,7 @@ from unittest import TestCase
 from citellus import citellus
 from citellus import magui
 
-testplugins = os.path.join(citellus.citellusdir, 'testplugins')
+testplugins = os.path.join(citellus.citellusdir, 'plugins', 'test')
 
 
 class MaguiTest(TestCase):
