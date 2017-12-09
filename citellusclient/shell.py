@@ -26,17 +26,16 @@ from __future__ import print_function
 import argparse
 import datetime
 import gettext
-import time
+import imp
 import json
 import logging
 import os
 import re
+import shutil
 import subprocess
 import sys
+import time
 import traceback
-import shutil
-import imp
-
 from multiprocessing import Pool, cpu_count
 
 LOG = logging.getLogger('citellus')

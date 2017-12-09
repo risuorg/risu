@@ -19,10 +19,10 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
-import subprocess
-from unittest import TestCase
-import tempfile
 import shutil
+import subprocess
+import tempfile
+from unittest import TestCase
 
 import citellusclient.shell as citellus
 

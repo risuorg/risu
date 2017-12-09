@@ -7,6 +7,7 @@
 from __future__ import print_function
 
 import os
+
 import citellusclient.shell as citellus
 
 extension = "core"

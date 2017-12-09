@@ -25,12 +25,12 @@
 from __future__ import print_function
 
 import argparse
+import datetime
 import gettext
+import json
 import logging
 import os.path
 import pprint
-import datetime
-import json
 
 try:
     # Python 3
