@@ -7,6 +7,7 @@
 from __future__ import print_function
 
 import os
+
 import citellusclient.shell as citellus
 
 extension = "core"
@@ -28,8 +29,7 @@ def listplugins(options):
     :param options: argparse options provided
     :return: plugin object generator
     """
-    yield citellus.findplugins(folders=[pluginsdir], include=options.include, exclude=options.exclude,
-                               executables=True, extension='core')
+    yield citellus.findplugins(folders=[pluginsdir], include=options.include, exclude=options.exclude)
 
 
 def get_description(plugin):

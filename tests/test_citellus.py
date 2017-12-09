@@ -3,10 +3,11 @@
 
 
 import os
-import pytest
 import re
-
 from unittest import TestCase
+
+import pytest
+
 import citellusclient.shell as citellus
 
 testplugins = os.path.join(citellus.citellusdir, 'plugins', 'test')
@@ -15,22 +16,25 @@ citellusdir = citellus.citellusdir
 
 class CitellusTest(TestCase):
     def test_runplugin_pass(self):
-        returncode, out, err = citellus.execonshell(os.path.join(testplugins, 'exit_passed.sh'))
-        returncode == citellus.RC_OKAY
-        out.endswith(b'something on stdout\n')
-        err.endswith(b'something on stderr\n')
+        plugins = citellus.findplugins(folders=[testplugins], include='exit_passed.sh')
+        results = citellus.docitellus(plugins=plugins)
+        assert results[0]['result']['rc'] == citellus.RC_OKAY
+        assert results[0]['result']['out'].endswith(b'something on stdout\n')
+        assert results[0]['result']['err'].endswith(b'something on stderr\n')
 
     def test_runplugin_fail(self):
-        returncode, out, err = citellus.execonshell(os.path.join(testplugins, 'exit_failed.sh'))
-        returncode == citellus.RC_FAILED
-        out.endswith(b'something on stdout\n')
-        err.endswith(b'something on stderr\n')
+        plugins = citellus.findplugins(folders=[testplugins], include='exit_failed.sh')
+        results = citellus.docitellus(plugins=plugins)
+        assert results[0]['result']['rc'] == citellus.RC_FAILED
+        assert results[0]['result']['out'].endswith(b'something on stdout\n')
+        assert results[0]['result']['err'].endswith(b'something on stderr\n')
 
     def test_runplugin_skip(self):
-        returncode, out, err = citellus.execonshell(os.path.join(testplugins, 'exit_skipped.sh'))
-        returncode == citellus.RC_SKIPPED
-        out.endswith(b'something on stdout\n')
-        err.endswith(b'something on stderr\n')
+        plugins = citellus.findplugins(folders=[testplugins], include='exit_skipped.sh')
+        results = citellus.docitellus(plugins=plugins)
+        assert results[0]['result']['rc'] == citellus.RC_SKIPPED
+        assert results[0]['result']['out'].endswith(b'something on stdout\n')
+        assert results[0]['result']['err'].endswith(b'something on stderr\n')
 
     def test_findplugins_positive_filter_include(self):
         plugins = citellus.findplugins([testplugins],
