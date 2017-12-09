@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60cc85eb_b35b4d6b",
+        "filename": "citellusclient/plugins/core/system/clock-2-ntpd-quantity.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2017-12-09T12:40:03Z",
+      "side": 1,
+      "message": "language might not be business style? ;-)",
+      "revId": "5f666d512478ccde9623e592e0c79fb1dac9fdc8",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
