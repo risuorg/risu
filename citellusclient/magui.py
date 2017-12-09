@@ -34,10 +34,10 @@ import json
 
 try:
     # Python 3
-    from . import citellus
+    from . import shell as citellus
 except ValueError:
     # Python 2
-    import citellus
+    import shell as citellus
 
 LOG = logging.getLogger('magui')
 
