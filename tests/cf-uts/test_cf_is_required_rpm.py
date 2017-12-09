@@ -24,7 +24,7 @@ from unittest import TestCase
 import tempfile
 import shutil
 
-from citellus import citellus
+import citellusclient.shell as citellus
 
 # To create your own test, update NAME with plugin name and copy this file to test_$NAME.py
 NAME = "test_cf_is_required_rpm"
