@@ -246,7 +246,19 @@ def main():
     # Each argument in sosreport is a sosreport
 
     # Prefill enabled citellus plugins from args
-    citellusplugins = citellus.findplugins(folders=options.pluginpath, include=options.include, exclude=options.exclude)
+    if not citellus.extensions:
+        extensions, exttriggers = citellus.initExtensions()
+
+    citellusplugins = []
+    for extension in extensions:
+        citellusplugins.extend(extension.listplugins(options))
+
+    # By default, flatten plugin list for all extensions
+    newplugins = []
+    for each in citellusplugins:
+        newplugins.extend(each)
+
+    citellusplugins = newplugins
 
     # Grab the data
     grouped = domagui(sosreports=options.sosreports, citellusplugins=citellusplugins)
