@@ -3,10 +3,11 @@
 
 
 import os
-import pytest
 import re
-
 from unittest import TestCase
+
+import pytest
+
 import citellusclient.shell as citellus
 
 testplugins = os.path.join(citellus.citellusdir, 'plugins', 'test')

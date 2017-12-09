@@ -7,6 +7,9 @@
 from __future__ import print_function
 
 import os
+
+import yaml
+
 import citellusclient.shell as citellus
 
 extension = "ansible"
@@ -38,7 +41,19 @@ def get_description(plugin):
     :param plugin: plugin object
     :return: description string for that plugin
     """
-    return ""
+
+    with open(plugin['plugin'], 'r') as stream:
+        try:
+            doc = (yaml.load(stream))
+        except yaml.YAMLError as exc:
+            print(exc)
+
+    try:
+        description = doc[0]['vars']['metadata']['description']
+    except:
+        description = ""
+
+    return description
 
 
 def run(plugin):  # do not edit this line
