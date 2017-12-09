@@ -25,12 +25,12 @@
 from __future__ import print_function
 
 import argparse
+import datetime
 import gettext
+import json
 import logging
 import os.path
 import pprint
-import datetime
-import json
 
 try:
     # Python 3
@@ -188,7 +188,6 @@ def write_results(results, filename):
     Writes result
     :param results: Data to write
     :param filename: File to use
-    :param path: Path to write to file metadata
     :return:
     """
     data = {
