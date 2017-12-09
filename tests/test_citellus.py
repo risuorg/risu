@@ -7,7 +7,7 @@ import pytest
 import re
 
 from unittest import TestCase
-from citellus import citellus
+import citellusclient.citellus as citellus
 
 testplugins = os.path.join(citellus.citellusdir, 'testplugins')
 citellusdir = citellus.citellusdir

@@ -24,7 +24,7 @@ from unittest import TestCase
 import tempfile
 import shutil
 
-from citellus import citellus
+import citellusclient.citellus as citellus
 
 testplugins = os.path.join(citellus.citellusdir, 'testplugins')
 plugins = os.path.join(citellus.citellusdir, 'plugins', 'core')
