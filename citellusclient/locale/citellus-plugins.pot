@@ -1,0 +1,267 @@
+#: citellusclient/plugins/core/pacemaker/packages.sh:25
+msgid "Outdated pacemaker packages"
+msgstr ""
+#: citellusclient/plugins/core/pacemaker/stonith_enabled.sh:23
+msgid "stonith is not enabled"
+msgstr ""
+#: citellusclient/plugins/core/network/external_connectivity.sh:33
+msgid "default gateway is unreachable"
+msgstr ""
+#: citellusclient/plugins/core/bugzilla/httpd_bug_1406417.sh:27
+msgid "https://bugzilla.redhat.com/show_bug.cgi?id=1406417"
+msgstr ""
+#: citellusclient/plugins/core/bugzilla/libvirt-systemd_bug_1172387.sh:46
+msgid "systemd https://bugzilla.redhat.com/show_bug.cgi?id=1172387"
+msgstr ""
+#: citellusclient/plugins/core/bugzilla/openstack/neutron_bug_1489066.sh:28
+msgid "errors on iptables xlock, check: https://bugzilla.redhat.com/show_bug.cgi?id=1489066"
+msgstr ""
+#: citellusclient/plugins/core/bugzilla/openstack/swift_bug_1500607.sh:27
+msgid "swift expirer https://bugzilla.redhat.com/show_bug.cgi?id=1500607"
+msgstr ""
+#: citellusclient/plugins/core/bugzilla/openstack/httpd_bug_1478042.sh:26
+msgid "https://bugzilla.redhat.com/show_bug.cgi?id=1478042"
+msgstr ""
+#: citellusclient/plugins/core/bugzilla/openstack/nova_bug_1474092.sh:27
+msgid "nova.conf https://bugzilla.redhat.com/show_bug.cgi?id=1474092"
+msgstr ""
+#: citellusclient/plugins/core/bugzilla/openstack/keystone_bug_1473713.sh:29
+msgid "errors on token expiration, check: https://bugzilla.redhat.com/show_bug.cgi?id=1473713"
+msgstr ""
+#: citellusclient/plugins/core/bugzilla/openstack/neutron_bug_1474092.sh:26
+msgid "neutron.conf https://bugzilla.redhat.com/show_bug.cgi?id=1474092"
+msgstr ""
+#: citellusclient/plugins/core/bugzilla/openstack/neutron_bug_1450223.sh:42
+msgid "possible python-ryu bug in ovs-agent https://bugzilla.redhat.com/show_bug.cgi?id=1450223"
+msgstr ""
+#: citellusclient/plugins/core/bugzilla/openstack/ceilometer_bug_1483456.sh:38
+msgid "https://bugzilla.redhat.com/show_bug.cgi?id=1483456"
+msgstr ""
+#: citellusclient/plugins/core/bugzilla/openstack/ceph_bug_1358697.sh:29
+msgid "outdated ceph packages: https://bugzilla.redhat.com/show_bug.cgi?id=1358697"
+msgstr ""
+#: citellusclient/plugins/core/openstack/iptables/metadata_redirect.sh:41
+msgid "No iptables rule defined for metadata access"
+msgstr ""
+#: citellusclient/plugins/core/openstack/ceph/ceph-pg_num.sh:53
+msgid "pg_num count $_PG_NUM is not optimal"
+msgstr ""
+#: citellusclient/plugins/core/openstack/ceph/missing-repos-on-compute.sh:29
+msgid "librbd1 might be outdated if rhceph repo is not enabled on compute"
+msgstr ""
+#: citellusclient/plugins/core/openstack/packstack.sh:28
+msgid "packstack detected"
+msgstr ""
+#: citellusclient/plugins/core/openstack/redis/redis-tooz-lock.sh:29
+msgid "tooz: configured lock_timeout seems not to be enough"
+msgstr ""
+#: citellusclient/plugins/core/openstack/redis/redis-tooz-lock.sh:32
+msgid "tooz https://bugzilla.redhat.com/show_bug.cgi?id=1465385"
+msgstr ""
+#: citellusclient/plugins/core/openstack/crontab/cinder-data-purge.sh:27
+msgid "crontab cinder db purge is not set"
+msgstr ""
+#: citellusclient/plugins/core/openstack/crontab/keystone_cleanup.sh:31
+msgid "crontab keystone cleanup is not set"
+msgstr ""
+#: citellusclient/plugins/core/openstack/crontab/keystone_cleanup.sh:37
+msgid "token flush not running every hour "
+msgstr ""
+#: citellusclient/plugins/core/openstack/crontab/heat_stack-purge.sh:27
+msgid "crontab heat stack purge is not set"
+msgstr ""
+#: citellusclient/plugins/core/openstack/network/dpdk.sh:65
+msgid "missing NUMATopologyFilter in nova.conf"
+msgstr ""
+#: citellusclient/plugins/core/openstack/network/dpdk.sh:84
+msgid "missing dpdk-socket-mem in ovs-vsctl"
+msgstr ""
+#: citellusclient/plugins/core/openstack/network/dpdk.sh:88
+msgid "missing dpdk-lcore-mask= (Core list) in ovs-vsctl"
+msgstr ""
+#: citellusclient/plugins/core/openstack/network/dpdk.sh:92
+msgid "missing pmd-cpu-mask= (pmd cpu mask) in ovs-vsctl"
+msgstr ""
+#: citellusclient/plugins/core/openstack/network/dpdk.sh:170
+msgid "Nova VCPU in vcpu_pin_set not in Isolated CPU's:"
+msgstr ""
+#: citellusclient/plugins/core/openstack/network/dpdk.sh:243
+msgid "DPDK PMD CPU was already used by Nova:"
+msgstr ""
+#: citellusclient/plugins/core/openstack/network/dpdk.sh:299
+msgid "DPDK CORE CPU was already used by Kernel, Nova or DPDK PMD: "
+msgstr ""
+#: citellusclient/plugins/core/openstack/network/common-dpdk-sriov.sh:27
+msgid "missing intel_iommu=on on kernel cmdline"
+msgstr ""
+#: citellusclient/plugins/core/openstack/network/common-dpdk-sriov.sh:31
+msgid "missing iommu=pt on kernel cmdline"
+msgstr ""
+#: citellusclient/plugins/core/openstack/network/common-dpdk-sriov.sh:36
+msgid "missing amd_iommu=pt on kernel cmdline"
+msgstr ""
+#: citellusclient/plugins/core/openstack/network/sriov.sh:32
+msgid "missing rpm openstack-neutron-sriov-nic-agent"
+msgstr ""
+#: citellusclient/plugins/core/openstack/network/sriov.sh:36
+msgid "neutron-sriov-nic-agent not running"
+msgstr ""
+#: citellusclient/plugins/core/openstack/network/sriov.sh:42
+msgid "missing rpm tuned-profiles-cpu-partitioning"
+msgstr ""
+#: citellusclient/plugins/core/openstack/network/sriov.sh:46
+msgid "missing isolated_cores in /etc/tuned/cpu-partitioning-variables.conf"
+msgstr ""
+#: citellusclient/plugins/core/openstack/network/sriov.sh:63
+msgid "virtual function is disabled"
+msgstr ""
+#: citellusclient/plugins/core/openstack/network/sriov.sh:67
+msgid "vfio_iommu module is not loaded"
+msgstr ""
+#: citellusclient/plugins/core/openstack/network/sriov.sh:72
+msgid "unsafe interrupts not enabled"
+msgstr ""
+#: citellusclient/plugins/core/openstack/network/sriov.sh:77
+msgid "missing hugepagesz on kernel cmdline"
+msgstr ""
+#: citellusclient/plugins/core/openstack/network/sriov.sh:82
+msgid "missing hugepages= on kernel cmdline"
+msgstr ""
+#: citellusclient/plugins/core/openstack/network/sriov.sh:87
+msgid "missing isolcpus= on kernel cmdline"
+msgstr ""
+#: citellusclient/plugins/core/openstack/network/sriov.sh:92
+msgid "missing sriovnicswitch in ml2_conf.ini"
+msgstr ""
+#: citellusclient/plugins/core/openstack/network/sriov.sh:111
+msgid "missing PciPassthroughFilter in nova.conf"
+msgstr ""
+#: citellusclient/plugins/core/openstack/network/sriov.sh:115
+msgid "missing vcpu_pin_set in nova.conf"
+msgstr ""
+#: citellusclient/plugins/core/openstack/network/sriov.sh:120
+msgid "missing pci_passthrough_whitelist in /etc/nova/nova.conf"
+msgstr ""
+#: citellusclient/plugins/core/openstack/network/sriov.sh:126
+msgid "missing physical_device_mappings in /etc/neutron/plugins/ml2/sriov_agent.ini"
+msgstr ""
+#: citellusclient/plugins/core/openstack/swift/pipeline-or-ignore-filling-gnocchi.sh:33
+msgid "https://bugzilla.redhat.com/show_bug.cgi?id=1449986"
+msgstr ""
+#: citellusclient/plugins/core/openstack/hardware/memory.sh:34
+msgid "memory is lower than 16gb ram"
+msgstr ""
+#: citellusclient/plugins/core/openstack/hardware/memory.sh:40
+msgid "memory is lower than (1.5gb per core)"
+msgstr ""
+#: citellusclient/plugins/core/openstack/hardware/memory.sh:47
+msgid "memory is lower than (3gb per core)"
+msgstr ""
+#: citellusclient/plugins/core/openstack/ceilometer/out-of-sync-host.sh:26
+msgid "works only on compute node"
+msgstr ""
+#: citellusclient/plugins/core/openstack/ceilometer/out-of-sync-host.sh:37
+msgid "ceilometer and nova compute host are out of sync."
+msgstr ""
+#: citellusclient/plugins/core/openstack/ceilometer/expiration.sh:29
+msgid "is listed more than once on file"
+msgstr ""
+#: citellusclient/plugins/core/openstack/ceilometer/expiration.sh:43
+msgid "ceilometer.conf setting must be updated:"
+msgstr ""
+#: citellusclient/plugins/core/openstack/mysql/innodb-file-per-table.sh:29
+msgid "innodb_file_per_table not set in /etc/my.cnf.d/galera.cnf or /etc/my.cnf"
+msgstr ""
+#: citellusclient/plugins/core/openstack/containers/containerized_deployment.sh:32
+msgid "the OSP 12 deployment seems to not be containerized"
+msgstr ""
+#: citellusclient/plugins/core/openstack/system/clock-chronyd-disabled.sh:33
+msgid "chrony service is active, and it should not on OSP node"
+msgstr ""
+#: citellusclient/plugins/core/openstack/glance/image_size_cap.sh:34
+msgid "image_size_cap is less than 1TiB"
+msgstr ""
+#: citellusclient/plugins/core/openstack/nova/resume-guests-state-on-host-boot.sh:46
+msgid "compute node is configured to restore guests state at startup"
+msgstr ""
+#: citellusclient/plugins/core/openstack/nova/resume-guests-state-on-host-boot.sh:49
+msgid "compute node is NOT configured to restore guests state at startup"
+msgstr ""
+#: citellusclient/plugins/core/openstack/nova/incompatible-aggregate-capabilities-filters.sh:30
+msgid "Incompatible ComputeCapabilitiesFilter and AggregateInstanceExtraSpecsFilter in scheduler_default_filters at nova.conf"
+msgstr ""
+#: citellusclient/plugins/core/openstack/nova/consolelog-permissions-on-enforcing-selinux.sh:30
+msgid "AVC denial for console.log: https://bugzilla.redhat.com/show_bug.cgi?id=1501957 https://bugzilla.redhat.com/show_bug.cgi?id=1491767"
+msgstr ""
+#: citellusclient/plugins/core/openstack/nova/osp11-versioned-notifications.sh:40
+msgid "missing notification_format=unversioned in nova.conf"
+msgstr ""
+#: citellusclient/plugins/core/openstack/nova/vnc-console-localhost.sh:40
+msgid "nova's vnc console listening on 127.0.0.1"
+msgstr ""
+#: citellusclient/plugins/core/launchpad/openstack/keystone_bug_1649616.sh:27
+msgid "https://bugs.launchpad.net/keystone/+bug/1649616/"
+msgstr ""
+#: citellusclient/plugins/core/system/hardware_virtualization.sh:28
+msgid "no hardware virt support found in /proc/cpuinfo"
+msgstr ""
+#: citellusclient/plugins/core/system/selinux_runtime.sh:32
+msgid "failed to determined runtime selinux mode"
+msgstr ""
+#: citellusclient/plugins/core/system/selinux_runtime.sh:37
+msgid "runtime selinux mode is not enforcing"
+msgstr ""
+#: citellusclient/plugins/core/system/abrtd-config.sh:26
+msgid "abrt package missing"
+msgstr ""
+#: citellusclient/plugins/core/system/abrtd-config.sh:30
+msgid "abrtd is not running on this node"
+msgstr ""
+#: citellusclient/plugins/core/system/abrtd-config.sh:38
+msgid "core_pattern: core"
+msgstr ""
+#: citellusclient/plugins/core/system/kdump-checker.sh:26
+msgid "kexec-tools package missing"
+msgstr ""
+#: citellusclient/plugins/core/system/kdump-checker.sh:30
+msgid "kdump is not running on this node"
+msgstr ""
+#: citellusclient/plugins/core/system/kdump-checker.sh:41
+msgid "missing crashkernel on kernel cmdline"
+msgstr ""
+#: citellusclient/plugins/core/system/kdump-checker.sh:45
+msgid "missing path in kdump.conf"
+msgstr ""
+#: citellusclient/plugins/core/system/kdump-checker.sh:49
+msgid "missing core_collector in kdump.conf"
+msgstr ""
+#: citellusclient/plugins/core/system/clock-0-ntp-services.sh:30
+msgid "both ntpd and chrony are active"
+msgstr ""
+#: citellusclient/plugins/core/system/clock-0-ntp-services.sh:35
+msgid "both chrony or ntpd are not active"
+msgstr ""
+#: citellusclient/plugins/core/system/yum_history_rollback-undo.sh:49
+msgid "detected undo/redo/rollback yum operations"
+msgstr ""
+#: citellusclient/plugins/core/system/sysstat.sh:26
+msgid "systat package missing"
+msgstr ""
+#: citellusclient/plugins/core/virtualization/libvirt-qemu-kernel-compatibility.sh:66
+msgid "compatibility between libvirt, qemu and kernel"
+msgstr ""
+#: citellusclient/plugins/core/virtualization/libvirt-qemu-kernel-compatibility.sh:69
+msgid "detected running kernel: $kernel_version"
+msgstr ""
+#: citellusclient/plugins/core/virtualization/libvirt-qemu-kernel-compatibility.sh:70
+msgid "libvirt:  $libvirt_version expected $libvirt"
+msgstr ""
+#: citellusclient/plugins/core/virtualization/libvirt-qemu-kernel-compatibility.sh:71
+msgid "qemu-kvm: $qemu_version expected $qemu"
+msgstr ""
+#: citellusclient/plugins/core/virtualization/libvirt-qemu-kernel-compatibility.sh:72
+msgid "redhat-release: $redhat_release_version expected $redhat_release"
+msgstr ""
+#: citellusclient/citellus.sh:59
+msgid "                                                  "
+msgstr ""

@@ -4,6 +4,7 @@
 
 import os
 from unittest import TestCase
+
 import citellusclient.shell as citellus
 from citellusclient import magui
 

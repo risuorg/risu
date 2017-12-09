@@ -3,10 +3,11 @@
 
 
 import os
-import pytest
 import re
-
 from unittest import TestCase
+
+import pytest
+
 import citellusclient.shell as citellus
 
 testplugins = os.path.join(citellus.citellusdir, 'plugins', 'test')
@@ -16,21 +17,21 @@ citellusdir = citellus.citellusdir
 class CitellusTest(TestCase):
     def test_runplugin_pass(self):
         returncode, out, err = citellus.execonshell(os.path.join(testplugins, 'exit_passed.sh'))
-        returncode == citellus.RC_OKAY
-        out.endswith(b'something on stdout\n')
-        err.endswith(b'something on stderr\n')
+        assert returncode == citellus.RC_OKAY
+        assert out.endswith(b'something on stdout\n')
+        assert err.endswith(b'something on stderr\n')
 
     def test_runplugin_fail(self):
         returncode, out, err = citellus.execonshell(os.path.join(testplugins, 'exit_failed.sh'))
-        returncode == citellus.RC_FAILED
-        out.endswith(b'something on stdout\n')
-        err.endswith(b'something on stderr\n')
+        assert returncode == citellus.RC_FAILED
+        assert out.endswith(b'something on stdout\n')
+        assert err.endswith(b'something on stderr\n')
 
     def test_runplugin_skip(self):
         returncode, out, err = citellus.execonshell(os.path.join(testplugins, 'exit_skipped.sh'))
-        returncode == citellus.RC_SKIPPED
-        out.endswith(b'something on stdout\n')
-        err.endswith(b'something on stderr\n')
+        assert returncode == citellus.RC_SKIPPED
+        assert out.endswith(b'something on stdout\n')
+        assert err.endswith(b'something on stderr\n')
 
     def test_findplugins_positive_filter_include(self):
         plugins = citellus.findplugins([testplugins],
