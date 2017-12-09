@@ -7,14 +7,10 @@
 from __future__ import print_function
 
 import os
-
-import citellus
+import citellusclient.shell as citellus
 
 extension = "ansible"
-try:
-    pluginsdir = os.path.join(citellus.citellusdir, 'plugins', extension)
-except:
-    pluginsdir = os.path.join(citellus.citellus.citellusdir, 'plugins', extension)
+pluginsdir = os.path.join(citellus.citellusdir, 'plugins', extension)
 
 
 def init():

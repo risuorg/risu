@@ -4,8 +4,8 @@
 
 import os
 from unittest import TestCase
-from citellus import citellus
-from citellus import magui
+import citellusclient.shell as citellus
+from citellusclient import magui
 
 testplugins = os.path.join(citellus.citellusdir, 'testplugins')
 
