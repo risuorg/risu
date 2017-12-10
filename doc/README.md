@@ -129,3 +129,9 @@ location of various files. To use this script you can source it at the top:
         ~~~sh
         if is_lineinfile "^debug[ \t]*=[ \t]*true" "$config_file"; then echo "Debug enabled."; fi
         ~~~
+
+- `is_required_containerized` -- continues if environment is containerized works only against OSP12 and later
+    - Example:
+        ~~~sh
+        is_required_containerized
+        ~~~

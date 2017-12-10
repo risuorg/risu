@@ -16,6 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+# description: Checks if OSP12 deployment is using containers and valid sosreport version
 
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
@@ -25,40 +26,27 @@ exitoudated(){
     exit $RC_FAILED
 }
 
-
-# Find release
-RELEASE=$(discover_osp_version)
-
-# description: Checks if OSP12 deployment is using containers
-
 # Containerized deployment is only supported option starting in OSP 12
-if [ ${RELEASE} -ge 12 ]; then
-    if [ -d "${CITELLUS_ROOT}/var/log/containers" ] && [ -d "${CITELLUS_ROOT}/var/lib/config-data" ]; then
+is_required_containerized
 
-        # Sosreport with container support is 3.4-9 or later
-        is_required_rpm sos
+# Sosreport with container support is 3.4-9 or later
+is_required_rpm sos
 
-        VERSION=$(is_rpm sos)
+VERSION=$(is_rpm sos)
 
-        MAJOR=$(echo ${VERSION} | sed -n -r -e 's/^sos.*-([0-9]+).[0-9]+-[0-9]+.*$/\1/p')
-        MID=$(echo ${VERSION} | sed -n -r -e 's/^sos.*-[0-9]+.([0-9]+)-[0-9]+.*$/\1/p')
-        MINOR=$(echo ${VERSION} | sed -n -r -e 's/^sos.*-[0-9]+.[0-9]+-([0-9]+).*$/\1/p')
+MAJOR=$(echo ${VERSION} | sed -n -r -e 's/^sos.*-([0-9]+).[0-9]+-[0-9]+.*$/\1/p')
+MID=$(echo ${VERSION} | sed -n -r -e 's/^sos.*-[0-9]+.([0-9]+)-[0-9]+.*$/\1/p')
+MINOR=$(echo ${VERSION} | sed -n -r -e 's/^sos.*-[0-9]+.[0-9]+-([0-9]+).*$/\1/p')
 
-        if [[ "${MAJOR}" -ge "3" ]]; then
-            if [[ "${MID}" -ge "4" ]]; then
-                if [[ "${MINOR}" -lt "9" ]]; then
-                    exitoudated
-                fi
-            else
-                exitoudated
-            fi
-        else
+if [[ "${MAJOR}" -ge "3" ]]; then
+    if [[ "${MID}" -ge "4" ]]; then
+        if [[ "${MINOR}" -lt "9" ]]; then
             exitoudated
         fi
-        exit $RC_OKAY
-
+    else
+        exitoudated
     fi
 else
-    echo "works only on OSP 12 and later" >&2
-    exit $RC_SKIPPED
+    exitoudated
 fi
+exit $RC_OKAY
