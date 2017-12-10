@@ -25,4 +25,6 @@ RELEASE=$(discover_osp_version)
 # description: Checks if OSP12 deployment is using containers
 
 # Containerized deployment is only supported option starting in OSP 12
-is_required_containerized
+if is_required_containerized; then
+    exit $RC_OKAY
+fi
