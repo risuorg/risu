@@ -43,7 +43,8 @@ elif [ "x$CITELLUS_LIVE" = "x0" ];  then
         done
         is_required_file "${PCS_DIRECTORY}/pcs_status"
         if is_lineinfile "Stopped" "${PCS_DIRECTORY}/pcs_status"; then
-            egrep -i "Clone|Master|Resource|Stopped" "${PCS_DIRECTORY}/pcs_status" | grep "Stopped" -B1 >&2
+            egrep -i "^(\sClone|\sMaster|\sResource)|Stopped" "${PCS_DIRECTORY}/pcs_status" | grep "Stopped" -B1 \
+            | sed '/^--$/d' >&2
             exit $RC_FAILED
         else
             exit $RC_OKAY
