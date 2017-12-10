@@ -89,6 +89,9 @@ def run(plugin):  # do not edit this line
 
     command = "%s -i localhost, --connection=local %s" % (ansible, plugin['plugin'])
 
+    # Disable Ansible retry files creation:
+    os.environ['ANSIBLE_RETRY_FILES_ENABLED'] = "0"
+
     # Call exec to run playbook
     returncode, out, err = citellus.execonshell(filename=command)
 
