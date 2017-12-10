@@ -34,6 +34,12 @@ is_required_file "$FILE"
 running_kernel=$(cut -d" " -f3 "$FILE" | sed -r 's/(^([0-9]+\.){2}[0-9]+-[0-9]+).*$/\1/')
 
 is_required_file "${CITELLUS_ROOT}/var/log/yum.log"
+nkernel=$(grep "\skernel-[0-9]" "${CITELLUS_ROOT}/var/log/yum.log")
+if [[ -z "$nkernel" ]]; then
+    echo $"no kernel install or update found in yum.log"
+    exit $RC_OKAY
+fi
+
 installed_kernel=$(grep "\skernel-[0-9]" "${CITELLUS_ROOT}/var/log/yum.log" | tail -1 \
     | awk '{print $NF}' |  sed -r 's/[a-z]*-(([0-9]+\.){2}[0-9]+-[0-9]+).*$/\1/')
 
