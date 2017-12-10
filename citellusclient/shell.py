@@ -451,7 +451,7 @@ def parse_args(default=False, parse=False):
     s.add_argument("--dump-config", help=_("Dump config to console to be saved into file"), default=False, action="store_true")
     s.add_argument("--no-config", default=False, help=_("Do not read configuration from file %s or ~/.citellus.conf" % os.path.join(citellusdir, "citellus.conf")), action="store_true")
 
-    p.add_argument('sosreport', nargs='*')
+    p.add_argument('sosreport', nargs='?')
 
     if not default and not parse:
         return p.parse_args()
@@ -496,8 +496,7 @@ def array_to_config(config, path=False):
 
     # We do add paths at the end without any parameter
     if path:
-        for each in path:
-            valid.append(each)
+        valid.append(path)
     return parse_args(parse=valid)
 
 
@@ -671,9 +670,9 @@ def main():
     LOG.debug("# Effective options for this run: %s" % diff_config(options=options, path=True))
 
     if not options.live:
-        if len(options.sosreport) > 0:
-            # Live not specified, so we will use file snapshot as first arg
-            CITELLUS_ROOT = options.sosreport.pop(0)
+        if options.sosreport:
+            # Live not specified, so we will use file snapshot
+            CITELLUS_ROOT = options.sosreport
         elif not options.list_plugins and not options.list_extensions:
             LOG.error(_("When not running in Live mode, snapshot path is required"))
             sys.exit(1)
