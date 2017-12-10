@@ -26,9 +26,6 @@ exitoudated(){
     exit $RC_FAILED
 }
 
-# Containerized deployment is only supported option starting in OSP 12
-is_required_containerized
-
 # Sosreport with container support is 3.4-9 or later
 is_required_rpm sos
 
