@@ -40,7 +40,7 @@ if ! is_active pacemaker; then
 fi
 
 if [ "x$CITELLUS_LIVE" = "x1" ];  then
-    NUM_NODES=$(pcs status | sed -n -r -e 's/^([0-9])[ \t]+node.*/\1/p')
+    NUM_NODES=$(pcs config |  awk '/Pacemaker Nodes/ {getline; print $0}' | wc -w)
     count_nodes
 elif [ "x$CITELLUS_LIVE" = "x0" ];  then
     if is_active "pacemaker"; then
@@ -49,8 +49,8 @@ elif [ "x$CITELLUS_LIVE" = "x0" ];  then
                 PCS_DIRECTORY="${CITELLUS_ROOT}/sos_commands/${CLUSTER_DIRECTORY}"
             fi
         done
-        is_required_file "${PCS_DIRECTORY}/pcs_status"
-        NUM_NODES=$(sed -n -r -e 's/^([0-9])[ \t]+node.*/\1/p' "${PCS_DIRECTORY}/pcs_status")
+        is_required_file "${PCS_DIRECTORY}/pcs_config"
+        NUM_NODES=$(awk '/Pacemaker Nodes/ {getline; print $0}' "${PCS_DIRECTORY}/pcs_config" | wc -w)
         count_nodes
     fi
 fi
