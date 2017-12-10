@@ -117,3 +117,16 @@ is_lineinfile(){
     # $*: files
     [ -f "$2" ] && egrep -iq "$1" "${@:2}"
 }
+
+is_required_containerized(){
+    RELEASE=$(discover_osp_version)
+    if [[ "${RELEASE}" -ge "12" ]]; then
+        if [[ ! -d "${CITELLUS_ROOT}/var/log/containers" ]] || [[ ! -d "${CITELLUS_ROOT}/var/lib/config-data" ]]; then
+            echo "the OSP${RELEASE} deployment seems to not be containerized" >&2
+            exit $RC_FAILED
+        fi
+    else
+        echo "works only on OSP12 and later" >&2
+        exit $RC_SKIPPED
+    fi
+}
