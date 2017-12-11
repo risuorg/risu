@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b79f2c5_59858ada",
+        "filename": "citellusclient/common-functions.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2017-12-11T07:01:22Z",
+      "side": 1,
+      "message": "This should be rewriten to use is_containerized and exit RC_FAILED or not based on it\u0027s return code\n\n\ncheck is_rpm vs is_required_rpm",
+      "revId": "ee08a113e5b09f713eeb2774b177f9a611d4a7a0",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "13909b7e_71760157",
+        "filename": "citellusclient/common-functions.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2017-12-11T07:01:22Z",
+      "side": 1,
+      "message": "is_containerized, as it\u0027s not required should not exit with RC_FAILED, it should just return False to caller",
+      "revId": "ee08a113e5b09f713eeb2774b177f9a611d4a7a0",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
