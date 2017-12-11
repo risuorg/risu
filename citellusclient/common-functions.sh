@@ -130,3 +130,30 @@ is_required_containerized(){
         exit $RC_SKIPPED
     fi
 }
+
+is_containerized(){
+    RELEASE=$(discover_osp_version)
+    if [[ "${RELEASE}" -ge "12" ]]; then
+        [[ -d "${CITELLUS_ROOT}/var/log/containers" ]] && [[ -d "${CITELLUS_ROOT}/var/lib/config-data" ]]
+    else
+        echo "works only on OSP12 and later" >&2
+        exit $RC_SKIPPED
+    fi
+}
+
+docker_runit(){
+    # Run command in docker container
+    # $1: container name
+    # $2: command
+    if [ "x$CITELLUS_LIVE" = "x1" ]; then 
+        if [[ -x "$(which docker)" ]]; then
+            docker exec -it $(docker ps | grep "${1}" | cut -d" " -f1) "${@:2}"
+        else
+            echo "docker: command not found or executable" >&2
+            exit $RC_SKIPPED
+        fi
+    elif [ "x$CITELLUS_LIVE" = "x0" ]; then
+        echo "docker: works only on live system" >&2
+        exit $RC_SKIPPED
+    fi
+}
