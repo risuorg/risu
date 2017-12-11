@@ -151,6 +151,6 @@ location of various files. To use this script you can source it at the top:
 - `docker_runit` -- execute the command inside docker works only with docker
     - Example:
         ~~~sh
-        # docker exec -it $(docker ps | grep rabbitmq-bundle | cut -d" " -f1) rabbitmqctl report
-        docker_runit "rabbitmq-bundle" rabbitmqctl report
+        # docker exec -it $(docker ps | grep rabbitmq-bundle | cut -d" " -f1) sh -c "rabbitmqctl report"
+        docker_runit "rabbitmq-bundle" "rabbitmqctl report" | grep partitions
         ~~~
