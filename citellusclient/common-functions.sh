@@ -107,7 +107,7 @@ name_osp_version(){
 
 is_process(){
     if [ "x$CITELLUS_LIVE" = "x1" ];  then
-        ps -elf | grep -q "$1"
+        ps -elf | grep "$1" | grep -q -v grep
     elif [ "x$CITELLUS_LIVE" = "x0" ];  then
         grep -q "$1" "${CITELLUS_ROOT}/ps";
     fi
