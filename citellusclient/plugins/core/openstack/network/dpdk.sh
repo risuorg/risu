@@ -211,7 +211,7 @@ if [ -f "$FILE" ]; then
 
     DPDKPMDMASK=$(cat $FILE|tr " {}," "\n"|grep "^pmd-cpu-mask"|cut -d "=" -f 2|tr -d ",\'\""|tr '[a-z]' '[A-Z]')
 
-    if [ "${DPDKPMDMASK:0:2}" == "0x" ] ; then
+    if [ "${DPDKPMDMASK:0:2}" == "0X" ] ; then
         # We need to strip 0x
         DPDKPMDMASK=${DPDKPMDMASK:2}
     fi
@@ -277,7 +277,7 @@ if [ -f "$FILE" ]; then
 
     DPDKCOREMASK=$(cat $FILE|tr " {}," "\n"|grep "^dpdk-lcore-mask"|cut -d "=" -f 2|tr -d ",\'\""|tr '[a-z]' '[A-Z]')
 
-    if [ "${DPDKCOREMASK:0:2}" == "0x" ] ; then
+    if [ "${DPDKCOREMASK:0:2}" == "0X" ] ; then
         # We need to strip 0x
         DPDKCOREMASK=${DPDKCOREMASK:2}
     fi
