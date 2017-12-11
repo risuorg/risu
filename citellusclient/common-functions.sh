@@ -121,9 +121,7 @@ is_lineinfile(){
 
 is_containerized(){
     RELEASE=$(discover_osp_version)
-    if [[ "${RELEASE}" -ge "12" ]]; then
-        [[ -d "${CITELLUS_ROOT}/var/log/containers" ]] && [[ -d "${CITELLUS_ROOT}/var/lib/config-data" ]]
-    fi
+    [[ -d "${CITELLUS_ROOT}/var/log/containers" ]] && [[ -d "${CITELLUS_ROOT}/var/lib/config-data" ]]
 }
 
 is_required_containerized(){
