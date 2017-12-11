@@ -210,6 +210,12 @@ if [ -f "$FILE" ]; then
     # CPU 1, CPU 7, CPU 13, CPU 19
 
     DPDKPMDMASK=$(cat $FILE|tr " {}," "\n"|grep "^pmd-cpu-mask"|cut -d "=" -f 2|tr -d ",\'\"")
+
+    if [ "${DPDKPMDMASK:0:2}" == "0x" ] ; then
+        # We need to strip 0x
+        DPDKPMDMASK=${DPDKPMDMASK:2}
+    fi
+
     BINPMDMASK=$(echo "obase=2; ibase=16; $DPDKPMDMASK" | bc)
 
     # Walk the binary PMD mask to find processor numbers
@@ -270,6 +276,12 @@ if [ -f "$FILE" ]; then
     # We'll be using bc for the conversion:
 
     DPDKCOREMASK=$(cat $FILE|tr " {}," "\n"|grep "^dpdk-lcore-mask"|cut -d "=" -f 2|tr -d ",\'\"")
+
+    if [ "${DPDKCOREMASK:0:2}" == "0x" ] ; then
+        # We need to strip 0x
+        DPDKCOREMASK=${DPDKCOREMASK:2}
+    fi
+
     BINCOREMASK=$(echo "obase=2; ibase=16; $DPDKCOREMASK" | bc)
 
     # Walk the binary CPU mask to find processor numbers
