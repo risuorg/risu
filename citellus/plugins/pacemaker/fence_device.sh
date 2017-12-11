@@ -17,15 +17,34 @@
 
 # description: Checks pacemaker stonith devices configured
 
-# this can run against live
+# we can run this against fs snapshot or live system
+
+[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 
 if [ "x$CITELLUS_LIVE" = "x0" ]; then
-    echo "works on live-system only" >&2
-    exit $RC_SKIPPED
+    if is_active "pacemaker"; then
+        for CLUSTER_DIRECTORY in "pacemaker" "cluster"; do
+            if [ -d "${CITELLUS_ROOT}/sos_commands/${CLUSTER_DIRECTORY}" ]; then
+                PCS_DIRECTORY="${CITELLUS_ROOT}/sos_commands/${CLUSTER_DIRECTORY}"
+            fi
+        done
+        is_required_file "${PCS_DIRECTORY}/pcs_config"
+        if is_lineinfile "class=stonith" "${PCS_DIRECTORY}/pcs_config"; then
+            exit $RC_OKAY
+        else
+            echo "NO stonith devices configured" >&2
+            exit $RC_FAILED
+        fi
+    elso
+        echo "pacemaker is not running on this node" >&2
+        exit $RC_SKIPPED
+    fi
+
 elif [ "x$CITELLUS_LIVE" = "x1" ]; then
     pacemaker_status=$(systemctl is-active pacemaker || :)
     if [ "$pacemaker_status" = "active" ]; then
         if pcs stonith show | grep -q "NO stonith devices configured"; then
+            echo "NO stonith devices configured" >&2
             exit $RC_FAILED
         else
             exit $RC_OKAY
