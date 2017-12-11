@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d6852aaf_645dc1ea",
+        "filename": "citellus/plugins/pacemaker/fence_device.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2017-12-11T08:44:07Z",
+      "side": 1,
+      "message": "exit $RC_FAILED should also contain a message \u0027echoed\u0027 to \u003e\u00262 with the reason for the failure\n\nSo for example:\n\necho $\"Fence device not defined in pcs config\" \u003e\u00262\nexit $RC_FAILED",
+      "revId": "e509b46774dbd61ec164c17c91c463bbf124cc43",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
