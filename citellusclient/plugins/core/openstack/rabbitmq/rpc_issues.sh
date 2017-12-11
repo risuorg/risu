@@ -26,6 +26,7 @@ if [ "x$CITELLUS_LIVE" = "x1" ];  then
         done
     )
 elif [ "x$CITELLUS_LIVE" = "x0" ]; then
+    is_required_file "${CITELLUS_ROOT}/installed-rpms"
     log_files=$(
         for i in $(sed -n -r -e 's/^openstack-([a-z]*)-.*$/\1/p' ${CITELLUS_ROOT}/installed-rpms | sort | uniq); do
             ls ${CITELLUS_ROOT}/var/log/$i/*.log 2>/dev/null | grep '/var/log/[^/]*/[^/]*\.log';
