@@ -105,6 +105,13 @@ def run(plugin):  # do not edit this line
     err = out
     out = ''
 
+    # Rewrite error messages to not contain all playbook execution but just the actual error
+    if 'FAILED!' in err:
+        start = err.find('FAILED!', 0) + 11
+        end = err.find('PLAY RECAP', 0) - 10
+        newtext = err[start:end]
+        err = newtext
+
     return returncode, out, err
 
 
