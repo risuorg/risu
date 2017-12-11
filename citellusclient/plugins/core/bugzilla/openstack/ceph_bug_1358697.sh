@@ -19,6 +19,9 @@
 
 # description: Checks for outdated ceph packages
 
+# Load common functions
+[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
+
 if [ "x$CITELLUS_LIVE" = "x1" ];  then
     VERSIONS=$(rpm -qa ceph-common* python-rbd* librados2* python-rados* | sed -n -r -e 's/.*-0.([0-9]+).([0-9]+)-([0-9]+).*$/\1-\2-\3/p')
 elif [ "x$CITELLUS_LIVE" = "x0" ];  then
