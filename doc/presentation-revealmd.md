@@ -104,7 +104,8 @@ mode: fs snapshot .
 - Plugins in your language of choice.
 - Allows to dump output to json file to be processed by other tools.
     - Allow to visualize html from json output.
-- Ansible playbook support.
+- Ansible playbook support (live and snapshoot if crafted playbooks)
+    - Core implemented as extension to easily expand.
 - Save / restore default settings
 
 ----
@@ -167,7 +168,7 @@ Tests are even simpler:
 
 ## What about the plugins? (continuation)
 
-- Would inherit some env vars like root folder for sosreport (empty for live) (`CITELLUS_ROOT`) or if running live (`CITELLUS_LIVE`) that provide required details. No user input should be required.
+- Will inherit some env vars like root folder for sosreport (empty for live) (`CITELLUS_ROOT`) or if running live (`CITELLUS_LIVE`) that provide required details. No user input should be required.
 - Live tests can for example query DB and ones in sosreport check values on logs
 
 ----
@@ -240,8 +241,7 @@ Blog post by Pablo:
 ----
 
 ## How to start a new plugin (example)
-- `mkdir ~/mytests/`
-- Write a script in `~/mytests/hosted-engine.sh`
+- Write a script in `~/citellus/citellusclient/plugins/core/rhev/hosted-engine.sh`
 - `chmod +x hosted-engine.sh`
 
 Requirements:
@@ -274,18 +274,19 @@ fi
 
 ## How to test your plugin?
 
-Just specify the folder containing the plugins to use:
+- Use `tox` to run some UT's
+
+- Specify the plugin to use:
 ~~~sh
-[piranzo@host mytests]$ /git/citellus/citellus/citellus.py sosreport-20170724-175510/crta02 ~/mytests/
+[piranzo@host citellus]$ ~/citellus/citellus/citellus.py sosreport-20170724-175510/crta02 -i hosted-engine.sh
 _________ .__  __         .__  .__
 \_   ___ \|__|/  |_  ____ |  | |  |  __ __  ______
 /    \  \/|  \   __\/ __ \|  | |  | |  |  \/  ___/
 \     \___|  ||  | \  ___/|  |_|  |_|  |  /\___ \
  \______  /__||__|  \___  >____/____/____//____  >
         \/              \/                     \/
-found #1 tests at /home/remote/piranzo/mytests/
 mode: fs snapshot sosreport-20170724-175510/crta02
-# /home/remote/piranzo/mytests/ovirt-engine.sh: failed
+# /home/iranzo/citellus/citellusclient/plugins/core/rhev/hosted-engine.sh: failed
     “ovirt-hosted-engine is not installed “
 ~~~
 
