@@ -19,6 +19,9 @@
 
 # description: Check for RPC issues in OpenStack services
 
+# Load common functions
+[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
+
 if [ "x$CITELLUS_LIVE" = "x1" ];  then
     log_files=$(
         for i in $(rpm -qa | sed -n -r -e 's/^openstack-([a-z]*)-.*$/\1/p' | sort | uniq); do
