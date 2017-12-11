@@ -133,5 +133,24 @@ location of various files. To use this script you can source it at the top:
 - `is_required_containerized` -- continues if environment is containerized works only against OSP12 and later
     - Example:
         ~~~sh
-        is_required_containerized
+        if is_required_containerized; then
+            echo "Environment is containerized"
+        fi
+        ~~~
+
+- `is_containerized` -- returns true or false if environment is containerized works only against OSP12 and later
+    - Example:
+        ~~~sh
+        if is_containerized; then
+            echo "Environment is containerized"
+        else
+            echo "Environment is NOT containerized"
+        fi
+        ~~~
+
+- `docker_runit` -- execute the command inside docker works only with docker
+    - Example:
+        ~~~sh
+        # docker exec -it $(docker ps | grep rabbitmq-bundle | cut -d" " -f1) rabbitmqctl report
+        docker_runit "rabbitmq-bundle" rabbitmqctl report
         ~~~
