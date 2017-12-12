@@ -26,8 +26,10 @@ if [ "x$CITELLUS_LIVE" = "x1" ]; then
     pacemaker_status=$(systemctl is-active pacemaker || :)
     if [ "$pacemaker_status" = "active" ]; then
         if pcs status | grep -q "Failed Actions"; then
+            pcs status | awk -F" " '/^\*/ {print $2}' >&2
             exit $RC_FAILED
         else
+            echo "no failed actions detected" >&2
             exit $RC_OKAY
         fi
     else
@@ -46,6 +48,7 @@ elif [ "x$CITELLUS_LIVE" = "x0" ]; then
             awk -F" " '/^\*/ {print $2}'  "${PCS_DIRECTORY}/pcs_status" >&2
             exit $RC_FAILED
         else
+            echo "no failed actions detected" >&2
             exit $RC_OKAY
         fi
     else
