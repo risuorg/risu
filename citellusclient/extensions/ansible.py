@@ -15,6 +15,9 @@ except:
 
 import citellusclient.shell as citellus
 
+# Load i18n settings from citellus
+_ = citellus._
+
 extension = "ansible"
 pluginsdir = os.path.join(citellus.citellusdir, 'plugins', extension)
 
@@ -68,7 +71,7 @@ def run(plugin):  # do not edit this line
 
     ansible = citellus.which("ansible-playbook")
     if not ansible:
-        return citellus.RC_SKIPPED, '', 'ansible-playbook support not found'
+        return citellus.RC_SKIPPED, '', _('ansible-playbook support not found')
 
     if citellus.CITELLUS_LIVE == 0 and citellus.regexpfile(filename=plugin['plugin'], regexp="CITELLUS_ROOT"):
         # We're running in snapshoot and playbook has CITELLUS_ROOT
@@ -85,7 +88,7 @@ def run(plugin):  # do not edit this line
             skipped = 1
 
     if skipped == 1:
-        return citellus.RC_SKIPPED, '', 'Plugin does satisfies conditions for running'
+        return citellus.RC_SKIPPED, '', _('Plugin does not satisfy conditions for running')
 
     command = "%s -i localhost, --connection=local %s" % (ansible, plugin['plugin'])
 
@@ -121,5 +124,5 @@ def help():  # do not edit this line
     :return: help text
     """
 
-    commandtext = "This extension proceses Ansible playbooks"
+    commandtext = _("This extension processes Ansible playbooks")
     return commandtext

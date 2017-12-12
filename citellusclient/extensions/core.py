@@ -10,6 +10,9 @@ import os
 
 import citellusclient.shell as citellus
 
+# Load i18n settings from citellus
+_ = citellus._
+
 extension = "core"
 pluginsdir = os.path.join(citellus.citellusdir, 'plugins', extension)
 
@@ -55,5 +58,5 @@ def help():  # do not edit this line
     :return: help text
     """
 
-    commandtext = "This extension proceses Citellus core plugins"
+    commandtext = _("This extension proceses Citellus core plugins")
     return commandtext
