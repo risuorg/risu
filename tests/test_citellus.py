@@ -97,3 +97,33 @@ class CitellusTest(TestCase):
                 plugins.append(file)
         f.close()
         assert plugins == pluginscit
+
+    def test_which(self):
+        assert citellus.which('/bin/sh') == '/bin/sh'
+
+    def test_findplugins_ext(self):
+        plugins = []
+        folder = [os.path.join(citellus.citellusdir, 'plugins', 'core')]
+        for each in citellus.findplugins(folders=folder, fileextension='.sh'):
+            plugins.append(each)
+        assert len(plugins) != 0
+
+    def test_execonshellfailure(self):
+        returncode, out, err = citellus.execonshell('/proc/cmdline')
+        assert returncode == 3
+    
+    def test_arraytoconfig(self):
+        config = {"list-plugins": True}
+        parsed = citellus.array_to_config(config=config, path=False)
+        assert parsed.list_plugins is True
+        
+    def test_readconfig(self):
+        config = {"list-plugins": True}
+        parsed = citellus.read_config()
+        assert parsed == {}
+        
+    def test_diff_config(self):
+        config = {"list-plugins": True}
+        parsed = citellus.array_to_config(config=config, path=False)
+        diff = citellus.diff_config(options=parsed, path=False)
+        assert diff == config
