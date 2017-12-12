@@ -22,10 +22,14 @@
 
 # description: Check if there are pacemaker resources disabled
 
+# description: Check if there are pacemaker resources disabled
+
 if [ "x$CITELLUS_LIVE" = "x1" ];  then
     pacemaker_status=$(systemctl is-active pacemaker || :)
     if [ "$pacemaker_status" = "active" ]; then
-        if pcs config | grep -q -i "target-role=Stopped"; then
+        if pcs config | grep -i "target-role=Stopped"; then
+            pcs config | egrep -i "^(\sBundle|\sClone|\sMaster|\sResource)|target-role=Stopped" \
+            | grep -i "target-role=Stopped" -B1 | awk -F" " '/Bundle/||/Clone/||/Master/||/Resource/{print $2}' >&2
             exit $RC_FAILED
         else
             exit $RC_OKAY
@@ -43,8 +47,8 @@ elif [ "x$CITELLUS_LIVE" = "x0" ];  then
         done
         is_required_file "${PCS_DIRECTORY}/pcs_config"
         if is_lineinfile "target-role=" "${PCS_DIRECTORY}/pcs_config"; then
-            egrep -i "Clone|Master|Resource|target-role=Stopped" "${PCS_DIRECTORY}/pcs_config" \
-            | grep -i "target-role=Stopped" -B1 | awk -F" " '/Clone/||/Master/||/Resource/{print $2}' >&2
+            egrep -i "^(\sBundle|\sClone|\sMaster|\sResource)|target-role=Stopped" "${PCS_DIRECTORY}/pcs_config" \
+            | grep -i "target-role=Stopped" -B1 | awk -F" " '/Bundle/||/Clone/||/Master/||/Resource/{print $2}' >&2
             exit $RC_FAILED
         else
             exit $RC_OKAY
