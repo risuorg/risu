@@ -22,11 +22,6 @@
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 
-if is_process nova-compute;then
-    echo "works only on controller node" >&2
-    exit $RC_SKIPPED
-fi
-
 is_required_containerized
 
 if [ $CITELLUS_LIVE -eq 0 ]; then
