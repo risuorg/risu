@@ -17,7 +17,7 @@
 
 # we can run this on fs snapshot or live system
 
-# description: Check RabbitMQ Network Partition in containers
+# description: Check RabbitMQ node health in container
 
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
@@ -32,11 +32,11 @@ fi
 is_required_containerized
 
 if [ "x$CITELLUS_LIVE" = "x1" ]; then
-    if docker_runit rabbitmq-bundle "rabbitmqctl cluster_status" | grep -q "partitions,\[\]"; then
-        echo $"no rabbitmq network partitions detected" >&2
+    if docker_runit rabbitmq-bundle "rabbitmqctl node_health_check" 2>&1 | grep -q "Health check passed"; then
+        echo $"no rabbitmq problems detected" >&2
         exit $RC_OKAY
     else
-        echo $"rabbitmq network partitions detected" >&2
+        echo $"rabbitmq problems detected" >&2
         exit $RC_FAILED
     fi
 elif [ "x$CITELLUS_LIVE" = "x0" ]; then
