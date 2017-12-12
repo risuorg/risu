@@ -137,7 +137,7 @@ docker_runit(){
     # $2: command
     if [ "x$CITELLUS_LIVE" = "x1" ]; then
         if [[ -x "$(which docker)" ]]; then
-            docker exec -i $(docker ps | grep "${1}" | cut -d" " -f1) sh -c "${@:2}"
+            docker exec $(docker ps | grep "${1}" | cut -d" " -f1) sh -c "${@:2}"
         else
             echo "docker: command not found or executable" >&2
             exit $RC_SKIPPED
