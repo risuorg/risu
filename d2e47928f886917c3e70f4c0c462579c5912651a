@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0910e1ae_7a25371b",
+        "filename": "citellusclient/plugins/core/openstack/containers/docker/health-check.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2017-12-12T14:21:13Z",
+      "side": 1,
+      "message": "which file? ;-)",
+      "revId": "d2e47928f886917c3e70f4c0c462579c5912651a",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ac262ae9_17fc21ee",
+        "filename": "citellusclient/plugins/core/openstack/containers/docker/health-check.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2017-12-12T14:21:13Z",
+      "side": 1,
+      "message": "if you do use the echo of docker ps into a tmp file with a trap to remove it on exit, you can combine both conditionals as you\u0027ll be using same syntax for both of them",
+      "revId": "d2e47928f886917c3e70f4c0c462579c5912651a",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0b86ef79_96bfc83a",
+        "filename": "citellusclient/plugins/core/openstack/containers/docker/health-check.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2017-12-12T14:21:13Z",
+      "side": 1,
+      "message": "nit: extra space",
+      "revId": "d2e47928f886917c3e70f4c0c462579c5912651a",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
