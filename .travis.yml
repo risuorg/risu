@@ -2,6 +2,7 @@ language: python
 
 dist: trusty
 sudo: required
+group: deprecated-2017Q4
 
 notifications:
     email: false
