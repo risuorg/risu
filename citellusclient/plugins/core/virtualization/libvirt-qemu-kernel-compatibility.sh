@@ -52,7 +52,7 @@ is_required_file "$FILE"
 kernel_version=$(cut -d" " -f3 "$FILE" | sed -r 's/(^([0-9]+\.){2}[0-9]+-[0-9]+).*$/\1/')
 
 qemu_version=$(is_rpm qemu-kvm-rhev | sed -r 's/^[a-z-]*([0-9]\.[0-9]\.[0-9]).*$/\1/')
-libvirt_version=$(is_rpm libvirt | sed -r 's/^[a-z-]*([0-9]\.[0-9]\.[0-9]).*$/\1/')
+libvirt_version=$(is_rpm libvirt-daemon | sed -r 's/^[a-z-]*([0-9]\.[0-9]\.[0-9]).*$/\1/')
 
 version="${kernel_libvirt_qemu[$kernel_version]}"
 libvirt=$(echo "$version" | cut -d" " -f1)
