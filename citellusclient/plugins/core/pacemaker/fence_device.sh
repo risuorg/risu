@@ -35,7 +35,7 @@ if [ "x$CITELLUS_LIVE" = "x0" ]; then
             echo "No stonith devices configured" >&2
             exit $RC_FAILED
         fi
-    elso
+    else
         echo "pacemaker is not running on this node" >&2
         exit $RC_SKIPPED
     fi
