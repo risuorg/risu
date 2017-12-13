@@ -216,7 +216,7 @@ if [ -f "$FILE" ]; then
         DPDKPMDMASK=${DPDKPMDMASK:2}
     fi
 
-    BINPMDMASK=$(dc -e "16i2o${DPDKPMDMASK}p")
+    BINPMDMASK=$(dc -e "16i2o${DPDKPMDMASK}p"|tr -d '\n\\')
 
     # Walk the binary PMD mask to find processor numbers
     PMDCPUS=""
@@ -282,7 +282,7 @@ if [ -f "$FILE" ]; then
         DPDKCOREMASK=${DPDKCOREMASK:2}
     fi
 
-    BINCOREMASK=$(dc -e "16i2o${DPDKCOREMASK}p")
+    BINCOREMASK=$(dc -e "16i2o${DPDKCOREMASK}p"|tr -d '\n\\')
 
     # Walk the binary CPU mask to find processor numbers
     CORECPUS=""
