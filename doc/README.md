@@ -80,6 +80,18 @@ location of various files. To use this script you can source it at the top:
   snapshot of some sort. This variable can be used to easier identify the
   systemctl list units file.
 
+- `iniparser` -- parses ini file and returns value
+    - Example:
+        ~~~sh
+        if $(iniparser $config_file DEFAULT debug) == "True"); then echo "debug enabled in $config_file";fi
+        ~~~
+
+- `is_active $service` -- reports if service is active either based on live or snapshoot
+    - Example:
+        ~~~sh
+        if is_active ntpd; then echo "NTP Running";fi
+        ~~~
+
 - `is_active $service` -- reports if service is active either based on live or snapshoot
     - Example:
         ~~~sh
