@@ -39,7 +39,7 @@ class CitellusTest(TestCase):
                 nonsourcing.append(plugin['plugin'])
 
         commonfunctions = []
-        filename = os.path.join(citellus.citellusdir, 'common-functions.sh')
+        filename = os.path.join(citellus.citellusdir, 'common.d/citellus.sh')
         with open(filename, 'r') as f:
             for line in f:
                 find = re.match('^(([a-z]+_+)+[a-z]*)', line)
