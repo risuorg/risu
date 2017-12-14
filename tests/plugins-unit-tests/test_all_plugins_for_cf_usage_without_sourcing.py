@@ -39,12 +39,14 @@ class CitellusTest(TestCase):
                 nonsourcing.append(plugin['plugin'])
 
         commonfunctions = []
-        filename = os.path.join(citellus.citellusdir, 'common-functions.sh')
-        with open(filename, 'r') as f:
-            for line in f:
-                find = re.match('^(([a-z]+_+)+[a-z]*)', line)
-                if find and find.groups()[0] != '':
-                    commonfunctions.append(find.groups()[0])
+
+        for script in citellus.findplugins(folders=[os.path.join(citellus.citellusdir, 'common.d')], executables=True, fileextension='.sh'):
+            filename = script['plugin']
+            with open(filename, 'r') as f:
+                for line in f:
+                    find = re.match('^(([a-z]+_+)+[a-z]*)', line)
+                    if find and find.groups()[0] != '':
+                        commonfunctions.append(find.groups()[0])
 
         usingcf = []
         for plugin in nonsourcing:
