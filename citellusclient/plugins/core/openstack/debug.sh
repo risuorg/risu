@@ -36,7 +36,7 @@ fi
 
 for config_file in $config_files; do
     [ -f "$config_file" ] || continue
-    if is_lineinfile "^debug[ \t]*=[ \t]*true" "$config_file"; then
+    if [[ "$(iniparser "$config_file" DEFAULT debug)" == "true" ]] ; then
         # to remove the ${CITELLUS_ROOT} from the stderr.
         config_file=${config_file#$CITELLUS_ROOT}
         echo "enabled in $config_file" >&2

@@ -41,7 +41,7 @@ iniparser(){
     awk -F'=' -v topic="[$2]" -v key="$3" \
     '$0==topic { flag=1; next } /^\[/ { flag=0; next } \
     flag && tolower($1)~"^"key { gsub(" ", "") ; value=$2 } \
-    END{ print value }' $1
+    END{ print tolower(value) }' $1
 }
 
 is_required_file(){
