@@ -61,6 +61,19 @@ is_active() {
     fi
 }
 
+is_enabled() {
+    if [ "x$CITELLUS_LIVE" = "x1" ]; then
+        systemctl is-enabled "$1" > /dev/null 2>&1
+    elif [ "x$CITELLUS_LIVE" = "x0" ]; then
+        if [[ -f "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-unit-files" ]]; then
+            grep -q "$1.* enabled" "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-unit-files"
+        else
+            echo "required systemd files not found." >&2
+            exit $RC_SKIPPED
+        fi
+    fi
+}
+
 is_rpm(){
     if [ "x$CITELLUS_LIVE" = "x1" ]; then
         rpm -qa *$1*|egrep ^"$1"-[0-9]
