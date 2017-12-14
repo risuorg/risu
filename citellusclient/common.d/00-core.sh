@@ -37,7 +37,14 @@ if [ "x$CITELLUS_LIVE" = "x0" ];  then
     done
 fi
 
-is_required_file() {
+iniparser(){ 
+    awk -F'=' -v topic="[$2]" -v key="$3" \
+    '$0==topic { flag=1; next } /^\[/ { flag=0; next } \
+    flag && tolower($1)~"^"key { gsub(" ", "") ; value=$2 } \
+    END{ print value }' $1 
+}
+
+is_required_file(){
     for file in "$@"; do
         if [[ ! -f $file ]];  then
             # to remove the ${CITELLUS_ROOT} from the stderr.
@@ -48,7 +55,7 @@ is_required_file() {
     done
 }
 
-is_active() {
+is_active(){
     if [ "x$CITELLUS_LIVE" = "x1" ]; then
         systemctl is-active "$1" > /dev/null 2>&1
     elif [ "x$CITELLUS_LIVE" = "x0" ]; then
@@ -61,7 +68,7 @@ is_active() {
     fi
 }
 
-is_enabled() {
+is_enabled(){
     if [ "x$CITELLUS_LIVE" = "x1" ]; then
         systemctl is-enabled "$1" > /dev/null 2>&1
     elif [ "x$CITELLUS_LIVE" = "x0" ]; then
