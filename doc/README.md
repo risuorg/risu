@@ -83,7 +83,7 @@ location of various files. To use this script you can source it at the top:
 - `iniparser` -- parses ini file and returns value
     - Example:
         ~~~sh
-        if $(iniparser $config_file DEFAULT debug) == "True"); then echo "debug enabled in $config_file";fi
+        if [[ $(iniparser $config_file DEFAULT debug) == "True" ]]; then echo "debug enabled in $config_file";fi
         ~~~
 
 - `is_active $service` -- reports if service is active either based on live or snapshoot
