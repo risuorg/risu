@@ -8,62 +8,104 @@
     pre {
          white-space: pre-wrap;
     }
+    body {
+     padding-top: 3.5rem;
+    }
+    .sidebar {
+      position: fixed;
+      top: 51px;
+      bottom: 0;
+      left: 0;
+      z-index: 1000;
+      padding: 20px 0;
+      overflow-x: hidden;
+      overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+      border-right: 1px solid #eee;
+    }
+    .sidebar .nav {
+      margin-bottom: 20px;
+      text-align: right;
+    }
+
+   .sidebar .nav-item {
+    width: 100%;
+   }
+
+  .sidebar .nav-item + .nav-item {
+    margin-left: 0;
+   }
   </style>
  </head>
  <body>
-  <div class="container">
-   <nav class="navbar navbar-expand-lg navbar-light bg-danger">
-    <a class="navbar-brand" href="#">Citellus</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-     <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-     <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a class="nav-link" target="_blank" href="https://github.com/zerodayz/citellus">Usage Doc</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" target="_blank" href="https://github.com/zerodayz/citellus/tree/master/doc">Plugin Development</a>
-      </li>
-      <li class="nav-item">
-       <a class="nav-link" target="_blank" href="https://github.com/zerodayz/citellus/blob/master/CONTRIBUTING.md">Contribute</a>
-      </li>
-     </ul>
-     <form class="form-inline my-2 my-lg-0">
-	  <input type="search" class="form-control mr-sm-2" id='search-plugin' placeholder="Search for plugin" aria-label="Search for plugin">
-     </form>
-    </div>
-   </nav>
+  <header>
+    <nav class="navbar navbar-expand-md fixed-top navbar-dark bg-dark">
+     <a class="navbar-brand" href="https://github.com/zerodayz/citellus"><img src="https://raw.githubusercontent.com/zerodayz/citellus/master/doc/citellus.png" width="30" height="30" alt=""> Citellus</a>
+     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+     </button>
+     <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+       <li class="nav-item">
+         <a class="nav-link" target="_blank" href="https://github.com/zerodayz/citellus/blob/master/README.md">Usage Doc</a>
+       </li>
+       <li class="nav-item">
+         <a class="nav-link" target="_blank" href="https://github.com/zerodayz/citellus/tree/master/doc">Plugin Development</a>
+       </li>
+       <li class="nav-item">
+        <a class="nav-link" target="_blank" href="https://github.com/zerodayz/citellus/blob/master/CONTRIBUTING.md">Contribute</a>
+       </li>
+      </ul>
+      <form class="form-inline my-2 my-lg-0">
+       <input type="search" class="form-control mr-sm-2" id='search-plugin' placeholder="Search for plugin" aria-label="Search for plugin">
+      </form>
+     </div>
+    </nav>
+  </header>
+  <div class="container-fluid">
    <div class="row">
-	<div class="col-sm">
-     <table id="metadata_table" class="table table-hover table-bordered">
-      <thead>
-       <tr><th colspan=2 class='text-center'>Runtime Metadata</th></tr>
-      </thead>
-      <tbody>
-      </tbody>
-     </table>
-    </div> <!-- /col -->
-   </div> <!-- /row -->
-   <div class="row">
-    <div class="col-sm">
-	 <div class="btn-group" role="group" aria-label="Filters">
-	  <button type="button" class="btn btn-success filters" data-filter="okay">okay</button>
-	  <button type="button" class="btn btn-danger filters" data-filter="failed">failed</button>
-	  <button type="button" class="btn btn-warning filters" data-filter="skipped">skipped</button>
-      <button type="button" class="btn btn-dark filters" data-filter="all">all</button>
-	 </div><!-- /btn-group -->
-    </div><!-- /col -->
-    <div class="col-sm">
-     <button type="button" class="btn btn-secondary" id="expandAll">Expand All</button>
-    </div><!-- /col -->
-   </div><!-- /row -->
-   <div id="accordion" role="tablist"></div>
-  </div> <!-- /container -->
+    <nav id='cat_sidebar' class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar">
+    </nav>
+    <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
+     <div class="row">
+	  <div class="col-sm">
+       <table id="metadata_table" class="table table-hover table-bordered">
+        <thead>
+         <tr><th colspan=2 class='text-center'>Runtime Metadata</th></tr>
+        </thead>
+        <tbody>
+        </tbody>
+       </table>
+      </div> <!-- /col -->
+     </div> <!-- /row -->
+     <div class="row">
+      <div class="col-sm">
+	   <div class="btn-group" role="group" aria-label="Filters">
+	    <button type="button" class="btn btn-success filters" data-filter="okay">okay</button>
+	    <button type="button" class="btn btn-danger filters" data-filter="failed">failed</button>
+	    <button type="button" class="btn btn-warning filters" data-filter="skipped">skipped</button>
+        <button type="button" class="btn btn-dark filters" data-filter="all">all</button>
+	   </div><!-- /btn-group -->
+      </div><!-- /col -->
+      <div class="col-sm">
+       <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#cat_list" aria-expanded="false" aria-controls="cat_list">Categories</button>
+       <button type="button" class="btn btn-secondary" id="expandAll">Expand All</button>
+      </div><!-- /col -->
+     </div><!-- /row -->
+     <div class="row">
+      <div class="col-sm">
+        <div class="collapse" id="cat_list"></div>
+      </div><!-- /col -->
+     </div><!-- /row -->
+     <div id="accordion" role="tablist"></div>
+    </main>
+   </div> <!-- /container -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
   <script>
+   function onlyUnique(value, index, self) { 
+    return self.indexOf(value) === index;
+   }
    $(document).ready(function() {
     $("#expandAll").click(function(e) {
        $('.collapse').each(function(i,o) {
@@ -83,6 +125,7 @@
 			}
 		});
     });
+    // listener when the user writes in the searchbox
 	$("#search-plugin").keyup(function(e) {
 		var txt = $(this).val();
 		if (txt.length < 3) {
@@ -99,24 +142,100 @@
 		 });
        }
 	});
+    // listener when the user clicks on category check boxes
+    // we have to attach event on the body because we are using dynamic elements
+    $('body').on('change','.check_category',function() {
+         var cb = $(this);
+         var catname = cb.data('category');
+         cb_regex = new RegExp(catname);
+         if (cb.prop('checked')) {
+             cb.parent().removeClass("btn-danger").addClass("btn-primary");
+         } else {
+             cb.parent().removeClass("btn-primary").addClass("btn-danger");
+         }
+         $("#accordion > div").each(function(i,j) {
+             var cats = $(this).data("categories");
+             if (cb_regex.test(cats)) {
+                 if (cb.prop("checked")) {
+                  $(this).show();
+                 } else {
+                  $(this).hide();
+                 }
+             }
+         });
+    });
+    // listener when the user checks or uncheck the "All categories"
+    $('body').on('change','#check_all',function() {
+        var cb = $(this);
+        $(".check_category").each(function(i,j) {
+            if (cb.prop("checked")) {
+                $(this).prop('checked',true).change();
+            } else {
+                $(this).prop('checked',false).change();
+            }
+        });
+    });
+
+    // Here we load the data from citellus.json with ajax and we populate the webpage
     $.ajax({
+       // This is hardcoded for now
        url: 'citellus.json', 
        dataType: 'json',
        async: true,
        success: function(data) {
         // We need to generate some kind of plugin id with the filename
-        var plugin_re = /\/([^\/]+)\.[a-z0-9]+$/;
+        var plugin_re = /plugins\/(.*)\/([^\/]+)\.[a-z0-9]+$/;
         var bz_re = /\_([0-9]{7})$/;
         $.each(data.metadata, function(i, item) {
             var row = '<tr><th>'+i+'</th><td>'+item+'</td></tr>\n';
-            console.log(i);
             $("#metadata_table > tbody:last-child").append(row);
         });
+        var plugin_cats_array = new Array();
+        var dataNum = data.results.length;
+        var counter = 0;
         $.each(data.results, function(i, item) {
-            var plugin_name = plugin_re.exec(item.plugin)[1];
-            var plugin_icon, plugin_state;
 
-            // We set some variables depending on the result of the plugins
+            // Grabbing the name of the plugin off the filename
+            var plugin_name = plugin_re.exec(item.plugin)[2];
+
+            // Taking all the categories and we make an array out of it
+            var plugin_cat = plugin_re.exec(item.plugin)[1];
+            var plugin_cats = plugin_cat.split("/");
+            var plugin_icon, plugin_state;
+            var plugin_cats_visual = "";
+            var plugin_cats_list = "";
+
+            // This counter will let us know when we are done looping
+            // We need this because JS is async
+            counter++;
+
+            // Here we generate the list of category, visual list with badges, as well as comma-separated for the data-attribute
+            $.each(plugin_cats, function(c, cname) {
+             plugin_cats_visual += '<a href="#" class="badge badge-primary">'+cname+'</a> ';
+             plugin_cats_list += cname+',';
+             plugin_cats_array.push(cname);
+            });
+
+            // We remove the last comma
+            plugin_cats_list = plugin_cats_list.slice(0, -1);
+            if (counter == dataNum) {
+             // Here we are done with looping all the results, we are going to update the filters above
+             var unique = plugin_cats_array.filter( onlyUnique );
+             // We generate the category filters here
+             var cat_sidebar = '<h3 class="nav nav-pills">Categories</h3><br><ul class="nav nav-pills flex-column">\n<li class="nav-item"><label class="btn btn-dark active"><input type="checkbox" id="check_all" checked autocomplete="off">All</label></li>\n</ul><br>\n';
+             cat_sidebar += '<ul class="nav nav-pills flex-column">\n';
+             var div_cat_list = '<div class="row">\n';
+             $.each(unique,function(c, cname) {
+                 cat_sidebar += ' <li class="nav-item"><label class="btn btn-primary active"><input type="checkbox" class="check_category" data-category="'+cname+'" checked autocomplete="off">'+cname+'</    label></li>\n';
+                 div_cat_list += ' <div class="col-md-3"><label class="btn btn-primary active"><input type="checkbox" class="check_category" data-category="'+cname+'" checked autocomplete="off">'+cname+'</label></div>\n';
+             });
+             div_cat_list += '</div>';
+             cat_sidebar += '</ul>\n';
+             $("#cat_list").html(div_cat_list);
+             $("#cat_sidebar").html(cat_sidebar);
+            }
+
+            // We set some variables depending on the result or exit code of the plugins
             if (item.result.rc == 30) {
                 plugin_icon = "warning"; plugin_state = "skipped"; plugin_class = "warning"; plugin_text = "text-black";
             } else if (item.result.rc == 10) {
@@ -129,7 +248,7 @@
 	     	error_text = item.result.err.replace(/\bhttp[s]*:\/\/([^\s]+)+\b/gi,'<a href="$&" target="_blank">$&</a>');
 
             // we built the text that is going to be appended to the container
-            var row = '<div data-state="'+plugin_state+'" class="card">\n';
+            var row = '<div data-state="'+plugin_state+'" data-categories="'+ plugin_cats_list +'" class="card">\n';
             row += '<div class="card-header" role="tab" id="head-'+plugin_name+'">\n';
             row += ' <div class="row">\n';
             row += '  <div class="col-sm"><a data-toggle="collapse" href="#'+plugin_name+'" aria-expanded="true" aria-controls="'+plugin_name+'" class="'+plugin_text+'">'+plugin_name+'</a></div>\n';
@@ -137,12 +256,17 @@
             row += ' </div>\n'; // /row
             row += '</div>\n'; // /header
             row += '<div id="'+plugin_name+'" class="collapse" role="tabpanel" aria-labelledby="head-'+plugin_name+'" data-parent="#accordion">\n';
-            row += ' <div data-plugin-name="'+plugin_name+'" class="card-body"><pre><code>'+error_text+'</code></pre></div>'; // /body
-            row += ' <div class="card-footer">';
-            row += '  <span class="badge badge-pill badge-'+plugin_class+'">'+plugin_state+'</span> ';
+            row += ' <div data-plugin-name="'+plugin_name+'" class="card-body"><pre><code>'+error_text+'</code></pre></div>\n'; // /body
+            row += ' <div class="card-footer">\n';
+            row += '  <div class="row">\n';
+            row += '   <div class="col-sm">\n';
+            row += '    <span class="badge badge-pill badge-'+plugin_class+'">'+plugin_state+'</span> ';
             if (bz_re.test(plugin_name)) {
-                 row += '<a href="https://bugzilla.redhat.com/show_bug.cgi?id='+bz_re.exec(plugin_name)[1]+'" target="_blank" class="badge badge-danger">Bugzilla</a>';
+                 row += '   <a href="https://bugzilla.redhat.com/show_bug.cgi?id='+bz_re.exec(plugin_name)[1]+'" target="_blank" class="badge badge-danger">Bugzilla</a>';
             }
+            row += '  </div>\n'; // /col
+            row += '  <div class="col-sm">\n'+plugin_cats_visual+'\n</div>\n';
+            row += '  </div>\n'; // /row
             row += ' </div>\n'; // /footer
             row += '</div>\n'; // /tabpanel
             row += '</div>\n'; //card
@@ -150,7 +274,6 @@
         });
        }
     });
-
    });
   </script>
  </body>
