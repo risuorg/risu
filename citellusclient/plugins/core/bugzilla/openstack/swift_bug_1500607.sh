@@ -24,5 +24,9 @@
 
 is_required_file "${CITELLUS_ROOT}/etc/swift/object-expirer.conf"
 
-is_lineinfile "^memcache_servers.*127.0.0.1" "${CITELLUS_ROOT}/etc/swift/object-expirer.conf" && echo $"swift expirer https://bugzilla.redhat.com/show_bug.cgi?id=1500607" >&2 && exit $RC_FAILED
-exit $RC_OKAY
+if [[ "$(iniparser "${CITELLUS_ROOT}/etc/swift/object-expirer.conf" filter:cache memcache_servers)" == "127.0.0.1" ]]; then
+    echo $"swift expirer https://bugzilla.redhat.com/show_bug.cgi?id=1500607" >&2
+    exit $RC_FAILED
+else
+    exit $RC_OKAY
+fi

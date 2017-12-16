@@ -34,7 +34,7 @@ if [ "$(discover_osp_version)" -ne "11" ]; then
     exit $RC_SKIPPED
 fi
 
-if is_lineinfile "^notification_format.*=.*unversioned" "${CITELLUS_ROOT}/etc/nova/nova.conf"; then
+if [[ "$(iniparser "${CITELLUS_ROOT}/etc/nova/nova.conf" notifications notification_format)" == "unversioned" ]]; then
     exit $RC_OKAY
 else
     echo $"missing notification_format=unversioned in nova.conf" >&2
