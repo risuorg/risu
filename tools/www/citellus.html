@@ -8,69 +8,45 @@
     pre {
          white-space: pre-wrap;
     }
-    body {
-     padding-top: 3.5rem;
+    #cat_list {
+        padding-top: 1.5rem;
+        padding-bottom: 1.5rem;
     }
-    .sidebar {
-      position: fixed;
-      top: 51px;
-      bottom: 0;
-      left: 0;
-      z-index: 1000;
-      padding: 20px 0;
-      overflow-x: hidden;
-      overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
-      border-right: 1px solid #eee;
+    #accordion {
+        padding-top: 1.5rem;
+        padding-bottom: 1.5rem;
     }
-    .sidebar .nav {
-      margin-bottom: 20px;
-      text-align: right;
-    }
-
-   .sidebar .nav-item {
-    width: 100%;
-   }
-
-  .sidebar .nav-item + .nav-item {
-    margin-left: 0;
-   }
   </style>
  </head>
  <body>
-  <header>
-    <nav class="navbar navbar-expand-md fixed-top navbar-dark bg-dark">
-     <a class="navbar-brand" href="https://github.com/zerodayz/citellus"><img src="https://raw.githubusercontent.com/zerodayz/citellus/master/doc/citellus.png" width="30" height="30" alt=""> Citellus</a>
-     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-     </button>
-     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-       <li class="nav-item">
-         <a class="nav-link" target="_blank" href="https://github.com/zerodayz/citellus/blob/master/README.md">Usage Doc</a>
-       </li>
-       <li class="nav-item">
-         <a class="nav-link" target="_blank" href="https://github.com/zerodayz/citellus/tree/master/doc">Plugin Development</a>
-       </li>
-       <li class="nav-item">
-        <a class="nav-link" target="_blank" href="https://github.com/zerodayz/citellus/blob/master/CONTRIBUTING.md">Contribute</a>
-       </li>
-      </ul>
-      <form class="form-inline my-2 my-lg-0">
-       <input type="search" class="form-control mr-sm-2" id='search-plugin' placeholder="Search for plugin" aria-label="Search for plugin">
-      </form>
-     </div>
-    </nav>
-  </header>
-  <div class="container-fluid">
-   <div class="row">
-    <nav id='cat_sidebar' class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar">
-    </nav>
-    <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
-     <div class="row">
-	  <div class="col-sm">
-       <table id="metadata_table" class="table table-hover table-bordered">
+  <div class="container">
+   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="https://github.com/zerodayz/citellus"><img src="https://raw.githubusercontent.com/zerodayz/citellus/master/doc/citellus.png" width="30" height="30" alt=""> Citellus</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+     <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+     <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" target="_blank" href="https://github.com/zerodayz/citellus/blob/master/README.md">Usage Doc</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" target="_blank" href="https://github.com/zerodayz/citellus/tree/master/doc">Plugin Development</a>
+      </li>
+      <li class="nav-item">
+       <a class="nav-link" target="_blank" href="https://github.com/zerodayz/citellus/blob/master/CONTRIBUTING.md">Contribute</a>
+      </li>
+     </ul>
+     <form class="form-inline my-2 my-lg-0">
+      <input type="search" class="form-control mr-sm-2" id="filter_text" placeholder="Search for plugin" aria-label="Search for plugin">
+     </form>
+    </div>
+   </nav>
+    <div class="row">
+     <div class="col-sm">
+      <table id="metadata_table" class="table table-hover table-bordered">
         <thead>
-         <tr><th colspan=2 class='text-center'>Runtime Metadata</th></tr>
+         <tr><th colspan=2 class="text-center">Runtime Metadata</th></tr>
         </thead>
         <tbody>
         </tbody>
@@ -79,11 +55,12 @@
      </div> <!-- /row -->
      <div class="row">
       <div class="col-sm">
-	   <div class="btn-group" role="group" aria-label="Filters">
-	    <button type="button" class="btn btn-success filters" data-filter="okay">okay</button>
-	    <button type="button" class="btn btn-danger filters" data-filter="failed">failed</button>
-	    <button type="button" class="btn btn-warning filters" data-filter="skipped">skipped</button>
-        <button type="button" class="btn btn-dark filters" data-filter="all">all</button>
+       <input type="hidden" id="filter_status" value="all">
+	   <div class="btn-group" role="group" aria-label="Status Filters">
+	    <button type="button" class="btn btn-success filter-status" data-filter="okay">okay</button>
+	    <button type="button" class="btn btn-danger filter-status" data-filter="failed">failed</button>
+	    <button type="button" class="btn btn-warning filter-status" data-filter="skipped">skipped</button>
+        <button type="button" class="btn btn-dark filter-status" data-filter="all">all</button>
 	   </div><!-- /btn-group -->
       </div><!-- /col -->
       <div class="col-sm">
@@ -93,94 +70,113 @@
      </div><!-- /row -->
      <div class="row">
       <div class="col-sm">
-        <div class="collapse" id="cat_list"></div>
-      </div><!-- /col -->
-     </div><!-- /row -->
-     <div id="accordion" role="tablist"></div>
-    </main>
-   </div> <!-- /container -->
+       <div class="collapse" id="cat_list"></div>
+     </div><!-- /col -->
+    </div><!-- /row -->
+    <div id="accordion" role="tablist"></div>
+  </div> <!-- /container -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
   <script>
+   var ft_min_char = 3;
+   // function that filters the unique values of an array
    function onlyUnique(value, index, self) { 
-    return self.indexOf(value) === index;
+       return self.indexOf(value) === index;
    }
-   $(document).ready(function() {
-    $("#expandAll").click(function(e) {
-       $('.collapse').each(function(i,o) {
-		console.log($(this));
-		$(this).collapse('show');
-	   });
-    });
-    $(".filters").click(function(e){
-        var clicked = $(this);
-		$("#accordion > div").each(function(i,j) {
-			if (clicked.data('filter') == "all") {
-				$(this).show();
-			} else if ($(this).data('state') != clicked.data('filter')) {
-				$(this).hide();
-			} else {
-				$(this).show();
-			}
-		});
-    });
-    // listener when the user writes in the searchbox
-	$("#search-plugin").keyup(function(e) {
-		var txt = $(this).val();
-		if (txt.length < 3) {
-			$(".card").show();
-		} else {
-	  	  $(".card").find(".card-body").each(function(i) {
-			var domtxt = $(this).text();
-			var pluginname = $(this).data('plugin-name');
-			if (domtxt.toLowerCase().indexOf(txt) != -1 || pluginname.toLowerCase().indexOf(txt) != -1) {
-				$(this).parents(".card").show();
-			} else {
-                 $(this).parents(".card").hide();
-			}
-		 });
-       }
-	});
-    // listener when the user clicks on category check boxes
-    // we have to attach event on the body because we are using dynamic elements
-    $('body').on('change','.check_category',function() {
-         var cb = $(this);
-         var catname = cb.data('category');
-         cb_regex = new RegExp(catname);
-         if (cb.prop('checked')) {
-             cb.parent().removeClass("btn-danger").addClass("btn-primary");
-         } else {
-             cb.parent().removeClass("btn-primary").addClass("btn-danger");
-         }
-         $("#accordion > div").each(function(i,j) {
-             var cats = $(this).data("categories");
-             if (cb_regex.test(cats)) {
-                 if (cb.prop("checked")) {
-                  $(this).show();
-                 } else {
-                  $(this).hide();
-                 }
-             }
-         });
-    });
-    // listener when the user checks or uncheck the "All categories"
-    $('body').on('change','#check_all',function() {
-        var cb = $(this);
-        $(".check_category").each(function(i,j) {
-            if (cb.prop("checked")) {
-                $(this).prop('checked',true).change();
+   // function to either check or uncheck all categories
+   function checkAllCat(checked) {
+       $(".check-category").each(function(i,j) {
+           $(this).prop("checked",checked);
+           checkThisCat($(this));
+       });
+       $("#check_all").prop("checked",checked);
+       filterCards();
+   }
+   // function to set the correct colors on checkbox
+   function checkThisCat(cb) {
+         if (cb.prop("checked")) {
+              cb.parent().removeClass("btn-danger").addClass("btn-primary");
+          } else {
+              cb.parent().removeClass("btn-primary").addClass("btn-danger");
+          }
+
+   }
+
+   // function that applies all possible filters.
+   // it's called whenever a filter is triggered.
+   function filterCards() {
+       var filter_status = $("#filter_status").val();
+       var filter_text = $("#filter_text").val();
+       var filter_category = "";
+       $(".check-category").each(function(i,j) {
+           if ($(this).prop("checked")) {
+             filter_category += $(this).attr("name") + "|";
+           }
+        });
+        filter_category = filter_category.slice(0, -1);
+        var cb_regex = new RegExp(filter_category);
+        $("#accordion > div").each(function(i,j) {
+           var plugin_cats = $(this).data("categories");
+           var plugin_txt = $(this).children('.plugin-error').first().text();
+           var plugin_name = $(this).data("plugin-name");
+           var plugin_status = $(this).data("state");
+           // Validations:
+           // - if plugin categories match regex of checked categories
+           // - if plugin state match status filter
+           // - if plugin (name|text) match text filter, only if there's at least $ft_min_char char
+            if (cb_regex.test(plugin_cats) && (filter_status == "all" || filter_status == $(this).data("state")) && (filter_text.length < ft_min_char || (filter_text.length >= ft_min_char && (plugin_txt && plugin_txt.toLowerCase().indexOf(filter_text) != -1) || (plugin_name && plugin_name.toLowerCase().indexOf(filter_text) != -1)))) {
+             $(this).show();
             } else {
-                $(this).prop('checked',false).change();
+             $(this).hide();
             }
         });
+   }
+   $(document).ready(function() {
+
+    // for some unknown reason, this is broken
+    $("#expandAll").click(function(e) {
+       $(".collapse").each(function(i,o) {
+		console.log($(this));
+		$(this).collapse("show");
+	   });
+    });
+
+    // listener when the user picks a status filter
+    $(".filter-status").click(function(e){
+        $("#filter_status").val($(this).data("filter"));
+        filterCards();
+    });
+    // listener when the user writes in the searchbox
+	$("#filter_text").keyup(function(e) {
+      filterCards();
+	});
+
+    // In this section, we have to attach events on the body 
+    // because we are using dynamic elements
+
+    // listener when the user clicks on category check boxes
+    $("body").on("change",".check-category",function() {
+         checkThisCat($(this));
+         filterCards();
+    });
+    // listener when the user checks or uncheck the "All categories"
+    $("body").on("change","#check_all",function() {
+        var cb = $(this);
+        checkAllCat(cb.prop("checked"));
+    });
+    // listener when someone is clicking on a badge in an expanded card
+    $("body").on("click",".category-badge",function() {
+        var cat = $(this).data("category");
+        checkAllCat(false);
+        $("#cb_cat_"+cat).prop("checked",true).change();
     });
 
     // Here we load the data from citellus.json with ajax and we populate the webpage
     $.ajax({
        // This is hardcoded for now
-       url: 'citellus.json', 
-       dataType: 'json',
+       url: "citellus.json", 
+       dataType: "json",
        async: true,
        success: function(data) {
         // We need to generate some kind of plugin id with the filename
@@ -211,7 +207,7 @@
 
             // Here we generate the list of category, visual list with badges, as well as comma-separated for the data-attribute
             $.each(plugin_cats, function(c, cname) {
-             plugin_cats_visual += '<a href="#" class="badge badge-primary">'+cname+'</a> ';
+             plugin_cats_visual += '<a href="#" data-category="'+cname+'" class="badge badge-primary category-badge">'+cname+'</a> ';
              plugin_cats_list += cname+',';
              plugin_cats_array.push(cname);
             });
@@ -222,26 +218,21 @@
              // Here we are done with looping all the results, we are going to update the filters above
              var unique = plugin_cats_array.filter( onlyUnique );
              // We generate the category filters here
-             var cat_sidebar = '<h3 class="nav nav-pills">Categories</h3><br><ul class="nav nav-pills flex-column">\n<li class="nav-item"><label class="btn btn-dark active"><input type="checkbox" id="check_all" checked autocomplete="off">All</label></li>\n</ul><br>\n';
-             cat_sidebar += '<ul class="nav nav-pills flex-column">\n';
-             var div_cat_list = '<div class="row">\n';
+             var div_cat_list = '<div class="row"><label class="btn btn-dark active" style="width: 100%"><input type="checkbox" id="check_all" checked autocomplete="off">All</label></div><div class="row">\n';
              $.each(unique,function(c, cname) {
-                 cat_sidebar += ' <li class="nav-item"><label class="btn btn-primary active"><input type="checkbox" class="check_category" data-category="'+cname+'" checked autocomplete="off">'+cname+'</    label></li>\n';
-                 div_cat_list += ' <div class="col-md-3"><label class="btn btn-primary active"><input type="checkbox" class="check_category" data-category="'+cname+'" checked autocomplete="off">'+cname+'</label></div>\n';
+                 div_cat_list += ' <div class="col-md-3"><label class="btn btn-primary active"><input type="checkbox" name="'+cname+'" id="cb_cat_'+cname+'" class="check-category" data-category="'+cname+'" checked autocomplete="off">'+cname+'</label></div>\n';
              });
              div_cat_list += '</div>';
-             cat_sidebar += '</ul>\n';
              $("#cat_list").html(div_cat_list);
-             $("#cat_sidebar").html(cat_sidebar);
             }
 
             // We set some variables depending on the result or exit code of the plugins
             if (item.result.rc == 30) {
-                plugin_icon = "warning"; plugin_state = "skipped"; plugin_class = "warning"; plugin_text = "text-black";
+                plugin_icon = "warning"; plugin_state = "skipped"; plugin_class = "warning"; plugin_text_color = "text-black";
             } else if (item.result.rc == 10) {
-                plugin_icon = "circle-check"; plugin_state = "okay"; plugin_class = "success"; plugin_text = "text-black";
+                plugin_icon = "circle-check"; plugin_state = "okay"; plugin_class = "success"; plugin_text_color = "text-black";
             } else {
-                plugin_icon = "ban"; plugin_state = "failed"; plugin_class = "danger"; plugin_text = "text-black";
+                plugin_icon = "ban"; plugin_state = "failed"; plugin_class = "danger"; plugin_text_color = "text-black";
             }
 
             // Converting the links to html
@@ -249,9 +240,10 @@
 
             // we built the text that is going to be appended to the container
             var row = '<div data-state="'+plugin_state+'" data-categories="'+ plugin_cats_list +'" class="card">\n';
+            row += '<textarea class="plugin-error" style="display: none;">'+item.result.err+'</textarea>\n';
             row += '<div class="card-header" role="tab" id="head-'+plugin_name+'">\n';
             row += ' <div class="row">\n';
-            row += '  <div class="col-sm"><a data-toggle="collapse" href="#'+plugin_name+'" aria-expanded="true" aria-controls="'+plugin_name+'" class="'+plugin_text+'">'+plugin_name+'</a></div>\n';
+            row += '  <div class="col-sm"><a data-toggle="collapse" href="#'+plugin_name+'" aria-expanded="true" aria-controls="'+plugin_name+'" class="'+plugin_text_color+'">'+plugin_name+'</a></div>\n';
             row += '  <div class="col-sm"><span class="badge badge-pill badge-'+plugin_class+'">'+plugin_state+'</span></div>\n';
             row += ' </div>\n'; // /row
             row += '</div>\n'; // /header
