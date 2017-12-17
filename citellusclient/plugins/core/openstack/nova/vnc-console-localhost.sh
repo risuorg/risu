@@ -27,9 +27,20 @@
 
 is_required_file "${CITELLUS_ROOT}/etc/nova/nova.conf"
 
-if is_lineinfile "^vncserver_listen.*=.*127.0.0.1" "${CITELLUS_ROOT}/etc/nova/nova.conf"; then
-    flag=1
-elif ! is_lineinfile "^vncserver_listen" "${CITELLUS_ROOT}/etc/nova/nova.conf"; then
+# Find release
+RELEASE=$(discover_osp_version)
+
+if [[ "${RELEASE}" -ge "8" ]]; then
+    if [[ "$(iniparser "${CITELLUS_ROOT}/etc/nova/nova.conf" vnc vncserver_listen)" == "127.0.0.1" ]]; then
+        flag=1
+    fi
+else
+    if [[ "$(iniparser "${CITELLUS_ROOT}/etc/nova/nova.conf" DEFAULT vncserver_listen)" == "127.0.0.1" ]]; then
+        flag=1
+    fi
+fi
+
+if ! is_lineinfile "^vncserver_listen" "${CITELLUS_ROOT}/etc/nova/nova.conf"; then
     flag=1
 else
     grep "^vncserver_listen" "${CITELLUS_ROOT}/etc/nova/nova.conf" >&2

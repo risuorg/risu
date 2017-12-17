@@ -23,7 +23,10 @@
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 
 is_required_file "${CITELLUS_ROOT}/etc/my.cnf.d/galera.cnf" "${CITELLUS_ROOT}/etc/my.cnf"
-if is_lineinfile "^innodb_file_per_table[ \t]*=[ \t]*(ON|1)$" "${CITELLUS_ROOT}/etc/my.cnf.d/galera.cnf" "${CITELLUS_ROOT}/etc/my.cnf"; then
+
+if [[ "$(iniparser "${CITELLUS_ROOT}/etc/my.cnf.d/galera.cnf" mysqld innodb_file_per_table)" == "ON" ]]; then
+    exit $RC_OKAY
+elif [[ "$(iniparser "${CITELLUS_ROOT}/etc/my.cnf" mysqld innodb_file_per_table)" == "ON" ]]; then
     exit $RC_OKAY
 else
     echo $"innodb_file_per_table not set in /etc/my.cnf.d/galera.cnf or /etc/my.cnf" >&2
