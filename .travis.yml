@@ -2,13 +2,14 @@ language: python
 
 dist: trusty
 sudo: required
-group: deprecated-2017Q4
 
 notifications:
     email: false
 
+python:
+    - "3.5"
+
 before_install:
-    - pyenv global 2.7 3.5
     - pip install tox
     - pip install python-coveralls
 
