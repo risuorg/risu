@@ -244,7 +244,8 @@ if [ -f "$FILE" ]; then
                 present=1
             fi
         done
-        if [ $present -eq 1 ];then
+        if [ $present -eq 0 ];then
+            # CPU was in free pool
             if [ $usedcpu -eq 0 ]; then
                 echo -n $"DPDK PMD CPU was already used by Nova:" >&2
                 usedcpu=1
