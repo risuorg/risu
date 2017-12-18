@@ -24,6 +24,11 @@
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 
+if [ ! "x$CITELLUS_LIVE" = "x1" ]; then
+    echo "works on live-system only" >&2
+    exit $RC_SKIPPED
+fi
+
 # Find release
 RELEASE=$(discover_osp_version)
 
@@ -31,11 +36,6 @@ if [[ "${RELEASE}" -ge "12" ]]; then
 
     if [[ -z $(is_rpm tripleo-heat-templates) && -z $(is_rpm python-tripleoclient) ]]; then
         echo "works on director node only" >&2
-        exit $RC_SKIPPED
-    fi
-
-    if [ ! "x$CITELLUS_LIVE" = "x1" ]; then
-        echo "works on live-system only" >&2
         exit $RC_SKIPPED
     fi
 
