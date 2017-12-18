@@ -16,6 +16,9 @@
         padding-top: 1.5rem;
         padding-bottom: 1.5rem;
     }
+    .alert strong {
+        text-transform: capitalize;
+    }
   </style>
  </head>
  <body>
@@ -42,7 +45,8 @@
      </form>
     </div>
    </nav>
-    <div class="row">
+   <div id="alert_list"></div>
+   <div class="row">
      <div class="col-sm">
       <table id="metadata_table" class="table table-hover table-bordered">
         <thead>
@@ -132,8 +136,15 @@
             }
         });
    }
+   function warnMessage(level,m) {
+      var html = '<div class="alert alert-'+level+' alert-dismissible fade show" role="alert"><strong>'+level+'</strong> '+m+' <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span></button></div>';
+      $("#alert_list").append(html);
+   }
    $(document).ready(function() {
-
+    var url_file_regex = new RegExp("^file:\/\/");
+    if (window.chrome && window.chrome.webstore && url_file_regex.test(window.location.href)) {
+        warnMessage("warning","Some browsers (ie: Chrome) are not accepting file:// URLs. Firefox supports it, or you can start Chrome with --allow-file-access-from-files");
+    }
     // for some unknown reason, this is broken
     $("#expandAll").click(function(e) {
        $(".collapse").each(function(i,o) {
@@ -178,6 +189,23 @@
        url: "citellus.json",
        dataType: "json",
        async: true,
+       error: function(jqXHR, exception) {
+           if (jqXHR.status === 0) {
+               warnMessage("danger","Unable to get JSON file. [0]");
+           } else if (jqXHR.status == 404) {
+               warnMessage("danger","File not found. [404]");
+           } else if (jqXHR.status == 500) {
+               warnMessage("danger","Internal Server Error [500].");
+           } else if (exception === "parsererror") {
+               warnMessage("danger","Requested JSON parse failed.");
+           } else if (exception === "timeout") {
+               warnMessage("danger","Time out error.");
+           } else if (exception === "abort") {
+               warnMessage("danger","Ajax request aborted.");
+           } else {
+               warnMessage("danger","Uncaught Error.\n" + jqXHR.responseText);
+           }
+       },
        success: function(data) {
         // We need to generate some kind of plugin id with the filename
         var plugin_re = /plugins\/(.*)\/([^\/]+)\.[a-z0-9]+$/;
