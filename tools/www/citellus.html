@@ -42,6 +42,12 @@
      </form>
     </div>
    </nav>
+   <div class="alert alert-warning alert-dismissible fade" id="browser_warning" role="alert">
+    <strong>Warning</strong> Some browsers (ie: Chrome) are not accepting file:// URLs. Firefox supports it, or you can start Chrome with --allow-file-access-from-files
+     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+     </button>
+    </div>
     <div class="row">
      <div class="col-sm">
       <table id="metadata_table" class="table table-hover table-bordered">
@@ -133,7 +139,11 @@
         });
    }
    $(document).ready(function() {
-
+    var url_file_regex = new RegExp("^file:\/\/");
+    if (url_file_regex.test(window.location.href)) {
+        $("#browser_warning").addClass("show");
+        console.log("Error file");
+    }
     // for some unknown reason, this is broken
     $("#expandAll").click(function(e) {
        $(".collapse").each(function(i,o) {
