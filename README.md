@@ -180,18 +180,13 @@ found #1 extensions / found #0 tests at .
 mode: live
 # Running extension ansible-playbook
 # /home/iranzo/DEVEL/citellus/citellus/playbooks/system/clock-ntpstat.yml: failed
-    
-    PLAY [all] ***********************************************************************************************************
-    
-    TASK [Gathering Facts] ***********************************************************************************************
-    ok: [localhost]
-    
-    TASK [Run ntpstat] ***************************************************************************************************
     fatal: [localhost]: FAILED! => {"changed": false, "cmd": "ntpstat", "failed": true, "msg": "[Errno 2] No such file or directory", "rc": 2}
     	to retry, use: --limit @/home/iranzo/DEVEL/citellus/citellus/playbooks/system/clock-ntpstat.retry
-    
-    PLAY RECAP ***********************************************************************************************************
-    localhost                  : ok=1    changed=0    unreachable=0    failed=1   
-    
 ~~~
 
+## Contact us!!
+You can reach to us via:
+- irc at #citellus in Freenode
+- our mailing list:
+    - <mailto:citellus-dev@redhat.com>
+    - <https://www.redhat.com/mailman/listinfo/citellus-dev>
