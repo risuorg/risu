@@ -29,3 +29,20 @@ is_required_containerized(){
         exit $RC_SKIPPED
     fi
 }
+
+docker_runit(){
+    # Run command in docker container
+    # $1: container name
+    # $2: command
+    if [ "x$CITELLUS_LIVE" = "x1" ]; then
+        if [[ -x "$(which docker)" ]]; then
+            docker exec $(docker ps | grep "${1}" | cut -d" " -f1) sh -c "${@:2}"
+        else
+            echo "docker: command not found or executable" >&2
+            exit $RC_SKIPPED
+        fi
+    elif [ "x$CITELLUS_LIVE" = "x0" ]; then
+        echo "docker: works only on live system" >&2
+        exit $RC_SKIPPED
+    fi
+}
