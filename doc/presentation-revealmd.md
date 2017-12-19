@@ -14,8 +14,6 @@ mode : selfcontained
 
 <img src="citellus.png" width="20%" border=0>
 
-<small>Presented by: [Pablo Iranzo Gómez](https://iranzo.github.io)</small>
-
 ---
 
 ## What is Citellus?
@@ -24,7 +22,7 @@ mode : selfcontained
 
 ----
 
-## History: how did it was started?
+## History: how did was it started?
 
 - The tool, started by Robin Černín after a long weekend shift checking one and over again several sosreports for the same data on different hosts.
 
@@ -51,8 +49,20 @@ mode : selfcontained
     - missing parameters in expired ceilometer data, which can lead to filling up your hard drive.
     - unsynced ntp.
     - outdated packages that have known critical issues.
-    - etc (77 plugins as of this writting some of them with more than one issue detected)
+    - etc (94 plugins as of this writting some of them with more than one issue detected)
 - Whatever else you can imagine or code 😉
+
+----
+
+## Some numbers on plugin count:
+
+- bugzilla 14
+- launchpad 1
+- network 1
+- openstack 48
+- pacemaker 7
+- system 20
+- virtualization 1
 
 ---
 
@@ -346,5 +356,5 @@ THANK YOU FOR ATTENDING!!
 
 For questions, come to #citellus on Freenode or email us:
 
-- <mailto:rcernin@redhat.com>
-- <mailto:Pablo.Iranzo@redhat.com>
+- <mailto:citellus-dev@redhat.com>
+- <https://www.redhat.com/mailman/listinfo/citellus-dev>
