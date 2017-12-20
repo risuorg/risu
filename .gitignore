@@ -7,3 +7,9 @@
 *.pyc
 *.egg-info
 .coverage.*
+*.pot
+*.mo
+*.po
+.vscode
+.cache
+*~
