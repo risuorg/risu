@@ -221,7 +221,12 @@
 
             // Grabbing the name of the plugin off the filename
             var plugin_name = plugin_re.exec(item.plugin)[2];
-
+            var plugin_long_name;
+            if (/[a-z0-9]+/.test(item.long_name)) {
+                plugin_long_name = item.long_name;
+            } else {
+                plugin_long_name = plugin_name;
+            }
             // Taking all the categories and we make an array out of it
             var plugin_cat = plugin_re.exec(item.plugin)[1];
             var plugin_cats = plugin_cat.split("/");
@@ -269,23 +274,29 @@
             // we built the text that is going to be appended to the container
             var row = '<div data-state="'+plugin_state+'" data-categories="'+ plugin_cats_list +'" class="card">\n';
             row += '<textarea class="plugin-error" style="display: none;">'+item.result.err+'</textarea>\n';
-            row += '<div class="card-header" role="tab" id="head-'+plugin_name+'">\n';
+            row += '<div class="card-header" role="tab" id="head-'+item.id+'">\n';
             row += ' <div class="row">\n';
-            row += '  <div class="col-sm"><a data-toggle="collapse" href="#'+plugin_name+'" aria-expanded="true" aria-controls="'+plugin_name+'" class="'+plugin_text_color+'">'+plugin_name+'</a></div>\n';
+            row += '  <div class="col-sm"><a data-toggle="collapse" href="#'+item.id+'" aria-expanded="true" aria-controls="'+item.id+'" class="'+plugin_text_color+'">'+plugin_long_name+'</a></div>\n';
             row += '  <div class="col-sm"><span class="badge badge-pill badge-'+plugin_class+'">'+plugin_state+'</span></div>\n';
+            row += '  <div class="col-sm-3">\n'+plugin_cats_visual+'\n</div>\n';
             row += ' </div>\n'; // /row
             row += '</div>\n'; // /header
-            row += '<div id="'+plugin_name+'" class="collapse" role="tabpanel" aria-labelledby="head-'+plugin_name+'" data-parent="#accordion">\n';
-            row += ' <div data-plugin-name="'+plugin_name+'" class="card-body"><pre><code>'+error_text+'</code></pre></div>\n'; // /body
+            row += '<div id="'+item.id+'" class="collapse" role="tabpanel" aria-labelledby="head-'+plugin_name+'" data-parent="#accordion">\n';
+            row += ' <div data-plugin-name="'+plugin_name+'" class="card-body">';
+            row += '  <h6 class="card-subtitle mb-2 text-muted">'+item.description+'</h6>';
+            row += '  <pre><code>'+error_text+'</code></pre>';
+            row += ' </div>\n'; // /card-body
             row += ' <div class="card-footer">\n';
             row += '  <div class="row">\n';
-            row += '   <div class="col-sm">\n';
-            row += '    <span class="badge badge-pill badge-'+plugin_class+'">'+plugin_state+'</span> ';
-            if (bz_re.test(plugin_name)) {
+            row += '   <div class="col-sm-1 text-muted"><span class="oi oi-clock" title="Execution time" aria-hidden="true"></span> '+Math.round(item.time * 1000)/1000+'</div>';
+            row += '   <div class="col-sm-2 text-muted"><span class="oi oi-fork" title="Backend" aria-hidden="true"></span> '+item.backend+'</div>';
+            row += '   <div class="col-sm-3">\n';
+            if (/[0-9a-z]+/.test(item.bugzilla)) {
+                 row += '   <a href="'+item.bugzilla+'" target="_blank" class="badge badge-danger">Bugzilla</a>';
+            } else if (bz_re.test(plugin_name)) {
                  row += '   <a href="https://bugzilla.redhat.com/show_bug.cgi?id='+bz_re.exec(plugin_name)[1]+'" target="_blank" class="badge badge-danger">Bugzilla</a>';
             }
             row += '  </div>\n'; // /col
-            row += '  <div class="col-sm">\n'+plugin_cats_visual+'\n</div>\n';
             row += '  </div>\n'; // /row
             row += ' </div>\n'; // /footer
             row += '</div>\n'; // /tabpanel
