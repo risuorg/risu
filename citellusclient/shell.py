@@ -26,6 +26,7 @@ from __future__ import print_function
 import argparse
 import datetime
 import gettext
+import hashlib
 import imp
 import json
 import logging
@@ -262,7 +263,7 @@ def findplugins(folders, include=None, exclude=None, executables=True, fileexten
     # Build dictionary of plugins and it's metadata
     metaplugins = []
     for plugin in plugins:
-        dictionary = {'plugin': plugin, 'backend': extension}
+        dictionary = {'plugin': plugin, 'backend': extension, 'id': hashlib.md5(plugin).hexdigest()}
         dictionary.update(get_metadata(plugin=dictionary))
         metaplugins.append(dictionary)
 
@@ -297,13 +298,12 @@ def runplugin(plugin):
         else:
             LOG.debug(err)
 
-    return {'plugin': plugin['plugin'], 'backend': plugin['backend'],
-            'description': plugin['description'], 'long_name': plugin['long_name'],
-            'bugzilla': plugin['bugzilla'],
-            'result': {"rc": returncode,
-                       "out": out.decode('ascii', 'ignore'),
-                       "err": err.decode('ascii', 'ignore')},
-            'time': time.time() - start_time}
+    updates = {'result': {'rc': returncode,
+                          'out': out.decode('ascii', 'ignore'),
+                          'err': err.decode('ascii', 'ignore')},
+               'time': time.time() - start_time}
+    plugin.update(updates)
+    return plugin
 
 
 def execonshell(filename):
