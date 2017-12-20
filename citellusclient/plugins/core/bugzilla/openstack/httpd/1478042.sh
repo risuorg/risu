@@ -17,12 +17,17 @@
 
 # this can run against live and also any sort of snapshot of the filesystem
 
+# long_name: WSGIApplicationGroup definition in mod_wsgi
 # description: Checks httpd WSGIApplication defined to avoid wrong redirection
+# bugzilla: https://bugzilla.redhat.com/show_bug.cgi?id=1478042
 
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 
 is_required_file ${CITELLUS_ROOT}/etc/httpd/conf.d/*-horizon_vhost.conf
-is_lineinfile "WSGIApplicationGroup %{GLOBAL}" ${CITELLUS_ROOT}/etc/httpd/conf.d/*-horizon_vhost.conf && echo $"https://bugzilla.redhat.com/show_bug.cgi?id=1478042" >&2 && exit $RC_FAILED
+if is_lineinfile "WSGIApplicationGroup %{GLOBAL}" ${CITELLUS_ROOT}/etc/httpd/conf.d/*-horizon_vhost.conf; then
+    echo $"https://bugzilla.redhat.com/show_bug.cgi?id=1478042" >&2
+    exit $RC_FAILED
+fi
 
 exit $RC_OKAY

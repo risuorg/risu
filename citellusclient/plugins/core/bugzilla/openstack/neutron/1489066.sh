@@ -17,8 +17,9 @@
 
 # this can run against live and also any sort of snapshot of the filesystem
 
+# long_name: Concurrent use of iptables
 # description: Checks for iptables xlock errors
-# Reference: https://bugzilla.redhat.com/show_bug.cgi?id=1489066
+# bugzilla: https://bugzilla.redhat.com/show_bug.cgi?id=1489066
 
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"

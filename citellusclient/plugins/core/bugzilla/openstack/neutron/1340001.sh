@@ -17,7 +17,9 @@
 
 # this can run against live and also any sort of snapshot of the filesystem
 
+# long_name: Keystone metadata_agent.ini misconfiguration
 # description: Checks for wrong auth_url configuration in metadata_agent.ini
+# bugzilla: https://bugzilla.redhat.com/show_bug.cgi?id=1340001
 
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"

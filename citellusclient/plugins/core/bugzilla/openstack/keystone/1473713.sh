@@ -19,13 +19,17 @@
 
 # Reference: https://bugzilla.redhat.com/show_bug.cgi?id=1473713
 
+# long_name: Removal of expired tokens
 # description: Checks for keystone transaction errors on cleanup
+# bugzilla: https://bugzilla.redhat.com/show_bug.cgi?id=1473713
 
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 
 is_required_file "${CITELLUS_ROOT}/var/log/keystone/keystone.log"
 
-is_lineinfile "ERROR keystone DBDeadlock: .*pymysql.err.Internal.* try restarting transaction.*DELETE FROM token WHERE token.expires.*" "${CITELLUS_ROOT}/var/log/keystone/keystone.log" && echo $"errors on token expiration, check: https://bugzilla.redhat.com/show_bug.cgi?id=1473713" >&2 && exit $RC_FAILED
-
+if is_lineinfile "ERROR keystone DBDeadlock: .*pymysql.err.Internal.* try restarting transaction.*DELETE FROM token WHERE token.expires.*" "${CITELLUS_ROOT}/var/log/keystone/keystone.log"; then
+    echo $"errors on token expiration, check: https://bugzilla.redhat.com/show_bug.cgi?id=1473713" >&2
+    exit $RC_FAILED
+fi
 exit $RC_OKAY
