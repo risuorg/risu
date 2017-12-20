@@ -217,6 +217,11 @@ def findplugins(folders, include=None, exclude=None, executables=True, fileexten
 
     LOG.debug('starting plugin search in: %s', folders)
 
+    # Workaround if calling externally
+    global extensions
+    if not extensions:
+        extensions, exttriggers = initExtensions()
+
     plugins = []
     for folder in folders:
         for root, dirnames, filenames in os.walk(folder):
@@ -254,10 +259,11 @@ def findplugins(folders, include=None, exclude=None, executables=True, fileexten
 
     plugins = sorted(set(plugins))
 
+    # Build dictionary of plugins and it's metadata
     metaplugins = []
     for plugin in plugins:
         dictionary = {'plugin': plugin, 'backend': extension}
-        dictionary.update(get_metadata(dictionary))
+        dictionary.update(get_metadata(plugin=dictionary))
         metaplugins.append(dictionary)
 
     return metaplugins
@@ -279,6 +285,7 @@ def runplugin(plugin):
     out = ''
     err = 'Error finding extension to run plugin'
 
+    # Workaround if calling externally
     global extensions
     if not extensions:
         extensions, exttriggers = initExtensions()
