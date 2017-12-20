@@ -3,7 +3,6 @@
 
 
 import os
-import re
 from unittest import TestCase
 
 import pytest
@@ -74,29 +73,26 @@ class CitellusTest(TestCase):
         assert plugins == pluginscit
 
     @pytest.mark.last
-    def test_plugins_have_description(self):
-        pluginpath = [os.path.join(citellus.citellusdir, 'plugins', 'core')]
-        pluginscit = []
-        for plugin in citellus.findplugins(folders=pluginpath):
-            pluginscit.append(plugin['plugin'])
+    def test_plugins_have_metadata(self):
 
-        pluginscit = sorted(set(pluginscit))
-
-        regexp = '\A# description:'
-
+        extensions, exttriggers = citellus.initExtensions()
+        # get all plugins
         plugins = []
+        
+        # code
+        for plugin in citellus.findplugins(folders=[os.path.join(citellus.citellusdir, 'plugins', 'core')]):
+            plugins.append(plugin)
+        
+        # ansible
+        for plugin in citellus.findplugins(executables=False, fileextension=".yml", extension='ansible',folders=[os.path.join(citellus.citellusdir, 'plugins', 'ansible')]):
+            plugins.append(plugin)
+        
 
-        # Loop over plugins to store in the var the ones that have description
-        for file in pluginscit:
-            flag = 0
-            with open(file, 'r') as f:
-                for line in f:
-                    if re.match(regexp, line):
-                        flag = 1
-            if flag == 1:
-                plugins.append(file)
-        f.close()
-        assert plugins == pluginscit
+        for plugin in plugins:
+            print(plugin)
+            assert plugin['plugin'] != ''
+            assert plugin['description'] != ''
+            assert plugin['long_name'] != ''
 
     def test_which(self):
         assert citellus.which('/bin/sh') == '/bin/sh'

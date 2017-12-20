@@ -254,6 +254,7 @@ def findplugins(folders, include=None, exclude=None, executables=True, fileexten
 
     plugins = sorted(set(plugins))
 
+    # Build dictionary of plugins and it's metadata
     metaplugins = []
     for plugin in plugins:
         dictionary = {'plugin': plugin, 'backend': extension}
