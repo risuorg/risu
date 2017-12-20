@@ -291,6 +291,8 @@ def runplugin(plugin):
             LOG.debug(err)
 
     return {'plugin': plugin['plugin'], 'backend': plugin['backend'],
+            'description': plugin['description'], 'long_name': plugin['long_name'],
+            'bugzilla': plugin['bugzilla'],
             'result': {"rc": returncode,
                        "out": out.decode('ascii', 'ignore'),
                        "err": err.decode('ascii', 'ignore')},
