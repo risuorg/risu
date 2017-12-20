@@ -17,7 +17,9 @@
 
 # this can run against live and also any sort of snapshot of the filesystem
 
+# long_name: Keystone token flush job failure
 # description: Checks for transaction size exceeded on keystone token purge
+# bugzilla: https://bugs.launchpad.net/keystone/+bug/1649616
 
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
