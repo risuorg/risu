@@ -27,14 +27,14 @@ from unittest import TestCase
 import citellusclient.shell as citellus
 
 # To create your own test, update NAME with plugin name and copy this file to test_$NAME.py
-NAME = 'httpd_bug_1406417'
+NAME = '1406417'
 
 testplugins = os.path.join(citellus.citellusdir, 'plugins', 'test')
 plugins = os.path.join(citellus.citellusdir, 'plugins', 'core')
 folder = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'setup')
 uttest = citellus.findplugins(folders=[folder], include=[NAME])[0]['plugin']
 us = os.path.basename(uttest)
-citplugs = citellus.findplugins(folders=[plugins], include=[us])
+citplugs = citellus.findplugins(folders=[plugins], include=[NAME])
 
 # Setup commands and expected return codes
 rcs = {"pass": citellus.RC_OKAY,
