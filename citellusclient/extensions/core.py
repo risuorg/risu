@@ -35,13 +35,17 @@ def listplugins(options):
     yield citellus.findplugins(folders=[pluginsdir], include=options.include, exclude=options.exclude)
 
 
-def get_description(plugin):
+def get_metadata(plugin):
     """
-    Gets description for plugin
+    Gets metadata for plugin
     :param plugin: plugin object
-    :return: description string for that plugin
+    :return: metadata dict for that plugin
     """
-    return citellus.regexpfile(filename=plugin['plugin'], regexp='\A# description:')
+
+    metadata = {'description': citellus.regexpfile(filename=plugin['plugin'], regexp='\A# description:')[14:].strip(),
+                'long_name': citellus.regexpfile(filename=plugin['plugin'], regexp='\A# long_name:')[12:].strip(),
+                'bugzilla': citellus.regexpfile(filename=plugin['plugin'], regexp='\A# bugzilla:')[11:].strip()}
+    return metadata
 
 
 def run(plugin):  # do not edit this line

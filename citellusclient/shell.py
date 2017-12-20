@@ -256,7 +256,9 @@ def findplugins(folders, include=None, exclude=None, executables=True, fileexten
 
     metaplugins = []
     for plugin in plugins:
-        metaplugins.append({'plugin': plugin, 'backend': extension})
+        dictionary = {'plugin': plugin, 'backend': extension}
+        dictionary.update(get_metadata(dictionary))
+        metaplugins.append(dictionary)
 
     return metaplugins
 
@@ -597,23 +599,23 @@ def regexpfile(filename=False, regexp=False):
                 # Return earlier if match found
                 return line
 
-    return False
+    return ''
 
 
-def get_description(plugin=False):
+def get_metadata(plugin=False):
     """
-    Gets description for provided plugin
+    Gets metadata for provided plugin
     :param plugin:  plugin
-    :return: Description text
+    :return: metadata text
     """
 
-    description = ""
+    metadata = {}
     for extension in extensions:
         name = extension.__name__.split(".")[-1]
         if plugin['backend'] == name:
-            return extension.get_description(plugin)
+            return extension.get_metadata(plugin)
 
-    return description
+    return metadata
 
 
 def main():
@@ -704,11 +706,11 @@ def main():
     if options.list_plugins:
         for extension in plugins:
             for plugin in extension:
-                print(plugin)
+                pretty = {'plugin': plugin['plugin'], 'backend': plugin['backend']}
+
                 if options.description:
-                    desc = get_description(plugin)
-                    if desc:
-                        print(indent(text=desc, amount=4))
+                    pretty.update({'description': plugin['description']})
+                print(pretty)
         return
 
     # Reinstall language in case it has changed

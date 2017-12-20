@@ -41,11 +41,11 @@ def listplugins(options):
                                executables=False, fileextension=".yml", extension='ansible')
 
 
-def get_description(plugin):
+def get_metadata(plugin):
     """
-    Gets description for plugin
+    Gets meadata for plugin
     :param plugin: plugin object
-    :return: description string for that plugin
+    :return: metadata dict for that plugin
     """
 
     with open(plugin['plugin'], 'r') as stream:
@@ -59,7 +59,11 @@ def get_description(plugin):
     except:
         description = ""
 
-    return description
+    metadata = {'description': description,
+                'long_name': citellus.regexpfile(filename=plugin['plugin'], regexp='\A# long_name:'),
+                'bugzilla': citellus.regexpfile(filename=plugin['plugin'], regexp='\A# bugzilla:')}
+
+    return metadata
 
 
 def run(plugin):  # do not edit this line
