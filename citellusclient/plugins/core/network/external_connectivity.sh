@@ -17,13 +17,14 @@
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 
+# long_name: External connectivity test
 # description: Checks for external connectivity of the system
 
 : ${REMOTE_PING_TARGET:=8.8.8.8}
 
 if [ ! "x$CITELLUS_LIVE" = "x1" ]; then
     echo "works on live-system only" >&2
-    RC=$RC_SKIPPED
+    exit $RC_SKIPPED
 fi
 
 gw=$(ip route | awk '$1 == "default" {print $3}')
