@@ -16,7 +16,10 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 # this can run against live and also any sort of snapshot of the filesystem
+
+# long_name: Mismatch between neutron host and hostname
 # description: Checks for wrong host definition on neutron.conf
+# bugzilla: https://bugzilla.redhat.com/show_bug.cgi?id=1474092
 
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
