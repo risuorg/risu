@@ -17,7 +17,10 @@
 
 # this can run against live and also any sort of snapshot of the filesystem
 
+# files_scanned: /etc/nova/nova.conf, /hostname, /ps
 # description: Checks missconfigured host in nova vs hostname
+# long_name: Mismatch between nova host and hostname
+# bugzilla: https://bugzilla.redhat.com/show_bug.cgi?id=1483456
 
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
