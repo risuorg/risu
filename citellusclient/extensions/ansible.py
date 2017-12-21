@@ -60,8 +60,8 @@ def get_metadata(plugin):
         description = ""
 
     metadata = {'description': description,
-                'long_name': citellus.regexpfile(filename=plugin['plugin'], regexp='\A# long_name:'),
-                'bugzilla': citellus.regexpfile(filename=plugin['plugin'], regexp='\A# bugzilla:')}
+                'long_name': citellus.regexpfile(filename=plugin['plugin'], regexp='\A# long_name:')[12:].strip(),
+                'bugzilla': citellus.regexpfile(filename=plugin['plugin'], regexp='\A# bugzilla:')[11:].strip()}
 
     return metadata
 
