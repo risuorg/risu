@@ -3,7 +3,6 @@
 
 
 import os
-import re
 from unittest import TestCase
 
 import pytest
@@ -75,28 +74,43 @@ class CitellusTest(TestCase):
 
     @pytest.mark.last
     def test_plugins_have_description(self):
-        pluginpath = [os.path.join(citellus.citellusdir, 'plugins', 'core')]
-        pluginscit = []
-        for plugin in citellus.findplugins(folders=pluginpath):
-            pluginscit.append(plugin['plugin'])
-
-        pluginscit = sorted(set(pluginscit))
-
-        regexp = '\A# description:'
-
+        global extensions
+        extensions, exttriggers = citellus.initExtensions()
+        # get all plugins
         plugins = []
 
-        # Loop over plugins to store in the var the ones that have description
-        for file in pluginscit:
-            flag = 0
-            with open(file, 'r') as f:
-                for line in f:
-                    if re.match(regexp, line):
-                        flag = 1
-            if flag == 1:
-                plugins.append(file)
-        f.close()
-        assert plugins == pluginscit
+        # code
+        for plugin in citellus.findplugins(folders=[os.path.join(citellus.citellusdir, 'plugins', 'core')]):
+            plugins.append(plugin)
+
+        # ansible
+        for plugin in citellus.findplugins(executables=False, fileextension=".yml", extension='ansible', folders=[os.path.join(citellus.citellusdir, 'plugins', 'ansible')]):
+            plugins.append(plugin)
+
+        for plugin in plugins:
+            if plugin['description'] == '':
+                print(plugin)
+            assert plugin['description'] != ''
+
+    @pytest.mark.last
+    def test_plugins_have_long_name(self):
+        global extensions
+        extensions, exttriggers = citellus.initExtensions()
+        # get all plugins
+        plugins = []
+
+        # code
+        for plugin in citellus.findplugins(folders=[os.path.join(citellus.citellusdir, 'plugins', 'core')]):
+            plugins.append(plugin)
+
+        # ansible
+        for plugin in citellus.findplugins(executables=False, fileextension=".yml", extension='ansible', folders=[os.path.join(citellus.citellusdir, 'plugins', 'ansible')]):
+            plugins.append(plugin)
+
+        for plugin in plugins:
+            if plugin['long_name'] == '':
+                print(plugin)
+            assert plugin['long_name'] != ''
 
     def test_which(self):
         assert citellus.which('/bin/sh') == '/bin/sh'
