@@ -17,6 +17,7 @@
 
 # we can run this against fs snapshot or live system
 
+# long_name: Package sysstat installed
 # description: This plugin reports missing systat that might be later needed for perf issues diagnostics
 
 # Load common functions

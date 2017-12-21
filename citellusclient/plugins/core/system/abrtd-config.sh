@@ -17,6 +17,7 @@
 
 # we can run this against fs snapshot or live system
 
+# long_name: ABRTd configuration
 # description: This plugin check abrtd configuration
 
 # Load common functions

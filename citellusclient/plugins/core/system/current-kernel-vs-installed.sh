@@ -15,6 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+# long_name: Current kernel vs last installed
 # description: Checks if running kernel is the one last installed
 
 # Load common functions

@@ -19,6 +19,7 @@
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 
 
+# long_name: SELinux persistent status
 # description: Determines SELinux status on configuration
 # selinux enforcing
 
