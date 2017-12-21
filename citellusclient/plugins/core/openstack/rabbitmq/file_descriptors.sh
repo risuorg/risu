@@ -17,6 +17,7 @@
 
 # we can run this on fs snapshot or live system
 
+# long_name: RabbitMQ File descriptors
 # description: Check File Descriptors in RabbitMQ
 
 # Load common functions

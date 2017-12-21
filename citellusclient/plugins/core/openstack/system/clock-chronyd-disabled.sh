@@ -18,6 +18,7 @@
 
 # adapted from https://github.com/larsks/platypus/blob/master/bats/system/test_clock.bats
 
+# long_name: Chronyd configuration in OSP
 # description: Reports if chrony is used on an OpenStack node
 
 # Load common functions

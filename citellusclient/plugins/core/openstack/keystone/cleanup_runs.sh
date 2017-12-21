@@ -15,6 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+# long_run: Keystone token clean-up runs
 # description: Checks for token cleanup expired tokens removal
 
 # this can run against live and also fs snapshot

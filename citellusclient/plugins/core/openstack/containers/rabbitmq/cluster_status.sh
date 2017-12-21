@@ -17,6 +17,7 @@
 
 # we can run this on fs snapshot or live system
 
+# long_name: RabbitMQ node health
 # description: Check RabbitMQ node health in container
 
 # Load common functions

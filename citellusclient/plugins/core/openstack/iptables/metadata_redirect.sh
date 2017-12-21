@@ -17,6 +17,7 @@
 
 # we can run this against fs snapshot or live system
 
+# long_name: Undercloud metadata server redirection
 # description: Checks for iptables rules to allow instances to reach metadata server
 
 # Load common functions

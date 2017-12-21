@@ -15,6 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+# long_name: HAProxy maximum connections
 # description: Checks HAProxy max connections
 
 # this can run against live

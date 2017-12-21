@@ -18,6 +18,7 @@
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 
+# long_name: Ceph pool number of replicas
 # description: Checks Ceph min_size
 
 mktempfile() {

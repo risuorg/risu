@@ -15,6 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+# long_name: Number of expired tokens in database
 # description: Checks for expired tokens in keystone database
 
 # this can run against live

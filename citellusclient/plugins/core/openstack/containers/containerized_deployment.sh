@@ -15,14 +15,14 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+# long_name: Containerized OSP12 deployment
+# description: Checks if OSP12 deployment is using containers
 
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 
 # Find release
 RELEASE=$(discover_osp_version)
-
-# description: Checks if OSP12 deployment is using containers
 
 # Containerized deployment is only supported option starting in OSP 12
 if is_required_containerized; then
