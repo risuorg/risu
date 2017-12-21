@@ -16,6 +16,13 @@
         padding-top: 1.5rem;
         padding-bottom: 1.5rem;
     }
+    #label_check_all {
+        margin-bottom: 1.5rem;
+    }
+    #category-list {
+        padding: 1.5rem;
+        margin: 1.5rem;
+    }
     .alert strong {
         text-transform: capitalize;
     }
@@ -68,17 +75,29 @@
 	   </div><!-- /btn-group -->
       </div><!-- /col -->
       <div class="col-sm">
-       <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#cat_list" aria-expanded="false" aria-controls="cat_list">Categories</button>
+       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-categories">Categories</button>
        <button type="button" class="btn btn-secondary" id="expandAll">Expand All</button>
       </div><!-- /col -->
      </div><!-- /row -->
-     <div class="row">
-      <div class="col-sm">
-       <div class="collapse" id="cat_list"></div>
-     </div><!-- /col -->
-    </div><!-- /row -->
-    <div id="accordion" role="tablist"></div>
+     <div id="accordion" role="tablist"></div>
   </div> <!-- /container -->
+  <div class="modal fade" id="modal-categories" tabindex="-1" role="dialog">
+   <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Category Filter</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div id="category-list" class="modal-body">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+   </div>
+  </div>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
@@ -92,21 +111,10 @@
    function checkAllCat(checked) {
        $(".check-category").each(function(i,j) {
            $(this).prop("checked",checked);
-           checkThisCat($(this));
        });
        $("#check_all").prop("checked",checked);
        filterCards();
    }
-   // function to set the correct colors on checkbox
-   function checkThisCat(cb) {
-         if (cb.prop("checked")) {
-              cb.parent().removeClass("btn-danger").addClass("btn-primary");
-          } else {
-              cb.parent().removeClass("btn-primary").addClass("btn-danger");
-          }
-
-   }
-
    // function that applies all possible filters.
    // it's called whenever a filter is triggered.
    function filterCards() {
@@ -129,7 +137,7 @@
            // - if plugin categories match regex of checked categories
            // - if plugin state match status filter
            // - if plugin (name|text) match text filter, only if there's at least $ft_min_char char
-            if (cb_regex.test(plugin_cats) && (filter_status == "all" || filter_status == $(this).data("state")) && (filter_text.length < ft_min_char || (filter_text.length >= ft_min_char && (plugin_txt && plugin_txt.toLowerCase().indexOf(filter_text) != -1) || (plugin_name && plugin_name.toLowerCase().indexOf(filter_text) != -1)))) {
+            if (cb_regex.test(plugin_cats) && /[a-z0-9]+/.test(cb_regex) && (filter_status == "all" || filter_status == $(this).data("state")) && (filter_text.length < ft_min_char || (filter_text.length >= ft_min_char && (plugin_txt && plugin_txt.toLowerCase().indexOf(filter_text) != -1) || (plugin_name && plugin_name.toLowerCase().indexOf(filter_text) != -1)))) {
              $(this).show();
             } else {
              $(this).hide();
@@ -168,7 +176,6 @@
 
     // listener when the user clicks on category check boxes
     $("body").on("change",".check-category",function() {
-         checkThisCat($(this));
          filterCards();
     });
     // listener when the user checks or uncheck the "All categories"
@@ -249,14 +256,14 @@
             plugin_cats_list = plugin_cats_list.slice(0, -1);
             if (counter == dataNum) {
              // Here we are done with looping all the results, we are going to update the filters above
-             var unique = plugin_cats_array.filter( onlyUnique );
+             var unique = plugin_cats_array.filter( onlyUnique ).sort();
              // We generate the category filters here
-             var div_cat_list = '<div class="row"><label class="btn btn-dark active" style="width: 100%"><input type="checkbox" id="check_all" checked autocomplete="off">All</label></div><div class="row">\n';
+             var div_cat_list = '<div class="row"><label id="label_check_all" class="btn btn-dark active" style="width: 100%"><input type="checkbox" id="check_all" checked autocomplete="off">All</label></div><div class="row">\n';
              $.each(unique,function(c, cname) {
-                 div_cat_list += ' <div class="col-md-3"><label class="btn btn-primary active"><input type="checkbox" name="'+cname+'" id="cb_cat_'+cname+'" class="check-category" data-category="'+cname+'" checked autocomplete="off">'+cname+'</label></div>\n';
+                 div_cat_list += ' <div class="col-sm-4"><label><input type="checkbox" name="'+cname+'" id="cb_cat_'+cname+'" class="check-category" data-category="'+cname+'" checked autocomplete="off">'+cname+'</label></div>\n';
              });
              div_cat_list += '</div>';
-             $("#cat_list").html(div_cat_list);
+             $("#category-list").html(div_cat_list);
             }
 
             // We set some variables depending on the result or exit code of the plugins
