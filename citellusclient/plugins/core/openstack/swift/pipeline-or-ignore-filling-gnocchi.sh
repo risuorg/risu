@@ -17,7 +17,9 @@
 
 # we can run this against fs snapshot or live system
 
+# long_name: Ceilometer event collection
 # description: Checks Swift configuration that could fill gnocchi
+# bugzilla: https://bugzilla.redhat.com/show_bug.cgi?id=1449986
 
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"

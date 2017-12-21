@@ -18,6 +18,7 @@
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 
+# long_name: Ceph pg_num is optimal
 # description: Checks Ceph pg_num
 
 mktempfile() {

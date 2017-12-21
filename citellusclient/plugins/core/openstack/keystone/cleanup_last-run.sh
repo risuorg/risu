@@ -15,6 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+# long_name: Keystone token clean-up last execution date
 # description: Checks for token cleanup last execution
 
 # this can run against live and also fs snapshot

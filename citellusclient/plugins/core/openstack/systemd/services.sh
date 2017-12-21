@@ -20,6 +20,7 @@
 
 # we can run this against fs snapshot or live system
 
+# long_name: OpenStack failed services
 # description: Checks for failed OSP services
 
 if [ "x$CITELLUS_LIVE" = "x1" ];  then

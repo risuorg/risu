@@ -17,6 +17,7 @@
 
 # this can run against live and also any sort of snapshot of the filesystem
 
+# long_name: Keystone clean-up frequency
 # description: Keystone cleanups might not be frequent enough on busy systems, check frequency
 
 # Load common functions

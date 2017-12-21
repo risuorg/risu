@@ -17,6 +17,7 @@
 
 # this can run against live and also any sort of snapshot of the filesystem
 
+# long_name: Image upload size limit
 # description: Report on low glance image_size_cap that might affect big image uploads
 
 

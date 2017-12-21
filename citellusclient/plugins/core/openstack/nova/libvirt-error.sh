@@ -17,6 +17,7 @@
 
 # we can run this against fs snapshot or live system
 
+# long_name: Libvirt errors in nova service
 # description: Report libvirtErrors in Nova OpenStack service
 
 # Load common functions

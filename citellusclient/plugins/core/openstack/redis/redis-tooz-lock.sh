@@ -17,10 +17,11 @@
 
 # we can run this against fs snapshot or live system
 
+# long_name: Tooz lock errors
+# description: Checks for Tooz lock error in gnocchi metrics
+
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
-
-# description: Checks for Tooz lock error in gnocchi metrics
 
 is_required_file "${CITELLUS_ROOT}/var/log/gnocchi/metricd.log"
 
