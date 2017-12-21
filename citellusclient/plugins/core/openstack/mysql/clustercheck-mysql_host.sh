@@ -17,6 +17,7 @@
 
 # we can run this against fs snapshot or live system
 
+# long_name: Clustercheck MYSQL_HOST configuration
 # description: Checks clustercheck and it's variable $MYSQL_HOST is set to localhost
 
 # Load common functions

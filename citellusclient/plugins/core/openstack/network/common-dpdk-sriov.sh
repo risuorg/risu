@@ -17,6 +17,7 @@
 
 # we can run this against fs snapshot or live system
 
+# long_name: SR-IOV and DPDK Configuration
 # description: Checks for various SRIOV and DPDK configuration parameters
 
 # Load common functions

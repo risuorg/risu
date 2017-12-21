@@ -17,6 +17,7 @@
 
 # this can run against live and also any sort of snapshot of the filesystem
 
+# long_name: Mismatch between nova host and ceilometer host
 # description: Checks missconfigured host in nova vs ceilometer
 
 # Load common functions
