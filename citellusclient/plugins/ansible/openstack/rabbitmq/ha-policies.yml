@@ -1,3 +1,4 @@
+# long_name: RabbitMQ HA policies
 ---
 - name: Validate RabbitMQ HA policies
   hosts: all
