@@ -15,6 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+# long_name: Fence device configuration
 # description: Checks pacemaker stonith devices configured
 
 # we can run this against fs snapshot or live system
