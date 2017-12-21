@@ -18,6 +18,7 @@
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 
+# long_name: Number of pacemaker nodes
 # description: Checks number of pacemaker nodes
 
 # we can run this against fs snapshot or live system

@@ -20,6 +20,7 @@
 
 # we can run this against fs snapshot or live system
 
+# long_name: Disabled resources
 # description: Check if there are pacemaker resources disabled
 
 if [ "x$CITELLUS_LIVE" = "x1" ];  then

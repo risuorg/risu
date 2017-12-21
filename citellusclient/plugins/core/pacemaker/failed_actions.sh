@@ -20,6 +20,7 @@
 
 # we can run this against fs snapshot or live system
 
+# long_name: Failed actions
 # description: Check if there are pacemaker failed actions
 
 if [ "x$CITELLUS_LIVE" = "x1" ]; then

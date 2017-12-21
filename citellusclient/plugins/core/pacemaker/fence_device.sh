@@ -15,7 +15,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# description: Checks pacemaker stonith devices configured
+# long_name: Stonith device configuration
+# description: Checks pacemaker stonith devices are configured
 
 # we can run this against fs snapshot or live system
 
@@ -32,7 +33,7 @@ if [ "x$CITELLUS_LIVE" = "x0" ]; then
         if is_lineinfile "class=stonith" "${PCS_DIRECTORY}/pcs_config"; then
             exit $RC_OKAY
         else
-            echo "No stonith devices configured" >&2
+            echo "NO stonith devices configured" >&2
             exit $RC_FAILED
         fi
     else
