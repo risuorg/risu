@@ -17,9 +17,9 @@
 
 # this can run against live and also any sort of snapshot of the filesystem
 
+# long_name: VNC Server console address
 # description: Checks nova's vnc console ip address is set to localhost
-
-# Reference: https://bugzilla.redhat.com/show_bug.cgi?id=1468101
+# bugzilla: https://bugzilla.redhat.com/show_bug.cgi?id=1468101
 
 
 # Load common functions

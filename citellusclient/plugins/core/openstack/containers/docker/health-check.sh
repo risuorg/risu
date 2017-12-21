@@ -17,6 +17,7 @@
 
 # we can run this on fs snapshot or live system
 
+# long_name: Containers in unhealthy status
 # description: Check docker container health-check states
 
 # Load common functions

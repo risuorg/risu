@@ -17,6 +17,7 @@
 
 # we can run this against fs snapshot or live system
 
+# long_name: Tracebacks in services logs
 # description: Report tracebacks in Containerized OpenStack services logs
 
 # Load common functions
