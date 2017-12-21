@@ -18,6 +18,7 @@
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 
+# long_name: SELinux runtime status
 # description: Determines runtime SELinux status
 # selinux enforcing
 

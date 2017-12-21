@@ -19,7 +19,9 @@
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 
-# description: error if disk inode usage is greater than $CITELLUS_INODE_MAX_PERCENT
+# long_name: Disk inode usage
+# description: error if disk inode usage is greater than $CITELLUS_INODE_MAX_PERCENT=90
+
 : ${CITELLUS_INODE_MAX_PERCENT=90}
 
 if [[ $CITELLUS_LIVE = 0 ]]; then
