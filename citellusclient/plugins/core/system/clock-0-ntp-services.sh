@@ -15,6 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+# long_name: NTPd services status
 # description: Checks for proper network time sync status
 
 # Load common functions

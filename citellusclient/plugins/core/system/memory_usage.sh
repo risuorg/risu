@@ -18,7 +18,8 @@
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 
-# description: error if memory usage is higher than $CITELLUS_MEMORY_MAX_PERCENT
+# long_name: Memory usage
+# description: error if memory usage is higher than $CITELLUS_MEMORY_MAX_PERCENT=90
 
 : ${CITELLUS_MEMORY_MAX_PERCENT=90}
 

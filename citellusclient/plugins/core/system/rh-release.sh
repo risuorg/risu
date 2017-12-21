@@ -17,6 +17,7 @@
 
 # check redhat-release
 
+# long_name: RHEL release
 # description: Detects RHEL release
 
 if [ ! -f "${CITELLUS_ROOT}/etc/redhat-release" ]; then
