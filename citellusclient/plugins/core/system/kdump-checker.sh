@@ -17,6 +17,7 @@
 
 # we can run this against fs snapshot or live system
 
+# long_name: KDump configuration
 # description: This plugin check kdump configuration
 
 # Load common functions

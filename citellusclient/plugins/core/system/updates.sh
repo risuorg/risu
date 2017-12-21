@@ -15,6 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+# long_name: Available updates
 # description: This plugin checks for unapplied updates to the system
 
 if [[ $CITELLUS_LIVE = 0 ]]; then

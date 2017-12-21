@@ -15,6 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+# long_name: Kernel OOM-killer, panic or soft lockup
 # description: Looks for the Kernel Out of Memory, panics and soft locks
 
 # Load common functions

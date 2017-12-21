@@ -17,6 +17,7 @@
 
 # we can run this against fs snapshot or live system
 
+# long_name: Package rollback, undo or redo
 # description: this plugin checks in yum history for undo/rollback/redo 
 
 # Load common functions
