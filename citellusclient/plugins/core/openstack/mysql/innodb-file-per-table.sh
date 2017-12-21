@@ -17,6 +17,7 @@
 
 # we can run this against fs snapshot or live system
 
+# long_name: InnoDB file per table
 # description: Checks if mysql is configured to use one file per table for innodb
 
 # Load common functions

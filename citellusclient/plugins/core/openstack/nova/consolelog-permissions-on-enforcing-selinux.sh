@@ -15,6 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+# long_name: SELinux console.log permission
 # description: Checks for SELinux errors on console.log access on computes
 
 # Load common functions

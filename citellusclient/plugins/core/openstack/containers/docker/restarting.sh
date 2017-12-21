@@ -17,6 +17,7 @@
 
 # we can run this on fs snapshot or live system
 
+# long_name: Containers in restarting state
 # description: Check docker container restarting states
 
 # Load common functions

@@ -17,6 +17,7 @@
 
 # we can run this on fs snapshot
 
+# long_name: Services debug configuration
 # description: Check OpenStack services debug configuration in containers
 
 # Load common functions

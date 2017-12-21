@@ -18,6 +18,7 @@
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 
+# long_name: Memory recommendations
 # description: Checks for hypervisor memory vs the recommended values
 
 # check memory recommendations

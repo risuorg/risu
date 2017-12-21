@@ -17,6 +17,7 @@
 
 # we can run this against fs snapshot or live system
 
+# long_name: RabbitMQ RPC issues
 # description: Check for RPC issues in OpenStack services
 
 # Load common functions
