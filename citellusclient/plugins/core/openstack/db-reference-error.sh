@@ -17,6 +17,7 @@
 
 # we can run this against fs snapshot or live system
 
+# long_name: DBReferenceError in services logs
 # description: Report DBReferenceError in OpenStack services logs
 
 

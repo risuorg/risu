@@ -16,6 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+# long_name: Updated sos package
 # description: Checks if OSP12 deployment is using containers and valid sosreport version
 
 # Load common functions

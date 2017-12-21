@@ -15,6 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+# long_name: Ceph rhceph repository
 # description: Checks if Ceph repos are not enabled on computes
 
 # Load common functions

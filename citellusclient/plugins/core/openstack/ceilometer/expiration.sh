@@ -16,6 +16,7 @@
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 
+# long_name: Ceilometer expiration configuration
 # description: Check for ceilometer expiration values
 
 # Actually run the check

@@ -17,10 +17,11 @@
 
 # if we are running against fs snapshot we check installed-rpms
 
+# long_name: Packstack installation
+# description: Report OSP version
+
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
-
-# description: Report OSP version
 
 # Check which version we are using
 PACKSTACK=$(is_rpm "openstack-packstack")
