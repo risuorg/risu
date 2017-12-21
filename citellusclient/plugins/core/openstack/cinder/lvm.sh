@@ -13,6 +13,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+# long_name: Cinder LVM Backend
 # description: Checks if LVM is used as backing storage
 
 # Load common functions

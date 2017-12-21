@@ -17,6 +17,7 @@
 
 # we can run this against fs snapshot or live system
 
+# long_name: DPDK Configuration
 # description: Checks for various DPDK configuration parameters
 
 # Load common functions
