@@ -65,8 +65,8 @@ Filtering options:
 
 Config options:
   --dump-config         Dump config to console to be saved into file
-  --no-config           Do not read configuration from file
-                        /home/iranzo/DEVEL/citellus/citellus/citellus.conf or
+  --no-config           Do not read configuration from file /home/iranzo/DEVEL
+                        /citellus/citellusclient/citellus.conf or
                         ~/.citellus.conf
 ```
 
@@ -75,24 +75,14 @@ This is new feature of citellus that will show you available scripts and their d
 
 ```
 ./citellus.py --list-plugins --description
-INFO:citellus:using default plugin path
-/root/citellus/citellus/plugins/bugzilla/httpd_bug_1406417.sh
-# description: This plugin checks if Apache reaches its MaxRequestWorkers
-
-/root/citellus/citellus/plugins/bugzilla/libvirt-systemd_bug_1172387.sh
-# description: This plugin checks libvirt affected of multiple instance start error
-
-/root/citellus/citellus/plugins/bugzilla/openstack/ceilometer_bug_1483456.sh
-# description: Checks missconfigured host in nova vs hostname
-
-/root/citellus/citellus/plugins/bugzilla/openstack/ceph_bug_1358697.sh
-# description: Checks for outdated ceph packages
-
-/root/citellus/citellus/plugins/bugzilla/openstack/httpd_bug_1478042.sh
-# description: Checks httpd WSGIApplication defined to avoid wrong redirection
-
-/root/citellus/citellus/plugins/bugzilla/openstack/keystone_bug_1473713.sh
-# description: Checks for keystone transaction errors on cleanup
+{'backend': 'core', 'description': 'This plugin checks if Apache reaches its MaxRequestWorkers', 'plugin': '/home/iranzo/DEVEL/citellus/citellusclient/plugins/core/bugzilla/httpd/1406417.sh'}
+{'backend': 'core', 'description': 'Checks missconfigured host in nova vs hostname', 'plugin': '/home/iranzo/DEVEL/citellus/citellusclient/plugins/core/bugzilla/openstack/ceilometer/1483456.sh'}
+{'backend': 'core', 'description': 'Checks for outdated ceph packages', 'plugin': '/home/iranzo/DEVEL/citellus/citellusclient/plugins/core/bugzilla/openstack/ceph/1358697.sh'}
+{'backend': 'core', 'description': 'Checks httpd WSGIApplication defined to avoid wrong redirection', 'plugin': '/home/iranzo/DEVEL/citellus/citellusclient/plugins/core/bugzilla/openstack/httpd/1478042.sh'}
+{'backend': 'core', 'description': 'Checks for keystone transaction errors on cleanup', 'plugin': '/home/iranzo/DEVEL/citellus/citellusclient/plugins/core/bugzilla/openstack/keystone/1473713.sh'}
+{'backend': 'core', 'description': 'Checks for keystone LDAP domain template problem', 'plugin': '/home/iranzo/DEVEL/citellus/citellusclient/plugins/core/bugzilla/openstack/keystone/templates/1519057.sh'}
+{'backend': 'core', 'description': 'Checks for wrong auth_url configuration in metadata_agent.ini', 'plugin': '/home/iranzo/DEVEL/citellus/citellusclient/plugins/core/bugzilla/openstack/neutron/1340001.sh'}
+{'backend': 'core', 'description': 'Checks python-ryu tracebacks', 'plugin': '/home/iranzo/DEVEL/citellus/citellusclient/plugins/core/bugzilla/openstack/neutron/1450223.sh'}
 ```
 
 ## Doing a live check example
@@ -152,16 +142,16 @@ INFO:citellus:using default plugin path
 ```
 
 ## HTML Interface
-- Create by using --output and --web, open the generated `citellus.html`.
+- Create by using --output $FOLDER and --web, open the generated `citellus.html`.
 
 <img src="doc/images/www.png" height="40%" border=0>
 
 ## Ansible playbooks
-Citellus can also run Ansible playbooks
+Citellus can also run Ansible playbooks via extension
 
 The are some additional conventions that are detailed in [ansible-playbooks.md](doc/ansible-playbooks.md) that determine how to code them to be executed in live or snapshoot mode.
 
-Commands have been extended to allow '--list-plugins' to list them and include /exclude filters to work with them.
+Commands have been extended to allow `--list-plugins` to list them and include /exclude filters to work with them.
 
 All of them must end in `.yml`.
 
@@ -176,12 +166,12 @@ mode: fs snapshot .
 vs
 
 ~~~
-found #1 extensions / found #0 tests at .
+found #2 extensions with #2 plugins
 mode: live
-# Running extension ansible-playbook
-# /home/iranzo/DEVEL/citellus/citellus/playbooks/system/clock-ntpstat.yml: failed
-    fatal: [localhost]: FAILED! => {"changed": false, "cmd": "ntpstat", "failed": true, "msg": "[Errno 2] No such file or directory", "rc": 2}
-    	to retry, use: --limit @/home/iranzo/DEVEL/citellus/citellus/playbooks/system/clock-ntpstat.retry
+# /home/iranzo/DEVEL/citellus/citellusclient/plugins/ansible/openstack/rabbitmq/ha-policies.yml: okay
+# /home/iranzo/DEVEL/citellus/citellusclient/plugins/ansible/system/clock-ntpstat.yml: failed
+    {"changed": false, "cmd": "ntpstat", "msg": "[Errno 2] No such file or directory", 
+
 ~~~
 
 ## Contact us!!
