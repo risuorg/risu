@@ -173,11 +173,14 @@ def domagui(sosreports, citellusplugins):
         for plugin in results[sosreport]:
             plugins.append(plugin)
             grouped[plugin] = {}
+            grouped[plugin]['sosreport'] = {}
 
     # Fill the data
     for sosreport in sosreports:
         for plugin in results[sosreport]:
-            grouped[plugin][sosreport] = results[sosreport][plugin]['result']
+            grouped[plugin]['sosreport'][sosreport] = results[sosreport][plugin]['result']
+            for element in ['backend', 'long_name', 'bugzilla', 'description']:
+                grouped[plugin][element] = results[sosreport][plugin][element]
 
     # We've now a matrix of grouped[plugin][sosreport] and then [text] [out] [err] [rc]
     return grouped
@@ -218,15 +221,16 @@ def maguiformat(data):
 
     for plugin in data:
         pplug = 0
-        for host in data[plugin]:
-            if data[plugin][host]['rc'] != citellus.RC_OKAY and data[plugin][host]['rc'] != citellus.RC_SKIPPED:
+        for host in data[plugin]['sosreport']:
+            if data[plugin]['sosreport'][host]['rc'] != citellus.RC_OKAY and data[plugin]['sosreport'][host]['rc'] != citellus.RC_SKIPPED:
                 pplug = 1
         if pplug == 1:
             newplugin = plugin.replace(cp, '')
             toprint[newplugin] = {}
+            toprint[newplugin]['sosreport'] = {}
             for host in data[plugin]:
-                toprint[newplugin][host] = {}
-                toprint[newplugin][host] = data[plugin][host]
+                toprint[newplugin]['sosreport'][host] = {}
+                toprint[newplugin]['sosreport'][host] = data[plugin][host]
     return toprint
 
 
