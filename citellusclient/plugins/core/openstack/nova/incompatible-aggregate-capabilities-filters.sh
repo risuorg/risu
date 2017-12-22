@@ -15,8 +15,7 @@
 
 # long_name: Incompatible AggregateInstanceExtraSpecsFilter and ComputeCapabilitiesFilter
 # description: Checks incompatible AggregateInstanceExtraSpecsFilter and ComputeCapabilitiesFilter in nova
-
-# Base: https://bugs.launchpad.net/nova/+bug/1279719
+# bugzilla: https://bugs.launchpad.net/nova/+bug/1279719
 
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
