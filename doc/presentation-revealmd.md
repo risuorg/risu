@@ -1,11 +1,11 @@
 ---
-theme : "solarized"
+title: Citellus - Detecting common pitfalls of deployments
+author: Pablo Iranzo Gómez
+
+theme: "solarized"
 highlightTheme: "Zenburn"
 transition: cube
-
-title      : Citellus
-author     : Pablo Iranzo Gómez
-mode : selfcontained
+mode: selfcontained
 ---
 
 
@@ -13,8 +13,6 @@ mode : selfcontained
 ## Detecting common pitfalls of deployments
 
 <img src="citellus.png" width="20%" border=0>
-
-<small>Presented by: [Pablo Iranzo Gómez](https://iranzo.github.io)</small>
 
 ---
 
@@ -24,7 +22,7 @@ mode : selfcontained
 
 ----
 
-## History: how did it was started?
+## History: how did was it started?
 
 - The tool, started by Robin Černín after a long weekend shift checking one and over again several sosreports for the same data on different hosts.
 
@@ -36,8 +34,8 @@ mode : selfcontained
 
 ## What can you do with Citellus?
 
-- Solve issues faster thanks to the information it provides.<!-- .element: class="fragment" -->
 - Run against a sosreport or live environment.<!-- .element: class="fragment" -->
+- Solve issues faster thanks to the information it provides.<!-- .element: class="fragment" -->
 - Use the community-provided plugins for detecting actual or potential issues.<!-- .element: class="fragment" -->
 - Code new plugins in your language of choice (bash, python, ruby, etc.) to extend functionality.<!-- .element: class="fragment" -->
     - Contribute them upstream for others to benefit.<!-- .element: class="fragment" -->
@@ -51,8 +49,20 @@ mode : selfcontained
     - missing parameters in expired ceilometer data, which can lead to filling up your hard drive.
     - unsynced ntp.
     - outdated packages that have known critical issues.
-    - etc (77 plugins as of this writting some of them with more than one issue detected)
+    - others! (94 plugins as of this writting some of them with more than one issue detected)
 - Whatever else you can imagine or code 😉
+
+----
+
+## Some numbers on plugin count:
+
+- bugzilla 14
+- launchpad 1
+- network 1
+- openstack 48
+- pacemaker 7
+- system 20
+- virtualization 1
 
 ---
 
@@ -82,20 +92,23 @@ _________ .__  __         .__  .__
  \______  /__||__|  \___  >____/____/____//____  >
         \/              \/                     \/ 
                                                   
-found #1 extensions / found #77 tests at default path
-mode: fs snapshot .
-# Running extension ansible-playbook
-# skipping ansible per missing ansible-playbook binary.
-# /git/citellus/citellus/plugins/bugzilla/httpd_bug_1406417.sh: skipped
-# /git/citellus/citellus/plugins/bugzilla/libvirt-systemd_bug_1172387.sh: okay
-# /git/citellus/citellus/plugins/bugzilla/openstack/ceilometer_bug_1483456.sh: okay
-# /git/citellus/citellus/plugins/bugzilla/openstack/ceph_bug_1358697.sh: skipped
-# /git/citellus/citellus/plugins/bugzilla/openstack/httpd_bug_1478042.sh: skipped
-# /git/citellus/citellus/plugins/bugzilla/openstack/keystone_bug_1473713.sh: skipped
-# /git/citellus/citellus/plugins/bugzilla/openstack/neutron_bug_1450223.sh: skipped
-# /git/citellus/citellus/plugins/bugzilla/openstack/neutron_bug_1474092.sh: okay
-# /git/citellus/citellus/plugins/bugzilla/openstack/neutron_bug_1489066.sh: skipped
-# /git/citellus/citellus/plugins/bugzilla/openstack/nova_bug_1474092.sh: okay
+found #2 extensions with #94 plugins
+mode: fs snapshot ../sosreport-controller-0-20171212110438/
+# /home/iranzo/DEVEL/citellus/citellusclient/plugins/ansible/openstack/rabbitmq/ha-policies.yml: skipped
+# /home/iranzo/DEVEL/citellus/citellusclient/plugins/ansible/system/clock-ntpstat.yml: skipped
+# /home/iranzo/DEVEL/citellus/citellusclient/plugins/core/bugzilla/httpd/1406417.sh: okay
+# /home/iranzo/DEVEL/citellus/citellusclient/plugins/core/bugzilla/openstack/keystone/1473713.sh: okay
+# /home/iranzo/DEVEL/citellus/citellusclient/plugins/core/bugzilla/openstack/keystone/templates/1519057.sh: skipped
+# /home/iranzo/DEVEL/citellus/citellusclient/plugins/core/bugzilla/openstack/nova/1474092.sh: okay
+# /home/iranzo/DEVEL/citellus/citellusclient/plugins/core/bugzilla/openstack/nova/1527345.sh: skipped
+# /home/iranzo/DEVEL/citellus/citellusclient/plugins/core/bugzilla/openstack/swift/1500607.sh: okay
+# /home/iranzo/DEVEL/citellus/citellusclient/plugins/core/bugzilla/systemd/1172387.sh: okay
+# /home/iranzo/DEVEL/citellus/citellusclient/plugins/core/launchpad/openstack/keystone/1649616.sh: okay
+# /home/iranzo/DEVEL/citellus/citellusclient/plugins/core/network/external_connectivity.sh: skipped
+# /home/iranzo/DEVEL/citellus/citellusclient/plugins/core/openstack/ceilometer/expiration.sh: failed
+    alarm_history_time_to_live missing on file
+    event_time_to_live missing on file
+    metering_time_to_live missing on file
 ~~~
 
 ---
@@ -130,13 +143,9 @@ mode: fs snapshot .
 
 At the moment, there’s a strong presence on OpenStack plugins as it is where we solve our issues on everyday basis, but allows anything, as long as there are tests written for it.
 
-For example, it will be easy to report on systems registered against RHN instead of CDN  or systems with a specific version of pacemaker known to have lot of issues or check amount of free memory or memory usage from a process.
+For example, it will be easy to report on systems registered against RHN instead of CDN or systems with a specific version of pacemaker known to have lot of issues or check amount of free memory or memory usage from a process.
 
-Read contributing doc at: 
-
-<small><https://github.com/zerodayz/citellus/blob/master/CONTRIBUTING.md></small>
-
-for more details.
+<small> Read contributing doc at:  <https://github.com/zerodayz/citellus/blob/master/CONTRIBUTING.md> for more details.</small>
 
 ---
 
@@ -156,13 +165,8 @@ Philosophy is very simple:
 Tests are even simpler:
 - Written in whatever language of choice as long as they can be executed from shell.
 - Output messages to ‘stderr’ (>&2)
-- When using strings like echo $”string” bash’s builting i18n is used, so it can be providing languages in the language of your choice.
-
-- Returns:
-    - `$RC_OKAY` for success
-    - `$RC_FAILED` for error
-    - `$RC_SKIPPED` for skipped tests
-   - Other for unexpected error
+- When using strings like echo $”string” bash’s builting i18n is used so you can translate in your language.
+- Return `$RC_OKAY` for success / `$RC_FAILED` for error / `$RC_SKIPPED` for skipped tests / Other for unexpected error
 
 ----
 
@@ -244,11 +248,13 @@ Blog post by Pablo:
 - Write a script in `~/citellus/citellusclient/plugins/core/rhev/hosted-engine.sh`
 - `chmod +x hosted-engine.sh`
 
-Requirements:
-- return code must be $RC_OKAY (ok), $RC_FAILED (failed)  or $RC_SKIPPED (skipped)
+----
+
+## Requirements:
+- return code must be `$RC_OKAY` (ok), `$RC_FAILED` (failed)  or `$RC_SKIPPED` (skipped)
 - Messages to be printed on stderr are displayed on failed or ‘skipped’ if verbose enabled
 - Running against ‘sosreport’, CITELLUS_ROOT contains path to sosreport folder provided.
-- CITELLUS_LIVE contains 0 or 1 if running against live
+- CITELLUS_LIVE contains 0 or 1 if running against live or not
 
 ----
 
@@ -272,9 +278,25 @@ fi
 
 ----
 
+## How to start a new plugin (with functions)
+
+~~~sh
+# Load common functions
+[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
+
+if is_rpm ovirt-hosted-engine-ha; then
+    exit $RC_OKAY
+else
+        echo “ovirt-hosted-engine is not installed “ >&2
+        exit $RC_FAILED
+fi
+~~~
+
+----
+
 ## How to test your plugin?
 
-- Use `tox` to run some UT's
+- Use `tox` to run some UT's (utf8, bashate, python 2.7, python 3.5)
 
 - Specify the plugin to use:
 ~~~sh
@@ -298,26 +320,33 @@ mode: fs snapshot sosreport-20170724-175510/crta02
 
 <small>For example, galera requires to check seqno across all controllers running database.</small>
 
-- What does M.a.g.u.i. Does?  It runs citellus against each sosreport, gathers and groups the data per plugin.
+- What does M.a.g.u.i. Does?
+    - It runs citellus against each sosreport, gathers and groups the data per plugin.
 
 ----
 
 ## How does it looks like?
 It’s delivered in citellus repo and can be executed by specifying sosreports:
 ~~~sh
-[piranzo@host sosreport-20170725-080733]$ magui.py * -i seqno # (filtering for ‘seqno’ plugins.
-{'/home/remote/piranzo/citellus/citellus/plugins/openstack/mysql/seqno.sh': {'ctrl0.localdomain': {'err': '08a94e67-bae0-11e6-8239-9a6188749d23:36117633\n',
-                                                                                                   'out': '',
-                                                                                                   'rc': 0},
-                                                                             'ctrl1.localdomain': {'err': '08a94e67-bae0-11e6-8239-9a6188749d23:36117633\n',
-                                                                                                   'out': '',
-                                                                                                   'rc': 0},
-                                                                             'ctrl2.localdomain': {'err': '08a94e67-bae0-11e6-8239-9a6188749d23:36117633\n',
-                                                                                                   'out': '',
-                                                                                                   'rc': 0}}}
+[piranzo@collab-shell sosreport-20171205-172438]$ ~/citellus/magui.py * -i seqno
+    _
+  _( )_  Magui:
+ (_(ø)_)
+  /(_)   Multiple Analisis Generic Unifier and Interpreter
+ \|
+  |/
+{'/home/remote/piranzo/citellus/citellusclient/plugins/core/openstack/mysql/seqno.sh': {'controller0': {'err': u'2b65adb0-787e-11e7-81a8-26480628c14c:285019879\n',
+                                                                                                                          'out': u'',
+                                                                                                                          'rc': 10},
+                                                                                        'controller1': {'err': u'2b65adb0-787e-11e7-81a8-26480628c14c:285019879\n',
+                                                                                                                          'out': u'',
+                                                                                                                          'rc': 10},
+                                                                                        'controller2': {'err': u'2b65adb0-787e-11e7-81a8-26480628c14c:285019878\n',
+                                                                                                                          'out': u'',
+                                                                                                                          'rc': 10}}}
 ~~~
 
-- On this example, UUID and SEQNO is shown for each controller.
+- On this example, UUID and SEQNO is shown for each controller and we can see that controller 2 has different SEQNO to the other two nodes.
 
 ----
 
@@ -346,5 +375,5 @@ THANK YOU FOR ATTENDING!!
 
 For questions, come to #citellus on Freenode or email us:
 
-- <mailto:rcernin@redhat.com>
-- <mailto:Pablo.Iranzo@redhat.com>
+- <mailto:citellus-dev@redhat.com>
+- <https://www.redhat.com/mailman/listinfo/citellus-dev>
