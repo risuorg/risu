@@ -37,5 +37,5 @@ if [[ "${RELEASE}" -lt "9" ]]; then
     fi
     exit $RC_OKAY
 else
-    echo $RC_OKAY
+    exit $RC_OKAY
 fi
