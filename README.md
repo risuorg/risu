@@ -142,7 +142,7 @@ INFO:citellus:using default plugin path
 ```
 
 ## HTML Interface
-- Create by using --output $FOLDER and --web, open the generated `citellus.html`.
+- Create by using `--output $FOLDER` and `--web`, open the generated `citellus.html`.
 
 <img src="doc/images/www.png" height="40%" border=0>
 
