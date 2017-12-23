@@ -16,32 +16,73 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# Helper script to define location of various files.
+# Helper script to define which version of OSP is being used based on the 
+# openstack-nova-common rpm installed.
 
-discover_osp_version(){
-    RPM=$(is_rpm openstack-nova-common)
-    case ${RPM} in
-        openstack-nova-common-2014.*) echo 6 ;;
-        openstack-nova-common-2015.*) echo 7 ;;
-        openstack-nova-common-12.*) echo 8 ;;
-        openstack-nova-common-13.*) echo 9 ;;
-        openstack-nova-common-14.*) echo 10 ;;
-        openstack-nova-common-15.*) echo 11 ;;
-        openstack-nova-common-16.*) echo 12 ;;
-        *) echo 0 ;;
+# Import the mapping_os_versions function
+
+mapping_osp_versions(){
+    if [[ -z $rhos_release ]] ; then
+        declare -A osproject_2_osv
+        declare -A nova_versions
+        releases=$(curl -s https://releases.openstack.org/ |
+        awk '/^<tr.*class="doc">/ {\
+            t=gensub(/^<tr.*class="doc">(\w+).*$/, "\\1", "g", $0); print t }' |
+            tac)
+        counter="1"
+        for release in $releases; do
+            osproject_2_osv[$release]=$counter
+            nova_version=$(
+            curl -s https://releases.openstack.org/${release,,}/index.html |
+            awk 'BEGIN {RS="<tr"} /class="std/ && />nova</ {\
+                print gensub(/<td>([0-9]+\.[0-9]+).*<\/td>/, "\\1", "g", $7)}')
+            nova_versions[$nova_version]=$release
+            counter=$(($counter + 1))
+        done
+        os_release=$(is_rpm openstack-nova-common | awk 'BEGIN {FS="."}{print\
+            gensub(/openstack-nova-common-([0-9]+).*/,"\\1",1)"."$2}')
+        os_project_name=${nova_versions[$os_release]}
+        rhos_release=$((${osproject_2_osv[$os_project_name]}-4))
+
+        # Exporting these to global to save from running the above mapping
+        export os_project_name
+        export rhos_release
+    elif [[ -z $rhos_release || $(is_online) -ne 0 ]] ; then
+        RPM=$(is_rpm openstack-nova-common)
+        rhos_release=$(case ${RPM} in
+            openstack-nova-common-2014.*) echo 6 ;;
+            openstack-nova-common-2015.*) echo 7 ;;
+            openstack-nova-common-12.*) echo 8 ;;
+            openstack-nova-common-13.*) echo 9 ;;
+            openstack-nova-common-14.*) echo 10 ;;
+            openstack-nova-common-15.*) echo 11 ;;
+            openstack-nova-common-16.*) echo 12 ;;
+            *) echo 0 ;;
+        esac)
+        os_project_name=$(case ${VERSION} in
+            6) echo "juno" ;;
+            7) echo "kilo" ;;
+            8) echo "liberty" ;;
+            9) echo "mitaka" ;;
+            10) echo "newton" ;;
+            11) echo "ocata" ;;
+            12) echo "pike" ;;
+            *) echo "not recognized" ;;
+        esac)
+        export os_project_name
+        export rhos_release
+    fi
+
+    case $1 in
+        version) echo $rhos_release ;;
+        name) echo $os_project_name ;;
     esac
 }
 
+discover_osp_version(){
+    mapping_osp_versions version
+}
+
 name_osp_version(){
-    VERSION=$(discover_osp_version)
-    case ${VERSION} in
-        6) echo "juno" ;;
-        7) echo "kilo" ;;
-        8) echo "liberty" ;;
-        9) echo "mitaka" ;;
-        10) echo "newton" ;;
-        11) echo "ocata" ;;
-        12) echo "pike" ;;
-        *) echo "not recognized" ;;
-    esac
+    mapping_osp_versions name
 }
