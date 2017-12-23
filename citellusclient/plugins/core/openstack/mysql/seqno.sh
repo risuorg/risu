@@ -24,5 +24,5 @@
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 
 is_required_file "${CITELLUS_ROOT}/var/log/mysqld.log"
-grep "WSREP: Found saved state"  ${CITELLUS_ROOT}/var/log/mysqld.log |tail -1|awk '{print $8}' >&2
+awk '/WSREP: Found saved state/ {seqno=$8}; END {print seqno}' ${CITELLUS_ROOT}/var/log/mysqld.log >&2
 exit $RC_OKAY
