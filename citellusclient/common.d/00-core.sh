@@ -110,3 +110,7 @@ is_lineinfile(){
     # $*: files
     [ -f "$2" ] && egrep -iq "$1" "${@:2}"
 }
+
+is_online(){
+    nc -z releases.openstack.org 443 > /dev/null 2>&1
+}
