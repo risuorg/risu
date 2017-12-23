@@ -30,12 +30,13 @@ which mysql > /dev/null 2>&1
 RC=$?
 
 if [ "x$RC" = "x0" ]; then
-    mysql keystone -e 'select count(*) from token where token.expires < CURTIME();' >/dev/null 2>&1
+    # Test connection to the db
+    _test=$(mysql keystone -e "DESC token" 2>&1)
     RC=$?
     if [ "x$RC" = "x0" ]; then
-        TOKENS=$(mysql keystone -e 'select count(*) from token where token.expires < CURTIME();' | egrep -o '[0-9]+')
+        TOKENS=$(mysql keystone -sN -e 'SELECT count(*) FROM token WHERE token.expires < CURTIME();')
     else
-        echo "no keystone database" >&2
+        echo -e "ERROR connecting to the database\n${_test}" >&2
         exit $RC_SKIPPED
     fi
 else

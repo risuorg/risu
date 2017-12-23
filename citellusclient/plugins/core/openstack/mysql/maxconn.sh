@@ -30,27 +30,28 @@ which mysql > /dev/null 2>&1
 RC=$?
 
 if [ "x$RC" = "x0" ]; then
-    # Collect information from THREADS_CONNECTED
-    mysql -u root -e 'SELECT * FROM INFORMATION_SCHEMA.GLOBAL_STATUS where VARIABLE_NAME="THREADS_CONNECTED";'
+    # Test connection to the db
+    _test=$(mysql -u root -e exit 2>&1)
     RC=$?
+    # Collect information from THREADS_CONNECTED
     if [ "x$RC" = "x0" ]; then
-        THREADS_CONNECTED=$(mysql -u root -e 'SELECT * FROM INFORMATION_SCHEMA.GLOBAL_STATUS where VARIABLE_NAME="THREADS_CONNECTED";' | egrep -o '[0-9]+')
+        THREADS_CONNECTED=$(mysql -sN -u root -e 'SELECT VARIABLE_VALUE FROM INFORMATION_SCHEMA.GLOBAL_STATUS where VARIABLE_NAME="THREADS_CONNECTED";')
     else
-        echo "no connection to the database" >&2
+        echo -e "ERROR connecting to the database\n${_test}" >&2
         exit $RC_SKIPPED
     fi
     # Check for HAproxy topic in haproxy.cfg and pick the maxconn value
-    HAPROXY_MYSQL=$(awk '/listen mysql/,/^$/' /etc/haproxy/haproxy.cfg | grep maxconn | egrep -o '[0-9]+')
-    HAPROXY_DEFAULTS=$(awk '/defaults/,/^$/' /etc/haproxy/haproxy.cfg | grep maxconn | egrep -o '[0-9]+')
+    HAPROXY_MYSQL=$(awk '/defaults|listen mysql/,/^$/ {if ($1 == "maxconn" && $2 ~ /[0-9]+/) max=$2}; END {print max}' /etc/haproxy/haproxy.cfg)
 
-    # If the HAproxy mysql is empty assign the value from defaults
+    # If the HAPROXY_MYSQL is empty, set as the DEFAULT_MAXCONN at build time
     if [[ -z ${HAPROXY_MYSQL} ]]; then
-        HAPROXY_MYSQL=${HAPROXY_DEFAULTS}
+        HAPROXY_MYSQL=$(haproxy -vv 2>&1 | sed 's/.*maxconn = \([0-9]\+\).*/\1/;tx;d;:x')
     fi
 else
     echo "missing mysql binaries" >&2
     exit $RC_SKIPPED
 fi
+
 # Now that we have all needed compare the value from HAproxy and database.
 if [[ ! -z ${THREADS_CONNECTED} ]]; then
     if [[ "${THREADS_CONNECTED}" -ge ${HAPROXY_MYSQL} ]]; then

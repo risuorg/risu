@@ -30,10 +30,8 @@ which mysql > /dev/null 2>&1
 RC=$?
 
 if [ "x$RC" = "x0" ]; then
-    # quick test to the db before nothing
-    (
-    mysql -t -u root -e 'SHOW DATABASES;'
-    )  >/dev/null
+    # Test connection to the db
+    _test=$(mysql -u root -e exit 2>&1)
     RC=$?
     if [ "x$RC" = "x0" ]; then
         # Databases tables larger than 10 GB
@@ -41,7 +39,7 @@ if [ "x$RC" = "x0" ]; then
             mysql -t -u root -e 'SELECT table_schema AS db_name, table_name, ROUND(( data_length + index_length ) / ( 1024 * 1024 * 1024 ), 2) AS table_size_in_GB FROM information_schema.TABLES WHERE (DATA_LENGTH+INDEX_LENGTH)/ ( 1024 * 1024 * 1024 ) > 10;'
         ) >&2
     else
-        echo "no connection to the database" >&2
+        echo -e "ERROR connecting to the database\n${_test}" >&2
         exit $RC_SKIPPED
     fi
 else
