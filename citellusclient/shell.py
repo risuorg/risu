@@ -291,12 +291,14 @@ def runplugin(plugin):
     if not extensions:
         extensions, exttriggers = initExtensions()
 
+    found = 0
     for extension in extensions:
         name = extension.__name__.split(".")[-1]
         if plugin['backend'] == name:
             returncode, out, err = extension.run(plugin=plugin)
-        else:
-            LOG.debug(err)
+            found = 1
+    if found == 0:
+        LOG.debug(err + ":" + plugin)
 
     updates = {'result': {'rc': returncode,
                           'out': out.decode('ascii', 'ignore'),
