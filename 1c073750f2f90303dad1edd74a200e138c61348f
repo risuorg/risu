@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f8f7b6c_a60ebe20",
+        "filename": "citellusclient/plugins/core/system/reboot.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2017-12-31T21:47:39Z",
+      "side": 1,
+      "message": "Shouldn\u0027t it be duration_down as uploaded in changeset 2?",
+      "revId": "1c073750f2f90303dad1edd74a200e138c61348f",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
