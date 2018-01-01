@@ -149,6 +149,7 @@
       $("#alert_list").append(html);
    }
    $(document).ready(function() {
+    document.title = window.location.pathname.substr(1).replace('/citellus.html','') + " - Citellus";
     var url_file_regex = new RegExp("^file:\/\/");
     if (window.chrome && window.chrome.webstore && url_file_regex.test(window.location.href)) {
         warnMessage("warning","Some browsers (ie: Chrome) are not accepting file:// URLs. Firefox supports it, or you can start Chrome with --allow-file-access-from-files");
@@ -291,7 +292,7 @@
             row += '<div id="'+item.id+'" class="collapse" role="tabpanel" aria-labelledby="head-'+plugin_name+'" data-parent="#accordion">\n';
             row += ' <div data-plugin-name="'+plugin_name+'" class="card-body">';
             row += '  <h6 class="card-subtitle mb-2 text-muted">'+item.description+'</h6>';
-            row += '  <pre><code>'+error_text+'</code></pre>';
+            row += '  <pre class="bg-faded"><code>'+error_text+'</code></pre>';
             row += ' </div>\n'; // /card-body
             row += ' <div class="card-footer">\n';
             row += '  <div class="row">\n';
