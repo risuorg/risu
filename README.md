@@ -23,8 +23,9 @@ We are developing framework in python, the bash framework has been deprecated. P
 
 ```
 usage: citellus.py [arguments] [-h] [-l] [--list-plugins] [--list-extensions]
-                               [--description] [--output FILENAME] [--web]
-                               [--blame] [--lang] [--only-failed] [-v]
+                               [--list-categories] [--description]
+                               [--output FILENAME] [--web] [--blame] [--lang]
+                               [--only-failed] [-v]
                                [-d {INFO,DEBUG,WARNING,ERROR,CRITICAL}] [-q]
                                [-i SUBSTRING] [-x SUBSTRING] [--dump-config]
                                [--no-config]
@@ -41,6 +42,8 @@ optional arguments:
   -l, --live            Work on a live system instead of a snapshot
   --list-plugins        Print a list of discovered plugins and exit
   --list-extensions     Print a list of discovered extensions and exit
+  --list-categories     With list-plugins, also print a list and count of
+                        discovered plugin categories
   --description         With list-plugins, also outputs plugin description
   --output FILENAME, -o FILENAME
                         Write results to JSON file FILENAME
@@ -65,7 +68,7 @@ Filtering options:
 
 Config options:
   --dump-config         Dump config to console to be saved into file
-  --no-config           Do not read configuration from file /home/iranzo/DEVEL
+  --no-config           Do not read configuration from file ~/DEVEL
                         /citellus/citellusclient/citellus.conf or
                         ~/.citellus.conf
 ```
