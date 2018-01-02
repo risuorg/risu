@@ -4,7 +4,7 @@
 # Description: Runs set of scripts against system or snapshot to
 #              detect common pitfalls in configuration/status
 #
-# Copyright (C) 2017 Robin Černín (rcernin@redhat.com)
+# Copyright (C) 2017-2018 Robin Černín (rcernin@redhat.com)
 #                    Lars Kellogg-Stedman <lars@redhat.com>
 #                    Pablo Iranzo Gómez (Pablo.Iranzo@redhat.com)
 #
@@ -264,7 +264,13 @@ def findplugins(folders, include=None, exclude=None, executables=True, fileexten
     # Build dictionary of plugins and it's metadata
     metaplugins = []
     for plugin in plugins:
-        dictionary = {'plugin': plugin, 'backend': extension, 'id': hashlib.md5(plugin.encode('UTF-8')).hexdigest()}
+        subcategory = os.path.split(plugin)[0].replace(os.path.join(citellusdir, 'plugins', extension), '')
+        category = os.path.normpath(subcategory).split(os.sep)[1]
+
+        # Remove leading "/" (os.sep for safety)
+        if subcategory[0] == os.sep:
+            subcategory = subcategory[1:]
+        dictionary = {'plugin': plugin, 'backend': extension, 'id': hashlib.md5(plugin.encode('UTF-8')).hexdigest(), 'category': category, 'subcategory': subcategory}
         dictionary.update(get_metadata(plugin=dictionary))
         metaplugins.append(dictionary)
 
@@ -727,6 +733,9 @@ def main():
                 pretty = {'plugin': plugin['plugin'], 'backend': plugin['backend']}
                 if options.description:
                     pretty.update({'description': plugin['description']})
+                if options.list_categories:
+                    pretty.update({'category': plugin['category']})
+                    pretty.update({'subcategory': plugin['subcategory']})
                 print(pretty)
 
         if options.list_categories:
@@ -737,7 +746,7 @@ def main():
 
                     # We do create two lists, one for the individual items for detailed count and one for the parent folder for totals
                     categories.append(category)
-                    grosscategories.append(os.path.normpath(category).split(os.sep)[1])
+                    grosscategories.append(plugin['category'])
 
             # Get counters and start the information processing
             detail = Counter(categories)
@@ -756,6 +765,11 @@ def main():
                     if item.startswith(startpath):
                         subcount = "%s" % detail[item]
                         newdetail = item.replace(startpath, '')
+
+                        # Remove leading "/" (os.sep for safety)
+                        if newdetail != '' and newdetail[0] == os.sep:
+                            newdetail = newdetail[1:]
+
 
                         # Skip empty strings and instead just show empty array
                         if newdetail != '':
