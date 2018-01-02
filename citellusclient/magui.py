@@ -179,7 +179,7 @@ def domagui(sosreports, citellusplugins):
     for sosreport in sosreports:
         for plugin in results[sosreport]:
             grouped[plugin]['sosreport'][sosreport] = results[sosreport][plugin]['result']
-            for element in ['backend', 'long_name', 'bugzilla', 'description']:
+            for element in ['backend', 'long_name', 'bugzilla', 'description', 'category', 'subcategory']:
                 grouped[plugin][element] = results[sosreport][plugin][element]
 
     # We've now a matrix of grouped[plugin][sosreport] and then [text] [out] [err] [rc]
