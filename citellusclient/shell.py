@@ -271,7 +271,7 @@ def findplugins(folders, include=None, exclude=None, executables=True, fileexten
         if subcategory[0] == os.sep:
             subcategory = subcategory[1:]
 
-        dictionary = {'plugin': plugin, 'backend': extension, 'id': hashlib.md5(plugin.encode('UTF-8')).hexdigest(), 'category': category, 'subcategory': subcategory}
+        dictionary = {'plugin': plugin, 'backend': extension, 'id': hashlib.md5(plugin.replace(citellusdir, '').encode('UTF-8')).hexdigest(), 'category': category, 'subcategory': subcategory}
         dictionary.update(get_metadata(plugin=dictionary))
         metaplugins.append(dictionary)
 
