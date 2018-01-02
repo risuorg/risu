@@ -179,8 +179,11 @@ def domagui(sosreports, citellusplugins):
     for sosreport in sosreports:
         for plugin in results[sosreport]:
             grouped[plugin]['sosreport'][sosreport] = results[sosreport][plugin]['result']
-            for element in ['backend', 'long_name', 'bugzilla', 'description']:
-                grouped[plugin][element] = results[sosreport][plugin][element]
+            for element in results[sosreport][plugin]:
+                # Some of the elements are not useful as they are sosreport specific, so we do skip them completely
+                # In this approach we don't need to update this code each time the plugin exports new metadata
+                if element not in ['time', 'plugin', 'result']:
+                    grouped[plugin][element] = results[sosreport][plugin][element]
 
     # We've now a matrix of grouped[plugin][sosreport] and then [text] [out] [err] [rc]
     return grouped
