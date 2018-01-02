@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f82402b8_67c56740",
+        "filename": "citellusclient/plugins/core/system/reboot.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2018-01-02T16:31:59Z",
+      "side": 1,
+      "message": "if.... \u0027:\u0027\n   actions\n\nMissing condition or identation, I think this one can be skipped completely and just rely on try/except",
+      "revId": "b120cbef4c214100752488c3722a85cf0b3a3595",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
