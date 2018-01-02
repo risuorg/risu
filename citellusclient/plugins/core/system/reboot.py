@@ -165,7 +165,11 @@ def main():
         exitcitellus(code=RC_SKIPPED, msg="Only works on Red Hat Enterprise Linux 7 or greater, skipping")
 
     # Syslog parsing starts here
-    f = open(root_path + "/var/log/messages", "r")
+    try:
+        f = open(root_path + "/var/log/messages", "r")
+    except:
+        exitcitellus(code=RC_SKIPPED, msg='Missing /var/log/messages')
+
     for line in f:
         # chomp
         line = line.rstrip()
