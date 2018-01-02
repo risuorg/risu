@@ -38,6 +38,7 @@ import sys
 import time
 import traceback
 from multiprocessing import Pool, cpu_count
+from collections import Counter
 
 LOG = logging.getLogger('citellus')
 
@@ -413,6 +414,9 @@ def parse_args(default=False, parse=False):
     p.add_argument("--list-extensions",
                    action="store_true",
                    help=_("Print a list of discovered extensions and exit"))
+    p.add_argument("--list-categories",
+                   action="store_true",
+                   help=_("With list-plugins, also print a list and count of discovered plugin categories"))
     p.add_argument("--description",
                    action="store_true",
                    help=_("With list-plugins, also outputs plugin description"))
@@ -714,14 +718,52 @@ def main():
         plugins.extend(extension.listplugins(options))
 
     # Print plugin list and description if requested
+    categories = []
+    grosscategories = []
+
     if options.list_plugins:
         for extension in plugins:
             for plugin in extension:
                 pretty = {'plugin': plugin['plugin'], 'backend': plugin['backend']}
-
                 if options.description:
                     pretty.update({'description': plugin['description']})
                 print(pretty)
+
+        if options.list_categories:
+            for extension in plugins:
+                for plugin in extension:
+                    # Split category out of plugin path skipping the first item (for backend, etc)
+                    category = os.path.split(plugin['plugin'])[0].replace(os.path.join(citellusdir, 'plugins', plugin['backend']), '')
+
+                    # We do create two lists, one for the individual items for detailed count and one for the parent folder for totals
+                    categories.append(category)
+                    grosscategories.append(os.path.normpath(category).split(os.sep)[1])
+
+            # Get counters and start the information processing
+            detail = Counter(categories)
+            count = Counter(grosscategories)
+            total = 0
+
+            print("-------\n")
+
+            for each in sorted(count.items()):
+                elem = each[1]
+                detailed = []
+                for item in detail:
+                    startpath = os.path.join(os.sep, each[0])
+
+                    # List the items within that 'root' category and remove common path
+                    if item.startswith(startpath):
+                        subcount = "%s" % detail[item]
+                        newdetail = item.replace(startpath, '')
+
+                        # Skip empty strings and instead just show empty array
+                        if newdetail != '':
+                            detailed.append(newdetail + ": " + subcount)
+                print(each[0], ":", elem, detailed)
+                total = total + elem
+
+            print("-------\ntotal", ":", total)
         return
 
     # Reinstall language in case it has changed
