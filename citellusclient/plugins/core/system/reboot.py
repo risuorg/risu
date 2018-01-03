@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# coding=utf-8
 
 # Copyright (C) 2017  David Vallee Delisle (dvd@redhat.com)
 
@@ -115,6 +116,9 @@ def findevent(context, desc, index, reverse):
 
 
 class Event(object):
+    """
+    Defines event object
+    """
     def __init__(self, desc, time, context=None, status=None, index=None, duration_down=0, duration_bootloader=0, duration_os=0):
         """
         Events are journald stop/start events in syslog. This is how we determine the timestamps
@@ -148,6 +152,10 @@ class Event(object):
 
 
 def main():
+    """
+    Main code
+    """
+
     global lastcontext
     global events
     global now
@@ -159,15 +167,21 @@ def main():
     global RC_FAILED
     global RC_SKIPPED
 
-    if os.path.isfile(root_path + "/etc/redhat-release") is False:
+    for filename in [root_path + "/etc/redhat-release", root_path + "/var/log/messages"]:
+        if not os.access(filename, os.R_OK):
+            exitcitellus(code=RC_SKIPPED, msg='Missing access to required file %s' % filename)
+
+    if not os.path.isfile(root_path + "/etc/redhat-release"):
         exitcitellus(code=RC_SKIPPED, msg="Non Red Hat system, skipping")
-    if "Red Hat Enterprise Linux Server release 7" not in open(root_path + "/etc/redhat-release").read():
+    if "Red Hat Enterprise Linux Server release 7" not in open(root_path + "/etc/redhat-release", 'r').read():
         exitcitellus(code=RC_SKIPPED, msg="Only works on Red Hat Enterprise Linux 7 or greater, skipping")
 
     # Syslog parsing starts here
     try:
         f = open(root_path + "/var/log/messages", "r")
     except:
+        # Not needed but allows syntax checkers not to complain that f might not be defined
+        f = []
         exitcitellus(code=RC_SKIPPED, msg='Missing /var/log/messages')
 
     for line in f:
