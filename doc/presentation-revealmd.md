@@ -8,6 +8,7 @@ transition: cube
 mode: selfcontained
 ---
 
+# [Citellus](https://github.com/zerodayz/citellus)
 
 # [Citellus](https://github.com/zerodayz/citellus):
 ## Detecting common pitfalls of deployments
@@ -49,7 +50,7 @@ mode: selfcontained
     - missing parameters in expired ceilometer data, which can lead to filling up your hard drive.
     - unsynced ntp.
     - outdated packages that have known critical issues.
-    - others! (99 plugins as of this writting some of them with more than one issue detected)
+    - others! (100 plugins as of this writting some of them with more than one issue detected)
 - Whatever else you can imagine or code 😉
 
 ----
@@ -59,7 +60,7 @@ mode: selfcontained
 - bugzilla : 14
 - launchpad : 1
 - network : 1
-- openstack : 52
+- openstack : 53
 - pacemaker : 7
 - system : 23
 - virtualization : 1
@@ -69,13 +70,13 @@ mode: selfcontained
 ## More granular!!
 
 <small>
-bugzilla : 14 ['/openstack/swift: 1', '/openstack/keystone/templates: 1', '/openstack/ceph: 1', '/httpd: 1', '/openstack/keystone: 1', '/openstack/ceilometer: 1', '/openstack/nova: 2', '/openstack/httpd: 1', '/systemd: 1', '/openstack/neutron: 4']
+bugzilla : 14 ['openstack/swift: 1', 'openstack/keystone/templates: 1', 'openstack/ceph: 1', 'httpd: 1', 'openstack/keystone: 1', 'openstack/ceilometer: 1', 'openstack/nova: 2', 'openstack/httpd: 1', 'systemd: 1', 'openstack/neutron: 4']
 
-launchpad : 1 ['/openstack/keystone: 1']
+launchpad : 1 ['openstack/keystone: 1']
 
 network : 1 []
 
-openstack : 52 ['/nova: 8', '/mysql: 6', '/rabbitmq: 3', '/containers/rabbitmq: 1', '/network: 3', '/containers/docker: 2', '/hardware: 1', '/containers: 4', '/cinder: 1', '/swift: 2', '/systemd: 1', '/iptables: 1', '/ceph: 4', '/keystone: 3', '/system: 1', '/redis: 1', '/crontab: 3', '/ceilometer: 2', '/glance: 1']
+openstack : 52 ['nova: 8', 'mysql: 6', 'rabbitmq: 3', 'containers/rabbitmq: 1', 'network: 3', 'containers/docker: 2', 'hardware: 1', 'containers: 4', 'cinder: 1', 'swift: 2', 'systemd: 1', 'iptables: 1', 'ceph: 4', 'keystone: 3', 'system: 1', 'redis: 1', 'crontab: 3', 'ceilometer: 3', 'glance: 1']
 
 pacemaker : 7 []
 
