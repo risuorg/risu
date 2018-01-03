@@ -92,6 +92,10 @@ def parse_args():
     p.add_argument("--output", "-o",
                    metavar="FILENAME",
                    help=_("Write results to JSON file FILENAME"))
+    p.add_argument("--run", "-r",
+                   action='store_true',
+                   help=_("Force run of citellus instead of reading existing 'citellus.json'"))
+
     g = p.add_argument_group('Filtering options')
     g.add_argument("-q", "--quiet",
                    help=_("Enable quiet mode"),
@@ -136,7 +140,7 @@ def commonpath(folders):
     return code
 
 
-def callcitellus(path=False, plugins=False):
+def callcitellus(path=False, plugins=False, forcerun=False):
     """
     Do actual execution of citellus against data
     :param path: sosreport path
@@ -144,8 +148,22 @@ def callcitellus(path=False, plugins=False):
     :return: dict with results
     """
 
-    # Call citellus and format data returned
-    results = citellus.docitellus(path=path, plugins=plugins)
+    filename = os.path.join(path, 'citellus.json')
+    if os.access(filename, os.R_OK) and not forcerun:
+        LOG.debug("Reading Existing citellus analysis from disk")
+        oldresults = json.load(open(filename, 'r'))['results']
+        # Need to apply filters as by default the stored file will have everything
+        results = []
+
+        for result in oldresults:
+            for plugin in plugins:
+                if result['plugin'] == plugin['plugin']:
+                    # We have a match with the plugin defined and the ones we expect, so append results
+                    results.append(result)
+
+    else:
+        # Call citellus and format data returned
+        results = citellus.docitellus(path=path, plugins=plugins)
 
     # Process plugin output from multiple plugins
     new_dict = {}
@@ -155,16 +173,20 @@ def callcitellus(path=False, plugins=False):
     return new_dict
 
 
-def domagui(sosreports, citellusplugins):
+def domagui(sosreports, citellusplugins, options=False):
     """
     Do actual execution against sosreports
     :return: dict of results
     """
 
+    # Check if we've been provided options
+    if options:
+        forcerun = options.run
+
     # Grab data from citellus for the sosreports provided
     results = {}
     for sosreport in sosreports:
-        results[sosreport] = callcitellus(path=sosreport, plugins=citellusplugins)
+        results[sosreport] = callcitellus(path=sosreport, plugins=citellusplugins, forcerun=forcerun)
 
     # Precreate multidimensional array
     grouped = {}
@@ -267,7 +289,7 @@ def main():
     citellusplugins = newplugins
 
     # Grab the data
-    grouped = domagui(sosreports=options.sosreports, citellusplugins=citellusplugins)
+    grouped = domagui(sosreports=options.sosreports, citellusplugins=citellusplugins, options=options)
 
     # For now, let's only print plugins that have rc ! $RC_OKAY in quiet
     if options.quiet:
