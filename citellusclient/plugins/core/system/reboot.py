@@ -1,4 +1,4 @@
-#!/bin/env python
+#!/usr/bin/env python
 
 # Copyright (C) 2017  David Vallee Delisle (dvd@redhat.com)
 
