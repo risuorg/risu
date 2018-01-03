@@ -159,9 +159,13 @@ def main():
     global RC_FAILED
     global RC_SKIPPED
 
-    if os.path.isfile(root_path + "/etc/redhat-release") is False:
+    for filename in [root_path + "/etc/redhat-release", root_path + "/var/log/messages"]:
+        if not os.access(filename, os.R_OK):
+            exitcitellus(code=RC_SKIPPED, msg='Missing access to required file %s' % filename)
+
+    if not os.path.isfile(root_path + "/etc/redhat-release"):
         exitcitellus(code=RC_SKIPPED, msg="Non Red Hat system, skipping")
-    if "Red Hat Enterprise Linux Server release 7" not in open(root_path + "/etc/redhat-release").read():
+    if "Red Hat Enterprise Linux Server release 7" not in open(root_path + "/etc/redhat-release", 'r').read():
         exitcitellus(code=RC_SKIPPED, msg="Only works on Red Hat Enterprise Linux 7 or greater, skipping")
 
     # Syslog parsing starts here
