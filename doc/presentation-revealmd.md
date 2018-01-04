@@ -113,7 +113,7 @@ _________ .__  __         .__  .__
  \______  /__||__|  \___  >____/____/____//____  >
         \/              \/                     \/ 
                                                   
-found #2 extensions with #94 plugins
+found #2 extensions with #101 plugins
 mode: fs snapshot ../sosreport-controller-0-20171212110438/
 # /home/iranzo/DEVEL/citellus/citellusclient/plugins/ansible/openstack/rabbitmq/ha-policies.yml: skipped
 # /home/iranzo/DEVEL/citellus/citellusclient/plugins/ansible/system/clock-ntpstat.yml: skipped
