@@ -13,7 +13,10 @@ try:
 except:
     pass
 
-import citellusclient.shell as citellus
+try:
+    import citellusclient.shell as citellus
+except:
+    import shell as citellus
 
 # Load i18n settings from citellus
 _ = citellus._
