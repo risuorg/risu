@@ -10,6 +10,12 @@ Some problems are not detected only one one node, but are made by the aggregatio
 
 Magui aims to use Citellus for gathering the data and later, write plugins to analyze that information.
 
+## Highlights
+- Reuse saved citellus.json to speed up analisys on several files, retrigger if inconsistencies
+
+- Plugins use uuid to identify plugin properly and act on them.
+
+
 ## Usage help
 Plugins for Magui are to be written in Python, check next section for details.
 
