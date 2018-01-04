@@ -31,6 +31,7 @@ import json
 import logging
 import os.path
 import pprint
+import imp
 
 try:
     # Python 3
@@ -44,6 +45,14 @@ LOG = logging.getLogger('magui')
 # Where are we?
 maguidir = os.path.abspath(os.path.dirname(__file__))
 localedir = os.path.join(maguidir, 'locale')
+
+global PluginsFolder
+PluginsFolder = os.path.join(maguidir, "magplug")
+
+global plugins
+plugins = []
+global plugtriggers
+plugtriggers = {}
 
 trad = gettext.translation('citellus', localedir, fallback=True)
 
@@ -61,11 +70,11 @@ def show_logo():
 
     logo = "    _    ", \
            "  _( )_  Magui:", \
-           " (_(ø)_) ",\
+           " (_(ø)_) ", \
            "  /(_)   Multiple Analisis Generic Unifier and Interpreter", \
            " \|      ", \
-           "  |/     " \
-
+           "  |/     ", \
+           ""
     print("\n".join(logo))
 
 
@@ -83,6 +92,12 @@ def parse_args():
                    default="info",
                    type=lambda x: x.upper(),
                    choices=["INFO", "DEBUG", "WARNING", "ERROR", "CRITICAL"])
+    p.add_argument("--list-plugins",
+                   action="store_true",
+                   help=_("Print a list of discovered Magui plugins and exit"))
+    p.add_argument("--description",
+                   action="store_true",
+                   help=_("With list-plugins, also outputs plugin description"))
     p.add_argument('-p', "--pluginpath", dest="pluginpath",
                    help=_("Set path for Citellus plugin location if not default"),
                    action='append')
@@ -113,7 +128,7 @@ def parse_args():
 
     g.add_argument("-mf", "--mfilter", dest="mfilter",
                    help=_("Only include Magui plugins that contains in full path that substring"),
-                   default=False,
+                   default=[],
                    action='append')
 
     p.add_argument('sosreports', nargs='*')
@@ -138,6 +153,54 @@ def commonpath(folders):
             code = os.path.commonprefix(folders).rsplit('/', 1)[0]
 
     return code
+
+
+def getPlugins(options):
+    """
+    Gets list of Plugins in the magplug folder
+    :return: list of Plugins available
+    """
+
+    Plugins = []
+    possiblePlugins = citellus.findplugins(folders=[PluginsFolder], executables=False, exclude=['__init__.py', 'pyc'], include=options.mfilter)
+    for i in possiblePlugins:
+        module = os.path.splitext(os.path.basename(i['plugin']))[0]
+        modpath = os.path.dirname(i['plugin'])
+        try:
+            info = imp.find_module(module, [modpath])
+        except:
+            info = False
+        if i['plugin'] and info:
+            Plugins.append({"name": module, "info": info})
+
+    return Plugins
+
+
+def loadPlugin(Plugin):
+    """
+    Loads selected Plugin
+    :param Plugin: Plugin to load
+    :return: loader for Plugin
+    """
+    return imp.load_module(Plugin["name"], *Plugin["info"])
+
+
+def initPlugins(options):
+    """
+    Initializes Plugins
+    :return: list of Plugin modules initialized
+    """
+
+    plugs = []
+    plugtriggers = {}
+    for i in getPlugins(options):
+        newplug = loadPlugin(i)
+        plugs.append(newplug)
+        triggers = []
+        for each in newplug.init():
+            triggers.append(each)
+        plugtriggers[i["name"]] = triggers
+    return plugs, plugtriggers
 
 
 def callcitellus(path=False, plugins=False, forcerun=False):
@@ -300,9 +363,22 @@ def main():
 
     # Each argument in sosreport is a sosreport
 
+    magplugs, magtriggers = initPlugins(options)
+
+    if options.list_plugins:
+        for plugin in magplugs:
+            print("-", plugin.__name__.split(".")[-1])
+            if options.description:
+                desc = plugin.help()
+                if desc:
+                    print(citellus.indent(text=desc, amount=4))
+        return
+
     # Prefill enabled citellus plugins from args
     if not citellus.extensions:
         extensions, exttriggers = citellus.initExtensions()
+    else:
+        extensions = citellus.extensions
 
     citellusplugins = []
     for extension in extensions:
@@ -318,19 +394,15 @@ def main():
     # Grab the data
     grouped = domagui(sosreports=options.sosreports, citellusplugins=citellusplugins, options=options)
 
-    # For now, let's only print plugins that have rc ! $RC_OKAY in quiet
-    if options.quiet:
-        toprint = maguiformat(grouped)
-    else:
-        toprint = grouped
+    # Run Magui plugins
+    results = []
+    for plugin in magplugs:
+        results.append({'plugin': plugin.__name__.split(".")[-1], 'results': plugin.run(data=grouped, quiet=options.quiet)})
 
     if options.output:
-        write_results(results=grouped, filename=options.output)
+        write_results(results=results, filename=options.output)
 
-    pprint.pprint(toprint, width=1)
-    # We need to run our plugins against that data
-
-    # TODO(iranzo): write code for processing plugins once decided what to use and process (rather than feding above data outputed to the full scripts)
+    pprint.pprint(results, width=1)
 
 
 if __name__ == "__main__":
