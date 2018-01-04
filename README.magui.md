@@ -11,12 +11,13 @@ Some problems are not detected only one one node, but are made by the aggregatio
 Magui aims to use Citellus for gathering the data and later, write plugins to analyze that information.
 
 ## Usage help
-We are developing framework in python, and still no plugins created.
+Plugins for Magui are to be written in Python, check next section for details.
 
 ```
 usage: magui.py [arguments] [-h] [-d {INFO,DEBUG,WARNING,ERROR,CRITICAL}]
-                            [-p PLUGINPATH] [-m MPATH] [-q] [-i SUBSTRING]
-                            [-x SUBSTRING] [-mf MFILTER]
+                            [--list-plugins] [--description] [-p PLUGINPATH]
+                            [-m MPATH] [--output FILENAME] [--run] [-q]
+                            [-i SUBSTRING] [-x SUBSTRING] [-mf MFILTER]
                             [sosreports [sosreports ...]]
 
 Processes several generic archives/sosreports scripts in a uniform way, to
@@ -29,10 +30,16 @@ optional arguments:
   -h, --help            show this help message and exit
   -d {INFO,DEBUG,WARNING,ERROR,CRITICAL}, --loglevel {INFO,DEBUG,WARNING,ERROR,CRITICAL}
                         Set log level
+  --list-plugins        Print a list of discovered Magui plugins and exit
+  --description         With list-plugins, also outputs plugin description
   -p PLUGINPATH, --pluginpath PLUGINPATH
                         Set path for Citellus plugin location if not default
   -m MPATH, --mpath MPATH
                         Set path for Magui plugin location if not default
+  --output FILENAME, -o FILENAME
+                        Write results to JSON file FILENAME
+  --run, -r             Force run of citellus instead of reading existing
+                        'citellus.json'
 
 Filtering options:
   -q, --quiet           Enable quiet mode
@@ -43,6 +50,7 @@ Filtering options:
   -mf MFILTER, --mfilter MFILTER
                         Only include Magui plugins that contains in full path
                         that substring
+
 ```
 
 ## Running a check
@@ -63,5 +71,9 @@ This is an example of execution of Magui against a set of sosreports with `seqno
 On this example, UUID and SEQNO is shown for each controller.
 
 ```
+
+# Plugin development for Magui
+
+Please do check <doc/magui-plugin-development.md> for more details.
 
 Please if you have any idea on any improvements please do not hesitate to open an issue or submit your contributions.
