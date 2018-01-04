@@ -162,7 +162,7 @@ def getPlugins(options):
     """
 
     Plugins = []
-    possiblePlugins = citellus.findplugins(folders=[PluginsFolder], executables=False, exclude=['__init__.py', 'pyc'], include=options.mfilter)
+    possiblePlugins = citellus.findplugins(folders=[PluginsFolder], executables=False, exclude=['__init__.py', 'pyc'], include=options.mfilter, fileextension='.py')
     for i in possiblePlugins:
         module = os.path.splitext(os.path.basename(i['plugin']))[0]
         modpath = os.path.dirname(i['plugin'])
