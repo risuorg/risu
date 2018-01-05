@@ -55,5 +55,5 @@ def help():  # do not edit this line
     :return: help text
     """
 
-    commandtext = _("This plugin checks Ceilometer pipeline.yaml consistency across sosreports")
+    commandtext = _("Plugin for reporting back citellus data from all sosreports")
     return commandtext
