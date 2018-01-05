@@ -47,15 +47,15 @@ is_rpm_over(){
     if [[ "${MAJOR}" -ge "$2" ]]; then
         if [[ "${MID}" -ge "$3" ]]; then
             if [[ "${MINOR}" -lt "$4" ]]; then
-                echo "required package $1 version is lower than $MAJOR $MID $MINOR." >&2
+                echo "package $1 version $VERSION is lower than required $2.$3-$4." >&2
                 exit $RC_FAILED
             fi
         else
-            echo "required package $1 version is lower than $MAJOR $MID $MINOR." >&2
+            echo "package $1 version $VERSION is lower than required $2.$3-$4." >&2
             exit $RC_FAILED
         fi
     else
-        echo "required package $1 version is lower than $MAJOR $MID $MINOR." >&2
+        echo "package $1 version $VERSION is lower than required $2.$3-$4." >&2
         exit $RC_FAILED
     fi
 }
