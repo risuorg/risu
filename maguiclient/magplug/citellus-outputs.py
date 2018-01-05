@@ -7,6 +7,7 @@
 from __future__ import print_function
 
 import os
+
 import citellusclient.shell as citellus
 import maguiclient.magui as magui
 
@@ -22,14 +23,15 @@ def init():
     Initializes module
     :return: List of triggers for Plugin
     """
-    triggers = []
+    triggers = ['*']
     return triggers
 
 
 def run(data, quiet=False):  # do not edit this line
     """
     Executes plugin
-    :param plugin: plugin dictionary
+    :param data: data to process
+    :param quiet: work in reduced noise mode
     :return: returncode, out, err
     """
 
