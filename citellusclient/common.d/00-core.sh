@@ -81,22 +81,6 @@ is_enabled(){
     fi
 }
 
-is_rpm(){
-    if [ "x$CITELLUS_LIVE" = "x1" ]; then
-        rpm -qa *$1*|egrep ^"$1"-[0-9]
-    elif [ "x$CITELLUS_LIVE" = "x0" ]; then
-        is_required_file "${CITELLUS_ROOT}/installed-rpms"
-        awk '{print $1}' "${CITELLUS_ROOT}/installed-rpms"|egrep ^"$1"-[0-9]
-    fi
-}
-
-is_required_rpm(){
-    if ! is_rpm $1 ; then
-        echo "required package $1 not found." >&2
-        exit $RC_SKIPPED
-    fi
-}
-
 is_process(){
     if [ "x$CITELLUS_LIVE" = "x1" ];  then
         ps -elf | grep "$1" | grep -q -v grep
