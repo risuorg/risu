@@ -8,7 +8,7 @@ from __future__ import print_function
 
 import os
 import citellusclient.shell as citellus
-import citellusclient.magui as magui
+import maguiclient.magui as magui
 
 # Load i18n settings from citellus
 _ = citellus._
