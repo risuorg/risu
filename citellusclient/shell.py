@@ -39,6 +39,7 @@ import time
 import traceback
 from collections import Counter
 from multiprocessing import Pool, cpu_count
+sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/' + '../'))
 
 LOG = logging.getLogger('citellus')
 

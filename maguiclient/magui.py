@@ -33,8 +33,10 @@ import logging
 import os.path
 import pprint
 import time
+import sys
+sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/' + '../'))
 
-import citellusclient.shell as citellus
+from citellusclient import shell as citellus
 
 LOG = logging.getLogger('magui')
 
