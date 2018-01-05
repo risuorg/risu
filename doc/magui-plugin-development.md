@@ -16,16 +16,13 @@ Magui plugins should conform to the following standards:
     - Results are then filtered to get the data for that plugin ID, for example:
         ~~~py
         # Plugin ID to act on:
-        plugid = "131c0e0d785fae9811f2754262f0da9e"
+        # "131c0e0d785fae9811f2754262f0da9e"
+        # Note that this ID is returned via 'triggers' in the init function, so only the data that this plugin can process is provided.
 
-        ourdata = False
-        for item in data:
-            if data[item]['id'] == plugid:
-                ourdata = data[item]
+        returncode = citellus.RC_OKAY
 
-        message = []
-
-        if ourdata:
+        message = ''
+        for ourdata in data:
             # 'err' in this case should be always equal to the md5sum of the file so that we can report the problem
             err = []
             for sosreport in ourdata['sosreport']:
@@ -33,5 +30,9 @@ Magui plugins should conform to the following standards:
 
             if len(sorted(set(err))) != 1:
                 message = _("Pipeline.yaml contents differ across sosreports, please do check that the contents are the same and shared across the environment to ensure proper behavior.")
-        return message
+                returncode = citellus.RC_FAILED
+
+        out = ''
+        err = message
+        return returncode, out, err
         ~~~
