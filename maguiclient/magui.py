@@ -32,13 +32,7 @@ import logging
 import os.path
 import pprint
 import imp
-
-try:
-    # Python 3
-    from . import shell as citellus
-except ValueError:
-    # Python 2
-    import shell as citellus
+import citellusclient.shell as citellus
 
 LOG = logging.getLogger('magui')
 
