@@ -593,6 +593,7 @@ def write_results(results, filename,
         'metadata': {
             'when': datetime.datetime.utcnow().isoformat(),
             'live': bool(live),
+            'source': 'citellus',
         },
         'results': sorted(results, key=lambda r: r['plugin']),
     }

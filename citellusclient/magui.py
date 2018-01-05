@@ -311,6 +311,7 @@ def write_results(results, filename):
     data = {
         'metadata': {
             'when': datetime.datetime.utcnow().isoformat(),
+            'source': 'magui',
         },
         'results': results,
     }
