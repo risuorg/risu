@@ -22,29 +22,22 @@ def init():
     Initializes module
     :return: List of triggers for Plugin
     """
-    triggers = []
+    triggers = ['8a3daf75bbbe401a22aa6368bae1fa42']
     return triggers
 
 
 def run(data, quiet=False):  # do not edit this line
     """
     Executes plugin
-    :param plugin: plugin dictionary
+    :param quiet: be more silent on returned information
+    :param data: data to process
     :return: returncode, out, err
     """
 
-    # Plugin ID to act on:
-    plugid = "2c09ace9f807fe2fc4e896bd7819ff72"
     returncode = citellus.RC_OKAY
 
-    ourdata = False
-    for item in data:
-        if data[item]['id'] == plugid:
-            ourdata = data[item]
-
-    message = []
-
-    if ourdata:
+    message = ''
+    for ourdata in data:
         # 'err' in this case is something like: 08a94e67-bae0-11e6-8239-9a6188749d23:36117633
         # being UUID: seqno
         err = []
@@ -52,22 +45,27 @@ def run(data, quiet=False):  # do not edit this line
             err.append(ourdata['sosreport'][sosreport]['err'])
 
         if len(sorted(set(err))) != 1:
-            message = _("Galera sequence nmber differ across sosreports")
+            message = _("Galera sequence number differ across sosreports")
 
         # Find max in values
-        max = 0
+        maximum = 0
+        seqno = 0
         for each in err:
             try:
                 seqno = each.split(':')[1]
             except:
                 seqno = 0
-            if seqno > max:
-                max = seqno
+            if seqno > maximum:
+                maximum = seqno
 
         host = False
         for sosreport in ourdata['sosreport']:
-            if seqno in ourdata['sosreport'][sosreport]['err']:
-                host = sosreport
+            if ourdata['sosreport'][sosreport]['rc'] == citellus.RC_OKAY:
+                if seqno in ourdata['sosreport'][sosreport]['err']:
+                    host = sosreport
+            else:
+                message = _('Some of the sosreports failed to grab required data, skipping')
+                returncode = citellus.RC_SKIPPED
 
         if host:
             message = _("Host %s contains highest sequence in Galera consider that one for bootstraping if needed." % host)
