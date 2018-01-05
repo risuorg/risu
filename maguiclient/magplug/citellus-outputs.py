@@ -41,7 +41,10 @@ def run(data, quiet=False):  # do not edit this line
     else:
         toprint = data
 
-    return toprint
+    returncode = citellus.RC_OKAY
+    out = ''
+    err = toprint
+    return returncode, out, err
 
 
 def help():  # do not edit this line
