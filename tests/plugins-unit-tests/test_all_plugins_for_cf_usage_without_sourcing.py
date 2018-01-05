@@ -50,8 +50,8 @@ class CitellusTest(TestCase):
 
         usingcf = []
         for plugin in nonsourcing:
-            for function in commonfunctions:
-                if citellus.regexpfile(filename=plugin, regexp='.*%s' % function):
+            for func in commonfunctions:
+                if citellus.regexpfile(filename=plugin, regexp='.*%s' % func):
                     usingcf.append(plugin)
 
         assert sorted(set(usingcf)) == []

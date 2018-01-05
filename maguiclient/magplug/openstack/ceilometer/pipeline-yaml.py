@@ -22,29 +22,22 @@ def init():
     Initializes module
     :return: List of triggers for Plugin
     """
-    triggers = []
+    triggers = ['9f732b2f01837c60f66bd1cd301e40c3']
     return triggers
 
 
 def run(data, quiet=False):  # do not edit this line
     """
     Executes plugin
-    :param plugin: plugin dictionary
+    :param quiet: reduce amount of data returned
+    :param data: data to process
     :return: returncode, out, err
     """
 
-    # Plugin ID to act on:
-    plugid = "131c0e0d785fae9811f2754262f0da9e"
     returncode = citellus.RC_OKAY
 
-    ourdata = False
-    for item in data:
-        if data[item]['id'] == plugid:
-            ourdata = data[item]
-
-    message = []
-
-    if ourdata:
+    message = ''
+    for ourdata in data:
         # 'err' in this case should be always equal to the md5sum of the file so that we can report the problem
         err = []
         for sosreport in ourdata['sosreport']:
