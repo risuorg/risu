@@ -27,12 +27,13 @@ from __future__ import print_function
 import argparse
 import datetime
 import gettext
+import imp
 import json
 import logging
 import os.path
-import time
 import pprint
-import imp
+import time
+
 import citellusclient.shell as citellus
 
 LOG = logging.getLogger('magui')
@@ -201,6 +202,7 @@ def initPlugins(options):
 def callcitellus(path=False, plugins=False, forcerun=False):
     """
     Do actual execution of citellus against data
+    :param forcerun: Forces execution of citellus analysis (ignoring saved data in citellus.json)
     :param path: sosreport path
     :param plugins: plugins enabled as provided to citellus
     :return: dict with results
@@ -263,13 +265,14 @@ def domagui(sosreports, citellusplugins, options=False):
         rerun = False
         # Check all sosreports for data for all plugins
         for sosreport in sosreports:
-            try:
-                results[sosreport][plugin]['result']
-            except:
-                LOG.debug("Forcing rerun of citellus for %s because of missing %s" % (sosreport, plugin))
-                rerun = True
+            for plugin in plugins:
+                try:
+                    results[sosreport][plugin]['result']
+                except:
+                    rerun = True
 
             if rerun:
+                LOG.debug("Forcing rerun of citellus for %s because of missing %s" % (sosreport, plugin))
                 # Sosreport contains non uniform data, rerun
                 results[sosreport] = callcitellus(path=sosreport, plugins=citellusplugins, forcerun=True)
 
@@ -342,6 +345,24 @@ def maguiformat(data):
                 toprint[newplugin]['sosreport'][host] = {}
                 toprint[newplugin]['sosreport'][host] = data[plugin][host]
     return toprint
+
+def filterresults(data, triggers=[]):
+    """
+    Filters results for only the data that plugin will use
+    :param data: full set of data
+    :param triggers: set of triggers (plugin ID's) to match
+    :return: filtered data of only those plugins
+    """
+    if '*' in triggers:
+        # If plugin processes everything, return all data
+        return data
+
+    ourdata = []
+    for item in data:
+        if data[item]['id'] in triggers:
+            ourdata.append(data[item])
+
+    return ourdata
 
 
 def main():

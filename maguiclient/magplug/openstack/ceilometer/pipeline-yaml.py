@@ -22,14 +22,15 @@ def init():
     Initializes module
     :return: List of triggers for Plugin
     """
-    triggers = []
+    triggers = ['131c0e0d785fae9811f2754262f0da9e']
     return triggers
 
 
 def run(data, quiet=False):  # do not edit this line
     """
     Executes plugin
-    :param plugin: plugin dictionary
+    :param quiet: reduce amount of data returned
+    :param data: data to process
     :return: returncode, out, err
     """
 

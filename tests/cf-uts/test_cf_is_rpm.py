@@ -44,6 +44,12 @@ rcs = {"pass": citellus.RC_OKAY,
 
 
 def runtest(testtype='False'):
+    """
+    Actually run the test for UT
+    :param testtype: argument to pass to setup script
+    :return: returncode
+    """
+
     # testtype will be 'pass', 'fail', 'skipped'
 
     # We're iterating against the different UT tests defined in UT-tests folder

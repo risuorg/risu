@@ -22,14 +22,15 @@ def init():
     Initializes module
     :return: List of triggers for Plugin
     """
-    triggers = []
+    triggers = ['2c09ace9f807fe2fc4e896bd7819ff72']
     return triggers
 
 
 def run(data, quiet=False):  # do not edit this line
     """
     Executes plugin
-    :param plugin: plugin dictionary
+    :param quiet: be more silent on returned information
+    :param data: data to process
     :return: returncode, out, err
     """
 
@@ -55,14 +56,15 @@ def run(data, quiet=False):  # do not edit this line
             message = _("Galera sequence nmber differ across sosreports")
 
         # Find max in values
-        max = 0
+        maximum = 0
+        seqno = 0
         for each in err:
             try:
                 seqno = each.split(':')[1]
             except:
                 seqno = 0
-            if seqno > max:
-                max = seqno
+            if seqno > maximum:
+                maximum = seqno
 
         host = False
         for sosreport in ourdata['sosreport']:
