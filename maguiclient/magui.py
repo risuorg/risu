@@ -30,6 +30,7 @@ import gettext
 import json
 import logging
 import os.path
+import time
 import pprint
 import imp
 import citellusclient.shell as citellus
@@ -392,7 +393,16 @@ def main():
     # Run Magui plugins
     results = []
     for plugin in magplugs:
-        results.append({'plugin': plugin.__name__.split(".")[-1], 'results': plugin.run(data=grouped, quiet=options.quiet)})
+        start_time = time.time()
+        returncode, out, err = plugin.run(data=grouped, quiet=options.quiet)
+        updates = {'result': {'rc': returncode,
+                              'out': out,
+                              'err': err}}
+
+        results.append({'plugin': plugin.__name__.split(".")[-1],
+                        'description': plugin.help(),
+                        'results': updates,
+                        'time': time.time() - start_time})
 
     if options.output:
         write_results(results=results, filename=options.output)
