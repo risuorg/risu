@@ -29,25 +29,7 @@ exitoudated(){
 RELEASE=$(discover_osp_version)
 if [[ "${RELEASE}" -ge "12" ]]; then
     # Sosreport with container support is 3.4-9 or later
-    is_required_rpm sos
-
-    VERSION=$(is_rpm sos)
-
-    MAJOR=$(echo ${VERSION} | sed -n -r -e 's/^sos.*-([0-9]+).[0-9]+-[0-9]+.*$/\1/p')
-    MID=$(echo ${VERSION} | sed -n -r -e 's/^sos.*-[0-9]+.([0-9]+)-[0-9]+.*$/\1/p')
-    MINOR=$(echo ${VERSION} | sed -n -r -e 's/^sos.*-[0-9]+.[0-9]+-([0-9]+).*$/\1/p')
-
-    if [[ "${MAJOR}" -ge "3" ]]; then
-        if [[ "${MID}" -ge "4" ]]; then
-            if [[ "${MINOR}" -lt "9" ]]; then
-                exitoudated
-            fi
-        else
-            exitoudated
-        fi
-    else
-        exitoudated
-    fi
+    is_rpm_over sos 3 4 9
     exit $RC_OKAY
 else
     echo "works only on OSP12 and later" >&2
