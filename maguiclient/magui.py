@@ -45,7 +45,7 @@ maguidir = os.path.abspath(os.path.dirname(__file__))
 localedir = os.path.join(maguidir, 'locale')
 
 global PluginsFolder
-PluginsFolder = os.path.join(maguidir, "magplug")
+PluginsFolder = os.path.join(maguidir, "plugins")
 
 global plugins
 plugins = []
@@ -155,7 +155,7 @@ def commonpath(folders):
 
 def getPlugins(options):
     """
-    Gets list of Plugins in the magplug folder
+    Gets list of Plugins in the plugins folder
     :return: list of Plugins available
     """
 
