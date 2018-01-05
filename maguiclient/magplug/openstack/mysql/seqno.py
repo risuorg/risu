@@ -35,6 +35,7 @@ def run(data, quiet=False):  # do not edit this line
 
     # Plugin ID to act on:
     plugid = "2c09ace9f807fe2fc4e896bd7819ff72"
+    returncode = citellus.RC_OKAY
 
     ourdata = False
     for item in data:
@@ -72,8 +73,9 @@ def run(data, quiet=False):  # do not edit this line
             message = _("Host %s contains highest sequence in Galera consider that one for bootstraping if needed." % host)
 
         # find max in sosreport to report host
-
-    return message
+    out = ''
+    err = message
+    return returncode, out, err
 
 
 def help():  # do not edit this line

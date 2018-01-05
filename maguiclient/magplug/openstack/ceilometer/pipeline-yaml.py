@@ -35,6 +35,7 @@ def run(data, quiet=False):  # do not edit this line
 
     # Plugin ID to act on:
     plugid = "131c0e0d785fae9811f2754262f0da9e"
+    returncode = citellus.RC_OKAY
 
     ourdata = False
     for item in data:
@@ -51,8 +52,11 @@ def run(data, quiet=False):  # do not edit this line
 
         if len(sorted(set(err))) != 1:
             message = _("Pipeline.yaml contents differ across sosreports, please do check that the contents are the same and shared across the environment to ensure proper behavior.")
+            returncode = citellus.RC_FAILED
 
-    return message
+    out = ''
+    err = message
+    return returncode, out, err
 
 
 def help():  # do not edit this line
