@@ -37,8 +37,8 @@ import subprocess
 import sys
 import time
 import traceback
-from multiprocessing import Pool, cpu_count
 from collections import Counter
+from multiprocessing import Pool, cpu_count
 
 LOG = logging.getLogger('citellus')
 
@@ -538,9 +538,9 @@ def read_config():
     # check for valid config files
 
     config = {}
-    for file in [os.path.join(citellusdir, 'citellus.conf'), os.path.expanduser("~/.citellus.conf")]:
-        if os.path.exists(file):
-            config = json.load(open(file, 'r'))
+    for filename in [os.path.join(citellusdir, 'citellus.conf'), os.path.expanduser("~/.citellus.conf")]:
+        if os.path.exists(filename):
+            config = json.load(open(filename, 'r'))
 
     return config
 
