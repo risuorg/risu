@@ -34,28 +34,68 @@ is_required_rpm(){
 }
 
 is_rpm_over(){
-    # $1 RPM
-    # $2 MAJOR
-    # $3 MID
-    # $4 MINOR
-    is_required_rpm $1
-    VERSION=$(is_rpm sos)
-    MAJOR=$(echo ${VERSION} | sed -n -r -e "s/^$1.*-([0-9]+).[0-9]+-[0-9]+.*$/\1/p")
-    MID=$(echo ${VERSION} | sed -n -r -e "s/^$1.*-[0-9]+.([0-9]+)-[0-9]+.*$/\1/p")
-    MINOR=$(echo ${VERSION} | sed -n -r -e "s/^$1.*-[0-9]+.[0-9]+-([0-9]+).*$/\1/p")
+    if [[ "$#" -eq "4" ]]; then
+        # $1 RPM
+        # $2 MAJOR
+        # $3 MINOR
+        # $4 RELEASE
+        is_required_rpm $1
+        flag=0
+        VERSION=$(is_rpm sos)
+        MAJOR=$(echo ${VERSION} | sed -n -r -e "s/^$1.*-([0-9]+).[0-9]+-[0-9]+.*$/\1/p")
+        MINOR=$(echo ${VERSION} | sed -n -r -e "s/^$1.*-[0-9]+.([0-9]+)-[0-9]+.*$/\1/p")
+        RELEASE=$(echo ${VERSION} | sed -n -r -e "s/^$1.*-[0-9]+.[0-9]+-([0-9]+).*$/\1/p")
 
-    if [[ "${MAJOR}" -ge "$2" ]]; then
-        if [[ "${MID}" -ge "$3" ]]; then
-            if [[ "${MINOR}" -lt "$4" ]]; then
-                echo "package $1 version $VERSION is lower than required $2.$3-$4." >&2
-                exit $RC_FAILED
+        if [[ "${MAJOR}" -ge "$2" ]]; then
+            if [[ "${MINOR}" -ge "$3" ]]; then
+                if [[ "${RELEASE}" -lt "$4" ]]; then
+                    flag=1
+                fi
+            else
+                flag=1
             fi
         else
+            flag=1
+        fi
+        if [[ "$flag" -eq "1" ]]; then
             echo "package $1 version $VERSION is lower than required $2.$3-$4." >&2
             exit $RC_FAILED
         fi
+    elif [[ "$#" -eq "5" ]]; then
+        # $1 RPM
+        # $2 MAJOR
+        # $3 MID
+        # $4 MINOR
+        # $5 RELEASE
+        is_required_rpm $1
+        flag=0
+        VERSION=$(is_rpm sos)
+        MAJOR=$(echo ${VERSION} | sed -n -r -e "s/^$1.*-([0-9]+).[0-9]+.[0-9]+-[0-9]+.*$/\1/p")
+        MID=$(echo ${VERSION} | sed -n -r -e "s/^$1.*-[0-9]+.([0-9]+).[0-9]+-[0-9]+.*$/\1/p")
+        MINOR=$(echo ${VERSION} | sed -n -r -e "s/^$1.*-[0-9]+.[0-9]+.([0-9]+)-[0-9]+.*$/\1/p")
+        RELEASE=$(echo ${VERSION} | sed -n -r -e "s/^$1.*-[0-9]+.[0-9]+.[0-9]+-([0-9]+).*$/\1/p")
+
+        if [[ "${MAJOR}" -ge "$2" ]]; then
+            if [[ "${MID}" -ge "$3" ]]; then
+                if [[ "${MINOR}" -ge "$4" ]]; then
+                    if [[ "${RELEASE}" -lt "$5" ]]; then
+                        flag=1
+                    fi
+                else
+                    flag=1
+                fi
+            else
+                flag=1
+            fi
+        else
+            flag=1
+        fi
+        if [[ "$flag" -eq "1" ]]; then
+            echo "package $1 version $VERSION is lower than required $2.$3.$4-$5." >&2
+            exit $RC_FAILED
+        fi
     else
-        echo "package $1 version $VERSION is lower than required $2.$3-$4." >&2
-        exit $RC_FAILED
+        echo "invalid number of arguments" >&2
+        exit 99
     fi
 }
