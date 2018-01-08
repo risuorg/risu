@@ -8,8 +8,6 @@ transition: cube
 mode: selfcontained
 ---
 
-# [Citellus](https://github.com/zerodayz/citellus)
-
 # [Citellus](https://github.com/zerodayz/citellus):
 ## Detecting common pitfalls of deployments
 
@@ -170,6 +168,34 @@ For example, it will be easy to report on systems registered against RHN instead
 
 ---
 
+## Citellus vs other tools
+
+- XSOS
+Provides information on ram usage, etc, no analysis, more like a ‘fancy’ sosreport viewer.
+
+---
+
+## Why not sosreports?
+
+- It’s not Citellus or ‘sosreports’, SOS collects data from the system, Citellus, runs tests/plugins against the data collected.
+- Sosreport is installed in RHEL base channels, this makes it well spread, but also, slower to get changes.
+- Frequently, data about errors or errors to be, is already in sosreports.
+- Citellus is based on known issues and easy to extend with new ones, requires faster devel cycle, targeting more a devops or support teams as target audience.
+
+---
+
+## Other resources
+Blog post by Pablo:
+<small>
+- <http://iranzo.github.io/blog/2017/07/26/Citellus-framework-for-detecting-known-issues/>
+- <https://iranzo.github.io/blog/2017/07/31/Magui-for-analysis-of-issues-across-several-hosts/>
+- <https://iranzo.github.io/blog/2017/08/17/Jenkins-for-running-CI-tests/>
+
+</small>
+
+---
+
+
 ## How does it work under the hood?
 
 Philosophy is very simple:
@@ -227,33 +253,6 @@ else
     exit $RC_OKAY
 fi
 ```
-
----
-
-## Citellus vs other tools
-
-- XSOS
-Provides information on ram usage, etc, no analysis, more like a ‘fancy’ sosreport viewer.
-
----
-
-## Why not sosreports?
-
-- It’s not Citellus or ‘sosreports’, SOS collects data from the system, Citellus, runs tests/plugins against the data collected.
-- Sosreport is installed in RHEL base channels, this makes it well spread, but also, slower to get changes.
-- Frequently, data about errors or errors to be, is already in sosreports.
-- Citellus is based on known issues and easy to extend with new ones, requires faster devel cycle, targeting more a devops or support teams as target audience.
-
----
-
-## Other resources
-Blog post by Pablo:
-<small>
-- <http://iranzo.github.io/blog/2017/07/26/Citellus-framework-for-detecting-known-issues/>
-- <https://iranzo.github.io/blog/2017/07/31/Magui-for-analysis-of-issues-across-several-hosts/>
-- <https://iranzo.github.io/blog/2017/08/17/Jenkins-for-running-CI-tests/>
-
-</small>
 
 ---
 
@@ -374,20 +373,20 @@ It’s delivered in citellus repo and can be executed by specifying sosreports:
 
 ## Next steps with Magui
 
-- At the moment it aggregates the data outputted by scripts in citellus, the idea is to write other plugins Magui-specific that process on the data (a test in citellus might be ok, but could mean a failure when analyzed together with other sosreports)
-- For example you can compare the seqno in galera database or ntp sync status across several controllers.
-
+- Three plugins as of this writing:
+    - Aggregate data from citellus sorted by plugin for quick comparision
+    - pipeline-yaml different across sosreports
+    - seqno and higuuest seqno in galera
 
 ---
 
 ## Action Items
-<small>
-- Add more plugins<!-- .element: class="fragment" -->
+
+- Add more plugins!<!-- .element: class="fragment" -->
 - Evangelize about the tool so we can work together in solving our common issues on the same framework.<!-- .element: class="fragment" -->
 - Get moving fast enough that the tool has continuity, other tools just died by having a ‘solo’ developer working on spare time<!-- .element: class="fragment" -->
-- Start implementing some tests in Magui that provide real intelligence (for example we can report now on seqno, but we do not process that with a specific plugin that reports ‘error’ if one differs).<!-- .element: class="fragment" -->
+- Start implementing more tests in Magui that provide real intelligence (for example we do report and check on seqno or pipeline-yaml but lot of other issues can benefit from this).<!-- .element: class="fragment" -->
 
-</small>
 
 ---
 
