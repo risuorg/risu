@@ -1,7 +1,6 @@
 #!/bin/bash
 
-# Copyright (C) 2017  Pablo Iranzo Gómez (Pablo.Iranzo@redhat.com)
-# Based on the code of Jean-Francois Saucier (jsaucier@redhat.com)
+# Copyright (C) 2018  Pablo Iranzo Gómez (Pablo.Iranzo@redhat.com)
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -16,22 +15,18 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# long_name: Updated sos package
-# description: Checks if OSP12 deployment is using containers and valid sosreport version
+# long_name: Checks for fixed dracut package
+# description: Checks if package is affected of Spectre/Meltdown
 
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 
 exitoudated(){
-    echo $"outdated sosreport package ${VERSION}: Containerized deployments require updated release" >&2
-    exit $RC_FAILED
+    echo "Please do check https://access.redhat.com/security/vulnerabilities/speculativeexecution for guidance" >&2
 }
-RELEASE=$(discover_osp_version)
-if [[ "${RELEASE}" -ge "12" ]]; then
-    # Sosreport with container support is 3.4-9 or later
-    is_required_rpm_over sos 3 4 9
-    exit $RC_OKAY
-else
-    echo "works only on OSP12 and later" >&2
-    exit $RC_SKIPPED
+RELEASE=$(discover_rhrelease)
+if [[ "${RELEASE}" -eq "7" ]]; then
+    exitoudated
+    is_required_rpm_over libvirt 3 2 0 14
 fi
+exit $RC_OKAY
