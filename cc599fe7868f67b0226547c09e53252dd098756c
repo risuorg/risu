@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b46ebc4c_1c5020eb",
+        "filename": "citellusclient/common.d/01-rpm.sh",
+        "patchSetId": 10
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1011950
+      },
+      "writtenOn": "2018-01-08T22:18:02Z",
+      "side": 1,
+      "message": "Why do we use 2\u003e\u00261 | tail -1 ? and in other case tail -1?",
+      "range": {
+        "startLine": 114,
+        "startChar": 10,
+        "endLine": 115,
+        "endChar": 37
+      },
+      "revId": "cc599fe7868f67b0226547c09e53252dd098756c",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
