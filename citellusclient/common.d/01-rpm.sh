@@ -103,17 +103,17 @@ is_rpm_over(){
     fi
     if [[ "$flag" -eq "1" ]]; then
         # "package $1 version $VERSION is lower than required (${@:1})."
-        exit 1
+        return 1
     fi
-    exit 0
+    return 0
 
 }
 
 is_required_rpm_over(){
     is_required_rpm $1
     flag=0
-    VERSION=$(is_rpm $1)
-    if [ ! is_required_rpm $* ]; then
+    VERSION=$(is_rpm $1 2>&1|tail -1)
+    if ! is_rpm_over "${@}" ; then
         echo "package $1 version $VERSION is lower than required (${@:1})." >&2
         exit $RC_FAILED
     fi
