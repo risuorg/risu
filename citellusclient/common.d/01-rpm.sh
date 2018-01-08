@@ -34,13 +34,13 @@ is_required_rpm(){
 }
 
 is_rpm_over(){
+    is_required_rpm $1
+    flag=0
+    VERSION=$(is_rpm $1)
     if [[ "$#" -eq "3" ]]; then
         # $1 RPM
         # $2 MAJOR
         # $3 RELEASE
-        is_required_rpm $1
-        flag=0
-        VERSION=$(is_rpm $1)
         MAJOR=$(echo ${VERSION} | sed -n -r -e "s/^$1.*-([0-9]+)-.*$/\1/p")
         RELEASE=$(echo ${VERSION} | sed -n -r -e "s/^$1.*-[0-9]+.[0-9]+-([0-9]+).*$/\1/p")
 
@@ -51,18 +51,11 @@ is_rpm_over(){
         else
             flag=1
         fi
-        if [[ "$flag" -eq "1" ]]; then
-            echo "package $1 version $VERSION is lower than required $2-$3." >&2
-            exit $RC_FAILED
-        fi
     elif [[ "$#" -eq "4" ]]; then
         # $1 RPM
         # $2 MAJOR
         # $3 MINOR
         # $4 RELEASE
-        is_required_rpm $1
-        flag=0
-        VERSION=$(is_rpm $1)
         MAJOR=$(echo ${VERSION} | sed -n -r -e "s/^$1.*-([0-9]+).[0-9]+-[0-9]+.*$/\1/p")
         MINOR=$(echo ${VERSION} | sed -n -r -e "s/^$1.*-[0-9]+.([0-9]+)-[0-9]+.*$/\1/p")
         RELEASE=$(echo ${VERSION} | sed -n -r -e "s/^$1.*-[0-9]+.[0-9]+-([0-9]+).*$/\1/p")
@@ -78,19 +71,12 @@ is_rpm_over(){
         else
             flag=1
         fi
-        if [[ "$flag" -eq "1" ]]; then
-            echo "package $1 version $VERSION is lower than required $2.$3-$4." >&2
-            exit $RC_FAILED
-        fi
     elif [[ "$#" -eq "5" ]]; then
         # $1 RPM
         # $2 MAJOR
         # $3 MID
         # $4 MINOR
         # $5 RELEASE
-        is_required_rpm $1
-        flag=0
-        VERSION=$(is_rpm $1)
         MAJOR=$(echo ${VERSION} | sed -n -r -e "s/^$1.*-([0-9]+).[0-9]+.[0-9]+-[0-9]+.*$/\1/p")
         MID=$(echo ${VERSION} | sed -n -r -e "s/^$1.*-[0-9]+.([0-9]+).[0-9]+-[0-9]+.*$/\1/p")
         MINOR=$(echo ${VERSION} | sed -n -r -e "s/^$1.*-[0-9]+.[0-9]+.([0-9]+)-[0-9]+.*$/\1/p")
@@ -111,12 +97,24 @@ is_rpm_over(){
         else
             flag=1
         fi
-        if [[ "$flag" -eq "1" ]]; then
-            echo "package $1 version $VERSION is lower than required $2.$3.$4-$5." >&2
-            exit $RC_FAILED
-        fi
     else
         echo "invalid number of arguments $#" >&2
         exit 99
+    fi
+    if [[ "$flag" -eq "1" ]]; then
+        echo "package $1 version $VERSION is lower than required (${@:1})." >&2
+        exit 1
+    fi
+    exit 0
+
+}
+
+is_required_rpm_over(){
+    is_required_rpm $1
+    flag=0
+    VERSION=$(is_rpm $1)
+    if [ ! is_required_rpm $* ]; then
+        echo "package $1 version $VERSION is lower than required." >&2
+        exit $RC_FAILED
     fi
 }
