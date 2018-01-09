@@ -48,7 +48,7 @@ mode: selfcontained
     - missing parameters in expired ceilometer data, which can lead to filling up your hard drive.
     - unsynced ntp.
     - outdated packages that have known critical issues.
-    - others! (101 plugins as of this writting some of them with more than one issue detected)
+    - others! (111 plugins as of this writting some of them with more than one issue detected)
 - Whatever else you can imagine or code 😉
 
 ----
@@ -60,6 +60,7 @@ mode: selfcontained
 - network : 1
 - openstack : 54
 - pacemaker : 7
+- security: 10
 - system : 23
 - virtualization : 1
 
@@ -74,13 +75,16 @@ launchpad : 1 ['openstack/keystone: 1']
 
 network : 1 []
 
-openstack : 54 ['nova: 8', 'mysql: 6', 'rabbitmq: 3', 'containers/rabbitmq: 1', 'network: 3', 'containers/docker: 2', 'hardware: 1', 'containers: 4', 'cinder: 1', 'swift: 2', 'systemd: 1', 'iptables: 1', 'ceph: 4', 'keystone: 3', 'system: 1', 'redis: 1', 'crontab: 3', 'ceilometer: 3', 'glance: 1', 'neutron: 1']
+openstack : 54 ['nova: 8', 'mysql: 6', 'rabbitmq: 3', 'containers/rabbitmq: 1', 'network: 3', 'containers/docker: 2', 'hardware: 1', 'containers: 4', 'cinder: 1', 'swift: 2', 'systemd: 1', 'iptables: 1', 'ceph: 4', 'keystone: 3', 'system: 1', 'redis: 1', 'neutron: 1', 'crontab: 3', 'ceilometer: 3', 'glance: 1']
 
 pacemaker : 7 []
+
+security : 10 ['meltdown: 2', 'spectre: 8']
 
 system : 23 []
 
 virtualization : 1 []
+
 </small>
 
 ---

@@ -170,3 +170,29 @@ location of various files. To use this script you can source it at the top:
         # docker exec -i $(docker ps | grep rabbitmq-bundle | cut -d" " -f1) sh -c "rabbitmqctl report"
         docker_runit "rabbitmq-bundle" "rabbitmqctl report" | grep partitions
         ~~~
+
+- `discover_rhrelease` -- find RH Release number based on /etc/redhat-release code name
+    - Example:
+        ~~~sh
+        if [[ $(discover_rhrelease) -eq "7" ]] ; then
+            echo "RHEL 7 detected"
+        else
+            echo "RHEL 7 not detected"
+        fi
+        ~~~
+
+- `is_rpm_over` -- Checks if provided RPM is over specific release
+    - Example:
+        ~~~sh
+        if is_rpm_over dracut 033 502; then
+            echo "dracut is not affected by spectre"
+        else
+            echo "update dracut to get the fix for spectre vulnerability"
+        fi
+        ~~~
+
+- `is_required_rpm_over` -- Checks if provided RPM is over specific release or exit as FAILED
+    - Example:
+        ~~~sh
+        is_required_rpm_over dracut 033 502
+        ~~~
