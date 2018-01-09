@@ -27,6 +27,7 @@ from __future__ import print_function
 import argparse
 import datetime
 import gettext
+import hashlib
 import imp
 import json
 import logging
@@ -426,6 +427,7 @@ def main():
                    'err': err}
 
         results.append({'plugin': plugin.__name__.split(".")[-1],
+                        'id': hashlib.md5(plugin.__file__.replace(maguidir, '').encode('UTF-8')).hexdigest(),
                         'description': plugin.help(),
                         'results': updates,
                         'time': time.time() - start_time})
