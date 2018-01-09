@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "087e644e_b7c947d0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2018-01-09T15:39:28Z",
+      "side": 1,
+      "message": "As it depends on one BZ I would place it under:\n\ncitellusclient/plugins/core/bugzilla/openstack/tripleo/bz1437016-stuck_in_progress.sh",
+      "revId": "5b236144b9795507a2af252df4531b3271e3f789",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e88facfe_3cefe499",
+        "filename": "citellusclient/plugins/core/openstack/tripleo/stuck_in_progress.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2018-01-09T15:39:28Z",
+      "side": 1,
+      "message": "I know it works, but VERSION is set by the common function, it could become a problem in the future if we overwrite or rename it.\n\nCould you please do set it as VERSION\u003d$(is_rpm openstack-tripleo version or, use approach as below:\n\n\necho $\"outdated openstack-tripleo-common causes IN_PROGRESS loops: https://bugzilla.redhat.com/show_bug.cgi?id\u003d1437016\" \u003e\u00262 \n\nAnd then:\nis_required_rpm_over openstack-tripleo-common 2 0 0 11\n\nAs it will fail the \u0027required\u0027 part it will output installed and required version\n\nCheck the spectre/meltdown, for example: https://github.com/zerodayz/citellus/blob/master/citellusclient/plugins/core/security/spectre/dracut.sh\n\nThe trick is there is that we always output the error, but only exit with RC_FAILED when is_required_rpm_over fails",
+      "revId": "5b236144b9795507a2af252df4531b3271e3f789",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f2ab0f2e_e9892cfb",
+        "filename": "citellusclient/plugins/core/openstack/tripleo/stuck_in_progress.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2018-01-09T15:39:28Z",
+      "side": 1,
+      "message": "we can move the exit $RC_OKAY to the end of the script and make it not needed on lines 33, 37, 41",
+      "revId": "5b236144b9795507a2af252df4531b3271e3f789",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
