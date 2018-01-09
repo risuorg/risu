@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "5ae11fff_5b141256",
+        "filename": "citellusclient/plugins/core/openstack/tripleo/stuck_in_progress.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2018-01-09T15:43:58Z",
+      "side": 1,
+      "message": "Also, you can add:\n\n# bugzilla: https://bugzilla.redhat.com/show_bug.cgi?id\u003d1437016\n\nSo that it\u0027s populated in citellus metadata",
+      "revId": "5b236144b9795507a2af252df4531b3271e3f789",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e88facfe_3cefe499",
         "filename": "citellusclient/plugins/core/openstack/tripleo/stuck_in_progress.sh",
         "patchSetId": 1
