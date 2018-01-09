@@ -194,7 +194,7 @@ Blog post by Pablo:
 - <http://iranzo.github.io/blog/2017/07/26/Citellus-framework-for-detecting-known-issues/>
 - <https://iranzo.github.io/blog/2017/07/31/Magui-for-analysis-of-issues-across-several-hosts/>
 - <https://iranzo.github.io/blog/2017/08/17/Jenkins-for-running-CI-tests/>
-
+- DevConf.cz 2018 <https://devconfcz2018.sched.com/event/DJXG/detect-pitfalls-of-osp-deployments-with-citellus>
 </small>
 
 ---

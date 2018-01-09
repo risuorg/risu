@@ -11,6 +11,8 @@ Citellus is a program that should help with system configuration validation on e
 
 Please if you have any idea on any improvements please do not hesitate to open an issue.
 
+Come to hear about us at [devconf.cz!!](https://devconfcz2018.sched.com/event/DJXG/detect-pitfalls-of-osp-deployments-with-citellus)
+
 ## Highlights
 - Plugins in your language of choice.
 - Allows to dump output to json file to be processed by other tools.
