@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# long_name: Checks for fixed dracut package
+# long_name: Checks for fixed qemu-kvm package
 # description: Checks if package is affected of Spectre/Meltdown
 
 # Load common functions
