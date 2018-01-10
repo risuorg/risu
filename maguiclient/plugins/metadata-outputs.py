@@ -2,7 +2,7 @@
 # encoding: utf-8
 #
 # Copyright (C) 2018  Pablo Iranzo Gómez (Pablo.Iranzo@redhat.com)
-# Description: Plugin for reporting back citellus data from all sosreports
+# Description: Plugin for reporting back citellus metadata from all sosreports
 
 from __future__ import print_function
 
@@ -14,7 +14,7 @@ import maguiclient.magui as magui
 # Load i18n settings from citellus
 _ = citellus._
 
-extension = "citellus-outputs"
+extension = "metadata-outputs"
 pluginsdir = os.path.join(citellus.citellusdir, 'plugins', extension)
 
 
@@ -35,7 +35,7 @@ def run(data, quiet=False):  # do not edit this line
     :return: returncode, out, err
     """
 
-    # Return all data passed from citellus
+    # Return all metadata passed from citellus
 
     # For now, let's only print plugins that have rc ! $RC_OKAY in quiet
     if quiet:
@@ -46,7 +46,7 @@ def run(data, quiet=False):  # do not edit this line
     # We should filter metadata extension as is to be processed separately
     err = []
     for item in toprint:
-        if toprint[item]['backend'] != 'metadata':
+        if toprint[item]['backend'] == 'metadata':
             err.append(toprint[item])
 
     returncode = citellus.RC_OKAY
@@ -60,5 +60,5 @@ def help():  # do not edit this line
     :return: help text
     """
 
-    commandtext = _("Plugin for reporting back citellus data from all sosreports")
+    commandtext = _("Plugin for reporting back citellus metadata from all sosreports")
     return commandtext
