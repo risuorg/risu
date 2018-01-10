@@ -27,6 +27,6 @@ exitoudated(){
 RELEASE=$(discover_rhrelease)
 if [[ "${RELEASE}" -eq "7" ]]; then
     exitoudated
-    is_required_rpm_over kernel-rt 3 10 0 693
+    is_required_rpm_over kernel-rt 3 10 0 693 11 6
 fi
 exit $RC_OKAY
