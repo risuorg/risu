@@ -151,6 +151,13 @@ INFO:citellus:using default plugin path
 
 <img src="doc/images/www.png" height="40%" border=0>
 
+- Citellus-web now supports the parsing of magui.json.
+
+- It's possible to tell the citellus.html which json to parse by adding json=<jsonfile> as a query string:
+~~~
+http://host/citellus.html?json=magui.json
+~~~
+
 ## Ansible playbooks
 Citellus can also run Ansible playbooks via extension
 
