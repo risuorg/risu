@@ -28,5 +28,8 @@ RELEASE=$(discover_rhrelease)
 if [[ "${RELEASE}" -eq "7" ]]; then
     exitoudated
     is_required_rpm_over qemu-kvm 1 5 3 141
+elif [[ "${RELEASE}" -eq "6" ]]; then
+    exitoudated
+    is_required_rpm_over qemu-kvm 0 12 1 2 2 503
 fi
 exit $RC_OKAY
