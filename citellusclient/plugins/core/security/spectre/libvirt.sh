@@ -28,5 +28,8 @@ RELEASE=$(discover_rhrelease)
 if [[ "${RELEASE}" -eq "7" ]]; then
     exitoudated
     is_required_rpm_over libvirt 3 2 0 14
+elif [[ "${RELEASE}" -eq "6" ]]; then
+    exitoudated
+    is_required_rpm_over libvirt 0 10 2 62
 fi
 exit $RC_OKAY
