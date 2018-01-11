@@ -27,9 +27,9 @@ exitoudated(){
 RELEASE=$(discover_rhrelease)
 if [[ "${RELEASE}" -eq "4" ]]; then
     exitoudated
-    is_required_rpm_over dracut 033 502
+    is_required_rpm_over dracut dracut-033-502
 elif [[ "${RELEASE}" -eq "7" ]]; then
     exitoudated
-    is_required_rpm_over dracut 033 502
+    is_required_rpm_over dracut dracut-033-502
 fi
 exit $RC_OKAY

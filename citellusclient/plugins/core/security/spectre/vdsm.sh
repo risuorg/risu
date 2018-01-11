@@ -27,6 +27,6 @@ exitoudated(){
 RELEASE=$(discover_rhrelease)
 if [[ "${RELEASE}" -eq "7" ]]; then
     exitoudated
-    is_required_rpm_over vdsm 4 19 43 3
+    is_required_rpm_over vdsm vdsm-4.19.43-3.el7ev
 fi
 exit $RC_OKAY

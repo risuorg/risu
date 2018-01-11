@@ -184,7 +184,7 @@ location of various files. To use this script you can source it at the top:
 - `is_rpm_over` -- Checks if provided RPM is over specific release
     - Example:
         ~~~sh
-        if is_rpm_over dracut 033 502; then
+        if is_rpm_over dracut dracut-033-502; then
             echo "dracut is not affected by spectre"
         else
             echo "update dracut to get the fix for spectre vulnerability"
@@ -194,5 +194,5 @@ location of various files. To use this script you can source it at the top:
 - `is_required_rpm_over` -- Checks if provided RPM is over specific release or exit as FAILED
     - Example:
         ~~~sh
-        is_required_rpm_over dracut 033 502
+        is_required_rpm_over dracut dracut-033-502
         ~~~

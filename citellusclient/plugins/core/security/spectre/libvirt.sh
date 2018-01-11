@@ -27,9 +27,9 @@ exitoudated(){
 RELEASE=$(discover_rhrelease)
 if [[ "${RELEASE}" -eq "7" ]]; then
     exitoudated
-    is_required_rpm_over libvirt 3 2 0 14
+    is_required_rpm_over libvirt libvirt-3.2.0-14.el7_4.7
 elif [[ "${RELEASE}" -eq "6" ]]; then
     exitoudated
-    is_required_rpm_over libvirt 0 10 2 62
+    is_required_rpm_over libvirt libvirt-0.10.2-62.el6_9.1
 fi
 exit $RC_OKAY
