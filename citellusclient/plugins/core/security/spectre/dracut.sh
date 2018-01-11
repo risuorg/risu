@@ -25,11 +25,8 @@ exitoudated(){
     echo "Please do check https://access.redhat.com/security/vulnerabilities/speculativeexecution for guidance" >&2
 }
 RELEASE=$(discover_rhrelease)
-if [[ "${RELEASE}" -eq "4" ]]; then
+if [[ "${RELEASE}" -eq "7" ]]; then
     exitoudated
-    is_required_rpm_over dracut 033 502
-elif [[ "${RELEASE}" -eq "7" ]]; then
-    exitoudated
-    is_required_rpm_over dracut 033 502
+    is_required_rpm_over dracut-033-502.el7_4.1
 fi
 exit $RC_OKAY

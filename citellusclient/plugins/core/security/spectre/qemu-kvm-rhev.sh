@@ -27,6 +27,6 @@ exitoudated(){
 RELEASE=$(discover_rhrelease)
 if [[ "${RELEASE}" -eq "7" ]]; then
     exitoudated
-    is_required_rpm_over qemu-kvm-rhev 2 9 0 16
+    is_required_rpm_over qemu-kvm-rhev qemu-kvm-rhev-2.9.0-16
 fi
 exit $RC_OKAY

@@ -30,15 +30,15 @@ RELEASE=$(discover_osp_version)
 if [[ "${RELEASE}" -eq "8" ]]; then
     exitoutdated
     # openstack-tripleo-common needs to be 0.3.1-5 or later
-    is_required_rpm_over openstack-tripleo-common 0 3 1 5
+    is_required_rpm_over openstack-tripleo-common openstack-tripleo-common-0.3.1-5.el7ost
 elif [[ "${RELEASE}" -eq "9" ]]; then
     exitoutdated
     # openstack-tripleo-common needs to be 2.0.0-11 or later
-    is_required_rpm_over openstack-tripleo-common 2 0 0 11
+    is_required_rpm_over openstack-tripleo-common openstack-tripleo-common-2.0.0-11.el7ost
 elif [[ "${RELEASE}" -eq "10" ]]; then
     exitoutdated
     # openstack-tripleo-common needs to be 5.4.1-6 or later
-    is_required_rpm_over openstack-tripleo-common 5 4 1 6
+    is_required_rpm_over openstack-tripleo-common openstack-tripleo-common-5.4.1-6.el7ost
 else
     echo "only applies to OSP8, OSP9 and OSP10" >&2
     exit $RC_SKIPPED
