@@ -72,10 +72,46 @@ You can see pending and already merged actual changes at: <https://review.gerrit
 
 5. If Jenkins gives 'Verified +1', next step is wait for one reviewer to give final ACK and merge the change.
 
-### How to write tests
+# How to write tests
 
 Please refer to the
 [templates](https://github.com/zerodayz/citellus/tree/master/doc/templates)
 folder for examples.
 
 If you want to contribute also Unittests for your plugins, check [TESTING.md](TESTING.md)
+
+# How to debug your test
+
+We've included a file named `env-for.debug.sh` in the root folder of citellus repo that allows to be sourced and later execute your script.
+
+This  environment file will define the standard variables Citellus does use like:
+- RC_OKAY
+- RC_FAILED
+- RC_SKIPPED
+- TEXTDOMAIN
+- TEXTOMAINDIR
+- CITELLUS_BASE
+- CITELLUS_LIVE
+- CITELLUS_ROOT
+
+And will preload the common-functions
+
+The way to use it is:
+
+~~~sh
+. ~/citellus/env-for-debug.sh
+~~~
+
+Then you can debug your script with:
+
+~~~
+sh -x /path/to/your/plugin.sh
+~~~
+
+Or test individual functions output like:
+
+~~~
+is_rpm qemu-kvm-rhev
+~~~
+
+Please, do note that as some functions do 'exit' or 'return' for example executing `is_rpm_over` will exit the active shell, so beware!!
