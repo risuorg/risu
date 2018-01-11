@@ -378,10 +378,12 @@ It’s delivered in citellus repo and can be executed by specifying sosreports:
 
 ## Next steps with Magui
 
-- Three plugins as of this writing:
-    - Aggregate data from citellus sorted by plugin for quick comparision
+- Four plugins as of this writing:
+    - Aggregate data from citellus sorted by plugin for quick comparison
+    - Show 'metadata' extension separated to quickly compare across values
     - pipeline-yaml different across sosreports
     - seqno and higuuest seqno in galera
+
 
 ---
 

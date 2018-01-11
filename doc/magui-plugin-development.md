@@ -2,7 +2,7 @@
 
 Magui plugins should conform to the following standards:
 
-- Written in python and stored in the `magplug` folder following whatever desired hierarchy (for example, try to match citellus plugins structure for easyness in filtering)
+- Written in python and stored in the `maguiclient/plugins` folder following whatever desired hierarchy (for example, try to match citellus plugins structure for easyness in filtering)
 - Implement some base functions keeping arguments and data returned as in others:
     - init()
         - Returns list of triggers (array with strings) (contain citellus plugin ID data to act on)
