@@ -37,144 +37,9 @@ is_rpm_over(){
     is_required_rpm $1
     flag=0
     VERSION=$(is_rpm $1|sort -V|tail -1)
-    if [[ "$#" -eq "3" ]]; then
-        # $1 RPM
-        # $2 MAJOR
-        # $3 RELEASE
-        MAJOR=$(echo ${VERSION} | sed -n -r -e "s/^$1.*-([0-9]+)-.*$/\1/p")
-        RELEASE=$(echo ${VERSION} | sed -n -r -e "s/^$1.*-[0-9]+.[0-9]+-([0-9]+).*$/\1/p")
-
-        if [[ "${MAJOR}" -ge "$2" ]]; then
-            if [[ "${RELEASE}" -lt "$3" ]]; then
-                flag=1
-            fi
-        else
-            flag=1
-        fi
-    elif [[ "$#" -eq "4" ]]; then
-        # $1 RPM
-        # $2 MAJOR
-        # $3 MINOR
-        # $4 RELEASE
-        MAJOR=$(echo ${VERSION} | sed -n -r -e "s/^$1.*-([0-9]+).[0-9]+-[0-9]+.*$/\1/p")
-        MINOR=$(echo ${VERSION} | sed -n -r -e "s/^$1.*-[0-9]+.([0-9]+)-[0-9]+.*$/\1/p")
-        RELEASE=$(echo ${VERSION} | sed -n -r -e "s/^$1.*-[0-9]+.[0-9]+-([0-9]+).*$/\1/p")
-
-        if [[ "${MAJOR}" -ge "$2" ]]; then
-            if [[ "${MINOR}" -ge "$3" ]]; then
-                if [[ "${RELEASE}" -lt "$4" ]]; then
-                    flag=1
-                fi
-            else
-                flag=1
-            fi
-        else
-            flag=1
-        fi
-    elif [[ "$#" -eq "5" ]]; then
-        # $1 RPM
-        # $2 MAJOR
-        # $3 MID
-        # $4 MINOR
-        # $5 RELEASE
-        MAJOR=$(echo ${VERSION} | sed -n -r -e "s/^$1.*-([0-9]+).[0-9]+.[0-9]+-[0-9]+.*$/\1/p")
-        MID=$(echo ${VERSION} | sed -n -r -e "s/^$1.*-[0-9]+.([0-9]+).[0-9]+-[0-9]+.*$/\1/p")
-        MINOR=$(echo ${VERSION} | sed -n -r -e "s/^$1.*-[0-9]+.[0-9]+.([0-9]+)-[0-9]+.*$/\1/p")
-        RELEASE=$(echo ${VERSION} | sed -n -r -e "s/^$1.*-[0-9]+.[0-9]+.[0-9]+-([0-9]+).*$/\1/p")
-
-        if [[ "${MAJOR}" -ge "$2" ]]; then
-            if [[ "${MID}" -ge "$3" ]]; then
-                if [[ "${MINOR}" -ge "$4" ]]; then
-                    if [[ "${RELEASE}" -lt "$5" ]]; then
-                        flag=1
-                    fi
-                else
-                    flag=1
-                fi
-            else
-                flag=1
-            fi
-        else
-            flag=1
-        fi
-    elif [[ "$#" -eq "6" ]]; then
-        # $1 RPM
-        # $2 MAJOR
-        # $3 MID
-        # $4 MINOR
-        # $5 RELEASE
-        # $6 SUBRELEASE
-        MAJOR=$(echo ${VERSION} | sed -n -r -e "s/^$1.*-([0-9]+).[0-9]+.[0-9]+-[0-9]+.*$/\1/p")
-        MID=$(echo ${VERSION} | sed -n -r -e "s/^$1.*-[0-9]+.([0-9]+).[0-9]+-[0-9]+.*$/\1/p")
-        MINOR=$(echo ${VERSION} | sed -n -r -e "s/^$1.*-[0-9]+.[0-9]+.([0-9]+)-[0-9]+.*$/\1/p")
-        RELEASE=$(echo ${VERSION} | sed -n -r -e "s/^$1.*-[0-9]+.[0-9]+.[0-9]+-([0-9]+).*$/\1/p")
-        SUBRELEASE=$(echo ${VERSION} | sed -n -r -e "s/^$1.*-[0-9]+.[0-9]+.[0-9]+-[0-9]+.([0-9]+).*$/\1/p")
-
-        if [[ "${MAJOR}" -ge "$2" ]]; then
-            if [[ "${MID}" -ge "$3" ]]; then
-                if [[ "${MINOR}" -ge "$4" ]]; then
-                    if [[ "${RELEASE}" -ge "$5" ]]; then
-                        if [[ "${SUBRELEASE}" -lt "$6" ]]; then
-                            flag=1
-                        else
-                            flag=1
-                        fi
-                    else
-                        flag=1
-                    fi
-                else
-                    flag=1
-                fi
-            else
-                flag=1
-            fi
-        else
-            flag=1
-        fi
-    elif [[ "$#" -eq "7" ]]; then
-        # $1 RPM
-        # $2 MAJOR
-        # $3 MID
-        # $4 MINOR
-        # $5 RELEASE
-        # $6 SUBRELEASE
-        # $7 SUBSUBRELEASE
-        MAJOR=$(echo ${VERSION} | sed -n -r -e "s/^$1.*-([0-9]+).[0-9]+.[0-9]+-[0-9]+.*$/\1/p")
-        MID=$(echo ${VERSION} | sed -n -r -e "s/^$1.*-[0-9]+.([0-9]+).[0-9]+-[0-9]+.*$/\1/p")
-        MINOR=$(echo ${VERSION} | sed -n -r -e "s/^$1.*-[0-9]+.[0-9]+.([0-9]+)-[0-9]+.*$/\1/p")
-        RELEASE=$(echo ${VERSION} | sed -n -r -e "s/^$1.*-[0-9]+.[0-9]+.[0-9]+-([0-9]+).*$/\1/p")
-        SUBRELEASE=$(echo ${VERSION} | sed -n -r -e "s/^$1.*-[0-9]+.[0-9]+.[0-9]+-[0-9]+.([0-9]+).*$/\1/p")
-        SUBSUBRELEASE=$(echo ${VERSION} | sed -n -r -e "s/^$1.*-[0-9]+.[0-9]+.[0-9]+-[0-9]+.[0-9]+.([0-9]+).*$/\1/p")
-
-        if [[ "${MAJOR}" -ge "$2" ]]; then
-            if [[ "${MID}" -ge "$3" ]]; then
-                if [[ "${MINOR}" -ge "$4" ]]; then
-                    if [[ "${RELEASE}" -ge "$5" ]]; then
-                        if [[ "${SUBRELEASE}" -ge "$6" ]]; then
-                            if [[ "${SUBSUBRELEASE}" -lt "$7" ]]; then
-                                flag=1
-                            fi
-                        else
-                            flag=1
-                        fi
-                    else
-                        flag=1
-                    fi
-                else
-                    flag=1
-                fi
-            else
-                flag=1
-            fi
-        else
-            flag=1
-        fi
-    else
-        echo "invalid number of arguments $#" >&2
-        exit 99
-    fi
-    if [[ "$flag" -eq "1" ]]; then
-        # "package $1 version $VERSION is lower than required (${@:1})."
+    LATEST=$(echo $VERSION $2|tr " " "\n"|sort -V|tail -1)
+    if [ "$VERSION" != "$LATEST" ]; then
+        # "package $1 version $VERSION is lower than required ($2)."
         return 1
     fi
     return 0
@@ -186,7 +51,7 @@ is_required_rpm_over(){
     flag=0
     VERSION=$(is_rpm $1 2>&1|sort -V|tail -1)
     if ! is_rpm_over "${@}" ; then
-        echo "package $1 version $VERSION is lower than required (${@:1})." >&2
+        echo "package $1 version $VERSION is lower than required ($2)." >&2
         exit $RC_FAILED
     fi
 }

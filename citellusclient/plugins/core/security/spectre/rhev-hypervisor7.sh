@@ -27,6 +27,6 @@ exitoudated(){
 RELEASE=$(discover_rhrelease)
 if [[ "${RELEASE}" -eq "7" ]]; then
     exitoudated
-    is_required_rpm_over rhev-hypervisor7 7.3 20180102 1
+    is_required_rpm_over rhev-hypervisor7 rhev-hypervisor7-7.3-20180102.1.el7ev
 fi
 exit $RC_OKAY
