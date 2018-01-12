@@ -19,6 +19,7 @@
 
 # long_name: Undercloud metadata server redirection
 # description: Checks for iptables rules to allow instances to reach metadata server
+# priority: 800
 
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"

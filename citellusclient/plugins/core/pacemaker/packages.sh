@@ -17,6 +17,7 @@
 
 # long_name: Outdated pacemaker packages
 # description: Checks for outdated pacemaker packages
+# priority: 500
 
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"

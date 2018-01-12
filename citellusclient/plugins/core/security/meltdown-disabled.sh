@@ -17,6 +17,7 @@
 
 # long_name: Checks for disabled kernel protection features against Meltdown
 # description: Checks if user disabled fix for Meltdown
+# priority: 400
 
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"

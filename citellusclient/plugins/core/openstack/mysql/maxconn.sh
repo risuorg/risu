@@ -17,6 +17,7 @@
 
 # long_name: HAProxy maximum connections
 # description: Checks HAProxy max connections
+# priority: 500
 
 # this can run against live
 

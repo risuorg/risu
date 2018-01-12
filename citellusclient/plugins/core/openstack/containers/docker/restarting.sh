@@ -19,6 +19,7 @@
 
 # long_name: Containers in restarting state
 # description: Check docker container restarting states
+# priority: 700
 
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"

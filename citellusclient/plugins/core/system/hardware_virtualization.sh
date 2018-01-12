@@ -17,6 +17,7 @@
 
 # long_name: Hardware Virtualization support
 # description: Checks for HW virtualization support
+# priority: 200
 
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"

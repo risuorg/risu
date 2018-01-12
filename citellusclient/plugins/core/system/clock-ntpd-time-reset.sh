@@ -17,6 +17,7 @@
 
 # long_name: NTPd time resets because of time syncs
 # description: Checks for ntpd time resets
+# priority: 500
 
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"

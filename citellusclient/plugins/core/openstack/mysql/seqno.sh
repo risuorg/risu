@@ -17,6 +17,7 @@
 
 # long_name: Database sequence number
 # description: Checks latest seqno in MySQL/Galera
+# priority: 200
 
 # this can run against live or snapshot mode
 

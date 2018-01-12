@@ -17,6 +17,7 @@
 
 # long_name: Containerized deployment
 # description: Checks if deployment is using containers
+# priority: 100
 
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"

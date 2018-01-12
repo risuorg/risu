@@ -21,6 +21,7 @@
 
 # long_name: Disk inode usage
 # description: error if disk inode usage is greater than $CITELLUS_INODE_MAX_PERCENT=90
+# priority: 300
 
 : ${CITELLUS_INODE_MAX_PERCENT=90}
 

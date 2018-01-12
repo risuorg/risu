@@ -19,6 +19,7 @@
 
 # long_name: Containers in unhealthy status
 # description: Check docker container health-check states
+# priority: 900
 
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"

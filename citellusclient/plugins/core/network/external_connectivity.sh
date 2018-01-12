@@ -19,6 +19,7 @@
 
 # long_name: External connectivity test
 # description: Checks for external connectivity of the system
+# priority: 100
 
 : ${REMOTE_PING_TARGET:=8.8.8.8}
 

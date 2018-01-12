@@ -19,6 +19,7 @@
 
 # long_name: SR-IOV and DPDK Configuration
 # description: Checks for various SRIOV and DPDK configuration parameters
+# priority: 300
 
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"

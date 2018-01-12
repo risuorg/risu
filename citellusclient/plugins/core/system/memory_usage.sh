@@ -20,6 +20,7 @@
 
 # long_name: Memory usage
 # description: error if memory usage is higher than $CITELLUS_MEMORY_MAX_PERCENT=90
+# priority: 400
 
 : ${CITELLUS_MEMORY_MAX_PERCENT=90}
 

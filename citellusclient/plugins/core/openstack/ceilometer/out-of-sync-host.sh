@@ -19,6 +19,7 @@
 
 # long_name: Mismatch between nova host and ceilometer host
 # description: Checks missconfigured host in nova vs ceilometer
+# priority: 500
 
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"

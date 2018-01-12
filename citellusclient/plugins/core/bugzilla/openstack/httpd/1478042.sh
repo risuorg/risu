@@ -20,6 +20,7 @@
 # long_name: WSGIApplicationGroup definition in mod_wsgi
 # description: Checks httpd WSGIApplication defined to avoid wrong redirection
 # bugzilla: https://bugzilla.redhat.com/show_bug.cgi?id=1478042
+# priority: 600
 
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"

@@ -20,6 +20,7 @@
 # long_name: Concurrent use of iptables
 # description: Checks for iptables xlock errors
 # bugzilla: https://bugzilla.redhat.com/show_bug.cgi?id=1489066
+# priority: 800
 
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"

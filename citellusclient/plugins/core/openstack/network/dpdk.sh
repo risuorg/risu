@@ -19,6 +19,7 @@
 
 # long_name: DPDK Configuration
 # description: Checks for various DPDK configuration parameters
+# priority: 300
 
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"

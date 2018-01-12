@@ -17,6 +17,7 @@
 
 # long_name: NTPd server quantity
 # description: Checks for ntpd server quantity
+# priority: 500
 
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"

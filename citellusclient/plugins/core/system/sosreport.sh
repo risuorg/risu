@@ -18,6 +18,7 @@
 # we can run this against fs snapshot or live system
 
 # long_name: Outdated sos package
+# priority: 100
 # description: this plugin checks for outdated sosreport package
 
 # Load common functions

@@ -20,6 +20,7 @@
 
 # long_name: Number of pacemaker nodes
 # description: Checks number of pacemaker nodes
+# priority: 800
 
 # we can run this against fs snapshot or live system
 

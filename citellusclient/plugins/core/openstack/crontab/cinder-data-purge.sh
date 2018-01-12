@@ -20,6 +20,7 @@
 
 # long_name: Cinder database purge
 # description: Checks if crontab for cinder data purge is in place
+# priority: 700
 
 # this can run against live and also any sort of snapshot of the filesystem
 

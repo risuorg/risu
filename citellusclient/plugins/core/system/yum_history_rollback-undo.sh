@@ -18,7 +18,8 @@
 # we can run this against fs snapshot or live system
 
 # long_name: Package rollback, undo or redo
-# description: this plugin checks in yum history for undo/rollback/redo 
+# description: this plugin checks in yum history for undo/rollback/redo
+# priority: 300
 
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"

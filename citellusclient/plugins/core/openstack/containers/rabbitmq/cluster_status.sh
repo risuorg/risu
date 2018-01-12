@@ -19,6 +19,7 @@
 
 # long_name: RabbitMQ node health
 # description: Check RabbitMQ node health in container
+# priority: 800
 
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"

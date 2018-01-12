@@ -17,6 +17,7 @@
 
 # long_name: Ceph rhceph repository
 # description: Checks if Ceph repos are not enabled on computes
+# priority: 200
 
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"

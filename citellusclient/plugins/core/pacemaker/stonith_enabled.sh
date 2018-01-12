@@ -17,6 +17,7 @@
 
 # long_name: Stonith configuration
 # description: Checks for stonith enabled in cluster
+# priority: 300
 
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"

@@ -17,6 +17,7 @@
 
 # long_name: Chronyd time synchronization
 # description: Checks for proper chronyd status
+# priority: 500
 
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"

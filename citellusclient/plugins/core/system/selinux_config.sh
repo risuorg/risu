@@ -21,6 +21,7 @@
 
 # long_name: SELinux persistent status
 # description: Determines SELinux status on configuration
+# priority: 100
 # selinux enforcing
 
 if [[ $CITELLUS_LIVE = 0 ]];  then

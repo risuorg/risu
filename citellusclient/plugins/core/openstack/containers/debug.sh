@@ -19,6 +19,7 @@
 
 # long_name: Services debug configuration
 # description: Check OpenStack services debug configuration in containers
+# priority: 200
 
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"

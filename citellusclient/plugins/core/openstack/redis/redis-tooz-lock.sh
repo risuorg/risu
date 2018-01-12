@@ -19,6 +19,7 @@
 
 # long_name: Tooz lock errors
 # description: Checks for Tooz lock error in gnocchi metrics
+# priority: 600
 
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"

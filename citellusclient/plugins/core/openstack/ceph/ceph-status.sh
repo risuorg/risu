@@ -17,6 +17,7 @@
 
 # long_name: Ceph status
 # description: Checks Ceph status on node
+# priority: 800
 
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"

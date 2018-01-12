@@ -20,6 +20,7 @@
 
 # long_name: Chronyd configuration in OSP
 # description: Reports if chrony is used on an OpenStack node
+# priority: 400
 
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"

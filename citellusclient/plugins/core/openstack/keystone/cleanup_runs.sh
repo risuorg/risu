@@ -17,6 +17,7 @@
 
 # long_name: Keystone token clean-up runs
 # description: Checks for token cleanup expired tokens removal
+# priority: 600
 
 # this can run against live and also fs snapshot
 

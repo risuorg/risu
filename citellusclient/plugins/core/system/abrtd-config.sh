@@ -19,6 +19,7 @@
 
 # long_name: ABRTd configuration
 # description: This plugin check abrtd configuration
+# priority: 100
 
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"

@@ -20,6 +20,7 @@
 
 # long_name: Resume guests on host restart
 # description: Check if compute is configured to restore guests running after reboot
+# priority: 100
 
 # check if we are running against compute
 

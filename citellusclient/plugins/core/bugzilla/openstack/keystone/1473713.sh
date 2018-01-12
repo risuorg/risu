@@ -22,6 +22,7 @@
 # long_name: Removal of expired tokens
 # description: Checks for keystone transaction errors on cleanup
 # bugzilla: https://bugzilla.redhat.com/show_bug.cgi?id=1473713
+# priority: 600
 
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"

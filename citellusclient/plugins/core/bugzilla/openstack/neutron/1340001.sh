@@ -20,6 +20,7 @@
 # long_name: Keystone metadata_agent.ini misconfiguration
 # description: Checks for wrong auth_url configuration in metadata_agent.ini
 # bugzilla: https://bugzilla.redhat.com/show_bug.cgi?id=1340001
+# priority: 600
 
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"

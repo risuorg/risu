@@ -19,6 +19,7 @@
 
 # long_name: RabbitMQ RPC issues
 # description: Check for RPC issues in OpenStack services
+# priority: 900
 
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"

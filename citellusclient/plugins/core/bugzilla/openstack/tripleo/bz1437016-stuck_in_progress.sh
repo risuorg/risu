@@ -18,6 +18,7 @@
 # long_name: overcloud update stuck in progress
 # description: 'openstack overcloud update' loops on 'IN_PROGRESS' and times out
 # bugzilla: https://bugzilla.redhat.com/show_bug.cgi?id=1437016
+# priority: 600
 
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"

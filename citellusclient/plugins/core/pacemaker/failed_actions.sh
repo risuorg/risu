@@ -22,6 +22,7 @@
 
 # long_name: Failed actions
 # description: Check if there are pacemaker failed actions
+# priority: 800
 
 if [ "x$CITELLUS_LIVE" = "x1" ]; then
     pacemaker_status=$(systemctl is-active pacemaker || :)

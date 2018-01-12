@@ -18,6 +18,7 @@
 
 # long_name: Updated sos package
 # description: Checks if OSP12 deployment is using containers and valid sosreport version
+# priority: 200
 
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"

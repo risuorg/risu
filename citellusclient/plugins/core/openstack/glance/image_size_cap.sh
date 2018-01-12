@@ -19,6 +19,7 @@
 
 # long_name: Image upload size limit
 # description: Report on low glance image_size_cap that might affect big image uploads
+# priority: 300
 
 
 # Load common functions

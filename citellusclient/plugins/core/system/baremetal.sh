@@ -17,6 +17,7 @@
 
 # long_name: Physical machine
 # description: Reports hypervisor technology in use
+# priority: 100
 
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"

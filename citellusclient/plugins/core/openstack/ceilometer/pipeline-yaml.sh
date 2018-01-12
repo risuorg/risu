@@ -19,6 +19,7 @@
 
 # long_name: Ceilometer pipeline.yaml contents
 # description: Provides md5sum of file so in case it differs across sosreports issue can be spotted
+# priority: 200
 
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
