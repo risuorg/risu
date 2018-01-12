@@ -12,7 +12,7 @@
         padding-top: 1.5rem;
         padding-bottom: 1.5rem;
     }
-    #accordion {
+    #accordion-citellus {
         padding-top: 1.5rem;
         padding-bottom: 1.5rem;
     }
@@ -55,9 +55,9 @@
    <div id="alert_list"></div>
    <div class="row">
      <div class="col-sm">
-      <table id="metadata_table" class="table table-hover table-bordered">
+      <table id="metadata_table_citellus" class="table table-hover table-bordered">
         <thead>
-         <tr><th colspan=2 class="text-center">Runtime Metadata</th></tr>
+         <tr><th colspan=2 class="text-center">Citellus Runtime Metadata</th></tr>
         </thead>
         <tbody>
         </tbody>
@@ -79,7 +79,21 @@
        <button type="button" class="btn btn-secondary" id="expandAll">Expand All</button>
       </div><!-- /col -->
      </div><!-- /row -->
-     <div id="accordion" role="tablist"></div>
+     <div id="accordion-citellus" role="tablist"></div>
+     <div class="row invisible" id="row-metadata-magui">
+      <div class="col-sm">
+       <table id="metadata_table_citellus" class="table table-hover table-bordered">
+         <thead>
+          <tr><th colspan=2 class="text-center">Magui Runtime Metadata</th></tr>
+         </thead>
+         <tbody>
+         </tbody>
+        </table>
+       </div> <!-- /col -->
+     </div> <!-- /row -->
+     <div class="row invisible" id="row-accordion-magui">
+      <div id="accordion-magui"></div>
+     </div><!-- /magui-row -->
   </div> <!-- /container -->
   <div class="modal fade" id="modal-categories" tabindex="-1" role="dialog">
    <div class="modal-dialog" role="document">
@@ -135,7 +149,7 @@
         });
         filter_category = filter_category.slice(0, -1);
         var cb_regex = new RegExp(filter_category);
-        $("#accordion > div").each(function(i,j) {
+        $("#accordion-citellus > div").each(function(i,j) {
             var plugin_cats = $(this).data("categories");
             var plugin_txt = $(this).children('.plugin-error').first().text();
             var plugin_name = $(this).data("plugin-name");
@@ -176,11 +190,18 @@
 
     }
     // function that returns pluging names and category
-    function getPluginNames(item,source) {
+    function getPluginNames(item) {
         var plugin_long_name;
         var plugin_re = /plugins\/[^\/]+\/(.*)\/([^\/]+)\.[a-z0-9]+$/;
-        var plugin_name = plugin_re.exec(item.plugin)[2];
-        var plugin_cat = plugin_re.exec(item.plugin)[1];
+        var plugin_name;
+        var plugin_cat;
+        if (plugin_re.test(item.plugin)) {
+            plugin_name = plugin_re.exec(item.plugin)[2];
+            plugin_cat = plugin_re.exec(item.plugin)[1];
+        } else {
+            plugin_name = item.plugin
+            plugin_cat = "magui"
+        }
         if (/[a-z0-9]+/.test(item.long_name) && !/^undefined$/.test(item.long_name)) {
             plugin_long_name = item.long_name;
         } else {
@@ -193,7 +214,7 @@
         }
     }
     // function that parses the plugin cat returned by getPluginNames and return a visual and populates global array
-    function getPluginCats(plugin_cat,source) {
+    function getPluginCats(plugin_cat) {
         var plugin_cats_visual = "";
         var plugin_cats_list = "";
         var plugin_cats = plugin_cat.split("/");
@@ -209,12 +230,18 @@
         }
     }
     // function that generates a row to add to the accordion
-    function printCitellusPlugin (result,out,err,rc, data) {
-        var plugin_names = getPluginNames(result,data.metadata.source);
-        var plugin_cats = getPluginCats(plugin_names.cat,data.metadata.source);
+    function printCitellusPlugin (result, out, err, rc, data, plugin_var_name = false) {
+        var plugin_names = getPluginNames(result)
+        if (plugin_var_name == "metadata-outputs") {
+            plugin_names.cat = "metadata";
+        }
+        var plugin_cats = getPluginCats(plugin_names.cat)
         var plugin_state = getPluginState(rc);
 
         // Converting the links to html
+        if (Array.isArray(err)){
+            err = err.join();
+        }
         error_text = err.replace(/\bhttp[s]*:\/\/([^\s]+)+\b/gi,'<a href="$&" target="_blank">$&</a>');
         var item_id = result.id;
 
@@ -230,7 +257,7 @@
         row += '  <div class="col-sm-3 text-right">\n'+plugin_cats.visual+'\n</div>\n';
         row += ' </div>\n'; // /row
         row += '</div>\n'; // /header
-        row += '<div id="'+item_id+'" class="collapse" role="tabpanel" aria-labelledby="head-'+plugin_names.name+'" data-parent="#accordion">\n';
+        row += '<div id="'+item_id+'" class="collapse" role="tabpanel" aria-labelledby="head-'+plugin_names.name+'" data-parent="#accordion-citellus">\n';
         row += ' <div data-plugin-name="'+plugin_names.name+'" class="card-body">';
         row += '  <h6 class="card-subtitle mb-2 text-muted">'+result.description+'</h6>';
         row += '  <pre><code>'+error_text+'</code></pre>';
@@ -335,8 +362,11 @@
                 // We need to generate some kind of plugin id with the filename
                 $.each(data.metadata, function(i, item) {
                     var row = '<tr><th>'+i+'</th><td>'+item+'</td></tr>\n';
-                    $("#metadata_table > tbody:last-child").append(row);
+                    $("#metadata_table_citellus > tbody:last-child").append(row);
                 });
+                if (data.metadata.source == "magui") {
+                    $("#row-accordion-magui").show();
+                }
                 var dataNum = data.results.length;
                 var counter = 0;
                 $.each(data.results, function(i, item) {
@@ -359,14 +389,15 @@
                         $("#category-list").html(div_cat_list);
                     }
                     var row;
+                    console.log(item)
                     // Here we have a citellus.json
                     if (data.metadata.source == "citellus") {
                         row = printCitellusPlugin(item,item.result.out,item.result.err,item.result.rc, data);
-                        $("#accordion").append(row);
+                        $("#accordion-citellus").append(row);
                     // Here we have a magui.json
                     } else if (data.metadata.source == "magui") {
-                        if (item.plugin == "citellus-outputs") {
-                            $.each(item.results.result, function(s,result) {
+                        if (item.plugin == "citellus-outputs" || item.plugin == "metadata-outputs") {
+                            $.each(item.results, function(s,result) {
                                 if (s == "err") {
                                     $.each(result,function(plugin,pdata) {
 
@@ -387,11 +418,14 @@
                                             gout += plugin_state.badge + " " + server + ": " + obj.out + "<br>";
                                             gerr += plugin_state.badge + " " + server + ": " + obj.err + "<br>";
                                         })
-                                        row = printCitellusPlugin(pdata,gout,gerr,grc, data)
-                                        $("#accordion").append(row);
+                                        row = printCitellusPlugin(pdata, gout, gerr, grc, data, item.plugin)
+                                        $("#accordion-citellus").append(row);
                                     }); // each result
                                 } // s == "err"
                             }); // each item.results
+                        } else {
+                            row = printCitellusPlugin(item,item.results.out,item.results.err,item.results.rc,data)
+                            $("#accordion-citellus").append(row);
                         } // if citellus-outputs
                     } // if data source == "magui"
                 }); // each data.results
