@@ -18,6 +18,7 @@
 
 # long_name: Ceilometer expiration configuration
 # description: Check for ceilometer expiration values
+# priority: 600
 
 # Actually run the check
 

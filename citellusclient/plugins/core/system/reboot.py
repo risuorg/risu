@@ -18,6 +18,7 @@
 
 # long_name: Reboot Validation
 # description: We try to guess if the latest reboot(s) were clean or not
+# priority: 400
 
 # Loading some modules
 from __future__ import print_function

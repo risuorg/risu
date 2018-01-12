@@ -17,6 +17,7 @@
 
 # long_name: Checks for fixed qemu-kvm-rhev package
 # description: Checks if package is affected of Spectre/Meltdown
+# priority: 400
 
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"

@@ -20,6 +20,7 @@
 # long_name: Missing format_dom in nova
 # description: Checks for missing format_dom in nova
 # bugzilla: https://bugzilla.redhat.com/show_bug.cgi?id=1527345
+# priority: 800
 
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"

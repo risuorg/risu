@@ -22,6 +22,7 @@
 
 # long_name: OpenStack failed services
 # description: Checks for failed OSP services
+# priority: 1000
 
 if [ "x$CITELLUS_LIVE" = "x1" ];  then
 

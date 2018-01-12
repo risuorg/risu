@@ -20,6 +20,7 @@
 
 # long_name: SELinux runtime status
 # description: Determines runtime SELinux status
+# priority: 100
 # selinux enforcing
 
 if [[ $CITELLUS_LIVE = 0 ]];  then

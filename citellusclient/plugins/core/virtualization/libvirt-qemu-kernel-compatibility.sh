@@ -17,6 +17,7 @@
 
 # long_name: Kernel, QEMU and Libvirt compatibility
 # description: Checks compatibility between libvirt, qemu and kernel packages
+# priority: 700
 
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"

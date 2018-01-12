@@ -17,6 +17,7 @@
 
 # long_name: NTPd services status
 # description: Checks for proper network time sync status
+# priority: 500
 
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"

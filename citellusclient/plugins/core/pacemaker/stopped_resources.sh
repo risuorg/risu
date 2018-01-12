@@ -22,6 +22,7 @@
 
 # long_name: Stopped resources
 # description: Check if there are pacemaker resources stopped
+# priority: 700
 
 if [ "x$CITELLUS_LIVE" = "x1" ];  then
     pacemaker_status=$(systemctl is-active pacemaker || :)

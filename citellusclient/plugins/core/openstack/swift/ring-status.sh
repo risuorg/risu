@@ -17,6 +17,7 @@
 
 # long_name: Ring status
 # description: Checks Swift ring status
+# priority: 900
 
 if [ ! "x$CITELLUS_LIVE" = "x1" ]; then
     echo "works on live-system only" >&2

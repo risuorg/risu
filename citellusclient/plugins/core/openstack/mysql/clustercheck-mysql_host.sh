@@ -19,6 +19,7 @@
 
 # long_name: Clustercheck configuration
 # description: Checks clustercheck and it's variable $MYSQL_HOST is set to localhost
+# priority: 100
 
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"

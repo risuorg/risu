@@ -19,6 +19,7 @@
 
 # long_name: Package sysstat installed
 # description: This plugin reports missing systat that might be later needed for perf issues diagnostics
+# priority: 100
 
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"

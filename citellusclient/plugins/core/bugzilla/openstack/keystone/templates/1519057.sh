@@ -22,6 +22,7 @@
 # long_name: Keystone LDAP Domain integration
 # description: Checks for keystone LDAP domain template problem
 # bugzilla: https://bugzilla.redhat.com/show_bug.cgi?id=1519057
+# priority: 400
 
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"

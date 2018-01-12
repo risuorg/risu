@@ -19,6 +19,7 @@
 
 # long_name: Packstack installation
 # description: Report OSP version
+# priority: 900
 
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"

@@ -19,6 +19,7 @@
 
 # long_name: Keystone clean-up frequency
 # description: Keystone cleanups might not be frequent enough on busy systems, check frequency
+# priority: 700
 
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"

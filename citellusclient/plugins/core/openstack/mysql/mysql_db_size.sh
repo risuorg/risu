@@ -15,6 +15,7 @@
 
 # long_name: Database size
 # description: Checks for mysql database sizes
+# priority: 500
 
 # this can run against live
 

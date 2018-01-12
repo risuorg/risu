@@ -15,6 +15,7 @@
 
 # long_name: Cinder LVM Backend
 # description: Checks if LVM is used as backing storage
+# priority: 600
 
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"

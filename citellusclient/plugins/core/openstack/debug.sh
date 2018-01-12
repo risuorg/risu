@@ -20,6 +20,7 @@
 
 # long_name: Services debug configuration
 # description: Check if services are configured for logging in DEBUG level
+# priority: 100
 
 # if we are running against live system or fs snapshot
 

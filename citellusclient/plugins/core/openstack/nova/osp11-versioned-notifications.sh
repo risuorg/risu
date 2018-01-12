@@ -19,6 +19,7 @@
 
 # long_name: Nova unversioned notifications
 # description: Checks if nova on OSP11 is using only unversioned notifications
+# priority: 600
 
 # Reference: https://bugzilla.redhat.com/show_bug.cgi?id=1478274
 

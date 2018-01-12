@@ -19,6 +19,7 @@
 
 # long_name: Libvirt errors in nova service
 # description: Report libvirtErrors in Nova OpenStack service
+# priority: 800
 
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"

@@ -19,6 +19,7 @@
 
 # long_name: DBReferenceError in services logs
 # description: Report DBReferenceError in OpenStack services logs
+# priority: 900
 
 
 # Load common functions

@@ -19,6 +19,7 @@
 
 # long_name: RHEL release
 # description: Detects RHEL release
+# priority: 200
 
 if [ ! -f "${CITELLUS_ROOT}/etc/redhat-release" ]; then
     echo "this is not RHEL distribution" >&2

@@ -17,6 +17,7 @@
 
 # long_name: Current kernel vs last installed
 # description: Checks if running kernel is the one last installed
+# priority: 200
 
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"

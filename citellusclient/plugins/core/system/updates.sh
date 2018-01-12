@@ -17,6 +17,7 @@
 
 # long_name: Available updates
 # description: This plugin checks for unapplied updates to the system
+# priority: 100
 
 if [[ $CITELLUS_LIVE = 0 ]]; then
     echo "works on live-system only" >&2

@@ -17,6 +17,7 @@
 
 # long_name: Keystone token clean-up last execution date
 # description: Checks for token cleanup last execution
+# priority: 900
 
 # this can run against live and also fs snapshot
 

@@ -19,6 +19,7 @@
 
 # long_name: InnoDB file per table
 # description: Checks if mysql is configured to use one file per table for innodb
+# priority: 300
 
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"

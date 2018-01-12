@@ -17,6 +17,7 @@
 
 # long_name: Number of expired tokens in database
 # description: Checks for expired tokens in keystone database
+# priority: 900
 
 # this can run against live
 

@@ -20,6 +20,7 @@
 
 # long_name: Number of Placement Groups
 # description: Checks Ceph pg_num
+# priority: 600
 
 mktempfile() {
     tmpfile_status=$(mktemp testsXXXXXX)

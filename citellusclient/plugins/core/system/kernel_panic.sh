@@ -17,6 +17,7 @@
 
 # long_name: Kernel OOM-killer, panic or soft lockup
 # description: Looks for the Kernel Out of Memory, panics and soft locks
+# priority: 700
 
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"

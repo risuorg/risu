@@ -19,6 +19,7 @@
 
 # long_name: Tracebacks in services logs
 # description: Report tracebacks in Containerized OpenStack services logs
+# priority: 800
 
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
