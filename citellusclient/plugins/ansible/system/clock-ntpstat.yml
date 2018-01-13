@@ -1,4 +1,5 @@
 # long_name: NTPd time synchronization
+# priority: 500
 ---
 - hosts: all
   vars:
