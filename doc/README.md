@@ -5,10 +5,11 @@ Citellus tests should conform to the following standards:
 - The test script must be executable. Citellus will ignore tests for
   which it does not have execute permission (and report CI errors if there's a file which has not +x set in the plugins folder)
 
-- Test should include a line starting with `# description: `, `# long_name` and optional `# bugzilla` followed with a one line comment which describes plugin information, for example:
+- Test should include a line starting with `# description: `, `# long_name`, `# priority` and optional `# bugzilla` followed with a one line comment which describes plugin information, for example:
     ~~~sh
     # description: This plugins does check answer for Universe and everything
     # long_name: This is a tests for emulating Deep Tought answers
+    # priority: 500
     # bugzilla: https://bugzilla.redhat.com/show_bug.cgi?id=746698
     ~~~
 
