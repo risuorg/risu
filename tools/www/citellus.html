@@ -28,6 +28,13 @@
     .navbar {
         width: 100%;
     }
+    .badge-danger {
+        color: #fff;
+        background-color: #cc0000;
+    }
+    .badge {
+        margin-left: 0px;
+    }
   </style>
  </head>
  <body>
@@ -331,17 +338,26 @@
         row += '             <dd>'+Math.round(result.time * 1000)/1000+'</dd>\n';
         row += '             <dt>Backend</dt>\n';
         row += '             <dd>'+result.backend+'</dd>\n';
-        row += '             <dt>Out</dt>\n';
-        row += '             <dd>'+out+'</dd>\n';
-        row += '             <dt>Error</dt>\n';
-        row += '             <dd>'+error_text+'</dd>\n';
         row += '             <dt>Bugzilla</dt>\n';
         if (/[0-9a-z]+/.test(result.bugzilla)) {
-            row += '        <dd><a href="'+result.bugzilla+'" target="_blank" class="badge badge-danger">Bugzilla</a></dd>\n';
+            console.log(result.bugzilla);
+            row += '        <dd><a href="'+result.bugzilla+'" target="_blank"><span class="badge badge-danger">'+/([0-9]+)$/.exec(result.bugzilla)[1]+'</span></a></dd>\n';
         } else if (/\_([0-9]{7})$/.test(plugin_names.name)) {
-            row += '        <dd><a href="https://bugzilla.redhat.com/show_bug.cgi?id='+/\_([0-9]{7})$/.exec(plugin_names.name)[1]+'" target="_blank" class="badge badge-danger">Bugzilla</a></dd>\n';
+            row += '        <dd><a href="https://bugzilla.redhat.com/show_bug.cgi?id='+/\_([0-9]{7})$/.exec(plugin_names.name)[1]+'" target="_blank" class="badge badge-danger">'+/\_([0-9]{7})$/.exec(plugin_names.name)[1]+'</a></dd>\n';
         } else {
             row += '        <dd>N/A</dd>\n';
+        }
+        row += '             <dt>Out</dt>\n';
+        if (/[a-z0-9]+/.test(out)) {
+            row += '             <dd><pre>'+out+'</pre></dd>\n';
+        } else {
+            row += '             <dd>N/A</dd>\n';
+        }
+        row += '             <dt>Error</dt>\n';
+        if (/[a-z0-9]+/.test(error_text)) {
+            row += '             <dd><pre>'+error_text+'</pre></dd>\n';
+        } else {
+            row += '             <dd>N/A</dd>\n';
         }
         row += '            </dl>\n';
         row += '           <p>\n';
