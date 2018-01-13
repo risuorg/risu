@@ -581,7 +581,7 @@ def dump_config(options, path=False):
 
 
 def write_results(results, filename,
-                  live=False, path=None):
+                  live=False, path=None, time=0):
     """
     Writes result
     :param results: Data to write
@@ -595,6 +595,7 @@ def write_results(results, filename,
             'when': datetime.datetime.utcnow().isoformat(),
             'live': bool(live),
             'source': 'citellus',
+            'time': time
         },
         'results': sorted(results, key=lambda r: r['plugin']),
     }
@@ -816,23 +817,6 @@ def main():
     plugins = newplugins
     results = docitellus(live=options.live, path=CITELLUS_ROOT, plugins=plugins, lang=options.lang)
 
-    if options.output:
-        if not options.web:
-            write_results(results, options.output,
-                          live=options.live,
-                          path=CITELLUS_ROOT)
-        else:
-            basefolder = os.path.dirname(options.output)
-            if basefolder == '':
-                basefolder = './'
-            newfile = os.path.join(basefolder, 'citellus.json')
-            write_results(results, newfile,
-                          live=options.live,
-                          path=CITELLUS_ROOT)
-            src = os.path.join(citellusdir, '../tools/www/citellus.html')
-            if os.path.isfile(src):
-                shutil.copyfile(src, os.path.join(basefolder, os.path.basename(src)))
-
     # Print results based on the sorted order based on returned results from
     # parallel execution
 
@@ -867,8 +851,27 @@ def main():
         if show_err and err.strip():
             print(indent(err, 4))
 
+    totaltime = time.time() - start_time
+
+    if options.output:
+        if not options.web:
+            write_results(results, options.output,
+                          live=options.live,
+                          path=CITELLUS_ROOT)
+        else:
+            basefolder = os.path.dirname(options.output)
+            if basefolder == '':
+                basefolder = './'
+            newfile = os.path.join(basefolder, 'citellus.json')
+            write_results(results, newfile,
+                          live=options.live,
+                          path=CITELLUS_ROOT, time=totaltime)
+            src = os.path.join(citellusdir, '../tools/www/citellus.html')
+            if os.path.isfile(src):
+                shutil.copyfile(src, os.path.join(basefolder, os.path.basename(src)))
+
     if options.blame:
-        print("# Total execution time: %s seconds" % (time.time() - start_time))
+        print("# Total execution time: %s seconds" % totaltime)
 
 
 if __name__ == "__main__":
