@@ -2,17 +2,13 @@
 <html>
  <head>
   <title>Citellus</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta.3/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/patternfly/3.24.0/css/patternfly.min.css">
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/patternfly/3.24.0/css/patternfly-additions.min.css">
   <style>
     pre {
          white-space: pre-wrap;
     }
     #cat_list {
-        padding-top: 1.5rem;
-        padding-bottom: 1.5rem;
-    }
-    #accordion-citellus {
         padding-top: 1.5rem;
         padding-bottom: 1.5rem;
     }
@@ -26,80 +22,130 @@
     .alert strong {
         text-transform: capitalize;
     }
+    .navbar-pf .navbar-brand img {
+        display: inline;
+    }
+    .navbar {
+        width: 100%;
+    }
   </style>
  </head>
  <body>
-  <div class="container">
-   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="https://github.com/zerodayz/citellus"><img src="https://raw.githubusercontent.com/zerodayz/citellus/master/doc/citellus.png" width="30" height="30" alt=""> Citellus</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-     <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-     <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a class="nav-link" target="_blank" href="https://github.com/zerodayz/citellus/blob/master/README.md">Usage Doc</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" target="_blank" href="https://github.com/zerodayz/citellus/tree/master/doc">Plugin Development</a>
-      </li>
-      <li class="nav-item">
-       <a class="nav-link" target="_blank" href="https://github.com/zerodayz/citellus/blob/master/CONTRIBUTING.md">Contribute</a>
-      </li>
-     </ul>
-     <form class="form-inline my-2 my-lg-0">
-      <input type="search" class="form-control mr-sm-2" id="filter_text" placeholder="Search for plugin" aria-label="Search for plugin">
-     </form>
-    </div>
-   </nav>
+   <div class="container">
+    <header>
+    <nav class="navbar navbar-default navbar-pf" role="navigation">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse-1">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/"><img src="https://raw.githubusercontent.com/zerodayz/citellus/master/doc/citellus.png" style="width: 30px" alt="Citellus" /> Citellus</a>
+        <ul id="menu-primary" class="nav navbar-nav navbar-right">
+         <li class="nav-item">
+          <a class="nav-link" target="_blank" href="https://github.com/zerodayz/citellus/blob/master/README.md">Usage Doc</a>
+         </li>
+         <li class="nav-item">
+          <a class="nav-link" target="_blank" href="https://github.com/zerodayz/citellus/tree/master/doc">Plugin Development</a>
+         </li>
+         <li class="nav-item">
+          <a class="nav-link" target="_blank" href="https://github.com/zerodayz/citellus/blob/master/CONTRIBUTING.md">Contribute</a>
+         </li>
+        </ul>
+    </nav>
+   </header>
    <div id="alert_list"></div>
+        <div class="row toolbar-pf">
+          <div class="col-sm-12">
+            <form class="toolbar-pf-actions">
+              <div class="form-group toolbar-pf-filter">
+                <label class="sr-only" for="filter">Name</label>
+                <div class="input-group">
+                  <div class="input-group-btn">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Name <span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                      <li class="selected"><a href="#">Full text</a></li>
+                      <li><a href="#">Bugzilla</a></li>
+                    </ul>
+                  </div><!-- /btn-group -->
+                  <input type="text" class="form-control" id="filter_text" placeholder="Filter...">
+                </div><!-- /input-group -->
+              </div>
+              <div class="form-group">
+                <div class="dropdown btn-group">
+                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Name <span class="caret"></span></button>
+                  <ul class="dropdown-menu">
+                    <li class="selected"><a href="#">Name</a></li>
+                    <li><a href="#">State</a></li>
+                  </ul>
+                </div>
+                <button class="btn btn-link" type="button">
+                  <span class="fa fa-sort-alpha-asc"></span>
+                </button>
+                <input type="hidden" id="filter_status" value="all">
+                <div class="btn-group" role="group" aria-label="Status Filters">
+                 <button type="button" class="btn btn-success filter-status" data-filter="okay">okay</button>
+                 <button type="button" class="btn btn-danger filter-status" data-filter="failed">failed</button>
+                 <button type="button" class="btn btn-warning filter-status" data-filter="skipped">skipped</button>
+                 <button type="button" class="btn btn-dark filter-status" data-filter="all">all</button>
+                </div><!-- /btn-group -->
+
+              </div>
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-categories">Categories</button>
+              <button type="button" class="btn btn-secondary" id="expandAll">Expand All</button>
+              <div class="toolbar-pf-action-right">
+                <div class="form-group toolbar-pf-find">
+                  <button class="btn btn-link btn-find" type="button">
+                    <span class="fa fa-search"></span>
+                  </button>
+                  <div class="find-pf-dropdown-container">
+                    <input type="text" class="form-control" id="find" placeholder="Find By Keyword...">
+                    <div class="find-pf-buttons">
+                      <span class="find-pf-nums">1 of 3</span>
+                      <button class="btn btn-link" type="button">
+                        <span class="fa fa-angle-up"></span>
+                      </button>
+                      <button class="btn btn-link" type="button">
+                        <span class="fa fa-angle-down"></span>
+                      </button>
+                      <button class="btn btn-link btn-find-close" type="button">
+                        <span class="pficon pficon-close"></span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+            <div class="row toolbar-pf-results">
+              <div class="col-sm-12">
+                  <h5><span id="numresults"></span> Results</h5>
+              </div><!-- /col -->
+            </div><!-- /row -->
+          </div><!-- /col -->
+        </div><!-- /row -->
+      </div><!-- /container -->
+  <div class="container">
    <div class="row">
-     <div class="col-sm">
-      <table id="metadata_table_citellus" class="table table-hover table-bordered">
-        <thead>
-         <tr><th colspan=2 class="text-center">Citellus Runtime Metadata</th></tr>
-        </thead>
-        <tbody>
-        </tbody>
-       </table>
-      </div> <!-- /col -->
-     </div> <!-- /row -->
-     <div class="row">
-      <div class="col-sm">
-       <input type="hidden" id="filter_status" value="all">
-	   <div class="btn-group" role="group" aria-label="Status Filters">
-	    <button type="button" class="btn btn-success filter-status" data-filter="okay">okay</button>
-	    <button type="button" class="btn btn-danger filter-status" data-filter="failed">failed</button>
-	    <button type="button" class="btn btn-warning filter-status" data-filter="skipped">skipped</button>
-        <button type="button" class="btn btn-dark filter-status" data-filter="all">all</button>
-	   </div><!-- /btn-group -->
-      </div><!-- /col -->
-      <div class="col-sm">
-       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-categories">Categories</button>
-       <button type="button" class="btn btn-secondary" id="expandAll">Expand All</button>
-      </div><!-- /col -->
-     </div><!-- /row -->
-     <div id="accordion-citellus" role="tablist"></div>
-     <div class="row invisible" id="row-metadata-magui">
-      <div class="col-sm">
-       <table id="metadata_table_citellus" class="table table-hover table-bordered">
-         <thead>
-          <tr><th colspan=2 class="text-center">Magui Runtime Metadata</th></tr>
-         </thead>
-         <tbody>
-         </tbody>
-        </table>
-       </div> <!-- /col -->
-     </div> <!-- /row -->
-     <div class="row invisible" id="row-accordion-magui">
-      <div id="accordion-magui"></div>
-     </div><!-- /magui-row -->
+    <div class="col-sm">
+     <table id="metadata_table_citellus" class="table table-hover table-bordered">
+      <thead>
+       <tr><th colspan=2 class="text-center">Citellus Runtime Metadata</th></tr>
+      </thead>
+      <tbody>
+      </tbody>
+     </table>
+    </div> <!-- /col -->
+   </div> <!-- /row -->
+   <div class="row row-cards-pf">
+    <div id="list-group" class="list-group list-view-pf list-view-pf-view">
+    </div><!-- /list-group -->
+   </div><!-- /row-cards-pf -->
   </div> <!-- /container -->
-  <div class="modal fade" id="modal-categories" tabindex="-1" role="dialog">
+  <div class="modal fade" id="modal-categories" tabindex="-1" role="dialog" aria-labelledby="modalCategoriesLabel" aria-hidden="true">
    <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Category Filter</h5>
+        <h5 class="modal-title" id="modalCategoriesLabel">Category Filter</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -112,9 +158,9 @@
     </div>
    </div>
   </div>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta.3/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/patternfly/3.24.0/js/patternfly.min.js"></script>
   <script>
     var ft_min_char = 3;
     var plugin_cats_array = new Array();
@@ -139,6 +185,7 @@
     // function that applies all possible filters.
     // it's called whenever a filter is triggered.
     function filterCards() {
+        var count = 0;
         var filter_status = $("#filter_status").val();
         var filter_text = $("#filter_text").val();
         var filter_category = "";
@@ -149,10 +196,10 @@
         });
         filter_category = filter_category.slice(0, -1);
         var cb_regex = new RegExp(filter_category);
-        $("#accordion-citellus > div").each(function(i,j) {
+        $("#list-group > div").each(function(i,j) {
             var plugin_cats = $(this).data("categories");
             var plugin_txt = $(this).children('.plugin-error').first().text();
-            var plugin_name = $(this).data("plugin-name");
+            var plugin_name = $(this).data("plugin-name").toString();
             var plugin_status = $(this).data("state");
             // Validations:
             // - if plugin categories match regex of checked categories
@@ -160,10 +207,12 @@
             // - if plugin (name|text) match text filter, only if there's at least $ft_min_char char
             if (cb_regex.test(plugin_cats) && /[a-z0-9]+/.test(cb_regex) && (filter_status == "all" || filter_status == $(this).data("state")) && (filter_text.length < ft_min_char || (filter_text.length >= ft_min_char && (plugin_txt && plugin_txt.toLowerCase().indexOf(filter_text) != -1) || (plugin_name && plugin_name.toLowerCase().indexOf(filter_text) != -1)))) {
                 $(this).show();
+                count += 1;
             } else {
                 $(this).hide();
             }
         });
+        $("#numresults").html(count);
     }
     // function that returns various metadata depending on RC
     function getPluginState(rc) {
@@ -173,11 +222,11 @@
         var plugin_text_color;
         var plugin_badge;
         if (rc == 30) {
-            plugin_icon = "warning"; plugin_state = "skipped"; plugin_class = "warning"; plugin_text_color = "text-black";
+            plugin_icon = "pficon pficon-help"; plugin_state = "skipped"; plugin_class = "info"; plugin_text_color = "text-black";
         } else if (rc == 10) {
-            plugin_icon = "circle-check"; plugin_state = "okay"; plugin_class = "success"; plugin_text_color = "text-black";
+            plugin_icon = "fa fa-check-circle-o"; plugin_state = "okay"; plugin_class = "success"; plugin_text_color = "text-black";
         } else {
-            plugin_icon = "ban"; plugin_state = "failed"; plugin_class = "danger"; plugin_text_color = "text-black";
+            plugin_icon = "pficon pficon-error-circle-o"; plugin_state = "failed"; plugin_class = "danger"; plugin_text_color = "text-black";
         }
         plugin_badge = '<span class="badge badge-pill badge-'+plugin_class+'">'+plugin_state+'</span>';
         return {
@@ -191,10 +240,10 @@
     }
     // function that returns pluging names and category
     function getPluginNames(item) {
-        var plugin_long_name;
+        var plugin_long_name = "";
         var plugin_re = /plugins\/[^\/]+\/(.*)\/([^\/]+)\.[a-z0-9]+$/;
-        var plugin_name;
-        var plugin_cat;
+        var plugin_name = "";
+        var plugin_cat = "";
         if (plugin_re.test(item.plugin)) {
             plugin_name = plugin_re.exec(item.plugin)[2];
             plugin_cat = plugin_re.exec(item.plugin)[1];
@@ -242,42 +291,66 @@
         if (Array.isArray(err)){
             err = err.join();
         }
-        error_text = err.replace(/\bhttp[s]*:\/\/([^\s]+)+\b/gi,'<a href="$&" target="_blank">$&</a>');
+        var error_text = err.replace(/\bhttp[s]*:\/\/([^\s]+)+\b/gi,'<a href="$&" target="_blank">$&</a>');
         var item_id = result.id;
-
-        // we built the text that is going to be appended to the container
-        var row = '<div data-state="'+plugin_state.state+'" data-categories="'+ plugin_cats.list +'" class="card">\n';
-        row += '<textarea class="plugin-error" style="display: none;">'+result.err+'</textarea>\n';
-        row += '<div class="card-header" role="tab" id="head-'+item_id+'">\n';
-        row += ' <div class="row">\n';
-        row += '  <div class="col-sm-1">'+plugin_state.badge+'</div>\n';
-        row += '  <div class="col-sm"><a data-toggle="collapse" href="#'+item_id+'" aria-expanded="true" aria-controls="'+item_id+'" class="'+plugin_state.text_color+'">';
-        row += plugin_names.long_name
-        row += '</a></div>\n';
-        row += '  <div class="col-sm-3 text-right">\n'+plugin_cats.visual+'\n</div>\n';
-        row += ' </div>\n'; // /row
-        row += '</div>\n'; // /header
-        row += '<div id="'+item_id+'" class="collapse" role="tabpanel" aria-labelledby="head-'+plugin_names.name+'" data-parent="#accordion-citellus">\n';
-        row += ' <div data-plugin-name="'+plugin_names.name+'" class="card-body">';
-        row += '  <h6 class="card-subtitle mb-2 text-muted">'+result.description+'</h6>';
-        row += '  <pre><code>'+error_text+'</code></pre>';
-        row += ' </div>\n'; // /card-body
-        row += ' <div class="card-footer">\n';
-        row += '  <div class="row">\n';
-        row += '   <div class="col-sm">\n';
+        var row = "";
+        // we build the text that is going to be appended to the container
+        row += '        <div class="list-group-item" data-state="'+plugin_state.state+'" data-plugin-name="'+plugin_names.name+'" data-categories="'+ plugin_cats.list +'" id="head-'+item_id+'">\n';
+        row += '         <textarea class="plugin-error" style="display: none;">'+err+'</textarea>\n';
+        row += '         <div class="list-group-item-header">\n';
+        row += '          <div class="list-view-pf-expand">\n';
+        row += '           <span class="fa fa-angle-right"></span>\n';
+        row += '          </div> <!-- /list-view-pf-expand -->\n';
+        row += '          <div class="list-view-pf-main-info">\n';
+        row += '           <div class="list-view-pf-left">\n';
+        row += '            <span class="'+plugin_state.icon+' list-view-pf-icon-md list-view-pf-icon-'+plugin_state.pclass+'"></span>\n';
+        row += '           </div><!-- /list-view-pf-left -->\n';
+        row += '           <div class="list-view-pf-body">\n';
+        row += '            <div class="list-view-pf-description">\n';
+        row += '             <div class="list-group-item-heading">'+plugin_names.name+'</div>\n';
+        row += '             <div class="list-group-item-text">'+plugin_names.long_name+'</div>\n';
+        row += '            </div><!-- /list-view-pf-description -->\n';
+        row += '            <div class="list-view-pf-right">\n';
+        row += '             <div class="list-view-pf-additional-info-item">\n';
+        row += '              <span class="pficon pficon-replicator"></span> ' + plugin_cats.visual;
+        row += '             </div> <!-- /list-view-pf-additional-info-item -->\n';
+        row += '            </div><!-- /list-view-pf-right -->\n';
+        row += '           </div><!-- /list-view-pf-body -->\n';
+        row += '          </div><!-- /list-view-pf-main-info -->\n';
+        row += '         </div><!-- /list-group-item-header -->\n';
+        row += '         <div class="list-group-item-container container-fluid hidden">\n';
+        row += '          <div class="close">\n';
+        row += '           <span class="pficon pficon-close"></span>\n';
+        row += '          </div><!-- /close -->\n';
+        row += '          <div class="row">\n';
+        row += '           <div class="col-md-9">\n';
+        row += '            <dl class="dl-horizontal">\n';
+        row += '             <dt>Description</dt>\n';
+        row += '             <dd>'+result.description+'</dd>\n';
+        row += '             <dt>Plugin Execution Time</dt>\n';
+        row += '             <dd>'+Math.round(result.time * 1000)/1000+'</dd>\n';
+        row += '             <dt>Backend</dt>\n';
+        row += '             <dd>'+result.backend+'</dd>\n';
+        row += '             <dt>Out</dt>\n';
+        row += '             <dd>'+out+'</dd>\n';
+        row += '             <dt>Error</dt>\n';
+        row += '             <dd>'+error_text+'</dd>\n';
+        row += '             <dt>Bugzilla</dt>\n';
         if (/[0-9a-z]+/.test(result.bugzilla)) {
-            row += '   <a href="'+result.bugzilla+'" target="_blank" class="badge badge-danger">Bugzilla</a>';
+            row += '        <dd><a href="'+result.bugzilla+'" target="_blank" class="badge badge-danger">Bugzilla</a></dd>\n';
         } else if (/\_([0-9]{7})$/.test(plugin_names.name)) {
-            row += '   <a href="https://bugzilla.redhat.com/show_bug.cgi?id='+/\_([0-9]{7})$/.exec(plugin_names.name)[1]+'" target="_blank" class="badge badge-danger">Bugzilla</a>';
+            row += '        <dd><a href="https://bugzilla.redhat.com/show_bug.cgi?id='+/\_([0-9]{7})$/.exec(plugin_names.name)[1]+'" target="_blank" class="badge badge-danger">Bugzilla</a></dd>\n';
+        } else {
+            row += '        <dd>N/A</dd>\n';
         }
-        row += '   </div>\n'; // /col
-        row += '   <div class="col-sm-push-1 text-right text-muted"><span class="oi oi-clock" title="Execution time" aria-hidden="true"></span> '+Math.round(result.time * 1000)/1000+'</div>';
-        row += '   <div class="col-sm-2 text-right text-muted"><span class="oi oi-fork" title="Backend" aria-hidden="true"></span> '+result.backend+'</div>';
-        row += '  </div>\n'; // /row
-        row += ' </div>\n'; // /footer
-        row += '</div>\n'; // /tabpanel
-        row += '</div>\n'; //card
-        return row
+        row += '            </dl>\n';
+        row += '           <p>\n';
+        row += '           </p><!-- /p -->\n';
+        row += '          </div><!-- /col-md-9 -->\n';
+        row += '         </div><!-- /row -->\n';
+        row += '        </div><!-- /list-group-item-container -->\n';
+        row += '       </div><!-- /list-group-item -->\n';
+        $("#list-group").append(row);
     }
     // function that prints alert message at the top
     function warnMessage(level,m) {
@@ -300,10 +373,9 @@
 
         // for some unknown reason, this is broken
         $("#expandAll").click(function(e) {
-            $(".collapse").each(function(i,o) {
-		        console.log($(this));
-		        $(this).collapse("show");
-	        });
+            $("#list-group > div").each(function(i,j) {
+                $(j).toggleClass("list-view-pf-expand-active").find(".list-group-item-container").toggleClass("hidden");
+            });
         });
 
         // listener when the user picks a status filter
@@ -334,10 +406,20 @@
             checkAllCat(false);
             $("#cb_cat_"+cat).prop("checked",true).change();
         });
+        // click the list-view heading then expand a row
+        $("body").on("click",".list-group-item-header",function(event){
+            if(!$(event.target).is("button, a, input, .fa-ellipsis-v")){
+                $(this).find(".fa-angle-right").toggleClass("fa-angle-down").end().parent().toggleClass("list-view-pf-expand-active").find(".list-group-item-container").toggleClass("hidden");
+            } else {
+            }
+        })
+        // click the close button, hide the expand row and remove the active status
+        $("body").on("click",".list-group-item-container .close", function (){
+            $(this).parent().addClass("hidden").parent().removeClass("list-view-pf-expand-active").find(".fa-angle-right").removeClass("fa-angle-down");
+        })
 
         // Here we load the data from citellus.json with ajax and we populate the webpage
         $.ajax({
-            // This is hardcoded for now
             url: jsonFile,
             dataType: "json",
             async: true,
@@ -364,14 +446,9 @@
                     var row = '<tr><th>'+i+'</th><td>'+item+'</td></tr>\n';
                     $("#metadata_table_citellus > tbody:last-child").append(row);
                 });
-                if (data.metadata.source == "magui") {
-                    $("#row-accordion-magui").show();
-                }
                 var dataNum = data.results.length;
                 var counter = 0;
                 $.each(data.results, function(i, item) {
-
-                    // Taking all the categories and we make an array out of it
 
                     // This counter will let us know when we are done looping
                     // We need this because JS is async
@@ -387,13 +464,11 @@
                         });
                         div_cat_list += '</div>';
                         $("#category-list").html(div_cat_list);
+                        $("#numresults").html(counter);
                     }
-                    var row;
-                    console.log(item)
                     // Here we have a citellus.json
                     if (data.metadata.source == "citellus") {
-                        row = printCitellusPlugin(item,item.result.out,item.result.err,item.result.rc, data);
-                        $("#accordion-citellus").append(row);
+                        printCitellusPlugin(item,item.result.out,item.result.err,item.result.rc, data);
                     // Here we have a magui.json
                     } else if (data.metadata.source == "magui") {
                         if (item.plugin == "citellus-outputs" || item.plugin == "metadata-outputs") {
@@ -418,14 +493,12 @@
                                             gout += plugin_state.badge + " " + server + ": " + obj.out + "<br>";
                                             gerr += plugin_state.badge + " " + server + ": " + obj.err + "<br>";
                                         })
-                                        row = printCitellusPlugin(pdata, gout, gerr, grc, data, item.plugin)
-                                        $("#accordion-citellus").append(row);
+                                        printCitellusPlugin(pdata, gout, gerr, grc, data, item.plugin)
                                     }); // each result
                                 } // s == "err"
                             }); // each item.results
                         } else {
-                            row = printCitellusPlugin(item,item.results.out,item.results.err,item.results.rc,data)
-                            $("#accordion-citellus").append(row);
+                            printCitellusPlugin(item,item.results.out,item.results.err,item.results.rc,data)
                         } // if citellus-outputs
                     } // if data source == "magui"
                 }); // each data.results
