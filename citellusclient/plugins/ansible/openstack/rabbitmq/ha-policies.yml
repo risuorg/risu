@@ -1,4 +1,5 @@
 # long_name: RabbitMQ HA policies
+# priority: 500
 ---
 - name: Validate RabbitMQ HA policies
   hosts: all
