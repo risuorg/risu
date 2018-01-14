@@ -288,15 +288,15 @@ def main():
     for i, e in enumerate(events):
         if e.status == "hard":
             exitCode = RC_FAILED
-            errorMsg += "- Hard reboot found"
+            errorMsg += "- Hard reboot found\n"
             numErrors += 1
         if e.duration_bootloader > 20:
             exitCode = RC_FAILED
-            errorMsg += "- Bootloader took more than 20s to init"
+            errorMsg += "- Bootloader took more than 20s to init\n"
             numErrors += 1
         if e.duration_down > 600:
             exitCode = RC_FAILED
-            errorMsg += "- System was down for more than 10m"
+            errorMsg += "- System was down for more than 10m\n"
             numErrors += 1
         rebootList += format_rebootlist_ev.format(e.time, e.context, e.desc, e.status, e.duration_bootloader, e.duration_os, e.duration_down)
     out = str(numErrors) + " problem(s) found\n" + errorMsg + "\nEvents:\n" + format_rebootlist_hd.format('Time', 'Context', 'Description', 'Status', 'Boot', 'OS', 'Down') + rebootList
