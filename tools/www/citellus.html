@@ -265,15 +265,16 @@
         }
     }
     // function that parses the plugin cat returned by getPluginNames and return a visual and populates global array
-    function getPluginCats(plugin_cat) {
+    function getPluginCats(subcat) {
         var plugin_cats_visual = "";
         var plugin_cats_list = "";
-        var plugin_cats = plugin_cat.split("/");
+        var plugin_cats = subcat.split("/");
         $.each(plugin_cats, function(c, cname) {
             plugin_cats_visual += '<a href="#" data-category="'+cname+'" class="badge badge-primary category-badge">'+cname+'</a> ';
             plugin_cats_list += cname+',';
             plugin_cats_array.push(cname);
         });
+
         plugin_cats_list = plugin_cats_list.slice(0, -1);
         return {
             list: plugin_cats_list,
@@ -286,7 +287,7 @@
         if (plugin_var_name == "metadata-outputs") {
             plugin_names.cat = "metadata";
         }
-        var plugin_cats = getPluginCats(plugin_names.cat)
+        var plugin_cats = getPluginCats(result.subcategory)
         var plugin_state = getPluginState(rc);
 
         // Converting the links to html
