@@ -7,6 +7,7 @@ Some problems are not detected only one one node, but are made by the aggregatio
 - ntp sync
 - galera replication status
 - etc
+- RHEL release differences
 
 Magui aims to use Citellus for gathering the data and later, write plugins to analyze that information.
 
@@ -59,7 +60,7 @@ Filtering options:
 
 ```
 
-## Running a check
+### Running a check
 
 This is an example of execution of Magui against a set of sosreports with `seqno` plugin of Citellus enabled.
 ```sh
