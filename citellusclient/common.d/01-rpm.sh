@@ -37,12 +37,17 @@ is_rpm_over(){
     is_required_rpm $1
     VERSION=$(is_rpm $1|sort -V|tail -1)
     LATEST=$(echo $VERSION $2|tr " " "\n"|sort -V|tail -1)
+
+    if [ "$(echo $VERSION $2|tr " " "\n"|sort -V|uniq|wc -l)" == "1" ];then
+        # Version and $2 are the same (only one line, so we're on latest)
+        return 0
+    fi
+
     if [ "$VERSION" != "$LATEST" ]; then
         # "package $1 version $VERSION is lower than required ($2)."
         return 1
     fi
     return 0
-
 }
 
 is_required_rpm_over(){
