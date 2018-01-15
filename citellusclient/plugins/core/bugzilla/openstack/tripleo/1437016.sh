@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# long_name: overcloud update stuck in progress
+# long_name: Overcloud update stuck in progress
 # description: 'openstack overcloud update' loops on 'IN_PROGRESS' and times out
 # bugzilla: https://bugzilla.redhat.com/show_bug.cgi?id=1437016
 # priority: 600
