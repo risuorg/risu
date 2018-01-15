@@ -197,3 +197,9 @@ location of various files. To use this script you can source it at the top:
         ~~~sh
         is_required_rpm_over dracut dracut-033-502
         ~~~
+
+- `are_dates_diff_over` -- Checks if two dates are over X days in diff
+    - Example:
+        ~~~sh
+        are_dates_diff_over 5 "2017-12-01 14:40" "2017-12-31 14:45"
+        ~~~
