@@ -25,5 +25,5 @@
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 
 # Latest sos for el7.4 is 3.4-6.el7
-is_required_rpm_over sos sos.3.4-6
+is_required_rpm_over sos sos-3.4-6.el7.noarch
 exit $RC_OKAY
