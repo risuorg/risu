@@ -28,7 +28,7 @@ config_file="${CITELLUS_ROOT}/etc/keystone/keystone.conf"
 
 is_required_file $config_file
 
-backends = $(iniparser "$config_file" identity driver)
+backends=$(iniparser "$config_file" identity driver)
 
 supported=1
 for backend in $backends;do
@@ -56,7 +56,7 @@ for backend in $backends;do
     esac
 done
 
-if [ "$supported" -neq "1" ]; then
+if [ "$supported" -ne "1" ]; then
     exit $RC_FAILED
 fi
 
