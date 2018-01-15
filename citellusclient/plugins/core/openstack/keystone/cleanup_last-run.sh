@@ -44,7 +44,8 @@ if [[ "x${LASTRUN}" = "x" ]];then
 else
     # Not just last run, but we also want it to be 'recent'
     epochdate=$(date -d "${LASTRUN}" "+%s")
-    if [[ "$(( ($NOW - $epochdate)/(60*60*24)))" -gt 2 ]]; then
+
+    if are_dates_diff_over 2 "$NOW" "$epochdate"; then
         echo $"Last token run was more than two days ago" >&2
         echo $RC_FAILED
     fi
