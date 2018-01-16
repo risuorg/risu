@@ -1,0 +1,30 @@
+# Copyright (C) 2018  Pablo Iranzo Gómez (Pablo.Iranzo@redhat.com)
+# Requires: Ansible 2.2 (due to check_mode and timezone)
+# Uploads citellus folder to /tmp on target host and runs from there and stores it back on local host for magui analysis
+
+- hosts: 127.0.0.1
+  connection: local
+  tasks:
+    - name: Delete local citellus folder
+      file:
+        path=/tmp/citellus/hostrun-*
+        state=absent
+
+- hosts: all
+  user: root
+  tasks:
+    - name: Upload citellus
+      synchronize:
+        #src: "{{ lookup('env','CITELLUS_BASE') }}"
+        src: /home/iranzo/GSS/DEVEL/citellus/
+        dest: /tmp/citellus
+    - name: Runs citellus on target
+      command: /tmp/citellus/citellus.py -l -o /tmp/citellus.json
+      args:
+        chdir: /tmp/citellus/
+        creates: /tmp/citellus.json
+    - name: Gets remote execution results locally
+      fetch:
+        src: /tmp/citellus.json
+        dest: /tmp/citellus/hostrun-{{ inventory_hostname }}/citellus.json
+        flat: yes
