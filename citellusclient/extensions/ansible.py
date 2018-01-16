@@ -54,7 +54,7 @@ def get_metadata(plugin):
     with open(plugin['plugin'], 'r') as stream:
         try:
             doc = (yaml.load(stream))
-        except yaml.YAMLError:
+        except:
             doc = ""
 
     try:
