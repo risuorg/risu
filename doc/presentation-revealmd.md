@@ -48,7 +48,7 @@ mode: selfcontained
     - missing parameters in expired ceilometer data, which can lead to filling up your hard drive.
     - unsynced ntp.
     - outdated packages that have known critical issues.
-    - others! (118 plugins as of this writting some of them with more than one issue detected)
+    - others! (119 plugins as of this writting some of them with more than one issue detected)
 - Whatever else you can imagine or code 😉
 
 ----
@@ -61,7 +61,7 @@ mode: selfcontained
 - openstack : 54
 - pacemaker : 7
 - security: 12
-- system : 27
+- system : 28
 - virtualization : 1
 
 ----
@@ -81,7 +81,7 @@ pacemaker : 7 []
 
 security : 12 ['meltdown: 2', 'spectre: 8']
 
-system : 27 []
+system : 28 []
 
 virtualization : 1 []
 
@@ -349,6 +349,7 @@ mode: fs snapshot sosreport-20170724-175510/crta02
 - What does M.a.g.u.i. Does?
     - It runs citellus against each sosreport, gathers and groups the data per plugin.
     - Runs its own plugins against the data received to hilight issues that depend on several systems
+    - Allows to grab remote host data via ansible host lists
 
 ----
 
@@ -379,12 +380,12 @@ It’s delivered in citellus repo and can be executed by specifying sosreports:
 
 ## Next steps with Magui
 
-- Four plugins as of this writing:
+- Plugins as of this writing:
     - Aggregate data from citellus sorted by plugin for quick comparison
     - Show 'metadata' extension separated to quickly compare across values
     - pipeline-yaml different across sosreports
     - seqno and higuuest seqno in galera
-
+    - release check across hosts
 
 ---
 
@@ -394,7 +395,6 @@ It’s delivered in citellus repo and can be executed by specifying sosreports:
 - Evangelize about the tool so we can work together in solving our common issues on the same framework.<!-- .element: class="fragment" -->
 - Get moving fast enough that the tool has continuity, other tools just died by having a ‘solo’ developer working on spare time<!-- .element: class="fragment" -->
 - Start implementing more tests in Magui that provide real intelligence (for example we do report and check on seqno or pipeline-yaml but lot of other issues can benefit from this).<!-- .element: class="fragment" -->
-
 
 ---
 
