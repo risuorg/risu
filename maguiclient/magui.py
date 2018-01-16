@@ -27,6 +27,7 @@ from __future__ import print_function
 import argparse
 import datetime
 import gettext
+import glob
 import hashlib
 import imp
 import json
@@ -109,6 +110,9 @@ def parse_args():
     p.add_argument("--run", "-r",
                    action='store_true',
                    help=_("Force run of citellus instead of reading existing 'citellus.json'"))
+    p.add_argument("--hosts",
+                   metavar="hosts",
+                   help=_("Gather data via ansible from remote hosts to process."))
 
     g = p.add_argument_group('Filtering options')
     g.add_argument("-q", "--quiet",
@@ -220,7 +224,7 @@ def callcitellus(path=False, plugins=False, forcerun=False):
 
         for result in oldresults:
             for plugin in plugins:
-                if result['plugin'] == plugin['plugin']:
+                if result['id'] == plugin['id']:
                     # We have a match with the plugin defined and the ones we expect, so append results
                     results.append(result)
 
@@ -413,7 +417,27 @@ def main():
     citellusplugins = newplugins
 
     # Grab the data
-    grouped = domagui(sosreports=options.sosreports, citellusplugins=citellusplugins, options=options)
+    sosreports = options.sosreports
+
+    if options.hosts:
+        ansible = citellus.which("ansible-playbook")
+        if not ansible:
+            LOG.err("No ansible-playbook support found, skipping")
+        else:
+            LOG.info("Grabbing data from remote hosts with Ansible")
+            # Grab data from ansible hosts
+            os.environ['ANSIBLE_RETRY_FILES_ENABLED'] = "0"
+            command = "%s -i %s %s" % (ansible, options.hosts, os.path.join(maguidir, 'remote.yml'))
+
+            LOG.debug("Running: %s " % command)
+            citellus.execonshell(filename=command)
+
+            # Now check the hosts we got logs from:
+            hosts = citellus.findplugins(folders=glob.glob('/tmp/citellus/hostrun-*'), executables=False, fileextension='.json')
+            for host in hosts:
+                sosreports.append(os.path.dirname(host['plugin']))
+
+    grouped = domagui(sosreports=sosreports, citellusplugins=citellusplugins, options=options)
 
     # Run Magui plugins
     results = []
