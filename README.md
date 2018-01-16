@@ -29,8 +29,8 @@ usage: citellus.py [arguments] [-h] [-l] [--list-plugins] [--list-extensions]
                                [--output FILENAME] [--web] [--blame] [--lang]
                                [--only-failed] [-v]
                                [-d {INFO,DEBUG,WARNING,ERROR,CRITICAL}] [-q]
-                               [-i SUBSTRING] [-x SUBSTRING] [--dump-config]
-                               [--no-config]
+                               [-i SUBSTRING] [-x SUBSTRING] [-p [0-1000]]
+                               [--dump-config] [--no-config]
                                [sosreport]
 
 Citellus allows to analyze a directory against common set of tests, useful for
@@ -67,12 +67,15 @@ Filtering options:
                         Only include plugins that contain substring
   -x SUBSTRING, --exclude SUBSTRING
                         Exclude plugins that contain substring
+  -p [0-1000], --prio [0-1000]
+                        Only include plugins are equal or above specified prio
 
 Config options:
   --dump-config         Dump config to console to be saved into file
   --no-config           Do not read configuration from file ~/DEVEL
                         /citellus/citellusclient/citellus.conf or
                         ~/.citellus.conf
+
 ```
 
 ## Plugins and their descriptions

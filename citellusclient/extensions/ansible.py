@@ -41,7 +41,7 @@ def listplugins(options):
     :return: plugin object generator
     """
     yield citellus.findplugins(folders=[pluginsdir], include=options.include, exclude=options.exclude,
-                               executables=False, fileextension=".yml", extension='ansible')
+                               executables=False, fileextension=".yml", extension='ansible', prio=options.prio)
 
 
 def get_metadata(plugin):
@@ -65,7 +65,7 @@ def get_metadata(plugin):
     metadata = {'description': description,
                 'long_name': citellus.regexpfile(filename=plugin['plugin'], regexp='\A# long_name:')[12:].strip(),
                 'bugzilla': citellus.regexpfile(filename=plugin['plugin'], regexp='\A# bugzilla:')[11:].strip(),
-                'priority': citellus.regexpfile(filename=plugin['plugin'], regexp='\A# priority:')[11:].strip()}
+                'priority': int(citellus.regexpfile(filename=plugin['plugin'], regexp='\A# priority:')[11:].strip() or 0)}
 
     return metadata
 
