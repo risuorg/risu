@@ -35,7 +35,7 @@ def listplugins(options):
     :param options: argparse options provided
     :return: plugin object generator
     """
-    yield citellus.findplugins(folders=[pluginsdir], include=options.include, exclude=options.exclude, extension='metadata')
+    yield citellus.findplugins(folders=[pluginsdir], include=options.include, exclude=options.exclude, extension='metadata', prio=options.prio)
 
 
 def get_metadata(plugin):
@@ -46,7 +46,8 @@ def get_metadata(plugin):
     """
 
     metadata = {'description': citellus.regexpfile(filename=plugin['plugin'], regexp='\A# description:')[14:].strip(),
-                'long_name': citellus.regexpfile(filename=plugin['plugin'], regexp='\A# long_name:')[12:].strip()}
+                'long_name': citellus.regexpfile(filename=plugin['plugin'], regexp='\A# long_name:')[12:].strip(),
+                'priority': int(citellus.regexpfile(filename=plugin['plugin'], regexp='\A# priority:')[11:].strip() or 0)}
     return metadata
 
 

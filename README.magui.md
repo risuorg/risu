@@ -24,9 +24,9 @@ Plugins for Magui are to be written in Python, check next section for details.
 
 ```
 usage: magui.py [arguments] [-h] [-d {INFO,DEBUG,WARNING,ERROR,CRITICAL}]
-                            [--list-plugins] [--description] [-p PLUGINPATH]
-                            [-m MPATH] [--output FILENAME] [--run]
-                            [--hosts hosts] [-q] [-i SUBSTRING] [-x SUBSTRING]
+                            [--list-plugins] [--description] [-m MPATH]
+                            [--output FILENAME] [--run] [--hosts hosts] [-q]
+                            [-i SUBSTRING] [-x SUBSTRING] [-p [0-1000]]
                             [-mf MFILTER]
                             [sosreports [sosreports ...]]
 
@@ -42,8 +42,6 @@ optional arguments:
                         Set log level
   --list-plugins        Print a list of discovered Magui plugins and exit
   --description         With list-plugins, also outputs plugin description
-  -p PLUGINPATH, --pluginpath PLUGINPATH
-                        Set path for Citellus plugin location if not default
   -m MPATH, --mpath MPATH
                         Set path for Magui plugin location if not default
   --output FILENAME, -o FILENAME
@@ -58,6 +56,8 @@ Filtering options:
                         Only include plugins that contain substring
   -x SUBSTRING, --exclude SUBSTRING
                         Exclude plugins that contain substring
+  -p [0-1000], --prio [0-1000]
+                        Only include plugins are equal or above specified prio
   -mf MFILTER, --mfilter MFILTER
                         Only include Magui plugins that contains in full path
                         that substring

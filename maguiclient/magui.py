@@ -98,9 +98,6 @@ def parse_args():
     p.add_argument("--description",
                    action="store_true",
                    help=_("With list-plugins, also outputs plugin description"))
-    p.add_argument('-p', "--pluginpath", dest="pluginpath",
-                   help=_("Set path for Citellus plugin location if not default"),
-                   action='append')
     p.add_argument('-m', "--mpath", dest="mpath",
                    help=_("Set path for Magui plugin location if not default"),
                    action='append')
@@ -128,6 +125,12 @@ def parse_args():
                    help=_("Exclude plugins that contain substring"),
                    default=[],
                    action='append')
+    g.add_argument("-p", "--prio",
+                   metavar='[0-1000]',
+                   type=int,
+                   choices=range(0, 1001),
+                   help=_("Only include plugins are equal or above specified prio"),
+                   default=0)
 
     g.add_argument("-mf", "--mfilter", dest="mfilter",
                    help=_("Only include Magui plugins that contains in full path that substring"),

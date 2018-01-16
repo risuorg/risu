@@ -203,7 +203,7 @@ def show_logo():
     print("\n".join(logo))
 
 
-def findplugins(folders, include=None, exclude=None, executables=True, fileextension=False, extension='core'):
+def findplugins(folders, include=None, exclude=None, executables=True, fileextension=False, extension='core', prio=0):
     """
     Finds plugins in path and returns array of them
     :param executables: Enable to find only executable files
@@ -274,7 +274,9 @@ def findplugins(folders, include=None, exclude=None, executables=True, fileexten
 
         dictionary = {'plugin': plugin, 'backend': extension, 'id': hashlib.md5(plugin.replace(citellusdir, '').encode('UTF-8')).hexdigest(), 'category': category, 'subcategory': subcategory}
         dictionary.update(get_metadata(plugin=dictionary))
-        metaplugins.append(dictionary)
+
+        if dictionary['priority'] >= prio:
+            metaplugins.append(dictionary)
 
     return metaplugins
 
@@ -472,6 +474,13 @@ def parse_args(default=False, parse=False):
                    help=_("Exclude plugins that contain substring"),
                    default=[],
                    action='append')
+    g.add_argument("-p", "--prio",
+                   metavar='[0-1000]',
+                   type=int,
+                   choices=range(0, 1001),
+                   help=_("Only include plugins are equal or above specified prio"),
+                   default=0)
+
     s = p.add_argument_group('Config options')
     s.add_argument("--dump-config", help=_("Dump config to console to be saved into file"), default=False, action="store_true")
     s.add_argument("--no-config", default=False, help=_("Do not read configuration from file %s or ~/.citellus.conf" % os.path.join(citellusdir, "citellus.conf")), action="store_true")
