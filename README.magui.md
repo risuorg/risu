@@ -16,6 +16,8 @@ Magui aims to use Citellus for gathering the data and later, write plugins to an
 
 - Plugins use uuid to identify plugin properly and act on them.
 
+- Allows to get data from remote hosts with ansible-playbook
+
 
 ## Usage help
 Plugins for Magui are to be written in Python, check next section for details.

@@ -349,6 +349,7 @@ mode: fs snapshot sosreport-20170724-175510/crta02
 - What does M.a.g.u.i. Does?
     - It runs citellus against each sosreport, gathers and groups the data per plugin.
     - Runs its own plugins against the data received to hilight issues that depend on several systems
+    - Allows to grab remote host data via ansible host lists
 
 ----
 
