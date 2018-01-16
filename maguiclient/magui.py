@@ -343,11 +343,17 @@ def maguiformat(data):
     for plugin in data:
         pplug = 0
         for host in data[plugin]['sosreport']:
-            if data[plugin]['sosreport'][host]['rc'] != citellus.RC_OKAY and data[plugin]['sosreport'][host]['rc'] != citellus.RC_SKIPPED:
+            if data[plugin]['sosreport'][host]['rc'] not in [citellus.RC_OKAY, citellus.RC_SKIPPED]:
                 pplug = 1
         if pplug == 1:
             newplugin = plugin.replace(cp, '')
             toprint[newplugin] = {}
+
+            # Fill metadata for plugin
+            for key in data[plugin]:
+                if key not in ['sosreport']:
+                    toprint[newplugin][key] = data[plugin][key]
+
             toprint[newplugin]['sosreport'] = {}
             for host in data[plugin]:
                 toprint[newplugin]['sosreport'][host] = {}
@@ -450,11 +456,17 @@ def main():
                    'out': out,
                    'err': err}
 
-        results.append({'plugin': plugin.__name__.split(".")[-1],
-                        'id': hashlib.md5(plugin.__file__.replace(maguidir, '').encode('UTF-8')).hexdigest(),
-                        'description': plugin.help(),
-                        'results': updates,
-                        'time': time.time() - start_time})
+        adddata = True
+        if options.quiet:
+            if returncode in [citellus.RC_OKAY, citellus.RC_SKIPPED]:
+                adddata = False
+
+        if adddata:
+            results.append({'plugin': plugin.__name__.split(".")[-1],
+                            'id': hashlib.md5(plugin.__file__.replace(maguidir, '').encode('UTF-8')).hexdigest(),
+                            'description': plugin.help(),
+                            'results': updates,
+                            'time': time.time() - start_time})
 
     if options.output:
         write_results(results=results, filename=options.output)

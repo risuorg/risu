@@ -69,6 +69,7 @@ def run(data, quiet=False):  # do not edit this line
 
         if host:
             message = _("Host %s contains highest sequence in Galera consider that one for bootstraping if needed." % host)
+            returncode = citellus.RC_FAILED
 
         # find max in sosreport to report host
     out = ''

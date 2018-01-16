@@ -49,7 +49,12 @@ def run(data, quiet=False):  # do not edit this line
         if toprint[item]['backend'] != 'metadata':
             err.append(toprint[item])
 
-    returncode = citellus.RC_OKAY
+    # Do return different code if we've data
+    if len(err) > 0:
+        returncode = citellus.RC_FAILED
+    else:
+        returncode = citellus.RC_OKAY
+
     out = ''
     return returncode, out, err
 
