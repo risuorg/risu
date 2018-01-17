@@ -27,7 +27,16 @@ are_dates_diff_over(){
     date2="$3"
 
     EPOCH1="$(date -d "$date1" "+%s" 2>/dev/null)"
+    if [[ "$?" == "1" ]]; then
+        # failure when converting date, happened with one specific TZ, so let's approx by removing TZ
+        EPOCH1=$(date -d "$(echo "$date1" |awk '{print $1" "$2" "$3" "$4" "$6}')" "+%s")
+    fi
+
     EPOCH2="$(date -d "$date2" "+%s" 2>/dev/null)"
+    if [[ "$?" == "1" ]]; then
+        # failure when converting date, happened with one specific TZ, so let's approx by removing TZ
+        EPOCH2=$(date -d "$(echo "$date2" |awk '{print $1" "$2" "$3" "$4" "$6}')" "+%s")
+    fi
 
     if [[ ${EPOCH1} -gt ${EPOCH2} ]]; then
         DIFF="$(( ($EPOCH1 - $EPOCH2) ))"
