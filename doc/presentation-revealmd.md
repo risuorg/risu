@@ -103,7 +103,7 @@ virtualization : 1 []
 As easy as it could:
 
 ~~~sh
-citellus/citellus/citellus.py /folder/containing/sosreport
+citellus/citellus.py /folder/containing/sosreport
 ~~~
 
 Example:
@@ -142,15 +142,14 @@ mode: fs snapshot ../sosreport-controller-0-20171212110438/
 - Allows to dump output to json file to be processed by other tools.
     - Allow to visualize html from json output.
 - Ansible playbook support (live and snapshoot if crafted playbooks)
-    - Core implemented as extension to easily expand.
+    - Core implemented as extension to easily expand with new ones.
 - Save / restore default settings
 
 ----
 
 ## HTML Interface
-- Create by using --output and --web, open the generated `citellus.html`.
+- Create by using --output and --web, open the generated `citellus.html` over http.
 <img src="images/www.png" height="40%" border=0>
-
 
 ---
 
@@ -175,8 +174,9 @@ For example, it will be easy to report on systems registered against RHN instead
 
 ## Citellus vs other tools
 
-- XSOS
-Provides information on ram usage, etc, no analysis, more like a ‘fancy’ sosreport viewer.
+- XSOS: Provides information on ram usage, etc, no analysis, more like a ‘fancy’ sosreport viewer.
+
+- TripleO-validations: only runs live from the environment, for customer support most of times we cannot afford to do that.
 
 ---
 
@@ -195,6 +195,8 @@ Blog post by Pablo:
 - <http://iranzo.github.io/blog/2017/07/26/Citellus-framework-for-detecting-known-issues/>
 - <https://iranzo.github.io/blog/2017/07/31/Magui-for-analysis-of-issues-across-several-hosts/>
 - <https://iranzo.github.io/blog/2017/08/17/Jenkins-for-running-CI-tests/>
+- <https://iranzo.github.io/blog/2017/10/26/i18n-and-bash8-in-bash/>
+- <https://iranzo.github.io/blog/2018/01/16/recent-changes-in-magui-and-citellus/>
 - DevConf.cz 2018 <https://devconfcz2018.sched.com/event/DJXG/detect-pitfalls-of-osp-deployments-with-citellus>
 
 </small>
@@ -209,7 +211,7 @@ Philosophy is very simple:
 - Allows to specify on sosreport and test folders<!-- .element: class="fragment" -->
 - Finds tests available in test folders<!-- .element: class="fragment" -->
 - Executes each test against sosreport and reports return status<!-- .element: class="fragment" -->
-- Framework written in python (fallback to prior shell version) so features like parsing, parallel execution of tests, etc are available.<!-- .element: class="fragment" -->
+- Framework written in python which features option parsing, parallel execution of tests, filtering, etc.<!-- .element: class="fragment" -->
 
 ---
 
@@ -266,7 +268,7 @@ fi
 
 - There are more tests for OpenStack at the moment as this is the speciality where it started, but it’s open and able to extend to whatever is needed.
 
-- Each test should take care of checking if it should run or not and output return code and stderr. Wrapper just runs all the tests or specific ones (filtering)
+- Each test should take care of checking if it should run or not and output return code and stderr. Wrapper just runs all the tests or specific ones (filtering options)
 
 ----
 
@@ -313,8 +315,8 @@ fi
 if is_rpm ovirt-hosted-engine-ha; then
     exit $RC_OKAY
 else
-        echo “ovirt-hosted-engine is not installed “ >&2
-        exit $RC_FAILED
+    echo “ovirt-hosted-engine is not installed “ >&2
+    exit $RC_FAILED
 fi
 ~~~
 
@@ -326,7 +328,7 @@ fi
 
 - Specify the plugin to use:
 ~~~sh
-[piranzo@host citellus]$ ~/citellus/citellus/citellus.py sosreport-20170724-175510/crta02 -i hosted-engine.sh
+[piranzo@host citellus]$ ~/citellus/citellus.py sosreport-20170724-175510/crta02 -i hosted-engine.sh
 _________ .__  __         .__  .__
 \_   ___ \|__|/  |_  ____ |  | |  |  __ __  ______
 /    \  \/|  \   __\/ __ \|  | |  | |  |  \/  ___/
@@ -334,7 +336,7 @@ _________ .__  __         .__  .__
  \______  /__||__|  \___  >____/____/____//____  >
         \/              \/                     \/
 mode: fs snapshot sosreport-20170724-175510/crta02
-# /home/iranzo/citellus/citellusclient/plugins/core/rhev/hosted-engine.sh: failed
+# ~/citellus/citellusclient/plugins/core/rhev/hosted-engine.sh: failed
     “ovirt-hosted-engine is not installed “
 ~~~
 
@@ -363,7 +365,7 @@ It’s delivered in citellus repo and can be executed by specifying sosreports:
   /(_)   Multiple Analisis Generic Unifier and Interpreter
  \|
   |/
-{'/home/remote/piranzo/citellus/citellusclient/plugins/core/openstack/mysql/seqno.sh': {'controller0': {'err': u'2b65adb0-787e-11e7-81a8-26480628c14c:285019879\n',
+{'~/citellus/citellusclient/plugins/core/openstack/mysql/seqno.sh': {'controller0': {'err': u'2b65adb0-787e-11e7-81a8-26480628c14c:285019879\n',
                                                                                                                           'out': u'',
                                                                                                                           'rc': 10},
                                                                                         'controller1': {'err': u'2b65adb0-787e-11e7-81a8-26480628c14c:285019879\n',
@@ -384,7 +386,7 @@ It’s delivered in citellus repo and can be executed by specifying sosreports:
     - Aggregate data from citellus sorted by plugin for quick comparison
     - Show 'metadata' extension separated to quickly compare across values
     - pipeline-yaml different across sosreports
-    - seqno and higuuest seqno in galera
+    - seqno and highest seqno in galera
     - release check across hosts
 
 ---
@@ -402,7 +404,9 @@ It’s delivered in citellus repo and can be executed by specifying sosreports:
 
 THANK YOU FOR ATTENDING!!
 
-For questions, come to #citellus on Freenode or email us:
+### Questions?
+
+For additional questions, come to #citellus on Freenode or email us:
 
 - <mailto:citellus-dev@redhat.com>
 - <https://www.redhat.com/mailman/listinfo/citellus-dev>
