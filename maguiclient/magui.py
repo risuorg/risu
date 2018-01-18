@@ -464,12 +464,26 @@ def main():
             if returncode in [citellus.RC_OKAY, citellus.RC_SKIPPED]:
                 adddata = False
 
+        subcategory = os.path.split(plugin.__file__)[0].replace(os.path.join(maguidir, 'plugins', ''), '')
+
+        if subcategory:
+            if len(os.path.normpath(subcategory).split(os.sep)) > 1:
+                category = os.path.normpath(subcategory).split(os.sep)[0]
+            else:
+                category = subcategory
+                subcategory = []
+        else:
+            category = []
+
         if adddata:
             results.append({'plugin': plugin.__name__.split(".")[-1],
                             'id': hashlib.md5(plugin.__file__.replace(maguidir, '').encode('UTF-8')).hexdigest(),
                             'description': plugin.help(),
                             'results': updates,
-                            'time': time.time() - start_time})
+                            'time': time.time() - start_time,
+                            'category': category,
+                            'subcategory': subcategory
+                            })
 
     if options.output:
         write_results(results=results, filename=options.output)
