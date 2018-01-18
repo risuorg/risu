@@ -336,7 +336,7 @@ def execonshell(filename):
     return returncode, out, err
 
 
-def docitellus(live=False, path=False, plugins=False, lang='en_US'):
+def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=False):
     """
     Runs citellus scripts on specified root folder
     :param lang: language to use on shell
@@ -367,8 +367,17 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US'):
     # Set pool for same processes as CPU cores
     p = Pool(cpu_count())
 
-    # Execute runplugin for each plugin found
-    results = p.map(runplugin, plugins)
+    filename = os.path.join(path, 'citellus.json')
+    if os.access(filename, os.R_OK) and not forcerun and not live:
+        LOG.debug("Reading Existing citellus analysis from disk for %s" % path)
+        results = json.load(open(filename, 'r'))['results']
+    else:
+        # Execute runplugin for each plugin found
+        results = p.map(runplugin, plugins)
+
+        if os.access(path, os.W_OK):
+            # Write results to disk
+            write_results(results, filename, live=False, path=path)
 
     return results
 
@@ -436,6 +445,9 @@ def parse_args(default=False, parse=False):
     p.add_argument("--web",
                    action="store_true",
                    help=_("Write results to JSON file citellus.json and copy html interface in path defined in --output"))
+    p.add_argument("--run", "-r",
+                   action='store_true',
+                   help=_("Force run of citellus instead of reading existing 'citellus.json'"))
 
     g = p.add_argument_group('Output and logging options')
     g.add_argument("--blame",
@@ -824,7 +836,7 @@ def main():
         newplugins.extend(each)
 
     plugins = newplugins
-    results = docitellus(live=options.live, path=CITELLUS_ROOT, plugins=plugins, lang=options.lang)
+    results = docitellus(live=options.live, path=CITELLUS_ROOT, plugins=plugins, lang=options.lang, forcerun=options.run)
 
     # Print results based on the sorted order based on returned results from
     # parallel execution
