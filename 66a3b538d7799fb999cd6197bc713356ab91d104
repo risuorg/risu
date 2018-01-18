@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "332acaec_770cd09e",
+        "filename": "maguiclient/magui.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1012331
+      },
+      "writtenOn": "2018-01-18T14:43:03Z",
+      "side": 1,
+      "message": "I believe that this is returning a string, so it might be a good idea to default to a string when empty ?",
+      "range": {
+        "startLine": 467,
+        "startChar": 8,
+        "endLine": 467,
+        "endChar": 106
+      },
+      "revId": "66a3b538d7799fb999cd6197bc713356ab91d104",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
