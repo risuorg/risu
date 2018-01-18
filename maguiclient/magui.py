@@ -232,9 +232,31 @@ def callcitellus(path=False, plugins=False, forcerun=False):
                     results.append(result)
 
     else:
-        LOG.debug("Running citellus analysis for %s" % path)
-        # Call citellus and format data returned
-        results = citellus.docitellus(path=path, plugins=plugins)
+        if os.access(path, os.R_OK):
+            LOG.debug("Running citellus analysis for %s" % path)
+            # We've forced execution so refresh file on disk if we've permissions with all plugins and return only the ones filtered
+            if os.access(filename, os.W_OK):
+                # Call citellus and format data returned
+                results = citellus.docitellus(path=path, plugins=False)
+
+                citellus.write_results(results, filename, live=False, path=path)
+
+                oldresults = results
+
+                # Need to apply filters as by default the stored file will have everything
+                results = []
+
+                for result in oldresults:
+                    for plugin in plugins:
+                        if result['id'] == plugin['id']:
+                            # We have a match with the plugin defined and the ones we expect, so append results
+                            results.append(result)
+            else:
+                # We cannot write to the file, so just run whith the plugins we've been pased
+                results = citellus.docitellus(path=path, plugins=False)
+        else:
+            LOG.debug("No access to path: %s" % path)
+            results = []
 
     # Process plugin output from multiple plugins
     new_dict = {}
