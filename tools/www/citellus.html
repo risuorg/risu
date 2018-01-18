@@ -298,7 +298,7 @@
         var item_id = result.id;
         var row = "";
         // we build the text that is going to be appended to the container
-        row += '        <div class="list-group-item" data-state="'+plugin_state.state+'" data-plugin-name="'+plugin_names.name+'" data-categories="'+ plugin_cats.list +'" id="head-'+item_id+'">\n';
+        row += '        <div class="list-group-item" data-state="'+plugin_state.state+'" data-plugin-name="'+plugin_names.name+'" data-categories="'+ plugin_cats.list +'" id="plugin-'+item_id+'">\n';
         row += '         <textarea class="plugin-error" style="display: none;">'+err+'</textarea>\n';
         row += '         <div class="list-group-item-header">\n';
         row += '          <div class="list-view-pf-expand">\n';
@@ -358,6 +358,9 @@
         row += '           <p>\n';
         row += '           </p><!-- /p -->\n';
         row += '          </div><!-- /col-md-9 -->\n';
+        row += '          <div class="col-md-3">\n';
+        row += '            <a href="#plugin-'+item_id+'"><span class="fa fa-link"></span> Link</a>\n';
+        row += '          </div><!-- /col-md-3 -->\n';
         row += '         </div><!-- /row -->\n';
         row += '        </div><!-- /list-group-item-container -->\n';
         row += '       </div><!-- /list-group-item -->\n';
@@ -371,6 +374,13 @@
 
     // This code is only executed when everything else is loaded
     $(document).ready(function() {
+        if (window.location.hash.substr(1)) {
+            console.log($("#" + window.location.hash.substr(1)).prop('tagName'));
+            $("#" + window.location.hash.substr(1)).toggleClass("fa-angle-down").end().parent().toggleClass("list-view-pf-expand-active").find(".list-group-item-container").toggleClass("hidden");
+//           $('html, body').animate({
+//               scrollTop: $("#" + window.location.hash.substr(1)).offset().top
+//            }, 2000);
+        }
         jsonFile = getParameterByName("json");
         if (jsonFile == null) {
             jsonFile = "citellus.json";
@@ -513,6 +523,12 @@
                         } // if citellus-outputs
                     } // if data source == "magui"
                 }); // each data.results
+                if (window.location.hash.substr(1)) {
+                    $('html, body').animate({
+                        scrollTop: $("#" + window.location.hash.substr(1)).offset().top
+                    }, 1000);
+                    $("#" + window.location.hash.substr(1)).find(".fa-angle-right:first").toggleClass("fa-angle-down").end().toggleClass("list-view-pf-expand-active").find(".list-group-item-container").toggleClass("hidden").end().css("border","2px solid red");
+                }
             } // ajax success
         }); // ajax query
     }); // doc ready
