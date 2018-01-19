@@ -203,7 +203,63 @@ def show_logo():
     print("\n".join(logo))
 
 
-def findplugins(folders, include=None, exclude=None, executables=True, fileextension=False, extension='core', prio=0):
+def findfiles(folders, executables=True, fileextension=False, include=None, exclude=None):
+    """
+    Finds files in path and returns array of them
+    :param executables: Enable to find only executable files
+    :param fileextension: Extension to match for plugins found
+    :param exclude: exclude string in filter path
+    :param include: include string in filter path
+    :param folders: Folders to use as source for plugin search
+    :return: list of files found
+    """
+
+    if not folders:
+        folders = [os.path.join(citellusdir, 'plugins')]
+
+    LOG.debug('starting file search in: %s', folders)
+
+    files = []
+    for folder in folders:
+        for root, dirnames, filenames in os.walk(folder):
+            LOG.debug('looking for files in: %s', root)
+            for filename in filenames:
+                filepath = os.path.join(root, filename)
+                LOG.debug('considering: %s', filepath)
+                passesextension = False
+                if fileextension:
+                    if os.path.splitext(filepath)[1] == fileextension:
+                        passesextension = True
+                else:
+                    passesextension = True
+
+                if passesextension is True:
+                    if executables:
+                        if os.access(filepath, os.X_OK):
+                            files.append(filepath)
+                    else:
+                        files.append(filepath)
+
+    LOG.debug(msg=_('Found files: %s') % files)
+
+    # this unique-ifies the list of files (and ensures consistent
+    # ordering).
+
+    files = sorted(set(files))
+
+    if include:
+        files = [filename for filename in files
+                 for filters in include
+                 if filters in filename]
+
+    if exclude:
+        files = [filename for filename in files
+                 if not any(filters in filename for filters in exclude)]
+
+    return files
+
+
+def findplugins(folders, executables=True, fileextension=False, extension='core', prio=0):
     """
     Finds plugins in path and returns array of them
     :param executables: Enable to find only executable files
@@ -225,36 +281,8 @@ def findplugins(folders, include=None, exclude=None, executables=True, fileexten
     if not extensions:
         extensions, exttriggers = initExtensions()
 
-    plugins = []
-    for folder in folders:
-        for root, dirnames, filenames in os.walk(folder):
-            LOG.debug('looking for plugins in: %s', root)
-            for filename in filenames:
-                filepath = os.path.join(root, filename)
-                LOG.debug('considering: %s', filepath)
-                passesextension = False
-                if fileextension:
-                    if os.path.splitext(filepath)[1] == fileextension:
-                        passesextension = True
-                else:
-                    passesextension = True
-
-                if passesextension is True:
-                    if executables:
-                        if os.access(filepath, os.X_OK):
-                            plugins.append(filepath)
-                    else:
-                        plugins.append(filepath)
-
-    if include:
-        plugins = [plugin for plugin in plugins
-                   for filters in include
-                   if filters in plugin]
-
-    if exclude:
-        plugins = [plugin for plugin in plugins
-                   if not any(filters in plugin for filters in exclude)]
-
+    # Call findfiles to detect the plugins so that we can later add metadata
+    plugins = findfiles(folders, executables, fileextension)
     LOG.debug(msg=_('Found plugins: %s') % plugins)
 
     # this unique-ifies the list of plugins (and ensures consistent
@@ -336,7 +364,7 @@ def execonshell(filename):
     return returncode, out, err
 
 
-def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=False, savepath=False):
+def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=False, savepath=False, include=None, exclude=None):
     """
     Runs citellus scripts on specified root folder
     :param lang: language to use on shell
@@ -390,6 +418,27 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
         if os.access(path, os.W_OK):
             # Write results to disk
             write_results(results, filename, live=False, path=path)
+
+    # We've filters defined, so filter data
+    if include or exclude:
+        if include:
+            oldresults = results
+            results = []
+            for result in oldresults:
+                for plugin in plugins:
+                        for filters in include:
+                            if filters in result['plugin']:
+                                # We have a match with the plugin defined and the ones we expect, so append results
+                                results.append(result)
+        if exclude:
+            oldresults = results
+            results = []
+            for result in oldresults:
+                for plugin in plugins:
+                        for filters in include:
+                            if not any(filters in result['plugin']):
+                                # We have a match with the plugin defined and the ones we expect, so append results
+                                results.append(result)
 
     return results
 
@@ -848,7 +897,7 @@ def main():
         newplugins.extend(each)
 
     plugins = newplugins
-    results = docitellus(live=options.live, path=CITELLUS_ROOT, plugins=plugins, lang=options.lang, forcerun=options.run, savepath=options.output)
+    results = docitellus(live=options.live, path=CITELLUS_ROOT, plugins=plugins, lang=options.lang, forcerun=options.run, savepath=options.output, include=options.include, exclude=options.exclude)
 
     # Print results based on the sorted order based on returned results from
     # parallel execution
@@ -886,14 +935,17 @@ def main():
 
     totaltime = time.time() - start_time
 
-    if options.output:
-        if options.web:
+    if options.web:
+        if options.output:
             basefolder = os.path.dirname(options.output)
-            if basefolder == '':
-                basefolder = './'
-            src = os.path.join(citellusdir, '../tools/www/citellus.html')
-            if os.path.isfile(src):
-                shutil.copyfile(src, os.path.join(basefolder, os.path.basename(src)))
+        else:
+            basefolder = os.path.dirname(options.sosreport)
+
+        if basefolder == '':
+            basefolder = './'
+        src = os.path.join(citellusdir, '../tools/www/citellus.html')
+        if os.path.isfile(src):
+            shutil.copyfile(src, os.path.join(basefolder, os.path.basename(src)))
 
     if options.blame:
         print("# Total execution time: %s seconds" % totaltime)
