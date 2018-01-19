@@ -29,6 +29,9 @@ if is_process nova-compute; then
     exit $RC_SKIPPED
 fi
 
+# Exit if not OSP node
+is_required_rpm openstack-nova-common
+
 MESSAGE=$"AVC denial for console.log: https://bugzilla.redhat.com/show_bug.cgi?id=1501957 https://bugzilla.redhat.com/show_bug.cgi?id=1491767"
 
 if [ "x$CITELLUS_LIVE" = "x0" ];  then
