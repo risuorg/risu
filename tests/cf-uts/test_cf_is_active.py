@@ -32,9 +32,9 @@ NAME = "test_cf_is_active"
 testplugins = os.path.join(citellus.citellusdir, 'plugins', 'test')
 plugins = os.path.join(citellus.citellusdir, 'plugins', 'core')
 folder = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'setup')
-uttest = citellus.findplugins(folders=[folder], include=[NAME])[0]['plugin']
+uttest = citellus.findfiles(folders=[folder], include=[NAME])[0]['plugin']
 us = os.path.basename(uttest)
-citplugs = citellus.findplugins(folders=[folder], include=[us])
+citplugs = citellus.findfiles(folders=[folder], include=[us])
 
 
 # Setup commands and expected return codes
