@@ -35,7 +35,7 @@ def listplugins(options):
     :param options: argparse options provided
     :return: plugin object generator
     """
-    yield citellus.findplugins(folders=[pluginsdir], include=options.include, exclude=options.exclude, prio=options.prio)
+    yield citellus.findplugins(folders=[pluginsdir], prio=options.prio)
 
 
 def get_metadata(plugin):

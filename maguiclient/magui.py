@@ -168,15 +168,17 @@ def getPlugins(options):
     """
 
     Plugins = []
-    possiblePlugins = citellus.findplugins(folders=[PluginsFolder], executables=False, exclude=['__init__.py', 'pyc'], include=options.mfilter, fileextension='.py')
+    possiblePlugins = citellus.findfiles(folders=[PluginsFolder], executables=False, exclude=['__init__.py', 'pyc'], include=options.mfilter, fileextension='.py')
     for i in possiblePlugins:
-        module = os.path.splitext(os.path.basename(i['plugin']))[0]
-        modpath = os.path.dirname(i['plugin'])
+        LOG.info(i)
+        module = os.path.splitext(os.path.basename(i))[0]
+        modpath = os.path.dirname(i)
         try:
             info = imp.find_module(module, [modpath])
         except:
             info = False
-        if i['plugin'] and info:
+
+        if i and info:
             Plugins.append({"name": module, "info": info})
 
     return Plugins
