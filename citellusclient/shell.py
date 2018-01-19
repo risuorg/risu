@@ -336,7 +336,7 @@ def execonshell(filename):
     return returncode, out, err
 
 
-def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=False):
+def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=False, savepath=False):
     """
     Runs citellus scripts on specified root folder
     :param lang: language to use on shell
@@ -367,19 +367,25 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
     # Set pool for same processes as CPU cores
     p = Pool(cpu_count())
 
-    if live:
-        return p.map(runplugin, plugins)
-
+    # We've save path, use it
+    if savepath:
+        filename = savepath
+    elif path:
+        # We don't have it, force to be sosreport folder
+        filename = os.path.join(path, 'citellus.json')
     else:
-        if path:
-            filename = os.path.join(path, 'citellus.json')
+        filename = ""
 
-            if os.access(filename, os.R_OK) and not forcerun:
-                LOG.debug("Reading Existing citellus analysis from disk for %s" % path)
-                return json.load(open(filename, 'r'))['results']
+    # if we're not running live, read existing file
+    if not live:
+        if os.access(filename, os.R_OK) and not forcerun:
+            LOG.debug("Reading Existing citellus analysis from disk for %s" % path)
+            return json.load(open(filename, 'r'))['results']
 
+    # Execute Citellus (live and non-live with forcerun)
     results = p.map(runplugin, plugins)
 
+    # Write results if possible
     if path:
         if os.access(path, os.W_OK):
             # Write results to disk
@@ -842,7 +848,7 @@ def main():
         newplugins.extend(each)
 
     plugins = newplugins
-    results = docitellus(live=options.live, path=CITELLUS_ROOT, plugins=plugins, lang=options.lang, forcerun=options.run)
+    results = docitellus(live=options.live, path=CITELLUS_ROOT, plugins=plugins, lang=options.lang, forcerun=options.run, savepath=options.output)
 
     # Print results based on the sorted order based on returned results from
     # parallel execution
@@ -881,18 +887,10 @@ def main():
     totaltime = time.time() - start_time
 
     if options.output:
-        if not options.web:
-            write_results(results, options.output,
-                          live=options.live,
-                          path=CITELLUS_ROOT)
-        else:
+        if options.web:
             basefolder = os.path.dirname(options.output)
             if basefolder == '':
                 basefolder = './'
-            newfile = os.path.join(basefolder, 'citellus.json')
-            write_results(results, newfile,
-                          live=options.live,
-                          path=CITELLUS_ROOT, time=totaltime)
             src = os.path.join(citellusdir, '../tools/www/citellus.html')
             if os.path.isfile(src):
                 shutil.copyfile(src, os.path.join(basefolder, os.path.basename(src)))
