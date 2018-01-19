@@ -232,9 +232,23 @@ def callcitellus(path=False, plugins=False, forcerun=False):
                     results.append(result)
 
     else:
-        LOG.debug("Running citellus analysis for %s" % path)
-        # Call citellus and format data returned
-        results = citellus.docitellus(path=path, plugins=plugins)
+        if os.access(path, os.R_OK):
+            LOG.debug("Running citellus analysis for %s" % path)
+
+            # We've forced execution so refresh file on disk if we've permissions with all plugins and return only the ones filtered
+            if os.access(path, os.W_OK):
+                # Call citellus and format data returned
+                results = citellus.docitellus(path=path, plugins=plugins)
+
+                # Write results to disk
+                citellus.write_results(results, filename, live=False, path=path)
+
+            else:
+                # We cannot write to the file, so just run with the plugins we've been passed
+                results = citellus.docitellus(path=path, plugins=plugins)
+        else:
+            LOG.debug("No access to path: %s" % path)
+            results = []
 
     # Process plugin output from multiple plugins
     new_dict = {}
