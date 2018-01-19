@@ -281,7 +281,8 @@ def domagui(sosreports, citellusplugins, options=False):
                 except:
                     rerun = True
 
-            if rerun:
+            # Forcing rerun but not if we've specified ansible hosts
+            if rerun and not options.hosts:
                 LOG.debug("Forcing rerun of citellus for %s because of missing %s" % (sosreport, plugin))
                 # Sosreport contains non uniform data, rerun
                 results[sosreport] = callcitellus(path=sosreport, plugins=citellusplugins, forcerun=True)

@@ -11,20 +11,32 @@
         state=absent
 
 - hosts: all
+  strategy: free
   user: root
+  vars:
+    citellus_base: "{{ lookup('env','CITELLUS_BASE') }}"
   tasks:
-    - name: Upload citellus
-      synchronize:
-        #src: "{{ lookup('env','CITELLUS_BASE') }}"
-        src: /home/iranzo/GSS/DEVEL/citellus/
-        dest: /tmp/citellus
-    - name: Runs citellus on target
-      command: /tmp/citellus/citellus.py -l -o /tmp/citellus.json
-      args:
-        chdir: /tmp/citellus/
-        creates: /tmp/citellus.json
-    - name: Gets remote execution results locally
-      fetch:
-        src: /tmp/citellus.json
-        dest: /tmp/citellus/hostrun/{{ inventory_hostname }}/citellus.json
-        flat: yes
+    - name: Do citellus
+      block:
+      - name: Upload citellus
+        synchronize:
+          src: "{{ citellus_base }}/../"
+          dest: /root/citellus/
+          rsync_opts:
+            - "--exclude=.git"
+            - "--exclude=.tox"
+      - name: Run citellus on target
+        command: /root/citellus/citellus.py -l -o /tmp/citellus.json
+        args:
+          chdir: /root/citellus/
+          creates: /tmp/citellus.json
+      - name: Get remote execution results locally
+        fetch:
+          src: /tmp/citellus.json
+          dest: /tmp/citellus/hostrun/{{ inventory_hostname }}/citellus.json
+          flat: yes
+      when: citellus_base | trim != ''
+    - name: Complain on empty ENVironment variable
+      debug:
+        msg: "CITELLUS_BASE undefined"
+      when: citellus_base | trim == ''
