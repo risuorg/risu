@@ -218,37 +218,8 @@ def callcitellus(path=False, plugins=False, forcerun=False):
     :return: dict with results
     """
 
-    filename = os.path.join(path, 'citellus.json')
-    if os.access(filename, os.R_OK) and not forcerun:
-        LOG.debug("Reading Existing citellus analysis from disk for %s" % path)
-        oldresults = json.load(open(filename, 'r'))['results']
-        # Need to apply filters as by default the stored file will have everything
-        results = []
-
-        for result in oldresults:
-            for plugin in plugins:
-                if result['id'] == plugin['id']:
-                    # We have a match with the plugin defined and the ones we expect, so append results
-                    results.append(result)
-
-    else:
-        if os.access(path, os.R_OK):
-            LOG.debug("Running citellus analysis for %s" % path)
-
-            # We've forced execution so refresh file on disk if we've permissions with all plugins and return only the ones filtered
-            if os.access(path, os.W_OK):
-                # Call citellus and format data returned
-                results = citellus.docitellus(path=path, plugins=plugins)
-
-                # Write results to disk
-                citellus.write_results(results, filename, live=False, path=path)
-
-            else:
-                # We cannot write to the file, so just run with the plugins we've been passed
-                results = citellus.docitellus(path=path, plugins=plugins)
-        else:
-            LOG.debug("No access to path: %s" % path)
-            results = []
+    # Call citellus normally, if existing prior results those will be loaded or executed + saved
+    results = citellus.docitellus(path=path, plugins=plugins, forcerun=forcerun)
 
     # Process plugin output from multiple plugins
     new_dict = {}
