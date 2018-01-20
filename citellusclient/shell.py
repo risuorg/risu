@@ -336,7 +336,7 @@ def execonshell(filename):
     return returncode, out, err
 
 
-def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=False, savepath=False):
+def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=False, savepath=False, include=None, exclude=None):
     """
     Runs citellus scripts on specified root folder
     :param lang: language to use on shell
@@ -377,19 +377,47 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
         filename = ""
 
     # if we're not running live, read existing file
-    if not live:
-        if os.access(filename, os.R_OK) and not forcerun:
-            LOG.debug("Reading Existing citellus analysis from disk for %s" % path)
-            return json.load(open(filename, 'r'))['results']
+    if not live and os.access(filename, os.R_OK) and not forcerun:
+        LOG.debug("Reading Existing citellus analysis from disk for %s" % path)
+        results = json.load(open(filename, 'r'))['results']
 
-    # Execute Citellus (live and non-live with forcerun)
-    results = p.map(runplugin, plugins)
+    else:
+        # Execute Citellus (live and non-live with forcerun)
+        results = p.map(runplugin, plugins)
 
-    # Write results if possible
-    if path:
-        if os.access(path, os.W_OK):
-            # Write results to disk
-            write_results(results, filename, live=False, path=path)
+        # Write results if possible
+        if path:
+            if os.access(path, os.W_OK):
+                # Write results to disk
+                write_results(results, filename, live=False, path=path)
+
+    # We've filters defined, so filter data
+    if include or exclude:
+        if include:
+            oldresults = results
+            results = []
+            for result in oldresults:
+                add = False
+                for plugin in plugins:
+                        for filters in include:
+                            if filters in result['plugin']:
+                                # We have a match with the plugin defined and the ones we expect, so append results
+                                add = True
+                if add:
+                    results.append(result)
+
+        if exclude:
+            oldresults = results
+            results = []
+            for result in oldresults:
+                add = False
+                for plugin in plugins:
+                        for filters in include:
+                            if not any(filters in result['plugin']):
+                                # We have a match with the plugin defined and the ones we expect, so append results
+                                add = True
+                if add:
+                    results.append(result)
 
     return results
 
@@ -848,7 +876,7 @@ def main():
         newplugins.extend(each)
 
     plugins = newplugins
-    results = docitellus(live=options.live, path=CITELLUS_ROOT, plugins=plugins, lang=options.lang, forcerun=options.run, savepath=options.output)
+    results = docitellus(live=options.live, path=CITELLUS_ROOT, plugins=plugins, lang=options.lang, forcerun=options.run, savepath=options.output, include=options.include, exclude=options.exclude)
 
     # Print results based on the sorted order based on returned results from
     # parallel execution
@@ -886,9 +914,12 @@ def main():
 
     totaltime = time.time() - start_time
 
-    if options.output:
-        if options.web:
+    if options.web:
+        if options.output:
             basefolder = os.path.dirname(options.output)
+        else:
+            basefolder = os.path.dirname(options.sosreport)
+
             if basefolder == '':
                 basefolder = './'
             src = os.path.join(citellusdir, '../tools/www/citellus.html')
