@@ -80,14 +80,15 @@
       </div><!-- /form-group toolbar-pf-filter -->
       <div class="form-group">
        <div class="dropdown btn-group">
-        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Name <span class="caret"></span></button>
+        <button id="plugin-sort" type="button" data-sortfield="priority" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Priority <span class="caret"></span></button>
         <ul class="dropdown-menu">
-         <li class="selected"><a href="#">Name</a></li>
-         <li><a href="#">State</a></li>
+         <li class="selected"><a href="#" class="plugin-sort-field">Priority</a></li>
+         <li><a href="#" class="plugin-sort-field">State</a></li>
+         <li><a href="#" class="plugin-sort-field">Name</a></li>
         </ul>
        </div><!-- /dropdown btn-group -->
        <button class="btn btn-link" type="button">
-        <span class="fa fa-sort-alpha-asc"></span>
+        <span data-direction="desc" id="sortDirection" class="fa fa-sort-amount-desc"></span>
        </button>
        <input type="hidden" id="filter_status" value="all">
        <div class="btn-group" role="group" aria-label="Status Filters">
@@ -201,7 +202,7 @@
         $("#list-group > div").each(function(i,j) {
             var plugin_cats = $(this).data("categories");
             var plugin_txt = $(this).children('.plugin-error').first().text();
-            var plugin_name = $(this).data("plugin-name").toString();
+            var plugin_name = $(this).data("name").toString();
             var plugin_status = $(this).data("state");
             // Validations:
             // - if plugin categories match regex of checked categories
@@ -283,6 +284,27 @@
             visual: plugin_cats_visual
         }
     }
+    function sortPlugins(sortkey) {
+        var mylist = $("#list-group");
+        var listitems = mylist.children('div .list-group-item').get();
+        var sortdirection = $("#sortDirection").data("direction");
+        listitems.sort(function(a, b) {
+            if (sortkey == "priority") {
+                if (sortdirection == "desc") {
+                    return ($(b).data(sortkey) - $(a).data(sortkey));
+                } else {
+                    return ($(a).data(sortkey) - $(b).data(sortkey));
+                }
+            } else {
+                if (sortdirection == "desc") {
+                    return $(a).data(sortkey).toString().localeCompare($(b).data(sortkey).toString());
+                } else {
+                    return $(b).data(sortkey).toString().localeCompare($(a).data(sortkey).toString());
+                }
+            }
+        })
+        $.each(listitems, function(idx, itm) { mylist.append(itm); });
+    };
     // function that generates a row to add to the accordion
     function printCitellusPlugin (result, out, err, rc, data, plugin_var_name = false, prepend_category = false) {
         var plugin_names = getPluginNames(result)
@@ -294,6 +316,9 @@
         }
         var plugin_cats = getPluginCats(result.subcategory)
         var plugin_state = getPluginState(rc);
+        if (result.priority == "undefined") {
+            result.priority = 0;
+        }
 
         // Converting the links to html
         if (Array.isArray(err)){
@@ -303,7 +328,7 @@
         var item_id = result.id;
         var row = "";
         // we build the text that is going to be appended to the container
-        row += '        <div class="list-group-item" data-state="'+plugin_state.state+'" data-plugin-name="'+plugin_names.name+'" data-categories="'+ plugin_cats.list +'" id="plugin-'+item_id+'">\n';
+        row += '        <div class="list-group-item" data-priority="'+result.priority+'" data-state="'+plugin_state.state+'" data-name="'+plugin_names.name+'" data-categories="'+ plugin_cats.list +'" id="plugin-'+item_id+'">\n';
         row += '         <textarea class="plugin-error" style="display: none;">'+err+'</textarea>\n';
         row += '         <div class="list-group-item-header">\n';
         row += '          <div class="list-view-pf-expand">\n';
@@ -337,6 +362,8 @@
         row += '             <dd>'+Math.round(result.time * 1000)/1000+'</dd>\n';
         row += '             <dt>Backend</dt>\n';
         row += '             <dd>'+result.backend+'</dd>\n';
+        row += '             <dt>Priority</dt>\n';
+        row += '             <dd>'+result.priority+'</dd>\n';
         row += '             <dt>Bugzilla</dt>\n';
         if (/([0-9])+$/.test(result.bugzilla)) {
             row += '        <dd><a href="'+result.bugzilla+'" target="_blank"><span class="badge badge-danger">'+/([0-9]+)$/.exec(result.bugzilla)[1]+'</span></a></dd>\n';
@@ -427,13 +454,35 @@
         $("body").on("click",".list-group-item-header",function(event){
             if(!$(event.target).is("button, a, input, .fa-ellipsis-v")){
                 $(this).find(".fa-angle-right").toggleClass("fa-angle-down").end().parent().toggleClass("list-view-pf-expand-active").find(".list-group-item-container").toggleClass("hidden");
-            } else {
             }
         })
         // click the close button, hide the expand row and remove the active status
         $("body").on("click",".list-group-item-container .close", function (){
             $(this).parent().addClass("hidden").parent().removeClass("list-view-pf-expand-active").find(".fa-angle-right").removeClass("fa-angle-down");
         })
+        $("body").on("click","#sortDirection",function(e) {
+            var sortdir = $("#sortDirection");
+            sortdir.removeClass()
+            if (sortdir.data("direction") == "desc" ) {
+                sortdir.addClass("fa fa-sort-amount-asc");
+                sortdir.data("direction","asc")
+            } else {
+                sortdir.addClass("fa fa-sort-amount-desc");
+                sortdir.data("direction","desc")
+            }
+            sortPlugins($("#plugin-sort").data("sortfield"));
+        });
+        $("body").on("click",".plugin-sort-field",function(e) {
+            var sortfield = $(this);
+            var sortkey = sortfield.html();
+            var sortkeyl = sortkey.toLowerCase();
+            var sortbutton = $(this).parent().parent().parent().find("button");
+            sortfield.parent().parent().find("li").removeClass("selected");
+            sortfield.parent().addClass("selected");
+            sortbutton.html(sortkey + ' <span class="caret"></span>');
+            sortbutton.data("sortfield",sortkeyl)
+            sortPlugins(sortkeyl);
+        });
 
         // Here we load the data from citellus.json with ajax and we populate the webpage
         $.ajax({
@@ -519,6 +568,7 @@
                         } // if citellus-outputs
                     } // if data source == "magui"
                 }); // each data.results
+                sortPlugins("priority");
                 if (window.location.hash.substr(1)) {
                     $('html, body').animate({
                         scrollTop: $("#" + window.location.hash.substr(1)).offset().top
