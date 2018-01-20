@@ -43,12 +43,13 @@ fi
 for log_file in $log_files; do
     [ -f "$log_file" ] || continue
 
-    wc=$(grep -i 'AMQP server on .* is unreachable' $log_file | wc -l)
-    if [[ ${wc} -gt 0 ]]; then
+    events=$(grep -i 'AMQP server on .* is unreachable' $log_file | grep -oP "^([0-9\-]+)" | uniq -c)
+    if [[ -n "$events" ]]; then
         # to remove the ${CITELLUS_ROOT} from the stderr.
         log_file=${log_file#$CITELLUS_ROOT}
-        echo "$log_file (${wc} times)" >&2
+        echo -e "$log_file:\n${events}\n" >&2
         flag=1
     fi
+
 done
 [[ "x$flag" = "x" ]] && exit $RC_OKAY || exit $RC_FAILED
