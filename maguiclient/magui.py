@@ -421,7 +421,14 @@ def main():
         else:
             LOG.info("Grabbing data from remote hosts with Ansible")
             # Grab data from ansible hosts
+
+            # Disable Ansible retry files creation:
             os.environ['ANSIBLE_RETRY_FILES_ENABLED'] = "0"
+
+            if options.loglevel == 'DEBUG':
+                # Keep ansible remote files for debug
+                os.environ['ANSIBLE_KEEP_REMOTE_FILES'] = "1"
+
             command = "%s -i %s %s" % (ansible, options.hosts, os.path.join(maguidir, 'remote.yml'))
 
             LOG.debug("Running: %s " % command)
