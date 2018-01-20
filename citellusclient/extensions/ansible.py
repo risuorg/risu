@@ -103,6 +103,9 @@ def run(plugin):  # do not edit this line
     # Disable Ansible retry files creation:
     os.environ['ANSIBLE_RETRY_FILES_ENABLED'] = "0"
 
+    # Keep ansible remote files for debug
+    os.environ['ANSIBLE_KEEP_REMOTE_FILES'] = "1"
+
     # Call exec to run playbook
     returncode, out, err = citellus.execonshell(filename=command)
 
