@@ -35,7 +35,7 @@ if [ "x$RC" = "x0" ]; then
     _test=$(mysql keystone -e "DESC token" 2>&1)
     RC=$?
     if [ "x$RC" = "x0" ]; then
-        TOKENS=$(mysql keystone -sN -e 'SELECT count(*) FROM token WHERE token.expires < CURTIME();')
+        TOKENS=$(mysql keystone -sN -e "select table_rows from information_schema.tables where table_name = 'token'")
     else
         echo -e "ERROR connecting to the database\n${_test}" >&2
         exit $RC_SKIPPED
