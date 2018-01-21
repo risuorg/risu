@@ -369,7 +369,7 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
 
     # We've save path, use it
     if savepath:
-        filename = savepath
+        filename = os.path.join(savepath, 'citellus.json')
     elif path:
         # We don't have it, force to be sosreport folder
         filename = os.path.join(path, 'citellus.json')
@@ -920,11 +920,11 @@ def main():
         else:
             basefolder = os.path.dirname(options.sosreport)
 
-            if basefolder == '':
-                basefolder = './'
-            src = os.path.join(citellusdir, '../tools/www/citellus.html')
-            if os.path.isfile(src):
-                shutil.copyfile(src, os.path.join(basefolder, os.path.basename(src)))
+        if basefolder == '':
+            basefolder = './'
+        src = os.path.join(citellusdir, '../tools/www/citellus.html')
+        if os.path.isfile(src):
+            shutil.copyfile(src, os.path.join(basefolder, os.path.basename(src)))
 
     if options.blame:
         print("# Total execution time: %s seconds" % totaltime)
