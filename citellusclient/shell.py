@@ -369,11 +369,12 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
 
     # We've save path, use it
     if savepath:
-        filename = os.path.join(savepath, 'citellus.json')
+        filename = savepath
     elif path:
         # We don't have it, force to be sosreport folder
         filename = os.path.join(path, 'citellus.json')
     else:
+        # For example for 'Live' environment where no path is defined
         filename = ""
 
     # if we're not running live, read existing file
