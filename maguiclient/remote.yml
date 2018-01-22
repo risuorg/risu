@@ -12,7 +12,8 @@
 
 - hosts: all
   strategy: free
-  user: root
+  become: true
+  become_user: root
   vars:
     citellus_base: "{{ lookup('env','CITELLUS_BASE') }}"
   tasks:

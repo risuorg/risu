@@ -209,7 +209,7 @@ def initPlugins(options):
     return plugs, plugtriggers
 
 
-def callcitellus(path=False, plugins=False, forcerun=False):
+def callcitellus(path=False, plugins=False, forcerun=False, include=None, exclude=None):
     """
     Do actual execution of citellus against data
     :param forcerun: Forces execution of citellus analysis (ignoring saved data in citellus.json)
@@ -219,7 +219,7 @@ def callcitellus(path=False, plugins=False, forcerun=False):
     """
 
     # Call citellus normally, if existing prior results those will be loaded or executed + saved
-    results = citellus.docitellus(path=path, plugins=plugins, forcerun=forcerun)
+    results = citellus.docitellus(path=path, plugins=plugins, forcerun=forcerun, include=include, exclude=exclude)
 
     # Process plugin output from multiple plugins
     new_dict = {}
@@ -245,7 +245,7 @@ def domagui(sosreports, citellusplugins, options=False):
     results = {}
 
     for sosreport in sosreports:
-        results[sosreport] = callcitellus(path=sosreport, plugins=citellusplugins, forcerun=forcerun)
+        results[sosreport] = callcitellus(path=sosreport, plugins=citellusplugins, forcerun=forcerun, include=options.include, exclude=options.exclude)
 
     # Sanity check in case we do need to force run because of inconsistencies between saved data
     if not forcerun:
