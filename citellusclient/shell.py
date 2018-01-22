@@ -369,15 +369,18 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
 
     # We've save path, use it
     if savepath:
-        filename = os.path.join(savepath, 'citellus.json')
+        LOG.debug("Storing output on %s" % savepath)
+        filename = savepath
     elif path:
         # We don't have it, force to be sosreport folder
         filename = os.path.join(path, 'citellus.json')
+        LOG.debug("Storing output on file %s" % filename)
     else:
-        filename = ""
+        # For example for 'Live' environment where no path is defined
+        filename = False
 
     # if we're not running live, read existing file
-    if not live and os.access(filename, os.R_OK) and not forcerun:
+    if not live and filename and os.access(filename, os.R_OK) and not forcerun:
         LOG.debug("Reading Existing citellus analysis from disk for %s" % path)
         results = json.load(open(filename, 'r'))['results']
 
@@ -386,10 +389,13 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
         results = p.map(runplugin, plugins)
 
         # Write results if possible
-        if path:
-            if os.access(path, os.W_OK):
+        if filename:
+            try:
                 # Write results to disk
                 write_results(results, filename, live=False, path=path)
+            except:
+                # Couldn't write
+                LOG.debug("Couldn't write to file %s" % filename)
 
     # We've filters defined, so filter data
     if include or exclude:
@@ -914,12 +920,12 @@ def main():
 
     totaltime = time.time() - start_time
 
-    if options.web:
-        if options.output:
-            basefolder = os.path.dirname(options.output)
-        else:
-            basefolder = os.path.dirname(options.sosreport)
+    if options.output:
+        basefolder = os.path.dirname(options.output)
+    else:
+        basefolder = os.path.dirname(options.sosreport)
 
+    if options.web and options.output:
         if basefolder == '':
             basefolder = './'
         src = os.path.join(citellusdir, '../tools/www/citellus.html')
