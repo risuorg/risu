@@ -12,7 +12,8 @@
 
 - hosts: all
   strategy: free
-  user: root
+  become: true
+  become_user: root
   vars:
     citellus_base: "{{ lookup('env','CITELLUS_BASE') }}"
   tasks:
@@ -30,8 +31,6 @@
         args:
           chdir: /root/citellus/
           creates: /tmp/citellus.json
-        environment:
-          ANSIBLE_KEEP_REMOTE_FILES: "{{ lookup('env', 'ANSIBLE_KEEP_REMOTE_FILES') }}"
       - name: Get remote execution results locally
         fetch:
           src: /tmp/citellus.json
