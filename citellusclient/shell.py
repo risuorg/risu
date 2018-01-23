@@ -920,12 +920,12 @@ def main():
 
     totaltime = time.time() - start_time
 
-    if options.output:
-        basefolder = os.path.dirname(options.output)
-    else:
-        basefolder = os.path.dirname(options.sosreport)
-
     if options.web and options.output:
+        if options.output:
+            basefolder = os.path.dirname(options.output)
+        else:
+            basefolder = os.path.dirname(options.sosreport)
+
         if basefolder == '':
             basefolder = './'
         src = os.path.join(citellusdir, '../tools/www/citellus.html')
