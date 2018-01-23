@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84b958fb_21ccecee",
+        "filename": "citellusclient/plugins/metadata/system/openstack-role.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1011950
+      },
+      "writtenOn": "2018-01-23T06:46:47Z",
+      "side": 1,
+      "message": "All the undercloud will be flagged as compute with this. Due to the nova-compute running on undercloud.",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 21
+      },
+      "revId": "763dc0e7122958d30b116162df16e7661a4639d0",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
