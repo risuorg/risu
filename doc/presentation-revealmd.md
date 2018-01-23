@@ -315,7 +315,7 @@ mode: fs snapshot sosreport-20170724-175510/crta02
 ## How does it looks like?
 It’s delivered in citellus repo and can be executed by specifying sosreports:
 ~~~sh
-[piranzo@collab-shell sosreport-20171205-172438]$ ~/citellus/magui.py * -i seqno
+[piranzo@collab-shell]$ ~/citellus/magui.py * -i seqno
     _
   _( )_  Magui:
  (_(ø)_)
