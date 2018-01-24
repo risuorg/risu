@@ -19,7 +19,7 @@
 # description: Checks Swift ring status
 # priority: 900
 
-if [ ! "x$CITELLUS_LIVE" = "x1" ]; then
+if [[ ! "x$CITELLUS_LIVE" = "x1" ]]; then
     echo "works on live-system only" >&2
     exit $RC_SKIPPED
 fi

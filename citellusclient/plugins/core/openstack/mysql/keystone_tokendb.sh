@@ -21,7 +21,7 @@
 
 # this can run against live
 
-if [ ! "x$CITELLUS_LIVE" = "x1" ]; then
+if [[ ! "x$CITELLUS_LIVE" = "x1" ]]; then
     echo "works on live-system only" >&2
     exit $RC_SKIPPED
 fi
@@ -30,11 +30,11 @@ fi
 which mysql > /dev/null 2>&1
 RC=$?
 
-if [ "x$RC" = "x0" ]; then
+if [[ "x$RC" = "x0" ]]; then
     # Test connection to the db
     _test=$(mysql keystone -e "DESC token" 2>&1)
     RC=$?
-    if [ "x$RC" = "x0" ]; then
+    if [[ "x$RC" = "x0" ]]; then
         TOKENS=$(mysql keystone -sN -e "select table_rows from information_schema.tables where table_name = 'token'")
     else
         echo -e "ERROR connecting to the database\n${_test}" >&2
@@ -45,7 +45,7 @@ else
     exit $RC_SKIPPED
 fi
 
-if [ ! -z ${TOKENS} ] ; then
+if [[ ! -z ${TOKENS} ]] ; then
     if [[ "${TOKENS}" -ge 1000 ]]; then
         exit $RC_FAILED
     elif [[ "${TOKENS}" -lt 1000 ]]; then

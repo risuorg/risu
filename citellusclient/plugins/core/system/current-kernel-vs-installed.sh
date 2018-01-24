@@ -26,10 +26,10 @@
 
 is_required_rpm kernel
 
-if [ "x$CITELLUS_LIVE" = "x0" ]; then
+if [[ "x$CITELLUS_LIVE" = "x0" ]]; then
     FILE="${CITELLUS_ROOT}/uname"
     RPMFILE="${CITELLUS_ROOT}/installed-rpms"
-elif [ "x$CITELLUS_LIVE" = "x1" ];then
+elif [[ "x$CITELLUS_LIVE" = "x1" ]];then
     FILE=$(mktemp)
     RPMFILE=$(mktemp)
     trap "rm $FILE $RPMFILE" EXIT

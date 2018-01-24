@@ -21,7 +21,7 @@
 # description: Detects RHEL release
 # priority: 200
 
-if [ ! -f "${CITELLUS_ROOT}/etc/redhat-release" ]; then
+if [[ ! -f "${CITELLUS_ROOT}/etc/redhat-release" ]]; then
     echo "this is not RHEL distribution" >&2
     exit $RC_FAILED
 else

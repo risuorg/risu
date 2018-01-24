@@ -29,13 +29,13 @@ if [[ -z $(is_rpm tripleo-heat-templates) && -z $(is_rpm python-tripleoclient) ]
     exit $RC_SKIPPED
 fi
 
-if [ "x$CITELLUS_LIVE" = "x1" ]; then
+if [[ "x$CITELLUS_LIVE" = "x1" ]]; then
     if iptables -t nat -vnL | grep -q "REDIRECT.*169.254.169.254" ; then
         exit $RC_OKAY
     else
         exit $RC_FAILED
     fi
-elif [ "x$CITELLUS_LIVE" = "x0" ]; then
+elif [[ "x$CITELLUS_LIVE" = "x0" ]]; then
     is_required_file "${CITELLUS_ROOT}/sos_commands/networking/iptables_-t_nat_-nvL"
     if grep -q "REDIRECT.*169.254.169.254" "${CITELLUS_ROOT}/sos_commands/networking/iptables_-t_nat_-nvL" ; then
         exit $RC_OKAY

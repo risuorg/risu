@@ -56,7 +56,7 @@ for backend in $backends;do
     esac
 done
 
-if [ "$supported" -ne "1" ]; then
+if [[ "$supported" -ne "1" ]]; then
     exit $RC_FAILED
 fi
 
