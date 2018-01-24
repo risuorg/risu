@@ -27,7 +27,7 @@
 # Find release
 RELEASE=$(discover_osp_version)
 
-if [ "x$RELEASE" != "x10" ]; then
+if [[ "x$RELEASE" != "x10" ]]; then
     echo "This affects only OSP10" >&2
     exit $RC_SKIPPED
 fi

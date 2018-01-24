@@ -26,7 +26,7 @@
 
 TAINT=$(cat ${CITELLUS_ROOT}/proc/sys/kernel/tainted)
 
-if [ "x$TAINT" = "x0" ]; then
+if [[ "x$TAINT" = "x0" ]]; then
     exit $RC_OKAY
 else
     echo $"Kernel is tainted" $TAINT

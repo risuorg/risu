@@ -35,7 +35,7 @@ RC=$RC_OKAY
 is_required_file $FILE
 
 if is_lineinfile ${string} $FILE;then
-    if [ $(grep -e ^${string} $FILE|cut -d "=" -f2|grep ${substring}|wc -l) -gt 0 ]; then
+    if [[ $(grep -e ^${string} $FILE|cut -d "=" -f2|grep ${substring}|wc -l) -gt 0 ]]; then
         grep -e ^${string} $FILE >&2
         RC=$RC_FAILED
     fi
