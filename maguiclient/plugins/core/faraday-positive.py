@@ -2,19 +2,19 @@
 # encoding: utf-8
 #
 # Copyright (C) 2018  Pablo Iranzo Gómez (Pablo.Iranzo@redhat.com)
-# Description: Plugin for checking Ceilometer pipeline-yaml data
+# Description: Plugin for reporting failed affinity on the faraday citellus plugin
 
 from __future__ import print_function
 
-try:
-    import citellusclient.shell as citellus
-except:
-    import shell as citellus
+import os
+
+import citellusclient.shell as citellus
 
 # Load i18n settings from citellus
 _ = citellus._
 
-extension = "pipeline-yaml"
+extension = "faraday"
+pluginsdir = os.path.join(citellus.citellusdir, 'plugins', extension)
 
 
 def init():
@@ -22,33 +22,38 @@ def init():
     Initializes module
     :return: List of triggers for Plugin
     """
-    ids = citellus.getids(include=['/core/openstack/ceilometer/pipeline-yaml.sh'])
-    return ids
+
+    triggers = citellus.getids(include=['faraday/positive'])
+    return triggers
 
 
 def run(data, quiet=False):  # do not edit this line
     """
     Executes plugin
-    :param quiet: reduce amount of data returned
     :param data: data to process
+    :param quiet: work in reduced noise mode
     :return: returncode, out, err
     """
 
+    message = []
     returncode = citellus.RC_OKAY
-
-    message = ''
     for ourdata in data:
         # 'err' in this case should be always equal to the md5sum of the file so that we can report the problem
         err = []
+        allskipped = True
         for sosreport in ourdata['sosreport']:
             err.append(ourdata['sosreport'][sosreport]['err'])
+            if ourdata['sosreport'][sosreport]['rc'] != citellus.RC_SKIPPED:
+                allskipped = False
 
-        if len(sorted(set(err))) != 1:
-            message = _("Pipeline.yaml contents differ across sosreports, please do check that the contents are the same and shared across the environment to ensure proper behavior.")
-            returncode = citellus.RC_FAILED
+        if not allskipped:
+            if len(sorted(set(err))) != 1:
+                message.append(_("%s contents differ across hosts, ensure proper behavior.") % ourdata['path'])
+                returncode = citellus.RC_FAILED
 
     out = ''
-    err = message
+    err = "\n".join(message)
+
     return returncode, out, err
 
 
@@ -58,5 +63,5 @@ def help():  # do not edit this line
     :return: help text
     """
 
-    commandtext = _("This plugin checks Ceilometer pipeline.yaml consistency across sosreports")
+    commandtext = _("Plugin for reporting back files that should be different across sosreports")
     return commandtext

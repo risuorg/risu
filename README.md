@@ -20,6 +20,8 @@ Come to hear about us at [devconf.cz!!](https://devconfcz2018.sched.com/event/DJ
 - Ansible playbook support.
 - Save / restore default settings
 
+Check latest changes on <Changelog.md>
+
 ## Usage help
 We are developing framework in python, the bash framework has been deprecated. Python framework is the only supported framework.
 
