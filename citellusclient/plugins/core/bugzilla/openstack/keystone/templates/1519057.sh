@@ -25,9 +25,9 @@
 # priority: 400
 
 # Load common functions
-[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
+[[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
-if [ ! "x$CITELLUS_LIVE" = "x1" ]; then
+if [[ ! "x$CITELLUS_LIVE" = "x1" ]]; then
     echo "works on live-system only" >&2
     exit $RC_SKIPPED
 fi
@@ -48,7 +48,7 @@ if [[ "${RELEASE}" -ge "12" ]]; then
     RC=$RC_OKAY
 
     COUNT=$(awk '/config_volume: keystone/ { getline; print $0}' ${FILE} | grep -c keystone_domain_config)
-    if [ ${COUNT} -eq 0 ]; then
+    if [[ ${COUNT} -eq 0 ]]; then
         echo $"https://bugzilla.redhat.com/show_bug.cgi?id=1519057" >&2
         RC=$RC_FAILED
     fi

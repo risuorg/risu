@@ -22,7 +22,7 @@
 # priority: 100
 
 # Load common functions
-[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
+[[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
 if ! is_rpm kexec-tools; then
     echo $"kexec-tools package missing" >&2

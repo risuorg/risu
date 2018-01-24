@@ -20,7 +20,7 @@
 # priority: 700
 
 # Load common functions
-[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
+[[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
 # we can run this against fs snapshot or live system
 
@@ -42,9 +42,9 @@ kernel_libvirt_qemu=( ["3.10.0-123"]="1.1.1 1.5.3 7.0" \
 
 redhat_release_version=$(egrep -o '[0-9]+.[0-9]+' "${CITELLUS_ROOT}/etc/redhat-release")
 
-if [ "x$CITELLUS_LIVE" = "x0" ]; then
+if [[ "x$CITELLUS_LIVE" = "x0" ]]; then
     FILE="${CITELLUS_ROOT}/uname"
-elif [ "x$CITELLUS_LIVE" = "x1" ];then
+elif [[ "x$CITELLUS_LIVE" = "x1" ]];then
     FILE=$(mktemp)
     trap "rm $FILE" EXIT
     uname -a > $FILE

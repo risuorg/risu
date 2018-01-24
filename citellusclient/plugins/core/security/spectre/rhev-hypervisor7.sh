@@ -21,7 +21,7 @@
 
 
 # Load common functions
-[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
+[[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
 exitoudated(){
     echo "Please do check https://access.redhat.com/security/vulnerabilities/speculativeexecution for guidance" >&2

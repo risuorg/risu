@@ -20,16 +20,16 @@
 # priority: 300
 
 # Load common functions
-[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
+[[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
 # we can run this against fs snapshot or live system
 
 is_required_rpm kernel
 
-if [ "x$CITELLUS_LIVE" = "x0" ]; then
+if [[ "x$CITELLUS_LIVE" = "x0" ]]; then
     FILE="${CITELLUS_ROOT}/uname"
     RPMFILE="${CITELLUS_ROOT}/installed-rpms"
-elif [ "x$CITELLUS_LIVE" = "x1" ];then
+elif [[ "x$CITELLUS_LIVE" = "x1" ]];then
     FILE=$(mktemp)
     RPMFILE=$(mktemp)
     trap "rm $FILE $RPMFILE" EXIT
