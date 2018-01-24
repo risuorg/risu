@@ -21,7 +21,7 @@
 # priority: 600
 
 # Load common functions
-[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
+[[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
 exitoutdated(){
     echo $"outdated openstack-tripleo-common causes IN_PROGRESS loops: https://bugzilla.redhat.com/show_bug.cgi?id=1437016" >&2

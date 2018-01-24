@@ -26,7 +26,7 @@
 # priority: 300
 
 # Load common functions
-[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
+[[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
 is_required_rpm python-ryu || echo "no python-ryu package installed" >&2 &&  exit $RC_SKIPPED
 
@@ -34,7 +34,7 @@ is_required_rpm python-ryu || echo "no python-ryu package installed" >&2 &&  exi
 CITELLUS_PYTHON_RYU_VERSION=$(is_rpm python-ryu | grep -Po "python-ryu-\K[0-9\.]+")
 
 CITELLUS_PYTHON_RYU_VERSION_VALIDATE=$(echo $CITELLUS_PYTHON_RYU_VERSION'<4.9' | bc -l)
-if [ $CITELLUS_PYTHON_RYU_VERSION_VALIDATE -lt 1 ]; then
+if [[ $CITELLUS_PYTHON_RYU_VERSION_VALIDATE -lt 1 ]]; then
     echo "python-ryu version is $CITELLUS_PYTHON_RYU_VERSION >= 4.9" >&2
     exit $RC_SKIPPED
 fi
