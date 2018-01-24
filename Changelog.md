@@ -2,6 +2,12 @@
 
 This file will contain a manually mantained log of hilights between versions, it's not a very extensive detail, but some of the bigger changes/ideas will be added here.
 
+## 2018-01-24
+- Faraday extension
+    - Some files must be equal or different across sosreports, actually we do have `release` and `ceilometer-yaml` one that rely on this, but this is hard to mantain as each new file will require a new plugin for Citellus plus a new plugin for Magui.
+
+    - In order to simplify this a new extension has been created so adding a new file to monitor no longer requires new plugins for `citellus` or `magui` but just creating a text file with some data within as documented on `citellusclient/plugins/faraday/README.md`
+
 ## 2018-01-22
 - Changed the way we work with sosreports for Citellus and Magui:
     - Now all plugins are always executed and filters do act on the output only.
