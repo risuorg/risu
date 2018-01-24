@@ -1,0 +1,106 @@
+#!/usr/bin/env python
+# encoding: utf-8
+#
+# Copyright (C) 2018  Pablo Iranzo Gómez (Pablo.Iranzo@redhat.com)
+# Description: Plugin for reporting failed affinity on the faraday citellus plugin
+
+from __future__ import print_function
+
+import os
+
+import citellusclient.shell as citellus
+import maguiclient.magui as magui
+
+# Load i18n settings from citellus
+_ = citellus._
+
+extension = "faraday"
+pluginsdir = os.path.join(citellus.citellusdir, 'plugins', extension)
+
+
+def init():
+    """
+    Initializes module
+    :return: List of triggers for Plugin
+    """
+
+    # TODO: dinamycally generate ID's based on plugin ID's in faraday
+    triggers = ['*']
+    return triggers
+
+
+def run(data, quiet=False):  # do not edit this line
+    """
+    Executes plugin
+    :param data: data to process
+    :param quiet: work in reduced noise mode
+    :return: returncode, out, err
+    """
+
+
+    #TODO: Everything
+
+    # Return all data passed from citellus
+
+    # For now, let's only print plugins that have rc ! $RC_OKAY in quiet
+    if quiet:
+        toprint = magui.maguiformat(data)
+    else:
+        toprint = data
+
+    # We should filter metadata extension as is to be processed separately
+    err = []
+    for item in toprint:
+        if toprint[item]['backend'] != 'metadata':
+            err.append(toprint[item])
+
+    # Do return different code if we've data
+    if len(err) > 0:
+        returncode = citellus.RC_FAILED
+    else:
+        returncode = citellus.RC_OKAY
+
+    out = ''
+    return returncode, out, err
+
+# def init():
+#     """
+#     Initializes module
+#     :return: List of triggers for Plugin
+#     """
+#     triggers = ['9f732b2f01837c60f66bd1cd301e40c3']
+#     return triggers
+
+# def run(data, quiet=False):  # do not edit this line
+#     """
+#     Executes plugin
+#     :param quiet: reduce amount of data returned
+#     :param data: data to process
+#     :return: returncode, out, err
+#     """
+
+#     returncode = citellus.RC_OKAY
+
+#     message = ''
+#     for ourdata in data:
+#         # 'err' in this case should be always equal to the md5sum of the file so that we can report the problem
+#         err = []
+#         for sosreport in ourdata['sosreport']:
+#             err.append(ourdata['sosreport'][sosreport]['err'])
+
+#         if len(sorted(set(err))) != 1:
+#             message = _("Pipeline.yaml contents differ across sosreports, please do check that the contents are the same and shared across the environment to ensure proper behavior.")
+#             returncode = citellus.RC_FAILED
+
+#     out = ''
+#     err = message
+#     return returncode, out, err
+
+def help():  # do not edit this line
+    """
+    Returns help for plugin
+    :return: help text
+    """
+
+    commandtext = _("Plugin for reporting back files that should be different across sosreports")
+    return commandtext
