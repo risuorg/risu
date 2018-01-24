@@ -22,11 +22,11 @@
 # priority: 900
 
 # Load common functions
-[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
+[[ -f -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
 # Check which version we are using
 PACKSTACK=$(is_rpm "openstack-packstack")
-if [ ! -z $PACKSTACK ]; then
+if [[ ! -z $PACKSTACK ]]; then
     echo $"packstack detected" >&2
     exit $RC_FAILED
 else

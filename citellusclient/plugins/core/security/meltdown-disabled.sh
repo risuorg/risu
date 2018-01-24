@@ -20,7 +20,7 @@
 # priority: 400
 
 # Load common functions
-[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
+[[ -f -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
 # pti == meltdown, other 2 are spectrum
 # echo 0 > /sys/kernel/debug/x86/pti_enabled

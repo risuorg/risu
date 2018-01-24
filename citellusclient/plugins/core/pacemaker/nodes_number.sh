@@ -16,7 +16,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 # Load common functions
-[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
+[[ -f -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
 # long_name: Number of pacemaker nodes
 # description: Checks number of pacemaker nodes
@@ -25,10 +25,10 @@
 # we can run this against fs snapshot or live system
 
 count_nodes(){
-    if [ ! "$(echo $(( (NUM_NODES-1) % 2 )))" -eq  "0" ]; then
+    if [[ ! "$(echo $(( (NUM_NODES-1) % 2 )))" -eq  "0" ]]; then
         echo "${NUM_NODES}" >&2
         exit $RC_FAILED
-    elif [ "x$NUM_NODES" = "x1" ]; then
+    elif [[ "x$NUM_NODES" = "x1" ]]; then
         echo "${NUM_NODES}" >&2
         exit $RC_FAILED
     else
@@ -41,13 +41,13 @@ if ! is_active pacemaker; then
     exit $RC_SKIPPED
 fi
 
-if [ "x$CITELLUS_LIVE" = "x1" ];  then
+if [[ "x$CITELLUS_LIVE" = "x1" ]];  then
     NUM_NODES=$(pcs config |  awk '/Pacemaker Nodes/ {getline; print $0}' | wc -w)
     count_nodes
-elif [ "x$CITELLUS_LIVE" = "x0" ];  then
+elif [[ "x$CITELLUS_LIVE" = "x0" ]];  then
     if is_active "pacemaker"; then
         for CLUSTER_DIRECTORY in "pacemaker" "cluster"; do
-            if [ -d "${CITELLUS_ROOT}/sos_commands/${CLUSTER_DIRECTORY}" ]; then
+            if [[ -d "${CITELLUS_ROOT}/sos_commands/${CLUSTER_DIRECTORY}" ]]; then
                 PCS_DIRECTORY="${CITELLUS_ROOT}/sos_commands/${CLUSTER_DIRECTORY}"
             fi
         done

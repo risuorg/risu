@@ -19,7 +19,7 @@
 
 
 # Load common functions
-[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
+[[ -f -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
 FILE="${CITELLUS_ROOT}/etc/nova/nova.conf"
 is_required_file ${FILE}
@@ -41,7 +41,7 @@ case $VTYPE in
         ;;
 esac
 
-if [ "$supported" -ne "1" ]; then
+if [[ "$supported" -ne "1" ]]; then
     exit $RC_FAILED
 fi
 

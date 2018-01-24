@@ -19,11 +19,11 @@
 # description: Sets hostname metadata
 
 # Load common functions
-[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
+[[ -f -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
-if [ $CITELLUS_LIVE -eq 0 ]; then
+if [[ $CITELLUS_LIVE -eq 0 ]]; then
     FILE="${CITELLUS_ROOT}/hostname"
-elif [ $CITELLUS_LIVE -eq 1 ];then
+elif [[ $CITELLUS_LIVE -eq 1 ]];then
     FILE=$(mktemp)
     trap "rm $FILE" EXIT
     hostname  > $FILE

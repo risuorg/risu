@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 # Load common functions
-[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
+[[ -f -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
 # long_name: External connectivity test
 # description: Checks for external connectivity of the system
@@ -23,7 +23,7 @@
 
 : ${REMOTE_PING_TARGET:=8.8.8.8}
 
-if [ ! "x$CITELLUS_LIVE" = "x1" ]; then
+if [[ ! "x$CITELLUS_LIVE" = "x1" ]]; then
     echo "works on live-system only" >&2
     exit $RC_SKIPPED
 fi

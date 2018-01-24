@@ -22,7 +22,7 @@
 # priority: 800
 
 # Load common functions
-[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
+[[ -f -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
 if is_process nova-compute;then
         echo "works only on controller node" >&2
@@ -33,7 +33,7 @@ fi
 
 is_required_containerized
 
-if [ "x$CITELLUS_LIVE" = "x1" ]; then
+if [[ "x$CITELLUS_LIVE" = "x1" ]]; then
     if docker_runit rabbitmq-bundle "rabbitmqctl node_health_check" 2>&1 | grep -q "Health check passed"; then
         echo $"no rabbitmq problems detected" >&2
         exit $RC_OKAY
@@ -41,7 +41,7 @@ if [ "x$CITELLUS_LIVE" = "x1" ]; then
         echo $"rabbitmq problems detected" >&2
         exit $RC_FAILED
     fi
-elif [ "x$CITELLUS_LIVE" = "x0" ]; then
+elif [[ "x$CITELLUS_LIVE" = "x0" ]]; then
     # used to be ${CITELLUS_ROOT}/sos_commands/rabbitmq/rabbitmqctl_report"
     # missing now. Do nothing unless fixed.
     echo $"this info is not collected in containerized deployments" >&2

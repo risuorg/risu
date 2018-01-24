@@ -20,11 +20,11 @@
 # priority: 100
 
 # Load common functions
-[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
+[[ -f -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
 # check baremetal node
 
-if [ "x$CITELLUS_LIVE" = "x0" ];  then
+if [[ "x$CITELLUS_LIVE" = "x0" ]];  then
     is_required_file "${CITELLUS_ROOT}/sos_commands/hardware/dmidecode"
 
     is_lineinfile "Product Name: VMware" "${CITELLUS_ROOT}/sos_commands/hardware/dmidecode" && echo "VMware" >&2 && exit $RC_FAILED
@@ -33,7 +33,7 @@ if [ "x$CITELLUS_LIVE" = "x0" ];  then
     is_lineinfile "Product Name: Bochs" "${CITELLUS_ROOT}/sos_commands/hardware/dmidecode" && echo "Bosch" >&2 && exit $RC_FAILED
     exit $RC_OKAY
 
-elif [ "x$CITELLUS_LIVE" = "x1" ]; then
+elif [[ "x$CITELLUS_LIVE" = "x1" ]]; then
     if dmidecode | grep -q "Product Name: VMware" ; then
         echo "VMware" >&2
         exit $RC_FAILED

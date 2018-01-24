@@ -20,7 +20,7 @@
 # priority: 400
 
 # Load common functions
-[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
+[[ -f -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
 # check if we are running against compute
 
@@ -34,14 +34,14 @@ is_required_rpm openstack-nova-common
 
 MESSAGE=$"AVC denial for console.log: https://bugzilla.redhat.com/show_bug.cgi?id=1501957 https://bugzilla.redhat.com/show_bug.cgi?id=1491767"
 
-if [ "x$CITELLUS_LIVE" = "x0" ];  then
-    if [ -z "${journalctl_file}" ]; then
+if [[ "x$CITELLUS_LIVE" = "x0" ]];  then
+    if [[ -z "${journalctl_file}" ]]; then
         echo "file /sos_commands/logs/journalctl_--no-pager_--boot not found." >&2
         echo "file /sos_commands/logs/journalctl_--all_--this-boot_--no-pager not found." >&2
         exit $RC_SKIPPED
     fi
     is_lineinfile '.*avc:.*denied.*unlink.*virtlogd.*name="console.log".*' ${journalctl_file} && echo "$MESSAGE" >&2 && exit $RC_FAILED
-elif [ "x$CITELLUS_LIVE" = "x1" ]; then
+elif [[ "x$CITELLUS_LIVE" = "x1" ]]; then
     if journalctl --no-pager --boot | grep -qe '.*avc:.*denied.*unlink.*virtlogd.*name="console.log".*'; then
         echo "$MESSAGE" >&2
         exit $RC_FAILED

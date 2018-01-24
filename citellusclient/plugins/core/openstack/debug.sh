@@ -16,7 +16,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 # Load common functions
-[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
+[[ -f -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
 # long_name: Services debug configuration
 # description: Check if services are configured for logging in DEBUG level
@@ -24,9 +24,9 @@
 
 # if we are running against live system or fs snapshot
 
-if [ "x$CITELLUS_LIVE" = "x1" ];  then
+if [[ "x$CITELLUS_LIVE" = "x1" ]];  then
     config_files=$(rpm -qa -c 'openstack-*' | grep '/etc/[^/]*/[^/]*\.conf')
-elif [ "x$CITELLUS_LIVE" = "x0" ]; then
+elif [[ "x$CITELLUS_LIVE" = "x0" ]]; then
     is_required_file "${CITELLUS_ROOT}/installed-rpms"
     config_files=$(
         for i in $(sed -n -r -e 's/^openstack-([a-z]*)-.*$/\1/p' ${CITELLUS_ROOT}/installed-rpms | sort | uniq); do

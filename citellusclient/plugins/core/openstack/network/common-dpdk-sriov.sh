@@ -22,7 +22,7 @@
 # priority: 300
 
 # Load common functions
-[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
+[[ -f -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
 if is_lineinfile "Intel" "${CITELLUS_ROOT}/proc/cpuinfo"; then
     if ! is_lineinfile "intel_iommu=on" "${CITELLUS_ROOT}/proc/cmdline"; then

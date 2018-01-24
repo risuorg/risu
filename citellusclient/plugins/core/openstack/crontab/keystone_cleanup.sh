@@ -22,7 +22,7 @@
 # priority: 700
 
 # Load common functions
-[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
+[[ -f -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
 # Find release to report which bug to check
 RELEASE=$(discover_osp_version)
@@ -35,7 +35,7 @@ if ! awk '/keystone-manage token_flush/ && /^[^#]/ { print $0 }' "${CITELLUS_ROO
 elif awk '/keystone-manage token_flush/ && /^[^#]/ { print $0 }' "${CITELLUS_ROOT}/var/spool/cron/keystone"; then
     # Skip default crontab of 1 0 * * * as it might miss busy systems and fail to do later cleanups
     COUNT=$(awk '/keystone-manage token_flush/ && /^[^#]/ { print $0 }' "${CITELLUS_ROOT}/var/spool/cron/keystone" 2>&1|egrep  '^1 0'  -c)
-    if [ "x$COUNT" = "x1" ]; then
+    if [[ "x$COUNT" = "x1" ]]; then
         echo -n $"token flush not running every hour " >&2
         case ${RELEASE} in
             6) echo "https://bugzilla.redhat.com/show_bug.cgi?id=1470230" >&2 ;;

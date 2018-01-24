@@ -17,7 +17,7 @@
 
 
 # Load common functions
-[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
+[[ -f -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
 # long_name: Disk inode usage
 # description: error if disk inode usage is greater than $CITELLUS_INODE_MAX_PERCENT=90
@@ -34,7 +34,7 @@ fi
 
 result=$($DISK_USE_CMD |awk -vinode_max_percent=$CITELLUS_INODE_MAX_PERCENT '/^\/dev/ && substr($5, 0, length($5)-1) > inode_max_percent { print $6,$5 }')
 
-if [ -n "$result" ]; then
+if [[ -n "$result" ]]; then
     echo "${result}" >&2
     exit $RC_FAILED
 else

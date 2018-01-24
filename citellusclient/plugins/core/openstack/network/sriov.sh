@@ -22,14 +22,14 @@
 # priority: 300
 
 # Load common functions
-[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
+[[ -f -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
 # Actual code execution
 RELEASE=$(discover_osp_version)
 
 flag=0
 
-if [ "$RELEASE" -gt 7 ]; then
+if [[ "$RELEASE" -gt 7 ]]; then
     if ! is_rpm openstack-neutron-sriov-nic-agent;then
         echo $"missing rpm openstack-neutron-sriov-nic-agent" >&2
         flag=1
@@ -49,19 +49,19 @@ if ! is_lineinfile "^isolated_cores=.*" "${CITELLUS_ROOT}/etc/tuned/cpu-partitio
     flag=1
 fi
 
-if [ "x$CITELLUS_LIVE" = "x1" ];  then
-    if [ "$(lspci|grep "Virtual Function"|wc -l)" -eq "0" ]; then
+if [[ "x$CITELLUS_LIVE" = "x1" ]];  then
+    if [[ "$(lspci|grep "Virtual Function"|wc -l)" -eq "0" ]]; then
         vfflag=1
         flag=1
     fi
-elif [ "x$CITELLUS_LIVE" = "x0" ]; then
+elif [[ "x$CITELLUS_LIVE" = "x0" ]]; then
     if ! is_lineinfile "Virtual Function" "${CITELLUS_ROOT}/lspci";then
         vfflag=1
         flag=1
     fi
 fi
 
-if [ "x$vfflag" = "x1" ]; then
+if [[ "x$vfflag" = "x1" ]]; then
     echo $"virtual function is disabled" >&2
 fi
 
@@ -96,7 +96,7 @@ if ! is_lineinfile "mechanism_drivers.*sriovnicswitch" "${CITELLUS_ROOT}/etc/neu
 fi
 
 
-if [ "$(discover_osp_version)" -lt "11" ]; then
+if [[ "$(discover_osp_version)" -lt "11" ]]; then
     if ! is_lineinfile "^scheduler_defaults.*PciPassthroughFilter" "${CITELLUS_ROOT}/etc/nova/nova.conf";then
         missingpcipasstru=1
         flag=1
@@ -109,7 +109,7 @@ else
     fi
 fi
 
-if [ "$missingpcipasstru" -eq "1" ]; then
+if [[ "$missingpcipasstru" -eq "1" ]]; then
     echo $"missing PciPassthroughFilter in nova.conf" >&2
 fi
 

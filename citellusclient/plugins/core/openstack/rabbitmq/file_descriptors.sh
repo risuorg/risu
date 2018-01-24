@@ -21,7 +21,7 @@
 # description: Check File Descriptors in RabbitMQ
 
 # Load common functions
-[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
+[[ -f -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
 if is_process nova-compute;then
         echo "works only on controller node" >&2
@@ -30,10 +30,10 @@ fi
 
 # Setup the file we'll be using for using similar approach on Live and non-live
 
-if [ "x$CITELLUS_LIVE" = "x1" ];  then
+if [[ "x$CITELLUS_LIVE" = "x1" ]];  then
     which rabbitmqctl > /dev/null 2>&1
     RC=$?
-    if [ "x$RC" != "x0" ]; then
+    if [[ "x$RC" != "x0" ]]; then
         echo "rabbitmqctl not found" >&2
         exit $RC_SKIPPED
     fi
@@ -43,7 +43,7 @@ if [ "x$CITELLUS_LIVE" = "x1" ];  then
     rabbitmqctl report > $FILE
     HN=${HOSTNAME}
 
-elif [ "x$CITELLUS_LIVE" = "x0" ];then
+elif [[ "x$CITELLUS_LIVE" = "x0" ]];then
     FILE="${CITELLUS_ROOT}/sos_commands/rabbitmq/rabbitmqctl_report"
     is_required_file ${FILE}
     HN=$(cat ${CITELLUS_ROOT}/hostname)
@@ -62,24 +62,24 @@ USED_FILE_DESCRIPTORS=$(awk -v target="$HN" '$4 ~ target { flag = 1 } \
 flag = 1 && /total_used/ { print ; exit }' \
 "${FILE}" | egrep -o '[0-9]+')
 
-if [ -z ${FILE_DESCRIPTORS} ]; then
+if [[ -z ${FILE_DESCRIPTORS} ]]; then
     echo "couldn't get file descriptors from rabbitmqctl report" >&2
     exit $RC_FAILED
 fi
 
-if [ -z ${USED_FILE_DESCRIPTORS} ]; then
+if [[ -z ${USED_FILE_DESCRIPTORS} ]]; then
     echo "couldn't get used file descriptors from rabbitmqctl report" >&2
     exit $RC_FAILED
 fi
 
-if [ "${FILE_DESCRIPTORS}" -lt  "65336" ]; then
+if [[ "${FILE_DESCRIPTORS}" -lt  "65336" ]]; then
     echo "total ${FILE_DESCRIPTORS}" >&2
     flag=1
 fi
 
 AVAILABLE_FILE_DESCRIPTORS=$(( FILE_DESCRIPTORS - USED_FILE_DESCRIPTORS ))
 
-if [ "${AVAILABLE_FILE_DESCRIPTORS}" -lt "16000" ]; then
+if [[ "${AVAILABLE_FILE_DESCRIPTORS}" -lt "16000" ]]; then
     echo "total_used ${USED_FILE_DESCRIPTORS}" >&2
     echo "available ${AVAILABLE_FILE_DESCRIPTORS}" >&2
     flag=1

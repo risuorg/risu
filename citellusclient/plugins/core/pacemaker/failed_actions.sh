@@ -16,7 +16,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 # Load common functions
-[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
+[[ -f -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
 # we can run this against fs snapshot or live system
 
@@ -24,9 +24,9 @@
 # description: Check if there are pacemaker failed actions
 # priority: 800
 
-if [ "x$CITELLUS_LIVE" = "x1" ]; then
+if [[ "x$CITELLUS_LIVE" = "x1" ]]; then
     pacemaker_status=$(systemctl is-active pacemaker || :)
-    if [ "$pacemaker_status" = "active" ]; then
+    if [[ "$pacemaker_status" = "active" ]]; then
         if pcs status | grep -q "Failed Actions"; then
             pcs status | awk -F" " '/^\*/ {print $2}' >&2
             exit $RC_FAILED
@@ -38,10 +38,10 @@ if [ "x$CITELLUS_LIVE" = "x1" ]; then
         echo "pacemaker is not running on this node" >&2
         exit $RC_SKIPPED
     fi
-elif [ "x$CITELLUS_LIVE" = "x0" ]; then
+elif [[ "x$CITELLUS_LIVE" = "x0" ]]; then
     if is_active "pacemaker"; then
         for CLUSTER_DIRECTORY in "pacemaker" "cluster"; do
-            if [ -d "${CITELLUS_ROOT}/sos_commands/${CLUSTER_DIRECTORY}" ]; then
+            if [[ -d "${CITELLUS_ROOT}/sos_commands/${CLUSTER_DIRECTORY}" ]]; then
                 PCS_DIRECTORY="${CITELLUS_ROOT}/sos_commands/${CLUSTER_DIRECTORY}"
             fi
         done

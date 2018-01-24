@@ -22,15 +22,15 @@
 # priority: 900
 
 # Load common functions
-[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
+[[ -f -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
-if [ "x$CITELLUS_LIVE" = "x1" ];  then
+if [[ "x$CITELLUS_LIVE" = "x1" ]];  then
     log_files=$(
         for i in $(rpm -qa | sed -n -r -e 's/^openstack-([a-z]*)-.*$/\1/p' | sort | uniq); do
         ls /var/log/$i/*.log 2>/dev/null | grep '/var/log/[^/]*/[^/]*\.log';
         done
     )
-elif [ "x$CITELLUS_LIVE" = "x0" ]; then
+elif [[ "x$CITELLUS_LIVE" = "x0" ]]; then
     is_required_file "${CITELLUS_ROOT}/installed-rpms"
     log_files=$(
         for i in $(sed -n -r -e 's/^openstack-([a-z]*)-.*$/\1/p' ${CITELLUS_ROOT}/installed-rpms | sort | uniq); do

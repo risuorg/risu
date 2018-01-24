@@ -22,7 +22,7 @@
 # priority: 300
 
 # Load common functions
-[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
+[[ -f -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
 if [[ $CITELLUS_LIVE = 0 ]]; then
     FILE="${CITELLUS_ROOT}/sos_commands/yum/yum_history"

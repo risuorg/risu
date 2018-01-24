@@ -22,7 +22,7 @@
 # this can run against live or snapshot mode
 
 # Load common functions
-[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
+[[ -f -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
 is_required_file "${CITELLUS_ROOT}/var/log/mysqld.log"
 awk '/WSREP: Found saved state/ {seqno=$8}; END {print seqno}' ${CITELLUS_ROOT}/var/log/mysqld.log >&2

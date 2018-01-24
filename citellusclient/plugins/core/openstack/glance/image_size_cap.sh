@@ -23,7 +23,7 @@
 
 
 # Load common functions
-[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
+[[ -f -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
 is_required_file "${CITELLUS_ROOT}/etc/glance/glance-api.conf"
 
@@ -32,7 +32,7 @@ if is_lineinfile "^image_size_cap" "${CITELLUS_ROOT}/etc/glance/glance-api.conf"
     IMAGE_SIZE=$(awk -F "=" '/^image_size_cap/ {gsub (" ", "", $0); print $2}' \
                 "${CITELLUS_ROOT}/etc/glance/glance-api.conf")
 
-    if [ "${IMAGE_SIZE}" -lt  "${IMAGE_SIZE_DEFAULT}" ]; then
+    if [[ "${IMAGE_SIZE}" -lt  "${IMAGE_SIZE_DEFAULT}" ]]; then
         echo $"image_size_cap is less than 1TiB" >&2
         exit $RC_FAILED
     fi

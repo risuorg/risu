@@ -22,7 +22,7 @@
 # priority: 300
 
 # Load common functions
-[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
+[[ -f -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
 expand_ranges(){
     (
@@ -44,11 +44,11 @@ expand_and_remove_excludes(){
     for CPU in $CPUs; do
         exclude=0
         for EXCL in $EXCLUDES;do
-            if [ "^$CPU" == "$EXCL" ]; then
+            if [[ "^$CPU" == "$EXCL" ]]; then
                 exclude=1
             fi
         done
-        if [ "$exclude" == "0" ];then
+        if [[ "$exclude" == "0" ]];then
             echo $CPU
         fi
     done
@@ -69,15 +69,15 @@ if ! is_process nova-compute; then
     fi
 fi
 
-if [ $CITELLUS_LIVE -eq 0 ]; then
+if [[ $CITELLUS_LIVE -eq 0 ]]; then
     FILE="${CITELLUS_ROOT}/sos_commands/openvswitch/ovs-vsctl_-t_5_get_Open_vSwitch_._other_config"
-elif [ $CITELLUS_LIVE -eq 1 ];then
+elif [[ $CITELLUS_LIVE -eq 1 ]];then
     FILE=$(mktemp)
     trap "rm $FILE" EXIT
     ovs-vsctl -t 5 get Open_vSwitch . other_config > $FILE
 fi
 
-if [ -f "$FILE" ]; then
+if [[ -f "$FILE" ]]; then
 
     if is_lineinfile "dpdk-init.*true" "${FILE}";then
         # DPDK is supposedly enabled, do further checks
@@ -110,11 +110,11 @@ if [ -f "$FILE" ]; then
         for i in ${procids[@]}; do
             present=0
             for j in ${systemdaffinity[@]}; do
-                if [ $i -eq $j ];then
+                if [[ $i -eq $j ]];then
                     present=1
                 fi
             done
-            if [ $present -eq 0 ];then
+            if [[ $present -eq 0 ]];then
                 isolated="$isolated $i"
             fi
         done
@@ -128,11 +128,11 @@ if [ -f "$FILE" ]; then
         for i in ${procids[@]}; do
             present=1
             for j in ${ISOLCPUS[@]}; do
-                if [ $i -eq $j ];then
+                if [[ $i -eq $j ]];then
                     present=0
                 fi
             done
-            if [ $present -eq 1 ];then
+            if [[ $present -eq 1 ]];then
                 USEDBYKERNEL="$USEDBYKERNEL $i"
             fi
         done
@@ -162,13 +162,13 @@ if [ -f "$FILE" ]; then
             *)
                 present=0
                 for j in ${ISOLCPUS[@]}; do
-                    if [ $i -eq $j ];then
+                    if [[ $i -eq $j ]];then
                         present=1
                         USEDBYNOVA="$USEDBYNOVA $i"
                     fi
                 done
-                if [ $present -eq 0 ];then
-                    if [ $usedcpu -eq 0 ]; then
+                if [[ $present -eq 0 ]];then
+                    if [[ $usedcpu -eq 0 ]]; then
                         echo -n $"Nova VCPU in vcpu_pin_set not in Isolated CPU's:" >&2
                         usedcpu=1
                     fi
@@ -179,7 +179,7 @@ if [ -f "$FILE" ]; then
         esac
     done
 
-    if [ $usedcpu -eq 1 ]; then
+    if [[ $usedcpu -eq 1 ]]; then
         echo "" >&2
     fi
 
@@ -190,11 +190,11 @@ if [ -f "$FILE" ]; then
     for i in ${FREECPUS[@]}; do
         present=0
         for j in ${USEDBYNOVA[@]}; do
-            if [ $i -eq $j ];then
+            if [[ $i -eq $j ]];then
                 present=1
             fi
         done
-        if [ $present -eq 0 ];then
+        if [[ $present -eq 0 ]];then
             NEWFREE="$NEWFREE $i"
         fi
     done
@@ -213,7 +213,7 @@ if [ -f "$FILE" ]; then
 
     DPDKPMDMASK=$(cat $FILE|tr " {}," "\n"|grep "^pmd-cpu-mask"|cut -d "=" -f 2|tr -d ",\'\""|tr '[a-z]' '[A-Z]')
 
-    if [ "${DPDKPMDMASK:0:2}" == "0X" ] ; then
+    if [[ "${DPDKPMDMASK:0:2}" == "0X" ]] ; then
         # We need to strip 0x
         DPDKPMDMASK=${DPDKPMDMASK:2}
     fi
@@ -227,7 +227,7 @@ if [ -f "$FILE" ]; then
     for (( i=${#foo}-1; i>=0; i-- )); do
         enabled=0
         enabled="${foo:$i:1}"
-        if [ "$enabled" = "1" ];then
+        if [[ "$enabled" = "1" ]];then
             PMDCPUS="$PMDCPUS $j"
         fi
         j=$((j+1))
@@ -242,13 +242,13 @@ if [ -f "$FILE" ]; then
     for i in ${FREECPUS[@]}; do
         present=0
         for j in ${PMDCPUS[@]}; do
-            if [ $i -eq $j ];then
+            if [[ $i -eq $j ]];then
                 present=1
             fi
         done
-        if [ $present -eq 0 ];then
+        if [[ $present -eq 0 ]];then
             # CPU was in free pool
-            if [ $usedcpu -eq 0 ]; then
+            if [[ $usedcpu -eq 0 ]]; then
                 echo -n $"DPDK PMD CPU was already used by Nova:" >&2
                 usedcpu=1
             fi
@@ -259,7 +259,7 @@ if [ -f "$FILE" ]; then
         fi
     done
 
-    if [ $usedcpu -eq 1 ]; then
+    if [[ $usedcpu -eq 1 ]]; then
         echo "" >&2
     fi
 
@@ -280,7 +280,7 @@ if [ -f "$FILE" ]; then
 
     DPDKCOREMASK=$(cat $FILE|tr " {}," "\n"|grep "^dpdk-lcore-mask"|cut -d "=" -f 2|tr -d ",\'\""|tr '[a-z]' '[A-Z]')
 
-    if [ "${DPDKCOREMASK:0:2}" == "0X" ] ; then
+    if [[ "${DPDKCOREMASK:0:2}" == "0X" ]] ; then
         # We need to strip 0x
         DPDKCOREMASK=${DPDKCOREMASK:2}
     fi
@@ -294,7 +294,7 @@ if [ -f "$FILE" ]; then
     for (( i=${#foo}-1; i>=0; i-- )); do
         enabled=0
         enabled="${foo:$i:1}"
-        if [ "$enabled" = "1" ];then
+        if [[ "$enabled" = "1" ]];then
             CORECPUS="$CORECPUS $j"
         fi
         j=$((j+1))
@@ -308,9 +308,9 @@ if [ -f "$FILE" ]; then
     for i in ${USEDCPUS[@]}; do
         present=0
         for j in ${CORECPUS[@]}; do
-            if [ $i -eq $j ];then
+            if [[ $i -eq $j ]];then
                 present=1
-                if [ $usedcpu -eq 0 ]; then
+                if [[ $usedcpu -eq 0 ]]; then
                     echo -n $"DPDK CORE CPU was already used by Kernel, Nova or DPDK PMD: " >&2
                     usedcpu=1
                 fi
@@ -321,7 +321,7 @@ if [ -f "$FILE" ]; then
         done
     done
 
-    if [ $usedcpu -eq 1 ]; then
+    if [[ $usedcpu -eq 1 ]]; then
         echo "" >&2
     fi
 
@@ -330,18 +330,18 @@ if [ -f "$FILE" ]; then
     for i in ${procids[@]}; do
         present=0
         for j in ${USEDCPUS[@]}; do
-            if [ $i -eq $j ];then
+            if [[ $i -eq $j ]];then
                 present=1
             fi
         done
-        if [ $present -eq 0 ];then
+        if [[ $present -eq 0 ]];then
             NEWFREE="$NEWFREE $i"
         fi
     done
 
     FREECPUS="$NEWFREE"
 
-    if [ "${#FREECPUS}" != "0" ];then
+    if [[ "${#FREECPUS}" != "0" ]];then
         echo "There are CPU's unallocated: $FREECPUS" >&2
         flag=1
     fi
