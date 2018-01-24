@@ -26,10 +26,10 @@
 
 is_required_containerized
 
-if [ $CITELLUS_LIVE -eq 0 ]; then
+if [[ $CITELLUS_LIVE -eq 0 ]]; then
     is_required_file "${CITELLUS_ROOT}/sos_commands/docker/docker_ps"
     FILE="${CITELLUS_ROOT}/sos_commands/docker/docker_ps"
-elif [ $CITELLUS_LIVE -eq 1 ];then
+elif [[ $CITELLUS_LIVE -eq 1 ]];then
     FILE=$(mktemp)
     trap "rm $FILE" EXIT
     docker ps > $FILE
