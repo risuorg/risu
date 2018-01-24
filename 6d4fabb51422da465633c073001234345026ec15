@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "567a1dec_80f4d9e8",
+        "filename": "citellusclient/plugins/core/openshift/etcd/certificates.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2018-01-24T14:46:20Z",
+      "side": 1,
+      "message": "We\u0027re in 2018 ;-)",
+      "revId": "6d4fabb51422da465633c073001234345026ec15",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
