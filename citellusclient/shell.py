@@ -384,7 +384,19 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
         LOG.debug("Reading Existing citellus analysis from disk for %s" % path)
         results = json.load(open(filename, 'r'))['results']
 
+        # We do need to check that we've the results for all the plugins we know, if not, rerun.
+
+        rerun = False
+        # Check all sosreports for data for all plugins
+        for plugin in plugins:
+            try:
+                results[plugin]['result']
+            except:
+                rerun = True
     else:
+        rerun = True
+
+    if rerun:
         # Execute Citellus (live and non-live with forcerun)
         results = p.map(runplugin, plugins)
 
