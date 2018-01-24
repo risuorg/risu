@@ -21,7 +21,7 @@
 # priority: 200
 
 # Load common functions
-[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
+[[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
 exitoudated(){
     echo $"outdated sosreport package ${VERSION}: Containerized deployments require updated release" >&2

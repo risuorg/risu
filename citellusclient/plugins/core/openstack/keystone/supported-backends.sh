@@ -22,7 +22,7 @@
 # this can run against live and also fs snapshot
 
 # Load common functions
-[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
+[[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
 config_file="${CITELLUS_ROOT}/etc/keystone/keystone.conf"
 
@@ -56,7 +56,7 @@ for backend in $backends;do
     esac
 done
 
-if [ "$supported" -ne "1" ]; then
+if [[ "$supported" -ne "1" ]]; then
     exit $RC_FAILED
 fi
 

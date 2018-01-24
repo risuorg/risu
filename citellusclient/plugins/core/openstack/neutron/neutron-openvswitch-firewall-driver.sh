@@ -22,12 +22,12 @@
 # priority: 200
 
 # Load common functions
-[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
+[[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
 # Find release
 RELEASE=$(discover_osp_version)
 
-if [ "x$RELEASE" != "x10" ]; then
+if [[ "x$RELEASE" != "x10" ]]; then
     echo "This affects only OSP10" >&2
     exit $RC_SKIPPED
 fi

@@ -19,7 +19,7 @@
 # description: Retrieves release data from host
 
 # Load common functions
-[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
+[[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
 
 FILE="${CITELLUS_ROOT}/etc/redhat-release"
