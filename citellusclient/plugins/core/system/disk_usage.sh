@@ -33,7 +33,7 @@ fi
 
 result=$($DISK_USE_CMD |awk -vdisk_max_percent=$CITELLUS_DISK_MAX_PERCENT '/^\/dev/ && substr($5, 0, length($5)-1) > disk_max_percent { print $6,$5 }')
 
-if [ -n "$result" ]; then
+if [[ -n "$result" ]]; then
     echo "${result}" >&2
     exit $RC_FAILED
 else

@@ -41,7 +41,7 @@ case $VTYPE in
         ;;
 esac
 
-if [ "$supported" -ne "1" ]; then
+if [[ "$supported" -ne "1" ]]; then
     exit $RC_FAILED
 fi
 
