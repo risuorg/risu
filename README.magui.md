@@ -18,6 +18,7 @@ Magui aims to use Citellus for gathering the data and later, write plugins to an
 
 - Allows to get data from remote hosts with ansible-playbook
 
+Check latest changes on <Changelog.md>
 
 ## Usage help
 Plugins for Magui are to be written in Python, check next section for details.
