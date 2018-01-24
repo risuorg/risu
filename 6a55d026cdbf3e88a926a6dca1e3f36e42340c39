@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43de67ee_0e23800f",
+        "filename": "citellusclient/plugins/core/openshift/etcd/certificates.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2018-01-24T22:07:27Z",
+      "side": 1,
+      "message": "this is not valid for sosreport (CITELLUS_LIVE\u003d0) as it will use host processing sosreport and not data inside the sosreport like \u0027hostname\u0027 or `ip_addr`",
+      "revId": "6a55d026cdbf3e88a926a6dca1e3f36e42340c39",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "29ef5681_e4ff0dbd",
+        "filename": "citellusclient/plugins/core/openshift/etcd/certificates.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2018-01-24T22:07:27Z",
+      "side": 1,
+      "message": "same as above",
+      "revId": "6a55d026cdbf3e88a926a6dca1e3f36e42340c39",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
