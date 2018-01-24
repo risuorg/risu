@@ -30,15 +30,15 @@ if ! is_process nova-compute; then
 fi
 OUTDATED=$"librbd1 might be outdated if rhceph repo is not enabled on compute"
 
-if [ "x$CITELLUS_LIVE" = "x1" ]; then
-    if [ "$(yum -C repolist 2>&1 | grep "rhceph.*tools" | wc -l)" -eq "0" ]; then
+if [[ "x$CITELLUS_LIVE" = "x1" ]]; then
+    if [[ "$(yum -C repolist 2>&1 | grep "rhceph.*tools" | wc -l)" -eq "0" ]]; then
         echo "$OUTDATED" >&2
         exit $RC_FAILED
     else
         exit $RC_OKAY
     fi
-elif [ "x$CITELLUS_LIVE" = "x0" ]; then
-    if [ "$(cat ${CITELLUS_ROOT}/sos_commands/yum/yum_-C_repolist | grep "rhceph.*tools" | wc -l)" -eq "0" ]; then
+elif [[ "x$CITELLUS_LIVE" = "x0" ]]; then
+    if [[ "$(cat ${CITELLUS_ROOT}/sos_commands/yum/yum_-C_repolist | grep "rhceph.*tools" | wc -l)" -eq "0" ]]; then
         echo "$OUTDATED" >&2
         exit $RC_FAILED
     else

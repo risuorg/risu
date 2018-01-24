@@ -28,9 +28,9 @@
 if is_process nova-compute; then
     is_required_file "${CITELLUS_ROOT}/etc/nova/nova.conf"
 
-    if [ "x$CITELLUS_LIVE" = "x1" ];  then
+    if [[ "x$CITELLUS_LIVE" = "x1" ]];  then
         HOST=$(hostname)
-    elif [ "x$CITELLUS_LIVE" = "x0" ];  then
+    elif [[ "x$CITELLUS_LIVE" = "x0" ]];  then
         is_required_file "${CITELLUS_ROOT}/hostname"
         HOST=$(cat "${CITELLUS_ROOT}/hostname")
     fi

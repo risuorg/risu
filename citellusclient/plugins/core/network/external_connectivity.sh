@@ -23,7 +23,7 @@
 
 : ${REMOTE_PING_TARGET:=8.8.8.8}
 
-if [ ! "x$CITELLUS_LIVE" = "x1" ]; then
+if [[ ! "x$CITELLUS_LIVE" = "x1" ]]; then
     echo "works on live-system only" >&2
     exit $RC_SKIPPED
 fi

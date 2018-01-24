@@ -28,10 +28,10 @@ is_required_containerized
 
 CONFIG_FOLDER="${CITELLUS_ROOT}/var/lib/config-data/puppet-generated"
 
-if [ "x$CITELLUS_LIVE" = "x1" ]; then
+if [[ "x$CITELLUS_LIVE" = "x1" ]]; then
     echo $"works only against fs snapshot"
     exit $RC_SKIPPED
-elif [ "x$CITELLUS_LIVE" = "x0" ]; then
+elif [[ "x$CITELLUS_LIVE" = "x0" ]]; then
     containers=$(
         for directory in ${CONFIG_FOLDER}/*; do
             if [[ -d "${directory}" ]]; then
