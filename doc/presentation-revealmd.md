@@ -99,41 +99,10 @@ virtualization : 1 []
 ---
 
 ## How to run in manually?
+<img src="images/citellusrun.png" height="40%" border=0>
 
-As easy as it could:
 
-~~~sh
-citellus/citellus.py /folder/containing/sosreport
-~~~
-
-Example:
-
-~~~
-_________ .__  __         .__  .__                
-\_   ___ \|__|/  |_  ____ |  | |  |  __ __  ______
-/    \  \/|  \   __\/ __ \|  | |  | |  |  \/  ___/
-\     \___|  ||  | \  ___/|  |_|  |_|  |  /\___ \ 
- \______  /__||__|  \___  >____/____/____//____  >
-        \/              \/                     \/ 
-                                                  
-found #2 extensions with #101 plugins
-mode: fs snapshot ../sosreport-controller-0-20171212110438/
-# /home/iranzo/DEVEL/citellus/citellusclient/plugins/ansible/openstack/rabbitmq/ha-policies.yml: skipped
-# /home/iranzo/DEVEL/citellus/citellusclient/plugins/ansible/system/clock-ntpstat.yml: skipped
-# /home/iranzo/DEVEL/citellus/citellusclient/plugins/core/bugzilla/httpd/1406417.sh: okay
-# /home/iranzo/DEVEL/citellus/citellusclient/plugins/core/bugzilla/openstack/keystone/1473713.sh: okay
-# /home/iranzo/DEVEL/citellus/citellusclient/plugins/core/bugzilla/openstack/keystone/templates/1519057.sh: skipped
-# /home/iranzo/DEVEL/citellus/citellusclient/plugins/core/bugzilla/openstack/nova/1474092.sh: okay
-# /home/iranzo/DEVEL/citellus/citellusclient/plugins/core/bugzilla/openstack/nova/1527345.sh: skipped
-# /home/iranzo/DEVEL/citellus/citellusclient/plugins/core/bugzilla/openstack/swift/1500607.sh: okay
-# /home/iranzo/DEVEL/citellus/citellusclient/plugins/core/bugzilla/systemd/1172387.sh: okay
-# /home/iranzo/DEVEL/citellus/citellusclient/plugins/core/launchpad/openstack/keystone/1649616.sh: okay
-# /home/iranzo/DEVEL/citellus/citellusclient/plugins/core/network/external_connectivity.sh: skipped
-# /home/iranzo/DEVEL/citellus/citellusclient/plugins/core/openstack/ceilometer/expiration.sh: failed
-    alarm_history_time_to_live missing on file
-    event_time_to_live missing on file
-    metering_time_to_live missing on file
-~~~
+Note: Change speaker after this
 
 ---
 
@@ -187,22 +156,10 @@ For example, it will be easy to report on systems registered against RHN instead
 - Frequently, data about errors or errors to be, is already in sosreports.
 - Citellus is based on known issues and easy to extend with new ones, requires faster devel cycle, targeting more a devops or support teams as target audience.
 
----
 
-## Other resources
-Blog post by Pablo:
-<small>
-- <http://iranzo.github.io/blog/2017/07/26/Citellus-framework-for-detecting-known-issues/>
-- <https://iranzo.github.io/blog/2017/07/31/Magui-for-analysis-of-issues-across-several-hosts/>
-- <https://iranzo.github.io/blog/2017/08/17/Jenkins-for-running-CI-tests/>
-- <https://iranzo.github.io/blog/2017/10/26/i18n-and-bash8-in-bash/>
-- <https://iranzo.github.io/blog/2018/01/16/recent-changes-in-magui-and-citellus/>
-- DevConf.cz 2018 <https://devconfcz2018.sched.com/event/DJXG/detect-pitfalls-of-osp-deployments-with-citellus>
-
-</small>
+Note: Change speaker after this
 
 ---
-
 
 ## How does it work under the hood?
 
@@ -273,7 +230,7 @@ fi
 ----
 
 ## How to start a new plugin (example)
-- Write a script in `~/citellus/citellusclient/plugins/core/rhev/hosted-engine.sh`
+- Write a script in `~/~/.../plugins/core/rhev/hosted-engine.sh`
 - `chmod +x hosted-engine.sh`
 
 ----
@@ -336,7 +293,7 @@ _________ .__  __         .__  .__
  \______  /__||__|  \___  >____/____/____//____  >
         \/              \/                     \/
 mode: fs snapshot sosreport-20170724-175510/crta02
-# ~/citellus/citellusclient/plugins/core/rhev/hosted-engine.sh: failed
+# ~/~/.../plugins/core/rhev/hosted-engine.sh: failed
     “ovirt-hosted-engine is not installed “
 ~~~
 
@@ -358,14 +315,14 @@ mode: fs snapshot sosreport-20170724-175510/crta02
 ## How does it looks like?
 It’s delivered in citellus repo and can be executed by specifying sosreports:
 ~~~sh
-[piranzo@collab-shell sosreport-20171205-172438]$ ~/citellus/magui.py * -i seqno
+[piranzo@collab-shell]$ ~/citellus/magui.py * -i seqno
     _
   _( )_  Magui:
  (_(ø)_)
   /(_)   Multiple Analisis Generic Unifier and Interpreter
  \|
   |/
-{'~/citellus/citellusclient/plugins/core/openstack/mysql/seqno.sh': {'controller0': {'err': u'2b65adb0-787e-11e7-81a8-26480628c14c:285019879\n',
+{'~/~/.../plugins/core/openstack/mysql/seqno.sh': {'controller0': {'err': u'2b65adb0-787e-11e7-81a8-26480628c14c:285019879\n',
                                                                                                                           'out': u'',
                                                                                                                           'rc': 10},
                                                                                         'controller1': {'err': u'2b65adb0-787e-11e7-81a8-26480628c14c:285019879\n',
@@ -397,6 +354,20 @@ It’s delivered in citellus repo and can be executed by specifying sosreports:
 - Evangelize about the tool so we can work together in solving our common issues on the same framework.<!-- .element: class="fragment" -->
 - Get moving fast enough that the tool has continuity, other tools just died by having a ‘solo’ developer working on spare time<!-- .element: class="fragment" -->
 - Start implementing more tests in Magui that provide real intelligence (for example we do report and check on seqno or pipeline-yaml but lot of other issues can benefit from this).<!-- .element: class="fragment" -->
+
+---
+
+## Other resources
+Blog post by Pablo:
+<small>
+- <http://iranzo.github.io/blog/2017/07/26/Citellus-framework-for-detecting-known-issues/>
+- <https://iranzo.github.io/blog/2017/07/31/Magui-for-analysis-of-issues-across-several-hosts/>
+- <https://iranzo.github.io/blog/2017/08/17/Jenkins-for-running-CI-tests/>
+- <https://iranzo.github.io/blog/2017/10/26/i18n-and-bash8-in-bash/>
+- <https://iranzo.github.io/blog/2018/01/16/recent-changes-in-magui-and-citellus/>
+- DevConf.cz 2018 <https://devconfcz2018.sched.com/event/DJXG/detect-pitfalls-of-osp-deployments-with-citellus>
+
+</small>
 
 ---
 
