@@ -23,7 +23,7 @@
 # priority: 600
 
 # Load common functions
-[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
+[[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
 RELEASE=$(discover_osp_version)
 

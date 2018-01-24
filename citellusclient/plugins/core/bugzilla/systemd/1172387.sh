@@ -23,7 +23,7 @@
 # priority: 800
 
 # Load common functions
-[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
+[[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
 is_required_file "${CITELLUS_ROOT}/var/log/messages"
 is_required_rpm systemd
@@ -36,16 +36,16 @@ if is_lineinfile "Did not receive a reply. Possible causes include: the remote a
     MINOR=$(echo $VERSION|sed -n -r -e 's/.*-([0-9]+)-([0-9]+).*$/\1-\2/p'|cut -d "-" -f2)
 
     # versions under systemd-219-1.el7 are affected
-    if [ $MAJOR -eq 219 ];then
-        if [ $MINOR -lt 1 ]; then
+    if [[ $MAJOR -eq 219 ]];then
+        if [[ $MINOR -lt 1 ]]; then
             flag=1
         fi
-    elif [ $MAJOR -lt 219 ]; then
+    elif [[ $MAJOR -lt 219 ]]; then
         flag=1
     fi
 fi
 
-if [ $flag -eq 1 ]; then
+if [[ $flag -eq 1 ]]; then
     echo $"systemd https://bugzilla.redhat.com/show_bug.cgi?id=1172387" >&2
     exit $RC_FAILED
 fi

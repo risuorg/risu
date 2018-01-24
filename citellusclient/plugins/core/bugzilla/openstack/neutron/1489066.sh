@@ -23,7 +23,7 @@
 # priority: 800
 
 # Load common functions
-[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
+[[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
 is_required_file "${CITELLUS_ROOT}/var/log/neutron/dhcp-agent.log"
 

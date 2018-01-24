@@ -16,7 +16,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 # Load common functions
-[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
+[[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
 # we can run this against fs snapshot or live system
 
@@ -24,7 +24,7 @@
 # description: Checks for failed OSP services
 # priority: 1000
 
-if [ "x$CITELLUS_LIVE" = "x1" ];  then
+if [[ "x$CITELLUS_LIVE" = "x1" ]];  then
 
     SERVICES=$(systemctl list-units --all | grep "neutron.*failed\|openstack.*failed\|openvswitch.*failed" | sed 's/*//' |awk '{print $1}')
     if systemctl list-units --all | grep -q "neutron.*failed\|openstack.*failed\|openvswitch.*failed"; then
@@ -33,8 +33,8 @@ if [ "x$CITELLUS_LIVE" = "x1" ];  then
     else
         exit $RC_OKAY
     fi
-elif [ "x$CITELLUS_LIVE" = "x0" ];  then
-    if [ -z "${systemctl_list_units_file}" ]; then
+elif [[ "x$CITELLUS_LIVE" = "x0" ]];  then
+    if [[ -z "${systemctl_list_units_file}" ]]; then
         echo "file /sos_commands/systemd/systemctl_list-units not found." >&2
         echo "file /sos_commands/systemd/systemctl_list-units_--all not found." >&2
         exit $RC_SKIPPED

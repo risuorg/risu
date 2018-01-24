@@ -22,7 +22,7 @@
 # this can run against live and also fs snapshot
 
 # Load common functions
-[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
+[[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
 if is_process nova-compute; then
     echo "works only on controller node" >&2

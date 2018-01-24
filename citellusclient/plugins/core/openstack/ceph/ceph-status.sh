@@ -20,12 +20,12 @@
 # priority: 800
 
 # Load common functions
-[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
+[[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
 # Check if ceph was integrated, if yes then check it's health
 
-if [ "x$CITELLUS_LIVE" = "x0" ]; then
-    if [ -z "${systemctl_list_units_file}" ]; then
+if [[ "x$CITELLUS_LIVE" = "x0" ]]; then
+    if [[ -z "${systemctl_list_units_file}" ]]; then
         echo "file /sos_commands/systemd/systemctl_list-units not found." >&2
         echo "file /sos_commands/systemd/systemctl_list-units_--all not found." >&2
         exit $RC_SKIPPED
@@ -39,7 +39,7 @@ if [ "x$CITELLUS_LIVE" = "x0" ]; then
             exit $RC_SKIPPED
         fi
     fi
-elif [ "x$CITELLUS_LIVE" = "x1" ]; then
+elif [[ "x$CITELLUS_LIVE" = "x1" ]]; then
     if hiera -c /etc/puppet/hiera.yaml enabled_services | egrep -sq ceph_mon; then
         if ceph -s | grep -q HEALTH_OK; then
             exit $RC_OKAY
