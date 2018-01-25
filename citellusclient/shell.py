@@ -467,14 +467,18 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
         rerun = False
         # Check all sosreports for data for all plugins
         for plugin in plugins:
-            try:
-                results[plugin]['result']
-            except:
+            match = False
+            for output in results:
+                if output['plugin'] == plugin['plugin']:
+                    match = True
+            if match == False:
                 rerun = True
+
     else:
         rerun = True
 
     if rerun:
+        LOG.debug("We've set to run citellus")
         # Execute Citellus (live and non-live with forcerun)
         results = p.map(runplugin, plugins)
 
