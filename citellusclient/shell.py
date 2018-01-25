@@ -47,9 +47,12 @@ LOG = logging.getLogger('citellus')
 global citellusdir
 global localedir
 global ExtensionFolder
+global allplugins
+
 citellusdir = os.path.abspath(os.path.dirname(__file__))
 localedir = os.path.join(citellusdir, 'locale')
 ExtensionFolder = os.path.join(citellusdir, "extensions")
+allplugins = []
 
 global extensions
 extensions = []
@@ -203,9 +206,32 @@ def show_logo():
     print("\n".join(logo))
 
 
-def findplugins(folders, include=None, exclude=None, executables=True, fileextension=False, extension='core', prio=0):
+def findallplugins():
+    """
+    Finds all plugins that citellus recognized
+    :return: array of plugins found (dictionaries)
+    """
+    global extensions
+    if not extensions:
+        extensions, exttriggers = initExtensions()
+
+    plugins = []
+    for extension in extensions:
+        plugins.extend(extension.listplugins())
+
+    # Flatten plugins
+    newplugins = []
+    for extension in plugins:
+        for plugin in extension:
+            newplugins.append(plugin)
+
+    return newplugins
+
+
+def findplugins(folders=None, include=None, exclude=None, executables=True, fileextension=False, extension='core', prio=0):
     """
     Finds plugins in path and returns array of them
+    :param prio: define minimum priority of returned plugins
     :param executables: Enable to find only executable files
     :param fileextension: Extension to match for plugins found
     :param extension: Extension that will handle this plugin
@@ -272,7 +298,7 @@ def findplugins(folders, include=None, exclude=None, executables=True, fileexten
         if subcategory[0] == os.sep:
             subcategory = subcategory[1:]
 
-        dictionary = {'plugin': plugin, 'backend': extension, 'id': hashlib.md5(plugin.replace(citellusdir, '').encode('UTF-8')).hexdigest(), 'category': category, 'subcategory': subcategory}
+        dictionary = {'plugin': plugin, 'backend': extension, 'id': calcid(string=plugin), 'category': category, 'subcategory': subcategory}
         dictionary.update(get_metadata(plugin=dictionary))
 
         if dictionary['priority'] >= prio:
@@ -319,6 +345,54 @@ def runplugin(plugin):
     return plugin
 
 
+def calcid(string, replace=citellusdir):
+    """
+    Returns ID for defined string
+    :param string: String to calculate md5 on
+    :param replace: String to replace previous to calculation
+    :return: md5sum of string
+    """
+    return hashlib.md5(string.replace(replace, '').encode('UTF-8')).hexdigest()
+
+
+def getids(plugins=None, include=None, exclude=None):
+    """
+    Gets ID's for specified include/excluded plugins
+    :param plugins: all plugins availabme
+    :param include: keywords to include
+    :param exclude: keywords to exclude
+    :return: array of md5 hashes
+    """
+    if not plugins:
+        plugins = findallplugins()
+
+    allplugins = plugins
+    newplugins = []
+
+    for plugin in plugins:
+        newplugins.append(plugin['plugin'])
+
+    # Process plugins in include / exclude
+    plugins = newplugins
+
+    if include:
+        plugins = [plugin for plugin in plugins
+                   for filters in include
+                   if filters in plugin]
+
+    if exclude:
+        plugins = [plugin for plugin in plugins
+                   if not any(filters in plugin for filters in exclude)]
+
+    # Get full plugins details
+
+    ids = []
+    for plugin in allplugins:
+        if plugin['plugin'] in plugins:
+            ids.append(plugin['id'])
+    return ids
+
+
 def execonshell(filename):
     """
     Executes command on shell
@@ -339,6 +413,10 @@ def execonshell(filename):
 def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=False, savepath=False, include=None, exclude=None):
     """
     Runs citellus scripts on specified root folder
+    :param exclude: keywords to exclude in plugins
+    :param include: keywords to include in plugins
+    :param savepath: Path to store resulting output
+    :param forcerun: Forces execution instead of reading saved file
     :param lang: language to use on shell
     :param path: Path to analyze
     :param live:  Test is to be executed live or on snapshot/sosreport
@@ -404,7 +482,7 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
         if filename:
             try:
                 # Write results to disk
-                write_results(results, filename, live=False, path=path)
+                write_results(results, filename, path=path)
             except:
                 # Couldn't write
                 LOG.debug("Couldn't write to file %s" % filename)
@@ -663,6 +741,7 @@ def write_results(results, filename,
                   live=False, path=None, time=0):
     """
     Writes result
+    :param time: date of report
     :param results: Data to write
     :param filename: File to use
     :param live: Metadata
@@ -805,6 +884,9 @@ def main():
     plugins = []
     for extension in extensions:
         plugins.extend(extension.listplugins(options))
+
+    global allplugins
+    allplugins = plugins
 
     # Print plugin list and description if requested
     categories = []

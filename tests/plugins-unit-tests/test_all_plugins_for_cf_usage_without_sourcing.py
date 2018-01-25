@@ -40,7 +40,8 @@ class CitellusTest(TestCase):
 
         commonfunctions = []
 
-        for script in citellus.findplugins(folders=[os.path.join(citellus.citellusdir, 'common.d')], executables=True, fileextension='.sh'):
+        for script in citellus.findplugins(folders=[os.path.join(citellus.citellusdir, 'common.d')],
+                                           fileextension='.sh'):
             filename = script['plugin']
             with open(filename, 'r') as f:
                 for line in f:

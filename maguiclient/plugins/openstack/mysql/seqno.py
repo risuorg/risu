@@ -22,8 +22,8 @@ def init():
     Initializes module
     :return: List of triggers for Plugin
     """
-    triggers = ['8a3daf75bbbe401a22aa6368bae1fa42']
-    return triggers
+    ids = citellus.getids(include=['/core/openstack/mysql/seqno.sh'])
+    return ids
 
 
 def run(data, quiet=False):  # do not edit this line
