@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d8c3252_f4b5fd97",
+        "filename": "citellusclient/common.d/01-rpm.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2018-01-25T14:52:08Z",
+      "side": 1,
+      "message": "Does AWK return same return codes as grep?",
+      "revId": "2b71b00d294e4f60daa5e263874f838907d070be",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
