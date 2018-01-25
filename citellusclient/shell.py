@@ -203,7 +203,19 @@ def show_logo():
     print("\n".join(logo))
 
 
-def findplugins(folders, include=None, exclude=None, executables=True, fileextension=False, extension='core', prio=0):
+def findallplugins():
+    global extensions
+    if not extensions:
+        extensions, exttriggers = initExtensions()
+
+    plugins = []
+    for extension in extensions:
+        plugins.extend(extension.listplugins())
+
+    return plugins
+
+
+def findplugins(folders=None, include=None, exclude=None, executables=True, fileextension=False, extension='core', prio=0):
     """
     Finds plugins in path and returns array of them
     :param executables: Enable to find only executable files
@@ -272,7 +284,7 @@ def findplugins(folders, include=None, exclude=None, executables=True, fileexten
         if subcategory[0] == os.sep:
             subcategory = subcategory[1:]
 
-        dictionary = {'plugin': plugin, 'backend': extension, 'id': hashlib.md5(plugin.replace(citellusdir, '').encode('UTF-8')).hexdigest(), 'category': category, 'subcategory': subcategory}
+        dictionary = {'plugin': plugin, 'backend': extension, 'id': calcid(string=plugin), 'category': category, 'subcategory': subcategory}
         dictionary.update(get_metadata(plugin=dictionary))
 
         if dictionary['priority'] >= prio:
@@ -317,6 +329,31 @@ def runplugin(plugin):
                'time': time.time() - start_time}
     plugin.update(updates)
     return plugin
+
+
+def calcid(string, replace=citellusdir):
+    return hashlib.md5(string.replace(replace, '').encode('UTF-8')).hexdigest()
+
+
+def getids(plugins=None, include=None, exclude=None):
+
+    if not plugins:
+        plugins = findallplugins()
+
+    if include:
+        plugins = [plugin for plugin in plugins
+                   for filters in include
+                   if filters in plugin]
+
+    if exclude:
+        plugins = [plugin for plugin in plugins
+                   if not any(filters in plugin for filters in exclude)]
+
+    ids = []
+    for plugin in plugins:
+        ids.append(calcid(plugin))
+
+    return []
 
 
 def execonshell(filename):

@@ -23,6 +23,9 @@ def init():
     :return: List of triggers for Plugin
     """
     triggers = ['1586bab95f7d891153bcbb6da148e361']
+    ids = citellus.getids(include=['metadata/system/release.sh'])
+    citellus.LOG.debug("IRANZO")
+    citellus.LOG.debug(ids)
     return triggers
 
 
