@@ -819,6 +819,8 @@ def main():
                 if options.list_categories:
                     pretty.update({'category': plugin['category']})
                     pretty.update({'subcategory': plugin['subcategory']})
+                if options.loglevel == 'DEBUG' or options.verbose:
+                    pretty.update({'id': plugin['id']})
                 print(pretty)
 
         if options.list_categories:
