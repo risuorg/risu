@@ -212,6 +212,8 @@ def initPlugins(options):
 def callcitellus(path=False, plugins=False, forcerun=False, include=None, exclude=None):
     """
     Do actual execution of citellus against data
+    :param exclude: keywords to exclude
+    :param include: keywords to include
     :param forcerun: Forces execution of citellus analysis (ignoring saved data in citellus.json)
     :param path: sosreport path
     :param plugins: plugins enabled as provided to citellus
@@ -403,6 +405,9 @@ def main():
     citellusplugins = []
     for extension in extensions:
         citellusplugins.extend(extension.listplugins(options))
+
+    global allplugins
+    allplugins = citellusplugins
 
     # By default, flatten plugin list for all extensions
     newplugins = []
