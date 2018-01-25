@@ -404,6 +404,9 @@ def main():
     for extension in extensions:
         citellusplugins.extend(extension.listplugins(options))
 
+    global allplugins
+    allplugins = citellusplugins
+
     # By default, flatten plugin list for all extensions
     newplugins = []
     for each in citellusplugins:

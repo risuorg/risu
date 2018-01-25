@@ -22,8 +22,8 @@ def init():
     Initializes module
     :return: List of triggers for Plugin
     """
-    triggers = ['9f732b2f01837c60f66bd1cd301e40c3']
-    return triggers
+    ids = citellus.getids(include=['/core/openstack/ceilometer/pipeline-yaml.sh'])
+    return ids
 
 
 def run(data, quiet=False):  # do not edit this line

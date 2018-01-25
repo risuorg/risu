@@ -34,13 +34,21 @@ def init():
     return triggers
 
 
-def listplugins(options):
+def listplugins(options=None):
     """
     List available plugins
     :param options: argparse options provided
     :return: plugin object generator
     """
-    yield citellus.findplugins(folders=[pluginsdir], executables=False, fileextension=".yml", extension='ansible', prio=options.prio)
+
+    prio = 0
+    if options:
+        try:
+            prio = options.prio
+        except:
+            pass
+
+    yield citellus.findplugins(folders=[pluginsdir], executables=False, fileextension=".yml", extension='ansible', prio=prio)
 
 
 def get_metadata(plugin):
