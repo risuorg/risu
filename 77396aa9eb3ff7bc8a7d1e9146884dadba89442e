@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3bfaa3b6_e8b1f2c2",
+        "filename": "citellusclient/plugins/metadata/system/system-uuid.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1011950
+      },
+      "writtenOn": "2018-01-25T03:44:34Z",
+      "side": 1,
+      "message": "shouldn\u0027t we also add the is_required_file ?\n\nis_required_file $file -- continues if file exists or exits $RC_SKIPPED if doesn\u0027t",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 68
+      },
+      "revId": "77396aa9eb3ff7bc8a7d1e9146884dadba89442e",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
