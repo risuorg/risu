@@ -98,7 +98,7 @@ virtualization : 1 []
 
 ---
 
-## How to run in manually?
+## How to run it manually?
 <img src="images/citellusrun.png" height="40%" border=0>
 
 
@@ -177,7 +177,7 @@ Philosophy is very simple:
 Tests are even simpler:
 - Written in whatever language of choice as long as they can be executed from shell.
 - Output messages to ‘stderr’ (>&2)
-- When using strings like echo $”string” bash’s builting i18n is used so you can translate in your language.
+- When using strings like echo $”string” bash’s built-in i18n is used so you can translate in your language.
 - Return `$RC_OKAY` for success / `$RC_FAILED` for error / `$RC_SKIPPED` for skipped tests / Other for unexpected error
 
 ----
