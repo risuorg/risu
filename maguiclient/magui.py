@@ -268,6 +268,17 @@ def domagui(sosreports, citellusplugins, options=False):
                 except:
                     rerun = True
 
+            # If we were running against a folder with just json, cancel rerun as it will fail
+            if rerun:
+                try:
+                    access = os.access(os.join.path(sosreport, 'version.txt'), os.R_OK)
+                except:
+                    access = False
+
+                if not access:
+                    # We're running against a folder that misses version.txt, so probably just folder with json, skip rerun
+                    rerun = False
+
             # Forcing rerun but not if we've specified ansible hosts
             if rerun and not options.hosts:
                 LOG.debug("Forcing rerun of citellus for %s because of missing %s" % (sosreport, plugin))
