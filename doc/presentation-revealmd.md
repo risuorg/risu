@@ -36,12 +36,12 @@ mode: selfcontained
 
 ## What can you do with Citellus?
 
-- Run against a sosreport or live environment.<!-- .element: class="fragment" -->
-- Solve issues faster thanks to the information it provides.<!-- .element: class="fragment" -->
-- Use the community-provided plugins for detecting actual or potential issues.<!-- .element: class="fragment" -->
-- Code new plugins in your language of choice (bash, python, ruby, etc.) to extend functionality.<!-- .element: class="fragment" -->
-    - Contribute them upstream for others to benefit.<!-- .element: class="fragment" -->
-- Use that information as part of proactive insights about the systems.<!-- .element: class="fragment" -->
+- Run against a sosreport or live environment.
+- Solve issues faster thanks to the information it provides.
+- Use the community-provided plugins for detecting actual or potential issues.
+- Code new plugins in your language of choice (bash, python, ruby, etc.) to extend functionality.
+    - Contribute them upstream for others to benefit.
+- Use that information as part of proactive insights about the systems.
 
 ---
 
@@ -57,19 +57,6 @@ mode: selfcontained
 ----
 
 ## Some numbers on plugin count:
-
-- bugzilla : 15
-- launchpad : 1
-- network : 1
-- openstack : 54
-- pacemaker : 7
-- security: 12
-- system : 28
-- virtualization : 1
-
-----
-
-## More granular!!
 
 <small>
 bugzilla : 15 ['openstack/swift: 1', 'openstack/keystone/templates: 1', 'openstack/ceph: 1', 'httpd: 1', 'openstack/keystone: 1', 'openstack/ceilometer: 1', 'openstack/nova: 2', 'openstack/httpd: 1', 'systemd: 1', 'openstack/tripleo: 1', 'openstack/neutron: 4']
@@ -95,14 +82,14 @@ virtualization : 1 []
 
 ## The goal
 
-- Be so damn simple to write new plugins that anyone can do them.<!-- .element: class="fragment" -->
-- Allow to write tests in whatever language of choice (bash, python, perl, etc) as long as they conform to some standards.<!-- .element: class="fragment" -->
-- Allow anyone to submit new plugins.<!-- .element: class="fragment" -->
+- Be so damn simple to write new plugins that anyone can do them.
+- Allow to write tests in whatever language of choice (bash, python, perl, etc) as long as they conform to some standards.
+- Allow anyone to submit new plugins.
 
 ---
 
 ## How to run it manually?
-<img src="images/citellusrun.png" height="40%" border=0>
+<img src="images/citellusrun.png" height="20%" border=0><!-- .element height="50%"  width="90%" -->
 
 
 Note: Change speaker after this
@@ -121,7 +108,7 @@ Note: Change speaker after this
 
 ## HTML Interface
 - Create by using --output and --web, open the generated `citellus.html` over http.
-<img src="images/www.png" height="40%" border=0>
+<img src="images/www.png" height="40%" border=0><!-- .element height="50%"  width="70%" -->
 
 ---
 
@@ -167,11 +154,11 @@ Note: Change speaker after this
 ## How does it work under the hood?
 
 Philosophy is very simple:
-- Citellus is just a simple wrapper.<!-- .element: class="fragment" -->
-- Allows to specify on sosreport and test folders<!-- .element: class="fragment" -->
-- Finds tests available in test folders<!-- .element: class="fragment" -->
-- Executes each test against sosreport and reports return status<!-- .element: class="fragment" -->
-- Framework written in python which features option parsing, parallel execution of tests, filtering, etc.<!-- .element: class="fragment" -->
+- Citellus is just a simple wrapper.
+- Allows to specify on sosreport and test folders
+- Finds tests available in test folders
+- Executes each test against sosreport and reports return status
+- Framework written in python which features option parsing, parallel execution of tests, filtering, etc.
 
 ---
 
@@ -308,10 +295,12 @@ mode: fs snapshot sosreport-20170724-175510/crta02
 
 <small>For example, galera requires to check seqno across all controllers running database.</small>
 
-- What does M.a.g.u.i. Does?
-    - It runs citellus against each sosreport, gathers and groups the data per plugin.
-    - Runs its own plugins against the data received to hilight issues that depend on several systems
-    - Allows to grab remote host data via ansible host lists
+---
+
+### What does M.a.g.u.i. Does?
+- It runs citellus against each sosreport, gathers and groups the data per plugin.
+- Runs its own plugins against the data received to hilight issues that depend on several systems
+- Allows to grab remote host data via ansible host lists
 
 ----
 
@@ -353,24 +342,10 @@ It’s delivered in citellus repo and can be executed by specifying sosreports:
 
 ## Action Items
 
-- Add more plugins!<!-- .element: class="fragment" -->
-- Evangelize about the tool so we can work together in solving our common issues on the same framework.<!-- .element: class="fragment" -->
-- Get moving fast enough that the tool has continuity, other tools just died by having a ‘solo’ developer working on spare time<!-- .element: class="fragment" -->
-- Start implementing more tests in Magui that provide real intelligence (for example we do report and check on seqno or pipeline-yaml but lot of other issues can benefit from this).<!-- .element: class="fragment" -->
-
----
-
-## Other resources
-Blog post by Pablo:
-<small>
-- <http://iranzo.github.io/blog/2017/07/26/Citellus-framework-for-detecting-known-issues/>
-- <https://iranzo.github.io/blog/2017/07/31/Magui-for-analysis-of-issues-across-several-hosts/>
-- <https://iranzo.github.io/blog/2017/08/17/Jenkins-for-running-CI-tests/>
-- <https://iranzo.github.io/blog/2017/10/26/i18n-and-bash8-in-bash/>
-- <https://iranzo.github.io/blog/2018/01/16/recent-changes-in-magui-and-citellus/>
-- DevConf.cz 2018 <https://devconfcz2018.sched.com/event/DJXG/detect-pitfalls-of-osp-deployments-with-citellus>
-
-</small>
+- Add more plugins!
+- Evangelize about the tool so we can work together in solving our common issues on the same framework.
+- Get moving fast enough that the tool has continuity, other tools just died by having a ‘solo’ developer working on spare time
+- Start implementing more tests in Magui that provide real intelligence (for example we do report and check on seqno or pipeline-yaml but lot of other issues can benefit from this).
 
 ---
 
@@ -384,3 +359,17 @@ For additional questions, come to #citellus on Freenode or email us:
 
 - <mailto:citellus-dev@redhat.com>
 - <https://www.redhat.com/mailman/listinfo/citellus-dev>
+
+---
+
+## Other resources
+Blog posts:
+<small>
+- <http://iranzo.github.io/blog/2017/07/26/Citellus-framework-for-detecting-known-issues/>
+- <https://iranzo.github.io/blog/2017/07/31/Magui-for-analysis-of-issues-across-several-hosts/>
+- <https://iranzo.github.io/blog/2017/08/17/Jenkins-for-running-CI-tests/>
+- <https://iranzo.github.io/blog/2017/10/26/i18n-and-bash8-in-bash/>
+- <https://iranzo.github.io/blog/2018/01/16/recent-changes-in-magui-and-citellus/>
+- DevConf.cz 2018 <https://devconfcz2018.sched.com/event/DJXG/detect-pitfalls-of-osp-deployments-with-citellus>
+
+</small>
