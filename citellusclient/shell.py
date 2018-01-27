@@ -292,11 +292,14 @@ def findplugins(folders=None, include=None, exclude=None, executables=True, file
     metaplugins = []
     for plugin in plugins:
         subcategory = os.path.split(plugin)[0].replace(os.path.join(citellusdir, 'plugins', extension), '')
-        category = os.path.normpath(subcategory).split(os.sep)[1]
+        category = os.path.normpath(subcategory).split(os.sep)[1] or ''
 
         # Remove leading "/" (os.sep for safety)
         if subcategory[0] == os.sep:
             subcategory = subcategory[1:]
+
+        if category == subcategory:
+            subcategory = ''
 
         dictionary = {'plugin': plugin, 'backend': extension, 'id': calcid(string=plugin), 'category': category, 'subcategory': subcategory}
         dictionary.update(get_metadata(plugin=dictionary))
