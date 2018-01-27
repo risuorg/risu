@@ -124,6 +124,9 @@ if [[ -f "$FILE" ]]; then
         ISOLCPUS=$(cat ${CITELLUS_ROOT}/proc/cmdline|tr " " "\n"|grep ^isolcpus|cut -d "=" -f 2-|tr ",\'\"" "\n")
         ISOLCPUS=$(expand_ranges $ISOLCPUS)
         USEDBYKERNEL=""
+
+        echo $"Isolcpus is not the recommended way to do isolation on CPU's please do check tuned and systemd CPUAffinity" >&2
+
         # Check CPU's not isolated:
         for i in ${procids[@]}; do
             present=1
