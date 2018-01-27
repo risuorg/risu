@@ -71,19 +71,18 @@ def run(plugin):  # do not edit this line
     """
     filename = plugin['path']
 
-    if citellus.CITELLUS_LIVE == 0 and citellus.regexpfile(filename=plugin['plugin'], regexp="CITELLUS_ROOT"):
-        # We're running in snapshoot and farday file has CITELLUS_ROOT
+    skipped = 0
+    if os.environ['CITELLUS_LIVE'] == 0 and citellus.regexpfile(filename=filename, regexp="CITELLUS_ROOT"):
+        # We're running in snapshoot and faraday file has CITELLUS_ROOT
         skipped = 0
-    elif citellus.CITELLUS_LIVE == 1:
-        if citellus.regexpfile(filename=plugin['plugin'], regexp="CITELLUS_HYBRID") or not citellus.regexpfile(filename=plugin['plugin'], regexp="CITELLUS_ROOT"):
-            # We're running in Live mode and either plugin supports HYBRID or has no CITELLUS_ROOT
-            skipped = 0
-        else:
-            # We do not satisfy conditions, exit early
-            skipped = 1
     else:
-            # We do not satisfy conditions, exit early
-            skipped = 1
+        if os.environ['CITELLUS_LIVE'] == 1:
+            if citellus.regexpfile(filename=plugin['plugin'], regexp="CITELLUS_HYBRID") or not citellus.regexpfile(filename=filename, regexp="CITELLUS_ROOT"):
+                # We're running in Live mode and either plugin supports HYBRID or has no CITELLUS_ROOT
+                skipped = 0
+            else:
+                # We do not satisfy conditions, exit early
+                skipped = 1
 
     if skipped == 1:
         return citellus.RC_SKIPPED, '', _('Plugin does not satisfy conditions for running')
