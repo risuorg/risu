@@ -271,7 +271,7 @@ def domagui(sosreports, citellusplugins, options=False):
             # If we were running against a folder with just json, cancel rerun as it will fail
             if rerun:
                 try:
-                    access = os.access(os.join.path(sosreport, 'version.txt'), os.R_OK)
+                    access = os.access(os.path.join(sosreport, 'version.txt'), os.R_OK)
                 except:
                     access = False
 
@@ -491,8 +491,7 @@ def main():
                             'results': updates,
                             'time': time.time() - start_time,
                             'category': category,
-                            'subcategory': subcategory
-                            })
+                            'subcategory': subcategory})
 
     if options.output:
         write_results(results=results, filename=options.output)
