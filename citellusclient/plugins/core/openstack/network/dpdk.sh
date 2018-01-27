@@ -149,7 +149,7 @@ if [[ -f "$FILE" ]]; then
     echo "CPU's isolated from kernel scheduler $FREECPUS" >&2
 
     # List of CPU's that other components can use
-    VCPUPINSET=$(grep ^vcpu_pin_set ${CITELLUS_ROOT}/etc/nova/nova.conf|cut -d "=" -f 2-|tr ",\'\"" "\n")
+    VCPUPINSET=$(iniparser "${CITELLUS_ROOT}/etc/nova/nova.conf" DEFAULT vcp_pin_set|tr ",\'\"" "\n")
     VCPUPINSET=$(expand_and_remove_excludes $VCPUPINSET)
 
     echo "CPU's pinned in nova $VCPUPINSET" >&2
