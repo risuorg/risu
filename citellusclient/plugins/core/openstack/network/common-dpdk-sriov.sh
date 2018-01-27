@@ -40,6 +40,15 @@ else
     fi
 fi
 
+VCPUPINSET=$(grep ^vcpu_pin_set ${CITELLUS_ROOT}/etc/nova/nova.conf|cut -d "=" -f 2-|tr ",\'\"" "\n")
+
+if ! -z ${VCPUPINSET}; then
+    if ! is_lineinfile "cpu-partitioning" "${CITELLUS_ROOT}/etc/tuned/active_profile"; then
+        echo $"For CPU pinning recomended tuned profile is cpu-partitioning provided by tuned-profiles-cpu-partitioning package" >&2
+        flag=1
+    fi
+fi
+
 if [[ $flag -eq '1' ]]; then
     exit $RC_FAILED
 else
