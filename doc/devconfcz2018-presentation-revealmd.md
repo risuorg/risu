@@ -16,6 +16,8 @@ mode: selfcontained
 
 <https://github.com/zerodayz/citellus>
 
+Recording at <https://www.youtube.com/watch?v=SDzzqrUdn5A>
+
 ---
 
 ## What is Citellus?

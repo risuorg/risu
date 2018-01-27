@@ -2,6 +2,11 @@
 
 This file will contain a manually mantained log of hilights between versions, it's not a very extensive detail, but some of the bigger changes/ideas will be added here.
 
+
+## 2018-01-27
+- DevConf.cz 2018 [Detect pitfalls of osp deployments with citellus](https://devconfcz2018.sched.com/event/DJXG/detect-pitfalls-of-osp-deployments-with-citellus)
+    - Recording at <https://www.youtube.com/watch?v=SDzzqrUdn5A>
+
 ## 2018-01-24
 - Faraday extension
     - Some files must be equal or different across sosreports, actually we do have `release` and `ceilometer-yaml` one that rely on this, but this is hard to mantain as each new file will require a new plugin for Citellus plus a new plugin for Magui.
