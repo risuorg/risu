@@ -16,6 +16,24 @@
       "revId": "704bbbd1ea45bc21a4695488bcda0ddadab397ef",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "96c8d3b4_7bfe3016",
+        "filename": "citellusclient/common.d/01-rpm.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1012331
+      },
+      "writtenOn": "2018-01-28T15:49:47Z",
+      "side": 1,
+      "message": "According to the DNF man pages, I didn\u0027t see any switch that would prevent network connections, but:\n\n~~~\nTo further reduce the bandwidth load, some of the commands where having up-to-date metadata  is not  critical  (e.g. the list command) do not look at whether a repository is expired and whenever any version of it is locally available, it will be used. Note that in all  situations  the user can force synchronization of all enabled repositories with the --refresh switch.\n~~~\n\nAs for the systems with only yum, I believe that rpm -qa should return the proper information?",
+      "parentUuid": "465d638a_b65b9bff",
+      "revId": "704bbbd1ea45bc21a4695488bcda0ddadab397ef",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
     }
   ]
 }
