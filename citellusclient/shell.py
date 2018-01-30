@@ -513,12 +513,11 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
             oldresults = results
             results = []
             for result in oldresults:
-                add = False
+                add = True
                 for plugin in plugins:
-                    for filters in include:
-                        if not any(filters in result['plugin']):
-                            # We have a match with the plugin defined and the ones we expect, so append results
-                            add = True
+                    for filters in exclude:
+                        if filters in result['plugin']:
+                            add = False
                 if add:
                     results.append(result)
 
