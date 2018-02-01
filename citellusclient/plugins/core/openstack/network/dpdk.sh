@@ -103,7 +103,7 @@ if [[ -f "$FILE" ]]; then
         # The only step required is hence to configure the CPUAffinity option in /etc/systemd/system.conf.
         # Systemd CPUAffinity should be 'negative' of ISOLCPU's so need to get all CPU's and reverse
         systemdaffinity=$(grep ^CPUAffinity ${CITELLUS_ROOT}/etc/systemd/system.conf|cut -d "=" -f 2)
-        systemdaffinity=$(expand_ranges $systemdaffinity)
+        systemdaffinity=$(expand_ranges $systemdaffinity|sort -V)
 
         # Loop for getting reversed array (items not in)
         isolated=""
@@ -122,7 +122,7 @@ if [[ -f "$FILE" ]]; then
         USEDBYKERNEL=$systemdaffinity
     elif is_lineinfile isolcpus ${CITELLUS_ROOT}/proc/cmdline; then
         ISOLCPUS=$(cat ${CITELLUS_ROOT}/proc/cmdline|tr " " "\n"|grep ^isolcpus|cut -d "=" -f 2-|tr ",\'\"" "\n")
-        ISOLCPUS=$(expand_ranges $ISOLCPUS)
+        ISOLCPUS=$(expand_ranges $ISOLCPUS|sort -V)
         USEDBYKERNEL=""
 
         echo $"Isolcpus is not the recommended way to do isolation on CPU's please do check tuned and systemd CPUAffinity" >&2
@@ -145,11 +145,11 @@ if [[ -f "$FILE" ]]; then
 
     echo "KERNEL used CPU's: $USEDBYKERNEL" >&2
 
-    FREECPUS=$(echo "$ISOLCPUS")
+    FREECPUS=$(echo "$ISOLCPUS"|sort -V)
     echo "CPU's isolated from kernel scheduler $FREECPUS" >&2
 
     # List of CPU's that other components can use
-    VCPUPINSET=$(iniparser "${CITELLUS_ROOT}/etc/nova/nova.conf" DEFAULT vcp_pin_set|tr ",\'\"" "\n")
+    VCPUPINSET=$(iniparser "${CITELLUS_ROOT}/etc/nova/nova.conf" DEFAULT vcpu_pin_set|tr ",\'\"" "\n")
     VCPUPINSET=$(expand_and_remove_excludes $VCPUPINSET)
 
     echo "CPU's pinned in nova $VCPUPINSET" >&2
