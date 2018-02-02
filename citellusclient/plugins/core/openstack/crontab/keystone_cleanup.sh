@@ -29,10 +29,10 @@ RELEASE=$(discover_osp_version)
 
 is_required_file "${CITELLUS_ROOT}/var/spool/cron/keystone"
 
-if ! awk '/keystone-manage token_flush/ && /^[^#]/ { print $0 }' "${CITELLUS_ROOT}/var/spool/cron/keystone"; then
+if ! awk '/keystone-manage token_flush/ && /^[^#]/ { print $0 }' "${CITELLUS_ROOT}/var/spool/cron/keystone" >/dev/null 2>&1; then
     echo $"crontab keystone cleanup is not set" >&2
     exit $RC_FAILED
-elif awk '/keystone-manage token_flush/ && /^[^#]/ { print $0 }' "${CITELLUS_ROOT}/var/spool/cron/keystone"; then
+elif awk '/keystone-manage token_flush/ && /^[^#]/ { print $0 }' "${CITELLUS_ROOT}/var/spool/cron/keystone" >/dev/null 2>&1; then
     # Skip default crontab of 1 0 * * * as it might miss busy systems and fail to do later cleanups
     COUNT=$(awk '/keystone-manage token_flush/ && /^[^#]/ { print $0 }' "${CITELLUS_ROOT}/var/spool/cron/keystone" 2>&1|egrep  '^1 0'  -c)
     if [[ "x$COUNT" = "x1" ]]; then
