@@ -48,16 +48,20 @@ global citellusdir
 global localedir
 global ExtensionFolder
 global allplugins
+global HooksFolder
 
 citellusdir = os.path.abspath(os.path.dirname(__file__))
 localedir = os.path.join(citellusdir, 'locale')
 ExtensionFolder = os.path.join(citellusdir, "extensions")
+HooksFolder = os.path.join(citellusdir, "hooks")
 allplugins = []
 
 global extensions
 extensions = []
 global exttriggers
 exttriggers = {}
+global hooks
+hooks = []
 
 global CITELLUS_LIVE
 CITELLUS_LIVE = 0
@@ -144,7 +148,7 @@ def loadExtension(Extension):
     return imp.load_module(Extension["name"], *Extension["info"])
 
 
-def initExtensions():
+def initExtensions(extensions=getExtensions()):
     """
     Initializes Extensions
     :return: list of Extension modules initialized
@@ -152,7 +156,7 @@ def initExtensions():
 
     exts = []
     exttriggers = {}
-    for i in getExtensions():
+    for i in extensions:
         newplug = loadExtension(i)
         exts.append(newplug)
         triggers = []
@@ -160,6 +164,32 @@ def initExtensions():
             triggers.append(each)
         exttriggers[i["name"]] = triggers
     return exts, exttriggers
+
+
+def getHooks(options=None):
+    """
+    Gets list of Hooks in the Hooks folder
+    :return: list of Plugins available
+    """
+
+    if not options:
+        hfilter = []
+    else:
+        hfilter = options.hfilter
+
+    Hooks = []
+    possibleHooks = findplugins(folders=[HooksFolder], executables=False, exclude=['__init__.py', 'pyc'], include=hfilter, fileextension='.py')
+    for i in possibleHooks:
+        module = os.path.splitext(os.path.basename(i['plugin']))[0]
+        modpath = os.path.dirname(i['plugin'])
+        try:
+            info = imp.find_module(module, [modpath])
+        except:
+            info = False
+        if i['plugin'] and info:
+            Hooks.append({"name": module, "info": info})
+
+    return Hooks
 
 
 def which(binary):
@@ -485,6 +515,12 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
         # Execute Citellus (live and non-live with forcerun)
         results = p.map(runplugin, plugins)
 
+        for hook in initExtensions(extensions=getHooks())[0]:
+            LOG.debug("Running hook: %s" % hook.__name__.split('.')[-1])
+            newresults = hook.run(data=results)
+            if newresults:
+                results = newresults
+
         # Write results if possible
         if filename:
             try:
@@ -581,6 +617,9 @@ def parse_args(default=False, parse=False):
     p.add_argument("--description",
                    action="store_true",
                    help=_("With list-plugins, also outputs plugin description"))
+    p.add_argument("--list-hooks",
+                   action="store_true",
+                   help=_("Print a list of discovered hooks and exit"))
     p.add_argument("--output", "-o",
                    metavar="FILENAME",
                    help=_("Write results to JSON file FILENAME"))
@@ -634,6 +673,11 @@ def parse_args(default=False, parse=False):
                    choices=range(0, 1001),
                    help=_("Only include plugins are equal or above specified prio"),
                    default=0)
+    g.add_argument("-hf", "--hfilter",
+                   metavar='SUBSTRING',
+                   help=_("Only include hooks that contain substring"),
+                   default=[],
+                   action='append')
 
     s = p.add_argument_group('Config options')
     s.add_argument("--dump-config", help=_("Dump config to console to be saved into file"), default=False, action="store_true")
@@ -864,7 +908,7 @@ def main():
         if options.sosreport:
             # Live not specified, so we will use file snapshot
             CITELLUS_ROOT = options.sosreport
-        elif not options.list_plugins and not options.list_extensions:
+        elif not options.list_plugins and not options.list_extensions and not options.list_hooks:
             LOG.error(_("When not running in Live mode, snapshot path is required"))
             sys.exit(1)
     else:
@@ -882,6 +926,18 @@ def main():
             print(extension.__name__.split(".")[-1])
             if options.description:
                 desc = extension.help()
+                if desc:
+                    print(indent(text=desc, amount=4))
+        return
+
+    hooks, hooktriggers = initExtensions(extensions=getHooks(options))
+
+    # List Hooks and exit
+    if options.list_hooks:
+        for hook in hooks:
+            print(hook.__name__.split(".")[-1])
+            if options.description:
+                desc = hook.help()
                 if desc:
                     print(indent(text=desc, amount=4))
         return
