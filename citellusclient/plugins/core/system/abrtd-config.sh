@@ -24,7 +24,7 @@
 # Load common functions
 [[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
-if ! is_rpm abrt; then
+if ! is_rpm abrt >/dev/null 2>&1; then
     echo $"abrt package missing" >&2
     exit $RC_FAILED
 fi

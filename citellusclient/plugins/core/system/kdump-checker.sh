@@ -24,7 +24,7 @@
 # Load common functions
 [[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
-if ! is_rpm kexec-tools; then
+if ! is_rpm kexec-tools >/dev/null 2>&1; then
     echo $"kexec-tools package missing" >&2
     exit $RC_FAILED
 fi
