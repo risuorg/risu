@@ -25,9 +25,11 @@
 # Load common functions
 [[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
-if is_active chronyd ; then
+(
+if is_active chronyd; then
     chronyd=1
 fi
+) >/dev/null 2>&1
 
 if is_rpm openstack-.* ; then
     # Node is OSP system
