@@ -55,6 +55,7 @@ class CitellusTest(TestCase):
 
         # Process plugin output from multiple plugins
         new_dict = []
+        out_dict = []
         for item in results:
             rc = item['result']['rc']
             if rc not in sorted(set([citellus.RC_OKAY, citellus.RC_FAILED, citellus.RC_SKIPPED])):
@@ -64,6 +65,10 @@ class CitellusTest(TestCase):
                 print(item)
                 assert item['result']['err'] != ""
             new_dict.append(rc)
+            if item['result']['out'] != "":
+                print(item)
+                assert item['result']['out]'] == ""
+            out_dict.append(item['result']['out'])
 
         assert sorted(set(new_dict)) == sorted(set([citellus.RC_OKAY, citellus.RC_FAILED, citellus.RC_SKIPPED]))
 
@@ -73,6 +78,7 @@ class CitellusTest(TestCase):
 
         # Process plugin output from multiple plugins
         new_dict = []
+        out_dict = []
         for item in results:
             rc = item['result']['rc']
             if rc not in sorted(set([citellus.RC_OKAY, citellus.RC_FAILED, citellus.RC_SKIPPED])):
@@ -81,6 +87,10 @@ class CitellusTest(TestCase):
             if rc == citellus.RC_FAILED or rc == citellus.RC_SKIPPED:
                 print(item)
                 assert item['result']['err'] != ""
+            if item['result']['out'] != "":
+                print(item)
+                assert item['result']['out]'] == ""
+            out_dict.append(item['result']['out'])
 
             new_dict.append(rc)
 
