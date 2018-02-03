@@ -443,7 +443,7 @@ def execonshell(filename):
     return returncode, out, err
 
 
-def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=False, savepath=False, include=None, exclude=None):
+def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=False, savepath=False, include=None, exclude=None, okay=RC_OKAY, skipped=RC_SKIPPED, failed=RC_FAILED):
     """
     Runs citellus scripts on specified root folder
     :param exclude: keywords to exclude in plugins
@@ -469,9 +469,9 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
     os.environ['CITELLUS_LIVE'] = "%s" % CITELLUS_LIVE
     os.environ['CITELLUS_BASE'] = "%s" % citellusdir
     os.environ['LANG'] = "%s" % lang
-    os.environ['RC_OKAY'] = "%s" % RC_OKAY
-    os.environ['RC_FAILED'] = "%s" % RC_FAILED
-    os.environ['RC_SKIPPED'] = "%s" % RC_SKIPPED
+    os.environ['RC_OKAY'] = "%s" % okay
+    os.environ['RC_FAILED'] = "%s" % failed
+    os.environ['RC_SKIPPED'] = "%s" % skipped
     os.environ['TEXTDOMAIN'] = 'citellus'
     os.environ['TEXTDOMAINDIR'] = "%s/locale" % citellusdir
 

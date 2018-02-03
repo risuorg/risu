@@ -19,6 +19,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
+import random
 import shutil
 import subprocess
 import tempfile
@@ -32,10 +33,15 @@ folder = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'setup')
 uttest = citellus.findplugins(folders=[folder])
 citplugs = citellus.findplugins(folders=[plugins])
 
+okay = random.randint(10, 30)
+failed = random.randint(40, 60)
+skipped = random.randint(60, 90)
+
+
 # Setup commands and expected return codes
-rcs = {"pass": citellus.RC_OKAY,
-       "fail": citellus.RC_FAILED,
-       "skipped": citellus.RC_SKIPPED}
+rcs = {"pass": okay,
+       "fail": failed,
+       "skipped": skipped}
 
 
 class CitellusTest(TestCase):
@@ -48,7 +54,7 @@ class CitellusTest(TestCase):
             subprocess.call([test['plugin'], test['plugin'], testtype, tmpdir])
 
         # Run citellus once against them
-        results = citellus.docitellus(path=tmpdir, plugins=citplugs)
+        results = citellus.docitellus(path=tmpdir, plugins=citplugs, okay=okay, failed=failed, skipped=skipped)
 
         # Remove tmp folder
         shutil.rmtree(tmpdir)
@@ -58,10 +64,10 @@ class CitellusTest(TestCase):
         out_dict = []
         for item in results:
             rc = item['result']['rc']
-            if rc not in sorted(set([citellus.RC_OKAY, citellus.RC_FAILED, citellus.RC_SKIPPED])):
+            if rc not in sorted(set([okay, failed, skipped])):
                 print(item)
-            assert rc in sorted(set([citellus.RC_OKAY, citellus.RC_FAILED, citellus.RC_SKIPPED]))
-            if rc == citellus.RC_FAILED or rc == citellus.RC_SKIPPED:
+            assert rc in sorted(set([okay, failed, skipped]))
+            if rc == failed or rc == skipped:
                 print(item)
                 assert item['result']['err'] != ""
             new_dict.append(rc)
@@ -70,21 +76,21 @@ class CitellusTest(TestCase):
                 assert item['result']['out]'] == ""
             out_dict.append(item['result']['out'])
 
-        assert sorted(set(new_dict)) == sorted(set([citellus.RC_OKAY, citellus.RC_FAILED, citellus.RC_SKIPPED]))
+        assert sorted(set(new_dict)) == sorted(set([okay, failed, skipped]))
 
     def test_all_plugins_live(self):
         # Run citellus once against them
-        results = citellus.docitellus(live=True, plugins=citplugs)
+        results = citellus.docitellus(live=True, plugins=citplugs, okay=okay, failed=failed, skipped=skipped)
 
         # Process plugin output from multiple plugins
         new_dict = []
         out_dict = []
         for item in results:
             rc = item['result']['rc']
-            if rc not in sorted(set([citellus.RC_OKAY, citellus.RC_FAILED, citellus.RC_SKIPPED])):
+            if rc not in sorted(set([okay, failed, skipped])):
                 print(item)
-            assert rc in sorted(set([citellus.RC_OKAY, citellus.RC_FAILED, citellus.RC_SKIPPED]))
-            if rc == citellus.RC_FAILED or rc == citellus.RC_SKIPPED:
+            assert rc in sorted(set([okay, failed, skipped]))
+            if rc == failed or rc == skipped:
                 print(item)
                 assert item['result']['err'] != ""
             if item['result']['out'] != "":
@@ -94,4 +100,4 @@ class CitellusTest(TestCase):
 
             new_dict.append(rc)
 
-        assert sorted(set(new_dict)) == sorted(set([citellus.RC_OKAY, citellus.RC_FAILED, citellus.RC_SKIPPED]))
+        assert sorted(set(new_dict)) == sorted(set([okay, failed, skipped]))
