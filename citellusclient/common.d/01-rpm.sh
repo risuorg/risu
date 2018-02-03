@@ -27,7 +27,7 @@ is_rpm(){
 }
 
 is_required_rpm(){
-    if ! is_rpm $1 ; then
+    if ! is_rpm $1 >/dev/null 2>&1; then
         echo "required package $1 not found." >&2
         exit $RC_SKIPPED
     fi

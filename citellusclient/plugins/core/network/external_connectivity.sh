@@ -31,7 +31,7 @@ fi
 gw=$(ip route | awk '$1 == "default" {print $3}')
 echo "default gateway is: $gw" >&2
 
-if ! ping -c1 $gw; then
+if ! ping -c1 $gw >/dev/null 2>&1; then
     echo $"default gateway is unreachable" >&2
     RC=$RC_FAILED
 else
@@ -39,7 +39,7 @@ else
     RC=$RC_OKAY
 fi
 
-if ! ping -c1 $REMOTE_PING_TARGET; then
+if ! ping -c1 $REMOTE_PING_TARGET >/dev/null 2>&1; then
     echo "remote target @ $REMOTE_PING_TARGET is unreachable" >&2
     RC=$RC_FAILED
 else

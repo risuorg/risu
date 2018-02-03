@@ -24,7 +24,7 @@ if [[ $CITELLUS_LIVE = 0 ]]; then
     exit $RC_SKIPPED
 fi
 
-yum check-update 2> /dev/null
+yum check-update >/dev/null 2>&1
 update_check=$?
 
 if [[ $update_check -eq 100 ]]; then
