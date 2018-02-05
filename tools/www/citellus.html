@@ -90,6 +90,11 @@
       </div><!-- /form-group -->
       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-categories">Categories</button>
       <button type="button" class="btn btn-secondary" id="expandAll">Expand All</button>
+      <div id="otherJsons" class="dropdown btn-group">
+       <button id="jsons" type="button" data-json="" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+       <ul class="dropdown-menu">
+       </ul>
+      </div><!-- /dropdown btn-group -->
       <div class="toolbar-pf-action-right">
        <div class="form-group toolbar-pf-find">
         <button class="btn btn-link btn-find" type="button">
@@ -407,6 +412,18 @@
         if (jsonFile == null) {
             jsonFile = "citellus.json";
         }
+        var otherJson = ( jsonFile == "citellus.json" ? "magui.json" : "citellus.json");
+        var div_otherJsons = $("#otherJsons");
+        div_otherJsons.children("button").html(jsonFile + ' <span class="caret"></span>');
+        div_otherJsons.children("ul").append('<li><a href="#" class="json-files">'+ jsonFile + '</a></li>')
+        $.ajax({
+             url: otherJson,
+             dataType: "json",
+             async: true,
+             success: function(data) {
+                div_otherJsons.children("ul").append('<li><a href="#" class="json-files">'+ otherJson + '</a></li>')
+             }
+        });
 
         // Chrome is too secure
         var url_file_regex = new RegExp("^file:\/\/");
@@ -481,6 +498,9 @@
             sortbutton.html(sortkey + ' <span class="caret"></span>');
             sortbutton.data("sortfield",sortkeyl)
             sortPlugins(sortkeyl);
+        });
+        $("body").on("click",".json-files", function(e) {
+         window.location.href = [location.protocol, '//', location.host, location.pathname].join('') + "?json=" + $(this).html();
         });
 
         // Here we load the data from citellus.json with ajax and we populate the webpage
