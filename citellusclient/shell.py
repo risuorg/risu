@@ -391,7 +391,7 @@ def calcid(string, replace=citellusdir):
 def getids(plugins=None, include=None, exclude=None):
     """
     Gets ID's for specified include/excluded plugins
-    :param plugins: all plugins availabme
+    :param plugins: all plugins available
     :param include: keywords to include
     :param exclude: keywords to exclude
     :return: array of md5 hashes
@@ -499,12 +499,8 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
 
         rerun = False
         # Check all sosreports for data for all plugins
-        for plugin in plugins:
-            match = False
-            for output in results:
-                if output['plugin'] == plugin['plugin']:
-                    match = True
-            if not match:
+        for plugid in getids():
+            if plugid not in results:
                 rerun = True
 
     else:
@@ -513,7 +509,12 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
     if rerun:
         LOG.debug("We've set to run citellus")
         # Execute Citellus (live and non-live with forcerun)
-        results = p.map(runplugin, plugins)
+        execution = p.map(runplugin, plugins)
+
+        results = {}
+
+        for plugin in execution:
+            results[plugin['id']] = dict(plugin)
 
         for hook in initExtensions(extensions=getHooks())[0]:
             LOG.debug("Running hook: %s" % hook.__name__.split('.')[-1])
@@ -523,6 +524,7 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
 
         # Write results if possible
         if filename:
+            write_results(results, filename, path=path)
             try:
                 # Write results to disk
                 write_results(results, filename, path=path)
@@ -533,29 +535,31 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
     # We've filters defined, so filter data
     if include or exclude:
         if include:
-            oldresults = results
-            results = []
+            oldresults = dict(results)
+            results = {}
             for result in oldresults:
                 add = False
+                # Iterate for all known plugins on actual execution vs stored ones (or executed)
                 for plugin in plugins:
                     for filters in include:
-                        if filters in result['plugin']:
+                        if filters in oldresults[result]['plugin']:
                             # We have a match with the plugin defined and the ones we expect, so append results
                             add = True
                 if add:
-                    results.append(result)
+                    results[result] = dict(oldresults[result])
 
         if exclude:
-            oldresults = results
-            results = []
+            oldresults = dict(results)
+            results = {}
             for result in oldresults:
                 add = True
+                # Iterate for all known plugins on actual execution vs stored ones (or executed)
                 for plugin in plugins:
                     for filters in exclude:
-                        if filters in result['plugin']:
+                        if filters in oldresults[result]['plugin']:
                             add = False
                 if add:
-                    results.append(result)
+                    results[result] = dict(oldresults[result])
 
     return results
 
@@ -805,14 +809,17 @@ def write_results(results, filename,
             'source': 'citellus',
             'time': time
         },
-        'results': sorted(results, key=lambda r: r['plugin']),
+        'results': results,
     }
 
     if path:
         data['metadata']['path'] = path
 
-    with open(filename, 'w') as fd:
-        json.dump(data, fd, indent=2)
+    try:
+        with open(filename, 'w') as fd:
+            json.dump(data, fd, indent=2)
+    except:
+        LOG.debug("Failed to write to file %s" % filename)
 
 
 def regexpfile(filename=False, regexp=False):
@@ -1045,19 +1052,19 @@ def main():
     # Print results based on the sorted order based on returned results from
     # parallel execution
 
-    for result in sorted(results, key=lambda r: r['plugin']):
-        out = result['result']['out']
-        err = result['result']['err']
-        rc = result['result']['rc']
+    for result in results:
+        out = results[result]['result']['out']
+        err = results[result]['result']['err']
+        rc = results[result]['result']['rc']
         text = formattext(rc)
 
         if options.only_failed and rc in [RC_OKAY, RC_SKIPPED]:
             continue
 
         if not options.blame:
-            print("# %s: %s" % (result['plugin'], text))
+            print("# %s: %s" % (results[result]['plugin'], text))
         else:
-            print("# %s (%s): %s" % (result['plugin'], result['time'], text))
+            print("# %s (%s): %s" % (results[result]['plugin'], results[result]['time'], text))
 
         show_err = (
             (rc in [RC_FAILED]) or
