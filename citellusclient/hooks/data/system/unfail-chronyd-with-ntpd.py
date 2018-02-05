@@ -36,30 +36,26 @@ def run(data, quiet=False):  # do not edit this line
     :return: returncode, out, err
     """
 
-    sourceid = citellus.getids(include=['/core/system/clock-1-ntpd.sh'])
-    targetid = citellus.getids(include=['/core/system/clock-1-chrony.sh'])
+    # By default it returns list, so get only one item
+    sourceid = citellus.getids(include=['/core/system/clock-1-ntpd.sh'])[0]
+    targetid = citellus.getids(include=['/core/system/clock-1-chrony.sh'])[0]
 
     mangle = False
 
     # Grab source data
-    for plugin in data:
-        if plugin['id'] in sourceid:
-            if plugin['result']['rc'] == citellus.RC_OKAY:
-                mangle = True
+    if sourceid in data:
+        if data[sourceid]['result']['rc'] == citellus.RC_OKAY:
+            mangle = True
 
-    newdata = []
-    for plugin in data:
-        if plugin['id'] in targetid:
-            if mangle:
-                # We now fake result as SKIPPED and copy to datahook dict the new data
-                plugin['datahook'] = {}
-                plugin['datahook']['prior'] = dict(plugin['result'])
-                plugin['result']['rc'] = citellus.RC_SKIPPED
-                plugin['result']['err'] = 'Marked as skipped by data hook %s' % os.path.basename(__file__).split(os.sep)[0]
-                citellus.LOG.debug("Data mangled for plugin %s:" % plugin['plugin'])
-        newdata.append(plugin)
+    if mangle:
+        # We now fake result as SKIPPED and copy to datahook dict the new data
+        data[targetid]['datahook'] = {}
+        data[targetid]['datahook']['prior'] = dict(data[targetid]['result'])
+        data[targetid]['result']['rc'] = citellus.RC_SKIPPED
+        data[targetid]['result']['err'] = 'Marked as skipped by data hook %s' % os.path.basename(__file__).split(os.sep)[0]
+        citellus.LOG.debug("Data mangled for plugin %s:" % data[targetid]['plugin'])
 
-    return newdata
+    return data
 
 
 def help():  # do not edit this line

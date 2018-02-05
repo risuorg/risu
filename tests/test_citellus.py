@@ -17,23 +17,28 @@ class CitellusTest(TestCase):
     def test_runplugin_pass(self):
         plugins = citellus.findplugins(folders=[testplugins], include=['exit_passed.sh'])
         results = citellus.docitellus(plugins=plugins)
-        assert results[0]['result']['rc'] == citellus.RC_OKAY
-        assert results[0]['result']['out'].endswith('something on stdout\n')
-        assert results[0]['result']['err'].endswith('something on stderr\n')
+        plugid = citellus.getids(plugins=plugins)[0]
+
+        assert results[plugid]['result']['rc'] == citellus.RC_OKAY
+        assert results[plugid]['result']['out'].endswith('something on stdout\n')
+        assert results[plugid]['result']['err'].endswith('something on stderr\n')
 
     def test_runplugin_fail(self):
         plugins = citellus.findplugins(folders=[testplugins], include=['exit_failed.sh'])
         results = citellus.docitellus(plugins=plugins)
-        assert results[0]['result']['rc'] == citellus.RC_FAILED
-        assert results[0]['result']['out'].endswith('something on stdout\n')
-        assert results[0]['result']['err'].endswith('something on stderr\n')
+        plugid = citellus.getids(plugins=plugins)[0]
+        assert results[plugid]['result']['rc'] == citellus.RC_FAILED
+        assert results[plugid]['result']['out'].endswith('something on stdout\n')
+        assert results[plugid]['result']['err'].endswith('something on stderr\n')
 
     def test_runplugin_skip(self):
         plugins = citellus.findplugins(folders=[testplugins], include=['exit_skipped.sh'])
         results = citellus.docitellus(plugins=plugins)
-        assert results[0]['result']['rc'] == citellus.RC_SKIPPED
-        assert results[0]['result']['out'].endswith('something on stdout\n')
-        assert results[0]['result']['err'].endswith('something on stderr\n')
+        plugid = citellus.getids(plugins=plugins)[0]
+
+        assert results[plugid]['result']['rc'] == citellus.RC_SKIPPED
+        assert results[plugid]['result']['out'].endswith('something on stdout\n')
+        assert results[plugid]['result']['err'].endswith('something on stderr\n')
 
     def test_findplugins_positive_filter_include(self):
         plugins = citellus.findplugins([testplugins],
