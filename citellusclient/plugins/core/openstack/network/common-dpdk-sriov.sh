@@ -49,6 +49,11 @@ if [[ ! -z ${VCPUPINSET} ]]; then
     fi
 fi
 
+if ! is_lineinfile "^enable_isolated_metadata.*rue" "${CITELLUS_ROOT}/etc/neutron/dhcp_agent.ini";then
+    echo $"missing Isolated metadata in neutron/dhcp_agent.ini" >&2
+    flag=1
+fi
+
 if [[ $flag -eq '1' ]]; then
     exit $RC_FAILED
 else
