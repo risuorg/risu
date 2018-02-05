@@ -66,17 +66,7 @@
     <div class="col-sm-12">
      <form class="toolbar-pf-actions">
       <div class="form-group toolbar-pf-filter">
-      <label class="sr-only" for="filter">Name</label>
-      <div class="input-group">
-       <div class="input-group-btn">
-        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Name <span class="caret"></span></button>
-         <ul class="dropdown-menu">
-          <li class="selected"><a href="#">Full text</a></li>
-          <li><a href="#">Bugzilla</a></li>
-         </ul>
-        </div><!-- /btn-group -->
         <input type="text" class="form-control" id="filter_text" placeholder="Filter...">
-       </div><!-- /input-group -->
       </div><!-- /form-group toolbar-pf-filter -->
       <div class="form-group">
        <div class="dropdown btn-group">
@@ -266,10 +256,13 @@
         }
     }
     // function that parses the plugin cat returned by getPluginNames and return a visual and populates global array
-    function getPluginCats(subcat) {
+    function getPluginCats(cat, subcat) {
         var plugin_cats_visual = "";
         var plugin_cats_list = "";
         var plugin_cats = subcat.split("/");
+        if (plugin_cats[0] != cat) {
+            plugin_cats.unshift(cat)
+        }
         $.each(plugin_cats, function(c, cname) {
             if (cname != "undefined") {
                 plugin_cats_visual += '<a href="#" data-category="'+cname+'" class="badge badge-primary category-badge">'+cname+'</a> ';
@@ -306,15 +299,12 @@
         $.each(listitems, function(idx, itm) { mylist.append(itm); });
     };
     // function that generates a row to add to the accordion
-    function printCitellusPlugin (result, out, err, rc, data, plugin_var_name = false, prepend_category = false) {
+    function printCitellusPlugin (result, out, err, rc, data, plugin_var_name = false) {
         var plugin_names = getPluginNames(result)
         if (plugin_var_name == "metadata-outputs") {
             plugin_names.cat = "metadata";
         }
-        if (prepend_category != false) {
-            result.subcategory = prepend_category +"/" + result.subcategory;
-        }
-        var plugin_cats = getPluginCats(result.subcategory)
+        var plugin_cats = getPluginCats(result.category, result.subcategory)
         var plugin_state = getPluginState(rc);
         if (result.priority == "undefined") {
             result.priority = 0;
@@ -401,7 +391,16 @@
         var html = '<div class="alert alert-'+level+' alert-dismissible fade show" role="alert"><strong>'+level+'</strong> '+m+' <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span></button></div>';
         $("#alert_list").append(html);
     }
-
+    // Count the number of objects
+    function ObjectLength( object ) {
+        var length = 0;
+        for( var key in object ) {
+            if( object.hasOwnProperty(key) ) {
+                ++length;
+            }
+        }
+        return length;
+    };
     // This code is only executed when everything else is loaded
     $(document).ready(function() {
         jsonFile = getParameterByName("json");
@@ -512,7 +511,7 @@
                     var row = '<tr><th>'+i+'</th><td>'+item+'</td></tr>\n';
                     $("#metadata_table_citellus > tbody:last-child").append(row);
                 });
-                var dataNum = data.results.length;
+                var dataNum = ObjectLength(data.results);
                 var counter = 0;
                 $.each(data.results, function(i, item) {
 

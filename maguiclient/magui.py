@@ -226,8 +226,8 @@ def callcitellus(path=False, plugins=False, forcerun=False, include=None, exclud
     # Process plugin output from multiple plugins
     new_dict = {}
     for item in results:
-        name = item['plugin']
-        new_dict[name] = item
+        name = results[item]['plugin']
+        new_dict[name] = dict(results[item])
     return new_dict
 
 
@@ -374,10 +374,10 @@ def filterresults(data, triggers=[]):
         # If plugin processes everything, return all data
         return data
 
-    ourdata = []
-    for item in data:
-        if data[item]['id'] in triggers:
-            ourdata.append(data[item])
+    ourdata = {}
+    for trigger in triggers:
+        if trigger in data:
+            ourdata[trigger] = dict(data[trigger])
 
     return ourdata
 

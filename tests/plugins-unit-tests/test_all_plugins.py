@@ -63,18 +63,18 @@ class CitellusTest(TestCase):
         new_dict = []
         out_dict = []
         for item in results:
-            rc = item['result']['rc']
+            rc = results[item]['result']['rc']
             if rc not in sorted(set([okay, failed, skipped])):
-                print(item)
+                print(results[item])
             assert rc in sorted(set([okay, failed, skipped]))
             if rc == failed or rc == skipped:
-                print(item)
-                assert item['result']['err'] != ""
+                print(results[item])
+                assert results[item]['result']['err'] != ""
             new_dict.append(rc)
-            if item['result']['out'] != "":
-                print(item)
-                assert item['result']['out]'] == ""
-            out_dict.append(item['result']['out'])
+            if results[item]['result']['out'] != "":
+                print(results[item])
+                assert results[item]['result']['out]'] == ""
+            out_dict.append(results[item]['result']['out'])
 
         assert sorted(set(new_dict)) == sorted(set([okay, failed, skipped]))
 
@@ -86,17 +86,17 @@ class CitellusTest(TestCase):
         new_dict = []
         out_dict = []
         for item in results:
-            rc = item['result']['rc']
+            rc = results[item]['result']['rc']
             if rc not in sorted(set([okay, failed, skipped])):
-                print(item)
+                print(results[item])
             assert rc in sorted(set([okay, failed, skipped]))
             if rc == failed or rc == skipped:
-                print(item)
-                assert item['result']['err'] != ""
-            if item['result']['out'] != "":
-                print(item)
-                assert item['result']['out]'] == ""
-            out_dict.append(item['result']['out'])
+                print(results[item])
+                assert results[item]['result']['err'] != ""
+            if results[item]['result']['out'] != "":
+                print(results[item])
+                assert results[item]['result']['out]'] == ""
+            out_dict.append(results[item]['result']['out'])
 
             new_dict.append(rc)
 

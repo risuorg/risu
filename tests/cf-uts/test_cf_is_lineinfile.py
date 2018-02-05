@@ -61,8 +61,9 @@ def runtest(testtype='False'):
     # Run test against it
     res = citellus.docitellus(path=tmpdir, plugins=citplugs)
 
+    plugid = citellus.getids(plugins=citplugs)[0]
     # Get Return code
-    rc = res[0]['result']['rc']
+    rc = res[plugid]['result']['rc']
 
     # Remove tmp folder
     shutil.rmtree(tmpdir)
