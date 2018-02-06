@@ -25,12 +25,8 @@
 [[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
 if is_lineinfile "Intel" "${CITELLUS_ROOT}/proc/cpuinfo"; then
-    if ! is_lineinfile "intel_iommu=on" "${CITELLUS_ROOT}/proc/cmdline"; then
-        echo $"missing intel_iommu=on on kernel cmdline" >&2
-        flag=1
-    fi
-    if ! is_lineinfile "iommu=pt" "${CITELLUS_ROOT}/proc/cmdline"; then
-        echo $"missing iommu=pt on kernel cmdline" >&2
+    if ! grep -P "intel_iommu=on|iommu=pt" ${CITELLUS_ROOT}/proc/cmdline; then
+        echo $"missing intel_iommu=on or iommu=pt on kernel cmdline" >&2
         flag=1
     fi
 else
