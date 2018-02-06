@@ -29,7 +29,7 @@ is_required_rpm openstack-nova-common
 is_required_rpm pacemaker
 
 if [[ $CITELLUS_LIVE -eq 0 ]]; then
-    FILE="${CITELLUS_ROOT}/sos_commands/pacemaker/sos_commands/pacemaker/crm_mon_-1_-A_-n_-r_-t"
+    FILE="${CITELLUS_ROOT}/sos_commands/pacemaker/crm_mon_-1_-A_-n_-r_-t"
 elif [[ $CITELLUS_LIVE -eq 1 ]];then
     FILE=$(mktemp)
     trap "rm $FILE" EXIT
