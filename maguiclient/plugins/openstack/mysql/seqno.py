@@ -41,8 +41,8 @@ def run(data, quiet=False):  # do not edit this line
         # 'err' in this case is something like: 08a94e67-bae0-11e6-8239-9a6188749d23:36117633
         # being UUID: seqno
         err = []
-        for sosreport in ourdata['sosreport']:
-            err.append(ourdata['sosreport'][sosreport]['err'])
+        for sosreport in data[ourdata]['sosreport']:
+            err.append(data[ourdata]['sosreport'][sosreport]['err'])
 
         if len(sorted(set(err))) != 1:
             message = _("Galera sequence number differ across sosreports")
@@ -59,9 +59,9 @@ def run(data, quiet=False):  # do not edit this line
                 maximum = seqno
 
         host = False
-        for sosreport in ourdata['sosreport']:
-            if ourdata['sosreport'][sosreport]['rc'] == citellus.RC_OKAY:
-                if seqno in ourdata['sosreport'][sosreport]['err']:
+        for sosreport in data[ourdata]['sosreport']:
+            if data[ourdata]['sosreport'][sosreport]['rc'] == citellus.RC_OKAY:
+                if seqno in data[ourdata]['sosreport'][sosreport]['err']:
                     host = sosreport
             else:
                 message = _('Some of the sosreports failed to grab required data, skipping')

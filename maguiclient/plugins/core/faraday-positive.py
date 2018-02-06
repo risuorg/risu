@@ -41,14 +41,14 @@ def run(data, quiet=False):  # do not edit this line
         # 'err' in this case should be always equal to the md5sum of the file so that we can report the problem
         err = []
         allskipped = True
-        for sosreport in ourdata['sosreport']:
-            err.append(ourdata['sosreport'][sosreport]['err'])
-            if ourdata['sosreport'][sosreport]['rc'] != citellus.RC_SKIPPED:
+        for sosreport in data[ourdata]['sosreport']:
+            err.append(data[ourdata]['sosreport'][sosreport]['err'])
+            if data[ourdata]['sosreport'][sosreport]['rc'] != citellus.RC_SKIPPED:
                 allskipped = False
 
         if not allskipped:
             if len(sorted(set(err))) != 1:
-                message.append(_("%s contents differ across hosts, ensure proper behavior.") % ourdata['path'])
+                message.append(_("%s contents differ across hosts, ensure proper behavior.") % data[ourdata]['path'])
                 returncode = citellus.RC_FAILED
 
     out = ''
