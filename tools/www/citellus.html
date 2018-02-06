@@ -537,7 +537,7 @@
                     // Here we have a magui.json
                     } else if (data.metadata.source == "magui") {
                         if (item.plugin == "citellus-outputs" || item.plugin == "metadata-outputs") {
-                            $.each(item.results, function(s,result) {
+                            $.each(item.result, function(s,result) {
                                 if (s == "err") {
                                     $.each(result,function(plugin,pdata) {
 
@@ -561,12 +561,12 @@
                                         printCitellusPlugin(pdata, gout, gerr, grc, data, item.plugin)
                                     }); // each result
                                 } // s == "err"
-                            }); // each item.results
+                            }); // each item.result
                         } else {
-                            printCitellusPlugin(item,item.results.out,item.results.err,item.results.rc,data, false, "magui")
+                            printCitellusPlugin(item,item.result.out,item.result.err,item.result.rc,data, false, "magui")
                         } // if citellus-outputs
                     } // if data source == "magui"
-                }); // each data.results
+                }); // each data.result
                 sortPlugins("priority");
                 if (window.location.hash.substr(1)) {
                     $('html, body').animate({

@@ -470,7 +470,7 @@ def main():
             results.append({'plugin': plugin.__name__.split(".")[-1],
                             'id': hashlib.md5(plugin.__file__.replace(maguidir, '').encode('UTF-8')).hexdigest(),
                             'description': plugin.help(),
-                            'results': updates,
+                            'result': updates,
                             'time': time.time() - start_time,
                             'category': category,
                             'subcategory': subcategory})
