@@ -38,7 +38,7 @@ fi
 
 if is_lineinfile "openstack-nova-compute" "${FILE}"; then
     echo $"Instance HA is in use in the environment, consider limitations" >&2
-    echo $RC_FAILED
+    exit $RC_FAILED
 fi
 
 exit $RC_OKAY
