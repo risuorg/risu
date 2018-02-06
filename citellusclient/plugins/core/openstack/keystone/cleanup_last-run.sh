@@ -41,7 +41,7 @@ else
     # Not just last run, but we also want it to be 'recent'
     if are_dates_diff_over 2 "$NOW" "$LASTRUN"; then
         echo $"Last token run was more than two days ago" >&2
-        echo $RC_FAILED
+        exit $RC_FAILED
     fi
     echo "${LASTRUN}" >&2
     exit $RC_OKAY

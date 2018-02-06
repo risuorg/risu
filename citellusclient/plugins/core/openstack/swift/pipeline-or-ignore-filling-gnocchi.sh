@@ -34,7 +34,7 @@ is_lineinfile "^ignore_projects" "${CITELLUS_ROOT}/etc/swift/proxy-server.conf" 
 
 if [[ "${flag}" -eq "1" ]]; then
     echo $"https://bugzilla.redhat.com/show_bug.cgi?id=1449986" >&2
-    echo $RC_FAILED
+    exit $RC_FAILED
 fi
 
 exit $RC_OKAY
