@@ -793,7 +793,7 @@ def dump_config(options, path=False):
 
 
 def write_results(results, filename,
-                  live=False, path=None, time=0):
+                  live=False, path=None, time=0, source='citellus'):
     """
     Writes result
     :param time: date of report
@@ -807,7 +807,7 @@ def write_results(results, filename,
         'metadata': {
             'when': datetime.datetime.utcnow().isoformat(),
             'live': bool(live),
-            'source': 'citellus',
+            'source': source,
             'time': time
         },
         'results': results,

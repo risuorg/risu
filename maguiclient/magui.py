@@ -25,12 +25,10 @@
 from __future__ import print_function
 
 import argparse
-import datetime
 import gettext
 import glob
 import hashlib
 import imp
-import json
 import logging
 import os.path
 import pprint
@@ -308,25 +306,6 @@ def domagui(sosreports, citellusplugins, options=False):
     return grouped
 
 
-def write_results(results, filename):
-    """
-    Writes result
-    :param results: Data to write
-    :param filename: File to use
-    :return:
-    """
-    data = {
-        'metadata': {
-            'when': datetime.datetime.utcnow().isoformat(),
-            'source': 'magui',
-        },
-        'results': results,
-    }
-
-    with open(filename, 'w') as fd:
-        json.dump(data, fd, indent=2)
-
-
 def maguiformat(data):
     """
     Formats the data from Magui for printing
@@ -386,6 +365,9 @@ def main():
     """
     Main code stub
     """
+
+    start_time = time.time()
+
     options = parse_args()
 
     # Configure logging
@@ -494,7 +476,7 @@ def main():
                             'subcategory': subcategory})
 
     if options.output:
-        write_results(results=results, filename=options.output)
+        citellus.write_results(results=results, filename=options.output, source='magui', path=sosreports, time=time.time() - start_time)
 
     pprint.pprint(results, width=1)
 
