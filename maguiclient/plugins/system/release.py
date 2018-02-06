@@ -40,8 +40,8 @@ def run(data, quiet=False):  # do not edit this line
     for ourdata in data:
         # 'err' in this case should be always equal to the md5sum of the file so that we can report the problem
         err = []
-        for sosreport in ourdata['sosreport']:
-            err.append(ourdata['sosreport'][sosreport]['err'])
+        for sosreport in data[ourdata]['sosreport']:
+            err.append(data[ourdata]['sosreport'][sosreport]['err'])
 
         if len(sorted(set(err))) != 1:
             message = _("Hosts contains different releases of operating system and can cause issues.")

@@ -232,7 +232,7 @@ def callcitellus(path=False, plugins=False, forcerun=False, include=None, exclud
 def domagui(sosreports, citellusplugins, options=False):
     """
     Do actual execution against sosreports
-    :return: dict of results
+    :return: dict of result
     """
 
     # Check if we've been provided options
@@ -242,17 +242,17 @@ def domagui(sosreports, citellusplugins, options=False):
         forcerun = False
 
     # Grab data from citellus for the sosreports provided
-    results = {}
+    result = {}
 
     for sosreport in sosreports:
-        results[sosreport] = callcitellus(path=sosreport, plugins=citellusplugins, forcerun=forcerun, include=options.include, exclude=options.exclude)
+        result[sosreport] = callcitellus(path=sosreport, plugins=citellusplugins, forcerun=forcerun, include=options.include, exclude=options.exclude)
 
     # Sanity check in case we do need to force run because of inconsistencies between saved data
     if not forcerun:
         # Prefill all plugins
         plugins = []
         for sosreport in sosreports:
-            for plugin in results[sosreport]:
+            for plugin in result[sosreport]:
                 plugins.append(plugin)
 
         plugins = sorted(set(plugins))
@@ -262,7 +262,7 @@ def domagui(sosreports, citellusplugins, options=False):
         for sosreport in sosreports:
             for plugin in plugins:
                 try:
-                    results[sosreport][plugin]['result']
+                    result[sosreport][plugin]['result']
                 except:
                     rerun = True
 
@@ -281,26 +281,26 @@ def domagui(sosreports, citellusplugins, options=False):
             if rerun and not options.hosts:
                 LOG.debug("Forcing rerun of citellus for %s because of missing %s" % (sosreport, plugin))
                 # Sosreport contains non uniform data, rerun
-                results[sosreport] = callcitellus(path=sosreport, plugins=citellusplugins, forcerun=True)
+                result[sosreport] = callcitellus(path=sosreport, plugins=citellusplugins, forcerun=True)
 
     # Precreate multidimensional array
     grouped = {}
     for sosreport in sosreports:
         plugins = []
-        for plugin in results[sosreport]:
+        for plugin in result[sosreport]:
             plugins.append(plugin)
             grouped[plugin] = {}
             grouped[plugin]['sosreport'] = {}
 
     # Fill the data
     for sosreport in sosreports:
-        for plugin in results[sosreport]:
-            grouped[plugin]['sosreport'][sosreport] = results[sosreport][plugin]['result']
-            for element in results[sosreport][plugin]:
+        for plugin in result[sosreport]:
+            grouped[plugin]['sosreport'][sosreport] = result[sosreport][plugin]['result']
+            for element in result[sosreport][plugin]:
                 # Some of the elements are not useful as they are sosreport specific, so we do skip them completely
                 # In this approach we don't need to update this code each time the plugin exports new metadata
                 if element not in ['time', 'result']:
-                    grouped[plugin][element] = results[sosreport][plugin][element]
+                    grouped[plugin][element] = result[sosreport][plugin][element]
 
     # We've now a matrix of grouped[plugin][sosreport] and then [text] [out] [err] [rc]
     return grouped
@@ -309,8 +309,8 @@ def domagui(sosreports, citellusplugins, options=False):
 def maguiformat(data):
     """
     Formats the data from Magui for printing
-    :param data: Results from domagui
-    :return: dict with results for printing
+    :param data: Result from domagui
+    :return: dict with result for printing
     """
     toprint = {}
 
@@ -354,9 +354,10 @@ def filterresults(data, triggers=[]):
         return data
 
     ourdata = {}
-    for trigger in triggers:
-        if trigger in data:
-            ourdata[trigger] = dict(data[trigger])
+    for elem in data:
+        for trigger in triggers:
+            if trigger == data[elem]['id']:
+                ourdata[trigger] = dict(data[elem])
 
     return ourdata
 
@@ -440,7 +441,7 @@ def main():
     grouped = domagui(sosreports=sosreports, citellusplugins=citellusplugins, options=options)
 
     # Run Magui plugins
-    results = []
+    result = []
     for plugin in magplugs:
         start_time = time.time()
         # Get output from plugin
@@ -467,7 +468,7 @@ def main():
             category = ""
 
         if adddata:
-            results.append({'plugin': plugin.__name__.split(".")[-1],
+            result.append({'plugin': plugin.__name__.split(".")[-1],
                             'id': hashlib.md5(plugin.__file__.replace(maguidir, '').encode('UTF-8')).hexdigest(),
                             'description': plugin.help(),
                             'result': updates,
@@ -476,9 +477,9 @@ def main():
                             'subcategory': subcategory})
 
     if options.output:
-        citellus.write_results(results=results, filename=options.output, source='magui', path=sosreports, time=time.time() - start_time)
+        citellus.write_results(results=result, filename=options.output, source='magui', path=sosreports, time=time.time() - start_time)
 
-    pprint.pprint(results, width=1)
+    pprint.pprint(result, width=1)
 
 
 if __name__ == "__main__":
