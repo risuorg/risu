@@ -36,7 +36,11 @@ else
     fi
 fi
 
-VCPUPINSET=$(iniparser "${CITELLUS_ROOT}/etc/nova/nova.conf" DEFAULT vcp_pin_set|tr ",\'\"" "\n")
+if [[ -f "${CITELLUS_ROOT}/etc/nova/nova.conf" ]]; then
+    VCPUPINSET=$(iniparser "${CITELLUS_ROOT}/etc/nova/nova.conf" DEFAULT vcp_pin_set|tr ",\'\"" "\n")
+else
+    VCPUPINSET=''
+fi
 
 if [[ ! -z ${VCPUPINSET} ]]; then
     if ! is_lineinfile "cpu-partitioning" "${CITELLUS_ROOT}/etc/tuned/active_profile"; then
