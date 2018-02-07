@@ -238,14 +238,20 @@ def domagui(sosreports, citellusplugins, options=False):
     # Check if we've been provided options
     if options:
         forcerun = options.run
+        citinclude = options.include
+        citexclude = options.exclude
+        hosts = options.hosts
     else:
         forcerun = False
+        citinclude = None
+        citexclude = None
+        hosts = False
 
     # Grab data from citellus for the sosreports provided
     result = {}
 
     for sosreport in sosreports:
-        result[sosreport] = callcitellus(path=sosreport, plugins=citellusplugins, forcerun=forcerun, include=options.include, exclude=options.exclude)
+        result[sosreport] = callcitellus(path=sosreport, plugins=citellusplugins, forcerun=forcerun, include=citinclude, exclude=citexclude)
 
     # Sanity check in case we do need to force run because of inconsistencies between saved data
     if not forcerun:
@@ -278,7 +284,7 @@ def domagui(sosreports, citellusplugins, options=False):
                     rerun = False
 
             # Forcing rerun but not if we've specified ansible hosts
-            if rerun and not options.hosts:
+            if rerun and not hosts:
                 LOG.debug("Forcing rerun of citellus for %s because of missing %s" % (sosreport, plugin))
                 # Sosreport contains non uniform data, rerun
                 result[sosreport] = callcitellus(path=sosreport, plugins=citellusplugins, forcerun=True)
@@ -396,20 +402,6 @@ def main():
     else:
         extensions = citellus.extensions
 
-    citellusplugins = []
-    for extension in extensions:
-        citellusplugins.extend(extension.listplugins(options))
-
-    global allplugins
-    allplugins = citellusplugins
-
-    # By default, flatten plugin list for all extensions
-    newplugins = []
-    for each in citellusplugins:
-        newplugins.extend(each)
-
-    citellusplugins = newplugins
-
     # Grab the data
     sosreports = options.sosreports
 
@@ -438,6 +430,84 @@ def main():
             for host in hosts:
                 sosreports.append(os.path.dirname(host['plugin']))
 
+    # Get all data from hosts for all plugins, etc
+    if options.output:
+
+        citellusplugins = []
+        # Prefill with all available plugins and the ones we want to filter for
+        for extension in extensions:
+            citellusplugins.extend(extension.listplugins())
+
+        global allplugins
+        allplugins = citellusplugins
+
+        # By default, flatten plugin list for all extensions
+        newplugins = []
+        for each in citellusplugins:
+            newplugins.extend(each)
+
+        citellusplugins = newplugins
+
+        # Run with all plugins so that we get all data back
+        grouped = domagui(sosreports=sosreports, citellusplugins=citellusplugins)
+
+        # Run Magui plugins
+        result = []
+        for plugin in magplugs:
+            start_time = time.time()
+            # Get output from plugin
+            data = filterresults(data=grouped, triggers=magtriggers[plugin.__name__.split(".")[-1]])
+            returncode, out, err = plugin.run(data=data, quiet=options.quiet)
+            updates = {'rc': returncode,
+                       'out': out,
+                       'err': err}
+
+            subcategory = os.path.split(plugin.__file__)[0].replace(os.path.join(maguidir, 'plugins', ''), '')
+
+            if subcategory:
+                if len(os.path.normpath(subcategory).split(os.sep)) > 1:
+                    category = os.path.normpath(subcategory).split(os.sep)[0]
+                else:
+                    category = subcategory
+                    subcategory = ""
+            else:
+                category = ""
+
+            mydata = {'plugin': plugin.__name__.split(".")[-1],
+                      'id': hashlib.md5(plugin.__file__.replace(maguidir, '').encode('UTF-8')).hexdigest(),
+                      'description': plugin.help(),
+                      'result': updates,
+                      'time': time.time() - start_time,
+                      'category': category,
+                      'subcategory': subcategory}
+
+            result.append(mydata)
+
+        citellus.write_results(results=result, filename=options.output, source='magui', path=sosreports, time=time.time() - start_time)
+
+    # Here preprocess output to use filtering, etc
+    # "result" does contain all data for both all citellus plugins and all magui plugins, need to filter for output on CLI only
+
+    # TODO(iranzo): this is a nasty hack to rerun all tests and output to screen when using filtering
+    # The tool should in reality grab the data obtained from 'result' in above code (executed always) and just output relevant ones,
+    # but this involved probably calling citellus with the filtered ones so only those ones are outputed (and we reuse citellus filtering)
+
+    citellusplugins = []
+    # Prefill with all available plugins and the ones we want to filter for
+    for extension in extensions:
+        citellusplugins.extend(extension.listplugins(options))
+
+    global allplugins
+    allplugins = citellusplugins
+
+    # By default, flatten plugin list for all extensions
+    newplugins = []
+    for each in citellusplugins:
+        newplugins.extend(each)
+
+    citellusplugins = newplugins
+
+    # Run with all plugins so that we get all data back
     grouped = domagui(sosreports=sosreports, citellusplugins=citellusplugins, options=options)
 
     # Run Magui plugins
@@ -467,17 +537,16 @@ def main():
         else:
             category = ""
 
-        if adddata:
-            result.append({'plugin': plugin.__name__.split(".")[-1],
-                           'id': hashlib.md5(plugin.__file__.replace(maguidir, '').encode('UTF-8')).hexdigest(),
-                           'description': plugin.help(),
-                           'result': updates,
-                           'time': time.time() - start_time,
-                           'category': category,
-                           'subcategory': subcategory})
+        mydata = {'plugin': plugin.__name__.split(".")[-1],
+                  'id': hashlib.md5(plugin.__file__.replace(maguidir, '').encode('UTF-8')).hexdigest(),
+                  'description': plugin.help(),
+                  'result': updates,
+                  'time': time.time() - start_time,
+                  'category': category,
+                  'subcategory': subcategory}
 
-    if options.output:
-        citellus.write_results(results=result, filename=options.output, source='magui', path=sosreports, time=time.time() - start_time)
+        if adddata:
+            result.append(mydata)
 
     pprint.pprint(result, width=1)
 
