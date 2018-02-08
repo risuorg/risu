@@ -25,9 +25,9 @@
 # this can run against live and also any sort of snapshot of the filesystem
 
 is_required_file "${CITELLUS_ROOT}/var/spool/cron/cinder"
-if ! awk '/cinder-manage db purge 30/ && /^[^#]/ { print $0 }' "${CITELLUS_ROOT}/var/spool/cron/cinder"; then
+if ! awk '/cinder-manage db purge 30/ && /^[^#]/ { print $0 }' "${CITELLUS_ROOT}/var/spool/cron/cinder" > /dev/null 2>&1; then
     echo $"crontab cinder db purge is not set" >&2
     exit $RC_FAILED
-elif awk '/cinder-manage db purge 30/ && /^[^#]/ { print $0 }' "${CITELLUS_ROOT}/var/spool/cron/cinder"; then
+elif awk '/cinder-manage db purge 30/ && /^[^#]/ { print $0 }' "${CITELLUS_ROOT}/var/spool/cron/cinder" > /dev/null 2>&1; then
     exit $RC_OKAY
 fi

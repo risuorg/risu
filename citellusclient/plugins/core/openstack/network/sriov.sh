@@ -30,7 +30,7 @@ RELEASE=$(discover_osp_version)
 flag=0
 
 if [[ "$RELEASE" -gt 7 ]]; then
-    if ! is_rpm openstack-neutron-sriov-nic-agent;then
+    if ! is_rpm openstack-neutron-sriov-nic-agent > /dev/null 2>&1;then
         echo $"missing rpm openstack-neutron-sriov-nic-agent" >&2
         flag=1
     fi
@@ -40,7 +40,7 @@ if [[ "$RELEASE" -gt 7 ]]; then
     fi
 fi
 
-if ! is_rpm tuned-profiles-cpu-partitioning;then
+if ! is_rpm tuned-profiles-cpu-partitioning > /dev/null 2>&1;then
     echo $"missing rpm tuned-profiles-cpu-partitioning" >&2
     flag=1
 fi

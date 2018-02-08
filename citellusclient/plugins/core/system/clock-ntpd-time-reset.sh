@@ -24,7 +24,7 @@
 
 is_required_file "${CITELLUS_ROOT}/var/log/messages"
 if is_lineinfile "time reset" "${CITELLUS_ROOT}/var/log/messages"; then
-    echo $"time reset detected"
+    echo $"time reset detected" >&2
     grep "time reset" "${CITELLUS_ROOT}/var/log/messages" >&2
     exit $RC_FAILED
 fi

@@ -31,7 +31,7 @@ if is_active chronyd; then
 fi
 ) >/dev/null 2>&1
 
-if is_rpm openstack-.* ; then
+if is_rpm openstack-.*  > /dev/null 2>&1; then
     # Node is OSP system
     if [[ "x$chronyd" = "x1" ]]; then
         echo $"chrony service is active, and it should not on OSP node" >&2
