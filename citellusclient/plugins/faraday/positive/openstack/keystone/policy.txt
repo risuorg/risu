@@ -1,0 +1,6 @@
+# bugzilla:
+# long_name: Checks Keystone policy.json file
+# priority: 500
+# description: Checks Keystone policy.json file
+# path: ${CITELLUS_ROOT}/etc/keystone/policy.json
+# CITELLUS_HYBRID

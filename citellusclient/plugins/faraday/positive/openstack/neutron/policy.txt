@@ -1,0 +1,6 @@
+# bugzilla:
+# long_name: Checks Neutron policy.json file
+# priority: 500
+# description: Checks Neutron policy.json file
+# path: ${CITELLUS_ROOT}/etc/neutron/policy.json
+# CITELLUS_HYBRID

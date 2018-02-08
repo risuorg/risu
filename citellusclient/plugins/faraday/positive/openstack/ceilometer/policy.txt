@@ -1,0 +1,6 @@
+# bugzilla:
+# long_name: Checks Ceilometer policy.json file
+# priority: 500
+# description: Checks Ceilometer policy.json file
+# path: ${CITELLUS_ROOT}/etc/ceilometer/policy.json
+# CITELLUS_HYBRID

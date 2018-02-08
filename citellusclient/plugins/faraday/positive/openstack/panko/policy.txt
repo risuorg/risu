@@ -1,0 +1,6 @@
+# bugzilla:
+# long_name: Checks Panko policy.json file
+# priority: 500
+# description: Checks Panko policy.json file
+# path: ${CITELLUS_ROOT}/etc/panko/policy.json
+# CITELLUS_HYBRID
