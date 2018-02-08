@@ -1,582 +1,659 @@
 <!DOCTYPE html>
 <html>
- <head>
-  <title>Citellus</title>
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/patternfly/3.24.0/css/patternfly.min.css">
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/patternfly/3.24.0/css/patternfly-additions.min.css">
-  <style>
-    pre {
-         white-space: pre-wrap;
-    }
-    #cat_list {
-        padding-top: 1.5rem;
-        padding-bottom: 1.5rem;
-    }
-    #label_check_all {
-        margin-bottom: 1.5rem;
-    }
-    #category-list {
-        padding: 1.5rem;
-        margin: 1.5rem;
-    }
-    .alert strong {
-        text-transform: capitalize;
-    }
-    .navbar-pf .navbar-brand img {
-        display: inline;
-    }
-    .navbar {
-        width: 100%;
-    }
-    .badge-danger {
-        color: #fff;
-        background-color: #cc0000;
-    }
-    .badge {
-        margin-left: 0px;
-    }
-  </style>
- </head>
- <body>
-   <div class="container">
-    <header>
-    <nav class="navbar navbar-default navbar-pf" role="navigation">
-     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse-1">
+
+<head>
+    <title>Citellus</title>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/patternfly/3.24.0/css/patternfly.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/patternfly/3.24.0/css/patternfly-additions.min.css">
+    <style>
+        pre {
+            white-space: pre-wrap;
+        }
+        
+        #cat_list {
+            padding-top: 1.5rem;
+            padding-bottom: 1.5rem;
+        }
+        
+        #label_check_all {
+            margin-bottom: 1.5rem;
+        }
+        
+        #category-list {
+            padding: 1.5rem;
+            margin: 1.5rem;
+        }
+        
+        .alert strong {
+            text-transform: capitalize;
+        }
+        
+        .navbar-pf .navbar-brand img {
+            display: inline;
+        }
+        
+        .navbar {
+            width: 100%;
+        }
+        
+        .badge-danger {
+            color: #fff;
+            background-color: #cc0000;
+        }
+        
+        .badge {
+            margin-left: 0px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <nav class="navbar navbar-default navbar-pf" role="navigation">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse-1">
       <span class="sr-only">Toggle navigation</span>
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
      </button>
-     <a class="navbar-brand" href="/"><img src="https://raw.githubusercontent.com/zerodayz/citellus/master/doc/citellus-white.png" style="width: 30px" alt="Citellus" /> Citellus</a>
-      <ul id="menu-primary" class="nav navbar-nav navbar-right">
-       <li class="nav-item">
-        <a class="nav-link" target="_blank" href="https://github.com/zerodayz/citellus/blob/master/README.md">Usage Doc</a>
-       </li>
-       <li class="nav-item">
-        <a class="nav-link" target="_blank" href="https://github.com/zerodayz/citellus/tree/master/doc">Plugin Development</a>
-       </li>
-       <li class="nav-item">
-        <a class="nav-link" target="_blank" href="https://github.com/zerodayz/citellus/blob/master/CONTRIBUTING.md">Contribute</a>
-       </li>
-      </ul>
-    </nav>
-   </header>
-   <div id="alert_list"></div>
-   <div class="clearfix toolbar-pf">
-    <div class="col-sm-12">
-     <form class="toolbar-pf-actions">
-      <div class="form-group toolbar-pf-filter">
-        <input type="text" class="form-control" id="filter_text" placeholder="Filter...">
-      </div><!-- /form-group toolbar-pf-filter -->
-      <div class="form-group">
-       <div class="dropdown btn-group">
-        <button id="plugin-sort" type="button" data-sortfield="priority" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Priority <span class="caret"></span></button>
-        <ul class="dropdown-menu">
-         <li class="selected"><a href="#" class="plugin-sort-field">Priority</a></li>
-         <li><a href="#" class="plugin-sort-field">State</a></li>
-         <li><a href="#" class="plugin-sort-field">Name</a></li>
-        </ul>
-       </div><!-- /dropdown btn-group -->
-       <button class="btn btn-link" type="button">
-        <span data-direction="desc" id="sortDirection" class="fa fa-sort-amount-desc"></span>
-       </button>
-       <input type="hidden" id="filter_status" value="all">
-       <div class="btn-group" role="group" aria-label="Status Filters">
-        <button type="button" class="btn btn-success filter-status" data-filter="okay">okay</button>
-        <button type="button" class="btn btn-danger filter-status" data-filter="failed">failed</button>
-        <button type="button" class="btn btn-warning filter-status" data-filter="skipped">skipped</button>
-        <button type="button" class="btn btn-dark filter-status" data-filter="all">all</button>
-       </div><!-- /btn-group -->
-      </div><!-- /form-group -->
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-categories">Categories</button>
-      <button type="button" class="btn btn-secondary" id="expandAll">Expand All</button>
-      <div class="toolbar-pf-action-right">
-       <div class="form-group toolbar-pf-find">
-        <button class="btn btn-link btn-find" type="button">
+                <a class="navbar-brand" href="/"><img src="https://raw.githubusercontent.com/zerodayz/citellus/master/doc/citellus-white.png" style="width: 30px" alt="Citellus" /> Citellus</a>
+                <ul id="menu-primary" class="nav navbar-nav navbar-right">
+                    <li class="nav-item">
+                        <a class="nav-link" target="_blank" href="https://github.com/zerodayz/citellus/blob/master/README.md">Usage Doc</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" target="_blank" href="https://github.com/zerodayz/citellus/tree/master/doc">Plugin Development</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" target="_blank" href="https://github.com/zerodayz/citellus/blob/master/CONTRIBUTING.md">Contribute</a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+        <div id="alert_list"></div>
+        <div class="clearfix toolbar-pf">
+            <div class="col-sm-12">
+                <form class="toolbar-pf-actions">
+                    <div class="form-group toolbar-pf-filter">
+                        <input type="text" class="form-control" id="filter_text" placeholder="Filter...">
+                    </div>
+                    <!-- /form-group toolbar-pf-filter -->
+                    <div class="form-group">
+                        <div class="dropdown btn-group">
+                            <button id="plugin-sort" type="button" data-sortfield="priority" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Priority <span class="caret"></span></button>
+                            <ul class="dropdown-menu">
+                                <li class="selected"><a href="#" class="plugin-sort-field">Priority</a></li>
+                                <li><a href="#" class="plugin-sort-field">State</a></li>
+                                <li><a href="#" class="plugin-sort-field">Name</a></li>
+                            </ul>
+                        </div>
+                        <!-- /dropdown btn-group -->
+                        <button class="btn btn-link" type="button">
+                            <span data-direction="desc" id="sortDirection" class="fa fa-sort-amount-desc"></span>
+                        </button>
+                        <input type="hidden" id="filter_status" value="all">
+                        <div class="btn-group" role="group" aria-label="Status Filters">
+                            <button type="button" class="btn btn-success filter-status" data-filter="okay">okay</button>
+                            <button type="button" class="btn btn-danger filter-status" data-filter="failed">failed</button>
+                            <button type="button" class="btn btn-warning filter-status" data-filter="skipped">skipped</button>
+                            <button type="button" class="btn btn-dark filter-status" data-filter="all">all</button>
+                        </div>
+                        <!-- /btn-group -->
+                    </div>
+                    <!-- /form-group -->
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-categories">Categories</button>
+                    <button type="button" class="btn btn-secondary" id="expandAll">Expand All</button>
+                    <div id="otherJsons" class="dropdown btn-group hidden">
+                        <button id="jsons" type="button" data-json="" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                        <ul class="dropdown-menu">
+                        </ul>
+                    </div>
+                    <!-- /dropdown btn-group -->
+                    <div class="toolbar-pf-action-right">
+                        <div class="form-group toolbar-pf-find">
+                            <button class="btn btn-link btn-find" type="button">
          <span class="fa fa-search"></span>
         </button>
-        <div class="find-pf-dropdown-container">
-         <input type="text" class="form-control" id="find" placeholder="Find By Keyword...">
-         <div class="find-pf-buttons">
-          <span class="find-pf-nums">1 of 3</span>
-          <button class="btn btn-link" type="button">
+                            <div class="find-pf-dropdown-container">
+                                <input type="text" class="form-control" id="find" placeholder="Find By Keyword...">
+                                <div class="find-pf-buttons">
+                                    <span class="find-pf-nums">1 of 3</span>
+                                    <button class="btn btn-link" type="button">
            <span class="fa fa-angle-up"></span>
           </button>
-          <button class="btn btn-link" type="button">
+                                    <button class="btn btn-link" type="button">
            <span class="fa fa-angle-down"></span>
           </button>
-          <button class="btn btn-link btn-find-close" type="button">
+                                    <button class="btn btn-link btn-find-close" type="button">
            <span class="pficon pficon-close"></span>
           </button>
-         </div><!-- /find-pf-buttons -->
-        </div><!-- /find-pf-dropdown-container -->
-       </div><!-- /toolbar-pf-find -->
-      </div><!-- /toolbar-pf-action-right -->
-     </form>
-     <div class="clearfix toolbar-pf-results">
-      <div class="col-sm-12">
-       <h5><span id="numresults"></span> Results</h5>
-      </div><!-- /col -->
-     </div><!-- /row -->
-    </div><!-- /col -->
-   </div><!-- /row -->
-   <div class="clearfix">
-    <div class="col-sm">
-     <table id="metadata_table_citellus" class="table table-hover table-bordered">
-      <thead>
-       <tr><th colspan=2 class="text-center">Citellus Runtime Metadata</th></tr>
-      </thead>
-      <tbody></tbody>
-     </table>
-    </div> <!-- /col -->
-   </div> <!-- /row -->
-   <div class="clearfix row-cards-pf">
-    <div id="list-group" class="list-group list-view-pf list-view-pf-view">
-    </div><!-- /list-group -->
-   </div><!-- /row-cards-pf -->
-  </div> <!-- /container -->
-  <div class="modal fade" id="modal-categories" tabindex="-1" role="dialog" aria-labelledby="modalCategoriesLabel" aria-hidden="true">
-   <div class="modal-dialog" role="document">
-    <div class="modal-content">
-     <div class="modal-header">
-      <h5 class="modal-title" id="modalCategoriesLabel">Category Filter</h5>
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                </div>
+                                <!-- /find-pf-buttons -->
+                            </div>
+                            <!-- /find-pf-dropdown-container -->
+                        </div>
+                        <!-- /toolbar-pf-find -->
+                    </div>
+                    <!-- /toolbar-pf-action-right -->
+                </form>
+                <div class="clearfix toolbar-pf-results">
+                    <div class="col-sm-12">
+                        <h5><span id="numresults"></span> Results</h5>
+                    </div>
+                    <!-- /col -->
+                </div>
+                <!-- /row -->
+            </div>
+            <!-- /col -->
+        </div>
+        <!-- /row -->
+        <div class="clearfix">
+            <div class="col-sm">
+                <table id="metadata_table_citellus" class="table table-hover table-bordered">
+                    <thead>
+                        <tr>
+                            <th colspan=2 class="text-center">Citellus Runtime Metadata</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <!-- /col -->
+        </div>
+        <!-- /row -->
+        <div class="clearfix row-cards-pf">
+            <div id="list-group" class="list-group list-view-pf list-view-pf-view">
+            </div>
+            <!-- /list-group -->
+        </div>
+        <!-- /row-cards-pf -->
+    </div>
+    <!-- /container -->
+    <div class="modal fade" id="modal-categories" tabindex="-1" role="dialog" aria-labelledby="modalCategoriesLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalCategoriesLabel">Category Filter</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
        <span aria-hidden="true">&times;</span>
       </button>
-     </div>
-     <div id="category-list" class="modal-body"></div>
-      <div class="modal-footer">
-       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div><!-- /modal-footer -->
-     </div><!-- /modal-content -->
-    </div><!-- /modal-dialog -->
-   </div><!-- /modal -->
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/patternfly/3.24.0/js/patternfly.min.js"></script>
-   <script>
-    var ft_min_char = 3;
-    var plugin_cats_array = new Array();
-    var server_array = new Array();
-    // function to get query string
-    function getParameterByName(name) {
-        var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
-        return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
-    }
-    // function that filters the unique values of an array
-    function onlyUnique(value, index, self) {
-        return self.indexOf(value) === index;
-    }
-    // function to either check or uncheck all categories
-    function checkAllCat(checked) {
-        $(".check-category").each(function(i,j) {
-            $(this).prop("checked",checked);
-        });
-        $("#check_all").prop("checked",checked);
-        filterCards();
-    }
-    // function that applies all possible filters.
-    // it's called whenever a filter is triggered.
-    function filterCards() {
-        var count = 0;
-        var filter_status = $("#filter_status").val();
-        var filter_text = $("#filter_text").val();
-        var filter_category = "";
-        $(".check-category").each(function(i,j) {
-            if ($(this).prop("checked")) {
-                filter_category += $(this).attr("name") + "|";
-            }
-        });
-        filter_category = filter_category.slice(0, -1);
-        var cb_regex = new RegExp(filter_category);
-        $("#list-group > div").each(function(i,j) {
-            var plugin_cats = $(this).data("categories");
-            var plugin_txt = $(this).children('.plugin-error').first().text();
-            var plugin_name = $(this).data("name").toString();
-            var plugin_status = $(this).data("state");
-            // Validations:
-            // - if plugin categories match regex of checked categories
-            // - if plugin state match status filter
-            // - if plugin (name|text) match text filter, only if there's at least $ft_min_char char
-            if (cb_regex.test(plugin_cats) && /[a-z0-9]+/.test(cb_regex) && (filter_status == "all" || filter_status == $(this).data("state")) && (filter_text.length < ft_min_char || (filter_text.length >= ft_min_char && (plugin_txt && plugin_txt.toLowerCase().indexOf(filter_text) != -1) || (plugin_name && plugin_name.toLowerCase().indexOf(filter_text) != -1)))) {
-                $(this).show();
-                count += 1;
-            } else {
-                $(this).hide();
-            }
-        });
-        $("#numresults").html(count);
-    }
-    // function that returns various metadata depending on RC
-    function getPluginState(rc) {
-        var plugin_icon;
-        var plugin_state;
-        var plugin_class;
-        var plugin_text_color;
-        var plugin_badge;
-        if (rc == 30) {
-            plugin_icon = "pficon pficon-help"; plugin_state = "skipped"; plugin_class = "info"; plugin_text_color = "text-black";
-        } else if (rc == 10) {
-            plugin_icon = "fa fa-check-circle-o"; plugin_state = "okay"; plugin_class = "success"; plugin_text_color = "text-black";
-        } else {
-            plugin_icon = "pficon pficon-error-circle-o"; plugin_state = "failed"; plugin_class = "danger"; plugin_text_color = "text-black";
+                </div>
+                <div id="category-list" class="modal-body"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+                <!-- /modal-footer -->
+            </div>
+            <!-- /modal-content -->
+        </div>
+        <!-- /modal-dialog -->
+    </div>
+    <!-- /modal -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/patternfly/3.24.0/js/patternfly.min.js"></script>
+    <script>
+        // "Config"
+        // text search minimum characters before we fire the search
+        var ft_min_char = 3;
+        // List of json files we're looking
+        var jsonFilesList = ["citellus.json", "magui.json"]
+        var plugin_cats_array = new Array();
+        var server_array = new Array();
+        // function to get query string
+        function getParameterByName(name) {
+            var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
+            return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
         }
-        plugin_badge = '<span class="badge badge-pill badge-'+plugin_class+'">'+plugin_state+'</span>';
-        return {
-            icon: plugin_icon,
-            state: plugin_state,
-            pclass: plugin_class,
-            text_color: plugin_text_color,
-            badge: plugin_badge
+        // function that filters the unique values of an array
+        function onlyUnique(value, index, self) {
+            return self.indexOf(value) === index;
         }
-
-    }
-    // function that returns pluging names and category
-    function getPluginNames(item) {
-        var plugin_long_name = "";
-        var plugin_re = /plugins\/[^\/]+\/(.*)\/([^\/]+)\.[a-z0-9]+$/;
-        var plugin_name = "";
-        var plugin_cat = "";
-        if (plugin_re.test(item.plugin)) {
-            plugin_name = plugin_re.exec(item.plugin)[2];
-            plugin_cat = plugin_re.exec(item.plugin)[1];
-        } else {
-            plugin_name = item.plugin
-            plugin_cat = "magui"
-        }
-        if (/[a-z0-9]+/.test(item.long_name) && !/^undefined$/.test(item.long_name)) {
-            plugin_long_name = item.long_name;
-        } else {
-            plugin_long_name = plugin_name;
-        }
-        return {
-            name: plugin_name,
-            long_name: plugin_long_name,
-            cat: plugin_cat
-        }
-    }
-    // function that parses the plugin cat returned by getPluginNames and return a visual and populates global array
-    function getPluginCats(cat, subcat) {
-        var plugin_cats_visual = "";
-        var plugin_cats_list = "";
-        var plugin_cats = subcat.split("/");
-        if (plugin_cats[0] != cat) {
-            plugin_cats.unshift(cat)
-        }
-        $.each(plugin_cats, function(c, cname) {
-            if (cname != "undefined") {
-                plugin_cats_visual += '<a href="#" data-category="'+cname+'" class="badge badge-primary category-badge">'+cname+'</a> ';
-                plugin_cats_list += cname+',';
-                plugin_cats_array.push(cname);
-            }
-        });
-
-        plugin_cats_list = plugin_cats_list.slice(0, -1);
-        return {
-            list: plugin_cats_list,
-            visual: plugin_cats_visual
-        }
-    }
-    function sortPlugins(sortkey) {
-        var mylist = $("#list-group");
-        var listitems = mylist.children('div .list-group-item').get();
-        var sortdirection = $("#sortDirection").data("direction");
-        listitems.sort(function(a, b) {
-            if (sortkey == "priority") {
-                if (sortdirection == "desc") {
-                    return ($(b).data(sortkey) - $(a).data(sortkey));
-                } else {
-                    return ($(a).data(sortkey) - $(b).data(sortkey));
-                }
-            } else {
-                if (sortdirection == "desc") {
-                    return $(a).data(sortkey).toString().localeCompare($(b).data(sortkey).toString());
-                } else {
-                    return $(b).data(sortkey).toString().localeCompare($(a).data(sortkey).toString());
-                }
-            }
-        })
-        $.each(listitems, function(idx, itm) { mylist.append(itm); });
-    };
-    // function that generates a row to add to the accordion
-    function printCitellusPlugin (result, out, err, rc, data, plugin_var_name = false) {
-        var plugin_names = getPluginNames(result)
-        if (plugin_var_name == "metadata-outputs") {
-            plugin_names.cat = "metadata";
-        }
-        var plugin_cats = getPluginCats(result.category, result.subcategory)
-        var plugin_state = getPluginState(rc);
-        if (result.priority == "undefined") {
-            result.priority = 0;
-        }
-
-        // Converting the links to html
-        if (Array.isArray(err)){
-            err = err.join();
-        }
-        var error_text = err.replace(/\bhttp[s]*:\/\/([^\s]+)+\b/gi,'<a href="$&" target="_blank">$&</a>');
-        var item_id = result.id;
-        var row = "";
-        // we build the text that is going to be appended to the container
-        row += '        <div class="list-group-item" data-priority="'+result.priority+'" data-state="'+plugin_state.state+'" data-name="'+plugin_names.name+'" data-categories="'+ plugin_cats.list +'" id="plugin-'+item_id+'">\n';
-        row += '         <textarea class="plugin-error" style="display: none;">'+err+'</textarea>\n';
-        row += '         <div class="list-group-item-header">\n';
-        row += '          <div class="list-view-pf-expand">\n';
-        row += '           <span class="fa fa-angle-right"></span>\n';
-        row += '          </div> <!-- /list-view-pf-expand -->\n';
-        row += '          <div class="list-view-pf-main-info">\n';
-        row += '           <div class="list-view-pf-left">\n';
-        row += '            <span class="'+plugin_state.icon+' list-view-pf-icon-sm list-view-pf-icon-'+plugin_state.pclass+'"></span>\n';
-        row += '           </div><!-- /list-view-pf-left -->\n';
-        row += '           <div class="list-view-pf-body">\n';
-        row += '            <div class="list-view-pf-description">\n';
-        row += '             <div class="list-group-item-heading">'+plugin_names.name+'</div>\n';
-        row += '             <div class="list-group-item-text pull-left">'+plugin_names.long_name+'</div>\n';
-        row += '            </div><!-- /list-view-pf-description -->\n';
-        row += '             <div class="list-view-pf-additional-info-item" style="width: 25%">\n';
-        row += '              <span class="pficon pficon-replicator"></span> ' + plugin_cats.visual;
-        row += '             </div> <!-- /list-view-pf-additional-info-item -->\n';
-        row += '           </div><!-- /list-view-pf-body -->\n';
-        row += '          </div><!-- /list-view-pf-main-info -->\n';
-        row += '         </div><!-- /list-group-item-header -->\n';
-        row += '         <div class="list-group-item-container container-fluid hidden">\n';
-        row += '          <div class="close">\n';
-        row += '           <span class="pficon pficon-close"></span>\n';
-        row += '          </div><!-- /close -->\n';
-        row += '          <div class="clearfix">\n';
-        row += '           <div class="col-md-9">\n';
-        row += '            <dl class="dl-horizontal">\n';
-        row += '             <dt>Description</dt>\n';
-        row += '             <dd>'+result.description+'</dd>\n';
-        row += '             <dt>Plugin Execution Time</dt>\n';
-        row += '             <dd>'+Math.round(result.time * 1000)/1000+'</dd>\n';
-        row += '             <dt>Backend</dt>\n';
-        row += '             <dd>'+result.backend+'</dd>\n';
-        row += '             <dt>Priority</dt>\n';
-        row += '             <dd>'+result.priority+'</dd>\n';
-        row += '             <dt>Bugzilla</dt>\n';
-        if (/([0-9])+$/.test(result.bugzilla)) {
-            row += '        <dd><a href="'+result.bugzilla+'" target="_blank"><span class="badge badge-danger">'+/([0-9]+)$/.exec(result.bugzilla)[1]+'</span></a></dd>\n';
-        } else if (/\_([0-9]{7})$/.test(plugin_names.name)) {
-            row += '        <dd><a href="https://bugzilla.redhat.com/show_bug.cgi?id='+/\_([0-9]{7})$/.exec(plugin_names.name)[1]+'" target="_blank" class="badge badge-danger">'+/\_([0-9]{7})$/.exec(plugin_names.name)[1]+'</a></dd>\n';
-        } else {
-            row += '        <dd>N/A</dd>\n';
-        }
-        row += '             <dt>Out</dt>\n';
-        if (/[a-z0-9]+/.test(out)) {
-            row += '             <dd><pre>'+out+'</pre></dd>\n';
-        } else {
-            row += '             <dd>N/A</dd>\n';
-        }
-        row += '             <dt>Error</dt>\n';
-        if (/[a-z0-9]+/.test(error_text)) {
-            row += '             <dd><pre>'+error_text+'</pre></dd>\n';
-        } else {
-            row += '             <dd>N/A</dd>\n';
-        }
-        row += '            </dl>\n';
-        row += '           <p>\n';
-        row += '           </p><!-- /p -->\n';
-        row += '          </div><!-- /col-md-9 -->\n';
-        row += '          <div class="col-md-3">\n';
-        row += '            <a href="#plugin-'+item_id+'"><span class="fa fa-link"></span> Link</a>\n';
-        row += '          </div><!-- /col-md-3 -->\n';
-        row += '         </div><!-- /row -->\n';
-        row += '        </div><!-- /list-group-item-container -->\n';
-        row += '       </div><!-- /list-group-item -->\n';
-        $("#list-group").append(row);
-    }
-    // function that prints alert message at the top
-    function warnMessage(level,m) {
-        var html = '<div class="alert alert-'+level+' alert-dismissible fade show" role="alert"><strong>'+level+'</strong> '+m+' <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span></button></div>';
-        $("#alert_list").append(html);
-    }
-    // Count the number of objects
-    function ObjectLength( object ) {
-        var length = 0;
-        for( var key in object ) {
-            if( object.hasOwnProperty(key) ) {
-                ++length;
-            }
-        }
-        return length;
-    };
-    // This code is only executed when everything else is loaded
-    $(document).ready(function() {
-        jsonFile = getParameterByName("json");
-        if (jsonFile == null) {
-            jsonFile = "citellus.json";
-        }
-
-        // Chrome is too secure
-        var url_file_regex = new RegExp("^file:\/\/");
-        if (window.chrome && window.chrome.webstore && url_file_regex.test(window.location.href)) {
-            warnMessage("warning","Some browsers (ie: Chrome) are not accepting file:// URLs. Firefox supports it, or you can start Chrome with --allow-file-access-from-files");
-        }
-
-        // for some unknown reason, this is broken
-        $("#expandAll").click(function(e) {
-            $("#list-group > div").each(function(i,j) {
-                $(j).toggleClass("list-view-pf-expand-active").find(".list-group-item-container").toggleClass("hidden");
+        // function to either check or uncheck all categories
+        function checkAllCat(checked) {
+            $(".check-category").each(function(i, j) {
+                $(this).prop("checked", checked);
             });
-        });
-
-        // listener when the user picks a status filter
-        $(".filter-status").click(function(e){
-            $("#filter_status").val($(this).data("filter"));
+            $("#check_all").prop("checked", checked);
             filterCards();
-        });
-        // listener when the user writes in the searchbox
-	    $("#filter_text").keyup(function(e) {
-            filterCards();
-    	});
-
-        // In this section, we have to attach events on the body
-        // because we are using dynamic elements
-
-        // listener when the user clicks on category check boxes
-        $("body").on("change",".check-category",function() {
-             filterCards();
-        });
-        // listener when the user checks or uncheck the "All categories"
-        $("body").on("change","#check_all",function() {
-            var cb = $(this);
-            checkAllCat(cb.prop("checked"));
-        });
-        // listener when someone is clicking on a badge in an expanded card
-        $("body").on("click",".category-badge",function() {
-            var cat = $(this).data("category");
-            checkAllCat(false);
-            $("#cb_cat_"+cat).prop("checked",true).change();
-        });
-        // click the list-view heading then expand a row
-        $("body").on("click",".list-group-item-header",function(event){
-            if(!$(event.target).is("button, a, input, .fa-ellipsis-v")){
-                $(this).find(".fa-angle-right").toggleClass("fa-angle-down").end().parent().toggleClass("list-view-pf-expand-active").find(".list-group-item-container").toggleClass("hidden");
-            }
-        })
-        // click the close button, hide the expand row and remove the active status
-        $("body").on("click",".list-group-item-container .close", function (){
-            $(this).parent().addClass("hidden").parent().removeClass("list-view-pf-expand-active").find(".fa-angle-right").removeClass("fa-angle-down");
-        })
-        $("body").on("click","#sortDirection",function(e) {
-            var sortdir = $("#sortDirection");
-            sortdir.removeClass()
-            if (sortdir.data("direction") == "desc" ) {
-                sortdir.addClass("fa fa-sort-amount-asc");
-                sortdir.data("direction","asc")
-            } else {
-                sortdir.addClass("fa fa-sort-amount-desc");
-                sortdir.data("direction","desc")
-            }
-            sortPlugins($("#plugin-sort").data("sortfield"));
-        });
-        $("body").on("click",".plugin-sort-field",function(e) {
-            var sortfield = $(this);
-            var sortkey = sortfield.html();
-            var sortkeyl = sortkey.toLowerCase();
-            var sortbutton = $(this).parent().parent().parent().find("button");
-            sortfield.parent().parent().find("li").removeClass("selected");
-            sortfield.parent().addClass("selected");
-            sortbutton.html(sortkey + ' <span class="caret"></span>');
-            sortbutton.data("sortfield",sortkeyl)
-            sortPlugins(sortkeyl);
-        });
-
-        // Here we load the data from citellus.json with ajax and we populate the webpage
-        $.ajax({
-            url: jsonFile,
-            dataType: "json",
-            async: true,
-            error: function(jqXHR, exception) {
-                if (jqXHR.status === 0) {
-                    warnMessage("danger","Unable to get JSON file. [0]");
-                } else if (jqXHR.status == 404) {
-                    warnMessage("danger","File not found. [404]");
-                } else if (jqXHR.status == 500) {
-                    warnMessage("danger","Internal Server Error [500].");
-                } else if (exception === "parsererror") {
-                    warnMessage("danger","Requested JSON parse failed.");
-                } else if (exception === "timeout") {
-                    warnMessage("danger","Time out error.");
-                } else if (exception === "abort") {
-                    warnMessage("danger","Ajax request aborted.");
+        }
+        // function that applies all possible filters.
+        // it's called whenever a filter is triggered.
+        function filterCards() {
+            var count = 0;
+            var filter_status = $("#filter_status").val();
+            var filter_text = $("#filter_text").val();
+            var filter_category = "";
+            $(".check-category").each(function(i, j) {
+                if ($(this).prop("checked")) {
+                    filter_category += $(this).attr("name") + "|";
+                }
+            });
+            filter_category = filter_category.slice(0, -1);
+            var cb_regex = new RegExp(filter_category);
+            $("#list-group > div").each(function(i, j) {
+                var plugin_cats = $(this).data("categories");
+                var plugin_txt = $(this).children('.plugin-error').first().text();
+                var plugin_name = $(this).data("name").toString();
+                var plugin_status = $(this).data("state");
+                // Validations:
+                // - if plugin categories match regex of checked categories
+                // - if plugin state match status filter
+                // - if plugin (name|text) match text filter, only if there's at least $ft_min_char char
+                if (cb_regex.test(plugin_cats) && /[a-z0-9]+/.test(cb_regex) && (filter_status == "all" || filter_status == $(this).data("state")) && (filter_text.length < ft_min_char || (filter_text.length >= ft_min_char && (plugin_txt && plugin_txt.toLowerCase().indexOf(filter_text) != -1) || (plugin_name && plugin_name.toLowerCase().indexOf(filter_text) != -1)))) {
+                    $(this).show();
+                    count += 1;
                 } else {
-                    warnMessage("danger","Uncaught Error.\n" + jqXHR.responseText);
+                    $(this).hide();
                 }
-            },
-            success: function(data) {
-                // We need to generate some kind of plugin id with the filename
-                $.each(data.metadata, function(i, item) {
-                    var row = '<tr><th>'+i+'</th><td>'+item+'</td></tr>\n';
-                    $("#metadata_table_citellus > tbody:last-child").append(row);
-                });
-                var dataNum = ObjectLength(data.results);
-                var counter = 0;
-                $.each(data.results, function(i, item) {
+            });
+            $("#numresults").html(count);
+        }
+        // function that returns various metadata depending on RC
+        function getPluginState(rc) {
+            var plugin_icon;
+            var plugin_state;
+            var plugin_class;
+            var plugin_text_color;
+            var plugin_badge;
+            if (rc == 30) {
+                plugin_icon = "pficon pficon-help";
+                plugin_state = "skipped";
+                plugin_class = "info";
+                plugin_text_color = "text-black";
+            } else if (rc == 10) {
+                plugin_icon = "fa fa-check-circle-o";
+                plugin_state = "okay";
+                plugin_class = "success";
+                plugin_text_color = "text-black";
+            } else {
+                plugin_icon = "pficon pficon-error-circle-o";
+                plugin_state = "failed";
+                plugin_class = "danger";
+                plugin_text_color = "text-black";
+            }
+            plugin_badge = '<span class="badge badge-pill badge-' + plugin_class + '">' + plugin_state + '</span>';
+            return {
+                icon: plugin_icon,
+                state: plugin_state,
+                pclass: plugin_class,
+                text_color: plugin_text_color,
+                badge: plugin_badge
+            }
 
-                    // This counter will let us know when we are done looping
-                    // We need this because JS is async
-                    counter++;
+        }
+        // function that returns pluging names and category
+        function getPluginNames(item) {
+            var plugin_long_name = "";
+            var plugin_re = /plugins\/[^\/]+\/(.*)\/([^\/]+)\.[a-z0-9]+$/;
+            var plugin_name = "";
+            var plugin_cat = "";
+            if (plugin_re.test(item.plugin)) {
+                plugin_name = plugin_re.exec(item.plugin)[2];
+                plugin_cat = plugin_re.exec(item.plugin)[1];
+            } else {
+                plugin_name = item.plugin
+                plugin_cat = "magui"
+            }
+            if (/[a-z0-9]+/.test(item.long_name) && !/^undefined$/.test(item.long_name)) {
+                plugin_long_name = item.long_name;
+            } else {
+                plugin_long_name = plugin_name;
+            }
+            return {
+                name: plugin_name,
+                long_name: plugin_long_name,
+                cat: plugin_cat
+            }
+        }
+        // function that parses the plugin cat returned by getPluginNames and return a visual and populates global array
+        function getPluginCats(cat, subcat) {
+            var plugin_cats_visual = "";
+            var plugin_cats_list = "";
+            var plugin_cats = subcat.split("/");
+            if (plugin_cats[0] != cat) {
+                plugin_cats.unshift(cat)
+            }
+            $.each(plugin_cats, function(c, cname) {
+                if (cname != "undefined") {
+                    plugin_cats_visual += '<a href="#" data-category="' + cname + '" class="badge badge-primary category-badge">' + cname + '</a> ';
+                    plugin_cats_list += cname + ',';
+                    plugin_cats_array.push(cname);
+                }
+            });
 
-                    if (counter == dataNum) {
-                        // Here we are done with looping all the results, we are going to update the filters above
-                        var unique = plugin_cats_array.filter( onlyUnique ).sort();
-                        // We generate the category filters here
-                        var div_cat_list = '<div class="row"><label id="label_check_all" class="btn btn-dark active" style="width: 100%"><input type="checkbox" id="check_all" checked autocomplete="off">All</label></div><div class="row">\n';
-                        $.each(unique,function(c, cname) {
-                            div_cat_list += ' <div class="col-sm-4"><label><input type="checkbox" name="'+cname+'" id="cb_cat_'+cname+'" class="check-category" data-category="'+cname+'" checked autocomplete="off">'+cname+'</label></div>\n';
-                        });
-                        div_cat_list += '</div>';
-                        $("#category-list").html(div_cat_list);
-                        $("#numresults").html(counter);
+            plugin_cats_list = plugin_cats_list.slice(0, -1);
+            return {
+                list: plugin_cats_list,
+                visual: plugin_cats_visual
+            }
+        }
+
+        function sortPlugins(sortkey) {
+            var mylist = $("#list-group");
+            var listitems = mylist.children('div .list-group-item').get();
+            var sortdirection = $("#sortDirection").data("direction");
+            listitems.sort(function(a, b) {
+                if (sortkey == "priority") {
+                    if (sortdirection == "desc") {
+                        return ($(b).data(sortkey) - $(a).data(sortkey));
+                    } else {
+                        return ($(a).data(sortkey) - $(b).data(sortkey));
                     }
-                    // Here we have a citellus.json
-                    if (data.metadata.source == "citellus") {
-                        printCitellusPlugin(item,item.result.out,item.result.err,item.result.rc, data);
-                    // Here we have a magui.json
-                    } else if (data.metadata.source == "magui") {
-                        if (item.plugin == "citellus-outputs" || item.plugin == "metadata-outputs") {
-                            $.each(item.result, function(s,result) {
-                                if (s == "err") {
-                                    $.each(result,function(plugin,pdata) {
-
-                                        // Defining defaults for globals
-                                        var gout = "";
-                                        var gerr = "";
-                                        var grc = 30;
-                                        $.each(pdata.sosreport,function(server,obj) {
-                                            // If we have a failed, the global will definitely be failed
-                                            if (obj.rc == 20) {
-                                                grc = 20;
-                                            }
-                                            // We make sur to not override a failure with an okay
-                                            if (obj.rc == 10 && grc != 20) {
-                                                grc = 10;
-                                            }
-                                            var plugin_state = getPluginState(obj.rc);
-                                            gout += plugin_state.badge + " " + server + ": " + obj.out + "<br>";
-                                            gerr += plugin_state.badge + " " + server + ": " + obj.err + "<br>";
-                                        })
-                                        printCitellusPlugin(pdata, gout, gerr, grc, data, item.plugin)
-                                    }); // each result
-                                } // s == "err"
-                            }); // each item.result
-                        } else {
-                            printCitellusPlugin(item,item.result.out,item.result.err,item.result.rc,data, false, "magui")
-                        } // if citellus-outputs
-                    } // if data source == "magui"
-                }); // each data.result
-                sortPlugins("priority");
-                if (window.location.hash.substr(1)) {
-                    $('html, body').animate({
-                        scrollTop: $("#" + window.location.hash.substr(1)).offset().top
-                    }, 1000);
-                    $("#" + window.location.hash.substr(1)).find(".fa-angle-right:first").toggleClass("fa-angle-down").end().toggleClass("list-view-pf-expand-active").find(".list-group-item-container").toggleClass("hidden").end().css("border","2px solid red");
+                } else {
+                    if (sortdirection == "desc") {
+                        return $(a).data(sortkey).toString().localeCompare($(b).data(sortkey).toString());
+                    } else {
+                        return $(b).data(sortkey).toString().localeCompare($(a).data(sortkey).toString());
+                    }
                 }
-            } // ajax success
-        }); // ajax query
-    }); // doc ready
-  </script>
- </body>
+            })
+            $.each(listitems, function(idx, itm) {
+                mylist.append(itm);
+            });
+        };
+        // function that generates a row to add to the accordion
+        function printCitellusPlugin(result, out, err, rc, data, plugin_var_name = false) {
+            var plugin_names = getPluginNames(result)
+            if (plugin_var_name == "metadata-outputs") {
+                plugin_names.cat = "metadata";
+            }
+            var plugin_cats = getPluginCats(result.category, result.subcategory)
+            var plugin_state = getPluginState(rc);
+            if (result.priority == "undefined") {
+                result.priority = 0;
+            }
+
+            // Converting the links to html
+            if (Array.isArray(err)) {
+                err = err.join();
+            }
+            var error_text = err.replace(/\bhttp[s]*:\/\/([^\s]+)+\b/gi, '<a href="$&" target="_blank">$&</a>');
+            var item_id = result.id;
+            var row = "";
+            // we build the text that is going to be appended to the container
+            row += '        <div class="list-group-item" data-priority="' + result.priority + '" data-state="' + plugin_state.state + '" data-name="' + plugin_names.name + '" data-categories="' + plugin_cats.list + '" id="plugin-' + item_id + '">\n';
+            row += '         <textarea class="plugin-error" style="display: none;">' + err + '</textarea>\n';
+            row += '         <div class="list-group-item-header">\n';
+            row += '          <div class="list-view-pf-expand">\n';
+            row += '           <span class="fa fa-angle-right"></span>\n';
+            row += '          </div> <!-- /list-view-pf-expand -->\n';
+            row += '          <div class="list-view-pf-main-info">\n';
+            row += '           <div class="list-view-pf-left">\n';
+            row += '            <span class="' + plugin_state.icon + ' list-view-pf-icon-sm list-view-pf-icon-' + plugin_state.pclass + '"></span>\n';
+            row += '           </div><!-- /list-view-pf-left -->\n';
+            row += '           <div class="list-view-pf-body">\n';
+            row += '            <div class="list-view-pf-description">\n';
+            row += '             <div class="list-group-item-heading">' + plugin_names.name + '</div>\n';
+            row += '             <div class="list-group-item-text pull-left">' + plugin_names.long_name + '</div>\n';
+            row += '            </div><!-- /list-view-pf-description -->\n';
+            row += '             <div class="list-view-pf-additional-info-item" style="width: 25%">\n';
+            row += '              <span class="pficon pficon-replicator"></span> ' + plugin_cats.visual;
+            row += '             </div> <!-- /list-view-pf-additional-info-item -->\n';
+            row += '           </div><!-- /list-view-pf-body -->\n';
+            row += '          </div><!-- /list-view-pf-main-info -->\n';
+            row += '         </div><!-- /list-group-item-header -->\n';
+            row += '         <div class="list-group-item-container container-fluid hidden">\n';
+            row += '          <div class="close">\n';
+            row += '           <span class="pficon pficon-close"></span>\n';
+            row += '          </div><!-- /close -->\n';
+            row += '          <div class="clearfix">\n';
+            row += '           <div class="col-md-9">\n';
+            row += '            <dl class="dl-horizontal">\n';
+            row += '             <dt>Description</dt>\n';
+            row += '             <dd>' + result.description + '</dd>\n';
+            row += '             <dt>Plugin Execution Time</dt>\n';
+            row += '             <dd>' + Math.round(result.time * 1000) / 1000 + '</dd>\n';
+            row += '             <dt>Backend</dt>\n';
+            row += '             <dd>' + result.backend + '</dd>\n';
+            row += '             <dt>Priority</dt>\n';
+            row += '             <dd>' + result.priority + '</dd>\n';
+            row += '             <dt>Bugzilla</dt>\n';
+            if (/([0-9])+$/.test(result.bugzilla)) {
+                row += '        <dd><a href="' + result.bugzilla + '" target="_blank"><span class="badge badge-danger">' + /([0-9]+)$/.exec(result.bugzilla)[1] + '</span></a></dd>\n';
+            } else if (/\_([0-9]{7})$/.test(plugin_names.name)) {
+                row += '        <dd><a href="https://bugzilla.redhat.com/show_bug.cgi?id=' + /\_([0-9]{7})$/.exec(plugin_names.name)[1] + '" target="_blank" class="badge badge-danger">' + /\_([0-9]{7})$/.exec(plugin_names.name)[1] + '</a></dd>\n';
+            } else {
+                row += '        <dd>N/A</dd>\n';
+            }
+            row += '             <dt>Out</dt>\n';
+            if (/[a-z0-9]+/.test(out)) {
+                row += '             <dd><pre>' + out + '</pre></dd>\n';
+            } else {
+                row += '             <dd>N/A</dd>\n';
+            }
+            row += '             <dt>Error</dt>\n';
+            if (/[a-z0-9]+/.test(error_text)) {
+                row += '             <dd><pre>' + error_text + '</pre></dd>\n';
+            } else {
+                row += '             <dd>N/A</dd>\n';
+            }
+            row += '            </dl>\n';
+            row += '           <p>\n';
+            row += '           </p><!-- /p -->\n';
+            row += '          </div><!-- /col-md-9 -->\n';
+            row += '          <div class="col-md-3">\n';
+            row += '            <a href="#plugin-' + item_id + '"><span class="fa fa-link"></span> Link</a>\n';
+            row += '          </div><!-- /col-md-3 -->\n';
+            row += '         </div><!-- /row -->\n';
+            row += '        </div><!-- /list-group-item-container -->\n';
+            row += '       </div><!-- /list-group-item -->\n';
+            $("#list-group").append(row);
+        }
+        // function that prints alert message at the top
+        function warnMessage(level, m) {
+            var html = '<div class="alert alert-' + level + ' alert-dismissible fade show" role="alert"><strong>' + level + '</strong> ' + m + ' <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span></button></div>';
+            $("#alert_list").append(html);
+        }
+        // Count the number of objects
+        function ObjectLength(object) {
+            var length = 0;
+            for (var key in object) {
+                if (object.hasOwnProperty(key)) {
+                    ++length;
+                }
+            }
+            return length;
+        };
+
+        function checkForFile(f) {
+            var div_otherJsons = $("#otherJsons");
+            return $.ajax({
+                url: f,
+                type: 'HEAD',
+                dataType: "json",
+                async: false,
+                success: function(data) {
+                    if (f == jsonFile) {
+                        div_otherJsons.children("button").html(jsonFile + ' <span class="caret"></span>');
+                    }
+                    div_otherJsons.children("ul").append('<li><a href="#" class="json-files">' + f + '</a></li>')
+                    div_otherJsons.removeClass("hidden")
+                }
+            });
+        }
+        // This code is only executed when everything else is loaded
+        $(document).ready(function() {
+            jsonFile = getParameterByName("json");
+            if (jsonFile == null) {
+                jsonFile = "citellus.json";
+            }
+            for (i = 0; i < jsonFilesList.length; ++i) {
+                checkForFile(jsonFilesList[i])
+            }
+            // Chrome is too secure
+            var url_file_regex = new RegExp("^file:\/\/");
+            if (window.chrome && window.chrome.webstore && url_file_regex.test(window.location.href)) {
+                warnMessage("warning", "Some browsers (ie: Chrome) are not accepting file:// URLs. Firefox supports it, or you can start Chrome with --allow-file-access-from-files");
+            }
+
+            // for some unknown reason, this is broken
+            $("#expandAll").click(function(e) {
+                $("#list-group > div").each(function(i, j) {
+                    $(j).toggleClass("list-view-pf-expand-active").find(".list-group-item-container").toggleClass("hidden");
+                });
+            });
+
+            // listener when the user picks a status filter
+            $(".filter-status").click(function(e) {
+                $("#filter_status").val($(this).data("filter"));
+                filterCards();
+            });
+            // listener when the user writes in the searchbox
+            $("#filter_text").keyup(function(e) {
+                filterCards();
+            });
+
+            // In this section, we have to attach events on the body
+            // because we are using dynamic elements
+
+            // listener when the user clicks on category check boxes
+            $("body").on("change", ".check-category", function() {
+                filterCards();
+            });
+            // listener when the user checks or uncheck the "All categories"
+            $("body").on("change", "#check_all", function() {
+                var cb = $(this);
+                checkAllCat(cb.prop("checked"));
+            });
+            // listener when someone is clicking on a badge in an expanded card
+            $("body").on("click", ".category-badge", function() {
+                var cat = $(this).data("category");
+                checkAllCat(false);
+                $("#cb_cat_" + cat).prop("checked", true).change();
+            });
+            // click the list-view heading then expand a row
+            $("body").on("click", ".list-group-item-header", function(event) {
+                    if (!$(event.target).is("button, a, input, .fa-ellipsis-v")) {
+                        $(this).find(".fa-angle-right").toggleClass("fa-angle-down").end().parent().toggleClass("list-view-pf-expand-active").find(".list-group-item-container").toggleClass("hidden");
+                    }
+                })
+                // click the close button, hide the expand row and remove the active status
+            $("body").on("click", ".list-group-item-container .close", function() {
+                $(this).parent().addClass("hidden").parent().removeClass("list-view-pf-expand-active").find(".fa-angle-right").removeClass("fa-angle-down");
+            })
+            $("body").on("click", "#sortDirection", function(e) {
+                var sortdir = $("#sortDirection");
+                sortdir.removeClass()
+                if (sortdir.data("direction") == "desc") {
+                    sortdir.addClass("fa fa-sort-amount-asc");
+                    sortdir.data("direction", "asc")
+                } else {
+                    sortdir.addClass("fa fa-sort-amount-desc");
+                    sortdir.data("direction", "desc")
+                }
+                sortPlugins($("#plugin-sort").data("sortfield"));
+            });
+            $("body").on("click", ".plugin-sort-field", function(e) {
+                var sortfield = $(this);
+                var sortkey = sortfield.html();
+                var sortkeyl = sortkey.toLowerCase();
+                var sortbutton = $(this).parent().parent().parent().find("button");
+                sortfield.parent().parent().find("li").removeClass("selected");
+                sortfield.parent().addClass("selected");
+                sortbutton.html(sortkey + ' <span class="caret"></span>');
+                sortbutton.data("sortfield", sortkeyl)
+                sortPlugins(sortkeyl);
+            });
+            $("body").on("click", ".json-files", function(e) {
+                window.location.href = [location.protocol, '//', location.host, location.pathname].join('') + "?json=" + $(this).html();
+            });
+            // Here we load the data from citellus.json with ajax and we populate the webpage
+            $.ajax({
+                url: jsonFile,
+                dataType: "json",
+                async: true,
+                error: function(jqXHR, exception) {
+                    if (jqXHR.status === 0) {
+                        warnMessage("danger", "Unable to get JSON file. [0]");
+                    } else if (jqXHR.status == 404) {
+                        warnMessage("danger", "File not found. [404]");
+                    } else if (jqXHR.status == 500) {
+                        warnMessage("danger", "Internal Server Error [500].");
+                    } else if (exception === "parsererror") {
+                        warnMessage("danger", "Requested JSON parse failed.");
+                    } else if (exception === "timeout") {
+                        warnMessage("danger", "Time out error.");
+                    } else if (exception === "abort") {
+                        warnMessage("danger", "Ajax request aborted.");
+                    } else {
+                        warnMessage("danger", "Uncaught Error.\n" + jqXHR.responseText);
+                    }
+                },
+                success: function(data) {
+                        // We need to generate some kind of plugin id with the filename
+                        $.each(data.metadata, function(i, item) {
+                            var row = '<tr><th>' + i + '</th><td>' + item + '</td></tr>\n';
+                            $("#metadata_table_citellus > tbody:last-child").append(row);
+                        });
+                        var dataNum = ObjectLength(data.results);
+                        var counter = 0;
+                        $.each(data.results, function(i, item) {
+
+                            // This counter will let us know when we are done looping
+                            // We need this because JS is async
+                            counter++;
+
+                            if (counter == dataNum) {
+                                // Here we are done with looping all the results, we are going to update the filters above
+                                var unique = plugin_cats_array.filter(onlyUnique).sort();
+                                // We generate the category filters here
+                                var div_cat_list = '<div class="row"><label id="label_check_all" class="btn btn-dark active" style="width: 100%"><input type="checkbox" id="check_all" checked autocomplete="off">All</label></div><div class="row">\n';
+                                $.each(unique, function(c, cname) {
+                                    div_cat_list += ' <div class="col-sm-4"><label><input type="checkbox" name="' + cname + '" id="cb_cat_' + cname + '" class="check-category" data-category="' + cname + '" checked autocomplete="off">' + cname + '</label></div>\n';
+                                });
+                                div_cat_list += '</div>';
+                                $("#category-list").html(div_cat_list);
+                                $("#numresults").html(counter);
+                            }
+                            // Here we have a citellus.json
+                            if (data.metadata.source == "citellus") {
+                                printCitellusPlugin(item, item.result.out, item.result.err, item.result.rc, data);
+                                // Here we have a magui.json
+                            } else if (data.metadata.source == "magui") {
+                                if (item.plugin == "citellus-outputs" || item.plugin == "metadata-outputs") {
+                                    $.each(item.result, function(s, result) {
+                                        if (s == "err") {
+                                            $.each(result, function(plugin, pdata) {
+
+                                                // Defining defaults for globals
+                                                var gout = "";
+                                                var gerr = "";
+                                                var grc = 30;
+                                                $.each(pdata.sosreport, function(server, obj) {
+                                                    // If we have a failed, the global will definitely be failed
+                                                    if (obj.rc == 20) {
+                                                        grc = 20;
+                                                    }
+                                                    // We make sur to not override a failure with an okay
+                                                    if (obj.rc == 10 && grc != 20) {
+                                                        grc = 10;
+                                                    }
+                                                    var plugin_state = getPluginState(obj.rc);
+                                                    gout += plugin_state.badge + " " + server + ": " + obj.out + "<br>";
+                                                    gerr += plugin_state.badge + " " + server + ": " + obj.err + "<br>";
+                                                })
+                                                printCitellusPlugin(pdata, gout, gerr, grc, data, item.plugin)
+                                            }); // each result
+                                        } // s == "err"
+                                    }); // each item.result
+                                } else {
+                                    printCitellusPlugin(item, item.result.out, item.result.err, item.result.rc, data, false, "magui")
+                                } // if citellus-outputs
+                            } // if data source == "magui"
+                        }); // each data.result
+                        sortPlugins("priority");
+                        if (window.location.hash.substr(1)) {
+                            $('html, body').animate({
+                                scrollTop: $("#" + window.location.hash.substr(1)).offset().top
+                            }, 1000);
+                            $("#" + window.location.hash.substr(1)).find(".fa-angle-right:first").toggleClass("fa-angle-down").end().toggleClass("list-view-pf-expand-active").find(".list-group-item-container").toggleClass("hidden").end().css("border", "2px solid red");
+                        }
+                    } // ajax success
+            }); // ajax query
+        }); // doc ready
+    </script>
+</body>
+
 </html>
