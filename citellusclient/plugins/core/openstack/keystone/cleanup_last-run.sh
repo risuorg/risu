@@ -26,6 +26,13 @@
 
 is_required_file "${CITELLUS_ROOT}/var/log/keystone/keystone.log"
 
+# Check if we've the keystone token manage cleanup job so we asume it's controller
+is_required_file "${CITELLUS_ROOT}/var/spool/cron/keystone"
+if ! is_lineinfile keystone-manage "${CITELLUS_ROOT}/var/spool/cron/keystone"; then
+    echo "Only runs on OSP controller" >&2
+    exit $RC_SKIPPED
+fi
+
 if [[ "${CITELLUS_LIVE}" = "1" ]]; then
     NOW=$(date)
 else
