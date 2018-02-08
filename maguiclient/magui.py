@@ -42,7 +42,7 @@ LOG = logging.getLogger('magui')
 
 # Where are we?
 maguidir = os.path.abspath(os.path.dirname(__file__))
-localedir = os.path.join(maguidir, 'locale')
+localedir = os.path.join(citellus.citellusdir, 'locale')
 
 global PluginsFolder
 PluginsFolder = os.path.join(maguidir, "plugins")
@@ -129,11 +129,14 @@ def parse_args():
                    choices=range(0, 1001),
                    help=_("Only include plugins are equal or above specified prio"),
                    default=0)
-
     g.add_argument("-mf", "--mfilter", dest="mfilter",
                    help=_("Only include Magui plugins that contains in full path that substring"),
                    default=[],
                    action='append')
+    g.add_argument("--lang",
+                   action="store_true",
+                   help=_("Define locale to use"),
+                   default='en_US')
 
     p.add_argument('sosreports', nargs='*')
 
@@ -377,6 +380,17 @@ def main():
 
     options = parse_args()
 
+    # Configure ENV language before anything else
+    os.environ['LANG'] = "%s" % options.lang
+
+    # Reinstall language in case it has changed
+    trad = gettext.translation('citellus', localedir, fallback=True, languages=[options.lang])
+
+    try:
+        _ = trad.ugettext
+    except AttributeError:
+        _ = trad.gettext
+
     # Configure logging
     logging.basicConfig(level=options.loglevel)
 
@@ -408,7 +422,7 @@ def main():
     if options.hosts:
         ansible = citellus.which("ansible-playbook")
         if not ansible:
-            LOG.err("No ansible-playbook support found, skipping")
+            LOG.err(_("No ansible-playbook support found, skipping"))
         else:
             LOG.info("Grabbing data from remote hosts with Ansible")
             # Grab data from ansible hosts
@@ -482,8 +496,8 @@ def main():
                       'subcategory': subcategory}
 
             result.append(mydata)
-
-        citellus.write_results(results=result, filename=options.output, source='magui', path=sosreports, time=time.time() - start_time)
+        branding = _("                                                  ")
+        citellus.write_results(results=result, filename=options.output, source='magui', path=sosreports, time=time.time() - start_time, branding=branding)
 
     # Here preprocess output to use filtering, etc
     # "result" does contain all data for both all citellus plugins and all magui plugins, need to filter for output on CLI only

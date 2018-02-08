@@ -528,7 +528,8 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
         if filename:
             try:
                 # Write results to disk
-                write_results(results, filename, path=path, time=time.time() - start_time)
+                branding = _("                                                  ")
+                write_results(results, filename, path=path, time=time.time() - start_time, branding=branding)
             except:
                 # Couldn't write
                 LOG.debug("Couldn't write to file %s" % filename)
@@ -792,8 +793,7 @@ def dump_config(options, path=False):
     return json.dumps(differences)
 
 
-def write_results(results, filename,
-                  live=False, path=None, time=0, source='citellus'):
+def write_results(results, filename, live=False, path=None, time=0, source='citellus', branding=''):
     """
     Writes result
     :param time: date of report
@@ -808,7 +808,8 @@ def write_results(results, filename,
             'when': datetime.datetime.utcnow().isoformat(),
             'live': bool(live),
             'source': source,
-            'time': time
+            'time': time,
+            'branding': branding
         },
         'results': results,
     }
