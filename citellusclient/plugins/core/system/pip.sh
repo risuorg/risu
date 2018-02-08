@@ -22,7 +22,7 @@
 # Load common functions
 [[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
-if is_rpm python*-pip* ; then
+if is_rpm python*-pip*  > /dev/null 2>&1; then
     echo $"python pip is detected" >&2
     exit $RC_FAILED
 else

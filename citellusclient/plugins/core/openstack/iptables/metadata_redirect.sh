@@ -24,7 +24,7 @@
 # Load common functions
 [[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
-if [[ -z $(is_rpm tripleo-heat-templates) && -z $(is_rpm python-tripleoclient) ]]; then
+if [[ -z $(is_rpm tripleo-heat-templates  > /dev/null 2>&1) && -z $(is_rpm python-tripleoclient  > /dev/null 2>&1) ]]; then
     echo "works on director node only" >&2
     exit $RC_SKIPPED
 fi
