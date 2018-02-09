@@ -362,11 +362,13 @@ def filterresults(data, triggers=[]):
         # If plugin processes everything, return all data
         return data
 
-    ourdata = {}
-    for elem in data:
-        for trigger in triggers:
+    ourdata = []
+    for trigger in triggers:
+        for elem in data:
             if trigger == data[elem]['id']:
-                ourdata[trigger] = dict(data[elem])
+                ourdata.append(dict(data[elem]))
+    citellus.LOG.debug("METADATA")
+    citellus.LOG.debug(ourdata)
 
     return ourdata
 
@@ -470,32 +472,32 @@ def main():
         for plugin in magplugs:
             start_time = time.time()
             # Get output from plugin
-            data = filterresults(data=grouped, triggers=magtriggers[plugin.__name__.split(".")[-1]])
-            returncode, out, err = plugin.run(data=data, quiet=options.quiet)
-            updates = {'rc': returncode,
-                       'out': out,
-                       'err': err}
+            for data in filterresults(data=grouped, triggers=magtriggers[plugin.__name__.split(".")[-1]]):
+                returncode, out, err = plugin.run(data=data, quiet=options.quiet)
+                updates = {'rc': returncode,
+                        'out': out,
+                        'err': err}
 
-            subcategory = os.path.split(plugin.__file__)[0].replace(os.path.join(maguidir, 'plugins', ''), '')
+                subcategory = os.path.split(plugin.__file__)[0].replace(os.path.join(maguidir, 'plugins', ''), '')
 
-            if subcategory:
-                if len(os.path.normpath(subcategory).split(os.sep)) > 1:
-                    category = os.path.normpath(subcategory).split(os.sep)[0]
+                if subcategory:
+                    if len(os.path.normpath(subcategory).split(os.sep)) > 1:
+                        category = os.path.normpath(subcategory).split(os.sep)[0]
+                    else:
+                        category = subcategory
+                        subcategory = ""
                 else:
-                    category = subcategory
-                    subcategory = ""
-            else:
-                category = ""
+                    category = ""
 
-            mydata = {'plugin': plugin.__name__.split(".")[-1],
-                      'id': hashlib.md5(plugin.__file__.replace(maguidir, '').encode('UTF-8')).hexdigest(),
-                      'description': plugin.help(),
-                      'result': updates,
-                      'time': time.time() - start_time,
-                      'category': category,
-                      'subcategory': subcategory}
+                mydata = {'plugin': plugin.__name__.split(".")[-1],
+                        'id': hashlib.md5(plugin.__file__.replace(maguidir, '').encode('UTF-8')).hexdigest(),
+                        'description': plugin.help(),
+                        'result': updates,
+                        'time': time.time() - start_time,
+                        'category': category,
+                        'subcategory': subcategory}
 
-            result.append(mydata)
+                result.append(mydata)
         branding = _("                                                  ")
         citellus.write_results(results=result, filename=options.output, source='magui', path=sosreports, time=time.time() - start_time, branding=branding)
 
@@ -529,38 +531,38 @@ def main():
     for plugin in magplugs:
         start_time = time.time()
         # Get output from plugin
-        data = filterresults(data=grouped, triggers=magtriggers[plugin.__name__.split(".")[-1]])
-        returncode, out, err = plugin.run(data=data, quiet=options.quiet)
-        updates = {'rc': returncode,
-                   'out': out,
-                   'err': err}
+        for data in filterresults(data=grouped, triggers=magtriggers[plugin.__name__.split(".")[-1]]):
+            returncode, out, err = plugin.run(data=data, quiet=options.quiet)
+            updates = {'rc': returncode,
+                    'out': out,
+                    'err': err}
 
-        adddata = True
-        if options.quiet:
-            if returncode in [citellus.RC_OKAY, citellus.RC_SKIPPED]:
-                adddata = False
+            adddata = True
+            if options.quiet:
+                if returncode in [citellus.RC_OKAY, citellus.RC_SKIPPED]:
+                    adddata = False
 
-        subcategory = os.path.split(plugin.__file__)[0].replace(os.path.join(maguidir, 'plugins', ''), '')
+            subcategory = os.path.split(plugin.__file__)[0].replace(os.path.join(maguidir, 'plugins', ''), '')
 
-        if subcategory:
-            if len(os.path.normpath(subcategory).split(os.sep)) > 1:
-                category = os.path.normpath(subcategory).split(os.sep)[0]
+            if subcategory:
+                if len(os.path.normpath(subcategory).split(os.sep)) > 1:
+                    category = os.path.normpath(subcategory).split(os.sep)[0]
+                else:
+                    category = subcategory
+                    subcategory = ""
             else:
-                category = subcategory
-                subcategory = ""
-        else:
-            category = ""
+                category = ""
 
-        mydata = {'plugin': plugin.__name__.split(".")[-1],
-                  'id': hashlib.md5(plugin.__file__.replace(maguidir, '').encode('UTF-8')).hexdigest(),
-                  'description': plugin.help(),
-                  'result': updates,
-                  'time': time.time() - start_time,
-                  'category': category,
-                  'subcategory': subcategory}
+            mydata = {'plugin': plugin.__name__.split(".")[-1],
+                    'id': hashlib.md5(plugin.__file__.replace(maguidir, '').encode('UTF-8')).hexdigest(),
+                    'description': plugin.help(),
+                    'result': updates,
+                    'time': time.time() - start_time,
+                    'category': category,
+                    'subcategory': subcategory}
 
-        if adddata:
-            result.append(mydata)
+            if adddata:
+                result.append(mydata)
 
     pprint.pprint(result, width=1)
 
