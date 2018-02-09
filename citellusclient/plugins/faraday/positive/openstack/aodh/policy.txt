@@ -1,6 +1,0 @@
-# bugzilla:
-# long_name: Checks Aodh policy.json file
-# priority: 500
-# description: Checks Aodh policy.json file
-# path: ${CITELLUS_ROOT}/etc/aodh/policy.json
-# CITELLUS_HYBRID

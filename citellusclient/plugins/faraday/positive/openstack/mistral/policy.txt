@@ -1,6 +1,0 @@
-# bugzilla:
-# long_name: Checks Mistral policy.json file
-# priority: 500
-# description: Checks Mistral policy.json file
-# path: ${CITELLUS_ROOT}/etc/mistral/policy.json
-# CITELLUS_HYBRID

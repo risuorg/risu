@@ -1,6 +1,0 @@
-# bugzilla:
-# long_name: Checks Ironic policy.json file
-# priority: 500
-# description: Checks Ironic policy.json file
-# path: ${CITELLUS_ROOT}/etc/ironic/policy.json
-# CITELLUS_HYBRID

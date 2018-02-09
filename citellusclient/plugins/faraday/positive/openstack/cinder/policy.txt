@@ -1,6 +1,0 @@
-# bugzilla:
-# long_name: Checks Cinder policy.json file
-# priority: 500
-# description: Checks Cinder policy.json file
-# path: ${CITELLUS_ROOT}/etc/cinder/policy.json
-# CITELLUS_HYBRID

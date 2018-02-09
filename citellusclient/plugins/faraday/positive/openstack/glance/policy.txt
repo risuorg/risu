@@ -1,6 +1,0 @@
-# bugzilla:
-# long_name: Checks Glance policy.json file
-# priority: 500
-# description: Checks Glance policy.json file
-# path: ${CITELLUS_ROOT}/etc/glance/policy.json
-# CITELLUS_HYBRID

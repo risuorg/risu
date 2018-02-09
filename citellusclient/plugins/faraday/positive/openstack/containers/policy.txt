@@ -1,6 +1,0 @@
-# bugzilla:
-# long_name: Checks Containers policy.json file
-# priority: 500
-# description: Checks Containers policy.json file
-# path: ${CITELLUS_ROOT}/etc/containers/policy.json
-# CITELLUS_HYBRID

@@ -1,0 +1,6 @@
+# bugzilla:
+# long_name: Checks Service policy.json file
+# priority: 500
+# description: Checks Service policy.json file
+# path: ${CITELLUS_ROOT}/etc/aodh/policy.json,${CITELLUS_ROOT}/etc/ceilometer/policy.json,${CITELLUS_ROOT}/etc/cinder/policy.json,${CITELLUS_ROOT}/etc/containers/policy.json,${CITELLUS_ROOT}/etc/glance/policy.json,${CITELLUS_ROOT}/etc/gnocchi/policy.json,${CITELLUS_ROOT}/etc/heat/policy.json,${CITELLUS_ROOT}/etc/ironic/policy.json,${CITELLUS_ROOT}/etc/keystone/policy.json,${CITELLUS_ROOT}/etc/manila/policy.json,${CITELLUS_ROOT}/etc/mistral/policy.json,${CITELLUS_ROOT}/etc/neutron/policy.json,${CITELLUS_ROOT}/etc/nova/policy.json,${CITELLUS_ROOT}/etc/panko/policy.json,${CITELLUS_ROOT}/etc/sahara/policy.json,${CITELLUS_ROOT}/etc/zaqar/policy.json
+# CITELLUS_HYBRID

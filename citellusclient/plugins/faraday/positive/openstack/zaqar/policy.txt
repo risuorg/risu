@@ -1,6 +1,0 @@
-# bugzilla:
-# long_name: Checks Zaqar policy.json file
-# priority: 500
-# description: Checks Zaqar policy.json file
-# path: ${CITELLUS_ROOT}/etc/zaqar/policy.json
-# CITELLUS_HYBRID

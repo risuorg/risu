@@ -63,5 +63,5 @@ def help():  # do not edit this line
     :return: help text
     """
 
-    commandtext = _("Plugin for reporting back files that should be different across sosreports")
+    commandtext = _("Plugin for reporting back files that should NOT be different across sosreports")
     return commandtext

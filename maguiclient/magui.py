@@ -227,7 +227,7 @@ def callcitellus(path=False, plugins=False, forcerun=False, include=None, exclud
     # Process plugin output from multiple plugins
     new_dict = {}
     for item in results:
-        name = results[item]['plugin']
+        name = results[item]['id']
         new_dict[name] = dict(results[item])
     return new_dict
 
@@ -363,11 +363,11 @@ def filterresults(data, triggers=[]):
         return data
 
     ourdata = {}
-    for elem in data:
-        for trigger in triggers:
-            if trigger == data[elem]['id']:
-                ourdata[trigger] = dict(data[elem])
-
+    for trigger in triggers:
+        for elem in data:
+            # We do use this approach in case of 'faked' id's like multi-Faraday bundles
+            if trigger in data[elem]['id']:
+                ourdata[data[elem]['id']] = dict(data[elem])
     return ourdata
 
 
@@ -540,26 +540,27 @@ def main():
             if returncode in [citellus.RC_OKAY, citellus.RC_SKIPPED]:
                 adddata = False
 
-        subcategory = os.path.split(plugin.__file__)[0].replace(os.path.join(maguidir, 'plugins', ''), '')
-
-        if subcategory:
-            if len(os.path.normpath(subcategory).split(os.sep)) > 1:
-                category = os.path.normpath(subcategory).split(os.sep)[0]
-            else:
-                category = subcategory
-                subcategory = ""
-        else:
-            category = ""
-
-        mydata = {'plugin': plugin.__name__.split(".")[-1],
-                  'id': hashlib.md5(plugin.__file__.replace(maguidir, '').encode('UTF-8')).hexdigest(),
-                  'description': plugin.help(),
-                  'result': updates,
-                  'time': time.time() - start_time,
-                  'category': category,
-                  'subcategory': subcategory}
-
         if adddata:
+            # If RC is to be stored, process further
+            subcategory = os.path.split(plugin.__file__)[0].replace(os.path.join(maguidir, 'plugins', ''), '')
+
+            if subcategory:
+                if len(os.path.normpath(subcategory).split(os.sep)) > 1:
+                    category = os.path.normpath(subcategory).split(os.sep)[0]
+                else:
+                    category = subcategory
+                    subcategory = ""
+            else:
+                category = ""
+
+            mydata = {'plugin': plugin.__name__.split(".")[-1],
+                      'id': hashlib.md5(plugin.__file__.replace(maguidir, '').encode('UTF-8')).hexdigest(),
+                      'description': plugin.help(),
+                      'result': updates,
+                      'time': time.time() - start_time,
+                      'category': category,
+                      'subcategory': subcategory}
+
             result.append(mydata)
 
     pprint.pprint(result, width=1)

@@ -1,6 +1,0 @@
-# bugzilla:
-# long_name: Checks Sahara policy.json file
-# priority: 500
-# description: Checks Sahara policy.json file
-# path: ${CITELLUS_ROOT}/etc/sahara/policy.json
-# CITELLUS_HYBRID

@@ -331,7 +331,12 @@ def findplugins(folders=None, include=None, exclude=None, executables=True, file
         if category == subcategory:
             subcategory = ''
 
-        dictionary = {'plugin': plugin, 'backend': extension, 'id': calcid(string=plugin), 'category': category, 'subcategory': subcategory}
+        dictionary = {'plugin': plugin,
+                      'backend': extension,
+                      'id': calcid(string=plugin),
+                      'category': category,
+                      'subcategory': subcategory,
+                      'name': os.path.splitext(os.path.basename(plugin))[0]}
         dictionary.update(get_metadata(plugin=dictionary))
 
         if dictionary['priority'] >= prio:
@@ -966,7 +971,7 @@ def main():
     if options.list_plugins:
         for extension in plugins:
             for plugin in extension:
-                pretty = {'plugin': plugin['plugin'], 'backend': plugin['backend']}
+                pretty = {'plugin': plugin['plugin'], 'backend': plugin['backend'], 'id': plugin['id'], 'name': plugin['name']}
                 if options.description:
                     pretty.update({'description': plugin['description']})
                 if options.list_categories:
