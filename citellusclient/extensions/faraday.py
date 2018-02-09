@@ -46,7 +46,25 @@ def listplugins(options=None):
         except:
             pass
 
-    yield citellus.findplugins(folders=[pluginsdir], executables=False, fileextension=".txt", extension=extension, prio=prio)
+    plugins =  citellus.findplugins(folders=[pluginsdir], executables=False, fileextension=".txt", extension=extension, prio=prio)
+    # check for multiple files specified as per the 'path' by using "," as separator
+
+    newplugins = []
+
+    # Expand bundles of CSV paths into fake plugins
+    for plugin in plugins:
+        if not ',' in plugin['path']:
+            newplugins.append(plugin)
+        else:
+            # Path contains ',' so we fake extra plugins for each path
+            for path in plugin['path'].split(","):
+                # Clone plugin dictionary:
+                newplugin = dict(plugin)
+                newplugin['path'] = path
+                # newplugin['id'] = citellus.calcid(string=path)
+                newplugins.append(newplugin)
+
+    yield newplugins
 
 
 def get_metadata(plugin):

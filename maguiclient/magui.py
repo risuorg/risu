@@ -363,8 +363,8 @@ def filterresults(data, triggers=[]):
         return data
 
     ourdata = {}
-    for elem in data:
-        for trigger in triggers:
+    for trigger in triggers:
+        for elem in data:
             if trigger == data[elem]['id']:
                 ourdata[trigger] = dict(data[elem])
 
