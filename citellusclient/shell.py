@@ -443,7 +443,7 @@ def execonshell(filename):
     return returncode, out, err
 
 
-def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=False, savepath=False, include=None, exclude=None, okay=RC_OKAY, skipped=RC_SKIPPED, failed=RC_FAILED):
+def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=False, savepath=False, include=None, exclude=None, okay=RC_OKAY, skipped=RC_SKIPPED, failed=RC_FAILED, web=False):
     """
     Runs citellus scripts on specified root folder
     :param exclude: keywords to exclude in plugins
@@ -495,11 +495,15 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
     # if we're not running live, read existing file
     if not live and filename and os.access(filename, os.R_OK) and not forcerun:
         LOG.debug("Reading Existing citellus analysis from disk for %s" % path)
-        results = json.load(open(filename, 'r'))['results']
+        try:
+            results = json.load(open(filename, 'r'))['results']
+            rerun = False
+        except:
+            results = {}
+            rerun = True
 
         # We do need to check that we've the results for all the plugins we know, if not, rerun.
 
-        rerun = False
         # Check all sosreports for data for all plugins
         for plugid in getids():
             if plugid not in results:
@@ -529,7 +533,7 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
             try:
                 # Write results to disk
                 branding = _("                                                  ")
-                write_results(results, filename, path=path, time=time.time() - start_time, branding=branding)
+                write_results(results, filename, path=path, time=time.time() - start_time, branding=branding, web=web)
             except:
                 # Couldn't write
                 LOG.debug("Couldn't write to file %s" % filename)
@@ -793,7 +797,7 @@ def dump_config(options, path=False):
     return json.dumps(differences)
 
 
-def write_results(results, filename, live=False, path=None, time=0, source='citellus', branding=''):
+def write_results(results, filename, live=False, path=None, time=0, source='citellus', branding='', web=False):
     """
     Writes result
     :param time: date of report
@@ -816,6 +820,19 @@ def write_results(results, filename, live=False, path=None, time=0, source='cite
 
     if path:
         data['metadata']['path'] = path
+
+    if os.access(os.path.join(os.path.dirname(filename), 'citellus.html'), os.W_OK):
+        LOG.debug("We can copy html again as we've W_OK")
+        web = True
+
+    if web:
+        basefolder = os.path.dirname(filename)
+
+        if basefolder == '':
+            basefolder = './'
+        src = os.path.join(citellusdir, '../tools/www/citellus.html')
+        if os.path.isfile(src):
+            shutil.copyfile(src, os.path.join(basefolder, os.path.basename(src)))
 
     try:
         with open(filename, 'w') as fd:
@@ -1049,7 +1066,12 @@ def main():
         newplugins.extend(each)
 
     plugins = newplugins
-    results = docitellus(live=options.live, path=CITELLUS_ROOT, plugins=plugins, lang=options.lang, forcerun=options.run, savepath=options.output, include=options.include, exclude=options.exclude)
+    forcerun = options.run
+
+    # Force rerun (so that we can copy recent html and json if using --web)
+    if options.web:
+        forcerun = True
+    results = docitellus(live=options.live, path=CITELLUS_ROOT, plugins=plugins, lang=options.lang, forcerun=forcerun, savepath=options.output, include=options.include, exclude=options.exclude, web=options.web)
 
     # Print results based on the sorted order based on returned results from
     # parallel execution
@@ -1086,18 +1108,6 @@ def main():
             print(indent(err, 4))
 
     totaltime = time.time() - start_time
-
-    if options.web and options.output:
-        if options.output:
-            basefolder = os.path.dirname(options.output)
-        else:
-            basefolder = os.path.dirname(options.sosreport)
-
-        if basefolder == '':
-            basefolder = './'
-        src = os.path.join(citellusdir, '../tools/www/citellus.html')
-        if os.path.isfile(src):
-            shutil.copyfile(src, os.path.join(basefolder, os.path.basename(src)))
 
     if options.blame:
         print("# Total execution time: %s seconds" % totaltime)
