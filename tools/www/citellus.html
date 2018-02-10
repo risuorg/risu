@@ -287,13 +287,11 @@
         function getPluginNames(item) {
             var plugin_long_name = "";
             var plugin_re = /plugins\/[^\/]+\/(.*)\/([^\/]+)\.[a-z0-9]+$/;
-            var plugin_name = "";
+            var plugin_name = item.name;
             var plugin_cat = "";
             if (plugin_re.test(item.plugin)) {
-                plugin_name = plugin_re.exec(item.plugin)[2];
                 plugin_cat = plugin_re.exec(item.plugin)[1];
             } else {
-                plugin_name = item.plugin
                 plugin_cat = "magui"
             }
             if (/[a-z0-9]+/.test(item.long_name) && !/^undefined$/.test(item.long_name)) {
