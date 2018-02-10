@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28c994c6_b818265c",
+        "filename": "citellusclient/plugins/core/openstack/cinder/timeout-with-EMC-VNX.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1012331
+      },
+      "writtenOn": "2018-02-10T01:48:17Z",
+      "side": 1,
+      "message": "This doesn\u0027t work on OSP12.\n\nThis is the log format:\nvolume.log-20180208:2018-02-08 02:34:23.300 632931 DEBUG storops.vnx.navi_command [req-b7a72ab4-2fad-47f9-ba45-177b1589501e - - - - -] command complete: /opt/Navisphere/bin/naviseccli -h 10.10.10.10 -user sysadmin -password *** -scope global -np connection -getport -all, time consumed (s): 0.17315196991, output: \n\nAlso, I don\u0027t know if some people do this, but /opt/Navisphere/bin is very static? Is it possible that it\u0027s running from another path?\n\nShould it check if cinder-volume runs on the server before?",
+      "range": {
+        "startLine": 32,
+        "startChar": 10,
+        "endLine": 32,
+        "endChar": 79
+      },
+      "revId": "6cfc162b43b7fb363701c1fc28992f9627c1049f",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
