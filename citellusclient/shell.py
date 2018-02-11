@@ -497,6 +497,7 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
         # For example for 'Live' environment where no path is defined
         filename = False
 
+    rerunsmart = False
     # if we're not running live, read existing file
     if not live and filename and os.access(filename, os.R_OK) and not forcerun:
         LOG.debug("Reading Existing citellus analysis from disk for %s" % path)
@@ -513,6 +514,7 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
         for plugid in getids():
             if plugid not in results:
                 rerun = True
+                rerunsmart = True
 
     else:
         rerun = True
@@ -520,9 +522,11 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
     if rerun:
         LOG.debug("We've set to run citellus")
         # Execute Citellus (live and non-live with forcerun)
+        # We need to filter plugins only for the new id's what we were missing
         execution = p.map(runplugin, plugins)
 
-        results = {}
+        if rerunsmart is not True:
+            results = {}
 
         for plugin in execution:
             results[plugin['id']] = dict(plugin)
