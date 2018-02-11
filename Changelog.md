@@ -3,6 +3,22 @@
 This file will contain a manually mantained log of hilights between versions, it's not a very extensive detail, but some of the bigger changes/ideas will be added here.
 
 
+## 2018-02-11
+Several changes introduced recently:
+- New plugins :)
+- When running rerun, improved some of the logic to also copy over www so that it matches the version of the json file.
+- Faraday can now accept bundle of files CSV in the list of files, it will mangle the extension reported name and description to match the file iterated.
+    - This allows one file to act over several FS files (for example, `policy.json` for several services).
+- UT's
+    - Some other UT tweaks to ensure plugins report no data to stdout, and ability to drop bunch of jsons to run that UT over them.
+    - We moved data to be a dictionary (instead of array of dictionaries), to better and faster filter on included plugins and others that are dependant on data generated (like Magui ones).
+    - UT to check for tests that were doing 'echo $RC_' instead of 'exit $RC_'
+- Citellus www
+    - Now uses the generated 'name' for plugins so we can tune it from the framework side.
+    - Also, auto switches to `magui.json` when no `citellus.json` exists, or shows a dropdown to select which one to show.
+
+
+
 ## 2018-01-27
 - DevConf.cz 2018 [Detect pitfalls of osp deployments with citellus](https://devconfcz2018.sched.com/event/DJXG/detect-pitfalls-of-osp-deployments-with-citellus)
     - Recording at <https://www.youtube.com/watch?v=SDzzqrUdn5A>
