@@ -49,12 +49,12 @@ def run(data, quiet=False):  # do not edit this line
 
         # Find max in values
         maximum = 0
-        seqno = 0
+        seqno = "0"
         for each in err:
             try:
                 seqno = each.split(':')[1]
             except:
-                seqno = 0
+                seqno = "0"
             if seqno > maximum:
                 maximum = seqno
 
