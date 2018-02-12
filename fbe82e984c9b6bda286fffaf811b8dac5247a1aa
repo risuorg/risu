@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3e68ded_f9bac7f9",
+        "filename": "citellusclient/plugins/core/system/conntrack_full.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2018-02-12T11:03:47Z",
+      "side": 1,
+      "message": "string should be put as in echo $\"packet drop.....\"\n\n\nAnd as we have the same line twice, we can write at line 24 something like ERRORMSG\u003d$\"packet drop because ip/....\"\n\nand then on lines 28 and 33: just do echo $ERRORMSG \u003e\u00262",
+      "revId": "fbe82e984c9b6bda286fffaf811b8dac5247a1aa",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
