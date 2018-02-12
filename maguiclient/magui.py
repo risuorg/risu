@@ -502,9 +502,8 @@ def main():
     # Here preprocess output to use filtering, etc
     # "result" does contain all data for both all citellus plugins and all magui plugins, need to filter for output on CLI only
 
-    # TODO(iranzo): this is a nasty hack to rerun all tests and output to screen when using filtering
-    # The tool should in reality grab the data obtained from 'result' in above code (executed always) and just output relevant ones,
-    # but this involved probably calling citellus with the filtered ones so only those ones are outputed (and we reuse citellus filtering)
+    # As we don't have a proper place to store output and we're running the full set of tests only when output is going
+    # to be stored (and then, the screen output is based on the already cached citellus results), it's probably not worth at this point to change this
 
     citellusplugins = []
     # Prefill with all available plugins and the ones we want to filter for
