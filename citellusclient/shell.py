@@ -258,6 +258,18 @@ def findallplugins():
     return newplugins
 
 
+def generate_file_hash(filename, blocksize=2**20):
+    hash = hashlib.md5()
+    # Open File
+    with open(filename, "rb") as f:
+        while True:
+            buffer = f.read(blocksize)
+            if not buffer:
+                break
+            hash.update(buffer)
+    return hash.hexdigest()
+
+
 def findplugins(folders=None, include=None, exclude=None, executables=True, fileextension=False, extension='core', prio=0):
     """
     Finds plugins in path and returns array of them
@@ -336,6 +348,7 @@ def findplugins(folders=None, include=None, exclude=None, executables=True, file
                       'id': calcid(string=plugin),
                       'category': category,
                       'subcategory': subcategory,
+                      'hash': generate_file_hash(filename=plugin),
                       'name': os.path.splitext(os.path.basename(plugin))[0]}
         dictionary.update(get_metadata(plugin=dictionary))
 
@@ -514,9 +527,35 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
         # Check all sosreports for data for all plugins
         for plugid in getids():
             if plugid not in results:
-                rerun = True
-                rerunsmart = True
                 missingplugins.append(plugid)
+
+        # Prefill hashes of known plugins
+        hashes = []
+        for plug in plugins:
+            hashes.append(plug['hash'])
+
+        # Check for changed plugins on disk vs stored
+        for plugin in results:
+            # We check all plugins in results
+            try:
+                hash = results[plugin]['hash']
+            except:
+                hash = False
+
+            if hash not in hashes:
+                # We now check all the available plugins for hashes
+                # Plugin hash is not matched in results, rerun plugin as it has changed
+                missingplugins.append(plug['id'])
+
+        # If some plugin is missing, rerun smart
+        if len(missingplugins) != 0:
+            missingplugins = sorted(set(missingplugins))
+            LOG.debug("Running smartrun for plugins %s" % missingplugins)
+            LOG.debug(len(missingplugins))
+            rerun = True
+            rerunsmart = True
+        else:
+            LOG.debug("No smartrun needed")
 
     else:
         rerun = True
