@@ -11,12 +11,8 @@ Citellus is a program that should help with system configuration validation on e
 
 Please if you have any idea on any improvements please do not hesitate to open an issue.
 
-Come to hear about us at [devconf.cz!!](https://devconfcz2018.sched.com/event/DJXG/detect-pitfalls-of-osp-deployments-with-citellus)
-
-Recording at <https://www.youtube.com/watch?v=SDzzqrUdn5A>
-
 ## Highlights
-- Plugins in your language of choice.
+- Plugins written in your language of choice.
 - Allows to dump output to json file to be processed by other tools.
     - Allow to visualize html from json output.
 - Ansible playbook support.
@@ -192,6 +188,18 @@ mode: live
     {"changed": false, "cmd": "ntpstat", "msg": "[Errno 2] No such file or directory", 
 
 ~~~
+
+## Additional resources
+- Devconf.cz 2018 Presentation:
+    - Slot link [devconf.cz!!](https://devconfcz2018.sched.com/event/DJXG/detect-pitfalls-of-osp-deployments-with-citellus)
+    - Slides <doc/devconfcz2018-presentation-revealmd.md>
+    - Recording <https://www.youtube.com/watch?v=SDzzqrUdn5A>
+- Blog posts
+    - <http://iranzo.github.io/blog/2017/07/26/Citellus-framework-for-detecting-known-issues/>
+    - <https://iranzo.github.io/blog/2017/07/31/Magui-for-analysis-of-issues-across-several-hosts/>
+    - <https://iranzo.github.io/blog/2017/08/17/Jenkins-for-running-CI-tests/>
+    - <https://iranzo.github.io/blog/2017/10/26/i18n-and-bash8-in-bash/>
+    - <https://iranzo.github.io/blog/2018/01/16/recent-changes-in-magui-and-citellus/>
 
 ## Contact us!!
 You can reach to us via:
