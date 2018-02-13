@@ -28,7 +28,7 @@ ERRORMATCH="megaraid_sas: resetting fusion adapter"
 is_required_file "${CITELLUS_ROOT}/var/log/messages"
 
 errcount=$(zgrep "$ERRORMATCH" ${CITELLUS_ROOT}/var/log/messages* |wc -l)
-if [[ "x$errcount" -ne "x0" ]] ; then
+if [[ "x$errcount" != "x0" ]] ; then
     echo $ERRORMSG >&2
     exit $RC_FAILED
 fi
