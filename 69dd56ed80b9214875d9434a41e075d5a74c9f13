@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fdcbfcdd_7e5e0714",
+        "filename": "citellusclient/plugins/core/openstack/cinder/timeout-with-EMC-VNX.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1011950
+      },
+      "writtenOn": "2018-02-13T01:14:49Z",
+      "side": 1,
+      "message": "\u0027/opt/Navisphere/bin/naviseccli.*returned: 0 in |s execute\u0027\n\u003d\u003e\n\u0027naviseccli.*returned: 0 in |s execute\u0027\n\nTo avoid hardcoded binary for navicli?",
+      "range": {
+        "startLine": 34,
+        "startChar": 23,
+        "endLine": 34,
+        "endChar": 81
+      },
+      "revId": "69dd56ed80b9214875d9434a41e075d5a74c9f13",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
