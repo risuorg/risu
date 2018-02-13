@@ -258,6 +258,18 @@ def findallplugins():
     return newplugins
 
 
+def generate_file_hash(filename, blocksize=2**20):
+    hash = hashlib.md5()
+    # Open File
+    with open(filename, "rb") as f:
+        while True:
+            buffer = f.read(blocksize)
+            if not buffer:
+                break
+            hash.update(buffer)
+    return hash.hexdigest()
+
+
 def findplugins(folders=None, include=None, exclude=None, executables=True, fileextension=False, extension='core', prio=0):
     """
     Finds plugins in path and returns array of them
@@ -336,6 +348,7 @@ def findplugins(folders=None, include=None, exclude=None, executables=True, file
                       'id': calcid(string=plugin),
                       'category': category,
                       'subcategory': subcategory,
+                      'hash': generate_file_hash(filename=plugin),
                       'name': os.path.splitext(os.path.basename(plugin))[0]}
         dictionary.update(get_metadata(plugin=dictionary))
 
@@ -512,11 +525,54 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
         # We do need to check that we've the results for all the plugins we know, if not, rerun.
 
         # Check all sosreports for data for all plugins
-        for plugid in getids():
+        allids = getids(plugins=plugins)
+
+        # Now check in results for id's no longer existing for removal:
+        delete = []
+        for key in results.iterkeys():
+            if key not in allids:
+                # Plugin ID no longer appears in found plugins.
+                delete.append(key)
+
+        LOG.debug("Removing old plugins from results: %s" % delete)
+
+        for plugid in allids:
             if plugid not in results:
-                rerun = True
-                rerunsmart = True
                 missingplugins.append(plugid)
+
+        LOG.debug("Adding new plugin id's missing to be executed: %s" % missingplugins)
+
+        for key in delete:
+            del results[key]
+
+        # Prefill hashes of known plugins for checking same id's with changed hash
+        hashes = []
+        for plug in plugins:
+            hashes.append(plug['hash'])
+
+        # Check for changed plugins on disk vs stored
+        for plugin in results:
+            # We check all plugins in results
+            try:
+                hash = results[plugin]['hash']
+            except:
+                hash = False
+
+            if hash not in hashes:
+                # We now check all the available plugins for hashes
+                # Plugin hash is not matched in results, rerun plugin as it has changed
+                missingplugins.append(plugin)
+                LOG.debug("Smart: rerunning plugin with modified hash on disk: %s" % results[plugin]['plugin'])
+
+        # If some plugin is missing, rerun smart
+        if len(missingplugins) != 0 or len(delete) != 0:
+            missingplugins = sorted(set(missingplugins))
+            LOG.debug("Running smartrun for plugins added %s" % missingplugins)
+            LOG.debug("Running smartrun for plugins deleted %s" % delete)
+            rerun = True
+            rerunsmart = True
+        else:
+            LOG.debug("No smartrun needed")
 
     else:
         rerun = True
@@ -527,14 +583,13 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
 
         # We need to filter plugins only for the new id's what we were missing
         if rerunsmart:
-            LOG.debug("We need to run some plugins that were missing")
+            LOG.debug("Smart: We need to run some plugins that were missing")
 
             # We clear list of plugins to run to just grab the missing data
             pluginstorun = []
             for plugin in plugins:
                 if plugin['id'] in missingplugins:
                     pluginstorun.append(plugin)
-            LOG.debug(pluginstorun)
         else:
             # Run all plugins
             pluginstorun = plugins
