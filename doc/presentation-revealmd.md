@@ -83,7 +83,7 @@ virtualization : 1 []
 ## The goal
 
 - Be so damn simple to write new plugins that anyone can do them.
-- Allow to write tests in whatever language of choice (bash, python, perl, etc) as long as they conform to some standards.
+- Write tests in whatever language (bash, python, perl, etc) as long as they conform to some standards.
 - Allow anyone to submit new plugins.
 
 ---
@@ -98,11 +98,11 @@ Note: Change speaker after this
 
 ## Highlights
 - Plugins in your language of choice.
-- Allows to dump output to json file to be processed by other tools.
-    - Allow to visualize html from json output.
-- Ansible playbook support (live and snapshoot if crafted playbooks)
+- Allows dumping output to json file to be processed by other tools.
+    - Allow the visualization of html from the json output.
+- Ansible playbook support (live and snapshot if crafted playbooks)
     - Core implemented as extension to easily expand with new ones.
-- Save / restore default settings
+- Save / restore default settings.
 
 ----
 
@@ -114,10 +114,10 @@ Note: Change speaker after this
 
 ## Why upstream?
 
-- This is an open source project. All the scripts should be committed upstream and shared (and we are willing to foster this)
+- This is an open source project. All the scripts should be committed upstream and shared (and we are willing to foster this).
     - Project on GitHub: <https://github.com/zerodayz/citellus/>
-- We want contributions to happen from anyone.
-- We follow an approach similar to other opensource projects: we do use Gerrit for reviewing the code and UT's for validating basic functionality.
+- We want contributions from anyone.
+- We follow an approach similar to other opensource projects: we use Gerrit for reviewing the code and UT's for validating basic functionality.
 
 ---
 
@@ -155,9 +155,9 @@ Note: Change speaker after this
 
 Philosophy is very simple:
 - Citellus is just a simple wrapper.
-- Allows to specify on sosreport and test folders
-- Finds tests available in test folders
-- Executes each test against sosreport and reports return status
+- Allows to specify on sosreport and test folders.
+- Finds tests available in test folders.
+- Executes each test against sosreport and reports return status.
 - Framework written in python which features option parsing, parallel execution of tests, filtering, etc.
 
 ---
@@ -165,17 +165,18 @@ Philosophy is very simple:
 ## What about the plugins?
 
 Tests are even simpler:
-- Written in whatever language of choice as long as they can be executed from shell.
+
+- Written in whatever language as long as they can be executed from shell
 - Output messages to ‘stderr’ (>&2)
-- When using strings like echo $”string” bash’s built-in i18n is used so you can translate in your language.
-- Return `$RC_OKAY` for success / `$RC_FAILED` for error / `$RC_SKIPPED` for skipped tests / Other for unexpected error
+- When using strings like echo $”string” bash’s built-in i18n is used so you can translate to your language
+- Return `$RC_OKAY` for success / `$RC_FAILED` for error / `$RC_SKIPPED` for skipped tests / Other for unexpected error.
 
 ----
 
 ## What about the plugins? (continuation)
 
 - Will inherit some env vars like root folder for sosreport (empty for live) (`CITELLUS_ROOT`) or if running live (`CITELLUS_LIVE`) that provide required details. No user input should be required.
-- Live tests can for example query DB and ones in sosreport check values on logs
+- Live tests can, for example, query DB and ones in sosreport check values on logs.
 
 ----
 
@@ -215,7 +216,7 @@ fi
 
 - There are more tests for OpenStack at the moment as this is the speciality where it started, but it’s open and able to extend to whatever is needed.
 
-- Each test should take care of checking if it should run or not and output return code and stderr. Wrapper just runs all the tests or specific ones (filtering options)
+- Each test should take care of checking if it should run or not and output return code and stderr. Wrapper just runs all the tests or specific ones (filtering options).
 
 ----
 
@@ -226,10 +227,10 @@ fi
 ----
 
 ## Requirements:
-- return code must be `$RC_OKAY` (ok), `$RC_FAILED` (failed)  or `$RC_SKIPPED` (skipped)
-- Messages to be printed on stderr are displayed on failed or ‘skipped’ if verbose enabled
+- return code must be `$RC_OKAY` (ok), `$RC_FAILED` (failed)  or `$RC_SKIPPED` (skipped).
+- Messages to be printed on stderr are displayed on failed or ‘skipped’ if verbose enabled.
 - Running against ‘sosreport’, CITELLUS_ROOT contains path to sosreport folder provided.
-- CITELLUS_LIVE contains 0 or 1 if running against live or not
+- CITELLUS_LIVE contains 0 or 1 if running against live or not.
 
 ----
 
@@ -297,10 +298,10 @@ mode: fs snapshot sosreport-20170724-175510/crta02
 
 ---
 
-### What does M.a.g.u.i. Does?
+### What does M.a.g.u.i. do?
 - It runs citellus against each sosreport, gathers and groups the data per plugin.
-- Runs its own plugins against the data received to hilight issues that depend on several systems
-- Allows to grab remote host data via ansible host lists
+- Runs its own plugins against the data received to highlight issues that depend on several systems.
+- Allows grabbing remote host data via ansible host lists.
 
 ----
 
@@ -325,7 +326,7 @@ It’s delivered in citellus repo and can be executed by specifying sosreports:
                                                                                                                           'rc': 10}}}
 ~~~
 
-- On this example, UUID and SEQNO is shown for each controller and we can see that controller 2 has different SEQNO to the other two nodes.
+- In this example, UUID and SEQNO is shown for each controller and we can see that controller 2 has different SEQNO from the other two nodes.
 
 ----
 
@@ -344,7 +345,7 @@ It’s delivered in citellus repo and can be executed by specifying sosreports:
 
 - Add more plugins!
 - Evangelize about the tool so we can work together in solving our common issues on the same framework.
-- Get moving fast enough that the tool has continuity, other tools just died by having a ‘solo’ developer working on spare time
+- Get moving fast enough that the tool has continuity, other tools just died by having a ‘solo’ developer working in their spare time.
 - Start implementing more tests in Magui that provide real intelligence (for example we do report and check on seqno or pipeline-yaml but lot of other issues can benefit from this).
 
 ---
@@ -371,5 +372,4 @@ Blog posts:
 - <https://iranzo.github.io/blog/2017/10/26/i18n-and-bash8-in-bash/>
 - <https://iranzo.github.io/blog/2018/01/16/recent-changes-in-magui-and-citellus/>
 - DevConf.cz 2018 <https://devconfcz2018.sched.com/event/DJXG/detect-pitfalls-of-osp-deployments-with-citellus>
-
 </small>
