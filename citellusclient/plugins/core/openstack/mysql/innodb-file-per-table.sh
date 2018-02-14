@@ -24,13 +24,17 @@
 # Load common functions
 [[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
-is_required_file "${CITELLUS_ROOT}/etc/my.cnf.d/galera.cnf" "${CITELLUS_ROOT}/etc/my.cnf"
+if is_process mysqld; then
+    is_required_file "${CITELLUS_ROOT}/etc/my.cnf.d/galera.cnf" "${CITELLUS_ROOT}/etc/my.cnf"
 
-if [[ "$(iniparser "${CITELLUS_ROOT}/etc/my.cnf.d/galera.cnf" mysqld innodb_file_per_table)" == "ON" ]]; then
-    exit $RC_OKAY
-elif [[ "$(iniparser "${CITELLUS_ROOT}/etc/my.cnf" mysqld innodb_file_per_table)" == "ON" ]]; then
-    exit $RC_OKAY
+    if [[ "$(iniparser "${CITELLUS_ROOT}/etc/my.cnf.d/galera.cnf" mysqld innodb_file_per_table)" == "ON" ]]; then
+        exit $RC_OKAY
+    elif [[ "$(iniparser "${CITELLUS_ROOT}/etc/my.cnf" mysqld innodb_file_per_table)" == "ON" ]]; then
+        exit $RC_OKAY
+    else
+        echo $"innodb_file_per_table not set in /etc/my.cnf.d/galera.cnf or /etc/my.cnf" >&2
+        exit $RC_FAILED
+    fi
 else
-    echo $"innodb_file_per_table not set in /etc/my.cnf.d/galera.cnf or /etc/my.cnf" >&2
-    exit $RC_FAILED
+    echo "Check only valid on controllers with mysql running" > &2
 fi
