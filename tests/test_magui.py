@@ -15,11 +15,6 @@ class MaguiTest(TestCase):
         res = magui.commonpath(['/etc/path', '/etc/common'])
         assert res == '/etc'
 
-    def test_callcitellus(self):
-        # Call with no arguments should return empty
-        res = magui.callcitellus(path='_does_not_exist_', plugins=[])
-        assert res == {}
-
     def test_domagui(self):
         # Call with no arguments
         res = magui.domagui(sosreports=[], citellusplugins=[])
