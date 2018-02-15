@@ -177,16 +177,24 @@ def getHooks(options=None):
     else:
         hfilter = options.hfilter
 
-    Hooks = []
     possibleHooks = findplugins(folders=[HooksFolder], executables=False, exclude=['__init__.py', 'pyc'], include=hfilter, fileextension='.py')
+
+    # Sort hook names so that we can user XX_hook
+    sortedhooks = []
     for i in possibleHooks:
-        module = os.path.splitext(os.path.basename(i['plugin']))[0]
-        modpath = os.path.dirname(i['plugin'])
+        sortedhooks.append(i['plugin'])
+
+    sortedhooks = sorted(set(sortedhooks))
+
+    Hooks = []
+    for i in sortedhooks:
+        module = os.path.splitext(os.path.basename(i))[0]
+        modpath = os.path.dirname(i)
         try:
             info = imp.find_module(module, [modpath])
         except:
             info = False
-        if i['plugin'] and info:
+        if i and info:
             Hooks.append({"name": module, "info": info})
 
     return Hooks

@@ -1,0 +1,8 @@
+# Author: Pablo Iranzo Gómez (Pablo.Iranzo@redhat.com)
+# Description:
+#
+# Defines which plugins to include, exclude, etc
+# Syntax
+# +keyword : includes keyword in plugin search
+# -keyword : excludes keyword in plugin search
+
