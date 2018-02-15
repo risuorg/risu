@@ -497,7 +497,7 @@ def main():
 
             result.append(mydata)
         branding = _("                                                  ")
-        citellus.write_results(results=result, filename=options.output, source='magui', path=sosreports, time=time.time() - start_time, branding=branding)
+        citellus.write_results(results=result, filename=options.output, source='magui', path=sosreports, time=time.time() - start_time, branding=branding, web=True)
 
     # Here preprocess output to use filtering, etc
     # "result" does contain all data for both all citellus plugins and all magui plugins, need to filter for output on CLI only
