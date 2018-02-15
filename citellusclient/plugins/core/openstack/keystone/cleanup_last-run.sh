@@ -30,7 +30,7 @@ is_required_file "${CITELLUS_ROOT}/var/log/keystone/keystone.log"
 is_required_file "${CITELLUS_ROOT}/var/spool/cron/keystone"
 if ! is_lineinfile keystone-manage "${CITELLUS_ROOT}/var/spool/cron/keystone"; then
     echo "Only runs on OSP controller" >&2
-    exit $RC_SKIPPED
+    exit ${RC_SKIPPED}
 fi
 
 if [[ "${CITELLUS_LIVE}" = "1" ]]; then
@@ -43,13 +43,13 @@ fi
 LASTRUN=$(awk '/Total expired tokens removed/ { print $1 " " $2 }' "${CITELLUS_ROOT}/var/log/keystone/keystone.log" | tail -1)
 if [[ "x${LASTRUN}" = "x" ]];then
     echo "no recorded last run of token removal" >&2
-    exit $RC_FAILED
+    exit ${RC_FAILED}
 else
     # Not just last run, but we also want it to be 'recent'
     if are_dates_diff_over 2 "$NOW" "$LASTRUN"; then
         echo $"Last token run was more than two days ago" >&2
-        exit $RC_FAILED
+        exit ${RC_FAILED}
     fi
     echo "${LASTRUN}" >&2
-    exit $RC_OKAY
+    exit ${RC_OKAY}
 fi

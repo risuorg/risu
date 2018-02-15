@@ -35,11 +35,11 @@ if is_rpm openstack-.*  > /dev/null 2>&1; then
     # Node is OSP system
     if [[ "x$chronyd" = "x1" ]]; then
         echo $"chrony service is active, and it should not on OSP node" >&2
-        exit $RC_FAILED
+        exit ${RC_FAILED}
     else
-        exit $RC_OKAY
+        exit ${RC_OKAY}
     fi
 else
     echo "works only on osp node" >&2
-    exit $RC_SKIPPED
+    exit ${RC_SKIPPED}
 fi

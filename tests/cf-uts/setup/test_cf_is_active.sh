@@ -22,14 +22,14 @@ FOLDER=$3
 
 case $2 in
     pass)
-        mkdir -p $FOLDER/sos_commands/systemd/
-        echo "ntpd.service active" > $FOLDER/sos_commands/systemd/systemctl_list-units
+        mkdir -p ${FOLDER}/sos_commands/systemd/
+        echo "ntpd.service active" > ${FOLDER}/sos_commands/systemd/systemctl_list-units
         exit 0
         ;;
 
     fail)
-        mkdir -p $FOLDER/sos_commands/systemd/
-        echo "ntpd.service inactive" > $FOLDER//sos_commands/systemd/systemctl_list-units
+        mkdir -p ${FOLDER}/sos_commands/systemd/
+        echo "ntpd.service inactive" > ${FOLDER}//sos_commands/systemd/systemctl_list-units
         exit 0
         ;;
 
@@ -38,8 +38,8 @@ case $2 in
         [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 
         # When no pass or fail is passed we're running the test for common function
-        is_active ntpd && exit $RC_OKAY || exit $RC_FAILED
+        is_active ntpd && exit ${RC_OKAY} || exit ${RC_FAILED}
         ;;
 esac
 
-exit $RC_SKIPPED
+exit ${RC_SKIPPED}

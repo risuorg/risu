@@ -28,7 +28,7 @@
 
 if is_lineinfile 'error:.*Errno 98.*Address already in use' "${CITELLUS_ROOT}/var/log/neutron/openvswitch-agent.log"; then
     echo "Possible OVS dead agent found on host." >&2
-    exit $RC_FAILED
+    exit ${RC_FAILED}
 fi
 
-exit $RC_OKAY
+exit ${RC_OKAY}

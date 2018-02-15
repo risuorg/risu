@@ -24,7 +24,7 @@
 
 if ! is_rpm logrotate >/dev/null 2>&1; then
     echo "logrotate is not installed and that could cause issues because of log growth" >&2
-    exit $RC_FAILED
+    exit ${RC_FAILED}
 fi
 
-exit $RC_OKAY
+exit ${RC_OKAY}

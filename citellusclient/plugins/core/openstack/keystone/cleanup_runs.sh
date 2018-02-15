@@ -30,17 +30,17 @@ is_required_file "${CITELLUS_ROOT}/var/log/keystone/keystone.log"
 is_required_file "${CITELLUS_ROOT}/var/spool/cron/keystone"
 if ! is_lineinfile keystone-manage "${CITELLUS_ROOT}/var/spool/cron/keystone"; then
     echo "Only runs on OSP controller" >&2
-    exit $RC_SKIPPED
+    exit ${RC_SKIPPED}
 fi
 
 RUNS=$(grep 'Total expired tokens removed' "${CITELLUS_ROOT}/var/log/keystone/keystone.log" | wc -l)
 
-[[ "x${RUNS}" = "x" ]] && echo "Non recorded cleanup runs" >&2 && exit $RC_FAILED
+[[ "x${RUNS}" = "x" ]] && echo "Non recorded cleanup runs" >&2 && exit ${RC_FAILED}
 
 if [[ "${RUNS}" -eq 0 ]]; then
     echo "Non recorded cleanup runs" >&2
-    exit $RC_FAILED
+    exit ${RC_FAILED}
 elif [[ "${RUNS}" -ge 1 ]]; then
     echo "${RUNS}" >&2
-    exit $RC_OKAY
+    exit ${RC_OKAY}
 fi

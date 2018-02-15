@@ -32,14 +32,14 @@ if [[ "x$CITELLUS_LIVE" = "x0" ]]; then
         done
         is_required_file "${PCS_DIRECTORY}/pcs_config"
         if is_lineinfile "class=stonith" "${PCS_DIRECTORY}/pcs_config"; then
-            exit $RC_OKAY
+            exit ${RC_OKAY}
         else
             echo "NO stonith devices configured" >&2
-            exit $RC_FAILED
+            exit ${RC_FAILED}
         fi
     else
         echo "pacemaker is not running on this node" >&2
-        exit $RC_SKIPPED
+        exit ${RC_SKIPPED}
     fi
 
 elif [[ "x$CITELLUS_LIVE" = "x1" ]]; then
@@ -47,12 +47,12 @@ elif [[ "x$CITELLUS_LIVE" = "x1" ]]; then
     if [[ "$pacemaker_status" = "active" ]]; then
         if pcs stonith show | grep -q "NO stonith devices configured"; then
             echo "No stonith devices configured" >&2
-            exit $RC_FAILED
+            exit ${RC_FAILED}
         else
-            exit $RC_OKAY
+            exit ${RC_OKAY}
         fi
     else
         echo "pacemaker is not running on this node" >&2
-        exit $RC_SKIPPED
+        exit ${RC_SKIPPED}
     fi
 fi

@@ -23,16 +23,16 @@ FOLDER=$3
 
 case $2 in
     pass)
-        mkdir -p $FOLDER
-        touch $FOLDER/installed-rpms
+        mkdir -p ${FOLDER}
+        touch ${FOLDER}/installed-rpms
         # Touch the crontab and populate
         mkdir -p "$FOLDER/var/spool/cron/"
         echo "1 * * * * keystone-manage token_flush" > "$FOLDER/var/spool/cron/keystone"
         ;;
 
     fail)
-        mkdir -p $FOLDER
-        touch $FOLDER/installed-rpms
+        mkdir -p ${FOLDER}
+        touch ${FOLDER}/installed-rpms
         # Touch the crontab and populate
         mkdir -p "$FOLDER/var/spool/cron/"
         echo "1 0 * * * keystone-manage token_flush" > "$FOLDER/var/spool/cron/keystone"

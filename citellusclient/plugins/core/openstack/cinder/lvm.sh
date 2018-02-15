@@ -25,20 +25,20 @@ is_required_file ${CITELLUS_ROOT}/ps
 
 if is_process nova-compute; then
     echo "works only on controller node" >&2
-    exit $RC_SKIPPED
+    exit ${RC_SKIPPED}
 fi
 FILE=${CITELLUS_ROOT}/etc/cinder/cinder.conf
 string=volume_driver
 substring=cinder.volume.drivers.lvm.LVM
-RC=$RC_OKAY
+RC=${RC_OKAY}
 
-is_required_file $FILE
+is_required_file ${FILE}
 
-if is_lineinfile ${string} $FILE;then
-    if [[ $(grep -e ^${string} $FILE|cut -d "=" -f2|grep ${substring}|wc -l) -gt 0 ]]; then
-        grep -e ^${string} $FILE >&2
-        RC=$RC_FAILED
+if is_lineinfile ${string} ${FILE};then
+    if [[ $(grep -e ^${string} ${FILE}|cut -d "=" -f2|grep ${substring}|wc -l) -gt 0 ]]; then
+        grep -e ^${string} ${FILE} >&2
+        RC=${RC_FAILED}
     fi
 fi
 
-exit $RC
+exit ${RC}

@@ -28,15 +28,15 @@
 
 if ! is_active chronyd;then
     echo "chronyd is not active" >&2
-    exit $RC_FAILED
+    exit ${RC_FAILED}
 fi
 
-if [[ $CITELLUS_LIVE = 0 ]]; then
+if [[ ${CITELLUS_LIVE} = 0 ]]; then
     is_required_file ${CITELLUS_ROOT}/sos_commands/chrony/chronyc_tracking
 
     if grep -q "Not synchronised\|Cannot talk to daemon" "${CITELLUS_ROOT}/sos_commands/chrony/chronyc_tracking"; then
         echo "clock is not synchronized" >&2
-        exit $RC_FAILED
+        exit ${RC_FAILED}
     fi
 
     offset=$(awk '/RMS offset/ {print $4}' "${CITELLUS_ROOT}/sos_commands/chrony/chronyc_tracking")
@@ -60,4 +60,4 @@ else
 fi
 
 # Check the return code from the offset calculation
-[[ "x$RC" = "x1" ]] && exit $RC_OKAY || exit $RC_FAILED
+[[ "x$RC" = "x1" ]] && exit ${RC_OKAY} || exit ${RC_FAILED}

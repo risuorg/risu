@@ -31,7 +31,7 @@ is_required_file "${CITELLUS_ROOT}/var/spool/cron/keystone"
 
 if ! awk '/keystone-manage token_flush/ && /^[^#]/ { print $0 }' "${CITELLUS_ROOT}/var/spool/cron/keystone" >/dev/null 2>&1; then
     echo $"crontab keystone cleanup is not set" >&2
-    exit $RC_FAILED
+    exit ${RC_FAILED}
 elif awk '/keystone-manage token_flush/ && /^[^#]/ { print $0 }' "${CITELLUS_ROOT}/var/spool/cron/keystone" >/dev/null 2>&1; then
     # Skip default crontab of 1 0 * * * as it might miss busy systems and fail to do later cleanups
     COUNT=$(awk '/keystone-manage token_flush/ && /^[^#]/ { print $0 }' "${CITELLUS_ROOT}/var/spool/cron/keystone" 2>&1|egrep  '^1 0'  -c)
@@ -45,7 +45,7 @@ elif awk '/keystone-manage token_flush/ && /^[^#]/ { print $0 }' "${CITELLUS_ROO
             10) echo "https://bugzilla.redhat.com/show_bug.cgi?id=1469457" >&2 ;;
             *) echo "" >&2 ;;
         esac
-        exit $RC_FAILED
+        exit ${RC_FAILED}
     fi
-    exit $RC_OKAY
+    exit ${RC_OKAY}
 fi

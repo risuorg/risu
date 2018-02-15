@@ -27,6 +27,6 @@
 
 is_required_file "${CITELLUS_ROOT}/var/log/neutron/dhcp-agent.log"
 
-is_lineinfile 'Another app is currently holding the xtables lock' "${CITELLUS_ROOT}/var/log/neutron/dhcp-agent.log" && echo $"errors on iptables xlock, check: https://bugzilla.redhat.com/show_bug.cgi?id=1489066" >&2 && exit $RC_FAILED
+is_lineinfile 'Another app is currently holding the xtables lock' "${CITELLUS_ROOT}/var/log/neutron/dhcp-agent.log" && echo $"errors on iptables xlock, check: https://bugzilla.redhat.com/show_bug.cgi?id=1489066" >&2 && exit ${RC_FAILED}
 
-exit $RC_OKAY
+exit ${RC_OKAY}

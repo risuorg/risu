@@ -26,13 +26,13 @@
 
 is_required_containerized
 
-if [[ $CITELLUS_LIVE -eq 0 ]]; then
+if [[ ${CITELLUS_LIVE} -eq 0 ]]; then
     is_required_file "${CITELLUS_ROOT}/sos_commands/docker/docker_ps"
     FILE="${CITELLUS_ROOT}/sos_commands/docker/docker_ps"
-elif [[ $CITELLUS_LIVE -eq 1 ]];then
+elif [[ ${CITELLUS_LIVE} -eq 1 ]];then
     FILE=$(mktemp)
-    trap "rm $FILE" EXIT
-    docker ps > $FILE
+    trap "rm ${FILE}" EXIT
+    docker ps > ${FILE}
 fi
 
 ncontainers=$(grep -v NAMES "${FILE}" | wc -l)
@@ -40,8 +40,8 @@ unhealthy_containers=$(grep -i -c unhealthy "${FILE}")
 if [[ "${unhealthy_containers}" -ge "1" ]]; then
     echo $"unhealthy containers detected (${unhealthy_containers}/${ncontainers}):" >&2
     grep -i "unhealthy" "${FILE}" | awk '{print $NF}' >&2
-    exit $RC_FAILED
+    exit ${RC_FAILED}
 else
     echo $"no unhealthy containers detected" >&2
-    exit $RC_OKAY
+    exit ${RC_OKAY}
 fi

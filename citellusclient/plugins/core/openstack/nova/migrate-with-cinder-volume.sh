@@ -34,9 +34,9 @@ RELEASE=$(discover_osp_version)
 if [[ "${RELEASE}" -lt "9" ]]; then
     if is_lineinfile 'MigrationError_Remote: Migration error: Cannot block migrate instance' "${CITELLUS_ROOT}/var/log/messages"; then
         echo $"Block migration unavailable before Mitaka" >&2
-        exit $RC_FAILED
+        exit ${RC_FAILED}
     fi
-    exit $RC_OKAY
+    exit ${RC_OKAY}
 else
-    exit $RC_OKAY
+    exit ${RC_OKAY}
 fi

@@ -27,17 +27,17 @@
 
 if ! is_process nova-compute; then
     echo "works only on compute node" >&2
-    exit $RC_SKIPPED
+    exit ${RC_SKIPPED}
 fi
 
 is_required_file "${CITELLUS_ROOT}/var/log/nova/nova-compute.log"
 log_file="${CITELLUS_ROOT}/var/log/nova/nova-compute.log"
 
-wc=$(grep -i 'libvirtError' $log_file | wc -l)
+wc=$(grep -i 'libvirtError' ${log_file} | wc -l)
 if [[ ${wc} -gt 0 ]]; then
     # to remove the ${CITELLUS_ROOT} from the stderr.
-    log_file=${log_file#$CITELLUS_ROOT}
+    log_file=${log_file#${CITELLUS_ROOT}}
     echo "$log_file (${wc} times)" >&2
     flag=1
 fi
-[[ "x$flag" = "x" ]] && exit $RC_OKAY || exit $RC_FAILED
+[[ "x$flag" = "x" ]] && exit ${RC_OKAY} || exit ${RC_FAILED}

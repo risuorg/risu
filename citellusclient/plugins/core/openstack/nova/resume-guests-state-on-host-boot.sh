@@ -26,7 +26,7 @@
 
 if ! is_process nova-compute; then
     echo "works only on compute node" >&2
-    exit $RC_SKIPPED
+    exit ${RC_SKIPPED}
 fi
 
 # this can run against live and also any sort of snapshot of the filesystem
@@ -40,9 +40,9 @@ is_required_file ${config_files[@]}
 LIBVIRTCONF="${CITELLUS_ROOT}/etc/sysconfig/libvirt-guests"
 NOVACONF="${CITELLUS_ROOT}/etc/nova/nova.conf"
 
-LIBVIRTBOOT=$(awk -F "=" '/^ON_BOOT/ {gsub (" ", "", $0); print tolower($2)}' $LIBVIRTCONF)
-LIBVIRTOFF=$(awk -F "=" '/^ON_SHUTDOWN/ {gsub (" ", "", $0); print tolower($2)}' $LIBVIRTCONF)
-NOVASTRING=$(awk -F "=" '/^resume_guests_state_on_host_boot/ {gsub (" ", "", $0); print tolower($2)}' $NOVACONF)
+LIBVIRTBOOT=$(awk -F "=" '/^ON_BOOT/ {gsub (" ", "", $0); print tolower($2)}' ${LIBVIRTCONF})
+LIBVIRTOFF=$(awk -F "=" '/^ON_SHUTDOWN/ {gsub (" ", "", $0); print tolower($2)}' ${LIBVIRTCONF})
+NOVASTRING=$(awk -F "=" '/^resume_guests_state_on_host_boot/ {gsub (" ", "", $0); print tolower($2)}' ${NOVACONF})
 
 if is_enabled libvirt-guests; then
     LIBVIRTGUESTS="true"
@@ -50,8 +50,8 @@ fi
 
 if [[ "$LIBVIRTBOOT" == "ignore" && "$LIBVIRTOFF" == "shutdown" && "$NOVASTRING" == "true" && "$LIBVIRTGUESTS" == "true" ]]; then
     echo $"compute node is configured to restore guests state at startup" >&2
-    exit $RC_OKAY
+    exit ${RC_OKAY}
 else
     echo $"compute node is NOT configured to restore guests state at startup" >&2
-    exit $RC_FAILED
+    exit ${RC_FAILED}
 fi

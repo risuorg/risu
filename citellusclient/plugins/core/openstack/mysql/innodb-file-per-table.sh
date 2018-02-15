@@ -26,16 +26,16 @@
 
 if ! is_process mysqld; then
     echo "only runs on controllers" >&2
-    exit $RC_SKIPPED
+    exit ${RC_SKIPPED}
 fi
 
 is_required_file "${CITELLUS_ROOT}/etc/my.cnf.d/galera.cnf" "${CITELLUS_ROOT}/etc/my.cnf"
 
 if [[ "$(iniparser "${CITELLUS_ROOT}/etc/my.cnf.d/galera.cnf" mysqld innodb_file_per_table)" == "ON" ]]; then
-    exit $RC_OKAY
+    exit ${RC_OKAY}
 elif [[ "$(iniparser "${CITELLUS_ROOT}/etc/my.cnf" mysqld innodb_file_per_table)" == "ON" ]]; then
-    exit $RC_OKAY
+    exit ${RC_OKAY}
 else
     echo $"innodb_file_per_table not set in /etc/my.cnf.d/galera.cnf or /etc/my.cnf" >&2
-    exit $RC_FAILED
+    exit ${RC_FAILED}
 fi

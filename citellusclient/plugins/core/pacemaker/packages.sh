@@ -31,11 +31,11 @@ if is_active pacemaker;then
     for package in ${PCS_VERSION}; do
         if [[ "${package}" -lt "15" ]]; then
             echo "$OUTDATED" >&2
-            exit $RC_FAILED
+            exit ${RC_FAILED}
         fi
     done
-    exit $RC_OKAY
+    exit ${RC_OKAY}
 else
     echo "pacemaker is not running on this node" >&2
-    exit $RC_SKIPPED
+    exit ${RC_SKIPPED}
 fi

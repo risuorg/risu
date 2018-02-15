@@ -30,12 +30,12 @@ is_active chronyd && chronyd=1 || chronyd=0
 
 if [[ ntpd -eq 1 && chronyd -eq 1 ]] ; then
     echo $"both ntpd and chrony are active" >&2
-    exit $RC_FAILED
+    exit ${RC_FAILED}
 elif [[ ntpd -eq 1 || chronyd -eq 1 ]] ; then
-    exit $RC_OKAY
+    exit ${RC_OKAY}
 else
     echo $"both chrony or ntpd are not active" >&2
-    exit $RC_FAILED
+    exit ${RC_FAILED}
 fi
 
-exit $RC_SKIPPED
+exit ${RC_SKIPPED}

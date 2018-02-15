@@ -32,11 +32,11 @@ if [[ "${RELEASE}" -le "8" ]]; then
 
     if ! is_lineinfile "auth_url.*/v(2.0|3)" "${CITELLUS_ROOT}/etc/neutron/metadata_agent.ini"; then
         echo $"keystone auth_url set wrongly in metadata_agent.ini https://bugzilla.redhat.com/show_bug.cgi?id=1340001" >&2
-        exit $RC_FAILED
+        exit ${RC_FAILED}
     else
-        exit $RC_OKAY
+        exit ${RC_OKAY}
     fi
 else
     echo "works only on OSP8 and earlier" >&2
-    exit $RC_SKIPPED
+    exit ${RC_SKIPPED}
 fi

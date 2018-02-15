@@ -26,13 +26,13 @@
 
 config_file="${CITELLUS_ROOT}/etc/keystone/keystone.conf"
 
-is_required_file $config_file
+is_required_file ${config_file}
 
 backends=$(iniparser "$config_file" identity driver)
 
 supported=1
-for backend in $backends;do
-    case $backend in
+for backend in ${backends};do
+    case ${backend} in
         "keystone.identity.backends.sql.Identity")
             # do nothing
             ;;
@@ -50,14 +50,14 @@ for backend in $backends;do
             ;;
         *)
             echo -n $"Unsupported keystone identity backend found " >&2
-            echo $backend >&2
+            echo ${backend} >&2
             supported=0
             ;;
     esac
 done
 
 if [[ "$supported" -ne "1" ]]; then
-    exit $RC_FAILED
+    exit ${RC_FAILED}
 fi
 
-exit $RC_OKAY
+exit ${RC_OKAY}

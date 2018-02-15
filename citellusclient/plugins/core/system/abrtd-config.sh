@@ -26,11 +26,11 @@
 
 if ! is_rpm abrt >/dev/null 2>&1; then
     echo $"abrt package missing" >&2
-    exit $RC_FAILED
+    exit ${RC_FAILED}
 fi
 if ! is_active abrtd; then
     echo $"abrtd is not running on this node" >&2
-    exit $RC_FAILED
+    exit ${RC_FAILED}
 fi
 
 is_required_file "${CITELLUS_ROOT}/proc/sys/kernel/core_pattern"
@@ -38,8 +38,8 @@ core_pattern=$(cat "${CITELLUS_ROOT}/proc/sys/kernel/core_pattern")
 
 if [[ "$core_pattern" == "core" ]]; then
     echo $"core_pattern: core" >&2
-    exit $RC_FAILED
+    exit ${RC_FAILED}
 else
     echo "core_pattern: $core_pattern" >&2
-    exit $RC_OKAY
+    exit ${RC_OKAY}
 fi

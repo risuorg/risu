@@ -28,17 +28,17 @@
 is_required_rpm openstack-nova-common
 is_required_rpm pacemaker
 
-if [[ $CITELLUS_LIVE -eq 0 ]]; then
+if [[ ${CITELLUS_LIVE} -eq 0 ]]; then
     FILE="${CITELLUS_ROOT}/sos_commands/pacemaker/crm_mon_-1_-A_-n_-r_-t"
-elif [[ $CITELLUS_LIVE -eq 1 ]];then
+elif [[ ${CITELLUS_LIVE} -eq 1 ]];then
     FILE=$(mktemp)
-    trap "rm $FILE" EXIT
-    crm_mon -1 -A -n -r -t  > $FILE 2>&1
+    trap "rm ${FILE}" EXIT
+    crm_mon -1 -A -n -r -t  > ${FILE} 2>&1
 fi
 
 if is_lineinfile "openstack-nova-compute" "${FILE}"; then
     echo $"Instance HA is in use in the environment, consider limitations" >&2
-    exit $RC_FAILED
+    exit ${RC_FAILED}
 fi
 
-exit $RC_OKAY
+exit ${RC_OKAY}

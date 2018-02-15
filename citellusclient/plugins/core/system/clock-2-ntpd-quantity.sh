@@ -24,7 +24,7 @@
 
 if ! is_active ntpd; then
     echo "ntpd is not running on this node" >&2
-    exit $RC_SKIPPED
+    exit ${RC_SKIPPED}
 fi
 
 is_required_file "${CITELLUS_ROOT}/etc/ntp.conf"
@@ -44,7 +44,7 @@ elif [[ "$ncount" -eq "1" ]]; then
     flag=1
 else
     echo $"ntpd not configured" >&2
-    exit $RC_FAILED
+    exit ${RC_FAILED}
 fi
 grep -E '^(peer|server)' "${CITELLUS_ROOT}/etc/ntp.conf" >&2
-[[ "x$flag" = "x0" ]] && exit $RC_OKAY || exit $RC_FAILED
+[[ "x$flag" = "x0" ]] && exit ${RC_OKAY} || exit ${RC_FAILED}

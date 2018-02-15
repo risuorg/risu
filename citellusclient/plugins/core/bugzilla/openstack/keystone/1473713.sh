@@ -31,6 +31,6 @@ is_required_file "${CITELLUS_ROOT}/var/log/keystone/keystone.log"
 
 if is_lineinfile "ERROR keystone DBDeadlock: .*pymysql.err.Internal.* try restarting transaction.*DELETE FROM token WHERE token.expires.*" "${CITELLUS_ROOT}/var/log/keystone/keystone.log"; then
     echo $"errors on token expiration, check: https://bugzilla.redhat.com/show_bug.cgi?id=1473713" >&2
-    exit $RC_FAILED
+    exit ${RC_FAILED}
 fi
-exit $RC_OKAY
+exit ${RC_OKAY}

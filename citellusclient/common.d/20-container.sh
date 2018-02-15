@@ -26,7 +26,7 @@ is_containerized(){
 is_required_containerized(){
     if ! is_containerized; then
         echo "the OSP${RELEASE} deployment seems to not be containerized" >&2
-        exit $RC_SKIPPED
+        exit ${RC_SKIPPED}
     fi
 }
 
@@ -39,10 +39,10 @@ docker_runit(){
             docker exec $(docker ps | grep "${1}" | cut -d" " -f1) sh -c "${@:2}"
         else
             echo "docker: command not found or executable" >&2
-            exit $RC_SKIPPED
+            exit ${RC_SKIPPED}
         fi
     elif [ "x$CITELLUS_LIVE" = "x0" ]; then
         echo "docker: works only on live system" >&2
-        exit $RC_SKIPPED
+        exit ${RC_SKIPPED}
     fi
 }

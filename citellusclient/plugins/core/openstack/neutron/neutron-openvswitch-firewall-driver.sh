@@ -29,12 +29,12 @@ RELEASE=$(discover_osp_version)
 
 if [[ "x$RELEASE" != "x10" ]]; then
     echo "This affects only OSP10" >&2
-    exit $RC_SKIPPED
+    exit ${RC_SKIPPED}
 fi
 
 if [[ "$(iniparser ${CITELLUS_ROOT}/etc/neutron/plugins/ml2/openvswitch_agent.ini securitygroup firewall_driver)" == 'openvswitch' ]]; then
     echo $"Unsupported firewall_driver = openvswitch in deployment" >&2
-    exit $RC_FAILED
+    exit ${RC_FAILED}
 fi
 
-exit $RC_OKAY
+exit ${RC_OKAY}

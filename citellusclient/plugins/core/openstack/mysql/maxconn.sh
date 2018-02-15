@@ -23,7 +23,7 @@
 
 if [[ ! "x$CITELLUS_LIVE" = "x1" ]]; then
     echo "works on live-system only" >&2
-    exit $RC_SKIPPED
+    exit ${RC_SKIPPED}
 fi
 
 # This test requires mysql
@@ -39,7 +39,7 @@ if [[ "x$RC" = "x0" ]]; then
         THREADS_CONNECTED=$(mysql -sN -u root -e 'SELECT VARIABLE_VALUE FROM INFORMATION_SCHEMA.GLOBAL_STATUS where VARIABLE_NAME="THREADS_CONNECTED";')
     else
         echo -e "ERROR connecting to the database\n${_test}" >&2
-        exit $RC_SKIPPED
+        exit ${RC_SKIPPED}
     fi
     # Check for HAproxy topic in haproxy.cfg and pick the maxconn value
     HAPROXY_MYSQL=$(awk '/defaults|listen mysql/,/^$/ {if ($1 == "maxconn" && $2 ~ /[0-9]+/) max=$2}; END {print max}' /etc/haproxy/haproxy.cfg)
@@ -50,14 +50,14 @@ if [[ "x$RC" = "x0" ]]; then
     fi
 else
     echo "missing mysql binaries" >&2
-    exit $RC_SKIPPED
+    exit ${RC_SKIPPED}
 fi
 
 # Now that we have all needed compare the value from HAproxy and database.
 if [[ ! -z ${THREADS_CONNECTED} ]]; then
     if [[ "${THREADS_CONNECTED}" -ge ${HAPROXY_MYSQL} ]]; then
-        exit $RC_FAILED
+        exit ${RC_FAILED}
     elif [[ "${THREADS_CONNECTED}" -lt ${HAPROXY_MYSQL} ]]; then
-        exit $RC_OKAY
+        exit ${RC_OKAY}
     fi
 fi

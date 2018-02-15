@@ -28,7 +28,7 @@
 
 if ! is_process nova-compute; then
     echo "works only on compute node" >&2
-    exit $RC_SKIPPED
+    exit ${RC_SKIPPED}
 fi
 
 # we know the exact kernel versions for RHEL7 from https://access.redhat.com/articles/3078
@@ -46,8 +46,8 @@ if [[ "x$CITELLUS_LIVE" = "x0" ]]; then
     FILE="${CITELLUS_ROOT}/uname"
 elif [[ "x$CITELLUS_LIVE" = "x1" ]];then
     FILE=$(mktemp)
-    trap "rm $FILE" EXIT
-    uname -a > $FILE
+    trap "rm ${FILE}" EXIT
+    uname -a > ${FILE}
 fi
 
 is_required_file "$FILE"
@@ -64,11 +64,11 @@ redhat_release=$(echo "$version" | cut -d" " -f3)
 if [[ "$libvirt" == "$libvirt_version" && "$qemu" == "$qemu_version" \
     && "$redhat_release" == "$redhat_release_version" ]]; then
     echo $"compatibility between libvirt, qemu and kernel" >&2
-    exit $RC_OKAY
+    exit ${RC_OKAY}
 else
     echo $"detected running kernel: $kernel_version" >&2
     echo $"libvirt:  $libvirt_version expected $libvirt" >&2
     echo $"qemu-kvm: $qemu_version expected $qemu" >&2
     echo $"redhat-release: $redhat_release_version expected $redhat_release" >&2
-    exit $RC_FAILED
+    exit ${RC_FAILED}
 fi

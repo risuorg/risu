@@ -30,13 +30,13 @@ if [[ "x$CITELLUS_LIVE" = "x1" ]];  then
         if pcs config | grep -q -i "target-role=Stopped"; then
             pcs config | egrep -i "^(\sBundle|\sClone|\sMaster|\sResource)|target-role=Stopped" \
             | grep -i "target-role=Stopped" -B1 | awk -F" " '/Bundle/||/Clone/||/Master/||/Resource/{print $2}' >&2
-            exit $RC_FAILED
+            exit ${RC_FAILED}
         else
-            exit $RC_OKAY
+            exit ${RC_OKAY}
         fi
     else
         echo "pacemaker is not running on this node" >&2
-        exit $RC_SKIPPED
+        exit ${RC_SKIPPED}
     fi
 elif [[ "x$CITELLUS_LIVE" = "x0" ]];  then
     if is_active "pacemaker"; then
@@ -49,12 +49,12 @@ elif [[ "x$CITELLUS_LIVE" = "x0" ]];  then
         if is_lineinfile "target-role=" "${PCS_DIRECTORY}/pcs_config"; then
             egrep -i "^(\sBundle|\sClone|\sMaster|\sResource)|target-role=Stopped" "${PCS_DIRECTORY}/pcs_config" \
             | grep -i "target-role=Stopped" -B1 | awk -F" " '/Bundle/||/Clone/||/Master/||/Resource/{print $2}' >&2
-            exit $RC_FAILED
+            exit ${RC_FAILED}
         else
-            exit $RC_OKAY
+            exit ${RC_OKAY}
         fi
     else
         echo "pacemaker is not running on this node" >&2
-        exit $RC_SKIPPED
+        exit ${RC_SKIPPED}
     fi
 fi

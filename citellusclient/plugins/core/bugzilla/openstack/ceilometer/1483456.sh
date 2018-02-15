@@ -39,11 +39,11 @@ if is_process nova-compute; then
 
     if [[ "$HOST" != "$NOVAHOST" ]]; then
         echo $"https://bugzilla.redhat.com/show_bug.cgi?id=1483456" >&2
-        exit $RC_FAILED
+        exit ${RC_FAILED}
     else
-        exit $RC_OKAY
+        exit ${RC_OKAY}
     fi
 else
     echo $"works only on controller node" >&2
-    exit $RC_SKIPPED
+    exit ${RC_SKIPPED}
 fi

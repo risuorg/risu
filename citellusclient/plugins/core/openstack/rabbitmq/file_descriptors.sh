@@ -25,7 +25,7 @@
 
 if is_process nova-compute;then
         echo "works only on controller node" >&2
-        exit $RC_SKIPPED
+        exit ${RC_SKIPPED}
 fi
 
 # Setup the file we'll be using for using similar approach on Live and non-live
@@ -35,12 +35,12 @@ if [[ "x$CITELLUS_LIVE" = "x1" ]];  then
     RC=$?
     if [[ "x$RC" != "x0" ]]; then
         echo "rabbitmqctl not found" >&2
-        exit $RC_SKIPPED
+        exit ${RC_SKIPPED}
     fi
     FILE=$(mktemp)
-    trap "rm $FILE" EXIT
+    trap "rm ${FILE}" EXIT
 
-    rabbitmqctl report > $FILE
+    rabbitmqctl report > ${FILE}
     HN=${HOSTNAME}
 
 elif [[ "x$CITELLUS_LIVE" = "x0" ]];then
@@ -51,7 +51,7 @@ fi
 
 if grep -q nodedown "${FILE}"; then
     echo "rabbitmq down" >&2
-    exit $RC_FAILED
+    exit ${RC_FAILED}
 fi
 
 FILE_DESCRIPTORS=$(awk -v target="$HN" '$4 ~ target { flag = 1 } \
@@ -64,12 +64,12 @@ flag = 1 && /total_used/ { print ; exit }' \
 
 if [[ -z ${FILE_DESCRIPTORS} ]]; then
     echo "couldn't get file descriptors from rabbitmqctl report" >&2
-    exit $RC_FAILED
+    exit ${RC_FAILED}
 fi
 
 if [[ -z ${USED_FILE_DESCRIPTORS} ]]; then
     echo "couldn't get used file descriptors from rabbitmqctl report" >&2
-    exit $RC_FAILED
+    exit ${RC_FAILED}
 fi
 
 if [[ "${FILE_DESCRIPTORS}" -lt  "65336" ]]; then
@@ -85,4 +85,4 @@ if [[ "${AVAILABLE_FILE_DESCRIPTORS}" -lt "16000" ]]; then
     flag=1
 fi
 
-[[ "x$flag" = "x" ]] && exit $RC_OKAY || exit $RC_FAILED
+[[ "x$flag" = "x" ]] && exit ${RC_OKAY} || exit ${RC_FAILED}

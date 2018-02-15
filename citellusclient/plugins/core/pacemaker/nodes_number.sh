@@ -27,18 +27,18 @@
 count_nodes(){
     if [[ ! "$(echo $(( (NUM_NODES-1) % 2 )))" -eq  "0" ]]; then
         echo "${NUM_NODES}" >&2
-        exit $RC_FAILED
+        exit ${RC_FAILED}
     elif [[ "x$NUM_NODES" = "x1" ]]; then
         echo "${NUM_NODES}" >&2
-        exit $RC_FAILED
+        exit ${RC_FAILED}
     else
-        exit $RC_OKAY
+        exit ${RC_OKAY}
     fi
 }
 
 if ! is_active pacemaker; then
     echo "pacemaker is not running on this node" >&2
-    exit $RC_SKIPPED
+    exit ${RC_SKIPPED}
 fi
 
 if [[ "x$CITELLUS_LIVE" = "x1" ]];  then

@@ -29,21 +29,21 @@ if [[ "x$CITELLUS_LIVE" = "x1" ]];  then
     SERVICES=$(systemctl list-units --all | grep "neutron.*failed\|openstack.*failed\|openvswitch.*failed" | sed 's/*//' |awk '{print $1}')
     if systemctl list-units --all | grep -q "neutron.*failed\|openstack.*failed\|openvswitch.*failed"; then
         echo ${SERVICES} | tr ' ' '\n' >&2
-        exit $RC_FAILED
+        exit ${RC_FAILED}
     else
-        exit $RC_OKAY
+        exit ${RC_OKAY}
     fi
 elif [[ "x$CITELLUS_LIVE" = "x0" ]];  then
     if [[ -z "${systemctl_list_units_file}" ]]; then
         echo "file /sos_commands/systemd/systemctl_list-units not found." >&2
         echo "file /sos_commands/systemd/systemctl_list-units_--all not found." >&2
-        exit $RC_SKIPPED
+        exit ${RC_SKIPPED}
     fi
     SERVICES=$(grep "neutron.*failed\|openstack.*failed\|openvswitch.*failed" "${systemctl_list_units_file}" | sed 's/*//' | awk '{print $1}')
     if grep -q "neutron.*failed\|openstack.*failed\|openvswitch.*failed" "${systemctl_list_units_file}"; then
         echo ${SERVICES} | tr ' ' '\n' >&2
-        exit $RC_FAILED
+        exit ${RC_FAILED}
     else
-        exit $RC_OKAY
+        exit ${RC_OKAY}
     fi
 fi

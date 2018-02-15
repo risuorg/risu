@@ -28,13 +28,13 @@ if [[ "x$CITELLUS_LIVE" = "x1" ]];  then
     pacemaker_status=$(systemctl is-active pacemaker || :)
     if [[ "$pacemaker_status" = "active" ]]; then
         if pcs status | grep -q "Stopped"; then
-            exit $RC_FAILED
+            exit ${RC_FAILED}
         else
-            exit $RC_OKAY
+            exit ${RC_OKAY}
         fi
     else
         echo "pacemaker is not running on this node" >&2
-        exit $RC_SKIPPED
+        exit ${RC_SKIPPED}
     fi
 elif [[ "x$CITELLUS_LIVE" = "x0" ]];  then
     if is_active "pacemaker"; then
@@ -47,12 +47,12 @@ elif [[ "x$CITELLUS_LIVE" = "x0" ]];  then
         if is_lineinfile "Stopped" "${PCS_DIRECTORY}/pcs_status"; then
             egrep -i "^(\sClone|\sMaster|\sResource)|Stopped" "${PCS_DIRECTORY}/pcs_status" | grep "Stopped" -B1 \
             | sed '/^--$/d' >&2
-            exit $RC_FAILED
+            exit ${RC_FAILED}
         else
-            exit $RC_OKAY
+            exit ${RC_OKAY}
         fi
     else
         echo "pacemaker is not running on this node" >&2
-        exit $RC_SKIPPED
+        exit ${RC_SKIPPED}
     fi
 fi

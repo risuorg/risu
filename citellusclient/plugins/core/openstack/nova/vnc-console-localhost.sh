@@ -45,10 +45,10 @@ if ! is_lineinfile "^vncserver_listen" "${CITELLUS_ROOT}/etc/nova/nova.conf"; th
     flag=1
 else
     grep "^vncserver_listen" "${CITELLUS_ROOT}/etc/nova/nova.conf" >&2
-    exit $RC_OKAY
+    exit ${RC_OKAY}
 fi
 
 if [[ "x$flag" = "x1" ]]; then
     echo $"nova's vnc console listening on 127.0.0.1" >&2
-    exit $RC_FAILED
+    exit ${RC_FAILED}
 fi

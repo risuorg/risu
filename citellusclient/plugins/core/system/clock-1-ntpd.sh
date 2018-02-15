@@ -28,23 +28,23 @@
 
 if ! is_active ntpd;then
     echo "ntpd is not active" >&2
-    exit $RC_FAILED
+    exit ${RC_FAILED}
 fi
 
 is_required_file "${CITELLUS_ROOT}/etc/ntp.conf"
 grep "^server" "${CITELLUS_ROOT}/etc/ntp.conf" >&2
 
-if [[ $CITELLUS_LIVE = 0 ]]; then
+if [[ ${CITELLUS_LIVE} = 0 ]]; then
     is_required_file "${CITELLUS_ROOT}/sos_commands/ntp/ntpq_-p"
 
     if grep -q "Connection refused" "${CITELLUS_ROOT}/sos_commands/ntp/ntpq_-p"; then
         echo "ntpq: read: Connection refused" >&2
-        exit $RC_FAILED
+        exit ${RC_FAILED}
     fi
 
     is_required_file "${CITELLUS_ROOT}/sos_commands/ntp/ntpq_-p"
     is_lineinfile "timed out" "${CITELLUS_ROOT}/sos_commands/ntp/ntpq_-p" && \
-        echo "localhost: timed out, nothing received" >&2 && exit $RC_FAILED
+        echo "localhost: timed out, nothing received" >&2 && exit ${RC_FAILED}
 
     offset=$(awk '/^\*/ {print $9}' "${CITELLUS_ROOT}/sos_commands/ntp/ntpq_-p")
     if [[ -z "$offset" ]]; then
@@ -59,18 +59,18 @@ if [[ $CITELLUS_LIVE = 0 ]]; then
             $offset>-${CITELLUS_MAX_CLOCK_OFFSET:-1000}" | bc -l)
     fi
 
-    [[ "x$RC" = "x1" ]] && exit $RC_OKAY || exit $RC_FAILED
+    [[ "x$RC" = "x1" ]] && exit ${RC_OKAY} || exit ${RC_FAILED}
 else
     is_required_file /usr/bin/bc
 
     if ! out=$(ntpq -c peers); then
         echo "failed to contact ntpd" >&2
-        exit $RC_FAILED
+        exit ${RC_FAILED}
     fi
 
     if ! awk '/^\*/ {sync=1} END {exit ! sync}' <<<"$out"; then
         echo "clock is not synchronized" >&2
-        return $RC_FAILED
+        return ${RC_FAILED}
     fi
 
     offset=$(awk '/^\*/ {print $9}' <<<"$out")
@@ -79,5 +79,5 @@ else
     RC=$(echo "$offset<${CITELLUS_MAX_CLOCK_OFFSET:-1000} && \
         $offset>-${CITELLUS_MAX_CLOCK_OFFSET:-1000}" | bc -l)
 
-    [[ "x$RC" = "x1" ]] && exit $RC_OKAY || exit $RC_FAILED
+    [[ "x$RC" = "x1" ]] && exit ${RC_OKAY} || exit ${RC_FAILED}
 fi

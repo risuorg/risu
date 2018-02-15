@@ -42,7 +42,7 @@ elif [[ "${RELEASE}" -eq "10" ]]; then
     is_required_rpm_over openstack-tripleo-common openstack-tripleo-common-5.4.1-6.el7ost
 else
     echo "only applies to OSP8, OSP9 and OSP10" >&2
-    exit $RC_SKIPPED
+    exit ${RC_SKIPPED}
 fi
 
-exit $RC_OKAY
+exit ${RC_OKAY}

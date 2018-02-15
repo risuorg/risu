@@ -23,7 +23,7 @@
 # priority: 100
 # selinux enforcing
 
-if [[ $CITELLUS_LIVE = 0 ]];  then
+if [[ ${CITELLUS_LIVE} = 0 ]];  then
     is_required_file "${CITELLUS_ROOT}/sos_commands/selinux/sestatus_-b"
     mode=$(awk '/^Current mode:/ {print $3}' "${CITELLUS_ROOT}/sos_commands/selinux/sestatus_-b")
 else
@@ -32,13 +32,13 @@ fi
 
 if ! [[ "$mode" ]]; then
     echo $"failed to determined runtime selinux mode" >&2
-    exit $RC_FAILED
+    exit ${RC_FAILED}
 fi
 
-if [[ $mode != enforcing ]]; then
+if [[ ${mode} != enforcing ]]; then
     echo -n $"runtime selinux mode is not enforcing" >&2
     echo " (found $mode)" >&2
-    exit $RC_FAILED
+    exit ${RC_FAILED}
 else
-    exit $RC_OKAY
+    exit ${RC_OKAY}
 fi

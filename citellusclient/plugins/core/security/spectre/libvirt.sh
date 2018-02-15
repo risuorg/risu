@@ -33,4 +33,4 @@ elif [[ "${RELEASE}" -eq "6" ]]; then
     exitoudated
     is_required_rpm_over libvirt libvirt-0.10.2-62.el6_9.1
 fi
-exit $RC_OKAY
+exit ${RC_OKAY}

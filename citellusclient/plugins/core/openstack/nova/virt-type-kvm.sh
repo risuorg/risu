@@ -27,7 +27,7 @@ is_required_file ${FILE}
 VTYPE=$(iniparser ${FILE} libvirt virt_type)
 
 supported=1
-case $VTYPE in
+case ${VTYPE} in
     "kvm")
         # do nothing
         ;;
@@ -42,7 +42,7 @@ case $VTYPE in
 esac
 
 if [[ "$supported" -ne "1" ]]; then
-    exit $RC_FAILED
+    exit ${RC_FAILED}
 fi
 
-exit $RC_OKAY
+exit ${RC_OKAY}

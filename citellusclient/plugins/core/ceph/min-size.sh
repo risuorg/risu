@@ -24,8 +24,8 @@
 
 mktempfile() {
     tmpfile=$(mktemp testsXXXXXX)
-    tmpfile=$(readlink -f $tmpfile)
-    trap "rm $tmpfile" EXIT
+    tmpfile=$(readlink -f ${tmpfile})
+    trap "rm ${tmpfile}" EXIT
 }
 
 # Check if ceph pools has correct min_size
@@ -35,7 +35,7 @@ check_settings() {
         SIZE=$(sed -n -r -e "s/^pool.*'$pool'.*\ssize[ \t]([0-9]).*$/\1/p" $1)
         if [[ -z "$SIZE" ]] || [[ -z "$MIN_SIZE" ]]; then
             echo "error could not parse size or min_size." >&2
-            exit $RC_FAILED
+            exit ${RC_FAILED}
         fi
         _MIN_SIZE="$(( (SIZE/2) + 1 ))"
 
@@ -44,7 +44,7 @@ check_settings() {
             flag=1
         fi
     done
-    [[ "x$flag" = "x" ]] && exit $RC_OKAY || exit $RC_FAILED
+    [[ "x$flag" = "x" ]] && exit ${RC_OKAY} || exit ${RC_FAILED}
 }
 
 if [[ "x$CITELLUS_LIVE" = "x0" ]];  then
@@ -55,15 +55,15 @@ if [[ "x$CITELLUS_LIVE" = "x0" ]];  then
         check_settings "${CITELLUS_ROOT}/sos_commands/ceph/ceph_osd_dump"
     else
         echo "no ceph integrated" >&2
-        exit $RC_SKIPPED
+        exit ${RC_SKIPPED}
     fi
 elif [[ "x$CITELLUS_LIVE" = "x1" ]]; then
     if hiera -c /etc/puppet/hiera.yaml enabled_services | egrep -sq ceph_mon; then
         mktempfile
-        ceph osd dump > $tmpfile
-        check_settings $tmpfile
+        ceph osd dump > ${tmpfile}
+        check_settings ${tmpfile}
     else
         echo "no ceph integrated" >&2
-        exit $RC_SKIPPED
+        exit ${RC_SKIPPED}
     fi
 fi

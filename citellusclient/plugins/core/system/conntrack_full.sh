@@ -27,15 +27,15 @@ ERRORMSG=$"packet drop because ip/nf_conntrack tables are full detected"
 if [[ "x$CITELLUS_LIVE" = "x0" ]];  then
     is_required_file "${CITELLUS_ROOT}/sos_commands/kernel/dmesg"
     if is_lineinfile "table full, dropping packet" "${CITELLUS_ROOT}/sos_commands/kernel/dmesg"; then
-        echo $ERRORMSG >&2
-        exit $RC_FAILED
+        echo ${ERRORMSG} >&2
+        exit ${RC_FAILED}
     fi
 elif [[ "x$CITELLUS_LIVE" = "x1" ]]; then
     if dmesg| grep -eq "table full, dropping packet"; then
-        echo $ERRORMSG >&2
-        exit $RC_FAILED
+        echo ${ERRORMSG} >&2
+        exit ${RC_FAILED}
     fi
 fi
 
 # exit as OK if haven't failed earlier
-exit $RC_OKAY
+exit ${RC_OKAY}

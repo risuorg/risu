@@ -29,9 +29,9 @@ is_required_file "${CITELLUS_ROOT}/var/log/messages"
 
 errcount=$(zgrep "$ERRORMATCH" ${CITELLUS_ROOT}/var/log/messages* |wc -l)
 if [[ "x$errcount" != "x0" ]] ; then
-    echo $ERRORMSG >&2
-    exit $RC_FAILED
+    echo ${ERRORMSG} >&2
+    exit ${RC_FAILED}
 fi
 
 # exit as OK if haven't failed earlier
-exit $RC_OKAY
+exit ${RC_OKAY}

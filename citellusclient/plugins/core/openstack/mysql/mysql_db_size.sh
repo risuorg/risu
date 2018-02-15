@@ -21,7 +21,7 @@
 
 if [[ ! "x$CITELLUS_LIVE" = "x1" ]]; then
     echo "works on live-system only" >&2
-    exit $RC_SKIPPED
+    exit ${RC_SKIPPED}
 fi
 
 # This test requires mysql
@@ -41,11 +41,11 @@ if [[ "x$RC" = "x0" ]]; then
         ) >&2
     else
         echo -e "ERROR connecting to the database\n${_test}" >&2
-        exit $RC_SKIPPED
+        exit ${RC_SKIPPED}
     fi
 else
     echo "missing mysql binaries" >&2
-    exit $RC_SKIPPED
+    exit ${RC_SKIPPED}
 fi
 
 if [[ -d "${MYSQL_DIR}" ]]; then
@@ -53,8 +53,8 @@ if [[ -d "${MYSQL_DIR}" ]]; then
     (
         du -h --threshold=10G ${MYSQL_DIR}/* | sort -nr  | egrep -i "ibdata|ib_log"
     )  >&2
-    exit $RC_OKAY
+    exit ${RC_OKAY}
 else
     echo "$MYSQL_DIR doesn't exists" >&2
-    exit $RC_FAILED
+    exit ${RC_FAILED}
 fi

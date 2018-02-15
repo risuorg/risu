@@ -29,7 +29,7 @@ is_required_file "${CITELLUS_ROOT}/etc/neutron/neutron.conf"
 
 if [[ "$(iniparser "${CITELLUS_ROOT}/etc/neutron/neutron.conf" DEFAULT host)" == "localhost" ]]; then
     echo $"neutron.conf https://bugzilla.redhat.com/show_bug.cgi?id=1474092" >&2
-    exit $RC_FAILED
+    exit ${RC_FAILED}
 else
-    exit $RC_OKAY
+    exit ${RC_OKAY}
 fi

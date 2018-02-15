@@ -21,13 +21,13 @@
 # Load common functions
 [[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
-if [[ $CITELLUS_LIVE -eq 0 ]]; then
+if [[ ${CITELLUS_LIVE} -eq 0 ]]; then
     DMIDECODE="${CITELLUS_ROOT}/dmidecode"
-    is_required_file $DMIDECODE
-    UUID=$(cat $DMIDECODE | grep -oP "UUID: \K(.*)")
-elif [[ $CITELLUS_LIVE -eq 1 ]];then
+    is_required_file ${DMIDECODE}
+    UUID=$(cat ${DMIDECODE} | grep -oP "UUID: \K(.*)")
+elif [[ ${CITELLUS_LIVE} -eq 1 ]];then
     UUID=$(sudo dmidecode -s system-uuid)
 fi
 
-echo $UUID >&2
-exit $RC_OKAY
+echo ${UUID} >&2
+exit ${RC_OKAY}

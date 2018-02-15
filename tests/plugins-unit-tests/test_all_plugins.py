@@ -64,9 +64,9 @@ class CitellusTest(TestCase):
         out_dict = []
         for item in results:
             rc = results[item]['result']['rc']
-            if rc not in sorted(set([okay, failed, skipped])):
+            if rc not in sorted({okay, failed, skipped}):
                 print(results[item])
-            assert rc in sorted(set([okay, failed, skipped]))
+            assert rc in sorted({okay, failed, skipped})
             if rc == failed or rc == skipped:
                 print(results[item])
                 assert results[item]['result']['err'] != ""
@@ -76,7 +76,7 @@ class CitellusTest(TestCase):
                 assert results[item]['result']['out]'] == ""
             out_dict.append(results[item]['result']['out'])
 
-        assert sorted(set(new_dict)) == sorted(set([okay, failed, skipped]))
+        assert sorted(set(new_dict)) == sorted({okay, failed, skipped})
 
     def test_all_plugins_live(self):
         # Run citellus once against them
@@ -87,9 +87,9 @@ class CitellusTest(TestCase):
         out_dict = []
         for item in results:
             rc = results[item]['result']['rc']
-            if rc not in sorted(set([okay, failed, skipped])):
+            if rc not in sorted({okay, failed, skipped}):
                 print(results[item])
-            assert rc in sorted(set([okay, failed, skipped]))
+            assert rc in sorted({okay, failed, skipped})
             if rc == failed or rc == skipped:
                 print(results[item])
                 assert results[item]['result']['err'] != ""
@@ -100,4 +100,4 @@ class CitellusTest(TestCase):
 
             new_dict.append(rc)
 
-        assert sorted(set(new_dict)) == sorted(set([okay, failed, skipped]))
+        assert sorted(set(new_dict)) == sorted({okay, failed, skipped})

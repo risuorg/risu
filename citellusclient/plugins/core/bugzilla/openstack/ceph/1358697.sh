@@ -34,19 +34,19 @@ fi
 
 exitoudated(){
     echo $"outdated ceph packages: https://bugzilla.redhat.com/show_bug.cgi?id=1358697" >&2
-    exit $RC_FAILED
+    exit ${RC_FAILED}
 }
 
 
 if [[ "x$VERSIONS" = "x" ]]; then
     echo "required packages not found" >&2
-    exit $RC_SKIPPED
+    exit ${RC_SKIPPED}
 else
     # Affected versions are lower than ceph-0.94.5-15
     for package in ${VERSIONS}; do
-        MAJOR=$(echo $package|cut -d "-" -f1)
-        MID=$(echo $package|cut -d "-" -f2)
-        MINOR=$(echo $package|cut -d "-" -f3)
+        MAJOR=$(echo ${package}|cut -d "-" -f1)
+        MID=$(echo ${package}|cut -d "-" -f2)
+        MINOR=$(echo ${package}|cut -d "-" -f3)
         if [[ "${MAJOR}" -ge "94" ]]; then
             if [[ "${MID}" -ge "5" ]]; then
                 if [[ "${MINOR}" -lt "15" ]]; then
@@ -59,5 +59,5 @@ else
             exitoudated
         fi
     done
-    exit $RC_OKAY
+    exit ${RC_OKAY}
 fi

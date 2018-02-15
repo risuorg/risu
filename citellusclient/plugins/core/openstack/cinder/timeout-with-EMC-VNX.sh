@@ -34,14 +34,14 @@ if is_process cinder-volume; then
         LINES=$(awk -F'.*/naviseccli.*returned: 0 in |s execute' '$2>$TIMEOUT {print $2}' "${CITELLUS_ROOT}/var/log/cinder/volume.log"|wc -l)
         if [[ "x$LINES" != "x0" ]]; then
             echo $"Detected possible Navicli timeouts in cinder" >&2
-            exit $RC_FAILED
+            exit ${RC_FAILED}
         fi
         echo "Not detected cinder rpc_response_timeout" >&2
-        exit $RC_SKIPPED
+        exit ${RC_SKIPPED}
     fi
 else
     echo "No cinder-volume running" >&2
-    exit $RC_SKIPPED
+    exit ${RC_SKIPPED}
 fi
 
-exit $RC_OKAY
+exit ${RC_OKAY}

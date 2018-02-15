@@ -54,8 +54,8 @@ if ! is_lineinfile "^enable_isolated_metadata.*rue" "${CITELLUS_ROOT}/etc/neutro
     flag=1
 fi
 
-if [[ $flag -eq '1' ]]; then
-    exit $RC_FAILED
+if [[ ${flag} -eq '1' ]]; then
+    exit ${RC_FAILED}
 else
-    exit $RC_OKAY
+    exit ${RC_OKAY}
 fi
