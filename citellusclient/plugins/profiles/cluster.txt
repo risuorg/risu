@@ -1,0 +1,12 @@
+# Author: Pablo Iranzo Gómez (Pablo.Iranzo@redhat.com)
+# description: Checks for several plugins related with ClusterHA environments
+# long_name: Cluster profile checks
+#
+# Defines which plugins to include, exclude, etc
+# Syntax
+# +keyword : includes keyword in plugin search
+# -keyword : excludes keyword in plugin search
+
++clock
++cluster
+-chronyd

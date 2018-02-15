@@ -2,6 +2,11 @@
 
 This file will contain a manually mantained log of hilights between versions, it's not a very extensive detail, but some of the bigger changes/ideas will be added here.
 
+## 2018-02-17
+- Implemented 'profiles' data hook
+    - Allow to define a text file with include/exclude filter and description that grabs data from the obtained results and shows in one place all return codes and error messages received
+    - This will allow to define 'healthchecks' based on other plugins output and generate them dinamycall.
+    - As it is done as if another plugin was executed, same Web UI interface is available for checking results.
 
 ## 2018-02-11
 Several changes introduced recently:
