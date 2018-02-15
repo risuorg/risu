@@ -24,6 +24,11 @@
 # Load common functions
 [[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
+if ! is_process mysqld; then
+    echo "only runs on controllers" >&2
+    exit $RC_SKIPPED
+fi
+
 is_required_file "${CITELLUS_ROOT}/etc/my.cnf.d/galera.cnf" "${CITELLUS_ROOT}/etc/my.cnf"
 
 if [[ "$(iniparser "${CITELLUS_ROOT}/etc/my.cnf.d/galera.cnf" mysqld innodb_file_per_table)" == "ON" ]]; then
