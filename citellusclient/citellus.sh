@@ -41,12 +41,12 @@ scriptname() {
 }
 
 discover_tests() {
-    find $spec -type d -execdir test -f {}/.citellus_tests \; -exec find {} -type f -perm /u+x -print \;
+    find ${spec} -type d -execdir test -f {}/.citellus_tests \; -exec find {} -type f -perm /u+x -print \;
 }
 
 show_stderr() {
-    [ -s $tmpdir/stderr ] || continue
-    sed 's/^/    /' $tmpdir/stderr && echo ""
+    [ -s ${tmpdir}/stderr ] || continue
+    sed 's/^/    /' ${tmpdir}/stderr && echo ""
 }
 
 show_logo(){
@@ -80,7 +80,7 @@ while :; do
             ;;
             -?*)
                 echo "unknown option: ${1}" >&2
-                exit $RC_FAILED
+                exit ${RC_FAILED}
                 ;;
         *) break
         ;;
@@ -88,14 +88,14 @@ while :; do
 done
 
 tmpdir=$(mktemp -d testsXXXXXX)
-tmpdir=$(readlink -f $tmpdir)
-trap "rm -rf $tmpdir" EXIT
+tmpdir=$(readlink -f ${tmpdir})
+trap "rm -rf ${tmpdir}" EXIT
 
 if [ "x${CITELLUS_LIVE}" = "x0" ]; then
     CITELLUS_ROOT=$(cd $(dirname "$1") && pwd -P)/$(basename "$1")
     if [ ! -d "${CITELLUS_ROOT}" ]; then
         show_help
-        exit $RC_FAILED
+        exit ${RC_FAILED}
     fi
     shift
 fi
@@ -108,35 +108,35 @@ fi
 
 for spec in "${specs[@]}"; do
     [ -d "$spec" ] || continue
-    discover_tests "$spec" >> $tmpdir/tests-unsorted
+    discover_tests "$spec" >> ${tmpdir}/tests-unsorted
 done
 
-[ -e "$tmpdir/tests-unsorted" ] && sort -u $tmpdir/tests-unsorted > $tmpdir/tests || exit $RC_FAILED
+[ -e "$tmpdir/tests-unsorted" ] && sort -u ${tmpdir}/tests-unsorted > ${tmpdir}/tests || exit ${RC_FAILED}
 
 
 show_logo
-test_count=$(wc -l < $tmpdir/tests)
+test_count=$(wc -l < ${tmpdir}/tests)
 scriptname "found $test_count tests"
-[[ $CITELLUS_LIVE = 1 ]] && echo "mode: live" || echo "mode: fs snapshot $CITELLUS_ROOT"
+[[ ${CITELLUS_LIVE} = 1 ]] && echo "mode: live" || echo "mode: fs snapshot $CITELLUS_ROOT"
 
 while read test; do
     echo -n "# $test: "
     (
-    cd $(dirname $test)
-    ./$(basename $test) > $tmpdir/stdout 2> $tmpdir/stderr
+    cd $(dirname ${test})
+    ./$(basename ${test}) > ${tmpdir}/stdout 2> ${tmpdir}/stderr
     )
     result=$?
 
-    if [[ $result -eq $RC_OKAY ]]; then
-        echo $TEST_OKAY
-    elif [[ $result -eq $RC_SKIPPED ]]; then
-        echo $TEST_SKIPPED
-    elif [[ $result -eq $RC_FAILED ]]; then
-        echo $TEST_FAILED
+    if [[ ${result} -eq ${RC_OKAY} ]]; then
+        echo ${TEST_OKAY}
+    elif [[ ${result} -eq ${RC_SKIPPED} ]]; then
+        echo ${TEST_SKIPPED}
+    elif [[ ${result} -eq ${RC_FAILED} ]]; then
+        echo ${TEST_FAILED}
         show_stderr
     else
-        echo $TEST_WTF
+        echo ${TEST_WTF}
         show_stderr
     fi
 
-done < $tmpdir/tests
+done < ${tmpdir}/tests

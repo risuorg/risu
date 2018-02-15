@@ -27,6 +27,6 @@
 
 is_required_file "${CITELLUS_ROOT}/var/log/httpd/error_log"
 
-is_lineinfile "MaxRequestWorkers" "${CITELLUS_ROOT}/var/log/httpd/error_log" && echo $"https://bugzilla.redhat.com/show_bug.cgi?id=1406417" >&2 && exit $RC_FAILED
+is_lineinfile "MaxRequestWorkers" "${CITELLUS_ROOT}/var/log/httpd/error_log" && echo $"https://bugzilla.redhat.com/show_bug.cgi?id=1406417" >&2 && exit ${RC_FAILED}
 
-exit $RC_OKAY
+exit ${RC_OKAY}

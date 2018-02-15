@@ -42,21 +42,21 @@ if [[ "x$CITELLUS_LIVE" = "x0" ]];  then
 
 elif [[ "x$CITELLUS_LIVE" = "x1" ]]; then
     dmesgfile=$(mktemp)
-    dmesg > $dmesgfile
+    dmesg > ${dmesgfile}
     virt_type=$(systemd-detect-virt)
     niccount=$(ip l |grep -c "eth[0-9]")
 
-    trap "rm $dmesgfile" EXIT
+    trap "rm ${dmesgfile}" EXIT
 fi
 
 if grep -q "$ERRORMATCH" "$dmesgfile"; then
     if [[ "x$virt_type" != "xkvm" ]]; then
         if ! ([ "x$niccount" = "x0" ] || [ "x$niccount" = "x1" ]); then
-            echo $ERRORMSG >&2
-            exit $RC_FAILED
+            echo ${ERRORMSG} >&2
+            exit ${RC_FAILED}
         fi
     fi
 fi
 
 # exit as OK if haven't failed earlier
-exit $RC_OKAY
+exit ${RC_OKAY}

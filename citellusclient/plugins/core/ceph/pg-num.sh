@@ -24,10 +24,10 @@
 
 mktempfile() {
     tmpfile_status=$(mktemp testsXXXXXX)
-    tmpfile_status=$(readlink -f $tmpfile_status)
+    tmpfile_status=$(readlink -f ${tmpfile_status})
     tmpfile_osd_dump=$(mktemp testsXXXXXX)
-    tmpfile_osd_dump=$(readlink -f $tmpfile_osd_dump)
-    trap "rm $tmpfile_status $tmpfile_osd_dump" EXIT
+    tmpfile_osd_dump=$(readlink -f ${tmpfile_osd_dump})
+    trap "rm ${tmpfile_status} ${tmpfile_osd_dump}" EXIT
 }
 
 # Check if ceph pg_num is optimal
@@ -36,26 +36,26 @@ check_settings() {
     OSDS=$(sed -n -r -e 's/.*osdmap.*\s([0-9]+)\sosds.*$/\1/p' $2)
     if [[ -z "$PGS" ]] || [[ -z "$OSDS" ]]; then
         echo "error could not parse pg_num or osds." >&2
-        exit $RC_FAILED
+        exit ${RC_FAILED}
     fi
     for pool in $(sed -n -r -e 's/^pool.*\x27(.*)\x27.*$/\1/p' $1); do
         PG_NUM=$(sed -n -r -e "s/^pool.*'$pool'.*pg_num[ \t]([0-9]+).*$/\1/p" $1)
         SIZE=$(sed -n -r -e "s/^pool.*'$pool'.*\ssize[ \t]([0-9]+).*$/\1/p" $1)
         if [[ -z "$PG_NUM" ]] || [[ -z "$SIZE" ]]; then
             echo "error could not parse pg_num or size." >&2
-            exit $RC_FAILED
+            exit ${RC_FAILED}
         fi
         _PG_NUM="$(( PG_NUM * SIZE ))"
-        PG_TOTAL+=$_PG_NUM
+        PG_TOTAL+=${_PG_NUM}
     done
     _PG_NUM=$(( PG_TOTAL / OSDS ))
-    if [[ $_PG_NUM -gt "100" ]] && [[ $_PG_NUM -lt "300" ]]; then
+    if [[ ${_PG_NUM} -gt "100" ]] && [[ ${_PG_NUM} -lt "300" ]]; then
         echo "pg_num count $_PG_NUM is optimal" >&2
     else
         echo $"pg_num count $_PG_NUM is not optimal" >&2
         flag=1
     fi
-    [[ "x$flag" = "x" ]] && exit $RC_OKAY || exit $RC_FAILED
+    [[ "x$flag" = "x" ]] && exit ${RC_OKAY} || exit ${RC_FAILED}
 }
 
 declare -i PG_TOTAL=0
@@ -64,7 +64,7 @@ if [[ "x$CITELLUS_LIVE" = "x0" ]]; then
     if [[ -z "${systemctl_list_units_file}" ]]; then
         echo "file /sos_commands/systemd/systemctl_list-units not found." >&2
         echo "file /sos_commands/systemd/systemctl_list-units_--all not found." >&2
-        exit $RC_SKIPPED
+        exit ${RC_SKIPPED}
     else
         if grep -q "ceph-mon.* active" "${systemctl_list_units_file}"; then
             is_required_file "${CITELLUS_ROOT}/etc/ceph/ceph.conf"
@@ -73,18 +73,18 @@ if [[ "x$CITELLUS_LIVE" = "x0" ]]; then
             check_settings "${CITELLUS_ROOT}/sos_commands/ceph/ceph_osd_dump" "${CITELLUS_ROOT}/sos_commands/ceph/ceph_status"
         else
             echo "no ceph integrated" >&2
-            exit $RC_SKIPPED
+            exit ${RC_SKIPPED}
         fi
     fi
 elif [[ "x$CITELLUS_LIVE" = "x1" ]]; then
     if hiera -c /etc/puppet/hiera.yaml enabled_services | egrep -sq ceph_mon
     then
         mktempfile
-        ceph -s > $tmpfile_status
-        ceph osd dump > $tmpfile_osd_dump
-        check_settings $tmpfile_osd_dump $tmpfile_status
+        ceph -s > ${tmpfile_status}
+        ceph osd dump > ${tmpfile_osd_dump}
+        check_settings ${tmpfile_osd_dump} ${tmpfile_status}
     else
         echo "no ceph integrated" >&2
-        exit $RC_SKIPPED
+        exit ${RC_SKIPPED}
     fi
 fi

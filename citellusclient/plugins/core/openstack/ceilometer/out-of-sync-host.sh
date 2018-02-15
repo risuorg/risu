@@ -26,7 +26,7 @@
 
 if ! is_process nova-compute; then
     echo $"works only on compute node" >&2
-    exit $RC_SKIPPED
+    exit ${RC_SKIPPED}
 fi
 
 is_required_file "${CITELLUS_ROOT}/etc/nova/nova.conf"
@@ -37,7 +37,7 @@ CEILOMETERHOST=$(awk -F "=" '/^host/ {gsub (" ", "", $0); print $2}' ${CITELLUS_
 
 if [[ "$CEILOMETERHOST" != "$NOVAHOST" ]]; then
     echo $"ceilometer and nova compute host are out of sync." >&2
-    exit $RC_FAILED
+    exit ${RC_FAILED}
 else
-    exit $RC_OKAY
+    exit ${RC_OKAY}
 fi

@@ -19,20 +19,20 @@
 # description: This plugin checks for unapplied updates to the system
 # priority: 100
 
-if [[ $CITELLUS_LIVE = 0 ]]; then
+if [[ ${CITELLUS_LIVE} = 0 ]]; then
     echo "works on live-system only" >&2
-    exit $RC_SKIPPED
+    exit ${RC_SKIPPED}
 fi
 
 yum check-update >/dev/null 2>&1
 update_check=$?
 
-if [[ $update_check -eq 100 ]]; then
+if [[ ${update_check} -eq 100 ]]; then
     echo "there are available uninstalled upgrades" >&2
-    exit $RC_FAILED
-elif [[ $update_check -ne 0 ]]; then
+    exit ${RC_FAILED}
+elif [[ ${update_check} -ne 0 ]]; then
     echo "failed to check available updates" >&2
-    exit $RC_FAILED
+    exit ${RC_FAILED}
 else
-    exit $RC_OKAY
+    exit ${RC_OKAY}
 fi

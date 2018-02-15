@@ -23,14 +23,14 @@ FOLDER=$3
 
 case $2 in
     pass)
-        mkdir -p $FOLDER
+        mkdir -p ${FOLDER}
         # Touch the systemctl command we check
         mkdir -p "$FOLDER/var/log/httpd/"
         echo "" > "$FOLDER/var/log/httpd/error_log"
         ;;
 
     fail)
-        mkdir -p $FOLDER
+        mkdir -p ${FOLDER}
         # Touch the systemctl command we check
         mkdir -p "$FOLDER/var/log/httpd/"
         echo "MaxRequestWorkers" > "$FOLDER/var/log/httpd/error_log"

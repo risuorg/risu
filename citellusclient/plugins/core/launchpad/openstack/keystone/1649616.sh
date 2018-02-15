@@ -27,5 +27,5 @@
 
 is_required_file "${CITELLUS_ROOT}/var/log/keystone/keystone.log"
 
-is_lineinfile "Got error 5 during COMMIT" "${CITELLUS_ROOT}/var/log/keystone/keystone.log" && echo $"https://bugs.launchpad.net/keystone/+bug/1649616/" >&2 && exit $RC_FAILED
-exit $RC_OKAY
+is_lineinfile "Got error 5 during COMMIT" "${CITELLUS_ROOT}/var/log/keystone/keystone.log" && echo $"https://bugs.launchpad.net/keystone/+bug/1649616/" >&2 && exit ${RC_FAILED}
+exit ${RC_OKAY}

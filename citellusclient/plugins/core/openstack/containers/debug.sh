@@ -30,32 +30,32 @@ CONFIG_FOLDER="${CITELLUS_ROOT}/var/lib/config-data/puppet-generated"
 
 if [[ "x$CITELLUS_LIVE" = "x1" ]]; then
     echo $"works only against fs snapshot"
-    exit $RC_SKIPPED
+    exit ${RC_SKIPPED}
 elif [[ "x$CITELLUS_LIVE" = "x0" ]]; then
     containers=$(
         for directory in ${CONFIG_FOLDER}/*; do
             if [[ -d "${directory}" ]]; then
-                echo $directory | sed -n -r -e 's_^.*puppet-generated/([a-z].*).*$_\1_p'| sort |uniq
+                echo ${directory} | sed -n -r -e 's_^.*puppet-generated/([a-z].*).*$_\1_p'| sort |uniq
             fi
         done
     )
     config_files=$(
-        for i in $containers; do
-            ls ${CONFIG_FOLDER}/$i/etc/$i/*.conf 2>/dev/null | grep '/etc/[^/]*/[^/]*\.conf'
+        for i in ${containers}; do
+            ls ${CONFIG_FOLDER}/${i}/etc/${i}/*.conf 2>/dev/null | grep '/etc/[^/]*/[^/]*\.conf'
         done
     )
 fi
 
-for config_file in $config_files; do
+for config_file in ${config_files}; do
     [ -f "$config_file" ] || continue
     if [[ "$(iniparser "$config_file" DEFAULT debug)" == "true" ]]; then
         # to remove the ${CONFIG_FOLDER} from the stderr.
-        config_file=${config_file#$CONFIG_FOLDER}
+        config_file=${config_file#${CONFIG_FOLDER}}
         echo "enabled in $config_file" >&2
         flag=1
     else
-        config_file=${config_file#$CONFIG_FOLDER}
+        config_file=${config_file#${CONFIG_FOLDER}}
         echo "disabled in $config_file" >&2
     fi
 done
-[[ "x$flag" = "x1" ]] && exit $RC_FAILED || exit $RC_OKAY
+[[ "x$flag" = "x1" ]] && exit ${RC_FAILED} || exit ${RC_OKAY}

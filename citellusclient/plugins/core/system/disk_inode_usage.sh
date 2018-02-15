@@ -25,18 +25,18 @@
 
 : ${CITELLUS_INODE_MAX_PERCENT=90}
 
-if [[ $CITELLUS_LIVE = 0 ]]; then
+if [[ ${CITELLUS_LIVE} = 0 ]]; then
     is_required_file "${CITELLUS_ROOT}/sos_commands/filesys/df_-ali"
     DISK_USE_CMD="cat ${CITELLUS_ROOT}/sos_commands/filesys/df_-ali"
 else
     DISK_USE_CMD="df -ali"
 fi
 
-result=$($DISK_USE_CMD |awk -vinode_max_percent=$CITELLUS_INODE_MAX_PERCENT '/^\/dev/ && substr($5, 0, length($5)-1) > inode_max_percent { print $6,$5 }')
+result=$(${DISK_USE_CMD} |awk -vinode_max_percent=${CITELLUS_INODE_MAX_PERCENT} '/^\/dev/ && substr($5, 0, length($5)-1) > inode_max_percent { print $6,$5 }')
 
 if [[ -n "$result" ]]; then
     echo "${result}" >&2
-    exit $RC_FAILED
+    exit ${RC_FAILED}
 else
-    exit $RC_OKAY
+    exit ${RC_OKAY}
 fi

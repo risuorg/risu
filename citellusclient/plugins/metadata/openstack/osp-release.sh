@@ -24,4 +24,4 @@
 # Find release
 RELEASE=$(name_osp_version)
 echo $"${RELEASE}" >&2
-exit $RC_OKAY
+exit ${RC_OKAY}

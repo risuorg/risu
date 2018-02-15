@@ -464,6 +464,10 @@ def execonshell(filename):
 def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=False, savepath=False, include=None, exclude=None, okay=RC_OKAY, skipped=RC_SKIPPED, failed=RC_FAILED, web=False):
     """
     Runs citellus scripts on specified root folder
+    :param web: Copy html to folder
+    :param failed: RC for FAILED
+    :param skipped: RC for SKIPPED
+    :param okay: RC for OKAY
     :param exclude: keywords to exclude in plugins
     :param include: keywords to include in plugins
     :param savepath: Path to store resulting output
@@ -512,6 +516,7 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
 
     rerunsmart = False
     missingplugins = []
+    results = {}
     # if we're not running live, read existing file
     if not live and filename and os.access(filename, os.R_OK) and not forcerun:
         LOG.debug("Reading Existing citellus analysis from disk for %s" % path)
@@ -529,7 +534,7 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
 
         # Now check in results for id's no longer existing for removal:
         delete = []
-        for key in results.iterkeys():
+        for key in iter(results.keys()):
             if key not in allids:
                 # Plugin ID no longer appears in found plugins.
                 delete.append(key)
@@ -626,11 +631,10 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
             for result in oldresults:
                 add = False
                 # Iterate for all known plugins on actual execution vs stored ones (or executed)
-                for plugin in plugins:
-                    for filters in include:
-                        if filters in oldresults[result]['plugin']:
-                            # We have a match with the plugin defined and the ones we expect, so append results
-                            add = True
+                for filters in include:
+                    if filters in oldresults[result]['plugin']:
+                        # We have a match with the plugin defined and the ones we expect, so append results
+                        add = True
                 if add:
                     results[result] = dict(oldresults[result])
 
@@ -640,10 +644,9 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
             for result in oldresults:
                 add = True
                 # Iterate for all known plugins on actual execution vs stored ones (or executed)
-                for plugin in plugins:
-                    for filters in exclude:
-                        if filters in oldresults[result]['plugin']:
-                            add = False
+                for filters in exclude:
+                    if filters in oldresults[result]['plugin']:
+                        add = False
                 if add:
                     results[result] = dict(oldresults[result])
 
@@ -880,6 +883,9 @@ def dump_config(options, path=False):
 def write_results(results, filename, live=False, path=None, time=0, source='citellus', branding='', web=False):
     """
     Writes result
+    :param web: copy html viewer
+    :param branding: branding string for metadata
+    :param source: source of information for metadata
     :param time: date of report
     :param results: Data to write
     :param filename: File to use
@@ -998,7 +1004,7 @@ def main():
     else:
         savedconfig = 'ignored'
 
-    global _
+    global _, CITELLUS_ROOT
 
     # Configure ENV language before anything else
     os.environ['LANG'] = "%s" % options.lang

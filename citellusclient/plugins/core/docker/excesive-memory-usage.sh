@@ -28,9 +28,9 @@ is_required_rpm docker
 
 if is_rpm_over docker docker-1.12.6-16.el7.x86_64; then
     if is_rpm_over docker docker-1.12.6-48; then
-        exit $RC_OKAY
+        exit ${RC_OKAY}
     fi
     echo $"docker might have high memory consumption" >&2
-    exit $RC_FAILED
+    exit ${RC_FAILED}
 fi
-exit $RC_OKAY
+exit ${RC_OKAY}

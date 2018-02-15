@@ -38,5 +38,5 @@ elif is_process ceilometer-collector;then
     ROLE="telemetry"
 fi
 
-echo $ROLE >&2
-exit $RC_OKAY
+echo ${ROLE} >&2
+exit ${RC_OKAY}

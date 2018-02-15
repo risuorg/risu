@@ -29,7 +29,7 @@ is_required_file "${CITELLUS_ROOT}/var/log/nova/nova-compute.log"
 
 if is_lineinfile 'libvirtError: XML error: Invalid PCI address 0000:00:00, at least one of domain, bus, or slot must be > 0' "${CITELLUS_ROOT}/var/log/nova/nova-compute.log"; then
     echo $"nova.conf https://bugzilla.redhat.com/show_bug.cgi?id=1527345" >&2
-    exit $RC_FAILED
+    exit ${RC_FAILED}
 else
-    exit $RC_OKAY
+    exit ${RC_OKAY}
 fi

@@ -46,11 +46,11 @@ iniparser(){
 
 is_required_file(){
     for file in "$@"; do
-        if [[ ! -f $file ]];  then
+        if [[ ! -f ${file} ]];  then
             # to remove the ${CITELLUS_ROOT} from the stderr.
-            file=${file#$CITELLUS_ROOT}
+            file=${file#${CITELLUS_ROOT}}
             echo "required file $file not found." >&2
-            exit $RC_SKIPPED
+            exit ${RC_SKIPPED}
         fi
     done
 }
@@ -63,7 +63,7 @@ is_active(){
             grep -q "$1.* active" "${systemctl_list_units_file}"
         else
             echo "required systemd files not found." >&2
-            exit $RC_SKIPPED
+            exit ${RC_SKIPPED}
         fi
     fi
 }
@@ -76,7 +76,7 @@ is_enabled(){
             grep -q "$1.* enabled" "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-unit-files"
         else
             echo "required systemd files not found." >&2
-            exit $RC_SKIPPED
+            exit ${RC_SKIPPED}
         fi
     fi
 }

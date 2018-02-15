@@ -33,4 +33,4 @@ elif [[ "${RELEASE}" -eq "6" ]]; then
     exitoudated
     is_required_rpm_over kernel kernel-2.6.32-696.18.7
 fi
-exit $RC_OKAY
+exit ${RC_OKAY}

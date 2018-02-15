@@ -27,5 +27,5 @@ RELEASE=$(discover_osp_version)
 
 # Containerized deployment
 if is_required_containerized; then
-    exit $RC_OKAY
+    exit ${RC_OKAY}
 fi

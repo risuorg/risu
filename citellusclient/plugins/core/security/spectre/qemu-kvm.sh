@@ -33,4 +33,4 @@ elif [[ "${RELEASE}" -eq "6" ]]; then
     exitoudated
     is_required_rpm_over qemu-kvm-0.12.1.2-2.503.el6_9.4
 fi
-exit $RC_OKAY
+exit ${RC_OKAY}

@@ -24,8 +24,8 @@
 
 if is_rpm python*-pip*  > /dev/null 2>&1; then
     echo $"python pip is detected" >&2
-    exit $RC_FAILED
+    exit ${RC_FAILED}
 else
     echo "no python pip package detected" >&2
-    exit $RC_OKAY
+    exit ${RC_OKAY}
 fi

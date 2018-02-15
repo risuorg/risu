@@ -26,14 +26,14 @@
 
 if is_process nova-compute;then
     echo "works only on controller node" >&2
-    exit $RC_SKIPPED
+    exit ${RC_SKIPPED}
 fi
 
 is_required_file "${CITELLUS_ROOT}/etc/sysconfig/clustercheck"
 if is_lineinfile "^MYSQL_HOST[ \t]*=[ \t]*localhost$" "${CITELLUS_ROOT}/etc/sysconfig/clustercheck"; then
-    exit $RC_OKAY
+    exit ${RC_OKAY}
 else
     echo $"clustercheck variable MYSQL_HOST should be set to localhost." >&2
     grep "^MYSQL_HOST" "${CITELLUS_ROOT}/etc/sysconfig/clustercheck" >&2
-    exit $RC_FAILED
+    exit ${RC_FAILED}
 fi

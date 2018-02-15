@@ -27,25 +27,25 @@
 if [[ "x$CITELLUS_LIVE" = "x0" ]];  then
     is_required_file "${CITELLUS_ROOT}/sos_commands/hardware/dmidecode"
 
-    is_lineinfile "Product Name: VMware" "${CITELLUS_ROOT}/sos_commands/hardware/dmidecode" && echo "VMware" >&2 && exit $RC_FAILED
-    is_lineinfile "Product Name: VirtualBox" "${CITELLUS_ROOT}/sos_commands/hardware/dmidecode" && echo "Virtualbox" >&2 && exit $RC_FAILED
-    is_lineinfile "Product Name: KVM" "${CITELLUS_ROOT}/sos_commands/hardware/dmidecode" && echo "KVM" >&2 && exit $RC_FAILED
-    is_lineinfile "Product Name: Bochs" "${CITELLUS_ROOT}/sos_commands/hardware/dmidecode" && echo "Bosch" >&2 && exit $RC_FAILED
-    exit $RC_OKAY
+    is_lineinfile "Product Name: VMware" "${CITELLUS_ROOT}/sos_commands/hardware/dmidecode" && echo "VMware" >&2 && exit ${RC_FAILED}
+    is_lineinfile "Product Name: VirtualBox" "${CITELLUS_ROOT}/sos_commands/hardware/dmidecode" && echo "Virtualbox" >&2 && exit ${RC_FAILED}
+    is_lineinfile "Product Name: KVM" "${CITELLUS_ROOT}/sos_commands/hardware/dmidecode" && echo "KVM" >&2 && exit ${RC_FAILED}
+    is_lineinfile "Product Name: Bochs" "${CITELLUS_ROOT}/sos_commands/hardware/dmidecode" && echo "Bosch" >&2 && exit ${RC_FAILED}
+    exit ${RC_OKAY}
 
 elif [[ "x$CITELLUS_LIVE" = "x1" ]]; then
     if dmidecode | grep -q "Product Name: VMware" ; then
         echo "VMware" >&2
-        exit $RC_FAILED
+        exit ${RC_FAILED}
     elif dmidecode | grep -q "Product Name: VirtualBox"; then
         echo "Virtualbox" >&2
-        exit $RC_FAILED
+        exit ${RC_FAILED}
     elif dmidecode | grep -q "Product Name: KVM"; then
         echo "KVM" >&2
-        exit $RC_FAILED
+        exit ${RC_FAILED}
     elif dmidecode | grep -q "Product Name: Bochs"; then
         echo "Bosch" >&2
     else
-        exit $RC_OKAY
+        exit ${RC_OKAY}
     fi
 fi

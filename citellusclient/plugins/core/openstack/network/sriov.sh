@@ -131,8 +131,8 @@ if is_process nova-compute; then
 fi
 # NeutronSriovNumVFs
 
-if [[ $flag -eq '1' ]]; then
-    exit $RC_FAILED
+if [[ ${flag} -eq '1' ]]; then
+    exit ${RC_FAILED}
 else
-    exit $RC_OKAY
+    exit ${RC_OKAY}
 fi

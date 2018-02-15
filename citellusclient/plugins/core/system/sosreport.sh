@@ -26,4 +26,4 @@
 
 # Latest sos for el7.4 is sos-3.4-13.el7_4.noarch
 is_required_rpm_over sos sos-3.4-13.el7_4.noarch
-exit $RC_OKAY
+exit ${RC_OKAY}

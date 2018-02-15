@@ -26,6 +26,6 @@
 
 if ! is_rpm sysstat >/dev/null 2>&1; then
     echo $"systat package missing" >&2
-    exit $RC_FAILED
+    exit ${RC_FAILED}
 fi
-exit $RC_OKAY
+exit ${RC_OKAY}

@@ -29,11 +29,11 @@ is_required_file "${CITELLUS_ROOT}/var/log/gnocchi/metricd.log"
 if is_lineinfile "ToozError: Cannot extend an unlocked lock" "${CITELLUS_ROOT}/var/log/gnocchi/metricd.log"; then
     if is_lineinfile "lock_timeout" "${CITELLUS_ROOT}/etc/gnocchi/gnocchi.conf"; then
         echo $"tooz: configured lock_timeout seems not to be enough" >&2
-        exit $RC_FAILED
+        exit ${RC_FAILED}
     else
         echo $"tooz https://bugzilla.redhat.com/show_bug.cgi?id=1465385" >&2
-        exit $RC_FAILED
+        exit ${RC_FAILED}
     fi
 fi
 
-exit $RC_OKAY
+exit ${RC_OKAY}

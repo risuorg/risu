@@ -29,7 +29,7 @@
 
 secdisabled(){
     echo "This system has Spectre security features disabled, please do check https://access.redhat.com/security/vulnerabilities/speculativeexecution for guidance" >&2
-    exit $RC_FAILED
+    exit ${RC_FAILED}
 }
 
 if is_lineinfile noibpb ${CITELLUS_ROOT}/proc/cmdline; then
@@ -40,4 +40,4 @@ if is_lineinfile noibrs ${CITELLUS_ROOT}/proc/cmdline; then
     secdisabled
 fi
 
-exit $RC_OKAY
+exit ${RC_OKAY}

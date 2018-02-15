@@ -28,14 +28,14 @@
 is_required_file ${CITELLUS_ROOT}/etc/httpd/conf.d/*-horizon_vhost.conf
 if ! is_lineinfile "WSGIApplicationGroup %{GLOBAL}" ${CITELLUS_ROOT}/etc/httpd/conf.d/*-horizon_vhost.conf; then
     echo $"https://bugzilla.redhat.com/show_bug.cgi?id=1478042" >&2
-    exit $RC_FAILED
+    exit ${RC_FAILED}
 fi
 
 if [[ -f "${CITELLUS_ROOT}/var/log/httpd/horizon_error.log" ]]; then
     if is_lineinfile "End of script output before headers: django.wsgi" "${CITELLUS_ROOT}/var/log/httpd/horizon_error.log"; then
         echo $"possible error on WSGIApplicationGroup in horizon, check: https://bugzilla.redhat.com/show_bug.cgi?id=1478042" >&2
-        exit $RC_FAILED
+        exit ${RC_FAILED}
     fi
 fi
 
-exit $RC_OKAY
+exit ${RC_OKAY}

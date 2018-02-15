@@ -38,6 +38,11 @@ except ImportError:
 
 
 def get_etcd_addr_from_netstat(nsout):
+    """
+    Gets etcd address from listening port on netstat
+    :param nsout: netstat output
+    :return: local ip address we listen on
+    """
     nsout = re.sub('[ \t]+', ' ', nsout)
     for l in nsout.splitlines():
         if "tcp" in l and "etcd" in l and "LISTEN" in l and "2379" in l:
@@ -48,6 +53,11 @@ def get_etcd_addr_from_netstat(nsout):
 
 
 def get_names(cert_file):
+    """
+    Get CN or subjectAlt from certificate
+    :param cert_file: file to open certificate from
+    :return: names found
+    """
     # Load the X509
     c = None
     try:
@@ -85,6 +95,12 @@ def get_names(cert_file):
 
 
 def crt_matches_key(crt, key):
+    """
+    Check that certificate matches key
+    :param crt: certificate file
+    :param key: key file
+    :return: bool
+    """
     try:
         # We call subprocess.check_output because the pyOpenSSL version
         # shipped in RHEL 7.4 doesn't provide any mechanism to check the
@@ -103,6 +119,12 @@ def crt_matches_key(crt, key):
 
 
 def crt_is_signed_by(crt, ca):
+    """
+    Check crt signing
+    :param crt: certificate
+    :param ca: certificate authority
+    :return: bool
+    """
     try:
         # We call subprocess.check_output because the pyOpenSSL version
         # shipped in RHEL 7.4 doesn't provide any mechanism to check the
@@ -160,7 +182,6 @@ def main():
             exitcitellus(code=RC_SKIPPED,
                          msg='Missing access to required file %s' % filename)
 
-    fqdn = None
     if citellus_live != "0":
         fqdn = socket.getfqdn()
     else:

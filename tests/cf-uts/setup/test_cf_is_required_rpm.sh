@@ -22,15 +22,15 @@ FOLDER=$3
 
 case $2 in
     pass)
-        mkdir -p $FOLDER
-        echo test-my-rpm-1.2.23.noarch > $FOLDER/installed-rpms
+        mkdir -p ${FOLDER}
+        echo test-my-rpm-1.2.23.noarch > ${FOLDER}/installed-rpms
         exit 0
         ;;
 
     skipped)
         # is_required_rpm doesn't FAIL, just SKIPS the test
-        mkdir -p $FOLDER
-        echo > $FOLDER/installed-rpms
+        mkdir -p ${FOLDER}
+        echo > ${FOLDER}/installed-rpms
         exit 0
         ;;
 
@@ -39,8 +39,8 @@ case $2 in
         [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 
         # When no pass or fail is passed we're running the test for common function
-        is_required_rpm test-my-rpm && exit $RC_OKAY || exit $RC_FAILED
+        is_required_rpm test-my-rpm && exit ${RC_OKAY} || exit ${RC_FAILED}
         ;;
 esac
 
-exit $RC_SKIPPED
+exit ${RC_SKIPPED}

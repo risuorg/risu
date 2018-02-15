@@ -33,8 +33,8 @@ elif [[ "x$CITELLUS_LIVE" = "x1" ]];  then
     MEMORY_USE_CMD=$(free | grep Mem | sed 's/[ \t]\+/ /g')
 fi
 
-MEMORY_TOTAL=$(echo $MEMORY_USE_CMD | cut -d" " -f2)
-MEMORY_USED=$(echo $MEMORY_USE_CMD | cut -d" " -f3)
+MEMORY_TOTAL=$(echo ${MEMORY_USE_CMD} | cut -d" " -f2)
+MEMORY_USED=$(echo ${MEMORY_USE_CMD} | cut -d" " -f3)
 MEMORY_USED_PERCENT=$(echo "(($MEMORY_USED / $MEMORY_TOTAL) * 100)" | bc -l)
 
 RC=$(echo "$MEMORY_USED_PERCENT>${CITELLUS_MEMORY_MAX_PERCENT:-90}" | bc -l)
@@ -42,7 +42,7 @@ RC=$(echo "$MEMORY_USED_PERCENT>${CITELLUS_MEMORY_MAX_PERCENT:-90}" | bc -l)
 
 if [[ "x$RC" = "x1" ]]; then
     echo "${MEMORY_USED_PERCENT%%.*}%" >&2
-    exit $RC_FAILED
+    exit ${RC_FAILED}
 else
-    exit $RC_OKAY
+    exit ${RC_OKAY}
 fi

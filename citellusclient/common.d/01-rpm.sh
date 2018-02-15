@@ -29,16 +29,16 @@ is_rpm(){
 is_required_rpm(){
     if ! is_rpm $1 >/dev/null 2>&1; then
         echo "required package $1 not found." >&2
-        exit $RC_SKIPPED
+        exit ${RC_SKIPPED}
     fi
 }
 
 is_rpm_over(){
     is_required_rpm $1
     VERSION=$(is_rpm $1|sort -V|tail -1)
-    LATEST=$(echo $VERSION $2|tr " " "\n"|sort -V|tail -1)
+    LATEST=$(echo ${VERSION} $2|tr " " "\n"|sort -V|tail -1)
 
-    if [ "$(echo $VERSION $2|tr " " "\n"|sort -V|uniq|wc -l)" == "1" ];then
+    if [ "$(echo ${VERSION} $2|tr " " "\n"|sort -V|uniq|wc -l)" == "1" ];then
         # Version and $2 are the same (only one line, so we're on latest)
         return 0
     fi
@@ -55,6 +55,6 @@ is_required_rpm_over(){
     VERSION=$(is_rpm $1 2>&1|sort -V|tail -1)
     if ! is_rpm_over "${@}" ; then
         echo "package $1 version $VERSION is lower than required ($2)." >&2
-        exit $RC_FAILED
+        exit ${RC_FAILED}
     fi
 }

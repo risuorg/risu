@@ -23,7 +23,7 @@
 
 if [[ ! "x$CITELLUS_LIVE" = "x1" ]]; then
     echo "works on live-system only" >&2
-    exit $RC_SKIPPED
+    exit ${RC_SKIPPED}
 fi
 
 # This test requires mysql
@@ -38,17 +38,17 @@ if [[ "x$RC" = "x0" ]]; then
         TOKENS=$(mysql keystone -sN -e "select table_rows from information_schema.tables where table_name = 'token'")
     else
         echo -e "ERROR connecting to the database\n${_test}" >&2
-        exit $RC_SKIPPED
+        exit ${RC_SKIPPED}
     fi
 else
     echo "missing mysql binaries" >&2
-    exit $RC_SKIPPED
+    exit ${RC_SKIPPED}
 fi
 
 if [[ ! -z ${TOKENS} ]] ; then
     if [[ "${TOKENS}" -ge 1000 ]]; then
-        exit $RC_FAILED
+        exit ${RC_FAILED}
     elif [[ "${TOKENS}" -lt 1000 ]]; then
-        exit $RC_OKAY
+        exit ${RC_OKAY}
     fi
 fi

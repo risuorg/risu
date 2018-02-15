@@ -19,22 +19,22 @@ if [ "x$CITELLUS_LIVE" = "x1" ];  then
   if true
   then
     if true ; then
-      exit $RC_OKAY
+      exit ${RC_OKAY}
     else
-      exit $RC_FAILED
+      exit ${RC_FAILED}
     fi
   else
-    exit $RC_SKIPPED
+    exit ${RC_SKIPPED}
   fi
 elif [ "x$CITELLUS_LIVE" = "x0" ];  then
   if true
   then
     if true ; then
-      exit $RC_OKAY
+      exit ${RC_OKAY}
     else
-      exit $RC_FAILED
+      exit ${RC_FAILED}
     fi
   else
-    exit $RC_SKIPPED
+    exit ${RC_SKIPPED}
   fi
 fi

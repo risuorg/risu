@@ -23,9 +23,9 @@
 
 
 FILE="${CITELLUS_ROOT}/etc/redhat-release"
-is_required_file $FILE
+is_required_file ${FILE}
 
 # Fill metadata 'hostname' to value
 echo "release"
-cat $FILE >&2
-exit $RC_OKAY
+cat ${FILE} >&2
+exit ${RC_OKAY}

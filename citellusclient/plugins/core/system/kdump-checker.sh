@@ -26,11 +26,11 @@
 
 if ! is_rpm kexec-tools >/dev/null 2>&1; then
     echo $"kexec-tools package missing" >&2
-    exit $RC_FAILED
+    exit ${RC_FAILED}
 fi
 if ! is_active kdump; then
     echo $"kdump is not running on this node" >&2
-    exit $RC_FAILED
+    exit ${RC_FAILED}
 fi
 
 is_required_file "${CITELLUS_ROOT}/boot/grub2/grub.cfg"
@@ -39,21 +39,21 @@ is_required_file "${CITELLUS_ROOT}/etc/kdump.conf"
 grub_conf="${CITELLUS_ROOT}/boot/grub2/grub.cfg"
 kdump_conf="${CITELLUS_ROOT}/etc/kdump.conf"
 
-if ! is_lineinfile "linux.*crashkernel=(auto|[0-9]+[mM]@[0-9]+*[mM]|[0-9]+*[mM])" $grub_conf; then
+if ! is_lineinfile "linux.*crashkernel=(auto|[0-9]+[mM]@[0-9]+*[mM]|[0-9]+*[mM])" ${grub_conf}; then
     echo $"missing crashkernel on kernel cmdline" >&2
     flag=1
 fi
-if ! is_lineinfile "^path" $kdump_conf; then
+if ! is_lineinfile "^path" ${kdump_conf}; then
     echo $"missing path in kdump.conf" >&2
     flag=1
 fi
-if ! is_lineinfile "^core_collector" $kdump_conf; then
+if ! is_lineinfile "^core_collector" ${kdump_conf}; then
     echo $"missing core_collector in kdump.conf" >&2
     flag=1
 fi
 
-if [[ $flag -eq '1' ]]; then
-    exit $RC_FAILED
+if [[ ${flag} -eq '1' ]]; then
+    exit ${RC_FAILED}
 else
-    exit $RC_OKAY
+    exit ${RC_OKAY}
 fi

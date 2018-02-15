@@ -24,32 +24,32 @@
 # Load common functions
 [[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
-if [[ $CITELLUS_LIVE = 0 ]]; then
+if [[ ${CITELLUS_LIVE} = 0 ]]; then
     FILE="${CITELLUS_ROOT}/sos_commands/yum/yum_history"
 else
     FILE=$(mktemp)
-    trap "rm $FILE" EXIT
-    yum history > $FILE
+    trap "rm ${FILE}" EXIT
+    yum history > ${FILE}
 fi
 
-is_required_file $FILE
+is_required_file ${FILE}
 flag=0
 
-if is_lineinfile undo $FILE; then
+if is_lineinfile undo ${FILE}; then
     flag=1
 fi
 
-if is_lineinfile redo $FILE; then
+if is_lineinfile redo ${FILE}; then
     flag=1
 fi
 
-if is_lineinfile rollback $FILE; then
+if is_lineinfile rollback ${FILE}; then
     flag=1
 fi
 
-if [[ $flag -eq '1' ]]; then
+if [[ ${flag} -eq '1' ]]; then
     echo $"detected undo/redo/rollback yum operations" >&2
-    exit $RC_FAILED
+    exit ${RC_FAILED}
 else
-    exit $RC_OKAY
+    exit ${RC_OKAY}
 fi

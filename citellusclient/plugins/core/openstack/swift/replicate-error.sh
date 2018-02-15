@@ -32,7 +32,7 @@ is_lineinfile "error with REPLICATE" "${CITELLUS_ROOT}/var/log/swift/swift.log" 
 
 if [[ "${flag}" -eq "1" ]]; then
     echo $"error with REPLICATE detected" >&2
-    exit $RC_FAILED
+    exit ${RC_FAILED}
 fi
 
-exit $RC_OKAY
+exit ${RC_OKAY}

@@ -34,18 +34,18 @@ if [[ ${MEMTOTAL} -ge 16000000 ]]; then
     echo "memory is greater than 16gb ram"
 else
     echo $"memory is lower than 16gb ram" >&2
-    exit $RC_FAILED
+    exit ${RC_FAILED}
 fi
 if [[ ${MEMTOTAL} -ge ${MEMMINIMUM} ]]; then
     echo "memory is greater than or equal to recommended minimum (1.5gb per core)"
 else
     echo $"memory is lower than (1.5gb per core)" >&2
-    exit $RC_FAILED
+    exit ${RC_FAILED}
 fi
 if [[ ${MEMTOTAL} -ge ${MEMRECOMMEND} ]]; then
     echo "memory is greater than or equal to best recommended (3gb per core)"
-    exit $RC_OKAY
+    exit ${RC_OKAY}
 else
     echo $"memory is lower than (3gb per core)" >&2
-    exit $RC_FAILED
+    exit ${RC_FAILED}
 fi

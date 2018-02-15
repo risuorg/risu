@@ -23,7 +23,7 @@ FOLDER=$3
 
 case $2 in
     pass)
-        mkdir -p $FOLDER
+        mkdir -p ${FOLDER}
         # Touch the systemctl command we check
         mkdir -p "$FOLDER/sos_commands/systemd/"
         echo "pacemaker active" > "$FOLDER/sos_commands/systemd/systemctl_list-units_--all"
@@ -32,7 +32,7 @@ case $2 in
         ;;
 
     fail)
-        mkdir -p $FOLDER
+        mkdir -p ${FOLDER}
         # Touch the systemctl command we check
         mkdir -p "$FOLDER/sos_commands/systemd/"
         echo "pacemaker active" > "$FOLDER/sos_commands/systemd/systemctl_list-units_--all"

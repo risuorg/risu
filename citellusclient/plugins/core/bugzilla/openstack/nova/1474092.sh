@@ -29,7 +29,7 @@ is_required_file "${CITELLUS_ROOT}/etc/nova/nova.conf"
 
 if [[ "$(iniparser "${CITELLUS_ROOT}/etc/nova/nova.conf" DEFAULT host)" == "localhost" ]]; then
     echo $"nova.conf https://bugzilla.redhat.com/show_bug.cgi?id=1474092" >&2
-    exit $RC_FAILED
+    exit ${RC_FAILED}
 else
-    exit $RC_OKAY
+    exit ${RC_OKAY}
 fi

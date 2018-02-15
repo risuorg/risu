@@ -29,7 +29,7 @@
 
 if [[ ! "x$CITELLUS_LIVE" = "x1" ]]; then
     echo "works on live-system only" >&2
-    exit $RC_SKIPPED
+    exit ${RC_SKIPPED}
 fi
 
 # Find release
@@ -39,22 +39,22 @@ if [[ "${RELEASE}" -ge "12" ]]; then
 
     if [[ -z $(is_rpm tripleo-heat-templates) && -z $(is_rpm python-tripleoclient) ]]; then
         echo "works on director node only" >&2
-        exit $RC_SKIPPED
+        exit ${RC_SKIPPED}
     fi
 
     FILE="/usr/share/openstack-tripleo-heat-templates/docker/services/keystone.yaml"
     is_required_file ${FILE}
 
-    RC=$RC_OKAY
+    RC=${RC_OKAY}
 
     COUNT=$(awk '/config_volume: keystone/ { getline; print $0}' ${FILE} | grep -c keystone_domain_config)
     if [[ ${COUNT} -eq 0 ]]; then
         echo $"https://bugzilla.redhat.com/show_bug.cgi?id=1519057" >&2
-        RC=$RC_FAILED
+        RC=${RC_FAILED}
     fi
 
-    exit $RC
+    exit ${RC}
 else
     echo "works only on OSP12 and later" >&2
-    exit $RC_SKIPPED
+    exit ${RC_SKIPPED}
 fi
