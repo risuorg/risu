@@ -19,6 +19,7 @@ Please if you have any idea on any improvements please do not hesitate to open a
 - Save / restore default settings
 
 Check latest changes on <Changelog.md>
+Check for plugins listing on <citellusclient/plugins/>
 
 ## Usage help
 We are developing framework in python, the bash framework has been deprecated. Python framework is the only supported framework.
@@ -99,20 +100,20 @@ This is an example of execution of Citellus using all openstack and pacemaker te
 ```
 ./citellus.py -q -l -i pacemaker -i openstack
 INFO:citellus:using default plugin path
-# /root/citellus/citellus/plugins/bugzilla/openstack/ceilometer_bug_1483456.sh: failed
+# /root/citellus/citellusclient/plugins/core/bugzilla/openstack/ceilometer_bug_1483456.sh: failed
     https://bugzilla.redhat.com/show_bug.cgi?id=1483456
-# /root/citellus/citellus/plugins/bugzilla/openstack/ceph_bug_1358697.sh: failed
+# /root/citellus/citellusclient/plugins/core/bugzilla/openstack/ceph_bug_1358697.sh: failed
     outdated ceph packages: https://bugzilla.redhat.com/show_bug.cgi?id=1358697
-# /root/citellus/citellus/plugins/bugzilla/openstack/httpd_bug_1478042.sh: skipped
-# /root/citellus/citellus/plugins/bugzilla/openstack/keystone_bug_1473713.sh: okay
-# /root/citellus/citellus/plugins/bugzilla/openstack/neutron_bug_1450223.sh: skipped
-# /root/citellus/citellus/plugins/bugzilla/openstack/neutron_bug_1474092.sh: okay
-# /root/citellus/citellus/plugins/bugzilla/openstack/neutron_bug_1489066.sh: okay
-# /root/citellus/citellus/plugins/bugzilla/openstack/nova_bug_1474092.sh: okay
-# /root/citellus/citellus/plugins/bugzilla/openstack/swift_bug_1500607.sh: failed
+# /root/citellus/citellusclient/plugins/core/bugzilla/openstack/httpd_bug_1478042.sh: skipped
+# /root/citellus/citellusclient/plugins/core/bugzilla/openstack/keystone_bug_1473713.sh: okay
+# /root/citellus/citellusclient/plugins/core/bugzilla/openstack/neutron_bug_1450223.sh: skipped
+# /root/citellus/citellusclient/plugins/core/bugzilla/openstack/neutron_bug_1474092.sh: okay
+# /root/citellus/citellusclient/plugins/core/bugzilla/openstack/neutron_bug_1489066.sh: okay
+# /root/citellus/citellusclient/plugins/core/bugzilla/openstack/nova_bug_1474092.sh: okay
+# /root/citellus/citellusclient/plugins/core/bugzilla/openstack/swift_bug_1500607.sh: failed
     swift expirer https://bugzilla.redhat.com/show_bug.cgi?id=1500607
-# /root/citellus/citellus/plugins/launchpad/openstack/keystone_bug_1649616.sh: okay
-# /root/citellus/citellus/plugins/openstack/ceilometer/expiration.sh: failed
+# /root/citellus/citellusclient/plugins/core/launchpad/openstack/keystone_bug_1649616.sh: okay
+# /root/citellus/citellusclient/plugins/core/openstack/ceilometer/expiration.sh: failed
     ceilometer.conf setting must be updated:
     alarm_history_time_to_live = -1
     ceilometer.conf setting must be updated:
@@ -127,20 +128,20 @@ This is an example of execution of Citellus using ```pacemaker``` and ```opensta
 ```
 ./citellus.py -q -i pacemaker -i openstack sosreport-undercloud-0.redhat.local-20171117212710/
 INFO:citellus:using default plugin path
-# /root/citellus/citellus/plugins/bugzilla/openstack/ceilometer_bug_1483456.sh: failed
+# /root/citellus/citellusclient/plugins/core/bugzilla/openstack/ceilometer_bug_1483456.sh: failed
     https://bugzilla.redhat.com/show_bug.cgi?id=1483456
-# /root/citellus/citellus/plugins/bugzilla/openstack/ceph_bug_1358697.sh: failed
+# /root/citellus/citellusclient/plugins/core/bugzilla/openstack/ceph_bug_1358697.sh: failed
     outdated ceph packages: https://bugzilla.redhat.com/show_bug.cgi?id=1358697
-# /root/citellus/citellus/plugins/bugzilla/openstack/httpd_bug_1478042.sh: skipped
-# /root/citellus/citellus/plugins/bugzilla/openstack/keystone_bug_1473713.sh: okay
-# /root/citellus/citellus/plugins/bugzilla/openstack/neutron_bug_1450223.sh: skipped
-# /root/citellus/citellus/plugins/bugzilla/openstack/neutron_bug_1474092.sh: okay
-# /root/citellus/citellus/plugins/bugzilla/openstack/neutron_bug_1489066.sh: okay
-# /root/citellus/citellus/plugins/bugzilla/openstack/nova_bug_1474092.sh: okay
-# /root/citellus/citellus/plugins/bugzilla/openstack/swift_bug_1500607.sh: failed
+# /root/citellus/citellusclient/plugins/core/bugzilla/openstack/httpd_bug_1478042.sh: skipped
+# /root/citellus/citellusclient/plugins/core/bugzilla/openstack/keystone_bug_1473713.sh: okay
+# /root/citellus/citellusclient/plugins/core/bugzilla/openstack/neutron_bug_1450223.sh: skipped
+# /root/citellus/citellusclient/plugins/core/bugzilla/openstack/neutron_bug_1474092.sh: okay
+# /root/citellus/citellusclient/plugins/core/bugzilla/openstack/neutron_bug_1489066.sh: okay
+# /root/citellus/citellusclient/plugins/core/bugzilla/openstack/nova_bug_1474092.sh: okay
+# /root/citellus/citellusclient/plugins/core/bugzilla/openstack/swift_bug_1500607.sh: failed
     swift expirer https://bugzilla.redhat.com/show_bug.cgi?id=1500607
-# /root/citellus/citellus/plugins/launchpad/openstack/keystone_bug_1649616.sh: okay
-# /root/citellus/citellus/plugins/openstack/ceilometer/expiration.sh: failed
+# /root/citellus/citellusclient/plugins/core/launchpad/openstack/keystone_bug_1649616.sh: okay
+# /root/citellus/citellusclient/plugins/core/openstack/ceilometer/expiration.sh: failed
     ceilometer.conf setting must be updated:
     alarm_history_time_to_live = -1
     ceilometer.conf setting must be updated:
