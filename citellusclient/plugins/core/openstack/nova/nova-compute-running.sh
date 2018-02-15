@@ -17,7 +17,7 @@
 
 # we can run this against fs snapshot or live system
 
-# long_name: Check for non running nova-compute
+# long_name: Check for running nova-compute
 # description: Reports if nova-compute is not running on compute node
 # priority: 900
 
