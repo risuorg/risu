@@ -514,104 +514,87 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
         # For example for 'Live' environment where no path is defined
         filename = False
 
-    rerunsmart = False
     missingplugins = []
-    results = {}
-    # if we're not running live, read existing file
-    if not live and filename and os.access(filename, os.R_OK) and not forcerun:
+
+    if live or forcerun:
+        results = {}
+    else:
+        # If we can load, fill variable, else, just blank it
         LOG.debug("Reading Existing citellus analysis from disk for %s" % path)
         try:
             results = json.load(open(filename, 'r'))['results']
-            rerun = False
         except:
             results = {}
-            rerun = True
 
-        # We do need to check that we've the results for all the plugins we know, if not, rerun.
+    # At this point we've 'results' with either empty dict (live, forcerun) or loaded if existing and valid
 
-        # Check all sosreports for data for all plugins
-        allids = getids(plugins=plugins)
+    # We do need to check that we've the results for all the plugins we know, if not, rerun.
 
-        # Now check in results for id's no longer existing for removal:
-        delete = []
-        for key in iter(results.keys()):
-            if key not in allids:
-                # Plugin ID no longer appears in found plugins.
-                delete.append(key)
+    # Check all sosreports for data for all plugins
+    allids = getids(plugins=plugins)
 
-        LOG.debug("Removing old plugins from results: %s" % delete)
+    # Now check in results for id's no longer existing for removal:
+    delete = []
+    for key in iter(results.keys()):
+        if key not in allids:
+            # Plugin ID no longer appears in found plugins.
+            delete.append(key)
 
-        for plugid in allids:
-            if plugid not in results:
-                missingplugins.append(plugid)
+    LOG.debug("Removing old plugins from results: %s" % delete)
 
-        LOG.debug("Adding new plugin id's missing to be executed: %s" % missingplugins)
+    for plugid in allids:
+        if plugid not in results:
+            missingplugins.append(plugid)
 
-        for key in delete:
-            del results[key]
+    LOG.debug("Adding new plugin id's missing to be executed: %s" % missingplugins)
 
-        # Prefill hashes of known plugins for checking same id's with changed hash
-        hashes = []
-        for plug in plugins:
-            hashes.append(plug['hash'])
+    for key in delete:
+        del results[key]
 
-        # Check for changed plugins on disk vs stored
-        for plugin in results:
-            # We check all plugins in results
-            try:
-                hash = results[plugin]['hash']
-            except:
-                hash = False
+    # Prefill hashes of known plugins for checking same id's with changed hash
+    hashes = []
+    for plug in plugins:
+        hashes.append(plug['hash'])
 
-            if hash not in hashes:
-                # We now check all the available plugins for hashes
-                # Plugin hash is not matched in results, rerun plugin as it has changed
-                missingplugins.append(plugin)
-                LOG.debug("Smart: rerunning plugin with modified hash on disk: %s" % results[plugin]['plugin'])
+    # Check for changed plugins on disk vs stored
+    for plugin in results:
+        # We check all plugins in results
+        try:
+            hash = results[plugin]['hash']
+        except:
+            hash = False
 
-        # If some plugin is missing, rerun smart
-        if len(missingplugins) != 0 or len(delete) != 0:
-            missingplugins = sorted(set(missingplugins))
-            LOG.debug("Running smartrun for plugins added %s" % missingplugins)
-            LOG.debug("Running smartrun for plugins deleted %s" % delete)
-            rerun = True
-            rerunsmart = True
-        else:
-            LOG.debug("No smartrun needed")
+        if hash not in hashes:
+            # We now check all the available plugins for hashes
+            # Plugin hash is not matched in results, rerun plugin as it has changed
+            missingplugins.append(plugin)
+            LOG.debug("Smart: rerunning plugin with modified hash on disk: %s" % results[plugin]['plugin'])
 
-    else:
-        rerun = True
+    # If some plugin is missing, rerun smart
+    if len(missingplugins) != 0 or len(delete) != 0:
+        missingplugins = sorted(set(missingplugins))
+        LOG.debug("Running smartrun for plugins added %s" % missingplugins)
+        LOG.debug("Running smartrun for plugins deleted %s" % delete)
 
-    if rerun:
-        LOG.debug("We've set to run citellus")
-        # Execute Citellus (live and non-live with forcerun)
+    # We need to filter plugins only for the new id's what we were missing
+    LOG.debug("Smart: We need to run some plugins that were missing")
 
-        # We need to filter plugins only for the new id's what we were missing
-        if rerunsmart:
-            LOG.debug("Smart: We need to run some plugins that were missing")
+    # We clear list of plugins to run to just grab the missing data
+    pluginstorun = []
+    for plugin in plugins:
+        if plugin['id'] in missingplugins:
+            pluginstorun.append(plugin)
 
-            # We clear list of plugins to run to just grab the missing data
-            pluginstorun = []
-            for plugin in plugins:
-                if plugin['id'] in missingplugins:
-                    pluginstorun.append(plugin)
-        else:
-            # Run all plugins
-            pluginstorun = plugins
+    execution = p.map(runplugin, pluginstorun)
 
-        execution = p.map(runplugin, pluginstorun)
+    for plugin in execution:
+        results[plugin['id']] = dict(plugin)
 
-        if rerunsmart is not True:
-            results = {}
-
-        for plugin in execution:
-            results[plugin['id']] = dict(plugin)
-
-        for hook in initExtensions(extensions=getHooks())[0]:
-            LOG.debug("Running hook: %s" % hook.__name__.split('.')[-1])
-            newresults = hook.run(data=results)
-            if newresults:
-                results = newresults
+    for hook in initExtensions(extensions=getHooks())[0]:
+        LOG.debug("Running hook: %s" % hook.__name__.split('.')[-1])
+        newresults = hook.run(data=results)
+        if newresults:
+            results = dict(newresults)
 
     # Write results if possible
     if filename:
