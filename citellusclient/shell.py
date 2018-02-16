@@ -1154,9 +1154,6 @@ def main():
     plugins = newplugins
     forcerun = options.run
 
-    # Force rerun (so that we can copy recent html and json if using --web)
-    if options.web:
-        forcerun = True
     results = docitellus(live=options.live, path=CITELLUS_ROOT, plugins=plugins, lang=options.lang, forcerun=forcerun, savepath=options.output, include=options.include, exclude=options.exclude, web=options.web)
 
     # Print results based on the sorted order based on returned results from
