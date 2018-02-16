@@ -613,15 +613,15 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
             if newresults:
                 results = newresults
 
-        # Write results if possible
-        if filename:
-            try:
-                # Write results to disk
-                branding = _("                                                  ")
-                write_results(results, filename, path=path, time=time.time() - start_time, branding=branding, web=web)
-            except:
-                # Couldn't write
-                LOG.debug("Couldn't write to file %s" % filename)
+    # Write results if possible
+    if filename:
+        try:
+            # Write results to disk
+            branding = _("                                                  ")
+            write_results(results, filename, path=path, time=time.time() - start_time, branding=branding, web=web)
+        except:
+            # Couldn't write
+            LOG.debug("Couldn't write to file %s" % filename)
 
     # We've filters defined, so filter data
     if include or exclude:
