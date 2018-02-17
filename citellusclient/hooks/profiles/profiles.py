@@ -69,7 +69,7 @@ def run(data, quiet=False):  # do not edit this line
         plugin = dict(item)
 
         # Precreate storage for this profile
-        name = os.path.basename(os.path.splitext(profile.replace(pluginsdir, ''))[0])
+        name = "Profiles: %s" % os.path.basename(os.path.splitext(profile.replace(pluginsdir, ''))[0])
         subcategory = ''
         category = name
 

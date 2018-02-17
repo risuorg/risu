@@ -8,5 +8,6 @@
 # -keyword : excludes keyword in plugin search
 
 +clock
-+cluster
--chronyd
++pacemaker
+-openstack
+
