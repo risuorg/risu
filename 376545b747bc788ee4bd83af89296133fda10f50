@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a7a7405_6b1eb4ce",
+        "filename": "citellusclient/plugins/core/openstack/rabbitmq/queues_with_no_consumer_but_msgs.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2018-02-17T14:48:36Z",
+      "side": 1,
+      "message": "nit: extra space and \u0027rebbit\u0027",
+      "revId": "376545b747bc788ee4bd83af89296133fda10f50",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a933c06e_f0c4b196",
+        "filename": "citellusclient/plugins/core/openstack/rabbitmq/queues_with_no_consumer_but_msgs.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2018-02-17T14:48:36Z",
+      "side": 1,
+      "message": "flag is unused in the script replace with exit ${RC_OKAY} as we already exited earlier if skipped or failed",
+      "revId": "376545b747bc788ee4bd83af89296133fda10f50",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
