@@ -51,8 +51,10 @@ def run(data, quiet=False):  # do not edit this line
         # We now fake result as SKIPPED and copy to datahook dict the new data
         data[targetid]['datahook'] = {}
         data[targetid]['datahook']['prior'] = dict(data[targetid]['result'])
-        data[targetid]['result']['rc'] = citellus.RC_SKIPPED
-        data[targetid]['result']['err'] = 'Marked as skipped by data hook %s' % os.path.basename(__file__).split(os.sep)[0]
+        newresults = dict(data[targetid]['result'])
+        newresults['rc'] = citellus.RC_SKIPPED
+        newresults['err'] = 'Marked as skipped by data hook %s' % os.path.basename(__file__).split(os.sep)[0]
+        data[targetid]['result'] = newresults
         citellus.LOG.debug("Data mangled for plugin %s:" % data[targetid]['plugin'])
 
     return data
