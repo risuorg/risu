@@ -53,7 +53,7 @@ def errorprint(*args, **kwargs):
     print(*args, file=sys.stderr, **kwargs)
 
 
-def exitcitellus(code=False, msg=False):
+def exitcitellus(code=False, msg=None):
     """
     Exits back to citellus with errorcode and message
     :param msg: Message to report on stderr
