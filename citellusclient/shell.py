@@ -267,6 +267,12 @@ def findallplugins():
 
 
 def generate_file_hash(filename, blocksize=2**20):
+    """
+    Obtains a file hash for provided filename
+    :param filename: file to open and hash
+    :param blocksize: block size for chunks read
+    :return: hash
+    """
     hash = hashlib.md5()
     # Open File
     with open(filename, "rb") as f:
