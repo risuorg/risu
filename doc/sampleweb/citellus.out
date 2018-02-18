@@ -1,0 +1,275 @@
+_________ .__  __         .__  .__                
+\_   ___ \|__|/  |_  ____ |  | |  |  __ __  ______
+/    \  \/|  \   __\/ __ \|  | |  | |  |  \/  ___/
+\     \___|  ||  | \  ___/|  |_|  |_|  |  /\___ \ 
+ \______  /__||__|  \___  >____/____/____//____  >
+        \/              \/                     \/ 
+ https://gitlab.cee.redhat.com/sbr-stack/citellus-GSSlang ENHANCED 
+found #5 extensions with #158 plugins
+mode: fs snapshot /cases/01991880/sosreport-20171212-110525/controller-0
+# /git/citellus/citellusclient/plugins/core/security/spectre/vdsm.sh: skipped
+# /git/citellus/citellusclient/plugins/core/launchpad/openstack/keystone/1649616.sh: okay
+# /git/citellus/citellusclient/plugins/faraday/positive/openstack/bundle-openstack-policy.txt: skipped
+# /git/citellus/citellusclient/plugins/core/system/reboot.py: skipped
+# /git/citellus/citellusclient/plugins/core/pacemaker/nodes_number.sh: okay
+# /git/citellus/citellusclient/plugins/core/ceph/status.sh: skipped
+# /git/citellus/citellusclient/plugins/core/bugzilla/openstack/keystone/templates/1519057.sh: skipped
+# /git/citellus/citellusclient/plugins/core/openstack/mysql/dberror.sh: okay
+# /git/citellus/citellusclient/plugins/core/pacemaker/failed_actions.sh: failed
+    galera-bundle-0_monitor_60000
+# /git/citellus/citellusclient/plugins/core/security/meltdown-disabled.sh: okay
+# /git/citellus/citellusclient/plugins/core/openstack/ceph/missing-repos-on-compute.sh: skipped
+# /git/citellus/citellusclient/plugins/faraday/positive/openstack/ceilometer/pipeline-yaml.txt: okay
+# /git/citellus/citellusclient/plugins/core/system/kernel_panic.sh: okay
+# /git/citellus/citellusclient/plugins/faraday/positive/system/redhat-release.txt: okay
+# /git/citellus/citellusclient/plugins/core/openstack/mysql/maxconn.sh: skipped
+# /git/citellus/citellusclient/plugins/core/system/current-kernel-RT-vs-installed.sh: skipped
+# /git/citellus/citellusclient/plugins/core/bugzilla/openstack/nova/1527345.sh: skipped
+# /git/citellus/citellusclient/plugins/core/pacemaker/fence_device.sh: failed
+    NO stonith devices configured
+# /git/citellus/citellusclient/plugins/core/openstack/nova/libvirt-error.sh: skipped
+# /git/citellus/citellusclient/plugins/core/openstack/cinder/timeout-with-EMC-VNX.sh: okay
+# /git/citellus/citellusclient/plugins/ansible/openstack/rabbitmq/ha-policies.yml: skipped
+# /git/citellus/citellusclient/plugins/core/openstack/containers/debug.sh: failed
+    enabled in /ceilometer/etc/ceilometer/ceilometer.conf
+    enabled in /gnocchi/etc/gnocchi/gnocchi.conf
+    enabled in /heat/etc/heat/heat.conf
+    enabled in /keystone/etc/keystone/keystone.conf
+    enabled in /nova/etc/nova/nova.conf
+    disabled in /rabbitmq/etc/rabbitmq/rabbitmqadmin.conf
+    disabled in /rabbitmq/etc/rabbitmq/rabbitmq-env.conf
+    disabled in /swift/etc/swift/account-server.conf
+    disabled in /swift/etc/swift/container-server.conf
+    disabled in /swift/etc/swift/object-expirer.conf
+    disabled in /swift/etc/swift/object-server.conf
+    disabled in /swift/etc/swift/proxy-server.conf
+    disabled in /swift/etc/swift/swift.conf
+# /git/citellus/citellusclient/plugins/core/system/abrtd-config.sh: failed
+    abrt package missing
+# /git/citellus/citellusclient/plugins/core/openstack/rabbitmq/file_descriptors.sh: failed
+    couldn't get file descriptors from rabbitmqctl report
+# /git/citellus/citellusclient/plugins/core/system/sysstat.sh: failed
+    systat package missing
+# /git/citellus/citellusclient/plugins/core/security/spectre/rhev-hypervisor7.sh: skipped
+# /git/citellus/citellusclient/plugins/core/docker/excesive-memory-usage.sh: okay
+# /git/citellus/citellusclient/plugins/core/bugzilla/openstack/neutron/1474092.sh: okay
+# /git/citellus/citellusclient/plugins/core/system/clock-1-ntpd.sh: okay
+# /git/citellus/citellusclient/plugins/faraday/positive/openstack/bundle-openstack-policy.txt: okay
+# /git/citellus/citellusclient/plugins/faraday/positive/openstack/bundle-openstack-policy.txt: okay
+# /git/citellus/citellusclient/plugins/core/openstack/cinder/lvm.sh: failed
+    volume_driver=cinder.volume.drivers.lvm.LVMVolumeDriver
+# /git/citellus/citellusclient/plugins/core/openstack/neutron/neutron-openvswitch-firewall-driver.sh: skipped
+# /git/citellus/citellusclient/plugins/core/openstack/glance/image_size_cap.sh: okay
+# /git/citellus/citellusclient/plugins/core/system/megaraid.sh: okay
+# /git/citellus/citellusclient/plugins/core/bugzilla/openstack/httpd/1478042.sh: skipped
+# /git/citellus/citellusclient/plugins/core/pacemaker/stonith_enabled.sh: failed
+    Stonith is not enabled, but it is a requirement to have it enabled with proper fencing devices in order to have the environment in supported status
+# /git/citellus/citellusclient/plugins/core/system/logrotate.sh: okay
+# /git/citellus/citellusclient/plugins/faraday/positive/openstack/bundle-openstack-policy.txt: skipped
+# /git/citellus/citellusclient/plugins/core/system/selinux_config.sh: okay
+# /git/citellus/citellusclient/plugins/faraday/positive/openstack/bundle-openstack-policy.txt: okay
+# /git/citellus/citellusclient/plugins/core/openstack/redis/redis-tooz-lock.sh: skipped
+# /git/citellus/citellusclient/plugins/core/openstack/containers/rabbitmq/cluster_status.sh: skipped
+# /git/citellus/citellusclient/plugins/core/openstack/debug.sh: failed
+    disabled in /etc/ceilometer/ceilometer.conf
+    disabled in /etc/ceilometer/rootwrap.conf
+    enabled in /etc/cinder/cinder.conf
+    disabled in /etc/cinder/rootwrap.conf
+    disabled in /etc/glance/glance-api.conf
+    disabled in /etc/glance/glance-cache.conf
+    disabled in /etc/glance/glance-registry.conf
+    disabled in /etc/glance/glance-scrubber.conf
+    disabled in /etc/glance/glance-swift.conf
+    disabled in /etc/glance/rootwrap.conf
+    disabled in /etc/gnocchi/gnocchi.conf
+    disabled in /etc/heat/heat.conf
+    disabled in /etc/ironic/ironic.conf
+    disabled in /etc/ironic/rootwrap.conf
+    disabled in /etc/keystone/keystone.conf
+    disabled in /etc/keystone/logging.conf
+    disabled in /etc/manila/manila.conf
+    disabled in /etc/manila/rootwrap.conf
+    disabled in /etc/neutron/networking_bgpvpn.conf
+    enabled in /etc/neutron/neutron.conf
+    disabled in /etc/neutron/neutron_lbaas.conf
+    disabled in /etc/neutron/rootwrap.conf
+    disabled in /etc/neutron/services_lbaas.conf
+    disabled in /etc/nova/nova.conf
+    disabled in /etc/nova/rootwrap.conf
+    disabled in /etc/puppet/auth.conf
+    disabled in /etc/puppet/puppet.conf
+    disabled in /etc/sahara/rootwrap.conf
+    disabled in /etc/sahara/sahara.conf
+    disabled in /etc/selinux/semanage.conf
+    disabled in /etc/swift/account-server.conf
+    disabled in /etc/swift/container-reconciler.conf
+    disabled in /etc/swift/container-server.conf
+    disabled in /etc/swift/object-expirer.conf
+    disabled in /etc/swift/object-server.conf
+    disabled in /etc/swift/proxy-server.conf
+    disabled in /etc/swift/swift.conf
+    disabled in /etc/openstack-dashboard/local_settings
+# /git/citellus/citellusclient/plugins/core/system/updates.sh: skipped
+# /git/citellus/citellusclient/plugins/core/system/conntrack_full.sh: okay
+# /git/citellus/citellusclient/plugins/core/bugzilla/systemd/1172387.sh: okay
+# /git/citellus/citellusclient/plugins/core/system/current-kernel-vs-installed.sh: okay
+# /git/citellus/citellusclient/plugins/core/security/spectre/qemu-kvm-rhev.sh: okay
+# /git/citellus/citellusclient/plugins/core/openstack/packstack.sh: okay
+# /git/citellus/citellusclient/plugins/metadata/system/system-uuid.sh: okay
+# /git/citellus/citellusclient/plugins/core/system/pip.sh: okay
+# /git/citellus/citellusclient/plugins/faraday/positive/openstack/bundle-openstack-policy.txt: skipped
+# /git/citellus/citellusclient/plugins/core/bugzilla/openstack/ceph/1358697.sh: skipped
+# /git/citellus/citellusclient/plugins/core/system/memory_usage.sh: okay
+# /git/citellus/citellusclient/plugins/faraday/positive/openstack/bundle-openstack-policy.txt: okay
+# /git/citellus/citellusclient/plugins/metadata/openstack/system-role.sh: okay
+# /git/citellus/citellusclient/plugins/metadata/openstack/osp-release.sh: okay
+# /git/citellus/citellusclient/plugins/core/security/spectre/kernel.sh: failed
+    Please do check https://access.redhat.com/security/vulnerabilities/speculativeexecution for guidance
+    package kernel version kernel-3.10.0-693.5.2.el7.x86_64 is lower than required (kernel-3.10.0-693.11.6).
+# /git/citellus/citellusclient/plugins/core/openstack/mysql/clustercheck-mysql_host.sh: skipped
+# /git/citellus/citellusclient/plugins/core/system/baremetal.sh: failed
+    KVM
+# /git/citellus/citellusclient/plugins/core/openstack/nova/vnc-console-localhost.sh: failed
+    nova's vnc console listening on 127.0.0.1
+# /git/citellus/citellusclient/plugins/core/openstack/hardware/memory.sh: skipped
+# /git/citellus/citellusclient/plugins/ansible/system/clock-ntpstat.yml: skipped
+# /git/citellus/citellusclient/plugins/core/openstack/nova/migrate-with-cinder-volume.sh: okay
+# /git/citellus/citellusclient/plugins/core/openstack/nova/resume-guests-state-on-host-boot.sh: skipped
+# /git/citellus/citellusclient/plugins/core/openstack/system/clock-chronyd-disabled.sh: okay
+# /git/citellus/citellusclient/plugins/core/openstack/nova/virt-type-kvm.sh: okay
+# /git/citellus/citellusclient/plugins/core/bugzilla/openstack/keystone/1473713.sh: okay
+# /git/citellus/citellusclient/plugins/core/openstack/pacemaker/instance-ha.sh: okay
+# /git/citellus/citellusclient/plugins/metadata/system/sosreport-date.sh: okay
+# /git/citellus/citellusclient/plugins/core/openstack/containers/containerized_deployment.sh: okay
+# /git/citellus/citellusclient/plugins/faraday/positive/openstack/bundle-openstack-policy.txt: okay
+# /git/citellus/citellusclient/plugins/core/openstack/mysql/db-reference-error.sh: okay
+# /git/citellus/citellusclient/plugins/faraday/positive/openstack/bundle-openstack-policy.txt: skipped
+# /git/citellus/citellusclient/plugins/faraday/positive/openstack/bundle-openstack-policy.txt: okay
+# /git/citellus/citellusclient/plugins/core/openstack/mysql/mysql_db_size.sh: skipped
+# /git/citellus/citellusclient/plugins/faraday/positive/openstack/bundle-openstack-policy.txt: okay
+# /git/citellus/citellusclient/plugins/core/openstack/nova/incompatible-aggregate-capabilities-filters.sh: okay
+# /git/citellus/citellusclient/plugins/core/openstack/crontab/heat_stack-purge.sh: skipped
+# /git/citellus/citellusclient/plugins/core/bugzilla/httpd/1406417.sh: okay
+# /git/citellus/citellusclient/plugins/core/openstack/swift/ring-status.sh: skipped
+# /git/citellus/citellusclient/plugins/core/pacemaker/stopped_resources.sh: okay
+# /git/citellus/citellusclient/plugins/faraday/negative/system/machine-id.txt: skipped
+# /git/citellus/citellusclient/plugins/core/system/clock-0-ntp-services.sh: okay
+# /git/citellus/citellusclient/plugins/core/openstack/containers/sosreport.sh: okay
+# /git/citellus/citellusclient/plugins/core/security/spectre/libvirt.sh: failed
+    Please do check https://access.redhat.com/security/vulnerabilities/speculativeexecution for guidance
+    package libvirt version libvirt-3.2.0-14.el7_4.3.x86_64 is lower than required (libvirt-3.2.0-14.el7_4.7).
+# /git/citellus/citellusclient/plugins/core/virtualization/libvirt-qemu-kernel-compatibility.sh: skipped
+# /git/citellus/citellusclient/plugins/core/openstack/mysql/keystone_tokendb.sh: skipped
+# /git/citellus/citellusclient/plugins/core/openstack/crontab/keystone_cleanup.sh: skipped
+# /git/citellus/citellusclient/plugins/core/network/external_connectivity.sh: skipped
+# /git/citellus/citellusclient/plugins/core/system/selinux_runtime.sh: okay
+# /git/citellus/citellusclient/plugins/faraday/positive/openstack/bundle-openstack-policy.txt: skipped
+# /git/citellus/citellusclient/plugins/core/openstack/containers/docker/health-check.sh: okay
+# /git/citellus/citellusclient/plugins/core/security/spectre/dracut.sh: skipped
+# /git/citellus/citellusclient/plugins/core/openstack/nova/osp10plus-versioned-notifications.sh: skipped
+# /git/citellus/citellusclient/plugins/core/system/kernel-tainted.sh: failed
+    Kernel is tainted 536870912
+# /git/citellus/citellusclient/plugins/faraday/positive/openstack/bundle-openstack-policy.txt: okay
+# /git/citellus/citellusclient/plugins/core/openshift/etcd/certificates.py: skipped
+# /git/citellus/citellusclient/plugins/core/openstack/keystone/supported-backends.sh: okay
+# /git/citellus/citellusclient/plugins/faraday/positive/openstack/bundle-openstack-policy.txt: okay
+# /git/citellus/citellusclient/plugins/core/openstack/iptables/metadata_redirect.sh: skipped
+# /git/citellus/citellusclient/plugins/core/bugzilla/openstack/tripleo/1437016.sh: skipped
+# /git/citellus/citellusclient/plugins/core/security/meltdown/kernel-rt.sh: skipped
+# /git/citellus/citellusclient/plugins/core/bugzilla/openstack/ceilometer/1483456.sh: skipped
+# /git/citellus/citellusclient/plugins/core/openstack/keystone/cleanup_runs.sh: skipped
+# /git/citellus/citellusclient/plugins/core/bugzilla/openstack/swift/1500607.sh: okay
+# /git/citellus/citellusclient/plugins/core/security/spectre/kernel-rt.sh: skipped
+# /git/citellus/citellusclient/plugins/core/system/disk_inode_usage.sh: okay
+# /git/citellus/citellusclient/plugins/core/openstack/traceback.sh: failed
+    /var/log/neutron/server.log:
+          2 2017-12-12
+    
+# /git/citellus/citellusclient/plugins/core/openstack/network/dpdk.sh: failed
+    missing NUMATopologyFilter in nova.conf
+    KERNEL used CPU's: 
+    CPU's isolated from kernel scheduler 
+    CPU's pinned in nova 
+    Nova used CPU's (from isolated pool): 
+    -- available CPU's after this step from isolated pool: 
+    dc: stack empty
+    DPDK PMD used CPU's: 
+    -- available CPU's after this step from isolated pool: 
+    dc: stack empty
+    DPDK CORE used CPU's: 
+    There are CPU's unallocated:  0 1 2 3
+# /git/citellus/citellusclient/plugins/core/system/netifnames.sh: skipped
+# /git/citellus/citellusclient/plugins/core/openstack/containers/docker/restarting.sh: okay
+# /git/citellus/citellusclient/plugins/core/system/sosreport.sh: failed
+    package sos version sos-3.4-9.el7_4.noarch is lower than required (sos-3.4-13.el7_4.noarch).
+# /git/citellus/citellusclient/plugins/core/openstack/ceilometer/out-of-sync-host.sh: skipped
+# /git/citellus/citellusclient/plugins/core/system/clock-1-chrony.sh: skipped
+# /git/citellus/citellusclient/plugins/core/system/corrupted_journal.sh: okay
+# /git/citellus/citellusclient/plugins/winston/system/redhat-release.txt: okay
+# /git/citellus/citellusclient/plugins/core/bugzilla/openstack/neutron/1489066.sh: okay
+# /git/citellus/citellusclient/plugins/core/openstack/containers/traceback.sh: failed
+    /var/log/containers/gnocchi/gnocchi-statsd.log (1 times)
+    /var/log/containers/nova/nova-consoleauth.log (1 times)
+# /git/citellus/citellusclient/plugins/core/system/rh-release.sh: okay
+# /git/citellus/citellusclient/plugins/core/pacemaker/disabled_resources.sh: okay
+# /git/citellus/citellusclient/plugins/core/ceph/pg-num.sh: skipped
+# /git/citellus/citellusclient/plugins/winston/system/iscsi/initatorname.txt: okay
+# /git/citellus/citellusclient/plugins/metadata/system/hostname.sh: okay
+# /git/citellus/citellusclient/plugins/core/security/meltdown/kernel.sh: failed
+    Please do check https://access.redhat.com/security/vulnerabilities/speculativeexecution for guidance
+    package kernel version kernel-3.10.0-693.5.2.el7.x86_64 is lower than required (kernel-3.10.0-693.11.6).
+# /git/citellus/citellusclient/plugins/core/openstack/ceilometer/expiration.sh: failed
+    alarm_history_time_to_live missing on file
+    event_time_to_live missing on file
+    metering_time_to_live missing on file
+# /git/citellus/citellusclient/plugins/core/system/clock-ntpd-time-reset.sh: okay
+# /git/citellus/citellusclient/plugins/core/openstack/crontab/cinder-data-purge.sh: okay
+# /git/citellus/citellusclient/plugins/core/system/yum_history_rollback-undo.sh: okay
+# /git/citellus/citellusclient/plugins/core/system/disk_usage.sh: okay
+# /git/citellus/citellusclient/plugins/core/bugzilla/openstack/neutron/1450223.sh: skipped
+# /git/citellus/citellusclient/plugins/core/openstack/rabbitmq/rpc_issues.sh: okay
+# /git/citellus/citellusclient/plugins/core/openstack/nova/nova-compute-running.sh: skipped
+# /git/citellus/citellusclient/plugins/core/openstack/network/sriov.sh: failed
+    neutron-sriov-nic-agent not running
+    missing isolated_cores in /etc/tuned/cpu-partitioning-variables.conf
+    NFV technologies rely on cards which provide Virtual Functions, and those couldn't be detected on this system.
+    If you're trying to use NFV, please do check your configuration.
+    vfio_iommu module is not loaded
+    unsafe interrupts not enabled
+    missing hugepagesz on kernel cmdline
+    missing hugepages= on kernel cmdline
+    missing isolcpus= on kernel cmdline
+    missing sriovnicswitch in ml2_conf.ini
+    missing PciPassthroughFilter in nova.conf
+    missing vcpu_pin_set in nova.conf
+    missing pci_passthrough_whitelist in /etc/nova/nova.conf
+# /git/citellus/citellusclient/plugins/faraday/negative/system/iscsi/initatorname.txt: okay
+# /git/citellus/citellusclient/plugins/core/security/spectre/qemu-kvm.sh: skipped
+# /git/citellus/citellusclient/plugins/core/bugzilla/openstack/nova/1474092.sh: okay
+# /git/citellus/citellusclient/plugins/core/system/kdump-checker.sh: okay
+# /git/citellus/citellusclient/plugins/core/ceph/min-size.sh: skipped
+# /git/citellus/citellusclient/plugins/core/system/hardware_virtualization.sh: okay
+# /git/citellus/citellusclient/plugins/core/system/clock-2-ntpd-quantity.sh: failed
+    ntpd configured with one server, if that one goes down, you are toast:
+    server clock.redhat.com iburst
+# /git/citellus/citellusclient/plugins/faraday/positive/openstack/bundle-openstack-policy.txt: okay
+# /git/citellus/citellusclient/plugins/winston/system/machine-id.txt: skipped
+# /git/citellus/citellusclient/plugins/core/openstack/keystone/cleanup_last-run.sh: skipped
+# /git/citellus/citellusclient/plugins/core/bugzilla/openstack/neutron/1340001.sh: skipped
+# /git/citellus/citellusclient/plugins/core/openstack/mysql/innodb-file-per-table.sh: failed
+    This is a configuration optimization which will become the default in OSP11. In case you need to shrink the DB, this then can be done without a backup restore of all databases with this option using the 'optimize table' mysql command. 
+    Therefore no downtime is then needed. But just setting the option in the config will not migrate the databases. They'd need to be recreated.
+    Without it, in order to reduce database size (and of ibdata file) can only done via full backup, removal of database and restore from backup.
+# /git/citellus/citellusclient/plugins/core/openstack/nova/consolelog-permissions-on-enforcing-selinux.sh: okay
+# /git/citellus/citellusclient/plugins/core/openstack/swift/pipeline-or-ignore-filling-gnocchi.sh: okay
+# /git/citellus/citellusclient/plugins/core/security/spectre-disabled.sh: okay
+# /git/citellus/citellusclient/plugins/core/openstack/swift/replicate-error.sh: okay
+# /git/citellus/citellusclient/plugins/core/openstack/mysql/seqno.sh: skipped
+# /git/citellus/citellusclient/plugins/core/pacemaker/packages.sh: okay
+# /git/citellus/citellusclient/plugins/metadata/system/release.sh: okay
+# /git/citellus/citellusclient/plugins/core/openstack/network/common-dpdk-sriov.sh: failed
+    missing intel_iommu=on or iommu=pt on kernel cmdline
+    missing Isolated metadata in neutron/dhcp_agent.ini
+# /git/citellus/citellusclient/plugins/faraday/positive/openstack/bundle-openstack-policy.txt: okay
+# /git/citellus/citellusclient/plugins/core/openstack/openvswitch/ovs-dead-agent.sh: okay
+# /git/citellus/citellusclient/plugins/core/openstack/systemd/services.sh: okay

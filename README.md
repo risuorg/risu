@@ -15,6 +15,7 @@ Please if you have any idea on any improvements please do not hesitate to open a
 - Plugins written in your language of choice.
 - Allows to dump output to json file to be processed by other tools.
     - Allow to visualize html from json output.
+    - Check our sample at: [Citellus-www](https://raw.githubusercontent.com/zerodayz/citellus/master/tools/doc/sampleweb/citellus.html)
 - Ansible playbook support.
 - Save / restore default settings
 
