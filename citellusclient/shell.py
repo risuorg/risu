@@ -37,7 +37,7 @@ import subprocess
 import sys
 import time
 import traceback
-from collections import Counter
+from itertools import groupby
 from multiprocessing import Pool, cpu_count
 sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/' + '../'))
 
@@ -1091,22 +1091,22 @@ def main():
                     grosscategories.append(plugin['category'])
 
             # Get counters and start the information processing
-            detail = Counter(categories)
-            count = Counter(grosscategories)
+            detail = sorted([(key, len(list(v))) for (key, v) in groupby(sorted(categories))])
+            count = sorted([(key, len(list(v))) for (key, v) in groupby(sorted(grosscategories))])
             total = 0
 
             print("-------\n")
 
-            for each in sorted(count.items()):
-                elem = each[1]
+            for each in count:
+                key, elem = each
                 detailed = []
-                for item in detail:
-                    startpath = os.path.join(os.sep, each[0])
-
+                for subitem in detail:
+                    startpath = os.path.join(os.sep, key)
+                    subkey, subval = subitem
                     # List the items within that 'root' category and remove common path
-                    if item.startswith(startpath):
-                        subcount = "%s" % detail[item]
-                        newdetail = item.replace(startpath, '')
+                    if subkey.startswith(startpath):
+                        subcount = "%s" % subval
+                        newdetail = subkey.replace(startpath, '')
 
                         # Remove leading "/" (os.sep for safety)
                         if newdetail != '' and newdetail[0] == os.sep:
@@ -1115,7 +1115,7 @@ def main():
                         # Skip empty strings and instead just show empty array
                         if newdetail != '':
                             detailed.append(newdetail + ": " + subcount)
-                print(each[0], ":", elem, detailed)
+                print(key, ":", elem, detailed)
                 total = total + elem
 
             print("-------\ntotal", ":", total)
