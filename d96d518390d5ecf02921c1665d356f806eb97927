@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb0fe2e6_b153e698",
+        "filename": "citellusclient/plugins/core/openstack/rabbitmq/ipv6_disabled.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2018-02-20T12:06:16Z",
+      "side": 1,
+      "message": "one rpm check per line can\u0027t accept several arguments",
+      "revId": "d96d518390d5ecf02921c1665d356f806eb97927",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
