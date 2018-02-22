@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bef332bd_5edcd46c",
+        "filename": "citellusclient/plugins/core/system/process-high-cpu-usage.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2018-02-22T08:47:11Z",
+      "side": 1,
+      "message": "this approach executes ps aux twice, once for headers, another for results.\n\nIf we do the trap approach and redirect to file, we can condensate it ;-)",
+      "revId": "7c1d02e80e9aed431760f38600990fd308c8051e",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
