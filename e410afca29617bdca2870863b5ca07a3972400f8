@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ceb7f546_7a4ec852",
+        "filename": "citellusclient/plugins/core/system/segfault.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1011950
+      },
+      "writtenOn": "2018-02-23T05:59:52Z",
+      "side": 1,
+      "message": "Can you change this to if condition like this:\n\n\nif is_lineinfile \"segfault at\" \"${journalctl_file}\"; then\n    echo \"SEGV detected\" \u003e\u00262\n    grep \"segfault at\" \"${journalctl_file}\" \u003e\u00262\n    exit ${RC_FAILED}\nfi",
+      "range": {
+        "startLine": 32,
+        "startChar": 4,
+        "endLine": 32,
+        "endChar": 147
+      },
+      "revId": "e410afca29617bdca2870863b5ca07a3972400f8",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b95b586a_6838c2d2",
+        "filename": "citellusclient/plugins/core/system/segfault.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1011950
+      },
+      "writtenOn": "2018-02-23T05:59:52Z",
+      "side": 1,
+      "message": "You are executing grep with \u0027-q\u0027 quiet mode, nothing will be in the output.",
+      "range": {
+        "startLine": 37,
+        "startChar": 54,
+        "endLine": 37,
+        "endChar": 56
+      },
+      "revId": "e410afca29617bdca2870863b5ca07a3972400f8",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
