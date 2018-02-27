@@ -22,6 +22,27 @@ Please if you have any idea on any improvements please do not hesitate to open a
 Check latest changes on <Changelog.md>
 Check for plugins listing on <citellusclient/plugins/>
 
+## Installation
+
+- Just clone the git repository and execute it from there 'or'
+- use 'pipsi' or create a python virtual env to install package 'citellus'
+    ~~~sh
+    # pipsi install citellus
+    Already using interpreter /usr/bin/python3
+    Using base prefix '/usr'
+    New python executable in /home/iranzo/.local/venvs/citellus/bin/python3
+    Also creating executable in /home/iranzo/.local/venvs/citellus/bin/python
+    Installing setuptools, pip, wheel...done.
+    Collecting citellus
+    Installing collected packages: citellus
+    Successfully installed citellus-0.1.0.dev1072
+      Linked script /home/iranzo/.local/bin/citellus.py
+      Linked script /home/iranzo/.local/bin/magui.py
+    Done.
+    ~~~
+    - Pipsi will take care of installing a virtual environment and link to binary folder so you can call citellus.py or magui.py directly
+    - Remember that pypi package might not contain all the latests plugins features as the github repo one.
+
 ## Usage help
 We are developing framework in python, the bash framework has been deprecated. Python framework is the only supported framework.
 
