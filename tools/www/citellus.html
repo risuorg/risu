@@ -44,6 +44,9 @@
         .badge {
             margin-left: 0px;
         }
+        input[type="search"]::-webkit-search-cancel-button {
+            -webkit-appearance: searchfield-cancel-button;
+        }   
     </style>
 </head>
 
@@ -76,7 +79,7 @@
             <div class="col-sm-12">
                 <form class="toolbar-pf-actions">
                     <div class="form-group toolbar-pf-filter">
-                        <input type="text" class="form-control" id="filter_text" placeholder="Filter...">
+                        <input type="search" class="form-control" id="filter_text" placeholder="Filter...">
                     </div>
                     <!-- /form-group toolbar-pf-filter -->
                     <div class="form-group">
@@ -116,7 +119,7 @@
          <span class="fa fa-search"></span>
         </button>
                             <div class="find-pf-dropdown-container">
-                                <input type="text" class="form-control" id="find" placeholder="Find By Keyword...">
+                                <input type="search" class="form-control" id="find" placeholder="Find By Keyword...">
                                 <div class="find-pf-buttons">
                                     <span class="find-pf-nums">1 of 3</span>
                                     <button class="btn btn-link" type="button">
