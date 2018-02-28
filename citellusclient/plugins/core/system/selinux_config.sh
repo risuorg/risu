@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Copyright (C) 2017   Robin Černín (rcernin@redhat.com)
+# Copyright (C) 2018   Mikel Olasagasti Uranga (mikel@redhat.com)
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -26,19 +27,25 @@
 
 if [[ ${CITELLUS_LIVE} = 0 ]];  then
     is_required_file "${CITELLUS_ROOT}/sos_commands/selinux/sestatus_-b"
-    mode=$(awk '/^Mode from config file:/ {print $5}' "${CITELLUS_ROOT}/sos_commands/selinux/sestatus_-b")
+    sestatus="${CITELLUS_ROOT}/sos_commands/selinux/sestatus_-b"
 else
-    mode=$(sestatus -b | awk '/^Mode from config file:/ {print $5}')
+    sestatus=$(sestatus -b)
 fi
 
-if ! [[ "$mode" ]]; then
+status=$(awk '/^SELinux status:/ {print $3}' $sestatus)
+if [[ "x$status" == "xenabled" ]]; then
+    file_mode=$(awk '/^Mode from config file:/ {print $5}' "$sestatus")
+
+    if [[ "x$file_mode" == "xenforcing" ]]; then
+        exit ${RC_OKAY}
+    else
+        echo "persistent selinux mode is not enforcing (found $mode)" >&2
+        exit ${RC_FAILED}
+    fi
+elif [[ "x$status" == "xdisabled" ]]; then
+    echo "SELinux is disabled" >&2
+    exit ${RC_FAILED}
+else
     echo "failed to determined persistent selinux mode" >&2
     exit ${RC_FAILED}
-fi
-
-if [[ ${mode} != enforcing ]]; then
-    echo "persistent selinux mode is not enforcing (found $mode)" >&2
-    exit ${RC_FAILED}
-else
-    exit ${RC_OKAY}
 fi
