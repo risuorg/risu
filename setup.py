@@ -2,6 +2,7 @@
 # encoding: utf-8
 
 import setuptools
+import os
 
 # In python < 2.7.4, a lazy loading of package `pbr` will break
 # setuptools if some other modules registered functions in `atexit`.
@@ -12,7 +13,9 @@ try:
 except ImportError:
     pass
 
+try:
+    version = os.environ['TRAVIS_BUILD_NUMBER']
+except:
+    version = None
 
-setuptools.setup(
-    setup_requires=['pbr>=2.0.0'],
-    pbr=True)
+setuptools.setup(setup_requires=['pbr>=2.0.0'], pbr=True, version=version)
