@@ -2,7 +2,6 @@
 # encoding: utf-8
 
 import setuptools
-import os
 
 # In python < 2.7.4, a lazy loading of package `pbr` will break
 # setuptools if some other modules registered functions in `atexit`.
