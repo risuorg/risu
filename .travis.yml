@@ -20,7 +20,3 @@ deploy:
     branch: master
 after_success:
 - coveralls
-- bumpversion patch
-- git add -u
-- git commit -m "[ci skip] version changed"
-- git push

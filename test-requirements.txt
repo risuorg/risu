@@ -6,4 +6,3 @@ flake8
 setuptools>=30
 bashate
 PyYAML
-bumpversion
