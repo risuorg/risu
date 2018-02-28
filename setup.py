@@ -13,9 +13,4 @@ try:
 except ImportError:
     pass
 
-try:
-    version = os.environ['TRAVIS_BUILD_NUMBER']
-except:
-    version = None
-
-setuptools.setup(setup_requires=['pbr>=2.0.0'], pbr=True, version=version)
+setuptools.setup(setup_requires=['pbr>=2.0.0'], pbr=True)
