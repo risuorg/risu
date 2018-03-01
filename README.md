@@ -43,6 +43,10 @@ Check for plugins listing on [citellusclient/plugins/](citellusclient/plugins/)
     ~~~
     - Pipsi will take care of installing a virtual environment and link to binary folder so you can call citellus.py or magui.py directly
     - Remember that pypi package might not contain all the latests plugins features as the github repo one.
+- Using the included ```Dockerfile``` in the git checkout.
+    - ```docker build .``` # (from git checkout, then note image id) 
+    - ```docker run -v $PATHTOSOSREPORT:/data:Z $IMAGEID /data```
+        - Docker passes as volume the path specified under /data so we do use that parameter with citellus for running the tests.
 
 ## Usage help
 We are developing framework in python, the bash framework has been deprecated. Python framework is the only supported framework.
