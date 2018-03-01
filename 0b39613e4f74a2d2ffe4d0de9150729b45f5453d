@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7339c9c8_d0c858d8",
+        "filename": "Dockerfile",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2018-03-01T13:28:04Z",
+      "side": 1,
+      "message": "This messes up with execution:\n\n# /citellus/citellusclient/plugins/core/openstack/iptables/.citellus_tests: unknown\n    Traceback (most recent call last):\n      File \"/citellus/citellusclient/shell.py\", line 468, in execonshell\n        p \u003d subprocess.Popen(filename.split(\" \"), stdout\u003dsubprocess.PIPE, stderr\u003dsubprocess.PIPE)\n      File \"/usr/lib64/python2.7/subprocess.py\", line 711, in __init__\n        errread, errwrite)\n      File \"/usr/lib64/python2.7/subprocess.py\", line 1327, in _execute_child\n        raise child_exception\n    OSError: [Errno 8] Exec format error",
+      "revId": "0b39613e4f74a2d2ffe4d0de9150729b45f5453d",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
