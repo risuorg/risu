@@ -43,6 +43,11 @@ Check for plugins listing on [citellusclient/plugins/](citellusclient/plugins/)
     ~~~
     - Pipsi will take care of installing a virtual environment and link to binary folder so you can call citellus.py or magui.py directly
     - Remember that pypi package might not contain all the latests plugins features as the github repo one.
+- Using the included ```Dockerfile``` in the git checkout.
+    - ```docker build . -f Dockerfile.centos7-atomic -t citellus:latest``` # (from git checkout, then note image id)
+    - ```docker run --user=$(id -u) --rm -v $PATHTOSOSREPORT:/data:Z citellus:latest /data```
+        - Docker passes as volume the path specified under /data so we do use that parameter with citellus for running the tests.
+        - The default user id within the container is 10001 and the commands or sosreport permissions doesn't allow that user to gather all the information, so the container is required to run as the current user.
 
 ## Usage help
 We are developing framework in python, the bash framework has been deprecated. Python framework is the only supported framework.
@@ -209,7 +214,7 @@ found #2 extensions with #2 plugins
 mode: live
 # /home/iranzo/DEVEL/citellus/citellusclient/plugins/ansible/openstack/rabbitmq/ha-policies.yml: okay
 # /home/iranzo/DEVEL/citellus/citellusclient/plugins/ansible/system/clock-ntpstat.yml: failed
-    {"changed": false, "cmd": "ntpstat", "msg": "[Errno 2] No such file or directory", 
+    {"changed": false, "cmd": "ntpstat", "msg": "[Errno 2] No such file or directory",
 
 ~~~
 
