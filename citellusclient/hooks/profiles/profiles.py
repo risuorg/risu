@@ -98,8 +98,11 @@ def run(data, quiet=False):  # do not edit this line
 
         # Start asembling data for the plugins relevant for profile
         data[uid]['result']['err'] = ''
-        for id in plugidsforprofile(profile=profile, plugins=plugins):
+        ids = plugidsforprofile(profile=profile, plugins=plugins)
+        for id in ids:
             data[uid]['result']['err'] = data[uid]['result']['err'] + "\n" + "%s" % {'plugin': data[id]['plugin'].replace(os.path.join(citellus.citellusdir, 'plugins'), ''), 'err': data[id]['result']['err'].strip(), 'rc': data[id]['result']['rc']}
+
+        data[uid]['components'] = ids
 
     return data
 
