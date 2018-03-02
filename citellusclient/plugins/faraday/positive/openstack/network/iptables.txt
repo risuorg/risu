@@ -1,0 +1,6 @@
+# bugzilla:
+# long_name: Network iptables consistency
+# priority: 600
+# description: Checks Network iptables file
+# path: ${CITELLUS_ROOT}/etc/sysconfig/iptables
+# CITELLUS_HYBRID
