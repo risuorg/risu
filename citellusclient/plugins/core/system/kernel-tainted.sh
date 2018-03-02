@@ -24,6 +24,7 @@
 
 # we can run this against fs snapshot or live system
 
+is_required_file ${CITELLUS_ROOT}/proc/sys/kernel/tainted
 TAINT=$(cat ${CITELLUS_ROOT}/proc/sys/kernel/tainted)
 
 if [[ "x$TAINT" = "x0" ]]; then
