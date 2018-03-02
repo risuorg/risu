@@ -2,6 +2,10 @@
 
 This file will contain a manually mantained log of hilights between versions, it's not a very extensive detail, but some of the bigger changes/ideas will be added here.
 
+## 2018-03-02
+- Implemented 'faraday-exec' plugin to generate fake plugins that run and output metadata that later is faked via a datahook to be compared via magui plugins.
+- Implemented automatic pypi.org package generation for each master merge that allows to run citellus installed via 'pip' or 'pipsi'.
+
 ## 2018-02-17
 - Implemented 'profiles' data hook
     - Allow to define a text file with include/exclude filter and description that grabs data from the obtained results and shows in one place all return codes and error messages received
