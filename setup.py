@@ -4,6 +4,7 @@
 import setuptools
 import os
 import re
+import time
 
 # In python < 2.7.4, a lazy loading of package `pbr` will break
 # setuptools if some other modules registered functions in `atexit`.
@@ -30,6 +31,9 @@ except:
     travis = None
 
 if travis:
-    os.environ['PBR_VERSION'] = "%s.%s" % (version, travis)
+    strings = time.strftime("%Y,%m,%d,%H,%M,%S")
+    t = strings.split(',')
+    numbers = [ str(x) for x in t ]
+    os.environ['PBR_VERSION'] = "%s.%s.%s" % (version, travis, "".join(numbers))
 
 setuptools.setup(setup_requires=['pbr>=2.0.0'], pbr=True)
