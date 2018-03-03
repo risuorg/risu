@@ -917,7 +917,7 @@ def write_results(results, filename, live=False, path=None, time=0, source='cite
 
         if basefolder == '':
             basefolder = './'
-        src = os.path.join(citellusdir, '../tools/www/citellus.html')
+        src = os.path.join(citellusdir, 'citellus.html')
         if os.path.isfile(src):
             shutil.copyfile(src, os.path.join(basefolder, os.path.basename(src)))
 
