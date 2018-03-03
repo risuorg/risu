@@ -103,6 +103,7 @@ Note: Change speaker after this
 - Ansible playbook support (live and snapshot if crafted playbooks)
     - Core implemented as extension to easily expand with new ones.
 - Save / restore default settings.
+- Run via pip/pipsi if you don't want to git clone from repo.
 
 ----
 
