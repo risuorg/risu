@@ -21,13 +21,13 @@
       block:
       - name: Upload citellus
         synchronize:
-          src: "{{ citellus_base }}/../"
-          dest: /root/citellus/
+          src: "{{ citellus_base }}/"
+          dest: /root/citellus/citellusclient/
           rsync_opts:
             - "--exclude=.git"
             - "--exclude=.tox"
       - name: Run citellus on target
-        command: /root/citellus/citellus.py -l -o /tmp/citellus.json
+        command: python /root/citellus/citellusclient/shell.py -l -o /tmp/citellus.json
         args:
           chdir: /root/citellus/
           creates: /tmp/citellus.json
