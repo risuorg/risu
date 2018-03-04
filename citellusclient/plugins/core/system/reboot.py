@@ -70,23 +70,25 @@ def gettime(line):
     :param line: syslog line
     """
     mg = re.match("([a-zA-Z]{3})[\s]+([0-9]+)[\s]+([0-9]+):([0-9]+):([0-9]+)", line)
-    ts = mg.group(1) + " " + mg.group(2) + " " + mg.group(3) + ":" + mg.group(4) + ":" + mg.group(5)
-    """
-    Because we don't have the year in the timestamp, we need to guess it
-    and it can be tricky when we're overlapping 2 years
-    """
-    thisyear = now.year
-    # With UTC, we can consider that now in 12h later
-    nnow = now + timedelta(hours=12)
-    while True:
-        # Prepending the year to the TS and parsing
-        tts = str(thisyear) + " " + ts
-        tsobj = datetime.strptime(tts, "%Y %b %d %H:%M:%S")
-        if tsobj < nnow:
-            # We're not in the future
-            return tsobj
-        # Let's try once more
-        thisyear -= 1
+    if mg is not None:
+        ts = mg.group(1) + " " + mg.group(2) + " " + mg.group(3) + ":" + mg.group(4) + ":" + mg.group(5)
+        thisyear = now.year
+        # With UTC, we can consider that now in 12h later
+        nnow = now + timedelta(hours=12)
+        while True:
+            # Prepending the year to the TS and parsing
+            tts = str(thisyear) + " " + ts
+            tsobj = datetime.strptime(tts, "%Y %b %d %H:%M:%S")
+            if tsobj < nnow:
+                # We're not in the future
+                return tsobj
+            # Let's try once more
+            thisyear -= 1
+
+    else:
+        mg = re.match("([0-9]{4})-([0-9]{1,2})-([0-9]{1,2})[\s|T]+([0-9]+):([0-9]+):([0-9]+)", line)
+        if mg is not None:
+            return datetime.strptime(mg.group(1) + "-" + mg.group(2) + "-" + mg.group(3) + " " + mg.group(4) + ":" + mg.group(5) + ":" + mg.group(6), "%Y-%m-%d %H:%M:%S")
 
 
 def setcontext(context):
