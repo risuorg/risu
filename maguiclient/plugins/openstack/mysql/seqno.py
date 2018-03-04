@@ -60,7 +60,7 @@ def run(data, quiet=False):  # do not edit this line
         host = False
         for sosreport in data[ourdata]['sosreport']:
             if data[ourdata]['sosreport'][sosreport]['rc'] == citellus.RC_OKAY:
-                if seqno in data[ourdata]['sosreport'][sosreport]['err']:
+                if data[ourdata]['sosreport'][sosreport]['err'].find("%s" % seqno):
                     host = sosreport
             else:
                 message = _('Some of the sosreports failed to grab required data, skipping')
