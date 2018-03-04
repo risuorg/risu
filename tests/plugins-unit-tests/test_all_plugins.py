@@ -54,7 +54,11 @@ class CitellusTest(TestCase):
             subprocess.call([test['plugin'], test['plugin'], testtype, tmpdir])
 
         # Run citellus once against them
-        results = citellus.docitellus(path=tmpdir, plugins=citplugs, okay=okay, failed=failed, skipped=skipped)
+        results = citellus.docitellus(path=tmpdir, plugins=citplugs, okay=okay, failed=failed, skipped=skipped, web=True)
+
+        # Check that citellus.html has been copied
+        assert os.access(os.path.join(tmpdir, 'citellus.json'), os.R_OK)
+        assert os.access(os.path.join(tmpdir, 'citellus.html'), os.R_OK)
 
         # Remove tmp folder
         shutil.rmtree(tmpdir)
