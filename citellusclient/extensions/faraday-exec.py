@@ -59,16 +59,16 @@ def get_metadata(plugin):
     """
 
     path = citellus.regexpfile(filename=plugin['plugin'], regexp='\A# path:')[7:].strip()
-    citellus.LOG.debug('IRANZO')
-    citellus.LOG.debug(path)
     path = path.replace('${CITELLUS_ROOT}', '')
-    citellus.LOG.debug(path)
 
+    subcategory = os.path.split(plugin['plugin'])[0].replace(pluginsdir, '/')
     metadata = {'description': citellus.regexpfile(filename=plugin['plugin'], regexp='\A# description:')[14:].strip(),
                 'long_name': citellus.regexpfile(filename=plugin['plugin'], regexp='\A# long_name:')[12:].strip(),
                 'bugzilla': citellus.regexpfile(filename=plugin['plugin'], regexp='\A# bugzilla:')[11:].strip(),
                 'priority': int(citellus.regexpfile(filename=plugin['plugin'], regexp='\A# priority:')[11:].strip() or 0),
-                'path': path}
+                'path': path,
+                'subcategory': subcategory,
+                'category': os.path.normpath(subcategory).split(os.sep)[1] or ''}
     return metadata
 
 
