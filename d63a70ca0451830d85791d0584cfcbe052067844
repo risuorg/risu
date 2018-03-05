@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "edc273b9_5f9108f7",
+        "filename": "citellusclient/plugins/core/bugzilla/openstack/neutron/1094867.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1011950
+      },
+      "writtenOn": "2018-03-05T22:45:46Z",
+      "side": 1,
+      "message": "it has to be exactly as in example \u0027bugzilla:\u0027",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 64
+      },
+      "revId": "d63a70ca0451830d85791d0584cfcbe052067844",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
