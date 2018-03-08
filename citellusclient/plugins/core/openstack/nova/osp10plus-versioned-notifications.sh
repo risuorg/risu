@@ -27,8 +27,6 @@
 # Load common functions
 [[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
-ERROR=${RC_OKAY}
-
 is_required_file "${CITELLUS_ROOT}/etc/nova/nova.conf"
 
 if [[ "$(discover_osp_version)" -lt "10" ]]; then
@@ -36,7 +34,11 @@ if [[ "$(discover_osp_version)" -lt "10" ]]; then
     exit ${RC_SKIPPED}
 fi
 
-if [[ "$(iniparser "${CITELLUS_ROOT}/etc/nova/nova.conf" notifications notification_format)" == "unversioned" ]]; then
+if [[ "$(iniparser "${CITELLUS_ROOT}/etc/nova/nova.conf" notifications notification_format)" == "unversioned" ]] \
+    && [[ "$(discover_osp_version)" -gt "10" ]]; then
+    exit ${RC_OKAY}
+elif [[ "$(iniparser "${CITELLUS_ROOT}/etc/nova/nova.conf" DEFAULT notification_format)" == "unversioned" ]] \
+    && [[ "$(discover_osp_version)" -eq "10" ]]; then
     exit ${RC_OKAY}
 else
     echo $"missing notification_format=unversioned in nova.conf" >&2
