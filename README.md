@@ -46,8 +46,11 @@ Check for plugins listing on [citellusclient/plugins/](citellusclient/plugins/)
 - Using the included ```Dockerfile``` in the git checkout.
     - ```docker build . -f Dockerfile.centos7-atomic -t citellus:latest``` # (from git checkout, then note image id)
     - ```docker run --user=$(id -u) --rm -v $PATHTOSOSREPORT:/data:Z citellus:latest /data```
-        - Docker passes as volume the path specified under /data so we do use that parameter with citellus for running the tests.
-        - The default user id within the container is 10001 and the commands or sosreport permissions doesn't allow that user to gather all the information, so the container is required to run as the current user.
+- Using the docker hub image.
+    - ```docker run --user=$(id -u) --rm -v $PATHTOSOSREPORT:/data:Z citellus/citellus:latest /data```
+- Notes about using docker:
+    - Docker passes as volume the path specified under /data so we do use that parameter with citellus for running the tests.
+    - The default user id within the container is 10001 and the commands or sosreport permissions doesn't allow that user to gather all the information, so the container is required to run as the current user.
 
 ## Usage help
 We are developing framework in python, the bash framework has been deprecated. Python framework is the only supported framework.

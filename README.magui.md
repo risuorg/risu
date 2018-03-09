@@ -64,6 +64,20 @@ Filtering options:
                         that substring
 ```
 
+Magui can be executed using the citellus docker image as well, by modifying
+the entrypoint:
+
+In a directory structure as:
+
+```
+/path/to/my/sosreports/
+├── sosreport-overcloud-controller-0
+├── sosreport-overcloud-controller-1
+└── sosreport-overcloud-controller-2
+```
+
+```docker run --user=$(id -u) --rm --entrypoint="magui.py" -v /path/to/my/sosreports/:/data:Z citellus:latest -q /data/sosreport-overcloud-controller-0/ /data/sosreport-overcloud-controller-1/ /data/sosreport-overcloud-controller-2/ >> magui.json```
+
 ### Running a check
 
 This is an example of execution of Magui against a set of sosreports with `seqno` plugin of Citellus enabled.
