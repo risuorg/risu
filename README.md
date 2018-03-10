@@ -3,6 +3,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/zerodayz/citellus/badge.svg?branch=master)](https://coveralls.io/github/zerodayz/citellus?branch=master)
 [![Release status](https://img.shields.io/github/release/zerodayz/citellus.svg)](https://github.com/zerodayz/citellus/releases)
 [![PyPI version](https://badge.fury.io/py/citellus.svg)](https://badge.fury.io/py/citellus)
+[![](https://images.microbadger.com/badges/image/citellus/citellus.svg)](https://microbadger.com/images/citellus/citellus "Get your own image badge on microbadger.com")
 
 <img src="doc/citellus.png" width="20%" border=0 align="right">
 
