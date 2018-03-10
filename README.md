@@ -11,6 +11,8 @@
 
 Citellus is a program that should help with system configuration validation on either live system or any sort of snapshot of the filesystem.
 
+Via execution of 'plugins' it reports status on each one execution against the system that gives you an idea on health status, actual problems or problems that will reveal themselves if no preventive action is taken.
+
 Please if you have any idea on any improvements please do not hesitate to open an issue.
 
 ## Highlights
@@ -22,6 +24,7 @@ Please if you have any idea on any improvements please do not hesitate to open a
 - Save / restore default settings
 
 Check latest changes on [Changelog.md](Changelog.md)
+
 Check for plugins listing on [citellusclient/plugins/](citellusclient/plugins/)
 
 ## Installation
@@ -44,16 +47,18 @@ Check for plugins listing on [citellusclient/plugins/](citellusclient/plugins/)
     ~~~
     - Pipsi will take care of installing a virtual environment and link to binary folder so you can call citellus.py or magui.py directly
     - Remember that pypi package might not contain all the latests plugins features as the github repo one.
-- Using the included ```Dockerfile``` in the git checkout.
-    - ```docker build . -f Dockerfile.centos7-atomic -t citellus:latest``` # (from git checkout, then note image id)
-    - ```docker run --user=$(id -u) --rm -v $PATHTOSOSREPORT:/data:Z citellus:latest /data```
-- Using the docker hub image.
-    - ```docker run --user=$(id -u) --rm -v $PATHTOSOSREPORT:/data:Z citellus/citellus:latest /data```
-- Notes about using docker:
-    - Docker passes as volume the path specified under /data so we do use that parameter with citellus for running the tests.
-    - The default user id within the container is 10001 and the commands or sosreport permissions doesn't allow that user to gather all the information, so the container is required to run as the current user.
+- Container:
+    - Use our automatically built container in docker hub:
+        - ```docker run --user=$(id -u) --rm -v $PATHTOSOSREPORT:/data:Z citellus/citellus:latest /data```
+    - or build your own using the included ```Dockerfile``` in the git checkout.
+        - ```docker build . -f Dockerfile.centos7-atomic -t citellus:latest``` # (from git checkout, then note image id)
+        - ```docker run --user=$(id -u) --rm -v $PATHTOSOSREPORT:/data:Z citellus:latest /data```
+    - Notes about using docker:
+        - Docker passes as volume the path specified under /data so we do use that parameter with citellus for running the tests.
+        - The default user id within the container is 10001 and the commands or sosreport permissions doesn't allow that user to gather all the information, so the container is required to run as the current user.
 
 ## Usage help
+
 We are developing framework in python, the bash framework has been deprecated. Python framework is the only supported framework.
 
 ```
