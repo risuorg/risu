@@ -76,7 +76,7 @@ In a directory structure as:
 └── sosreport-overcloud-controller-2
 ```
 
-```docker run --user=$(id -u) --rm --entrypoint="magui.py" -v /path/to/my/sosreports/:/data:Z citellus:latest -q /data/sosreport-overcloud-controller-0/ /data/sosreport-overcloud-controller-1/ /data/sosreport-overcloud-controller-2/ >> magui.json```
+```docker run --user=$(id -u) --rm --entrypoint="magui.py" -v /path/to/my/sosreports/:/data:Z citellus:latest -q /data/sosreport-overcloud-controller-0/ /data/sosreport-overcloud-controller-1/ /data/sosreport-overcloud-controller-2/```
 
 ### Running a check
 
