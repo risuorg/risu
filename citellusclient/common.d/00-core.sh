@@ -113,6 +113,10 @@ discover_rhrelease(){
 discover_os(){
     FILE="${CITELLUS_ROOT}/etc/os-release"
     is_required_file ${FILE}
-    OS=$(awk -F "=" '$1=="ID_LIKE" {print $2}' ${FILE}|tr -d '"')
+    if is_lineinfile ^ID_LIKE ${FILE};then
+        OS=$(awk -F "=" '$1=="ID_LIKE" {print $2}' ${FILE}|tr -d '"')
+    else
+        OS=$(awk -F "=" '$1=="ID" {print $2}' ${FILE}|tr -d '"')
+    fi
     echo "${OS}"
 }

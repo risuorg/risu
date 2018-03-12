@@ -23,6 +23,8 @@ FOLDER=$3
 case $2 in
     pass)
         mkdir -p ${FOLDER}
+        mkdir -p ${FOLDER}/etc
+        echo "ID_LIKE=fedora" > ${FOLDER}/etc/os-release
         echo test-my-rpm-1.2.23.noarch > ${FOLDER}/installed-rpms
         exit 0
         ;;
@@ -30,6 +32,8 @@ case $2 in
     skipped)
         # is_required_rpm doesn't FAIL, just SKIPS the test
         mkdir -p ${FOLDER}
+        mkdir -p ${FOLDER}/etc
+        echo "ID_LIKE=fedora" > ${FOLDER}/etc/os-release
         echo > ${FOLDER}/installed-rpms
         exit 0
         ;;
@@ -44,3 +48,4 @@ case $2 in
 esac
 
 exit ${RC_SKIPPED}
+    
