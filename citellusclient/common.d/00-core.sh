@@ -108,3 +108,11 @@ discover_rhrelease(){
         *) echo 0 ;;
     esac
 }
+
+# We do check on ID_LIKE so we can discard between dpkg or rpm access
+discover_os(){
+    FILE="${CITELLUS_ROOT}/etc/os-release"
+    is_required_file ${FILE}
+    OS=$(awk -F "=" '$1=="ID_LIKE" {print $2}' ${FILE}|tr -d '"')
+    echo "${OS}"
+}
