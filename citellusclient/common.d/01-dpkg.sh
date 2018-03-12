@@ -28,34 +28,28 @@ is_dpkg(){
 }
 
 is_required_dpkg(){
-    if ! is_dpkg $1 >/dev/null 2>&1; then
-        echo "required package $1 not found." >&2
-        exit ${RC_SKIPPED}
+    if [ "x$(discover_os)" != "xdebian" ]; then
+        echo "Not running on Debian family" >&2
+        exit $RC_FAILED
     fi
+
+    is_required_pkg $1
 }
 
 is_dpkg_over(){
-    is_required_dpkg $1
-    VERSION=$(is_dpkg $1|sort -V|tail -1)
-    LATEST=$(echo ${VERSION} $2|tr " " "\n"|sort -V|tail -1)
-
-    if [ "$(echo ${VERSION} $2|tr " " "\n"|sort -V|uniq|wc -l)" == "1" ];then
-        # Version and $2 are the same (only one line, so we're on latest)
-        return 0
+    if [ "x$(discover_os)" != "xdebian" ]; then
+        echo "Not running on Debian family" >&2
+        exit $RC_FAILED
     fi
 
-    if [ "$VERSION" != "$LATEST" ]; then
-        # "package $1 version $VERSION is lower than required ($2)."
-        return 1
-    fi
-    return 0
+    is_pkg_over $*
 }
 
 is_required_dpkg_over(){
-    is_required_dpkg $1
-    VERSION=$(is_dpkg $1 2>&1|sort -V|tail -1)
-    if ! is_dpkg_over "${@}" ; then
-        echo "package $1 version $VERSION is lower than required ($2)." >&2
-        exit ${RC_FAILED}
+    if [ "x$(discover_os)" != "xdebian" ]; then
+        echo "Not running on Debian family" >&2
+        exit $RC_FAILED
     fi
+
+    is_required_pkg_over $*
 }
