@@ -107,10 +107,10 @@ def crt_matches_key(crt, key):
         # private key and certificate match. Fedora ships a way more recent
         # version.
         crt_modulus = subprocess.check_output(["openssl", "x509", "-noout",
-                                              "-modulus", "-in", crt])
+                                               "-modulus", "-in", crt])
 
         key_modulus = subprocess.check_output(["openssl", "rsa", "-noout",
-                                              "-modulus", "-in", key])
+                                               "-modulus", "-in", key])
 
         return crt_modulus == key_modulus
     except subprocess.CalledProcessError as e:
@@ -161,7 +161,7 @@ def main():
     """
 
     # Getting environment
-    root_path = os.getenv('CITELLUS_ROOT', '') + "/"
+    root_path = os.path.join(os.getenv('CITELLUS_ROOT', ''), "/")
     RC_OKAY = int(os.environ['RC_OKAY'])
     RC_FAILED = int(os.environ['RC_FAILED'])
     RC_SKIPPED = int(os.environ['RC_SKIPPED'])
@@ -170,12 +170,12 @@ def main():
 
     error_list = []
 
-    ca_crt = root_path + "/etc/etcd/ca.crt"
-    peer_crt = root_path + "/etc/etcd/peer.crt"
-    server_crt = root_path + "/etc/etcd/server.crt"
+    ca_crt = os.path.join(root_path, "/etc/etcd/ca.crt")
+    peer_crt = os.path.join(root_path, "/etc/etcd/peer.crt")
+    server_crt = os.path.join(root_path, "/etc/etcd/server.crt")
 
-    peer_key = root_path + "/etc/etcd/peer.key"
-    server_key = root_path + "/etc/etcd/server.key"
+    peer_key = os.path.join(root_path, "/etc/etcd/peer.key")
+    server_key = os.path.join(root_path, "/etc/etcd/server.key")
 
     for filename in [ca_crt, peer_crt, server_crt]:
         if not os.access(filename, os.R_OK):
@@ -185,7 +185,7 @@ def main():
     if citellus_live != "0":
         fqdn = socket.getfqdn()
     else:
-        fd = open(root_path + "sos_commands/general/hostname")
+        fd = open(os.path.join(root_path, "sos_commands/general/hostname"))
         fqdn = fd.read().rstrip()
         fd.close()
 
@@ -199,7 +199,7 @@ def main():
             errorprint("Error calling netstat -W -neopa")
     else:
         try:
-            fd = open(root_path + "netstat")
+            fd = open(os.path.join(root_path, "netstat"))
             netstat_out = fd.read()
             fd.close()
         except:
