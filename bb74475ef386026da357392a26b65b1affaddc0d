@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b387461b_e32fa30e",
+        "filename": "citellusclient/plugins/core/bugzilla/openstack/tripleo/1541528.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2018-03-13T07:10:15Z",
+      "side": 1,
+      "message": "is_lineinfile ?",
+      "revId": "bb74475ef386026da357392a26b65b1affaddc0d",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
