@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bec4aec4_6e87ae45",
+        "filename": "citellusclient/plugins/core/system/pagetypeinfos.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2018-03-13T07:08:17Z",
+      "side": 1,
+      "message": "usually paths should be joined by:\n\nos.path.join(path1, path2) to ensure proper os.sep are included/removed as needed",
+      "revId": "e6f78dd765b039288a0bf1d23179971452da17a7",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
