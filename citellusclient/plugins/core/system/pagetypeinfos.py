@@ -33,7 +33,7 @@ RC_SKIPPED = int(os.environ['RC_SKIPPED'])
 
 
 # PageTypeInfo path
-pagetypeinfo = root_path + "/proc/pagetypeinfo"
+pagetypeinfo = os.path.join(root_path, "/proc/pagetypeinfo")
 
 
 def errorprint(*args, **kwargs):
@@ -46,7 +46,7 @@ def errorprint(*args, **kwargs):
 
 # We validate if the file exists and is readable
 if os.access(pagetypeinfo, os.R_OK) is False:
-    errorprint("File %s is not readable" % (pagetypeinfo))
+    errorprint("File %s is not readable" % pagetypeinfo)
     sys.exit(RC_SKIPPED)
 
 # Parsing the file
@@ -64,9 +64,9 @@ with open(pagetypeinfo, "r") as f:
             for i in p:
                 size = int(i) * factor / 1024.0
                 total_size += size
-                errorprint("%8.2f Mb " % (size), end='')
-                factor = factor * 2
+                errorprint("%8.2f Mb " % size, end='')
+                factor *= 2
 
-            errorprint("= %8.2f Mb" % (total_size))
+            errorprint("= %8.2f Mb" % total_size)
 
 sys.exit(RC_OKAY)
