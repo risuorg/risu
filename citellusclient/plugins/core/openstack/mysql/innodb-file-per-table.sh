@@ -37,5 +37,6 @@ elif [[ "$(iniparser "${CITELLUS_ROOT}/etc/my.cnf" mysqld innodb_file_per_table)
     exit ${RC_OKAY}
 else
     echo $"innodb_file_per_table not set in /etc/my.cnf.d/galera.cnf or /etc/my.cnf" >&2
+    echo $"Check: https://bugzilla.redhat.com/show_bug.cgi?id=1277598" >&2
     exit ${RC_FAILED}
 fi
