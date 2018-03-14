@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1f85d2b_c99200e6",
+        "filename": "CONTRIBUTING.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2018-03-14T22:11:58Z",
+      "side": 1,
+      "message": "20-22 NACK\n\nEach distribution has git-review package, using easy_install or pip could be a problem messing with system libraries\n\nIt should be \u0027use git-review\u0027 package provided by your distribution or something similar",
+      "revId": "c2664ddd9f008cbbbd088ef62f734ebe9aaf3cf8",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
