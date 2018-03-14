@@ -109,19 +109,6 @@ location of various files. To use this script you can source it at the top:
         is_required_file "${CITELLUS_ROOT}/var/log/messages"
         ~~~
 
-- `is_rpm $rpm` -- returns rpm name as installed on the system
-    - Example:
-        ~~~sh
-        # is_rpm sos
-        sos-3.2-15.el7.noarch
-        ~~~
-
-- `is_required_rpm $rpm` -- continues if rpm is installed or exits with `$RC_SKIPPED` if required rpm is missing
-    - Example:
-        ~~~sh
-        is_required_rpm sos
-        ~~~
-
 - `discover_osp_version $openstack-nova-common-version_package` -- echos osp version based on `openstack-nova-common version`
     - Example:
         ~~~sh
@@ -182,21 +169,57 @@ location of various files. To use this script you can source it at the top:
         fi
         ~~~
 
-- `is_rpm_over` -- Checks if provided RPM is over specific release
+- `is_pkg $pkg` -- returns package version if installed on system (RHEL/Centos/Fedora | Debian)
     - Example:
         ~~~sh
-        if is_rpm_over dracut dracut-033-502; then
+        # is_pkg systat
+        sos-3.2-15.el7.noarch
+        ~~~
+
+- `is_required_pkg $pkg` -- continues if package is installed or exits with `$RC_SKIPPED` if required package is missing
+    - Example:
+        ~~~sh
+        is_required_pkg sysstat
+        ~~~
+
+- `is_pkg_over $pkg` -- Checks if provided package is over specific release
+    - Example:
+        ~~~sh
+        if is_pkg_over dracut dracut-033-502; then  ## Note, version string is DISTRO dependent
             echo "dracut is not affected by spectre"
         else
             echo "update dracut to get the fix for spectre vulnerability"
         fi
         ~~~
 
-- `is_required_rpm_over` -- Checks if provided RPM is over specific release or exit as FAILED
+- `is_required_pkg_over $pkg` -- Checks if provided PKG is over specific release or exit as FAILED
     - Example:
         ~~~sh
-        is_required_rpm_over dracut dracut-033-502
+        is_required_pkg_over dracut dracut-033-502
         ~~~
+
+
+- `is_rpm $rpm` -- returns rpm name as installed on the system
+    - Example:
+        ~~~sh
+        # is_rpm sos
+        sos-3.2-15.el7.noarch
+        ~~~
+
+- `is_dpkg $dpkg` -- returns dpkg version as installed on the system
+    - Example:
+        ~~~sh
+        # is_dpkg libc6
+        2.12.1-0ubuntu10.2
+        ~~~
+
+- `is_required_rpm $rpm` -- Fallsback to `is_required_pkg $package` after forcing `rpm` distro check.
+- `is_rpm_over` -- Fallsback to `is_pkg_over $package` after forcing `rpm` distro check.
+- `is_required_rpm_over` -- Fallsback to `is_required_pkg_over $package` after forcing `rpm` distro check.
+
+- `is_required_dpkg $dpkg` -- Fallsback to `is_required_pkg $package` after forcing `dpkg` distro check.
+- `is_dpkg_over` -- Fallsback to `is_pkg_over $package` after forcing `dpkg` distro check.
+- `is_required_dpkg_over` -- Fallsback to `is_required_pkg_over $package` after forcing `dpkg` distro check.
 
 - `are_dates_diff_over` -- Checks if two dates are over X days in diff
     - Example:
