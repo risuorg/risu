@@ -1166,6 +1166,18 @@ def main():
         rc = results[result]['result']['rc']
         text = formattext(rc)
 
+        priority = 'informative'
+        priocolor = 'green'
+        if results[result]['priority'] > 666:
+            priority = 'critical'
+            priocolor = 'red'
+        elif results[result]['priority'] > 333:
+            priority = 'important'
+            priocolor = 'yellow'
+
+        if rc == RC_FAILED:
+            text = text + " [%s]" % colorize(text=priority, color=priocolor)
+
         if options.only_failed and rc in [RC_OKAY, RC_SKIPPED]:
             continue
 
