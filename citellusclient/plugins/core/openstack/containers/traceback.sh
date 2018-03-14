@@ -36,3 +36,5 @@ for log_file in $(ls ${CITELLUS_ROOT}/var/log/containers/*/*.log); do
         flag=1
     fi
 done
+
+[[ "x$flag" = "x" ]] && exit ${RC_OKAY} || exit ${RC_FAILED}
