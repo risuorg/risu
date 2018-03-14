@@ -17,6 +17,13 @@ like this:
 
 2. Configure the `git review` tool:
 
+        To install:   
+          easy_install pip  
+          pip install git-review   
+
+        To test connection to gerrit: list groups  
+          ssh -i ~/<path to pub key you uploaded to gerrit> -p 29418 <case sensitive gerrit username>@review.gerrithub.io  gerrit ls-groups  
+
         git review -s
 
 3. Check out a branch in which to make your changes:
