@@ -82,7 +82,7 @@ def run(data, quiet=False):  # do not edit this line
                      "hash": item['hash'],
                      "plugin": item['plugin'],
                      "name": name,
-                     "result": {"rc": int(os.environ['RC_OKAY']),
+                     "result": {"rc": 0,
                                 "err": "",
                                 "out": ""},
                      "time": 0,
@@ -96,13 +96,22 @@ def run(data, quiet=False):  # do not edit this line
                     'priority': int(citellus.regexpfile(filename=plugin['plugin'], regexp='\A# priority:')[11:].strip() or 0)}
         data[uid].update(metadata)
 
+        # start with OK status
+        overall = int(os.environ['RC_OKAY'])
+        failed = int(os.environ['RC_FAILED'])
+
         # Start asembling data for the plugins relevant for profile
         data[uid]['result']['err'] = ''
         ids = plugidsforprofile(profile=profile, plugins=plugins)
+
         for id in ids:
             data[uid]['result']['err'] = data[uid]['result']['err'] + "\n" + "%s" % {'plugin': data[id]['plugin'].replace(os.path.join(citellus.citellusdir, 'plugins'), ''), 'err': data[id]['result']['err'].strip(), 'rc': data[id]['result']['rc']}
+            if data[id]['result']['rc'] == failed:
+                # If test is failed, return global as failed
+                overall = failed
 
         data[uid]['components'] = ids
+        data[uid]['result']['rc'] = overall
 
     return data
 
