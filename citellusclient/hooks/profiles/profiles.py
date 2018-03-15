@@ -6,6 +6,7 @@
 
 from __future__ import print_function
 
+import json
 import os
 import re
 
@@ -104,12 +105,14 @@ def run(data, quiet=False):  # do not edit this line
         data[uid]['result']['err'] = ''
         ids = plugidsforprofile(profile=profile, plugins=plugins)
 
+        new_results = []
         for id in ids:
-            data[uid]['result']['err'] = data[uid]['result']['err'] + "\n" + "%s" % {'plugin': data[id]['plugin'].replace(os.path.join(citellus.citellusdir, 'plugins'), ''), 'err': data[id]['result']['err'].strip(), 'rc': data[id]['result']['rc']}
+            new_results.append({'plugin': data[id]['plugin'].replace(os.path.join(citellus.citellusdir, 'plugins'), ''), 'err': data[id]['result']['err'].strip(), 'rc': data[id]['result']['rc']})
             if data[id]['result']['rc'] == failed:
                 # If test is failed, return global as failed
                 overall = failed
 
+        data[uid]['result']['err'] = json.dumps(new_results)
         data[uid]['components'] = ids
         data[uid]['result']['rc'] = overall
 
