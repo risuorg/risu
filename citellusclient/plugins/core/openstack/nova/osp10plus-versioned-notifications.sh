@@ -42,5 +42,6 @@ if [[ "$(iniparser "${CITELLUS_ROOT}/etc/nova/nova.conf" $conf_section notificat
     exit ${RC_OKAY}
 else
     echo $"missing notification_format=unversioned in nova.conf" >&2
+    echo $"Check: https://bugzilla.redhat.com/show_bug.cgi?id=1478274" >&2
     exit ${RC_FAILED}
 fi
