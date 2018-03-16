@@ -116,6 +116,9 @@ Config options:
 
 ```
 
+Check how does it look in an execution at:
+[![asciicast](https://asciinema.org/a/169814.png)](https://asciinema.org/a/169814)
+
 ## Plugins and their descriptions
 This is new feature of citellus that will show you available scripts and their description.
 
