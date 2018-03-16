@@ -43,7 +43,10 @@
     color: #fff;
     background-color: #cc0000;
   }
-
+  .badge-success {
+    color: #fff;
+    background-color: #3f9c35;
+  }
   .badge {
       display: inline-block;
       padding: 0.1875rem 0.4375rem;
@@ -426,34 +429,54 @@
       row += '          </div><!-- /close -->\n';
       row += '          <div class="clearfix">\n';
       row += '           <div class="col-md-9">\n';
-      row += '            <dl class="dl-horizontal">\n';
-      row += '             <dt>Description</dt>\n';
-      row += '             <dd>' + result.description + '</dd>\n';
-      row += '             <dt>Plugin Execution Time</dt>\n';
-      row += '             <dd>' + Math.round(result.time * 1000) / 1000 + '</dd>\n';
-      row += '             <dt>Backend</dt>\n';
-      row += '             <dd>' + result.backend + '</dd>\n';
-      row += '             <dt>Priority</dt>\n';
-      row += '             <dd>' + result.priority + '</dd>\n';
-      row += '             <dt>Bugzilla</dt>\n';
-      if (/([0-9])+$/.test(result.bugzilla)) {
-        row += '        <dd><a href="' + result.bugzilla + '" target="_blank"><span class="badge badge-danger">' + /([0-9]+)$/.exec(result.bugzilla)[1] + '</span></a></dd>\n';
-      } else if (/\_([0-9]{7})$/.test(plugin_names.name)) {
-        row += '        <dd><a href="https://bugzilla.redhat.com/show_bug.cgi?id=' + /\_([0-9]{7})$/.exec(plugin_names.name)[1] + '" target="_blank" class="badge badge-danger">' + /\_([0-9]{7})$/.exec(plugin_names.name)[1] + '</a></dd>\n';
+      if (result.backend == "profile") {
+          profile_plugins = JSON.parse(err)
+          row += '                <table class="table table-striped table-bordered table-hover table-condensed">\n';
+          row += '                   <thead>\n';
+          row += '                      <tr>\n';
+          row += '                        <th>Plugin</th>\n';
+          row += '                        <th>Status</th>\n';
+          row += '                        <th>Message</th>\n';
+          row += '                     </tr>\n';
+          row += '                  </thead>\n';
+          row += '                  <tbody>\n';
+          $.each(profile_plugins, function (i, p) {
+              // "[{\"rc\": 30, \"err\": \"pacemaker is not running on this node\", \"plugin\": \"/core/pacemaker/nodes_number.sh\"}, 
+               var plugin_state = getPluginState(p.rc);
+              row += '                <tr><td><a href="#plugin-' + p.plugin_id + '">' + p.plugin + '</a></td><td>' + plugin_state.badge + '</td><td>' + p.err + ' </td></tr>\n';
+          });
+          row += '                  </tbody>\n';
+          row += '              </table>\n';
       } else {
-        row += '        <dd>N/A</dd>\n';
-      }
-      row += '             <dt>Out</dt>\n';
-      if (/[a-z0-9]+/.test(out)) {
-        row += '             <dd><pre>' + out + '</pre></dd>\n';
-      } else {
-        row += '             <dd>N/A</dd>\n';
-      }
-      row += '             <dt>Error</dt>\n';
-      if (/[a-z0-9]+/.test(error_text)) {
-        row += '             <dd><pre>' + error_text + '</pre></dd>\n';
-      } else {
-        row += '             <dd>N/A</dd>\n';
+          row += '            <dl class="dl-horizontal">\n';
+          row += '             <dt>Description</dt>\n';
+          row += '             <dd>' + result.description + '</dd>\n';
+          row += '             <dt>Plugin Execution Time</dt>\n';
+          row += '             <dd>' + Math.round(result.time * 1000) / 1000 + '</dd>\n';
+          row += '             <dt>Backend</dt>\n';
+          row += '             <dd>' + result.backend + '</dd>\n';
+          row += '             <dt>Priority</dt>\n';
+          row += '             <dd>' + result.priority + '</dd>\n';
+          row += '             <dt>Bugzilla</dt>\n';
+          if (/([0-9])+$/.test(result.bugzilla)) {
+            row += '        <dd><a href="' + result.bugzilla + '" target="_blank"><span class="badge badge-danger">' + /([0-9]+)$/.exec(result.bugzilla)[1] + '</span></a></dd>\n';
+          } else if (/\_([0-9]{7})$/.test(plugin_names.name)) {
+            row += '        <dd><a href="https://bugzilla.redhat.com/show_bug.cgi?id=' + /\_([0-9]{7})$/.exec(plugin_names.name)[1] + '" target="_blank" class="badge badge-danger">' + /\_([0-9]{7})$/.exec(plugin_names.name)[1] + '</a></dd>\n';
+          } else {
+            row += '        <dd>N/A</dd>\n';
+          }
+          row += '             <dt>Out</dt>\n';
+          if (/[a-z0-9]+/.test(out)) {
+            row += '             <dd><pre>' + out + '</pre></dd>\n';
+          } else {
+            row += '             <dd>N/A</dd>\n';
+          }
+          row += '             <dt>Error</dt>\n';
+          if (/[a-z0-9]+/.test(error_text)) {
+            row += '             <dd><pre>' + error_text + '</pre></dd>\n';
+          } else {
+            row += '             <dd>N/A</dd>\n';
+          }
       }
       row += '            </dl>\n';
       row += '           <p>\n';
@@ -499,6 +522,15 @@
         }
       });
     }
+    function scrollToPlugin() {
+      if (window.location.hash.substr(1)) {
+        var plugin = $("#" + window.location.hash.substr(1))
+        $('html, body').animate({
+          scrollTop: plugin.offset().top - plugin.height()
+        }, 1000);
+        plugin.show().find(".fa-angle-right:first").toggleClass("fa-angle-down").end().toggleClass("list-view-pf-expand-active").find(".list-group-item-container").removeClass("hidden").end().css("border", "2px solid red");
+      }
+    }
     // This code is only executed when everything else is loaded
     $(document).ready(function() {
       $().setupVerticalNavigation(true);
@@ -516,6 +548,9 @@
         warnMessage("warning", "Some browsers (ie: Chrome) are not accepting file:// URLs. Firefox supports it, or you can start Chrome with --allow-file-access-from-files");
       }
 
+      $(window).bind("hashchange", function(e) {
+        scrollToPlugin()    
+      })
       // for some unknown reason, this is broken
       $("#expandAll").click(function(e) {
         $("#list-group > div").each(function(i, j) {
@@ -684,13 +719,8 @@
             } // if data source == "magui"
           }); // each data.result
           sortPlugins("priority");
-          if (window.location.hash.substr(1)) {
-            $('html, body').animate({
-              scrollTop: $("#" + window.location.hash.substr(1)).offset().top
-            }, 1000);
-            $("#" + window.location.hash.substr(1)).find(".fa-angle-right:first").toggleClass("fa-angle-down").end().toggleClass("list-view-pf-expand-active").find(".list-group-item-container").toggleClass("hidden").end().css("border", "2px solid red");
-          }
           filterCards()
+          scrollToPlugin()
         } // ajax success
       }); // ajax query
     }); // doc ready
