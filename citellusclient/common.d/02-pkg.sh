@@ -19,9 +19,9 @@
 
 is_pkg(){
     OSVERSION=$(discover_os)
-    if [ "x$OSVERSION" = "xfedora" ]; then
+    if [ "${OSVERSION}" = "fedora" ]; then
         is_rpm $*
-    elif [ "x$OSVERSION" = "xdebian" ]; then
+    elif [ "${OSVERSION}" = "debian" ]; then
         is_dpkg $*
     fi
 }

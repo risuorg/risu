@@ -118,5 +118,11 @@ discover_os(){
     else
         OS=$(awk -F "=" '$1=="ID" {print $2}' ${FILE}|tr -d '"')
     fi
+
+    if [ "$(echo ${OS}|tr ' ' '\n'|grep -i fedora|wc -l)" != "0" ]; then
+        OS='fedora'
+    elif [ "$(echo ${OS}|tr ' ' '\n'|grep -i debian|wc -l)" != "0" ]; then
+        OS='debian'
+    fi
     echo "${OS}"
 }
