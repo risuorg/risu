@@ -29,21 +29,21 @@ ERRORMSG3=$"Memcached doesn't have any IP binding"
 if is_rpm memcached > /dev/null 2>&1; then
     is_required_file "${CITELLUS_ROOT}/etc/sysconfig/memcached"
     OPTIONS=$(grep "^OPTIONS" "${CITELLUS_ROOT}/etc/sysconfig/memcached")
-    if [[ -z "${OPTIONS}" ]] || [[ $(echo $OPTIONS |cut -d "=" -f2) == "\"\"" ]]; then
+    if [[ -z "${OPTIONS}" ]] || [[ $(echo ${OPTIONS} |cut -d "=" -f2) == "\"\"" ]]; then
         echo ${ERRORMSG1} >&2
         exit ${RC_FAILED}
     fi
-    if [[ "x$(echo $OPTIONS |grep "\-U 0" -c)" == "x0" ]]; then
+    if [[ "x$(echo ${OPTIONS} |grep "\-U 0" -c)" == "x0" ]]; then
         echo ${ERRORMSG2} >&2
         error=1
         exit ${RC_FAILED}
-    elif [[ "x$(echo $OPTIONS |grep "\-l" -c)" == "x0" ]]; then
+    elif [[ "x$(echo ${OPTIONS} |grep "\-l" -c)" == "x0" ]]; then
         echo ${ERRORMSG3} >&2
         error=1
         exit ${RC_FAILED}
     fi
 
-    if [[ $error == 1 ]]; then
+    if [[ ${error} == 1 ]]; then
         exit ${RC_FAILED}
     fi
 fi

@@ -32,7 +32,7 @@ __osp_version_with_nova(){
         openstack-nova-common-17.*) OSP=13 ;;
         *) OSP=0 ;;
     esac
-    echo $OSP
+    echo ${OSP}
 }
 
 __osp_version_with_cinder(){
@@ -48,13 +48,13 @@ __osp_version_with_cinder(){
         openstack-cinder-12.*) OSP=13 ;;
         *) OSP=0 ;;
     esac
-    echo $OSP
+    echo ${OSP}
 }
 
 discover_osp_version(){
     NOVA=$(__osp_version_with_nova)
     if [[ "x$NOVA" != "x0" ]]; then
-        echo $NOVA;
+        echo ${NOVA};
     else
         echo $(__osp_version_with_cinder)
     fi

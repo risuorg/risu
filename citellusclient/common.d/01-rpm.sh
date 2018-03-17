@@ -29,7 +29,7 @@ is_rpm(){
 is_required_rpm(){
     if [ "x$(discover_os)" != "xfedora" ]; then
         echo "Not running on RHEL family" >&2
-        exit $RC_FAILED
+        exit ${RC_FAILED}
     fi
     is_required_pkg $1
 }
@@ -37,7 +37,7 @@ is_required_rpm(){
 is_rpm_over(){
     if [ "x$(discover_os)" != "xfedora" ]; then
         echo "Not running on RHEL family" >&2
-        exit $RC_FAILED
+        exit ${RC_FAILED}
     fi
 
     is_pkg_over $*
@@ -46,7 +46,7 @@ is_rpm_over(){
 is_required_rpm_over(){
     if [ "x$(discover_os)" != "xfedora" ]; then
         echo "Not running on RHEL family" >&2
-        exit $RC_FAILED
+        exit ${RC_FAILED}
     fi
 
     is_required_pkg_over $*
