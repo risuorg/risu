@@ -10,4 +10,4 @@
 +clock
 +pacemaker
 -openstack
-
++cman
