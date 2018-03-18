@@ -18,6 +18,8 @@ Magui aims to use Citellus for gathering the data and later, write plugins to an
 
 - Allows to get data from remote hosts with ansible-playbook
 
+- Autogrouping: based on metadata plugin, runs comparisons against sets of host roles, hostnames, etc for better spotting issues across systems.
+
 Check latest changes on <Changelog.md>
 
 ## Usage help
@@ -108,6 +110,11 @@ echo "host2" >> hostsfile
 ./magui.py --hosts hostsfile
 ~~~
 
+#### Autogrouping
+
+[![asciicast](https://asciinema.org/a/170429.png)](https://asciinema.org/a/170429)
+
+Magui does check `metadata` for finding host roles or hostnames that should be checked together and generates additional json files for them.
 
 # Plugin development for Magui
 
