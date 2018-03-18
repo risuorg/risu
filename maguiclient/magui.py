@@ -371,6 +371,46 @@ def filterresults(data, triggers=[]):
     return ourdata
 
 
+def autogroups(autodata):
+    """
+    Based on metadata-outputs plugin generate possible groups for sosreport combination
+    :param autodata: metadata-outputs reults
+    :return: dict of groups and members
+    """
+    # Prefill dict with hosts
+    hostsdict = {}
+    for item in autodata:
+        for elem in iter(item['sosreport'].keys()):
+            if elem not in hostsdict:
+                hostsdict[elem] = {}
+
+        name = item['name']
+        for host in item['sosreport']:
+            value = item['sosreport'][host]['err']
+            update = {name: value}
+            hostsdict[host].update(update)
+
+    groups = {}
+
+    # Precreate groups
+    for element in hostsdict:
+        for item in iter(hostsdict[element].items()):
+            if not item[0] in groups:
+                groups["%s" % item[0]] = {}
+            if not item[1] in groups["%s" % item[0]]:
+                groups["%s" % item[0]]["%s" % item[1]] = [element]
+            else:
+                groups["%s" % item[0]]["%s" % item[1]].append(element)
+
+    results = {}
+    for category in groups:
+        for subcategory in groups[category]:
+            name = "%s-%s" % (category, subcategory)
+            if 1 < len(groups[category][subcategory]) < len(hostsdict):
+                results[name] = groups[category][subcategory]
+    return results
+
+
 def main():
     """
     Main code stub
@@ -462,44 +502,72 @@ def main():
 
         citellusplugins = newplugins
 
-        # Run with all plugins so that we get all data back
-        grouped = domagui(sosreports=sosreports, citellusplugins=citellusplugins)
+        def runmaguiandplugs(sosreports, citellusplugins, filename=options.output):
+            """
+            Runs magui and magui plugins
+            :param sosreports: sosreports to process
+            :param citellusplugins: citellusplugins to run
+            :param filename: filename to save to
+            :return: results of execution
+            """
+            # Run with all plugins so that we get all data back
+            grouped = domagui(sosreports=sosreports, citellusplugins=citellusplugins)
 
-        # Run Magui plugins
-        result = []
-        for plugin in magplugs:
-            start_time = time.time()
-            # Get output from plugin
-            data = filterresults(data=grouped, triggers=magtriggers[plugin.__name__.split(".")[-1]])
-            returncode, out, err = plugin.run(data=data, quiet=options.quiet)
-            updates = {'rc': returncode,
-                       'out': out,
-                       'err': err}
+            # Run Magui plugins
+            result = []
+            for plugin in magplugs:
+                start_time = time.time()
+                # Get output from plugin
+                data = filterresults(data=grouped, triggers=magtriggers[plugin.__name__.split(".")[-1]])
+                returncode, out, err = plugin.run(data=data, quiet=options.quiet)
+                updates = {'rc': returncode,
+                           'out': out,
+                           'err': err}
 
-            subcategory = os.path.split(plugin.__file__)[0].replace(os.path.join(maguidir, 'plugins', ''), '')
+                subcategory = os.path.split(plugin.__file__)[0].replace(os.path.join(maguidir, 'plugins', ''), '')
 
-            if subcategory:
-                if len(os.path.normpath(subcategory).split(os.sep)) > 1:
-                    category = os.path.normpath(subcategory).split(os.sep)[0]
+                if subcategory:
+                    if len(os.path.normpath(subcategory).split(os.sep)) > 1:
+                        category = os.path.normpath(subcategory).split(os.sep)[0]
+                    else:
+                        category = subcategory
+                        subcategory = ""
                 else:
-                    category = subcategory
-                    subcategory = ""
-            else:
-                category = ""
+                    category = ""
 
-            mydata = {'plugin': plugin.__name__.split(".")[-1],
-                      'name': "magui: %s" % os.path.basename(plugin.__name__.split(".")[-1]),
-                      'id': hashlib.md5(plugin.__file__.replace(maguidir, '').encode('UTF-8')).hexdigest(),
-                      'description': plugin.help(),
-                      'long_name': plugin.help(),
-                      'result': updates,
-                      'time': time.time() - start_time,
-                      'category': category,
-                      'subcategory': subcategory}
+                mydata = {'plugin': plugin.__name__.split(".")[-1],
+                          'name': "magui: %s" % os.path.basename(plugin.__name__.split(".")[-1]),
+                          'id': hashlib.md5(plugin.__file__.replace(maguidir, '').encode('UTF-8')).hexdigest(),
+                          'description': plugin.help(),
+                          'long_name': plugin.help(),
+                          'result': updates,
+                          'time': time.time() - start_time,
+                          'category': category,
+                          'subcategory': subcategory}
 
-            result.append(mydata)
-        branding = _("                                                  ")
-        citellus.write_results(results=result, filename=options.output, source='magui', path=sosreports, time=time.time() - start_time, branding=branding, web=True)
+                result.append(mydata)
+            branding = _("                                                  ")
+            citellus.write_results(results=result, filename=filename, source='magui', path=sosreports, time=time.time() - start_time, branding=branding, web=True)
+            return result
+
+        results = runmaguiandplugs(sosreports=sosreports, citellusplugins=citellusplugins, filename=options.output)
+
+        # Now we've Magui saved for the whole execution provided
+
+        # Start working on autogroups
+        for result in results:
+            if result['plugin'] == 'metadata-outputs':
+                autodata = result['result']['err']
+
+        print(_("Running magui for autogroups:\n"))
+
+        groups = autogroups(autodata)
+        for group in groups:
+            basefilename = os.path.splitext(options.output)
+            filename = basefilename[0] + "-" + group + basefilename[1]
+            print(filename)
+            runmaguiandplugs(sosreports=groups[group], citellusplugins=citellusplugins, filename=filename)
+        print(_("\nFinished autogroup generation."))
 
     # Here preprocess output to use filtering, etc
     # "result" does contain all data for both all citellus plugins and all magui plugins, need to filter for output on CLI only
