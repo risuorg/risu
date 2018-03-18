@@ -23,10 +23,6 @@
 # Load common functions
 [[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
-exitoudated(){
-    echo $"outdated sosreport package ${VERSION}: Containerized deployments require updated release" >&2
-    exit ${RC_FAILED}
-}
 RELEASE=$(discover_osp_version)
 if [[ "${RELEASE}" -ge "12" ]]; then
     # Sosreport with container support is 3.4-9 or later

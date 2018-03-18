@@ -31,7 +31,7 @@ else
     sestatus=$(sestatus -b)
 fi
 
-status=$(awk '/^SELinux status:/ {print $3}' $sestatus)
+status=$(awk '/^SELinux status:/ {print $3}' ${sestatus})
 if [[ "x$status" == "xenabled" ]]; then
     current_mode=$(awk '/^Current mode:/ {print $3}' "$sestatus")
 

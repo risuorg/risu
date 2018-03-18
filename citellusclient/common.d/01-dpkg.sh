@@ -20,17 +20,17 @@
 is_dpkg(){
     PACKAGE=$1
     if [ "x$CITELLUS_LIVE" = "x1" ]; then
-        dpkg -l *$1*|egrep ^ii | awk -v PACKAGE=$PACKAGE '$2==PACKAGE {print $3}'|egrep "."
+        dpkg -l *$1*|egrep ^ii | awk -v PACKAGE=${PACKAGE} '$2==PACKAGE {print $3}'|egrep "."
     elif [ "x$CITELLUS_LIVE" = "x0" ]; then
         is_required_file "${CITELLUS_ROOT}/installed-debs"
-        awk -v PACKAGE=$PACKAGE '$2==PACKAGE {print $3}' "${CITELLUS_ROOT}/installed-debs"|egrep "."
+        awk -v PACKAGE=${PACKAGE} '$2==PACKAGE {print $3}' "${CITELLUS_ROOT}/installed-debs"|egrep "."
     fi
 }
 
 is_required_dpkg(){
     if [ "x$(discover_os)" != "xdebian" ]; then
         echo "Not running on Debian family" >&2
-        exit $RC_FAILED
+        exit ${RC_FAILED}
     fi
 
     is_required_pkg $1
@@ -39,7 +39,7 @@ is_required_dpkg(){
 is_dpkg_over(){
     if [ "x$(discover_os)" != "xdebian" ]; then
         echo "Not running on Debian family" >&2
-        exit $RC_FAILED
+        exit ${RC_FAILED}
     fi
 
     is_pkg_over $*
@@ -48,7 +48,7 @@ is_dpkg_over(){
 is_required_dpkg_over(){
     if [ "x$(discover_os)" != "xdebian" ]; then
         echo "Not running on Debian family" >&2
-        exit $RC_FAILED
+        exit ${RC_FAILED}
     fi
 
     is_required_pkg_over $*

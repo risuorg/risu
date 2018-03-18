@@ -38,7 +38,7 @@ else
     conf_section="notifications"
 fi
 
-if [[ "$(iniparser "${CITELLUS_ROOT}/etc/nova/nova.conf" $conf_section notification_format)" == "unversioned" ]]; then
+if [[ "$(iniparser "${CITELLUS_ROOT}/etc/nova/nova.conf" ${conf_section} notification_format)" == "unversioned" ]]; then
     exit ${RC_OKAY}
 else
     echo $"missing notification_format=unversioned in nova.conf" >&2
