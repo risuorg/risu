@@ -33,6 +33,7 @@ import logging
 import os.path
 import pprint
 import time
+import shutil
 import sys
 sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/' + '../'))
 
@@ -562,11 +563,26 @@ def main():
         print(_("Running magui for autogroups:\n"))
 
         groups = autogroups(autodata)
+        processedgroups = {}
         for group in groups:
             basefilename = os.path.splitext(options.output)
             filename = basefilename[0] + "-" + group + basefilename[1]
             print(filename)
-            runmaguiandplugs(sosreports=groups[group], citellusplugins=citellusplugins, filename=filename)
+            runautogroup = True
+            for progroup in processedgroups:
+                if groups[group] == processedgroups[progroup]:
+                    runautogroup = False
+                    runautofile = progroup
+
+            if runautogroup:
+                # Analisys was missing, run
+                runmaguiandplugs(sosreports=groups[group], citellusplugins=citellusplugins, filename=filename)
+            else:
+                # Copy file instead of run
+                LOG.debug("Copying old file from %s to %s" % (runautofile, filename))
+                shutil.copyfile(runautofile, filename)
+            processedgroups[filename] = groups[group]
+
         print(_("\nFinished autogroup generation."))
 
     # Here preprocess output to use filtering, etc
