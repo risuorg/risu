@@ -20,8 +20,8 @@
 # Helper script to define location of various files.
 
 __osp_version_with_nova(){
-    RPM=$(is_rpm openstack-nova-common)
-    case ${RPM} in
+    PKG=$(is_pkg openstack-nova-common)
+    case ${PKG} in
         openstack-nova-common-2014.*) OSP=6 ;;
         openstack-nova-common-2015.*) OSP=7 ;;
         openstack-nova-common-12.*) OSP=8 ;;
@@ -37,8 +37,8 @@ __osp_version_with_nova(){
 }
 
 __osp_version_with_cinder(){
-    RPM=$(is_rpm openstack-cinder)
-    case ${RPM} in
+    PKG=$(is_pkg openstack-cinder)
+    case ${PKG} in
         openstack-cinder-2014.*) OSP=6 ;;
         openstack-cinder-2015.*) OSP=7 ;;
         openstack-cinder-7.*) OSP=8 ;;

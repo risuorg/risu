@@ -387,7 +387,10 @@ def autogroups(autodata):
 
         name = item['name']
         for host in item['sosreport']:
-            value = item['sosreport'][host]['err']
+            if item['sosreport'][host]['rc'] == citellus.RC_OKAY:
+                value = item['sosreport'][host]['err']
+            else:
+                value = ''
             update = {name: value}
             hostsdict[host].update(update)
 

@@ -29,6 +29,7 @@ elif [[ ${CITELLUS_LIVE} -eq 1 ]];then
     hostname  > ${FILE}
 fi
 
+is_required_file ${FILE}
 
 # Fill metadata 'hostname' to value
 echo "node-pacemaker-ip"
