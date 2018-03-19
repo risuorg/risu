@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8cbcf942_a7c244cc",
+        "filename": "citellusclient/plugins/core/openshift/node/network-manager-enabled.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2018-03-19T21:07:34Z",
+      "side": 1,
+      "message": "Message for skip should also go to \u003e\u00262",
+      "revId": "1e3cd83d6e5abef268888312523fe59fe1563389",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "96bc4892_4b1549c9",
+        "filename": "citellusclient/plugins/core/openshift/node/network-manager-enabled.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2018-03-19T21:07:34Z",
+      "side": 1,
+      "message": "exit should be to stderr \u003e\u00262",
+      "revId": "1e3cd83d6e5abef268888312523fe59fe1563389",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
