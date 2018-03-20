@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c62314b_b3630088",
+        "filename": "citellusclient/plugins/core/bugzilla/openstack/nova/1554265.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1012289
+      },
+      "writtenOn": "2018-03-20T13:03:45Z",
+      "side": 1,
+      "message": "we probably should also check the images_type being used. This should only apply for qcow2 which we have if images_type \u003d default and use_cow_images \u003d true (default) or images_type \u003d qcow2",
+      "revId": "595c8b8ebc584b7ffb97d392dbf5a49d3bdb941d",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
