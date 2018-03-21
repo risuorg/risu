@@ -881,7 +881,7 @@ def dump_config(options, path=False):
     return json.dumps(differences)
 
 
-def write_results(results, filename, live=False, path=None, time=0, source='citellus', branding='', web=False):
+def write_results(results, filename, live=False, path=None, time=0, source='citellus', branding='', web=False, extranames=None):
     """
     Writes result
     :param web: copy html viewer
@@ -900,7 +900,8 @@ def write_results(results, filename, live=False, path=None, time=0, source='cite
             'live': bool(live),
             'source': source,
             'time': time,
-            'branding': branding
+            'branding': branding,
+            'extranames': extranames
         },
         'results': results,
     }

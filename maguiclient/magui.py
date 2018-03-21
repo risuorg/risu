@@ -506,12 +506,13 @@ def main():
 
         citellusplugins = newplugins
 
-        def runmaguiandplugs(sosreports, citellusplugins, filename=options.output):
+        def runmaguiandplugs(sosreports, citellusplugins, filename=options.output, extranames=None):
             """
             Runs magui and magui plugins
             :param sosreports: sosreports to process
             :param citellusplugins: citellusplugins to run
             :param filename: filename to save to
+            :param extranames: additional filenames used
             :return: results of execution
             """
             # Run with all plugins so that we get all data back
@@ -551,7 +552,7 @@ def main():
 
                 result.append(mydata)
             branding = _("                                                  ")
-            citellus.write_results(results=result, filename=filename, source='magui', path=sosreports, time=time.time() - start_time, branding=branding, web=True)
+            citellus.write_results(results=result, filename=filename, source='magui', path=sosreports, time=time.time() - start_time, branding=branding, web=True, extranames=extranames)
             return result
 
         results = runmaguiandplugs(sosreports=sosreports, citellusplugins=citellusplugins, filename=options.output)
@@ -567,6 +568,7 @@ def main():
 
         groups = autogroups(autodata)
         processedgroups = {}
+        filenames = []
         for group in groups:
             basefilename = os.path.splitext(options.output)
             filename = basefilename[0] + "-" + group + basefilename[1]
@@ -579,7 +581,8 @@ def main():
 
             if runautogroup:
                 # Analisys was missing, run
-                runmaguiandplugs(sosreports=groups[group], citellusplugins=citellusplugins, filename=filename)
+                runmaguiandplugs(sosreports=groups[group], citellusplugins=citellusplugins, filename=filename, extranames=options.output)
+                filenames.append(filename)
             else:
                 # Copy file instead of run
                 LOG.debug("Copying old file from %s to %s" % (runautofile, filename))
@@ -587,6 +590,9 @@ def main():
             processedgroups[filename] = groups[group]
 
         print(_("\nFinished autogroup generation."))
+        if len(filenames) > 0:
+            # We've written additional files, so save again magui.json with additional references
+            results = runmaguiandplugs(sosreports=sosreports, citellusplugins=citellusplugins, filename=options.output, extranames=filenames)
 
     # Here preprocess output to use filtering, etc
     # "result" does contain all data for both all citellus plugins and all magui plugins, need to filter for output on CLI only
