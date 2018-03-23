@@ -225,7 +225,7 @@ def callcitellus(path=False, plugins=False, forcerun=False, include=None, exclud
     # Call citellus normally, if existing prior results those will be loaded or executed + saved
     results = citellus.docitellus(path=path, plugins=plugins, forcerun=forcerun, include=include, exclude=exclude)
 
-    # Process plugin output from multiple plugins
+    # Process plugin output from multiple plugins to be returned as a dictionary of ID's for each plugin
     new_dict = {}
     for item in results:
         name = results[item]['id']
@@ -394,6 +394,9 @@ def autogroups(autodata):
             update = {name: value}
             hostsdict[host].update(update)
 
+    # At this point we have a dict of dicts, being at first level the host with the output of the metadata, similar to:
+    # print(hostsdict)={'host1': {'release': 'xxxx', 'UUID': 'YYYYY'}, 'host2': .... }
+
     groups = {}
 
     # Precreate groups
@@ -412,6 +415,9 @@ def autogroups(autodata):
             name = "%s-%s" % (category, subcategory)
             if 1 < len(groups[category][subcategory]) < len(hostsdict):
                 results[name] = groups[category][subcategory]
+
+    # Here we've a list of groups based on 'metadata' plugin name and the hosts in the same group if more than one host.
+
     return results
 
 
@@ -463,6 +469,7 @@ def main():
     # Grab the data
     sosreports = options.sosreports
 
+    # If we've provided a hosts file, use ansible to grab the data from them
     if options.hosts:
         ansible = citellus.which("ansible-playbook")
         if not ansible:
@@ -553,11 +560,12 @@ def main():
                 result.append(mydata)
             branding = _("                                                  ")
             citellus.write_results(results=result, filename=filename, source='magui', path=sosreports, time=time.time() - start_time, branding=branding, web=True, extranames=extranames)
+
             return result
 
         results = runmaguiandplugs(sosreports=sosreports, citellusplugins=citellusplugins, filename=options.output)
 
-        # Now we've Magui saved for the whole execution provided
+        # Now we've Magui saved for the whole execution provided in 'results' var
 
         # Start working on autogroups
         for result in results:
@@ -580,11 +588,11 @@ def main():
                     runautofile = progroup
 
             if runautogroup:
-                # Analisys was missing, run
+                # Analisys was missing for this group, run
                 runmaguiandplugs(sosreports=groups[group], citellusplugins=citellusplugins, filename=filename, extranames=options.output)
                 filenames.append(filename)
             else:
-                # Copy file instead of run
+                # Copy file instead of run as it was already existing
                 LOG.debug("Copying old file from %s to %s" % (runautofile, filename))
                 shutil.copyfile(runautofile, filename)
             processedgroups[filename] = groups[group]
@@ -592,6 +600,9 @@ def main():
         print(_("\nFinished autogroup generation."))
         if len(filenames) > 0:
             # We've written additional files, so save again magui.json with additional references
+            # TODO: Intead of running magui and plugins again (should be fast, but not 'smart', we should save the json with the extra data.)
+            # As we've the extra data writing inside the function we might have to rewrite several steps so we went the code-reuse path
+
             results = runmaguiandplugs(sosreports=sosreports, citellusplugins=citellusplugins, filename=options.output, extranames=filenames)
 
     # Here preprocess output to use filtering, etc
@@ -614,7 +625,7 @@ def main():
 
     citellusplugins = newplugins
 
-    # Run with all plugins so that we get all data back
+    # Run with only the enabled plugins so that we get all data back for printing on console
     grouped = domagui(sosreports=sosreports, citellusplugins=citellusplugins, options=options)
 
     # Run Magui plugins

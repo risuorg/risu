@@ -308,6 +308,7 @@ def findplugins(folders=None, include=None, exclude=None, executables=True, file
         extensions, exttriggers = initExtensions()
 
     plugins = []
+    # Walk the folders and subfolders for files based on our criteria
     for folder in folders:
         for root, dirnames, filenames in os.walk(folder):
             LOG.debug('looking for plugins in: %s', root)
@@ -328,11 +329,13 @@ def findplugins(folders=None, include=None, exclude=None, executables=True, file
                     else:
                         plugins.append(filepath)
 
+    # Process include filters
     if include:
         plugins = [plugin for plugin in plugins
                    for filters in include
                    if filters in plugin]
 
+    # Process exclude filters
     if exclude:
         plugins = [plugin for plugin in plugins
                    if not any(filters in plugin for filters in exclude)]
@@ -366,6 +369,7 @@ def findplugins(folders=None, include=None, exclude=None, executables=True, file
                       'name': os.path.splitext(os.path.basename(plugin))[0]}
         dictionary.update(get_metadata(plugin=dictionary))
 
+        # Only add if plugin priority is over specified value
         if dictionary['priority'] >= prio:
             metaplugins.append(dictionary)
 
@@ -394,6 +398,8 @@ def runplugin(plugin):
         extensions, exttriggers = initExtensions()
 
     found = 0
+
+    # Loop tru extensions to find which one should handle it and run it
     for extension in extensions:
         name = extension.__name__.split(".")[-1]
         if plugin['backend'] == name:
@@ -566,6 +572,7 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
 
     LOG.debug("Adding new plugin id's missing to be executed: %s" % missingplugins)
 
+    # Remove old plugins no longer existing from results
     for key in delete:
         del results[key]
 
@@ -597,7 +604,7 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
     # We need to filter plugins only for the new id's what we were missing
     LOG.debug("Smart: We need to run some plugins that were missing")
 
-    # We clear list of plugins to run to just grab the missing data
+    # We clear list of plugins to run to just grab the missing data on them, and leave others
     pluginstorun = []
     for plugin in plugins:
         if plugin['id'] in missingplugins:
@@ -605,9 +612,11 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
 
     execution = p.map(runplugin, pluginstorun)
 
+    # Update back 'results' with the execution of the missing plugins
     for plugin in execution:
         results[plugin['id']] = dict(plugin)
 
+    # Processing hooks on the results
     for hook in initExtensions(extensions=getHooks())[0]:
         LOG.debug("Running hook: %s" % hook.__name__.split('.')[-1])
         newresults = hook.run(data=results)
@@ -1069,6 +1078,7 @@ def main():
     grosscategories = []
 
     if options.list_plugins:
+        # Prepare pretty printing of plugins and some of it's metadata based on switches used
         for extension in plugins:
             for plugin in extension:
                 pretty = {'plugin': plugin['plugin'], 'backend': plugin['backend'], 'id': plugin['id'], 'name': plugin['name']}
