@@ -27,7 +27,7 @@
 is_required_file "${CITELLUS_ROOT}/var/log/nova/nova-compute.log"
 is_required_rpm openstack-nova-compute
 
-if [[ -f "S{CITELLUS_ROOT}/var/log/nova/nova-compute-log" ]]; then
+if [[ -f "S{CITELLUS_ROOT}/var/log/nova/nova-compute.log" ]]; then
     if ! is_process nova-compute; then
         echo "nova-compute process is not running" >&2
         exit ${RC_FAILED}
