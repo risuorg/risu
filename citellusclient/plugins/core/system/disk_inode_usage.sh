@@ -32,7 +32,8 @@ else
     DISK_USE_CMD="df -ali"
 fi
 
-result=$(${DISK_USE_CMD} |awk -vinode_max_percent=${CITELLUS_INODE_MAX_PERCENT} '/^\/dev/ && substr($5, 0, length($5)-1) > inode_max_percent { print $6,$5 }')
+#https://unix.stackexchange.com/a/15083
+result=$(${DISK_USE_CMD} |awk -vinode_max_percent=${CITELLUS_INODE_MAX_PERCENT} '/^\/dev/ && 0+$5 > inode_max_percent { print $6,$5 }')
 
 if [[ -n "$result" ]]; then
     echo "${result}" >&2
