@@ -31,7 +31,8 @@ else
     DISK_USE_CMD="df -P"
 fi
 
-result=$(${DISK_USE_CMD} |awk -vdisk_max_percent=${CITELLUS_DISK_MAX_PERCENT} '/^\/dev/ && substr($5, 0, length($5)-1) > disk_max_percent { print $6,$5 }')
+#https://unix.stackexchange.com/a/15083
+result=$(${DISK_USE_CMD} |awk -vdisk_max_percent=${CITELLUS_DISK_MAX_PERCENT} '/^\/dev/ && 0+$5 > disk_max_percent { print $6,$5 }')
 
 if [[ -n "$result" ]]; then
     echo "${result}" >&2
