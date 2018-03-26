@@ -2,6 +2,9 @@
 
 This file will contain a manually mantained log of hilights between versions, it's not a very extensive detail, but some of the bigger changes/ideas will be added here.
 
+## 2018-03-25
+- Implement `--find` to citellus so that it can grep across a folder set for checking historic data for tests.
+
 ## 2018-03-18
 - Magui autogrouping support, generating files for each comparison set like osp roles, same hostname, etc. It's based on metadata plugins generated.
     - Skip reexecution if a specified sosreport set was already analyzed.
