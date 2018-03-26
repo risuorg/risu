@@ -39,6 +39,7 @@ import time
 import traceback
 from itertools import groupby
 from multiprocessing import Pool, cpu_count
+
 sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/' + '../'))
 
 LOG = logging.getLogger('citellus')
@@ -266,7 +267,7 @@ def findallplugins():
     return newplugins
 
 
-def generate_file_hash(filename, blocksize=2**20):
+def generate_file_hash(filename, blocksize=2 ** 20):
     """
     Obtains a file hash for provided filename
     :param filename: file to open and hash
@@ -485,7 +486,8 @@ def execonshell(filename):
     return returncode, out, err
 
 
-def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=False, savepath=False, include=None, exclude=None, okay=RC_OKAY, skipped=RC_SKIPPED, failed=RC_FAILED, web=False):
+def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=False, savepath=False, include=None,
+               exclude=None, okay=RC_OKAY, skipped=RC_SKIPPED, failed=RC_FAILED, web=False):
     """
     Runs citellus scripts on specified root folder
     :param web: Copy html to folder
@@ -732,6 +734,10 @@ def parse_args(default=False, parse=False):
     p.add_argument("--run", "-r",
                    action='store_true',
                    help=_("Force run of citellus instead of reading existing 'citellus.json'"))
+    p.add_argument("--find",
+                   action='store_true',
+                   help=_(
+                       "Use provided path at starting point for finding citellus.json and print them based on filters defined"))
 
     g = p.add_argument_group('Output and logging options')
     g.add_argument("--blame",
@@ -890,7 +896,8 @@ def dump_config(options, path=False):
     return json.dumps(differences)
 
 
-def write_results(results, filename, live=False, path=None, time=0, source='citellus', branding='', web=False, extranames=None):
+def write_results(results, filename, live=False, path=None, time=0, source='citellus', branding='', web=False,
+                  extranames=None):
     """
     Writes result
     :param web: copy html viewer
@@ -972,6 +979,54 @@ def get_metadata(plugin=False):
             return extension.get_metadata(plugin)
 
     return metadata
+
+
+def printresults(results, options):
+    """
+    Formats and prints results from citellus execution
+    :param results: results to print form citellus execution
+    :param options: commandline options passed
+    """
+    for result in results:
+        out = results[result]['result']['out']
+        err = results[result]['result']['err']
+        rc = results[result]['result']['rc']
+        text = formattext(rc)
+
+        priority = 'informative'
+        priocolor = 'green'
+        if results[result]['priority'] > 666:
+            priority = 'critical'
+            priocolor = 'red'
+        elif results[result]['priority'] > 333:
+            priority = 'important'
+            priocolor = 'yellow'
+
+        if rc == RC_FAILED:
+            text = text + " [%s]" % colorize(text=priority, color=priocolor)
+
+        if options.only_failed and rc in [RC_OKAY, RC_SKIPPED]:
+            continue
+
+        if not options.blame:
+            print("# %s: %s" % (results[result]['plugin'], text))
+        else:
+            print("# %s (%s): %s" % (results[result]['plugin'], results[result]['time'], text))
+
+        show_err = (
+                   (rc in [RC_FAILED]) or
+                   (rc not in [RC_OKAY, RC_FAILED, RC_SKIPPED]) or
+                   (rc in [RC_SKIPPED] and options.verbose > 0) or
+                   (options.verbose > 1)
+        )
+
+        show_out = (options.verbose > 1)
+
+        if show_out and out.strip():
+            print(indent(out, 4))
+
+        if show_err and err.strip():
+            print(indent(err, 4))
 
 
 def main():
@@ -1066,9 +1121,7 @@ def main():
         return
 
     # Prefill plugin list as we'll be still using it for execution
-    plugins = []
-    for extension in extensions:
-        plugins.extend(extension.listplugins(options))
+    plugins = findallplugins()
 
     global allplugins
     allplugins = plugins
@@ -1081,7 +1134,8 @@ def main():
         # Prepare pretty printing of plugins and some of it's metadata based on switches used
         for extension in plugins:
             for plugin in extension:
-                pretty = {'plugin': plugin['plugin'], 'backend': plugin['backend'], 'id': plugin['id'], 'name': plugin['name']}
+                pretty = {'plugin': plugin['plugin'], 'backend': plugin['backend'], 'id': plugin['id'],
+                          'name': plugin['name']}
                 if options.description:
                     pretty.update({'description': plugin['description']})
                 if options.list_categories:
@@ -1140,6 +1194,23 @@ def main():
     except AttributeError:
         _ = trad.gettext
 
+    if options.find:
+        if not options.sosreport:
+            LOG.error(_("Path needed for find operation mode"))
+            sys.exit(1)
+        jsons = findplugins(folders=[CITELLUS_ROOT], executables=False, include=['citellus.json'],
+                            fileextension='.json')
+        paths = []
+        for jsonfile in jsons:
+            paths.append(os.path.dirname(jsonfile['plugin']))
+
+        for path in paths:
+            results = docitellus(live=False, path=path, plugins=allplugins, lang=options.lang, forcerun=False,
+                                 savepath=False, include=options.include, exclude=options.exclude, web=False)
+            print("Report for path: %s" % path)
+            printresults(results, options)
+        sys.exit(0)
+
     if not options.quiet:
         show_logo()
         totalplugs = 0
@@ -1159,60 +1230,14 @@ def main():
     # Process Citellus extensions
 
     # By default
-    newplugins = []
-    for each in plugins:
-        newplugins.extend(each)
-
-    plugins = newplugins
     forcerun = options.run
 
-    results = docitellus(live=options.live, path=CITELLUS_ROOT, plugins=plugins, lang=options.lang, forcerun=forcerun, savepath=options.output, include=options.include, exclude=options.exclude, web=options.web)
+    results = docitellus(live=options.live, path=CITELLUS_ROOT, plugins=allplugins, lang=options.lang, forcerun=forcerun, savepath=options.output, include=options.include, exclude=options.exclude, web=options.web)
 
     # Print results based on the sorted order based on returned results from
     # parallel execution
 
-    for result in results:
-        out = results[result]['result']['out']
-        err = results[result]['result']['err']
-        rc = results[result]['result']['rc']
-        text = formattext(rc)
-
-        priority = 'informative'
-        priocolor = 'green'
-        if results[result]['priority'] > 666:
-            priority = 'critical'
-            priocolor = 'red'
-        elif results[result]['priority'] > 333:
-            priority = 'important'
-            priocolor = 'yellow'
-
-        if rc == RC_FAILED:
-            text = text + " [%s]" % colorize(text=priority, color=priocolor)
-
-        if options.only_failed and rc in [RC_OKAY, RC_SKIPPED]:
-            continue
-
-        if not options.blame:
-            print("# %s: %s" % (results[result]['plugin'], text))
-        else:
-            print("# %s (%s): %s" % (results[result]['plugin'], results[result]['time'], text))
-
-        show_err = (
-            (rc in [RC_FAILED]) or
-            (rc not in [RC_OKAY, RC_FAILED, RC_SKIPPED]) or
-            (rc in [RC_SKIPPED] and options.verbose > 0) or
-            (options.verbose > 1)
-        )
-
-        show_out = (
-            options.verbose > 1
-        )
-
-        if show_out and out.strip():
-            print(indent(out, 4))
-
-        if show_err and err.strip():
-            print(indent(err, 4))
+    printresults(results=results, options=options)
 
     totaltime = time.time() - start_time
 
