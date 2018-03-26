@@ -24,6 +24,9 @@
 # Load common functions
 [[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
+# assume that at least nova.conf should be present or skip
+is_required_file "${CITELLUS_ROOT}/etc/nova/nova.conf"
+
 if is_lineinfile "Intel" "${CITELLUS_ROOT}/proc/cpuinfo"; then
     if ! grep -qP "intel_iommu=on|iommu=pt" ${CITELLUS_ROOT}/proc/cmdline; then
         echo $"missing intel_iommu=on or iommu=pt on kernel cmdline" >&2
