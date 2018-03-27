@@ -1132,28 +1132,26 @@ def main():
 
     if options.list_plugins:
         # Prepare pretty printing of plugins and some of it's metadata based on switches used
-        for extension in plugins:
-            for plugin in extension:
-                pretty = {'plugin': plugin['plugin'], 'backend': plugin['backend'], 'id': plugin['id'],
-                          'name': plugin['name']}
-                if options.description:
-                    pretty.update({'description': plugin['description']})
-                if options.list_categories:
-                    pretty.update({'category': plugin['category']})
-                    pretty.update({'subcategory': plugin['subcategory']})
-                if options.loglevel == 'DEBUG' or options.verbose:
-                    pretty.update({'id': plugin['id']})
-                print(pretty)
+        for plugin in plugins:
+            pretty = {'plugin': plugin['plugin'], 'backend': plugin['backend'], 'id': plugin['id'],
+                        'name': plugin['name']}
+            if options.description:
+                pretty.update({'description': plugin['description']})
+            if options.list_categories:
+                pretty.update({'category': plugin['category']})
+                pretty.update({'subcategory': plugin['subcategory']})
+            if options.loglevel == 'DEBUG' or options.verbose:
+                pretty.update({'id': plugin['id']})
+            print(pretty)
 
         if options.list_categories:
-            for extension in plugins:
-                for plugin in extension:
-                    # Split category out of plugin path skipping the first item (for backend, etc)
-                    category = os.path.split(plugin['plugin'])[0].replace(os.path.join(citellusdir, 'plugins', plugin['backend']), '')
+            for plugin in plugins:
+                # Split category out of plugin path skipping the first item (for backend, etc)
+                category = os.path.split(plugin['plugin'])[0].replace(os.path.join(citellusdir, 'plugins', plugin['backend']), '')
 
-                    # We do create two lists, one for the individual items for detailed count and one for the parent folder for totals
-                    categories.append(category)
-                    grosscategories.append(plugin['category'])
+                # We do create two lists, one for the individual items for detailed count and one for the parent folder for totals
+                categories.append(category)
+                grosscategories.append(plugin['category'])
 
             # Get counters and start the information processing
             detail = sorted([(key, len(list(v))) for (key, v) in groupby(sorted(categories))])
