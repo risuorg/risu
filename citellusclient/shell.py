@@ -170,7 +170,7 @@ def initExtensions(extensions=getExtensions()):
 def getHooks(options=None):
     """
     Gets list of Hooks in the Hooks folder
-    :return: list of Plugins available
+    :return: list of Hooks available
     """
 
     if not options:
@@ -245,7 +245,7 @@ def show_logo():
     print("\n".join(logo))
 
 
-def findallplugins():
+def findallplugins(options=None):
     """
     Finds all plugins that citellus recognized
     :return: array of plugins found (dictionaries)
@@ -256,7 +256,7 @@ def findallplugins():
 
     plugins = []
     for extension in extensions:
-        plugins.extend(extension.listplugins())
+        plugins.extend(extension.listplugins(options))
 
     # Flatten plugins
     newplugins = []
@@ -285,7 +285,7 @@ def generate_file_hash(filename, blocksize=2 ** 20):
     return hash.hexdigest()
 
 
-def findplugins(folders=None, include=None, exclude=None, executables=True, fileextension=False, extension='core', prio=0):
+def findplugins(folders=None, include=None, exclude=None, executables=True, fileextension=False, extension='core', prio=0, dictupdate=None):
     """
     Finds plugins in path and returns array of them
     :param prio: define minimum priority of returned plugins
@@ -295,6 +295,7 @@ def findplugins(folders=None, include=None, exclude=None, executables=True, file
     :param exclude: exclude string in filter path
     :param include: include string in filter path
     :param folders: Folders to use as source for plugin search
+    :param dictupdate: Update dict to apply to each plugin found
     :return: list of plugins found
     """
 
@@ -370,6 +371,9 @@ def findplugins(folders=None, include=None, exclude=None, executables=True, file
                       'name': os.path.splitext(os.path.basename(plugin))[0]}
         dictionary.update(get_metadata(plugin=dictionary))
 
+        # Check if dictionary update is provided and apply it
+        if dictupdate:
+            dictionary.update(dictupdate)
         # Only add if plugin priority is over specified value
         if dictionary['priority'] >= prio:
             metaplugins.append(dictionary)
@@ -407,7 +411,7 @@ def runplugin(plugin):
             returncode, out, err = extension.run(plugin=plugin)
             found = 1
     if found == 0:
-        LOG.debug(err + ":" + plugin)
+        LOG.debug("%s : %s" % (err, plugin))
 
     updates = {'result': {'rc': returncode,
                           'out': "%s" % out,
@@ -487,7 +491,7 @@ def execonshell(filename):
 
 
 def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=False, savepath=False, include=None,
-               exclude=None, okay=RC_OKAY, skipped=RC_SKIPPED, failed=RC_FAILED, web=False):
+               exclude=None, okay=RC_OKAY, skipped=RC_SKIPPED, failed=RC_FAILED, web=False, dontsave=False):
     """
     Runs citellus scripts on specified root folder
     :param web: Copy html to folder
@@ -500,6 +504,7 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
     :param forcerun: Forces execution instead of reading saved file
     :param lang: language to use on shell
     :param path: Path to analyze
+    :param dontsave: Force not storing of results
     :param live:  Test is to be executed live or on snapshot/sosreport
     :param plugins:  plugins to execute against the system
     :return: Dict of plugins and results
@@ -538,7 +543,10 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
         LOG.debug("Storing output on file %s" % filename)
     else:
         # For example for 'Live' environment where no path is defined
-        filename = False
+        filename = None
+
+    if dontsave:
+        filename = None
 
     missingplugins = []
 
@@ -1121,7 +1129,7 @@ def main():
         return
 
     # Prefill plugin list as we'll be still using it for execution
-    plugins = findallplugins()
+    plugins = findallplugins(options)
 
     global allplugins
     allplugins = plugins

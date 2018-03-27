@@ -36,9 +36,12 @@ def run(data, quiet=False):  # do not edit this line
     :return: returncode, out, err
     """
 
+    # TODO(iranzo) FIX as this causes execution loop
     # By default it returns list, so get only one item
-    sourceid = citellus.getids(include=['/core/system/clock-1-ntpd.sh'])[0]
-    targetid = citellus.getids(include=['/core/system/clock-1-chrony.sh'])[0]
+    #sourceid = citellus.getids(include=['/core/system/clock-1-ntpd.sh'])[0]
+    #targetid = citellus.getids(include=['/core/system/clock-1-chrony.sh'])[0]
+    sourceid = "xasd21w341234123413"
+    targetid = "xasd21w341234123413"
 
     mangle = False
 
