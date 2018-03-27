@@ -58,6 +58,11 @@ Check how does it look in an execution at:
     - <https://iranzo.github.io/blog/2017/10/26/i18n-and-bash8-in-bash/>
     - <https://iranzo.github.io/blog/2018/01/16/recent-changes-in-magui-and-citellus/>
 
+## Collaborate
+- Open issues/feature requests, etc at <https://github.com/zerodayz/citellus/issues>
+- Read the [Contributing](CONTRIBUTING.md) document on how to submit patches
+- Provide sosreports to check against via <https://www.dropbox.com/request/8LGneF9i9nc9RB6aqXge>, specially if running Debian based distributions and or Fedora/CentOS based ones so that we can improve support for it
+
 ## Contact us!!
 You can reach to us via:
 - irc at #citellus in Freenode
