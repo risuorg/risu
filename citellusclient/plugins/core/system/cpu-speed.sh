@@ -31,7 +31,7 @@ cstate=$(cat "${CITELLUS_ROOT}/sys/module/intel_idle/parameters/max_cstate")
 
 if [[ "${cstate}" -ne "0" ]]; then
     echo $"CPU is not running at full speed" >&2
-    grep "cpu MHz" "${CITELLUS_ROOT}/proc/cpuinfo" >&2
+    egrep "processor|cpu MHz" "${CITELLUS_ROOT}/proc/cpuinfo" | tr '\n' ' '|sed 's/processor/\nprocessor/g' >&2
     exit ${RC_FAILED}
 else
     exit ${RC_OKAY}
