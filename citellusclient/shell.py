@@ -245,7 +245,7 @@ def show_logo():
     print("\n".join(logo))
 
 
-def findallplugins():
+def findallplugins(options):
     """
     Finds all plugins that citellus recognized
     :return: array of plugins found (dictionaries)
@@ -256,7 +256,7 @@ def findallplugins():
 
     plugins = []
     for extension in extensions:
-        plugins.extend(extension.listplugins())
+        plugins.extend(extension.listplugins(options))
 
     # Flatten plugins
     newplugins = []
@@ -1121,7 +1121,7 @@ def main():
         return
 
     # Prefill plugin list as we'll be still using it for execution
-    plugins = findallplugins()
+    plugins = findallplugins(options)
 
     global allplugins
     allplugins = plugins
