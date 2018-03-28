@@ -1211,9 +1211,7 @@ def main():
 
     if not options.quiet:
         show_logo()
-        totalplugs = 0
-        for extension in plugins:
-            totalplugs += len(extension)
+        totalplugs = len(plugins)
         print(_("found #%s extensions with #%s plugins") % (len(extensions), totalplugs))
 
     if not extensions:
