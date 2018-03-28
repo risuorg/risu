@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2fcefd98_cd0a1b35",
+        "filename": "citellusclient/plugins/core/openstack/system/non-current-osp-version-repos.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1011950
+      },
+      "writtenOn": "2018-03-28T00:15:36Z",
+      "side": 1,
+      "message": "Can you please change the legacy to non-current instead? I think it would be better than call OSP legacy:)",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 41
+      },
+      "revId": "42507c99fbed399413b5eed5233db754b6e5df9d",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
