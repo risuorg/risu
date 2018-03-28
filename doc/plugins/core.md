@@ -97,12 +97,6 @@ location of various files. To use this script you can source it at the top:
         if is_active ntpd; then echo "NTP Running";fi
         ~~~
 
-- `is_active $service` -- reports if service is active either based on live or snapshoot
-    - Example:
-        ~~~sh
-        if is_active ntpd; then echo "NTP Running";fi
-        ~~~
-
 - `is_required_file $file` -- continues if file exists or exits `$RC_SKIPPED` if doesn't
     - Example:
         ~~~sh
