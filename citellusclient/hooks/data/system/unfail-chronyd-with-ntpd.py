@@ -36,9 +36,9 @@ def run(data, quiet=False):  # do not edit this line
     :return: returncode, out, err
     """
 
-    # By default it returns list, so get only one item
-    sourceid = citellus.getids(include=['/core/system/clock-1-ntpd.sh'])[0]
-    targetid = citellus.getids(include=['/core/system/clock-1-chrony.sh'])[0]
+    # Use calculate ID instead of getid because of execution loop
+    sourceid = citellus.calcid(string='/plugins/core/system/clock-1-ntpd.sh')
+    targetid = citellus.calcid(string='/plugins/core/system/clock-1-chrony.sh')
 
     mangle = False
 
