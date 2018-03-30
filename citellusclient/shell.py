@@ -63,6 +63,8 @@ global exttriggers
 exttriggers = {}
 global hooks
 hooks = []
+global progress
+progress = '='
 
 global CITELLUS_LIVE
 CITELLUS_LIVE = 0
@@ -381,12 +383,15 @@ def findplugins(folders=None, include=None, exclude=None, executables=True, file
     return metaplugins
 
 
-def runplugin(plugin):
+def runplugin(plugin, step=progress):
     """
     Runs provided plugin and outputs message
     :param plugin:  plugin to execute
     :return: result, out, err
     """
+
+    global progress
+    step = progress
 
     LOG.debug(msg=_('Running plugin: %s') % plugin)
     start_time = time.time()
@@ -418,6 +423,8 @@ def runplugin(plugin):
                           'err': "%s" % err},
                'time': time.time() - start_time}
     plugin.update(updates)
+    sys.stdout.write(step)
+    sys.stdout.flush()
     return plugin
 
 
@@ -491,7 +498,7 @@ def execonshell(filename):
 
 
 def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=False, savepath=False, include=None,
-               exclude=None, okay=RC_OKAY, skipped=RC_SKIPPED, failed=RC_FAILED, web=False, dontsave=False):
+               exclude=None, okay=RC_OKAY, skipped=RC_SKIPPED, failed=RC_FAILED, web=False, dontsave=False, quiet=False):
     """
     Runs citellus scripts on specified root folder
     :param web: Copy html to folder
@@ -507,6 +514,7 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
     :param dontsave: Force not storing of results
     :param live:  Test is to be executed live or on snapshot/sosreport
     :param plugins:  plugins to execute against the system
+    :param quiet: make no progress output
     :return: Dict of plugins and results
     """
 
@@ -620,7 +628,12 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
         if plugin['id'] in missingplugins:
             pluginstorun.append(plugin)
 
+    if not quiet:
+        sys.stdout.write('\n[l%%%l]=[]')
+        sys.stdout.flush()
     execution = p.map(runplugin, pluginstorun)
+    if not quiet:
+        print('\n')
 
     # Update back 'results' with the execution of the missing plugins
     for plugin in execution:
@@ -772,6 +785,16 @@ def parse_args(default=False, parse=False):
     g.add_argument("-q", "--quiet",
                    help=_("Enable quiet mode"),
                    action='store_true')
+
+    g.add_argument("--luke",
+                   action='store_true',
+                   help=_("use blue progress bar"))
+    g.add_argument("--mace",
+                   action='store_true',
+                   help=_("use purple progress bar"))
+    g.add_argument("--darth",
+                   action='store_true',
+                   help=_("use red progress bar"))
 
     g = p.add_argument_group('Filtering options')
     g.add_argument("-i", "--include",
@@ -1230,6 +1253,14 @@ def main():
             print(_("mode: live"))
         else:
             print(_("mode: fs snapshot %s" % CITELLUS_ROOT))
+
+    global progress
+    if options.luke:
+        progress = colorize('=', 'blue')
+    elif options.darth:
+        progress = colorize('=', 'red')
+    elif options.mace:
+        progress = colorize('=', 'purple')
 
     # Process Citellus extensions
 
