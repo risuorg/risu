@@ -28,6 +28,7 @@ if [[ ${CITELLUS_LIVE} = 0 ]];  then
     is_required_file "${CITELLUS_ROOT}/sos_commands/selinux/sestatus_-b"
     sestatus="${CITELLUS_ROOT}/sos_commands/selinux/sestatus_-b"
 else
+    is_required_command "sestatus"
     sestatus=$(sestatus -b)
 fi
 
