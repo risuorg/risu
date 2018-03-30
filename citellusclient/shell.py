@@ -788,13 +788,13 @@ def parse_args(default=False, parse=False):
 
     g.add_argument("--luke",
                    action='store_true',
-                   help=_("use blue progress bar"))
+                   help=argparse.SUPPRESS)
     g.add_argument("--mace",
                    action='store_true',
-                   help=_("use purple progress bar"))
+                   help=argparse.SUPPRESS)
     g.add_argument("--darth",
                    action='store_true',
-                   help=_("use red progress bar"))
+                   help=argparse.SUPPRESS)
 
     g = p.add_argument_group('Filtering options')
     g.add_argument("-i", "--include",
@@ -1259,7 +1259,7 @@ def main():
         progress = colorize('=', 'blue')
     elif options.darth:
         progress = colorize('=', 'red')
-    elif options.mace:
+    else:
         progress = colorize('=', 'purple')
 
     if options.quiet:
