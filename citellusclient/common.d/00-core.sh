@@ -68,6 +68,17 @@ is_active(){
     fi
 }
 
+is_command(){
+    for file in "$@"; do
+        if [[ ! -x ${file} ]];  then
+            # to remove the ${CITELLUS_ROOT} from the stderr.
+            file=${file#${CITELLUS_ROOT}}
+            echo "required file $file not found or not executable." >&2
+            exit ${RC_SKIPPED}
+        fi
+    done
+}
+
 is_enabled(){
     if [ "x$CITELLUS_LIVE" = "x1" ]; then
         systemctl is-enabled "$1" > /dev/null 2>&1
