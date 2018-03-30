@@ -31,7 +31,7 @@ elif [[ "x$CITELLUS_LIVE" = "x1" ]]; then
     trap "rm ${FILE}" EXIT
 fi
 
-is_file_required "${FILE}"
+is_required_file "${FILE}"
 
 VALUE=$(grep vm.vfs_cache_pressure ${FILE}|cut -d "=" -f 2)
 
