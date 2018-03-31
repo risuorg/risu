@@ -28,7 +28,10 @@ if [[ ${CITELLUS_LIVE} = 0 ]];  then
     is_required_file "${CITELLUS_ROOT}/sos_commands/selinux/sestatus_-b"
     sestatus="${CITELLUS_ROOT}/sos_commands/selinux/sestatus_-b"
 else
-    sestatus=$(sestatus -b)
+    is_required_command "sestatus"
+    sestatus=$(mktemp)
+    trap "rm ${sestatus}" EXIT
+    sestatus -b > ${sestatus}
 fi
 
 status=$(awk '/^SELinux status:/ {print $3}' ${sestatus})
