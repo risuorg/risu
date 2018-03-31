@@ -26,6 +26,7 @@
 if [[ ${CITELLUS_LIVE} -eq 0 ]]; then
     FILE="${CITELLUS_ROOT}/sos_commands/pacemaker/pcs_status"
 elif [[ ${CITELLUS_LIVE} -eq 1 ]];then
+    is_required_command "pcs"
     FILE=$(mktemp)
     trap "rm ${FILE}" EXIT
     pcs status > ${FILE}
