@@ -1282,6 +1282,7 @@ def main():
     if options.blame:
         print("# Total execution time: %s seconds" % totaltime)
 
+progress = colorize(text='=', color='purple')
 
 if __name__ == "__main__":
     main()
