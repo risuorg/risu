@@ -24,10 +24,8 @@
 # Load common functions
 [[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
-if ! is_rpm kexec-tools >/dev/null 2>&1; then
-    echo $"kexec-tools package missing" >&2
-    exit ${RC_FAILED}
-fi
+is_required_rpm kexec-tools
+
 if ! is_active kdump; then
     echo $"kdump is not running on this node" >&2
     exit ${RC_FAILED}
