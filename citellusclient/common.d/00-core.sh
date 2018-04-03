@@ -62,7 +62,7 @@ is_active(){
         if [[ -f "${systemctl_list_units_file}" ]]; then
             grep -q "$1.* active" "${systemctl_list_units_file}"
         else
-            echo "required systemd files not found." >&2
+            echo "required systemd files not found. for validating $1 being active or not" >&2
             exit ${RC_SKIPPED}
         fi
     fi
