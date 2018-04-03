@@ -16,6 +16,7 @@ export RC_FAILED=20
 export RC_SKIPPED=30
 
 # i18n for bash support
+export LANG='en_US'
 export TEXTDOMAIN='citellus'
 export TEXTDOMAINDIR=${CITELLUS_BASE}/locale
 
