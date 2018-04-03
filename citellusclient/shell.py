@@ -555,6 +555,8 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
 
     if dontsave:
         filename = None
+    elif filename:
+        LOG.info("Storing output on file %s" % filename)
 
     missingplugins = []
 
@@ -562,7 +564,7 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
         results = {}
     else:
         # If we can load, fill variable, else, just blank it
-        LOG.debug("Reading Existing citellus analysis from disk for %s" % path)
+        LOG.info("Reading Existing citellus analysis from disk for %s" % path)
         try:
             results = json.load(open(filename, 'r'))['results']
         except:
@@ -654,7 +656,7 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
             write_results(results, filename, path=path, time=time.time() - start_time, branding=branding, web=web)
         except:
             # Couldn't write
-            LOG.debug("Couldn't write to file %s" % filename)
+            LOG.err("Couldn't write to file %s" % filename)
 
     # We've filters defined, so filter data
     if include or exclude:
