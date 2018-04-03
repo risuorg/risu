@@ -124,11 +124,16 @@ discover_rhrelease(){
 # We do check on ID_LIKE so we can discard between dpkg or rpm access
 discover_os(){
     FILE="${CITELLUS_ROOT}/etc/os-release"
-    is_required_file ${FILE}
-    if is_lineinfile ^ID_LIKE ${FILE};then
-        OS=$(awk -F "=" '$1=="ID_LIKE" {print $2}' ${FILE}|tr -d '"')
-    else
-        OS=$(awk -F "=" '$1=="ID" {print $2}' ${FILE}|tr -d '"')
+    if [[ -f  ${FILE} ]]; then
+        if is_lineinfile ^ID_LIKE ${FILE};then
+            OS=$(awk -F "=" '$1=="ID_LIKE" {print $2}' ${FILE}|tr -d '"')
+        else
+            OS=$(awk -F "=" '$1=="ID" {print $2}' ${FILE}|tr -d '"')
+        fi
+    elif [[ -f ${CITELLUS_ROOT}/etc/redhat-release ]]; then
+        OS='fedora'
+    elif [[ -f ${CITELLUS_ROOT}/etc/debian_version ]]; then
+        OS='debian'
     fi
 
     if [ "$(echo ${OS}|tr ' ' '\n'|grep -i fedora|wc -l)" != "0" ]; then
