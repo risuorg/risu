@@ -82,12 +82,21 @@ is_required_command(){
 
 is_enabled(){
     if [ "x$CITELLUS_LIVE" = "x1" ]; then
-        systemctl is-enabled "$1" > /dev/null 2>&1
+        if [ ! -z "$(which systemctl 2>/dev/null)" ]; then
+            systemctl is-enabled "$1" > /dev/null 2>&1
+        elif [ ! -z "$(which chkconfig 2>/dev/null)" ]; then
+            chkconfig --list "$1" | grep -q '3:on'
+        else
+            echo "could not check for enabled service $1 during live execution" >&2
+            exit ${RC_SKIPPED}
+        fi
     elif [ "x$CITELLUS_LIVE" = "x0" ]; then
         if [[ -f "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-unit-files" ]]; then
             grep -q "$1.* enabled" "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-unit-files"
+        elif [ -f "${CITELLUS_ROOT}"/chkconfig ]; then
+            grep -q "$1.*3:on" "${CITELLUS_ROOT}"/chkconfig
         else
-            echo "required systemd files not found." >&2
+            echo "could not check for enabled service $1" >&2
             exit ${RC_SKIPPED}
         fi
     fi
