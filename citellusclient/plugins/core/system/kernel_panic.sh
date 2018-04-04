@@ -28,21 +28,28 @@ if [[ "x$CITELLUS_LIVE" = "x0" ]];  then
         echo "file /sos_commands/logs/journalctl_--all_--this-boot_--no-pager not found." >&2
         exit ${RC_SKIPPED}
     fi
-
-    is_lineinfile "oom-killer" "${journalctl_file}" && echo "oom-killer detected" >&2 && exit ${RC_FAILED}
-    is_lineinfile "soft lockup" "${journalctl_file}" && echo "soft lockup detected" >&2 && exit ${RC_FAILED}
+    is_lineinfile "oom-killer" "${journalctl_file}" && echo "oom-killer detected" >&2 && flag=1
+    is_lineinfile "soft lockup" "${journalctl_file}" && echo "soft lockup detected" >&2 && flag=1
+    is_lineinfile "blocked for more than 120 seconds"  "${journalctl_file}" && echo "hung task detected"  >&2 && flag=1
 
 elif [[ "x$CITELLUS_LIVE" = "x1" ]]; then
     if journalctl -u kernel --no-pager --boot | grep -q "oom-killer"; then
         echo "oom-killer detected" >&2
-        exit ${RC_FAILED}
+        flag=1
     fi
     if journalctl -u kernel --no-pager --boot | grep -q "soft lockup"; then
         echo "soft lockup detected" >&2
-        exit ${RC_FAILED}
+        flag=1
+    fi
+    if journalctl -u kernel --no-pager --boot | grep -q "blocked for more than 120 seconds"; then
+        echo "hung task detected" >&2
+        flag=1
     fi
 fi
 
+if [[ "x$flag" = "x1" ]]; then
+    exit ${RC_FAILED}
+else
 # If the above conditions did not trigger RC_FAILED we are good.
-exit ${RC_OKAY}
-
+    exit ${RC_OKAY}
+fi
