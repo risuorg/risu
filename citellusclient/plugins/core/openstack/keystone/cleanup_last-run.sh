@@ -40,7 +40,7 @@ else
     NOW="$(cat ${CITELLUS_ROOT}/date)"
 fi
 
-LASTRUN=$(awk '/Total expired tokens removed/ { print $1 " " $2 }' "${CITELLUS_ROOT}/var/log/keystone/keystone.log" | tail -1)
+LASTRUN=$(grep 'Total expired tokens removed' "${CITELLUS_ROOT}/var/log/keystone/keystone.log"|awk '/Total expired tokens removed/ { print $1 " " $2 }' | tail -1)
 if [[ "x${LASTRUN}" = "x" ]];then
     echo "no recorded last run of token removal" >&2
     exit ${RC_FAILED}
