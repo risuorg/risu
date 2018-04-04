@@ -31,7 +31,7 @@ if is_process cinder-volume; then
     TIMEOUT=$(iniparser "${CITELLUS_ROOT}/etc/cinder/cinder.conf" DEFAULT rpc_response_timeout)
 
     if [[ "x$TIMEOUT" != "x" ]]; then
-        LINES=$(awk -F'.*/naviseccli.*returned: 0 in |s execute' '$2>$TIMEOUT {print $2}' "${CITELLUS_ROOT}/var/log/cinder/volume.log"|wc -l)
+        LINES=$(grep -E 'naviseccli.*returned' "${CITELLUS_ROOT}/var/log/cinder/volume.log"| awk -F'.*/naviseccli.*returned: 0 in |s execute' '$2>$TIMEOUT {print $2}'|wc -l)
         if [[ "x$LINES" != "x0" ]]; then
             echo $"Detected possible Navicli timeouts in cinder" >&2
             exit ${RC_FAILED}
