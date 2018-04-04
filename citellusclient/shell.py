@@ -608,7 +608,7 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
         except:
             hash = False
 
-        if hash not in hashes and '-' not in plugin['id']:
+        if hash not in hashes and '-' not in results[plugin]['id']:
             # We now check all the available plugins for hashes
             # Plugin hash is not matched in results, rerun plugin as it has changed
             missingplugins.append(plugin)
