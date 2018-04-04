@@ -31,7 +31,6 @@ import hashlib
 import imp
 import logging
 import os.path
-import pprint
 import time
 import shutil
 import sys
@@ -102,7 +101,8 @@ def parse_args():
                    action='append')
     p.add_argument("--output", "-o",
                    metavar="FILENAME",
-                   help=_("Write results to JSON file FILENAME"))
+                   help=_("Write results to JSON file FILENAME"),
+                   default='magui.json')
     p.add_argument("--run", "-r",
                    action='store_true',
                    help=_("Force run of citellus instead of reading existing 'citellus.json'"))
@@ -223,7 +223,7 @@ def callcitellus(path=False, plugins=False, forcerun=False, include=None, exclud
     """
 
     # Call citellus normally, if existing prior results those will be loaded or executed + saved
-    results = citellus.docitellus(path=path, plugins=plugins, forcerun=forcerun, include=include, exclude=exclude)
+    results = citellus.docitellus(path=path, plugins=plugins, forcerun=forcerun, include=include, exclude=exclude, quiet=True)
 
     # Process plugin output from multiple plugins to be returned as a dictionary of ID's for each plugin
     new_dict = {}
@@ -271,10 +271,15 @@ def domagui(sosreports, citellusplugins, options=False):
         # Check all sosreports for data for all plugins
         for sosreport in sosreports:
             for plugin in plugins:
-                try:
+                # Skip composed plugins as they will cause rerun
+                if '-' not in plugin:
                     result[sosreport][plugin]['result']
-                except:
-                    rerun = True
+                    if plugin not in result[sosreport]:
+                        result[sosreport][plugin]['result']
+                    try:
+                        result[sosreport][plugin]['result']
+                    except:
+                        rerun = True
 
             # If we were running against a folder with just json, cancel rerun as it will fail
             if rerun:
@@ -426,8 +431,6 @@ def main():
     Main code stub
     """
 
-    start_time = time.time()
-
     options = parse_args()
 
     # Configure ENV language before anything else
@@ -497,125 +500,16 @@ def main():
 
     # Get all data from hosts for all plugins, etc
     if options.output:
-
-        citellusplugins = []
-        # Prefill with all available plugins and the ones we want to filter for
-        for extension in extensions:
-            citellusplugins.extend(extension.listplugins())
-
-        global allplugins
-        allplugins = citellusplugins
-
-        # By default, flatten plugin list for all extensions
-        newplugins = []
-        for each in citellusplugins:
-            newplugins.extend(each)
-
-        citellusplugins = newplugins
-
-        def runmaguiandplugs(sosreports, citellusplugins, filename=options.output, extranames=None):
-            """
-            Runs magui and magui plugins
-            :param sosreports: sosreports to process
-            :param citellusplugins: citellusplugins to run
-            :param filename: filename to save to
-            :param extranames: additional filenames used
-            :return: results of execution
-            """
-            # Run with all plugins so that we get all data back
-            grouped = domagui(sosreports=sosreports, citellusplugins=citellusplugins)
-
-            # Run Magui plugins
-            result = []
-            for plugin in magplugs:
-                start_time = time.time()
-                # Get output from plugin
-                data = filterresults(data=grouped, triggers=magtriggers[plugin.__name__.split(".")[-1]])
-                returncode, out, err = plugin.run(data=data, quiet=options.quiet)
-                updates = {'rc': returncode,
-                           'out': out,
-                           'err': err}
-
-                subcategory = os.path.split(plugin.__file__)[0].replace(os.path.join(maguidir, 'plugins', ''), '')
-
-                if subcategory:
-                    if len(os.path.normpath(subcategory).split(os.sep)) > 1:
-                        category = os.path.normpath(subcategory).split(os.sep)[0]
-                    else:
-                        category = subcategory
-                        subcategory = ""
-                else:
-                    category = ""
-
-                mydata = {'plugin': plugin.__name__.split(".")[-1],
-                          'name': "magui: %s" % os.path.basename(plugin.__name__.split(".")[-1]),
-                          'id': hashlib.md5(plugin.__file__.replace(maguidir, '').encode('UTF-8')).hexdigest(),
-                          'description': plugin.help(),
-                          'long_name': plugin.help(),
-                          'result': updates,
-                          'time': time.time() - start_time,
-                          'category': category,
-                          'subcategory': subcategory}
-
-                result.append(mydata)
-            branding = _("                                                  ")
-            citellus.write_results(results=result, filename=filename, source='magui', path=sosreports, time=time.time() - start_time, branding=branding, web=True, extranames=extranames)
-
-            return result
-
-        results = runmaguiandplugs(sosreports=sosreports, citellusplugins=citellusplugins, filename=options.output)
-
-        # Now we've Magui saved for the whole execution provided in 'results' var
-
-        # Start working on autogroups
-        for result in results:
-            if result['plugin'] == 'metadata-outputs':
-                autodata = result['result']['err']
-
-        print(_("Running magui for autogroups:\n"))
-
-        groups = autogroups(autodata)
-        processedgroups = {}
-        filenames = []
-        for group in groups:
-            basefilename = os.path.splitext(options.output)
-            filename = basefilename[0] + "-" + group + basefilename[1]
-            print(filename)
-            runautogroup = True
-            for progroup in processedgroups:
-                if groups[group] == processedgroups[progroup]:
-                    runautogroup = False
-                    runautofile = progroup
-
-            if runautogroup:
-                # Analisys was missing for this group, run
-                runmaguiandplugs(sosreports=groups[group], citellusplugins=citellusplugins, filename=filename, extranames=options.output)
-                filenames.append(filename)
-            else:
-                # Copy file instead of run as it was already existing
-                LOG.debug("Copying old file from %s to %s" % (runautofile, filename))
-                shutil.copyfile(runautofile, filename)
-            processedgroups[filename] = groups[group]
-
-        print(_("\nFinished autogroup generation."))
-        if len(filenames) > 0:
-            # We've written additional files, so save again magui.json with additional references
-            # TODO: Intead of running magui and plugins again (should be fast, but not 'smart', we should save the json with the extra data.)
-            # As we've the extra data writing inside the function we might have to rewrite several steps so we went the code-reuse path
-
-            results = runmaguiandplugs(sosreports=sosreports, citellusplugins=citellusplugins, filename=options.output, extranames=filenames)
-
-    # Here preprocess output to use filtering, etc
-    # "result" does contain all data for both all citellus plugins and all magui plugins, need to filter for output on CLI only
-
-    # As we don't have a proper place to store output and we're running the full set of tests only when output is going
-    # to be stored (and then, the screen output is based on the already cached citellus results), it's probably not worth at this point to change this
+        dooutput = options.output
+    else:
+        dooutput = False
 
     citellusplugins = []
     # Prefill with all available plugins and the ones we want to filter for
     for extension in extensions:
-        citellusplugins.extend(extension.listplugins(options))
+        citellusplugins.extend(extension.listplugins())
 
+    global allplugins
     allplugins = citellusplugins
 
     # By default, flatten plugin list for all extensions
@@ -625,27 +519,29 @@ def main():
 
     citellusplugins = newplugins
 
-    # Run with only the enabled plugins so that we get all data back for printing on console
-    grouped = domagui(sosreports=sosreports, citellusplugins=citellusplugins, options=options)
+    def runmaguiandplugs(sosreports, citellusplugins, filename=dooutput, extranames=None):
+        """
+        Runs magui and magui plugins
+        :param sosreports: sosreports to process
+        :param citellusplugins: citellusplugins to run
+        :param filename: filename to save to
+        :param extranames: additional filenames used
+        :return: results of execution
+        """
+        # Run with all plugins so that we get all data back
+        grouped = domagui(sosreports=sosreports, citellusplugins=citellusplugins)
 
-    # Run Magui plugins
-    result = []
-    for plugin in magplugs:
-        start_time = time.time()
-        # Get output from plugin
-        data = filterresults(data=grouped, triggers=magtriggers[plugin.__name__.split(".")[-1]])
-        returncode, out, err = plugin.run(data=data, quiet=options.quiet)
-        updates = {'rc': returncode,
-                   'out': out,
-                   'err': err}
+        # Run Magui plugins
+        result = []
+        for plugin in magplugs:
+            start_time = time.time()
+            # Get output from plugin
+            data = filterresults(data=grouped, triggers=magtriggers[plugin.__name__.split(".")[-1]])
+            returncode, out, err = plugin.run(data=data, quiet=options.quiet)
+            updates = {'rc': returncode,
+                       'out': out,
+                       'err': err}
 
-        adddata = True
-        if options.quiet:
-            if returncode in [citellus.RC_OKAY, citellus.RC_SKIPPED]:
-                adddata = False
-
-        if adddata:
-            # If RC is to be stored, process further
             subcategory = os.path.split(plugin.__file__)[0].replace(os.path.join(maguidir, 'plugins', ''), '')
 
             if subcategory:
@@ -658,16 +554,65 @@ def main():
                 category = ""
 
             mydata = {'plugin': plugin.__name__.split(".")[-1],
+                      'name': "magui: %s" % os.path.basename(plugin.__name__.split(".")[-1]),
                       'id': hashlib.md5(plugin.__file__.replace(maguidir, '').encode('UTF-8')).hexdigest(),
                       'description': plugin.help(),
+                      'long_name': plugin.help(),
                       'result': updates,
                       'time': time.time() - start_time,
                       'category': category,
                       'subcategory': subcategory}
 
             result.append(mydata)
+        if filename:
+            branding = _("                                                  ")
+            citellus.write_results(results=result, filename=filename, source='magui', path=sosreports, time=time.time() - start_time, branding=branding, web=True, extranames=extranames)
 
-    pprint.pprint(result, width=1)
+        return result
+
+    results = runmaguiandplugs(sosreports=sosreports, citellusplugins=citellusplugins, filename=options.output)
+
+    # Now we've Magui saved for the whole execution provided in 'results' var
+
+    # Start working on autogroups
+    for result in results:
+        if result['plugin'] == 'metadata-outputs':
+            autodata = result['result']['err']
+
+    print(_("Running magui for autogroups:\n"))
+
+    groups = autogroups(autodata)
+    processedgroups = {}
+    filenames = []
+    for group in groups:
+        basefilename = os.path.splitext(options.output)
+        filename = basefilename[0] + "-" + group + basefilename[1]
+        print(filename)
+        runautogroup = True
+        for progroup in processedgroups:
+            if groups[group] == processedgroups[progroup]:
+                runautogroup = False
+                runautofile = progroup
+
+        if runautogroup:
+            # Analisys was missing for this group, run
+            runmaguiandplugs(sosreports=groups[group], citellusplugins=citellusplugins, filename=filename, extranames=options.output)
+            filenames.append(filename)
+        else:
+            # Copy file instead of run as it was already existing
+            LOG.debug("Copying old file from %s to %s" % (runautofile, filename))
+            shutil.copyfile(runautofile, filename)
+        processedgroups[filename] = groups[group]
+
+    print(_("\nFinished autogroup generation."))
+    if len(filenames) > 0:
+        # We've written additional files, so save again magui.json with additional references
+        # TODO: Intead of running magui and plugins again (should be fast, but not 'smart', we should save the json with the extra data.)
+        # As we've the extra data writing inside the function we might have to rewrite several steps so we went the code-reuse path
+
+        results = runmaguiandplugs(sosreports=sosreports, citellusplugins=citellusplugins, filename=options.output, extranames=filenames)
+
+    print("\nResults written to %s" % options.output)
 
 
 if __name__ == "__main__":
