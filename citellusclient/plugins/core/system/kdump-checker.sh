@@ -31,14 +31,23 @@ if ! is_active kdump; then
     exit ${RC_FAILED}
 fi
 
-is_required_file "${CITELLUS_ROOT}/boot/grub2/grub.cfg"
 is_required_file "${CITELLUS_ROOT}/etc/kdump.conf"
 
-grub_conf="${CITELLUS_ROOT}/boot/grub2/grub.cfg"
+grubs=( /boot/grub2/grub.cfg \
+        /boot/grub/grub.conf \
+        /etc/grub2.cfg       \
+        /etc/grub.conf       \
+        /boot/efi/EFI/redhat/grub.cfg )
+
+for f in "${CITELLUS_ROOT}/${grubs[@]}"; do
+    [ -f "$f" ] && grub_conf="$f" && break
+done
+[ -z "$grub_conf" ] && echo "Could not locate grub configuration. Skipping" && exit ${RC_SKIPPED}
+
 kdump_conf="${CITELLUS_ROOT}/etc/kdump.conf"
 
-if ! is_lineinfile "linux.*crashkernel=(auto|[0-9]+[mM]@[0-9]+*[mM]|[0-9]+*[mM])" ${grub_conf}; then
-    echo $"missing crashkernel on kernel cmdline" >&2
+if ! is_lineinfile "vmlinuz.*crashkernel=(auto|[0-9]+[mM]@[0-9]+*[mM]|[0-9]+*[mM])" ${grub_conf}; then
+    echo $"missing crashkernel from kernel cmdline in grub configuration" >&2
     flag=1
 fi
 if ! is_lineinfile "^path" ${kdump_conf}; then
