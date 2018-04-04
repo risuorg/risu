@@ -315,10 +315,8 @@ def findplugins(folders=None, include=None, exclude=None, executables=True, file
     # Walk the folders and subfolders for files based on our criteria
     for folder in folders:
         for root, dirnames, filenames in os.walk(folder):
-            LOG.debug('looking for plugins in: %s', root)
             for filename in filenames:
                 filepath = os.path.join(root, filename)
-                LOG.debug('considering: %s', filepath)
                 passesextension = False
                 if fileextension:
                     if os.path.splitext(filepath)[1] == fileextension:
@@ -555,7 +553,7 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
 
     if dontsave:
         filename = None
-    elif filename:
+    elif filename and not quiet:
         LOG.info("Storing output on file %s" % filename)
 
     missingplugins = []
@@ -564,7 +562,8 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
         results = {}
     else:
         # If we can load, fill variable, else, just blank it
-        LOG.info("Reading Existing citellus analysis from disk for %s" % path)
+        if not quiet:
+            LOG.info("Reading Existing citellus analysis from disk for %s" % path)
         try:
             results = json.load(open(filename, 'r'))['results']
         except:
@@ -587,7 +586,7 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
     LOG.debug("Removing old plugins from results: %s" % delete)
 
     for plugid in allids:
-        if plugid not in results:
+        if plugid not in results and '-' not in plugid:
             missingplugins.append(plugid)
 
     LOG.debug("Adding new plugin id's missing to be executed: %s" % missingplugins)
@@ -609,7 +608,7 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
         except:
             hash = False
 
-        if hash not in hashes:
+        if hash not in hashes and '-' not in plugin['id']:
             # We now check all the available plugins for hashes
             # Plugin hash is not matched in results, rerun plugin as it has changed
             missingplugins.append(plugin)
@@ -627,7 +626,7 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
     # We clear list of plugins to run to just grab the missing data on them, and leave others
     pluginstorun = []
     for plugin in plugins:
-        if plugin['id'] in missingplugins:
+        if plugin['id'] in missingplugins and '-' not in plugin['id']:
             pluginstorun.append(plugin)
 
     if not quiet:
