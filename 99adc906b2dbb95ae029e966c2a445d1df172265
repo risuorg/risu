@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06ffcb20_1aa493d7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2018-04-04T22:12:19Z",
+      "side": 1,
+      "message": "new line should contain:\n\nCloses #530\n\nSo once merged the issue is closed automatically",
+      "revId": "99adc906b2dbb95ae029e966c2a445d1df172265",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
