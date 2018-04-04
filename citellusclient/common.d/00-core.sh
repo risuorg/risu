@@ -57,7 +57,14 @@ is_required_file(){
 
 is_active(){
     if [ "x$CITELLUS_LIVE" = "x1" ]; then
-        systemctl is-active "$1" > /dev/null 2>&1
+        if [ ! -z "$(which systemctl 2>/dev/null)" ]; then
+            systemctl is-active "$1" > /dev/null 2>&1
+        elif [ ! -z "$(which service 2>/dev/null)" ]; then
+            service "$1" status > /dev/null 2>&1
+        else
+            echo "could not check for active service $1 during live execution" >&2
+            exit ${RC_SKIPPED}
+        fi
     elif [ "x$CITELLUS_LIVE" = "x0" ]; then
         if [[ -f "${systemctl_list_units_file}" ]]; then
             grep -q "$1.* active" "${systemctl_list_units_file}"
