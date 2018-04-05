@@ -823,6 +823,7 @@ def parse_args(default=False, parse=False):
     s = p.add_argument_group('Config options')
     s.add_argument("--dump-config", help=_("Dump config to console to be saved into file"), default=False, action="store_true")
     s.add_argument("--no-config", default=False, help=_("Do not read configuration from file %s or ~/.citellus.conf" % os.path.join(citellusdir, "citellus.conf")), action="store_true")
+    s.add_argument("--progress", default='=', help=_("Character to use as progress meter"))
 
     p.add_argument('sosreport', nargs='?')
 
@@ -1257,11 +1258,11 @@ def main():
 
     global progress
     if options.luke:
-        progress = colorize('=', 'blue')
+        progress = colorize(options.progress, 'blue')
     elif options.darth:
-        progress = colorize('=', 'red')
+        progress = colorize(options.progress, 'red')
     else:
-        progress = colorize('=', 'purple')
+        progress = colorize(options.progress, 'purple')
 
     if options.quiet:
         progress = ''
