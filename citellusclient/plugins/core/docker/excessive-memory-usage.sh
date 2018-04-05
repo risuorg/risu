@@ -18,7 +18,7 @@
 # we can run this on fs snapshot or live system
 
 # long_name: Checks for high mem usage docker version
-# description: Some docker versions have excesive memory usage
+# description: Some docker versions have excessive memory usage
 # priority: 700
 
 # Load common functions

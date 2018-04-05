@@ -557,9 +557,9 @@
     "1417abf032d18718b89edd646fa08b87": {
       "category": "docker", 
       "hash": "3df91f899265be74aa960e128195eeaf", 
-      "description": "Some docker versions have excesive memory usage", 
-      "plugin": "/citellus/citellusclient/plugins/core/docker/excesive-memory-usage.sh", 
-      "name": "excesive-memory-usage", 
+      "description": "Some docker versions have excessive memory usage", 
+      "plugin": "/citellus/citellusclient/plugins/core/docker/excessive-memory-usage.sh", 
+      "name": "excessive-memory-usage", 
       "priority": 700, 
       "long_name": "Checks for high mem usage docker version", 
       "bugzilla": "", 

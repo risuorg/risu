@@ -44,7 +44,7 @@ mode: fs snapshot /cases/02016541/sosreport-controller-0.02016541-20180225232251
 # /citellus/citellusclient/plugins/core/system/sysstat.sh: failed
     systat package missing
 # /citellus/citellusclient/plugins/core/security/spectre/rhev-hypervisor7.sh: skipped
-# /citellus/citellusclient/plugins/core/docker/excesive-memory-usage.sh: okay
+# /citellus/citellusclient/plugins/core/docker/excessive-memory-usage.sh: okay
 # /citellus/citellusclient/plugins/core/bugzilla/openstack/neutron/1474092.sh: okay
 # /citellus/citellusclient/plugins/core/bugzilla/openstack/neutron/1450223.sh: skipped
 # /citellus/citellusclient/plugins/faraday/positive/openstack/bundle-openstack-policy.txt: okay
