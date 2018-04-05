@@ -496,7 +496,7 @@ def execonshell(filename):
 
 
 def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=False, savepath=False, include=None,
-               exclude=None, okay=RC_OKAY, skipped=RC_SKIPPED, failed=RC_FAILED, web=False, dontsave=False, quiet=False):
+               exclude=None, okay=RC_OKAY, skipped=RC_SKIPPED, failed=RC_FAILED, web=False, dontsave=False, quiet=False, pgstart=None, pgend=None):
     """
     Runs citellus scripts on specified root folder
     :param web: Copy html to folder
@@ -630,11 +630,11 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
             pluginstorun.append(plugin)
 
     if not quiet:
-        sys.stdout.write('\n[l%%%l]=[]')
+        sys.stdout.write('%s' % pgstart)
         sys.stdout.flush()
     execution = p.map(runplugin, pluginstorun)
     if not quiet:
-        print('\n')
+        print('%s\n' % pgend)
 
     # Update back 'results' with the execution of the missing plugins
     for plugin in execution:
@@ -796,6 +796,11 @@ def parse_args(default=False, parse=False):
     g.add_argument("--darth",
                    action='store_true',
                    help=argparse.SUPPRESS)
+
+    g.add_argument("--progress", default='=', help=_("Character to use as progress meter"))
+    g.add_argument("--progress-colour", default='purple', help=_("Colour to use for progress meter"), choices=["black", 'red', 'green', 'orange', 'blue', 'magenta', 'purple', 'cyan', 'lightgrey', 'darkgrey', 'lightred', 'lightgreen', 'yellow', 'lightblue', 'pink', 'lightcyan'])
+    g.add_argument("--progress-start", default='\n[l%%%l]=[]', help=_("String to use as progress start"))
+    g.add_argument("--progress-end", default='', help=_("String to use as progress end"))
 
     g = p.add_argument_group('Filtering options')
     g.add_argument("-i", "--include",
@@ -1236,7 +1241,7 @@ def main():
 
         for path in paths:
             results = docitellus(live=False, path=path, plugins=allplugins, lang=options.lang, forcerun=False,
-                                 savepath=False, include=options.include, exclude=options.exclude, web=False)
+                                 savepath=False, include=options.include, exclude=options.exclude, web=False, pgstart=options.progress_start, pgend=options.progress_end)
             print("Report for path: %s" % path)
             printresults(results, options)
         sys.exit(0)
@@ -1257,11 +1262,11 @@ def main():
 
     global progress
     if options.luke:
-        progress = colorize('=', 'blue')
+        progress = colorize(options.progress, 'blue')
     elif options.darth:
-        progress = colorize('=', 'red')
+        progress = colorize(options.progress, 'red')
     else:
-        progress = colorize('=', 'purple')
+        progress = colorize(options.progress, options.progress_colour)
 
     if options.quiet:
         progress = ''
@@ -1271,7 +1276,7 @@ def main():
     # By default
     forcerun = options.run
 
-    results = docitellus(live=options.live, path=CITELLUS_ROOT, plugins=allplugins, lang=options.lang, forcerun=forcerun, savepath=options.output, include=options.include, exclude=options.exclude, web=options.web)
+    results = docitellus(live=options.live, path=CITELLUS_ROOT, plugins=allplugins, lang=options.lang, forcerun=forcerun, savepath=options.output, include=options.include, exclude=options.exclude, web=options.web, pgstart=options.progress_start, pgend=options.progress_end)
 
     # Print results based on the sorted order based on returned results from
     # parallel execution
