@@ -43,7 +43,7 @@ search_for_INCLUDE() {
                 [ -f "$RADDB/$file/$f" ] || continue
                 echo "$RADDB/$file/$f"
             done
-        else
+        elif [[ -f "$RADDB/$file" ]]; then
             echo "$RADDB/$file"
         fi
     done
