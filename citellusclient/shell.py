@@ -865,7 +865,7 @@ def array_to_config(config, path=False):
                     if value is not True and value != "True":
                         valid.append(value)
             else:
-                if key == 'verbose':
+                if key in ['verbose', 'live', 'darth', 'mace', 'luke', 'only-failed', 'list-plugins', 'list-extensions', 'list-categories', 'description', 'list-hooks', 'web', 'run', 'find', 'blame', 'quiet']:
                     valid.append("--%s" % key)
                 else:
                     valid.append("--%s" % key.encode('ascii', 'ignore'))
