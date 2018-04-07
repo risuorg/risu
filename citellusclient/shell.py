@@ -247,7 +247,7 @@ def show_logo():
     print("\n".join(logo))
 
 
-def findallplugins(options=None):
+def findallplugins(options=None, filter=False):
     """
     Finds all plugins that citellus recognized
     :return: array of plugins found (dictionaries)
@@ -265,6 +265,19 @@ def findallplugins(options=None):
     for extension in plugins:
         for plugin in extension:
             newplugins.append(plugin)
+
+    if filter:
+        plugins = newplugins
+        if options.include:
+            plugins = [plugin for plugin in plugins
+                       for filterp in options.include
+                       if filterp in plugin['plugin']]
+
+        if options.exclude:
+            plugins = [plugin for plugin in plugins
+                       if not any(filterp in plugin['plugin'] for filterp in options.exclude)]
+
+        newplugins = plugins
 
     return newplugins
 
@@ -632,7 +645,10 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
     if not quiet:
         sys.stdout.write('%s' % pgstart)
         sys.stdout.flush()
+
+    # Do the actual execution of plugins
     execution = p.map(runplugin, pluginstorun)
+
     if not quiet:
         print('%s\n' % pgend)
 
@@ -1158,7 +1174,11 @@ def main():
         return
 
     # Prefill plugin list as we'll be still using it for execution
-    plugins = findallplugins(options)
+    if options.live:
+        filter = True
+    else:
+        filter = False
+    plugins = findallplugins(options, filter=filter)
 
     global allplugins
     allplugins = plugins
