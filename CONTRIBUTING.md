@@ -80,6 +80,8 @@ folder for examples.
 
 If you want to contribute also Unittests for your plugins, check [TESTING.md](TESTING.md)
 
+For contributing translations check [i18n.md](doc/i18n.md)
+
 # How to debug your test
 
 We've included a file named `env-for.debug.sh` in the root folder of citellus repo that allows to be sourced and later execute your script.

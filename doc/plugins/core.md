@@ -54,17 +54,6 @@ fi
 - `$PLUGIN_BASEDIR` -- this contains the folder of the plugin that is being executed.
   The `$PLUGIN_BASEDIR` can be used to source files within the plugin folder.
 
-## Poedit
-Once you have decided to start a translation or to improve a new one, you must use the citellus.pot as 'base' for a new translation OR if you already have one created:
-
-- Open prior translation with poedit (so you can edit missing to translate strings)
-- If a plugin has introduced new strings, those will not appear on the file you're editting, so you'll need to update it:
-    - Execute `./extractpot.sh` to update `citellus.pot` with the new strings
-    - While your older translation is open, select from the `poedit` menus: `Catalog`, then `Update from POT file`, and then select `citellus.pot`.
-    - The new strings will appear in your editor, remember to `save` to create `citellus.po` for your language and the compiled `citellus.mo`.
-    - Remember to add those files to the repo in your commit if you want others to take advantage of it.
-    - Execute `citellus.py --lang $LANG` to test it
-
 ## Common Functions
 We provide helper script `common-functions.sh` to help define
 location of various files. To use this script you can source it at the top:
