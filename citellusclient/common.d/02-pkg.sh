@@ -55,6 +55,6 @@ is_required_pkg_over(){
     VERSION=$(is_pkg $1 2>&1|sort -V|tail -1)
     if ! is_pkg_over "${@}" ; then
         echo "package $1 version $VERSION is lower than required ($2)." >&2
-        exit ${RC_FAILED}
+        exit ${RC_SKIPPED}
     fi
 }
