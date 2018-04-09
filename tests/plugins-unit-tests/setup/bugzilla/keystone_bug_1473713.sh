@@ -36,7 +36,12 @@ case $2 in
         echo "2017-08-29 14:01:53.159 352327 ERROR keystone DBDeadlock: (pymysql.err.InternalError) (1205, u'Lock wait timeout exceeded; try restarting transaction') [SQL: u'DELETE FROM token WHERE token.expires <= %(expires_1)s'] [parameters: {u'expires_1': datetime.datetime(2017, 8, 17, 21, 14, 41)}]" > "$FOLDER/var/log/keystone/keystone.log"
         ;;
 
-    skip)
+    skipped)
         # Do nothing, the folder will be empty and test should be skipped
+        ;;
+
+    *)
+        echo "Unexpected mode '$2'!"
+        exit 2
         ;;
 esac

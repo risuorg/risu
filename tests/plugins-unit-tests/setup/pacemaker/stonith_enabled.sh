@@ -40,7 +40,12 @@ case $2 in
         echo  "stonith-enabled: false" > "$FOLDER/sos_commands/pacemaker/pcs_config"
         ;;
 
-    skip)
+    skipped)
         # Do nothing, the folder will be empty and test should be skipped
+        ;;
+
+    *)
+        echo "Unexpected mode '$2'!"
+        exit 2
         ;;
 esac

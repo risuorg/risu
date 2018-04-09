@@ -36,7 +36,12 @@ case $2 in
         echo "MaxRequestWorkers" > "$FOLDER/var/log/httpd/error_log"
         ;;
 
-    skip)
+    skipped)
         # Do nothing, the folder will be empty and test should be skipped
+        ;;
+
+    *)
+        echo "Unexpected mode '$2'!"
+        exit 2
         ;;
 esac

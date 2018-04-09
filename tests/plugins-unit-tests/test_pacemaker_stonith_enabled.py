@@ -56,7 +56,7 @@ def runtest(testtype='False'):
     tmpdir = tempfile.mkdtemp(prefix='citellus-tmp')
 
     # Setup test for 'testtype'
-    subprocess.call([uttest, uttest, testtype, tmpdir])
+    subprocess.check_output([uttest, uttest, testtype, tmpdir], stderr=subprocess.STDOUT)
 
     # Run test against it
     res = citellus.docitellus(path=tmpdir, plugins=citplugs)

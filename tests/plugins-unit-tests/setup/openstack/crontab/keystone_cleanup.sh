@@ -38,7 +38,12 @@ case $2 in
         echo "1 0 * * * keystone-manage token_flush" > "$FOLDER/var/spool/cron/keystone"
         ;;
 
-    skip)
+    skipped)
         # Do nothing, the folder will be empty and test should be skipped
+        ;;
+
+    *)
+        echo "Unexpected mode '$2'!"
+        exit 2
         ;;
 esac
