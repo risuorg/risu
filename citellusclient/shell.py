@@ -910,7 +910,10 @@ def read_config():
     config = {}
     for filename in [os.path.join(citellusdir, 'citellus.conf'), os.path.expanduser("~/.citellus.conf")]:
         if os.path.exists(filename):
-            config = json.load(open(filename, 'r'))
+            try:
+                config = json.load(open(filename, 'r'))
+            except:
+                config = {}
 
     return config
 
