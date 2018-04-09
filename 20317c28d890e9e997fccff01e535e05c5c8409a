@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "886b66ec_fe8bdf94",
+        "filename": "citellusclient/plugins/core/system/kernel-tainted.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2018-04-09T05:39:02Z",
+      "side": 1,
+      "message": "Can we replace the echo \"xxxxx\"\nfor echo $\"xxxx\"\n\nSo that we can incorporate them to the language file?",
+      "revId": "20317c28d890e9e997fccff01e535e05c5c8409a",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
