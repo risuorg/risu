@@ -44,6 +44,6 @@ if is_process nova-compute; then
         exit ${RC_OKAY}
     fi
 else
-    echo $"works only on controller node" >&2
+    echo $"works only on compute node" >&2
     exit ${RC_SKIPPED}
 fi
