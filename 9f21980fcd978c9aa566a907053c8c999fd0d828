@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03c62ee7_d38aff3e",
+        "filename": "citellusclient/plugins/core/system/systemd_ordering_cycle_start.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2018-04-09T13:35:18Z",
+      "side": 1,
+      "message": "same as the other, trap for removing file on exit",
+      "revId": "9f21980fcd978c9aa566a907053c8c999fd0d828",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
