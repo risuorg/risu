@@ -786,9 +786,6 @@ def parse_args(default=False, parse=False):
                    action="store_true",
                    help=_("Define locale to use"),
                    default='en_US')
-    g.add_argument("--only-failed", "-F",
-                   action="store_true",
-                   help=_("Only show failed tests"))
     g.add_argument("-v", "--verbose",
                    help=_("Increase verbosity of output (may be "
                           "specified more than once)"),
@@ -881,7 +878,7 @@ def array_to_config(config, path=False):
                     if value is not True and value != "True":
                         valid.append(value)
             else:
-                if key in ['verbose', 'live', 'darth', 'mace', 'luke', 'only-failed', 'list-plugins', 'list-extensions', 'list-categories', 'description', 'list-hooks', 'web', 'run', 'find', 'blame', 'quiet']:
+                if key in ['verbose', 'live', 'darth', 'mace', 'luke', 'list-plugins', 'list-extensions', 'list-categories', 'description', 'list-hooks', 'web', 'run', 'find', 'blame', 'quiet']:
                     valid.append("--%s" % key)
                 else:
                     valid.append("--%s" % key.encode('ascii', 'ignore'))
@@ -1061,7 +1058,7 @@ def printresults(results, options):
         if rc == RC_FAILED:
             text = text + " [%s]" % colorize(text=priority, color=priocolor)
 
-        if options.only_failed and rc in [RC_OKAY, RC_SKIPPED]:
+        if not options.verbose and rc in [RC_OKAY, RC_SKIPPED]:
             continue
 
         if not options.blame:
