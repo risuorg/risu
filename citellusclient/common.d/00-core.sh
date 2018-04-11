@@ -159,3 +159,9 @@ discover_os(){
     fi
     echo "${OS}"
 }
+
+# Function removing comments (pound sign) and trimming leading and ending spaces
+strip_and_trim() {
+    local file="$1"
+    egrep -v "^\s*($|#.*)" $file | sed -e 's/^[ \t]*//' -e 's/[ \t]*$//'
+}
