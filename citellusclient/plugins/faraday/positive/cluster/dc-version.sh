@@ -19,7 +19,7 @@
 
 # long_name: Checks dc-version in pacemaker
 # description: Reports dc-version in pacemaker cluster
-# path: ${CITELLUS_ROOT}/sos_commands/pacemaker/pcs_property_list_--all
+# path: Pacemaker-dc-version
 # priority: 900
 
 # Load common functions
