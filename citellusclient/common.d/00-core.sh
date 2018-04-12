@@ -44,6 +44,17 @@ iniparser(){
     END{ print tolower(value) }' $1
 }
 
+is_required_directory(){
+    for dir in "$@"; do
+        if [[ ! -d ${dir} ]];  then
+            # to remove the ${CITELLUS_ROOT} from the stderr.
+            dir=${dir#${CITELLUS_ROOT}}
+            echo "required directory $dir not found." >&2
+            exit ${RC_SKIPPED}
+        fi
+    done
+}
+
 is_required_file(){
     for file in "$@"; do
         if [[ ! -f ${file} ]];  then
