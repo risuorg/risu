@@ -43,6 +43,9 @@ def run(data, quiet=False):  # do not edit this line
     string = _("                                                  ")
 
     if 'GSS' in string:
+        # start with FAILED status
+        failed = int(os.environ['RC_FAILED'])
+
         # We now fake results to list kbase for linking
         fakedata = {"category": "support",
                     "hash": "c6e2fd181c31e921b3a9b1c3677f143c",
@@ -52,7 +55,7 @@ def run(data, quiet=False):  # do not edit this line
                     "priority": 1000,
                     "long_name": "https://access.redhat.com/solutions/3405671",
                     "bugzilla": "",
-                    "result": {"rc": citellus.RC_FAILED,
+                    "result": {"rc": failed,
                                "err": "Please do link provided kbase https://access.redhat.com/solutions/3405671 for metrics on usefulness of the tool",
                                "out": ""},
                     "time": 0,
