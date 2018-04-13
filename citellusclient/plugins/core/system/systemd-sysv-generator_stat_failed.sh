@@ -33,13 +33,13 @@ if [[ "x$CITELLUS_LIVE" = "x0" ]];  then
     journal="$journalctl_file"
 else
     journal="$(mktemp)"
-    trap "/bin/rm $journal" EXIT
-    journalctl -t systemd-sysv-generator --no-pager --boot > $journal
+    trap "/bin/rm ${journal}" EXIT
+    journalctl -t systemd-sysv-generator --no-pager --boot > ${journal}
 fi
 
-if is_lineinfile "$REGEXP" $journal; then
+if is_lineinfile "$REGEXP" ${journal}; then
     echo $">>> systemd-sysv-generator \"stat failed\" detected" >&2
-    egrep "$REGEXP" $journal >&2
+    egrep "$REGEXP" ${journal} >&2
     exit ${RC_FAILED}
 fi
 

@@ -33,8 +33,8 @@ if [[ "x$CITELLUS_LIVE" = "x0" ]]; then
     journal="$journalctl_file"
 else
     journal="$(mktemp)"
-    trap "/bin/rm $journal" EXIT
-    journalctl -t systemd --no-pager --boot > $journal
+    trap "/bin/rm ${journal}" EXIT
+    journalctl -t systemd --no-pager --boot > ${journal}
 fi
 
 if is_lineinfile "$REGEXP" "${journal}"; then
@@ -46,8 +46,8 @@ if is_lineinfile "$REGEXP" "${journal}"; then
             found=1
             break
         done
-        [[ $found -eq 1 ]] || continue
-        if [[ $summary_printed -eq 0 ]]; then
+        [[ ${found} -eq 1 ]] || continue
+        if [[ ${summary_printed} -eq 0 ]]; then
             summary_printed=1
             echo $">>> systemd couldn't find some units (symlinks to non-root filesystem)" >&2
         fi
