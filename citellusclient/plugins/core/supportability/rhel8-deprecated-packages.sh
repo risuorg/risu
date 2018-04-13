@@ -34,7 +34,7 @@ flag=0
 echo "Following packages will be deprecated in RHEL8:" >&2
 
 for package in authconfig pam_pkcs11 pam_krb5 openldap-servers mod_auth_kerb python-kerberos python-krbV python-requests-kerberos hesiod mod_nss mod_revocator ypserv ypbind portmap yp-tools nss-pam-ldapd mesa-private-llvm libdbi libdbi-drivers sendmail dmraid rsyslog-libdbi tcp_wrappers libcxgb3 cxgb3 libvirt-daemon-driver-lxc libvirt-daemon-lxc libvirt-login-shell; do
-    is_rpm $package >&2 && flag=1
+    is_rpm ${package} >&2 && flag=1
 done
 
 if [[ "x$flag" -eq "x1" ]]; then

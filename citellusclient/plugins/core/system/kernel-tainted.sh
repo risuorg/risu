@@ -119,7 +119,7 @@ if [[ "x$TAINT" = "x0" ]]; then
     exit ${RC_OKAY}
 else
     echo $"Kernel is tainted" ${TAINT} >&2
-    taintcheck $TAINT
+    taintcheck ${TAINT}
     exit ${RC_FAILED}
 fi
 

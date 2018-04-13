@@ -32,7 +32,7 @@ is_initscript() {
 
     # If we find 'chkconfig: XYZ' or 'Provides: NAME', assume we have an
     # iniscript
-    is_lineinfile '^#\s+(chkconfig|Provides):\s+.*$' $file && return 0
+    is_lineinfile '^#\s+(chkconfig|Provides):\s+.*$' ${file} && return 0
 
     # Otherwise, check for hints (shebang + presence of start/stop/status
     # keywords)
@@ -41,7 +41,7 @@ is_initscript() {
     # >= 3 (half of the number of items + 1).
     local confidence=0
     # Search for shebang on first line
-    if head -1 $file | grep -q '^#!'; then
+    if head -1 ${file} | grep -q '^#!'; then
         let confidence+=1
     fi
 
@@ -52,7 +52,7 @@ is_initscript() {
         fi
     done
 
-    [[ $confidence -ge 3 ]] && return 0
+    [[ ${confidence} -ge 3 ]] && return 0
 
     # Failure
     return 1
@@ -64,7 +64,7 @@ files_having_su=()
 for file in $(/bin/ls ${CITELLUS_ROOT}/etc/rc.d/init.d/*); do
     [[ -f "$file" ]] || continue
 
-    content="$(strip_and_trim $file)"
+    content="$(strip_and_trim ${file})"
     is_initscript "$file" "$content" || continue
 
     su_found=0
@@ -83,10 +83,10 @@ for file in $(/bin/ls ${CITELLUS_ROOT}/etc/rc.d/init.d/*); do
     done
 
     # Finding 'runuser -l' needs a review
-    [[ $runuser_l_found -ne 0 ]] && files_having_runuser_l=( "${files_having_runuser_l[@]}" "$file" )
-    if [[ $su_found -ne 0 ]]; then
+    [[ ${runuser_l_found} -ne 0 ]] && files_having_runuser_l=( "${files_having_runuser_l[@]}" "$file" )
+    if [[ ${su_found} -ne 0 ]]; then
         # Finding both 'runuser' and 'su' indicates administrator likely 'fixed' the initscript
-        [[ $runuser_found -ne 0 ]] && continue
+        [[ ${runuser_found} -ne 0 ]] && continue
         # Finding only 'su' needs a review
         files_having_su=( "${files_having_su[@]}" "$file" )
     fi
@@ -106,4 +106,4 @@ if [[ -n "$files_having_su" ]]; then
     EXIT_STATUS=${RC_FAILED}
 fi
 
-exit $EXIT_STATUS
+exit ${EXIT_STATUS}
