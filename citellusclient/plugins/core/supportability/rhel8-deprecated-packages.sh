@@ -37,7 +37,7 @@ for package in authconfig pam_pkcs11 pam_krb5 openldap-servers mod_auth_kerb pyt
     is_rpm $package >&2 && flag=1
 done
 
-if [[ "x$flag" -eq "x1" ]]; then
+if [[ "$flag" -eq "1" ]]; then
     echo $"Check RHEL7.5 deprecation notice" >&2
     exit ${RC_FAILED}
 fi
