@@ -645,6 +645,9 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
     if not quiet:
         sys.stdout.write('%s' % pgstart)
         sys.stdout.flush()
+    else:
+        global progress
+        progress = ''
 
     # Do the actual execution of plugins
     execution = p.map(runplugin, pluginstorun)
@@ -1261,7 +1264,7 @@ def main():
 
         for path in paths:
             results = docitellus(live=False, path=path, plugins=allplugins, lang=options.lang, forcerun=False,
-                                 savepath=False, include=options.include, exclude=options.exclude, web=False, pgstart=options.progress_start, pgend=options.progress_end)
+                                 savepath=False, include=options.include, exclude=options.exclude, web=False, pgstart=options.progress_start, pgend=options.progress_end, quiet=options.quiet)
             print("Report for path: %s" % path)
             printresults(results, options)
         sys.exit(0)
