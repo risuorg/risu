@@ -110,6 +110,11 @@ def parse_args():
                    metavar="hosts",
                    help=_("Gather data via ansible from remote hosts to process."))
 
+    p.add_argument("--max-hosts",
+                   default=10,
+                   metavar="max-hosts",
+                   help=_("Define the number of maximum hosts checks"))
+
     g = p.add_argument_group('Filtering options')
     g.add_argument("-q", "--quiet",
                    help=_("Enable quiet mode"),
@@ -503,6 +508,10 @@ def main():
         dooutput = options.output
     else:
         dooutput = False
+
+    if len(sosreports) > options.max_hosts:
+        print("Maximum number of sosreports provided, exitting")
+        sys.exit(0)
 
     citellusplugins = []
     # Prefill with all available plugins and the ones we want to filter for
