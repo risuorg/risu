@@ -1,9 +1,9 @@
 # Based on https://github.com/RHsyseng/container-rhel-examples/blob/master/starter-rhel-atomic/Dockerfile
 FROM registry.centos.org/centos/centos7-atomic:latest
-MAINTAINER Citellus developers <citellus-dev@redhat.com>
+MAINTAINER Citellus developers <citellus-dev _AT_ redhat.com>
 
 LABEL name="citellus/citellus" \
-      maintainer="citellus-dev@redhat.com" \
+      maintainer="citellus-dev _AT_ redhat.com" \
       vendor="Citellus" \
       version="0.1.9" \
       release="1" \
