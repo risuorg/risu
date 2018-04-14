@@ -24,6 +24,8 @@
 
 STONITHNOTENABLED=$"stonith is not enabled"
 
+is_required_file "${CITELLUS_ROOT}/etc/corosync/corosync.conf"
+
 # we can run this against fs snapshot or live system
 
 if [[ "x$CITELLUS_LIVE" = "x1" ]];  then

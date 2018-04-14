@@ -24,7 +24,13 @@
 
 # we can run this against fs snapshot or live system
 if [[ ${CITELLUS_LIVE} -eq 0 ]]; then
-    FILE="${CITELLUS_ROOT}/sos_commands/pacemaker/pcs_status"
+    for CLUSTER_DIRECTORY in "pacemaker" "cluster"; do
+        if [[ -d "${CITELLUS_ROOT}/sos_commands/${CLUSTER_DIRECTORY}" ]]; then
+            PCS_DIRECTORY="${CITELLUS_ROOT}/sos_commands/${CLUSTER_DIRECTORY}"
+        fi
+    done
+
+    FILE="${PCS_DIRECTORY}/pcs_status"
 elif [[ ${CITELLUS_LIVE} -eq 1 ]];then
     is_required_command "pcs"
     FILE=$(mktemp)
