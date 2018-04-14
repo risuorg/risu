@@ -30,8 +30,8 @@ from datetime import datetime
 from datetime import timedelta
 
 # Getting environment
-root_path = os.getenv('CITELLUS_ROOT', '')
-
+global root_path
+root_path = os.environ['CITELLUS_ROOT']
 
 # Defining some globals
 now = datetime.now()
@@ -171,18 +171,18 @@ def main():
     global RC_FAILED
     global RC_SKIPPED
 
-    for filename in [os.path.join(root_path, "/etc/redhat-release"), os.path.join(root_path, "/var/log/messages")]:
+    for filename in [os.path.join(root_path, "etc/redhat-release"), os.path.join(root_path, "var/log/messages")]:
         if not os.access(filename, os.R_OK):
             exitcitellus(code=RC_SKIPPED, msg='Missing access to required file %s' % filename)
 
-    if not os.path.isfile(os.path.join(root_path, "/etc/redhat-release")):
+    if not os.path.isfile(os.path.join(root_path, "etc/redhat-release")):
         exitcitellus(code=RC_SKIPPED, msg="Non Red Hat system, skipping")
-    if "Red Hat Enterprise Linux Server release 7" not in open(os.path.join(root_path, "/etc/redhat-release"), 'r').read():
+    if "Red Hat Enterprise Linux Server release 7" not in open(os.path.join(root_path, "etc/redhat-release"), 'r').read():
         exitcitellus(code=RC_SKIPPED, msg="Only works on Red Hat Enterprise Linux 7 or greater, skipping")
 
     # Syslog parsing starts here
     try:
-        f = open(os.path.join(root_path, "/var/log/messages"), "r")
+        f = open(os.path.join(root_path, "var/log/messages"), "r")
     except:
         # Not needed but allows syntax checkers not to complain that f might not be defined
         f = []
