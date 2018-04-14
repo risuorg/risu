@@ -77,7 +77,7 @@ class CitellusTest(TestCase):
             new_dict.append(rc)
             if results[item]['result']['out'] != "":
                 print(results[item])
-                assert results[item]['result']['out]'] == ""
+                assert results[item]['result']['out'] == ""
             out_dict.append(results[item]['result']['out'])
 
         assert sorted(set(new_dict)) == sorted({okay, failed, skipped})
@@ -99,7 +99,7 @@ class CitellusTest(TestCase):
                 assert results[item]['result']['err'] != ""
             if results[item]['result']['out'] != "":
                 print(results[item])
-                assert results[item]['result']['out]'] == ""
+                assert results[item]['result']['out'] == ""
             out_dict.append(results[item]['result']['out'])
 
             new_dict.append(rc)
