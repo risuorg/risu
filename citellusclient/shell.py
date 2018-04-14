@@ -1155,7 +1155,7 @@ def main():
     if not options.live:
         if options.sosreport:
             # Live not specified, so we will use file snapshot
-            CITELLUS_ROOT = options.sosreport
+            CITELLUS_ROOT = os.path.abspath(options.sosreport)
         elif not options.list_plugins and not options.list_extensions and not options.list_hooks:
             LOG.error(_("When not running in Live mode, snapshot path is required"))
             sys.exit(1)
