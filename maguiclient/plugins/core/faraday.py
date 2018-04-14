@@ -23,7 +23,7 @@ def init():
     :return: List of triggers for Plugin
     """
 
-    triggers = citellus.getids(include=['faraday/positive'])
+    triggers = citellus.getids(include=['faraday/'])
     return triggers
 
 
@@ -46,10 +46,17 @@ def run(data, quiet=False):  # do not edit this line
             if data[ourdata]['sosreport'][sosreport]['rc'] != citellus.RC_SKIPPED:
                 allskipped = False
 
-        if not allskipped:
-            if len(sorted(set(err))) != 1:
-                message.append(_("%s contents differ across hosts, ensure proper behavior.") % data[ourdata]['path'])
-                returncode = citellus.RC_FAILED
+        if data[ourdata]['path'].strip() != '':
+            if not allskipped:
+                if 'positive' in data[ourdata]['plugin']:
+                    if len(sorted(set(err))) != 1:
+                        message.append(_("%s contents DIFFER across hosts, ensure proper behavior.") % data[ourdata]['path'].replace("${CITELLUS_ROOT}", ""))
+                        returncode = citellus.RC_FAILED
+
+                if 'negative' in data[ourdata]['plugin']:
+                    if len(sorted(set(err))) == 1:
+                        message.append(_("%s contents are the SAME across hosts, ensure proper behavior.") % data[ourdata]['path'].replace("${CITELLUS_ROOT}", ""))
+                        returncode = citellus.RC_FAILED
 
     out = ''
     err = "\n".join(message)
@@ -63,5 +70,5 @@ def help():  # do not edit this line
     :return: help text
     """
 
-    commandtext = _("Plugin for reporting back files that should NOT be different across sosreports")
+    commandtext = _("Plugin for reporting back files that should BE or NOT be different across sosreports")
     return commandtext
