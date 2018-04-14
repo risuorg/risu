@@ -143,6 +143,7 @@ def parse_args():
                    action="store_true",
                    help=_("Define locale to use"),
                    default='en_US')
+    g.add_argument("--call-home", default=False, help=_("Server URI to HTTP-post upload generated citellus.json for metrics"), metavar='serveruri')
 
     p.add_argument('sosreports', nargs='*')
 
@@ -528,7 +529,7 @@ def main():
 
     citellusplugins = newplugins
 
-    def runmaguiandplugs(sosreports, citellusplugins, filename=dooutput, extranames=None):
+    def runmaguiandplugs(sosreports, citellusplugins, filename=dooutput, extranames=None, serveruri=False):
         """
         Runs magui and magui plugins
         :param sosreports: sosreports to process
@@ -575,11 +576,11 @@ def main():
             result.append(mydata)
         if filename:
             branding = _("                                                  ")
-            citellus.write_results(results=result, filename=filename, source='magui', path=sosreports, time=time.time() - start_time, branding=branding, web=True, extranames=extranames)
+            citellus.write_results(results=result, filename=filename, source='magui', path=sosreports, time=time.time() - start_time, branding=branding, web=True, extranames=extranames, serveruri=serveruri)
 
         return result
 
-    results = runmaguiandplugs(sosreports=sosreports, citellusplugins=citellusplugins, filename=options.output)
+    results = runmaguiandplugs(sosreports=sosreports, citellusplugins=citellusplugins, filename=options.output, serveruri=options.call_home)
 
     # Now we've Magui saved for the whole execution provided in 'results' var
 

@@ -32,6 +32,7 @@ import json
 import logging
 import os
 import re
+import requests
 import shutil
 import subprocess
 import sys
@@ -509,7 +510,7 @@ def execonshell(filename):
 
 
 def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=False, savepath=False, include=None,
-               exclude=None, okay=RC_OKAY, skipped=RC_SKIPPED, failed=RC_FAILED, web=False, dontsave=False, quiet=False, pgstart=None, pgend=None):
+               exclude=None, okay=RC_OKAY, skipped=RC_SKIPPED, failed=RC_FAILED, web=False, dontsave=False, quiet=False, pgstart=None, pgend=None, serveruri=False):
     """
     Runs citellus scripts on specified root folder
     :param web: Copy html to folder
@@ -668,7 +669,7 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
         try:
             # Write results to disk
             branding = _("                                                  ")
-            write_results(results, filename, path=path, time=time.time() - start_time, branding=branding, web=web)
+            write_results(results, filename, path=path, time=time.time() - start_time, branding=branding, web=web, serveruri=serveruri)
         except:
             # Couldn't write
             LOG.err("Couldn't write to file %s" % filename)
@@ -841,6 +842,7 @@ def parse_args(default=False, parse=False):
     s = p.add_argument_group('Config options')
     s.add_argument("--dump-config", help=_("Dump config to console to be saved into file"), default=False, action="store_true")
     s.add_argument("--no-config", default=False, help=_("Do not read configuration from file %s or ~/.citellus.conf" % os.path.join(citellusdir, "citellus.conf")), action="store_true")
+    s.add_argument("--call-home", default=False, help=_("Server URI to HTTP-post upload generated citellus.json for metrics"), metavar='serveruri')
 
     p.add_argument('sosreport', nargs='?')
 
@@ -950,7 +952,7 @@ def dump_config(options, path=False):
 
 
 def write_results(results, filename, live=False, path=None, time=0, source='citellus', branding='', web=False,
-                  extranames=None):
+                  extranames=None, serveruri=False):
     """
     Writes result
     :param web: copy html viewer
@@ -996,6 +998,15 @@ def write_results(results, filename, live=False, path=None, time=0, source='cite
             json.dump(data, fd, indent=2)
     except:
         LOG.debug("Failed to write to file %s" % filename)
+
+    # Code to upload file
+    if serveruri:
+        files = {'upload_file': open(filename,'rb')}
+        values = {}
+        try:
+            requests.post(serveruri, files=files, data=values)
+        except:
+            LOG.debug("Upload to serveruri failed")
 
 
 def regexpfile(filename=False, regexp=False):
@@ -1296,7 +1307,7 @@ def main():
     # By default
     forcerun = options.run
 
-    results = docitellus(live=options.live, path=CITELLUS_ROOT, plugins=allplugins, lang=options.lang, forcerun=forcerun, savepath=options.output, include=options.include, exclude=options.exclude, web=options.web, pgstart=options.progress_start, pgend=options.progress_end)
+    results = docitellus(live=options.live, path=CITELLUS_ROOT, plugins=allplugins, lang=options.lang, forcerun=forcerun, savepath=options.output, include=options.include, exclude=options.exclude, web=options.web, pgstart=options.progress_start, pgend=options.progress_end, serveruri=options.call_home)
 
     # Print results based on the sorted order based on returned results from
     # parallel execution
