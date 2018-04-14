@@ -24,6 +24,8 @@
 # description: Check if there are pacemaker resources disabled
 # priority: 600
 
+is_required_file "${CITELLUS_ROOT}/etc/corosync/corosync.conf"
+
 if [[ "x$CITELLUS_LIVE" = "x1" ]];  then
     pacemaker_status=$(systemctl is-active pacemaker || :)
     if [[ "$pacemaker_status" = "active" ]]; then

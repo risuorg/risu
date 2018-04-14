@@ -27,6 +27,10 @@ case $2 in
         # Touch the systemctl command we check
         mkdir -p "$FOLDER/sos_commands/systemd/"
         echo "pacemaker active" > "$FOLDER/sos_commands/systemd/systemctl_list-units_--all"
+
+        mkdir -p "$FOLDER/etc/corosync"
+        echo "XXXX" > "$FOLDER/etc/corosync/corosync.conf"
+
         mkdir -p "$FOLDER/sos_commands/pacemaker"
         echo  "stonith-enabled: True" > "$FOLDER/sos_commands/pacemaker/pcs_config"
         ;;
@@ -36,6 +40,10 @@ case $2 in
         # Touch the systemctl command we check
         mkdir -p "$FOLDER/sos_commands/systemd/"
         echo "pacemaker active" > "$FOLDER/sos_commands/systemd/systemctl_list-units_--all"
+
+        mkdir -p "$FOLDER/etc/corosync"
+        echo "XXXX" > "$FOLDER/etc/corosync/corosync.conf"
+
         mkdir -p "$FOLDER/sos_commands/pacemaker"
         echo  "stonith-enabled: false" > "$FOLDER/sos_commands/pacemaker/pcs_config"
         ;;

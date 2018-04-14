@@ -23,6 +23,8 @@
 
 [[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
+is_required_file "${CITELLUS_ROOT}/etc/corosync/corosync.conf"
+
 if [[ "x$CITELLUS_LIVE" = "x0" ]]; then
     if is_active "pacemaker"; then
         for CLUSTER_DIRECTORY in "pacemaker" "cluster"; do
