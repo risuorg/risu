@@ -113,7 +113,7 @@ def parse_args():
     p.add_argument("--max-hosts",
                    default=10,
                    metavar="max-hosts",
-                   help=_("Define the number of maximum hosts checks"))
+                   help=_("Define the number of maximum symultaneus hosts checks"))
 
     g = p.add_argument_group('Filtering options')
     g.add_argument("-q", "--quiet",
