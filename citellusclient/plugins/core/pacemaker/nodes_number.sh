@@ -36,6 +36,8 @@ count_nodes(){
     fi
 }
 
+is_required_file "${CITELLUS_ROOT}/etc/corosync/corosync.conf"
+
 if ! is_active pacemaker; then
     echo "pacemaker is not running on this node" >&2
     exit ${RC_SKIPPED}
