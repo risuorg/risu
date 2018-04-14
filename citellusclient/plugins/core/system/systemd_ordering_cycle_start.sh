@@ -33,13 +33,13 @@ if [[ "x$CITELLUS_LIVE" = "x0" ]]; then
     journal="$journalctl_file"
 else
     journal="$(mktemp)"
-    trap "/bin/rm $journal" EXIT
-    journalctl -t systemd --no-pager --boot > $journal
+    trap "/bin/rm ${journal}" EXIT
+    journalctl -t systemd --no-pager --boot > ${journal}
 fi
 
-if is_lineinfile "$REGEXP" $journal; then
+if is_lineinfile "$REGEXP" ${journal}; then
     echo $">>> systemd deleted some 'start' jobs" >&2
-    egrep "$REGEXP" $journal >&2
+    egrep "$REGEXP" ${journal} >&2
     exit ${RC_FAILED}
 fi
 

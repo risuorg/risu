@@ -39,7 +39,7 @@ search_for_INCLUDE() {
             # If file is a directoy, expand to files in that directory
             file=${file%/}                      # remove ending /
             local f
-            for f in $(/bin/ls -1 $RADDB/$file); do
+            for f in $(/bin/ls -1 ${RADDB}/${file}); do
                 [ -f "$RADDB/$file/$f" ] || continue
                 echo "$RADDB/$file/$f"
             done
@@ -58,8 +58,8 @@ newfiles="$ALL_FILES"
 while [ -n "$newfiles" ]; do
     files="$newfiles"
     newfiles=""
-    for file in $(search_for_INCLUDE $files); do
-        [[ " $ALL_FILES " != *\ $file\ * ]] || continue
+    for file in $(search_for_INCLUDE ${files}); do
+        [[ " $ALL_FILES " != *\ ${file}\ * ]] || continue
         newfiles="${newfiles:+$newfiles }$file"
     done
     ALL_FILES="${ALL_FILES:+$ALL_FILES }$newfiles"
@@ -69,8 +69,8 @@ files_using_old_regex=()
 files_using_new_regex=()
 new_regexmode=0
 
-for file in $ALL_FILES; do
-    content="$(strip_and_trim $file)"
+for file in ${ALL_FILES}; do
+    content="$(strip_and_trim ${file})"
     if echo "$content" | egrep -q "$OLD_REGEXP"; then
         files_using_old_regex=( "${files_using_old_regex[@]}" "$file" )
     fi
@@ -86,11 +86,11 @@ done
 # - 'old style' regex are found but regex mode is 'new style'
 # - 'new style' regex are found but regex mode is 'old style'
 
-if [[ -n "$files_using_old_regex" ]] && [[ $new_regexmode -eq 1 ]]; then
+if [[ -n "$files_using_old_regex" ]] && [[ ${new_regexmode} -eq 1 ]]; then
     echo $">>> new regex mode is used, but old regex style was found in some files" >&2
     printf '%s\n' "${files_using_old_regex[@]}" | sed "s#^${CITELLUS_ROOT}##g" >&2
     exit ${RC_FAILED}
-elif [[ -n "$files_using_new_regex" ]] && [[ $new_regexmode -eq 0 ]]; then
+elif [[ -n "$files_using_new_regex" ]] && [[ ${new_regexmode} -eq 0 ]]; then
     echo $">>> old regex mode is used, but new regex style was found in some files" >&2
     printf '%s\n' "${files_using_new_regex[@]}" | sed "s#^${CITELLUS_ROOT}##g" >&2
     exit ${RC_FAILED}
