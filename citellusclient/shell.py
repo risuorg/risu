@@ -32,7 +32,13 @@ import json
 import logging
 import os
 import re
-import requests
+
+# Do not require everyone to use requests
+try:
+    import requests
+except:
+    requests = False
+
 import shutil
 import subprocess
 import sys
@@ -1000,7 +1006,7 @@ def write_results(results, filename, live=False, path=None, time=0, source='cite
         LOG.debug("Failed to write to file %s" % filename)
 
     # Code to upload file
-    if serveruri:
+    if serveruri and requests:
         files = {'upload_file': open(filename, 'rb')}
         values = {}
         try:
