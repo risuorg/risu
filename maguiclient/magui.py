@@ -47,10 +47,15 @@ localedir = os.path.join(citellus.citellusdir, 'locale')
 global PluginsFolder
 PluginsFolder = os.path.join(maguidir, "plugins")
 
+global MaguiHooksFolder
+MaguiHooksFolder = os.path.join(maguidir, "hooks")
+
 global plugins
 plugins = []
 global plugtriggers
 plugtriggers = {}
+global maguihooks
+maguihooks = []
 
 trad = gettext.translation('citellus', localedir, fallback=True)
 
@@ -217,6 +222,41 @@ def initPlugins(options):
     return plugs, plugtriggers
 
 
+def getMaguiHooks(options=None):
+    """
+    Gets list of Hooks in the Hooks folder
+    :return: list of Hooks available
+    """
+
+    if not options:
+        hfilter = []
+    else:
+        hfilter = options.hfilter
+
+    possibleHooks = citellus.findplugins(folders=[MaguiHooksFolder], executables=False, exclude=['__init__.py', 'pyc'], include=hfilter, fileextension='.py')
+
+    # Sort hook names so that we can user XX_hook
+    sortedhooks = []
+    for i in possibleHooks:
+        sortedhooks.append(i['plugin'])
+
+    sortedhooks = sorted(set(sortedhooks))
+
+    global maguihooks
+    maguihooks = []
+    for i in sortedhooks:
+        module = os.path.splitext(os.path.basename(i))[0]
+        modpath = os.path.dirname(i)
+        try:
+            info = imp.find_module(module, [modpath])
+        except:
+            info = False
+        if i and info:
+            maguihooks.append({"name": module, "info": info})
+
+    return maguihooks
+
+
 def callcitellus(path=False, plugins=False, forcerun=False, include=None, exclude=None):
     """
     Do actual execution of citellus against data
@@ -322,6 +362,13 @@ def domagui(sosreports, citellusplugins, options=False):
                 # In this approach we don't need to update this code each time the plugin exports new metadata
                 if element not in ['time', 'result']:
                     grouped[plugin][element] = result[sosreport][plugin][element]
+
+    # Run the hook processing hooks on the results
+    for maguihook in citellus.initExtensions(extensions=getMaguiHooks())[0]:
+        LOG.debug("Running hook: %s" % maguihook.__name__.split('.')[-1])
+        newresults = maguihook.run(data=grouped)
+        if newresults:
+            grouped = dict(newresults)
 
     # We've now a matrix of grouped[plugin][sosreport] and then [text] [out] [err] [rc]
     return grouped

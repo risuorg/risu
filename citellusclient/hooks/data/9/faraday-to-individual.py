@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # encoding: utf-8
 #
-# Description: Hook for moving MTU global results to individual tests results
+# Description: Hook for moving faraday results to individual ones
 # Author: Pablo Iranzo Gomez (Pablo.Iranzo@gmail.com)
 
 from __future__ import print_function
@@ -42,7 +42,7 @@ def run(data, quiet=False):  # do not edit this line
 
     # Loop over plugin id's in data
     for pluginid in data:
-        if data[pluginid]['id'] == citellus.calcid(string='/plugins/faraday/positive/network/mtus.sh'):
+        if data[pluginid]['id'] in citellus.getids(include=['faraday/positive', 'faraday/negative']):
             # Make a copy of dict for working on it
             plugin = dict(data[pluginid])
 
@@ -55,16 +55,17 @@ def run(data, quiet=False):  # do not edit this line
             id = str(plugin['id'])
             ln = str(plugin['long_name'])
             desc = str(plugin['description'])
+            name = str(plugin['name'])
 
             # Iterate over NIC pairs
             for pair in err.split(";"):
                 if pair != '':
-                    # For each NIC pair, split on ":" for nic/MTU and fake plugin entry
+                    # For each value split and fake plugin entry
                     newid = "%s-%s" % (id, citellus.calcid(string=pair.split(":")[0]))
                     update = {'id': newid, 'description': '%s: %s' % (desc, pair.split(":")[0]),
                               'long_name': '%s: %s' % (ln, pair.split(":")[0]),
                               'plugin': '%s-%s' % (plugpath, pair.split(":")[0]),
-                              'name': 'mtu: %s' % pair}
+                              'name': 'Faraday: %s' % name}
 
                     resultupdate = {'result': {'err': pair, 'out': '', 'rc': rc}}
                     update.update(resultupdate)
@@ -94,5 +95,5 @@ def help():  # do not edit this line
     :return: help text
     """
 
-    commandtext = _("This hook proceses faraday-exec results and converts to faraday for Magui plugin to work")
+    commandtext = _("This hook proceses faraday results and fakes individual plugins out of them")
     return commandtext
