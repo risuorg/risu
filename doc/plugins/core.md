@@ -151,6 +151,11 @@ location of various files. To use this script you can source it at the top:
             echo "RHEL 7 not detected"
         fi
         ~~~
+    - NOTE: It might return '0', so it's convenient in your scripts to run something like:
+        ~~~sh
+        [[ "${RELEASE}" -eq '0' ]] && echo "RH release undefined" >&2 && exit ${RC_SKIPPED}
+        ~~~
+        To early leave the script
 
 - `is_pkg $pkg` -- returns package version if installed on system (RHEL/Centos/Fedora | Debian)
     - Example:
