@@ -272,7 +272,7 @@
                 // - if plugin categories match regex of checked categories
                 // - if plugin state match status filter
                 // - if plugin (name|text) match text filter, only if there's at least $ft_min_char char
-                if (cb_regex.test(plugin_cats) && /[a-z0-9]+/.test(cb_regex) && (filter_status.includes($(this).data("state"))) && (filter_text.length < ft_min_char || (filter_text.length >= ft_min_char && (plugin_txt && plugin_txt.toLowerCase().indexOf(filter_text) != -1) || (plugin_name && plugin_name.toLowerCase().indexOf(filter_text) != -1)))) {
+                if (cb_regex.test(plugin_cats) && /[A-z0-9]+/.test(cb_regex) && (filter_status.includes($(this).data("state"))) && (filter_text.length < ft_min_char || (filter_text.length >= ft_min_char && (plugin_txt && plugin_txt.toLowerCase().indexOf(filter_text) != -1) || (plugin_name && plugin_name.toLowerCase().indexOf(filter_text) != -1)))) {
                     $(this).show();
                     count += 1;
                 } else {
@@ -317,7 +317,7 @@
         // function that returns pluging names and category
         function getPluginNames(item) {
             var plugin_long_name = "";
-            var plugin_re = /plugins\/[^\/]+\/(.*)\/([^\/]+)\.[a-z0-9]+$/;
+            var plugin_re = /plugins\/[^\/]+\/(.*)\/([^\/]+)\.[A-z0-9]+$/;
             var plugin_name = item.name;
             var plugin_cat = "";
             if (plugin_re.test(item.plugin)) {
@@ -325,7 +325,7 @@
             } else {
                 plugin_cat = "magui"
             }
-            if (/[a-z0-9]+/.test(item.long_name) && !/^undefined$/.test(item.long_name)) {
+            if (/[A-z0-9]+/.test(item.long_name) && !/^undefined$/.test(item.long_name)) {
                 plugin_long_name = item.long_name;
             } else {
                 plugin_long_name = plugin_name;
@@ -481,7 +481,7 @@
                     row += '        <dd>N/A</dd>\n';
                 }
                 row += '             <dt>Error</dt>\n';
-                if (/[a-z0-9]+/.test(error_text)) {
+                if (/[A-z0-9]+/.test(error_text)) {
                     row += '             <dd><pre>' + error_text + '</pre></dd>\n';
                 } else {
                     row += '             <dd>N/A</dd>\n';
