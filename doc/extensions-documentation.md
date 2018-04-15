@@ -18,7 +18,7 @@ More docs: [Extension details](plugins/metadata.md)
 ## Faraday
 Extension to compare positive/negative affinities files across sosreports
 
-More docs: [Extension details](plugins/faraday.md)
+More docs: [Faraday Extension details](plugins/faraday.md) and [Faraday Exec Extension details](doc/plugins/faraday-exec.md)
 
 ## Winston
 

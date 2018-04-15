@@ -61,9 +61,28 @@ Check how does it look in an execution at:
     - <https://iranzo.github.io/blog/2018/01/16/recent-changes-in-magui-and-citellus/>
 
 ## Collaborate
+
 - Open issues/feature requests, etc at <https://github.com/zerodayz/citellus/issues>
 - Read the [Contributing](CONTRIBUTING.md) document on how to submit patches
 - Provide sosreports to check against via <https://www.dropbox.com/request/8LGneF9i9nc9RB6aqXge>, specially if running Debian based distributions and or Fedora/CentOS based ones so that we can improve support for it
+
+## Documentation
+
+| Documentation | Additional Notes |
+|---|---|
+|[Changelog](Changelog.md)| for everyone|
+|[Citellus](README.citellus.md) | for everyone |
+|[Magui](README.magui.md) | for everyone |
+|[General presentation](doc/presentation-revealmd.md)|for everyone|
+|[Devconf.cz 2018 presentation](doc/devconfcz2018-presentation-revealmd.md)|for everyone|
+|[Reviewer](REVIEWER.md)|for code reviewers|
+|[Contributing](CONTRIBUTING.md) | for plugin developers |
+|[Testing](TESTING.md) | for plugin developers: writing Unit Testing for plugins|
+|[internationalization i18n](doc/i18n.md)|for plugin developers|
+|[Ansible playbooks](doc/ansible-playbooks.md)| for plugin developers|
+|[Extensions documentation](doc/extensions-documentation.md)|for plugin developers|
+|[Extension development](doc/extension-development.md)|for extension developers willing to extend citellus plugin system|
+|[Magui plugin development](doc/magui-plugin-development.md)|for Magui plugin developers|
 
 ## Contact us!!
 You can reach to us via:
