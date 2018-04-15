@@ -25,7 +25,10 @@
 exitoudated(){
     echo "Please do check https://access.redhat.com/security/vulnerabilities/speculativeexecution for guidance" >&2
 }
+
 RELEASE=$(discover_rhrelease)
+[[ "${RELEASE}" -eq '0' ]] && echo "RH release undefined" >&2 && exit ${RC_SKIPPED}
+
 if [[ "${RELEASE}" -eq "7" ]]; then
     exitoudated
     is_required_rpm_over dracut-033-502.el7_4.1

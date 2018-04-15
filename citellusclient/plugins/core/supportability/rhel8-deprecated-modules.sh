@@ -22,10 +22,12 @@
 # Load common functions
 [[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
+#is_required_file ${CITELLUS_BASE}/etc/redhat-release
 RELEASE=$(discover_rhrelease)
+[[ "${RELEASE}" -eq '0' ]] && echo "RH release undefined" >&2 && exit ${RC_SKIPPED}
 
-if [[ "${RELEASE}" -gt "7" ]]; then
-    echo "test not applicable to EL8 releases or higher"
+if [[ ${RELEASE} -gt 7 ]]; then
+    echo "test not applicable to EL8 releases or higher" >&2
     exit ${RC_SKIPPED}
 fi
 
