@@ -24,8 +24,10 @@
 
 RELEASE=$(discover_rhrelease)
 
+[[ "${RELEASE}" -eq '0' ]] && echo "RH release undefined" >&2 && exit ${RC_SKIPPED}
+
 if [[ "${RELEASE}" -gt "7" ]]; then
-    echo "test not applicable to EL8 releases or higher"
+    echo "test not applicable to EL8 releases or higher" >&2
     exit ${RC_SKIPPED}
 fi
 

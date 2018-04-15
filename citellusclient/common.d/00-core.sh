@@ -136,16 +136,19 @@ is_lineinfile(){
 
 discover_rhrelease(){
     FILE="${CITELLUS_ROOT}/etc/redhat-release"
-    is_required_file ${FILE}
-    VERSION=$(cat ${FILE}|egrep -o "\(.*\)"|tr -d "()")
-    case ${VERSION} in
-        Maipo) echo 7 ;;
-        Santiago) echo 6 ;;
-        Tikanga) echo 5 ;;
-        Nahant) echo 4 ;;
-        Taroon) echo 3 ;;
-        *) echo 0 ;;
-    esac
+    if [[ ! -f ${FILE} ]]; then
+        echo 0
+    else
+        VERSION=$(cat ${FILE}|egrep -o "\(.*\)"|tr -d "()")
+        case ${VERSION} in
+            Maipo) echo 7 ;;
+            Santiago) echo 6 ;;
+            Tikanga) echo 5 ;;
+            Nahant) echo 4 ;;
+            Taroon) echo 3 ;;
+            *) echo 0 ;;
+        esac
+    fi
 }
 
 # We do check on ID_LIKE so we can discard between dpkg or rpm access
