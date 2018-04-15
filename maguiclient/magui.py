@@ -529,51 +529,56 @@ def main():
 
     citellusplugins = newplugins
 
-    def runmaguiandplugs(sosreports, citellusplugins, filename=dooutput, extranames=None, serveruri=False):
+    def runmaguiandplugs(sosreports, citellusplugins, filename=dooutput, extranames=None, serveruri=False, onlysave=False, result=None):
         """
         Runs magui and magui plugins
         :param sosreports: sosreports to process
         :param citellusplugins: citellusplugins to run
         :param filename: filename to save to
         :param extranames: additional filenames used
+        :param onlysave: Bool: Defines if we just want to save results
+        :param result: Results to write to disk
         :return: results of execution
         """
-        # Run with all plugins so that we get all data back
-        grouped = domagui(sosreports=sosreports, citellusplugins=citellusplugins)
 
-        # Run Magui plugins
-        result = []
-        for plugin in magplugs:
-            start_time = time.time()
-            # Get output from plugin
-            data = filterresults(data=grouped, triggers=magtriggers[plugin.__name__.split(".")[-1]])
-            returncode, out, err = plugin.run(data=data, quiet=options.quiet)
-            updates = {'rc': returncode,
-                       'out': out,
-                       'err': err}
+        start_time = time.time()
+        if not onlysave and not result:
+            # Run with all plugins so that we get all data back
+            grouped = domagui(sosreports=sosreports, citellusplugins=citellusplugins)
 
-            subcategory = os.path.split(plugin.__file__)[0].replace(os.path.join(maguidir, 'plugins', ''), '')
+            # Run Magui plugins
+            result = []
+            for plugin in magplugs:
+                plugstart_time = time.time()
+                # Get output from plugin
+                data = filterresults(data=grouped, triggers=magtriggers[plugin.__name__.split(".")[-1]])
+                returncode, out, err = plugin.run(data=data, quiet=options.quiet)
+                updates = {'rc': returncode,
+                           'out': out,
+                           'err': err}
 
-            if subcategory:
-                if len(os.path.normpath(subcategory).split(os.sep)) > 1:
-                    category = os.path.normpath(subcategory).split(os.sep)[0]
+                subcategory = os.path.split(plugin.__file__)[0].replace(os.path.join(maguidir, 'plugins', ''), '')
+
+                if subcategory:
+                    if len(os.path.normpath(subcategory).split(os.sep)) > 1:
+                        category = os.path.normpath(subcategory).split(os.sep)[0]
+                    else:
+                        category = subcategory
+                        subcategory = ""
                 else:
-                    category = subcategory
-                    subcategory = ""
-            else:
-                category = ""
+                    category = ""
 
-            mydata = {'plugin': plugin.__name__.split(".")[-1],
-                      'name': "magui: %s" % os.path.basename(plugin.__name__.split(".")[-1]),
-                      'id': hashlib.md5(plugin.__file__.replace(maguidir, '').encode('UTF-8')).hexdigest(),
-                      'description': plugin.help(),
-                      'long_name': plugin.help(),
-                      'result': updates,
-                      'time': time.time() - start_time,
-                      'category': category,
-                      'subcategory': subcategory}
+                mydata = {'plugin': plugin.__name__.split(".")[-1],
+                          'name': "magui: %s" % os.path.basename(plugin.__name__.split(".")[-1]),
+                          'id': hashlib.md5(plugin.__file__.replace(maguidir, '').encode('UTF-8')).hexdigest(),
+                          'description': plugin.help(),
+                          'long_name': plugin.help(),
+                          'result': updates,
+                          'time': time.time() - plugstart_time,
+                          'category': category,
+                          'subcategory': subcategory}
 
-            result.append(mydata)
+                result.append(mydata)
         if filename:
             branding = _("                                                  ")
             citellus.write_results(results=result, filename=filename, source='magui', path=sosreports, time=time.time() - start_time, branding=branding, web=True, extranames=extranames, serveruri=serveruri)
@@ -617,10 +622,8 @@ def main():
     print(_("\nFinished autogroup generation."))
     if len(filenames) > 0:
         # We've written additional files, so save again magui.json with additional references
-        # TODO: Intead of running magui and plugins again (should be fast, but not 'smart', we should save the json with the extra data.)
-        # As we've the extra data writing inside the function we might have to rewrite several steps so we went the code-reuse path
 
-        results = runmaguiandplugs(sosreports=sosreports, citellusplugins=citellusplugins, filename=options.output, extranames=filenames)
+        results = runmaguiandplugs(sosreports=sosreports, citellusplugins=citellusplugins, filename=options.output, extranames=filenames, onlysave=True, result=results)
 
     print("\nResults written to %s" % options.output)
 
