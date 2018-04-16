@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8286a6a_e9b3b0e9",
+        "filename": "citellusclient/plugins/core/system/multipath.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2018-04-16T11:59:01Z",
+      "side": 1,
+      "message": "In a system without multipath I\u0027m getting that error, should we check for existing /etc/multipath.conf file or skip the test instead before reaching to this?",
+      "revId": "c8130136bbe8b5ca779fa7c66e332850373df082",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
