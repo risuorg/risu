@@ -19,7 +19,3 @@ class MaguiTest(TestCase):
         # Call with no arguments
         res = magui.domagui(sosreports=[], citellusplugins=[])
         assert res == {}
-
-    def test_maguiformat(self):
-        res = magui.maguiformat(data={})
-        assert res == {}

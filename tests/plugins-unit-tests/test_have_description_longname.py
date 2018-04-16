@@ -17,7 +17,7 @@ class CitellusTest(TestCase):
     @pytest.mark.last
     def test_plugins_have_description(self):
         global extensions
-        extensions, exttriggers = citellus.initExtensions()
+        extensions, exttriggers = citellus.initPymodules()
         # get all plugins
         plugins = []
 
@@ -37,7 +37,7 @@ class CitellusTest(TestCase):
     @pytest.mark.last
     def test_plugins_have_long_name(self):
         global extensions
-        extensions, exttriggers = citellus.initExtensions()
+        extensions, exttriggers = citellus.initPymodules()
         # get all plugins
         plugins = []
 

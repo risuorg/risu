@@ -128,28 +128,27 @@ def colorize(text, color, stream=sys.stdout, force=False):
         color=color, text=text, reset=bcolors.end)
 
 
-def getExtensions():
+def getExtensions(folder=ExtensionFolder):
     """
     Gets list of Extensions in the Extensions folder
     :return: list of Extensions available
     """
 
-    Extensions = []
-    possibleExtensions = os.listdir(ExtensionFolder)
-    for i in possibleExtensions:
+    extensions = []
+    for i in os.listdir(folder):
         if i != "__init__.py" and os.path.splitext(i)[1] == ".py":
             i = os.path.splitext(i)[0]
         try:
-            info = imp.find_module(i, [ExtensionFolder])
+            info = imp.find_module(i, [folder])
         except:
             info = False
         if i and info:
-            Extensions.append({"name": i, "info": info})
+            extensions.append({"name": i, "info": info})
 
-    return Extensions
+    return extensions
 
 
-def loadExtension(Extension):
+def loadPymodules(Extension):
     """
     Loads selected Extension
     :param Extension: Extension to load
@@ -158,7 +157,7 @@ def loadExtension(Extension):
     return imp.load_module(Extension["name"], *Extension["info"])
 
 
-def initExtensions(extensions=getExtensions()):
+def initPymodules(extensions=getExtensions()):
     """
     Initializes Extensions
     :return: list of Extension modules initialized
@@ -167,7 +166,7 @@ def initExtensions(extensions=getExtensions()):
     exts = []
     exttriggers = {}
     for i in extensions:
-        newplug = loadExtension(i)
+        newplug = loadPymodules(i)
         exts.append(newplug)
         triggers = []
         for each in newplug.init():
@@ -176,27 +175,25 @@ def initExtensions(extensions=getExtensions()):
     return exts, exttriggers
 
 
-def getHooks(options=None):
+def getPymodules(options=None, folders=[HooksFolder]):
     """
     Gets list of Hooks in the Hooks folder
     :return: list of Hooks available
     """
 
-    if not options:
-        hfilter = []
-    else:
+    try:
         hfilter = options.hfilter
+    except:
+        hfilter = []
 
-    possibleHooks = findplugins(folders=[HooksFolder], executables=False, exclude=['__init__.py', 'pyc'], include=hfilter, fileextension='.py')
-
-    # Sort hook names so that we can user XX_hook
+    # Sort hook names so that we can use XX_hook
     sortedhooks = []
-    for i in possibleHooks:
+    for i in findplugins(folders=folders, executables=False, exclude=['__init__.py', 'pyc'], include=hfilter, fileextension='.py'):
         sortedhooks.append(i['plugin'])
 
     sortedhooks = sorted(set(sortedhooks))
 
-    Hooks = []
+    hooks = []
     for i in sortedhooks:
         module = os.path.splitext(os.path.basename(i))[0]
         modpath = os.path.dirname(i)
@@ -205,9 +202,9 @@ def getHooks(options=None):
         except:
             info = False
         if i and info:
-            Hooks.append({"name": module, "info": info})
+            hooks.append({"name": module, "info": info})
 
-    return Hooks
+    return hooks
 
 
 def which(binary):
@@ -225,7 +222,7 @@ def which(binary):
         """
         return os.path.isfile(filename) and os.access(filename, os.X_OK)
 
-    path, filename = os.path.split(binary)
+    path = os.path.split(binary)[0]
     if path:
         if is_executable(binary):
             return binary
@@ -261,7 +258,7 @@ def findallplugins(options=None, filter=False):
     """
     global extensions
     if not extensions:
-        extensions, exttriggers = initExtensions()
+        extensions, exttriggers = initPymodules()
 
     plugins = []
     for extension in extensions:
@@ -329,7 +326,7 @@ def findplugins(folders=None, include=None, exclude=None, executables=True, file
     # Workaround if calling externally
     global extensions
     if not extensions:
-        extensions, exttriggers = initExtensions()
+        extensions, exttriggers = initPymodules()
 
     plugins = []
     # Walk the folders and subfolders for files based on our criteria
@@ -404,6 +401,7 @@ def findplugins(folders=None, include=None, exclude=None, executables=True, file
 def runplugin(plugin, step=progress):
     """
     Runs provided plugin and outputs message
+    :param step: indicator of plugin executed
     :param plugin:  plugin to execute
     :return: result, out, err
     """
@@ -423,7 +421,7 @@ def runplugin(plugin, step=progress):
     # Workaround if calling externally
     global extensions
     if not extensions:
-        extensions, exttriggers = initExtensions()
+        extensions, exttriggers = initPymodules()
 
     found = 0
 
@@ -519,6 +517,9 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
                exclude=None, okay=RC_OKAY, skipped=RC_SKIPPED, failed=RC_FAILED, web=False, dontsave=False, quiet=False, pgstart=None, pgend=None, serveruri=False):
     """
     Runs citellus scripts on specified root folder
+    :param pgstart: progress start
+    :param pgend: progress end
+    :param serveruri: server URL for citellus.json upload via HTTP POST
     :param web: Copy html to folder
     :param failed: RC for FAILED
     :param skipped: RC for SKIPPED
@@ -667,7 +668,7 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
         results[plugin['id']] = dict(plugin)
 
     # Processing hooks on the results
-    for hook in initExtensions(extensions=getHooks())[0]:
+    for hook in initPymodules(extensions=getPymodules())[0]:
         LOG.debug("Running hook: %s" % hook.__name__.split('.')[-1])
         newresults = hook.run(data=results)
         if newresults:
@@ -964,6 +965,8 @@ def write_results(results, filename, live=False, path=None, time=0, source='cite
                   extranames=None, serveruri=False):
     """
     Writes result
+    :param extranames: Additional filenames to write in the json section
+    :param serveruri: Server URI for HTTP POST upload of results
     :param web: copy html viewer
     :param branding: branding string for metadata
     :param source: source of information for metadata
@@ -1169,7 +1172,7 @@ def main():
     global extensions
     global triggers
 
-    extensions, exttriggers = initExtensions()
+    extensions, exttriggers = initPymodules()
 
     # List extensions and exit
     if options.list_extensions:
@@ -1181,7 +1184,7 @@ def main():
                     print(indent(text=desc, amount=4))
         return
 
-    hooks, hooktriggers = initExtensions(extensions=getHooks(options))
+    hooks, hooktriggers = initPymodules(extensions=getPymodules(options))
 
     # List Hooks and exit
     if options.list_hooks:
@@ -1256,7 +1259,7 @@ def main():
                         if newdetail != '':
                             detailed.append(newdetail + ": " + subcount)
                 print(key, ":", elem, detailed)
-                total = total + elem
+                total += elem
 
             print("-------\ntotal", ":", total)
         return
@@ -1280,8 +1283,9 @@ def main():
             paths.append(os.path.dirname(jsonfile['plugin']))
 
         for path in paths:
-            results = docitellus(live=False, path=path, plugins=allplugins, lang=options.lang, forcerun=False,
-                                 savepath=False, include=options.include, exclude=options.exclude, web=False, pgstart=options.progress_start, pgend=options.progress_end, quiet=options.quiet)
+            results = docitellus(path=path, plugins=allplugins, lang=options.lang, include=options.include,
+                                 exclude=options.exclude, pgstart=options.progress_start, pgend=options.progress_end,
+                                 quiet=options.quiet)
             print("Report for path: %s" % path)
             printresults(results, options)
         sys.exit(0)

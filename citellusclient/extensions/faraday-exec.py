@@ -46,7 +46,7 @@ def listplugins(options=None):
         except:
             pass
 
-    plugins = citellus.findplugins(folders=[pluginsdir], executables=True, fileextension=".sh", extension=extension, prio=prio)
+    plugins = citellus.findplugins(folders=[pluginsdir], fileextension=".sh", extension=extension, prio=prio)
 
     yield plugins
 
