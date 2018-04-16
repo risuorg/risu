@@ -176,18 +176,18 @@ def initExtensions(extensions=getExtensions()):
     return exts, exttriggers
 
 
-def getHooks(options=None):
+def getHooks(options=None, folders=[HooksFolder]):
     """
     Gets list of Hooks in the Hooks folder
     :return: list of Hooks available
     """
 
-    if not options:
-        hfilter = []
-    else:
+    try:
         hfilter = options.hfilter
+    except:
+        hfilter = []
 
-    possibleHooks = findplugins(folders=[HooksFolder], executables=False, exclude=['__init__.py', 'pyc'], include=hfilter, fileextension='.py')
+    possibleHooks = findplugins(folders=folders, executables=False, exclude=['__init__.py', 'pyc'], include=hfilter, fileextension='.py')
 
     # Sort hook names so that we can user XX_hook
     sortedhooks = []

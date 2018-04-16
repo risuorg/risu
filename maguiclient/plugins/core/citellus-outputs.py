@@ -9,7 +9,6 @@ from __future__ import print_function
 import os
 
 import citellusclient.shell as citellus
-import maguiclient.magui as magui
 
 # Load i18n settings from citellus
 _ = citellus._
@@ -36,12 +35,7 @@ def run(data, quiet=False):  # do not edit this line
     """
 
     # Return all data passed from citellus
-
-    # For now, let's only print plugins that have rc ! $RC_OKAY in quiet
-    if quiet:
-        toprint = magui.maguiformat(data)
-    else:
-        toprint = data
+    toprint = data
 
     # We should filter metadata extension as is to be processed separately
     err = []
