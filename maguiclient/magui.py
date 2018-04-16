@@ -174,89 +174,6 @@ def commonpath(folders):
     return code
 
 
-def getPlugins(options):
-    """
-    Gets list of Plugins in the plugins folder
-    :return: list of Plugins available
-    """
-
-    Plugins = []
-    possiblePlugins = citellus.findplugins(folders=[PluginsFolder], executables=False, exclude=['__init__.py', 'pyc'], include=options.mfilter, fileextension='.py')
-    for i in possiblePlugins:
-        module = os.path.splitext(os.path.basename(i['plugin']))[0]
-        modpath = os.path.dirname(i['plugin'])
-        try:
-            info = imp.find_module(module, [modpath])
-        except:
-            info = False
-        if i['plugin'] and info:
-            Plugins.append({"name": module, "info": info})
-
-    return Plugins
-
-
-def loadPlugin(Plugin):
-    """
-    Loads selected Plugin
-    :param Plugin: Plugin to load
-    :return: loader for Plugin
-    """
-    return imp.load_module(Plugin["name"], *Plugin["info"])
-
-
-def initPlugins(options):
-    """
-    Initializes Plugins
-    :return: list of Plugin modules initialized
-    """
-
-    plugs = []
-    plugtriggers = {}
-    for i in getPlugins(options):
-        newplug = loadPlugin(i)
-        plugs.append(newplug)
-        triggers = []
-        for each in newplug.init():
-            triggers.append(each)
-        plugtriggers[i["name"]] = triggers
-    return plugs, plugtriggers
-
-
-def getMaguiHooks(options=None):
-    """
-    Gets list of Hooks in the Hooks folder
-    :return: list of Hooks available
-    """
-
-    if not options:
-        hfilter = []
-    else:
-        hfilter = options.hfilter
-
-    possibleHooks = citellus.findplugins(folders=[MaguiHooksFolder], executables=False, exclude=['__init__.py', 'pyc'], include=hfilter, fileextension='.py')
-
-    # Sort hook names so that we can user XX_hook
-    sortedhooks = []
-    for i in possibleHooks:
-        sortedhooks.append(i['plugin'])
-
-    sortedhooks = sorted(set(sortedhooks))
-
-    global maguihooks
-    maguihooks = []
-    for i in sortedhooks:
-        module = os.path.splitext(os.path.basename(i))[0]
-        modpath = os.path.dirname(i)
-        try:
-            info = imp.find_module(module, [modpath])
-        except:
-            info = False
-        if i and info:
-            maguihooks.append({"name": module, "info": info})
-
-    return maguihooks
-
-
 def callcitellus(path=False, plugins=False, forcerun=False, include=None, exclude=None):
     """
     Do actual execution of citellus against data
@@ -364,7 +281,7 @@ def domagui(sosreports, citellusplugins, options=False):
                     grouped[plugin][element] = result[sosreport][plugin][element]
 
     # Run the hook processing hooks on the results
-    for maguihook in citellus.initExtensions(extensions=getMaguiHooks())[0]:
+    for maguihook in citellus.initExtensions(extensions=citellus.getHooks(options=options, folders=[MaguiHooksFolder]))[0]:
         LOG.debug("Running hook: %s" % maguihook.__name__.split('.')[-1])
         newresults = maguihook.run(data=grouped)
         if newresults:
@@ -505,7 +422,7 @@ def main():
 
     # Each argument in sosreport is a sosreport
 
-    magplugs, magtriggers = initPlugins(options)
+    magplugs, magtriggers = citellus.initExtensions(extensions=citellus.getHooks(options=options, folders=[PluginsFolder]))
 
     if options.list_plugins:
         for plugin in magplugs:
