@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4ee2b8f_4a2744af",
+        "filename": "citellusclient/plugins/core/system/multipath.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2018-04-16T19:44:24Z",
+      "side": 1,
+      "message": "trailing \u0027-x\u0027 ;-)",
+      "revId": "55570702b4cde4d79d6ce2953a7db8b9dd367bce",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ce6d1b12_8bf58eab",
+        "filename": "citellusclient/plugins/core/system/multipath.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2018-04-16T19:44:24Z",
+      "side": 1,
+      "message": "could it also work on debian if we do check instead with is_required_pkg ?\n\nDo you happen to know how is the package named there?",
+      "revId": "55570702b4cde4d79d6ce2953a7db8b9dd367bce",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
