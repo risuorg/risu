@@ -13,7 +13,7 @@ like this:
 
 1. Clone the citellus repository:
 
-        git clone git@github.com:zerodayz/citellus.git
+        git clone git@github.com:citellusorg/citellus.git
 
 2. Configure the `git review` tool:
 
