@@ -6,11 +6,11 @@ like this:
 
 1. Clone the citellus repository:
 
-        git clone git@github.com:zerodayz/citellus.git
+        git clone git@github.com:citellusorg//citellus.git
 
-1. Configure the `git review` tool:
+1. Configure the `git-review` tool:
 
-        git review -s
+        git-review -s
 
 1. Check out the proposed change branch:
 

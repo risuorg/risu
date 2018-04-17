@@ -15,9 +15,9 @@ like this:
 
         git clone git@github.com:citellusorg/citellus.git
 
-2. Configure the `git review` tool:
+2. Configure the `git-review` tool:
 
-        git review -s
+        git-review -s
 
 3. Check out a branch in which to make your changes:
 
@@ -41,20 +41,20 @@ like this:
 
         git add $modified_files
         git commit
-        
+
         For the message, please use a short line with the fix and the subject like `[plugins][openstack][nova] Check nova configuration XXX`
-        
+
         If the commit fixes a github open issue, also use `Closes #$ISSUEID` so github automatically closes it once merged referencing the commit.
 
 6. Submit your changes for review:
 
-        git review
+        git-review
 
 Then wait for your changes to be reviewed.  It is common for reviewers
 to request changes; when this happens:
 
 1. Edit your files and revalidate with tox:
-        
+
         tox # this will check the new changes for some errors
 
 2. Update your existing commit. Do not create a new commit!
@@ -64,9 +64,9 @@ to request changes; when this happens:
 
 3. Resubmit the change:
 
-        git review
+        git-review
 
-You can see pending and already merged actual changes at: <https://review.gerrithub.io/#/q/project:zerodayz/citellus>
+You can see pending and already merged actual changes at: <https://review.gerrithub.io/#/q/project:citellusorg//citellus>
 
 4. Once the new plugin has been submitted you'll see some comments from 'Citellus Jenkins' which is running Unit tests against it (same ones that you run with `tox`)
 
