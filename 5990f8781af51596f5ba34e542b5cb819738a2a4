@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8fe2caf8_c860cd97",
+        "filename": "citellusclient/plugins/core/system/non_ascii_chars.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2018-04-17T09:22:02Z",
+      "side": 1,
+      "message": "replace 28-31 with:\n\nis_required_file ${CITELLUS_ROOT}/etc/security/limits.conf\n\nIt will check for file and exit with skipped if not existing",
+      "revId": "5990f8781af51596f5ba34e542b5cb819738a2a4",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f7031610_4ce0fd74",
+        "filename": "citellusclient/plugins/core/system/non_ascii_chars.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2018-04-17T09:22:02Z",
+      "side": 1,
+      "message": "is_lineinfile #REGEXP #FILES \n\ndoes check for them\n\nso it can be converted to\n\nfor f in $bad_files;do\nif is_lineinfile $REGEXP $f; then\necho $$$\n\ndone",
+      "range": {
+        "startLine": 32,
+        "startChar": 6,
+        "endLine": 39,
+        "endChar": 6
+      },
+      "revId": "5990f8781af51596f5ba34e542b5cb819738a2a4",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
