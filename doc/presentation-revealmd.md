@@ -51,7 +51,7 @@ mode: selfcontained
     - missing parameters in expired ceilometer data, which can lead to filling up your hard drive.
     - unsynced ntp.
     - outdated packages that have known critical issues.
-    - others! (119 plugins as of this writting some of them with more than one issue detected)
+    - others! (200 plugins as of this writting some of them with more than one issue detected)
 - Whatever else you can imagine or code 😉
 
 ----
