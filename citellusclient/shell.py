@@ -660,9 +660,6 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
     # Do the actual execution of plugins
     execution = p.map(runplugin, pluginstorun)
 
-    if not quiet:
-        print('%s\n' % pgend)
-
     # Update back 'results' with the execution of the missing plugins
     for plugin in execution:
         results[plugin['id']] = dict(plugin)
@@ -670,9 +667,18 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
     # Processing hooks on the results
     for hook in initPymodules(extensions=getPymodules())[0]:
         LOG.debug("Running hook: %s" % hook.__name__.split('.')[-1])
+
+        if not quiet:
+            sys.stdout.write(progress)
+            sys.stdout.flush()
+
         newresults = hook.run(data=results)
         if newresults:
             results = dict(newresults)
+
+    if not quiet:
+        print('%s\n' % pgend)
+
 
     # Write results if possible
     if filename:
