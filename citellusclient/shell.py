@@ -674,6 +674,14 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
         if newresults:
             results = dict(newresults)
 
+        if not quiet:
+            sys.stdout.write('%s' % pgstart)
+            sys.stdout.flush()
+
+    if not quiet:
+        print('%s\n' % pgend)
+
+
     # Write results if possible
     if filename:
         try:
