@@ -679,7 +679,6 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
     if not quiet:
         print('%s\n' % pgend)
 
-
     # Write results if possible
     if filename:
         try:
