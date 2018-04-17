@@ -41,8 +41,10 @@ def run(data, quiet=False):  # do not edit this line
     datatoadd = []
 
     # Loop over plugin id's in data
+    faradayids = citellus.getids(include=['faraday/positive', 'faraday/negative'])
+
     for pluginid in data:
-        if data[pluginid]['id'] in citellus.getids(include=['faraday/positive', 'faraday/negative']):
+        if data[pluginid]['id'] in faradayids:
             # Make a copy of dict for working on it
             plugin = dict(data[pluginid])
 
