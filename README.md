@@ -1,7 +1,7 @@
-[![License](https://img.shields.io/github/license/zerodayz/citellus.svg)](LICENSE)
-[![Build Status](https://travis-ci.org/zerodayz/citellus.svg?branch=master)](https://travis-ci.org/zerodayz/citellus)
-[![Coverage Status](https://coveralls.io/repos/github/zerodayz/citellus/badge.svg?branch=master)](https://coveralls.io/github/zerodayz/citellus?branch=master)
-[![Release status](https://img.shields.io/github/release/zerodayz/citellus.svg)](https://github.com/zerodayz/citellus/releases)
+[![License](https://img.shields.io/github/license/citellusorg/citellus.svg)](LICENSE)
+[![Build Status](https://travis-ci.org/citellusorg/citellus.svg?branch=master)](https://travis-ci.org/citellusorg/citellus)
+[![Coverage Status](https://coveralls.io/repos/github/citellusorg/citellus/badge.svg?branch=master)](https://coveralls.io/github/citellusorg/citellus?branch=master)
+[![Release status](https://img.shields.io/github/release/citellusorg/citellus.svg)](https://github.com/citellusorg/citellus/releases)
 [![PyPI version](https://badge.fury.io/py/citellus.svg)](https://badge.fury.io/py/citellus)
 [![](https://images.microbadger.com/badges/image/citellus/citellus.svg)](https://microbadger.com/images/citellus/citellus "Get your own image badge on microbadger.com")
 
@@ -19,7 +19,7 @@ Please if you have any idea on any improvements please do not hesitate to open a
 - Plugins written in your language of choice.
 - Allows to dump output to json file to be processed by other tools.
     - Allow to visualize html from json output.
-    - Check our sample at: [Citellus-www](http://htmlpreview.github.io/?https://github.com/zerodayz/citellus/blob/master/doc/sampleweb/citellus.html)
+    - Check our sample at: [Citellus-www](http://htmlpreview.github.io/?https://github.com/citellusorg/citellus/blob/master/doc/sampleweb/citellus.html)
 - Ansible playbook support.
 - Save / restore default settings
 
@@ -62,7 +62,7 @@ Check how does it look in an execution at:
 
 ## Collaborate
 
-- Open issues/feature requests, etc at <https://github.com/zerodayz/citellus/issues>
+- Open issues/feature requests, etc at <https://github.com/citellusorg/citellus/issues>
 - Read the [Contributing](CONTRIBUTING.md) document on how to submit patches
 - Provide sosreports to check against via <https://www.dropbox.com/request/8LGneF9i9nc9RB6aqXge>, specially if running Debian based distributions and or Fedora/CentOS based ones so that we can improve support for it
 

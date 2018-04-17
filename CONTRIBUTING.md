@@ -1,7 +1,7 @@
 # How to file a bug report
 
 If you have any suggestions for improvements please do not hesitate to
-open an [issue](https://github.com/zerodayz/citellus/issues/new).
+open an [issue](https://github.com/citellusorg/citellus/issues/new).
 
 # How to contribute code
 
@@ -35,7 +35,7 @@ like this:
         # We're skipping tox -e py35 which is also invoked by default when tox is executed without arguments.
         ~~~
 
-    2. In this way, errors that might be relevant to the test environment can be skipped. For example this one reported at issue tracker as [104](https://github.com/zerodayz/citellus/issues/104))
+    2. In this way, errors that might be relevant to the test environment can be skipped. For example this one reported at issue tracker as [104](https://github.com/citellusorg/citellus/issues/104))
 
 5. Update your local repository:
 
@@ -75,7 +75,7 @@ You can see pending and already merged actual changes at: <https://review.gerrit
 # How to write tests
 
 Please refer to the
-[templates](https://github.com/zerodayz/citellus/tree/master/doc/templates)
+[templates](https://github.com/citellusorg/citellus/tree/master/doc/templates)
 folder for examples.
 
 If you want to contribute also Unittests for your plugins, check [TESTING.md](TESTING.md)

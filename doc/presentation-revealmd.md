@@ -8,13 +8,13 @@ transition: cube
 mode: selfcontained
 ---
 
-## [Citellus](https://github.com/zerodayz/citellus):
+## [Citellus](https://citellus.org):
 ### Detecting common pitfalls of deployments
 
 <img src="citellus.png" width="15%" border=0>
 
 
-<https://github.com/zerodayz/citellus>
+<https://citellus.org>
 
 ---
 
@@ -26,9 +26,9 @@ mode: selfcontained
 
 ## History: how did was it started?
 
-- The tool, started by Robin Černín after a long weekend shift checking one and over again several sosreports for the same data on different hosts.
+- The tool, was started by [Robin Černín](https://zerodayz.github.io/) after a long weekend shift checking one and over again several sosreports for the same data on different hosts.
 
-- It started with some tests + shell wrapper, and was added a python wrapper by Pablo Iranzo to bring in more powerful features.
+- It started with some tests + shell wrapper, and was added a python wrapper by [Pablo Iranzo](https://iranzo.github.io) to bring in more powerful features.
 
 - After some design discussions with Engineering, a simpler reporting and design of tests was implemented.
 
@@ -59,23 +59,28 @@ mode: selfcontained
 ## Some numbers on plugin count:
 
 <small>
-bugzilla : 15 ['openstack/swift: 1', 'openstack/keystone/templates: 1', 'openstack/ceph: 1', 'httpd: 1', 'openstack/keystone: 1', 'openstack/ceilometer: 1', 'openstack/nova: 2', 'openstack/httpd: 1', 'systemd: 1', 'openstack/tripleo: 1', 'openstack/neutron: 4']
 
-launchpad : 1 ['openstack/keystone: 1']
+~~~py
+- bugzilla : 20 ['docker: 1', 'httpd: 1', 'openstack/ceilometer: 1', 'openstack/ceph: 1', 'openstack/httpd: 1', 'openstack/keystone: 1', 'openstack/keystone/templates: 1', 'openstack/neutron: 5', 'openstack/nova: 4', 'openstack/swift: 1', 'openstack/tripleo: 2', 'systemd: 1']
+- ceph : 3 []
+- cluster : 1 []
+- docker : 1 []
+- httpd : 1 []
+- launchpad : 1 ['openstack/keystone: 1']
+- negative : 2 ['system: 1', 'system/iscsi: 1']
+- network : 2 []
+- openshift : 2 ['etcd: 1', 'node: 1']
+- openstack : 69 ['ceilometer: 2', 'ceph: 1', 'cinder: 3', 'containers: 4', 'containers/docker: 2', 'containers/rabbitmq: 1', 'crontab: 3', 'glance: 1', 'haproxy: 2', 'hardware: 1', 'iptables: 1', 'keystone: 3', 'mysql: 8', 'network: 4', 'neutron: 2', 'nova: 10', 'openvswitch: 2', 'pacemaker: 1', 'rabbitmq: 5', 'redis: 1', 'swift: 3', 'system: 2', 'systemd: 1']
+- pacemaker : 10 []
+- positive : 19 ['cluster/cman: 1', 'openstack: 16', 'openstack/ceilometer: 1', 'system: 1']
+- security : 12 ['meltdown: 2', 'spectre: 8']
+- supportability : 2 []
+- system : 54 ['iscsi: 1']
+- virtualization : 1 []
+~~~
 
-network : 1 []
-
-openstack : 54 ['nova: 8', 'mysql: 6', 'rabbitmq: 3', 'containers/rabbitmq: 1', 'network: 3', 'glance: 1', 'containers/docker: 2', 'containers: 4', 'cinder: 1', 'hardware: 1', 'swift: 2', 'systemd: 1', 'iptables: 1', 'ceph: 4', 'keystone: 3', 'system: 1', 'redis: 1', 'neutron: 1', 'crontab: 3', 'ceilometer: 3']
-
-pacemaker : 7 []
-
-security : 12 ['meltdown: 2', 'spectre: 8']
-
-system : 28 []
-
-virtualization : 1 []
-
-
+-------
+total : 200
 </small>
 
 ---
@@ -89,7 +94,7 @@ virtualization : 1 []
 ---
 
 ## How to run it manually?
-<img src="images/citellusrun.png" height="20%" border=0><!-- .element height="50%"  width="90%" -->
+<img src="images/citellusrun.png" width="80%" border=0><!-- .element height="50%"  width="90%" -->
 
 
 Note: Change speaker after this
@@ -109,14 +114,14 @@ Note: Change speaker after this
 
 ## HTML Interface
 - Create by using --output and --web, open the generated `citellus.html` over http.
-<img src="images/www.png" height="40%" border=0><!-- .element height="50%"  width="70%" -->
+<img src="images/www.png" width="80%" border=0><!-- .element height="50%"  width="70%" -->
 
 ---
 
 ## Why upstream?
 
 - This is an open source project. All the scripts should be committed upstream and shared (and we are willing to foster this).
-    - Project on GitHub: <https://github.com/zerodayz/citellus/>
+    - Project on GitHub: <https://github.com/citellusorg/citellus/>
 - We want contributions from anyone.
 - We follow an approach similar to other opensource projects: we use Gerrit for reviewing the code and UT's for validating basic functionality.
 
@@ -128,7 +133,7 @@ At the moment, there’s a strong presence on OpenStack plugins as it is where w
 
 For example, it will be easy to report on systems registered against RHN instead of CDN or systems with a specific version of pacemaker known to have lot of issues or check amount of free memory or memory usage from a process.
 
-<small> Read contributing doc at:  <https://github.com/zerodayz/citellus/blob/master/CONTRIBUTING.md> for more details.</small>
+<small> Read contributing doc at:  <https://github.com/citellusorg/citellus/blob/master/CONTRIBUTING.md> for more details.</small>
 
 ---
 
@@ -183,7 +188,7 @@ Tests are even simpler:
 
 ## Some execution and script examples?
 
-Check [disk usage](<https://github.com/zerodayz/citellus/blob/master/citellus/plugins/system/disk_usage.sh>):
+Check [disk usage](<https://github.com/citellusorg/citellus/blob/master/citellus/plugins/system/disk_usage.sh>):
 
 ```sh
 #!/bin/bash
@@ -359,6 +364,7 @@ THANK YOU FOR ATTENDING!!
 
 For additional questions, come to #citellus on Freenode or email us:
 
+- https://citellus.org
 - <mailto:citellus-dev _AT_ redhat.com>
 - <https://www.redhat.com/mailman/listinfo/citellus-dev>
 
@@ -367,10 +373,11 @@ For additional questions, come to #citellus on Freenode or email us:
 ## Other resources
 Blog posts:
 <small>
+- Citellus tagged posts: https://iranzo.github.io/blog/tag/citellus/
 - <http://iranzo.github.io/blog/2017/07/26/Citellus-framework-for-detecting-known-issues/>
 - <https://iranzo.github.io/blog/2017/07/31/Magui-for-analysis-of-issues-across-several-hosts/>
 - <https://iranzo.github.io/blog/2017/08/17/Jenkins-for-running-CI-tests/>
 - <https://iranzo.github.io/blog/2017/10/26/i18n-and-bash8-in-bash/>
 - <https://iranzo.github.io/blog/2018/01/16/recent-changes-in-magui-and-citellus/>
-- DevConf.cz 2018 <https://devconfcz2018.sched.com/event/DJXG/detect-pitfalls-of-osp-deployments-with-citellus>
+- DevConf.cz 2018 recording <https://www.youtube.com/watch?v=SDzzqrUdn5A>
 </small>

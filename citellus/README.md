@@ -1,6 +1,6 @@
 # Deprecation Warning
 
-The files has been moved to `citellus` main directory [https://github.com/zerodayz/citellus/](https://github.com/zerodayz/citellus/)
+The files has been moved to `citellus` main directory [https://github.com/citellusorg/citellus/](https://github.com/citellusorg/citellus/)
 
 We created citellus to be importable module and made a script that imports it.
 

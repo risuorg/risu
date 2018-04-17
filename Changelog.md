@@ -78,7 +78,7 @@ Several changes introduced recently:
     - [David Valee Delisle](https://valleedelisle.com/) did a great job on preparing an html that loads citellus.json and shows it graphically.
     - Thanks to his work, we did extended some other features like priority, categories, etc that are calculated via citellus and consumed via citellus-www.
     - Interface can also load `magui.json` (with `?json=magui.json`) and show it's output.
-    - We did extend citellus to take `--web` to automatically create the json named `citellus.json` on the folder specified with `-o` and copy the `citellus.html` file there. So if you provide sosreports over http, you can point to citellus.html to see graphical status! (check latest image at citellus website as [www.png](https://github.com/zerodayz/citellus/raw/master/doc/images/www.png) )
+    - We did extend citellus to take `--web` to automatically create the json named `citellus.json` on the folder specified with `-o` and copy the `citellus.html` file there. So if you provide sosreports over http, you can point to citellus.html to see graphical status! (check latest image at citellus website as [www.png](https://github.com/citellusorg/citellus/raw/master/doc/images/www.png) )
 - Increased plugin count!
     - Now we do have more than 119 across different categories
     - A new plugin in python `reboot.py` that checks for unexpected reboots
