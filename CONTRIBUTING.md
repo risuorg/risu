@@ -13,7 +13,7 @@ like this:
 
 1. Clone the citellus repository:
 
-        git clone git@github.com:citellusorg/citellus.git
+        git clone https://github.com/citellusorg/citellus
 
 2. Configure the `git-review` tool:
 
@@ -66,7 +66,7 @@ to request changes; when this happens:
 
         git-review
 
-You can see pending and already merged actual changes at: <https://review.gerrithub.io/#/q/project:citellusorg//citellus>
+You can see pending and already merged actual changes at: <https://review.gerrithub.io/#/q/project:citellusorg/citellus>
 
 4. Once the new plugin has been submitted you'll see some comments from 'Citellus Jenkins' which is running Unit tests against it (same ones that you run with `tox`)
 
