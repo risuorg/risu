@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1af16e7b_e6b305c1",
+        "filename": "citellusclient/plugins/core/system/non_ascii_chars.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1011950
+      },
+      "writtenOn": "2018-04-17T00:30:37Z",
+      "side": 1,
+      "message": "I would rather see it -f or as ! -f example:\n\n➜  ~ if [[ ! -f /etc/security/limits.conf ]]; then echo ok; else echo \"notok\"; fi \nnotok\n➜  ~ if [[ ! -f /etc/security/dontexist.conf ]]; then echo ok; else echo \"notok\"; fi\nok\n\nwith -z you are checking the string. This won\u0027t work and if yes it is unexpected.\n\nAn example of a -z and -f on system with existing limits.conf:\n\n➜  ~ if [[ -f /etc/security/limits.conf ]]; then echo ok; else echo \"notok\"; fi\nok\n➜  ~ if [[ -z /etc/security/limits.conf ]]; then echo ok; else echo \"notok\"; fi\nnotok\n\nNote that with -z it ignores the fact the file exists.\n\nThe same output if file doesn\u0027t exist:\n\n➜  ~ if [[ -z /etc/security/dontexist.conf ]]; then echo ok; else echo \"notok\"; fi\nnotok",
+      "range": {
+        "startLine": 28,
+        "startChar": 6,
+        "endLine": 28,
+        "endChar": 8
+      },
+      "revId": "16daf223b317b6967b91d88a17f9356529a5f8a8",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
