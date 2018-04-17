@@ -8,13 +8,13 @@ transition: cube
 mode: selfcontained
 ---
 
-## [Citellus](https://github.com/zerodayz/citellus):
+## [Citellus](https://github.com/citellusorg/citellus):
 ### Detecting common pitfalls of deployments
 
 <img src="citellus.png" width="15%" border=0>
 
 
-<https://github.com/zerodayz/citellus>
+<https://github.com/citellusorg/citellus>
 
 Recording at <https://www.youtube.com/watch?v=SDzzqrUdn5A>
 
@@ -117,7 +117,7 @@ Note: Change speaker after this
 ## Why upstream?
 
 - This is an open source project. All the scripts should be committed upstream and shared (and we are willing to foster this)
-    - Project on GitHub: <https://github.com/zerodayz/citellus/>
+    - Project on GitHub: <https://github.com/citellusorg/citellus/>
 - We want contributions to happen from anyone.
 - We follow an approach similar to other opensource projects: we do use Gerrit for reviewing the code and UT's for validating basic functionality.
 
@@ -129,7 +129,7 @@ At the moment, there’s a strong presence on OpenStack plugins as it is where w
 
 For example, it will be easy to report on systems registered against RHN instead of CDN or systems with a specific version of pacemaker known to have lot of issues or check amount of free memory or memory usage from a process.
 
-<small> Read contributing doc at:  <https://github.com/zerodayz/citellus/blob/master/CONTRIBUTING.md> for more details.</small>
+<small> Read contributing doc at:  <https://github.com/citellusorg/citellus/blob/master/CONTRIBUTING.md> for more details.</small>
 
 ---
 
@@ -183,7 +183,7 @@ Tests are even simpler:
 
 ## Some execution and script examples?
 
-Check [disk usage](<https://github.com/zerodayz/citellus/blob/master/citellus/plugins/system/disk_usage.sh>):
+Check [disk usage](<https://github.com/citellusorg/citellus/blob/master/citellus/plugins/system/disk_usage.sh>):
 
 ```sh
 #!/bin/bash

@@ -35,7 +35,7 @@ config_files=( "${CITELLUS_ROOT}/etc/nova/nova.conf" "${CITELLUS_ROOT}/etc/sysco
 is_required_file ${config_files[@]}
 
 # check if nova is configured to resume guests power state at hypervisor startup
-# adapted from https://github.com/zerodayz/citellus/issues/59
+# adapted from https://github.com/citellusorg/citellus/issues/59
 
 LIBVIRTCONF="${CITELLUS_ROOT}/etc/sysconfig/libvirt-guests"
 NOVACONF="${CITELLUS_ROOT}/etc/nova/nova.conf"
