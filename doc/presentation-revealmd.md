@@ -108,7 +108,7 @@ Note: Change speaker after this
 - Ansible playbook support (live and snapshot if crafted playbooks)
     - Core implemented as extension to easily expand with new ones.
 - Save / restore default settings.
-- Run via pip/pipsi if you don't want to git clone from repo.
+- Run via pip/pipsi if you don't want to git clone from repo or using a container.
 
 ----
 
@@ -219,8 +219,6 @@ fi
 ---
 
 ## Ready for deep dive on tests?
-
-- There are more tests for OpenStack at the moment as this is the speciality where it started, but it’s open and able to extend to whatever is needed.
 
 - Each test should take care of checking if it should run or not and output return code and stderr. Wrapper just runs all the tests or specific ones (filtering options).
 
