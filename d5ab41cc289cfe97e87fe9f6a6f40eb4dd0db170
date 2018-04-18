@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b37b5469_50e10359",
+        "filename": "citellusclient/plugins/core/virtualization/libvirt-mig-block-conflict.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2018-04-18T14:37:03Z",
+      "side": 1,
+      "message": "is_lineinfile\n\nif we want to show them on stderr, missing \u003e\u00262",
+      "revId": "d5ab41cc289cfe97e87fe9f6a6f40eb4dd0db170",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b62ee942_f9296d9c",
+        "filename": "citellusclient/plugins/core/virtualization/libvirt-mig-block-conflict.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2018-04-18T14:37:03Z",
+      "side": 1,
+      "message": "\u003e\u00262",
+      "revId": "d5ab41cc289cfe97e87fe9f6a6f40eb4dd0db170",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
