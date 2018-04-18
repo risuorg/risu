@@ -232,9 +232,9 @@ fi
 
 ## Requirements:
 - return code must be `$RC_OKAY` (ok), `$RC_FAILED` (failed)  or `$RC_SKIPPED` (skipped).
-- Messages to be printed on stderr are displayed on failed or ‘skipped’ if verbose enabled.
-- Running against ‘sosreport’, CITELLUS_ROOT contains path to sosreport folder provided.
-- CITELLUS_LIVE contains 0 or 1 if running against live or not.
+- Messages to be printed on stderr are displayed on 'failed' or 'skipped' if verbose enabled.
+- Running against ‘sosreport’, `CITELLUS_ROOT` contains path to sosreport folder provided.
+- `CITELLUS_LIVE` contains `0` or `1` if running against live or not.
 
 ----
 
