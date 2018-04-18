@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a24d9f2_aecced56",
+        "filename": "citellusclient/plugins/core/bugzilla/openstack/cinder/1261083.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2018-04-18T19:12:50Z",
+      "side": 1,
+      "message": "double [[ needed",
+      "revId": "88b8a91ff747affa20e15102210a2c6dab108307",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e577aa6b_239381fe",
+        "filename": "citellusclient/plugins/core/bugzilla/openstack/cinder/1261083.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2018-04-18T19:12:50Z",
+      "side": 1,
+      "message": "same string as 77 and 78\n\nWrite a function named \u0027show_warning\u0027 or something and call it from both methods to print that string.\n\nThat makes i18n string extractor to fail as there\u0027s the same string twice",
+      "range": {
+        "startLine": 71,
+        "startChar": 7,
+        "endLine": 72,
+        "endChar": 16
+      },
+      "revId": "88b8a91ff747affa20e15102210a2c6dab108307",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
