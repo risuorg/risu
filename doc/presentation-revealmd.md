@@ -363,8 +363,15 @@ THANK YOU FOR ATTENDING!!
 For additional questions, come to #citellus on Freenode or email us:
 
 - https://citellus.org
-- <mailto:citellus-dev _AT_ redhat.com>
+- citellus-dev _AT_ redhat.com
 - <https://www.redhat.com/mailman/listinfo/citellus-dev>
+
+Note:
+
+- What sort of logic are scripts using to determine if the check is failed/ok or should be skipped
+
+- What do I need to do if I want to add my scripts
+
 
 ---
 

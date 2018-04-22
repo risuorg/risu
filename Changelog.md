@@ -1,6 +1,12 @@
 ## Changelog hilights
 
+Checkout the 'blog' section of <https://citellus.org/blog/category/blog/>
+
 This file will contain a manually mantained log of hilights between versions, it's not a very extensive detail, but some of the bigger changes/ideas will be added here.
+
+## 2018-04-17
+- Now Faraday results should be splitted into separate 'fake' plugins to easily spot the status.
+- Some code optimizations to remove duplicate and or old code.
 
 ## 2018-03-25
 - Implement `--find` to citellus so that it can grep across a folder set for checking historic data for tests.

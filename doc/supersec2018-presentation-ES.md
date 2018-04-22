@@ -379,7 +379,7 @@ Gracias por asistir!!
 For additional questions, come to #citellus on Freenode or email us:
 
 - https://citellus.org
-- <mailto:citellus-dev _AT_ redhat.com>
+- citellus-dev _AT_ redhat.com
 - <https://www.redhat.com/mailman/listinfo/citellus-dev>
 
 ---
