@@ -26,6 +26,7 @@ import tempfile
 from unittest import TestCase
 
 import citellusclient.shell as citellus
+import maguiclient.magui as magui
 
 testplugins = os.path.join(citellus.citellusdir, 'plugins', 'test')
 plugins = os.path.join(citellus.citellusdir, 'plugins', 'core')
@@ -47,21 +48,26 @@ rcs = {"pass": okay,
 class CitellusTest(TestCase):
     def test_all_plugins_snapshot(self):
         tmpdir = tempfile.mkdtemp(prefix='citellus-tmp')
+        tmpdir2 = tempfile.mkdtemp(prefix='citellus-tmp')
 
         # Setup folder for all tests
         testtype = 'pass'
         for test in uttest:
             subprocess.call([test['plugin'], test['plugin'], testtype, tmpdir])
+            subprocess.call([test['plugin'], test['plugin'], testtype, tmpdir2])
 
         # Run citellus once against them
         results = citellus.docitellus(path=tmpdir, plugins=citplugs, okay=okay, failed=failed, skipped=skipped, web=True)
+        maguiresults = magui.domagui(sosreports=[tmpdir, tmpdir2], citellusplugins=citplugs)
 
         # Check that citellus.html has been copied
         assert os.access(os.path.join(tmpdir, 'citellus.json'), os.R_OK)
         assert os.access(os.path.join(tmpdir, 'citellus.html'), os.R_OK)
+        assert maguiresults
 
         # Remove tmp folder
         shutil.rmtree(tmpdir)
+        shutil.rmtree(tmpdir2)
 
         # Process plugin output from multiple plugins
         new_dict = []
