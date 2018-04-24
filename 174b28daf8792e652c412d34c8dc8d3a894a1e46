@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f40a983d_65542f6c",
+        "filename": "citellusclient/plugins/core/bugzilla/openstack/cinder/1261083.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2018-04-24T11:21:44Z",
+      "side": 1,
+      "message": "I\u0027ll remove this else and put a \u0027fi\u0027 instead",
+      "revId": "174b28daf8792e652c412d34c8dc8d3a894a1e46",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e166c6af_74a9c345",
+        "filename": "citellusclient/plugins/core/bugzilla/openstack/cinder/1261083.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2018-04-24T11:21:44Z",
+      "side": 1,
+      "message": "move back 4 spaces so it starts on first column as it will be effectively out of \u0027if\u0027",
+      "range": {
+        "startLine": 53,
+        "startChar": 4,
+        "endLine": 69,
+        "endChar": 6
+      },
+      "revId": "174b28daf8792e652c412d34c8dc8d3a894a1e46",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b5b2740e_e671505f",
+        "filename": "citellusclient/plugins/core/bugzilla/openstack/cinder/1261083.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2018-04-24T11:21:44Z",
+      "side": 1,
+      "message": "remove trailing spaces",
+      "revId": "174b28daf8792e652c412d34c8dc8d3a894a1e46",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a90c72d_20119af7",
+        "filename": "citellusclient/plugins/core/bugzilla/openstack/cinder/1261083.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2018-04-24T11:21:44Z",
+      "side": 1,
+      "message": "remove this as we\u0027ll be out of the \u0027if\u0027",
+      "revId": "174b28daf8792e652c412d34c8dc8d3a894a1e46",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
