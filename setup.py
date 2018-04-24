@@ -18,6 +18,7 @@ except ImportError:
 filename = 'setup.cfg'
 regexp = '\Aversion.*([0-9]+)'
 
+line = ""
 with open(filename, 'r') as f:
     for line in f:
         if re.match(regexp, line):

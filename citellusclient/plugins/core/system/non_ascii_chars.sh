@@ -29,7 +29,7 @@ is_required_file "${CITELLUS_ROOT}/etc/security/limits.conf"
 
 bad_files=`grep -s -l -P -n "[\x80-\xFF]" ${CITELLUS_ROOT}/etc/security/limits.conf ${CITELLUS_ROOT}/etc/security/limits.d/*.conf`
 if [[ -n "$bad_files" ]]; then
-    for f in $bad_files; do
+    for f in ${bad_files}; do
         echo "file $f contains non ASCII characters." >&2
     done
     echo "This makes the system to ignore it." >&2

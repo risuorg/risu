@@ -70,13 +70,13 @@ def show_logo():
     :return:
     """
 
-    logo = "    _    ", \
-           "  _( )_  Magui:", \
-           " (_(ø)_) ", \
-           "  /(_)   Multiple Analisis Generic Unifier and Interpreter", \
-           " \|      ", \
-           "  |/     ", \
-           ""
+    logo = r"    _    ", \
+           r"  _( )_  Magui:", \
+           r" (_(ø)_) ", \
+           r"  /(_)   Multiple Analisis Generic Unifier and Interpreter", \
+           r" \|      ", \
+           r"  |/     ", \
+           r""
     print("\n".join(logo))
 
 
@@ -395,7 +395,7 @@ def main():
 
     # Prefill enabled citellus plugins from args
     if not citellus.extensions:
-        extensions, exttriggers = citellus.initPymodules()
+        extensions = citellus.initPymodules()[0]
     else:
         extensions = citellus.extensions
 

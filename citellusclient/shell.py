@@ -241,12 +241,12 @@ def show_logo():
     :return:
     """
 
-    logo = "_________ .__  __         .__  .__                ", \
-           "\_   ___ \|__|/  |_  ____ |  | |  |  __ __  ______", \
-           "/    \  \/|  \   __\/ __ \|  | |  | |  |  \/  ___/", \
-           "\     \___|  ||  | \  ___/|  |_|  |_|  |  /\___ \ ", \
-           " \______  /__||__|  \___  >____/____/____//____  >", \
-           "        \/              \/                     \/ ", \
+    logo = r"_________ .__  __         .__  .__                ", \
+           r"\_   ___ \|__|/  |_  ____ |  | |  |  __ __  ______", \
+           r"/    \  \/|  \   __\/ __ \|  | |  | |  |  \/  ___/", \
+           r"\     \___|  ||  | \  ___/|  |_|  |_|  |  /\___ \ ", \
+           r" \______  /__||__|  \___  >____/____/____//____  >", \
+           r"        \/              \/                     \/ ", \
            _("                                                  ")
     print("\n".join(logo))
 
@@ -258,7 +258,7 @@ def findallplugins(options=None, filter=False):
     """
     global extensions
     if not extensions:
-        extensions, exttriggers = initPymodules()
+        extensions = initPymodules()[0]
 
     plugins = []
     for extension in extensions:
@@ -326,12 +326,14 @@ def findplugins(folders=None, include=None, exclude=None, executables=True, file
     # Workaround if calling externally
     global extensions
     if not extensions:
-        extensions, exttriggers = initPymodules()
+        extensions = initPymodules()[0]
 
     plugins = []
     # Walk the folders and subfolders for files based on our criteria
     for folder in folders:
-        for root, dirnames, filenames in os.walk(folder):
+        for items in os.walk(folder):
+            root = items[0]
+            filenames = items[2]
             for filename in filenames:
                 filepath = os.path.join(root, filename)
                 passesextension = False
@@ -421,7 +423,7 @@ def runplugin(plugin, step=progress):
     # Workaround if calling externally
     global extensions
     if not extensions:
-        extensions, exttriggers = initPymodules()
+        extensions = initPymodules()[0]
 
     found = 0
 
@@ -1175,9 +1177,8 @@ def main():
 
     # Process Citellus extensions
     global extensions
-    global triggers
 
-    extensions, exttriggers = initPymodules()
+    extensions = initPymodules()[0]
 
     # List extensions and exit
     if options.list_extensions:
@@ -1189,7 +1190,7 @@ def main():
                     print(indent(text=desc, amount=4))
         return
 
-    hooks, hooktriggers = initPymodules(extensions=getPymodules(options))
+    hooks = initPymodules(extensions=getPymodules(options))[0]
 
     # List Hooks and exit
     if options.list_hooks:
