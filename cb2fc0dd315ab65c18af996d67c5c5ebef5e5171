@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d46c49ff_a52391bd",
+        "filename": "citellusclient/plugins/core/bugzilla/openstack/cinder/1261083.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2018-04-24T09:00:03Z",
+      "side": 1,
+      "message": "is_required_pkg will make this also work on Debian",
+      "revId": "cb2fc0dd315ab65c18af996d67c5c5ebef5e5171",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1202f2fd_9fba2506",
+        "filename": "citellusclient/plugins/core/bugzilla/openstack/cinder/1261083.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2018-04-24T09:00:03Z",
+      "side": 1,
+      "message": "instead of wrapping everything that makes it a bit more complex, I would do the inverse check:\n\nif it\u0027s not compute -\u003e exit\n\nrest of code",
+      "revId": "cb2fc0dd315ab65c18af996d67c5c5ebef5e5171",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
