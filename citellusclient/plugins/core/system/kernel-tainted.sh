@@ -101,7 +101,7 @@ if [[ "x$TAINT_HARDWARE_UNSUPPORTED" = "x1" ]];then
     echo $"Hardware is unsupported " >&2
 fi
 if [[ "x$TAINT_TECH_PREVIEW" = "x1" ]]; then
-    echo $"Tech preview kernel mdoule has been loaded."  >&2
+    echo $"Tech preview kernel module has been loaded."  >&2
     if [[ "x$CITELLUS_LIVE" = "x0" ]];  then
         if [[ -f  "${CITELLUS_ROOT}/sos_commands/kernel/dmesg" ]];then
             grep "TECH PREVIEW" "${CITELLUS_ROOT}/sos_commands/kernel/dmesg"  >&2 ; echo >&2
