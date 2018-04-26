@@ -408,9 +408,6 @@ def runplugin(plugin, step=progress):
     :return: result, out, err
     """
 
-    global progress
-    step = progress
-
     LOG.debug(msg=_('Running plugin: %s') % plugin)
     start_time = time.time()
     os.environ['PLUGIN_BASEDIR'] = "%s" % os.path.abspath(os.path.dirname(plugin['plugin']))
@@ -504,6 +501,7 @@ def execonshell(filename):
         p = subprocess.Popen(filename.split(" "), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         out, err = p.communicate(str.encode('utf8'))
         returncode = p.returncode
+        del p
     except:
         returncode = 3
         out = ""
@@ -661,10 +659,13 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
 
     # Do the actual execution of plugins
     execution = p.map(runplugin, pluginstorun)
+    del pluginstorun
 
     # Update back 'results' with the execution of the missing plugins
     for plugin in execution:
         results[plugin['id']] = dict(plugin)
+
+    del execution
 
     # Processing hooks on the results
     for hook in initPymodules(extensions=getPymodules())[0]:
@@ -677,6 +678,7 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
         newresults = hook.run(data=results)
         if newresults:
             results = dict(newresults)
+            del newresults
 
     if not quiet:
         print('%s\n' % pgend)
@@ -717,6 +719,7 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
                         add = False
                 if add:
                     results[result] = dict(oldresults[result])
+            del oldresults
 
     return results
 
@@ -907,6 +910,9 @@ def array_to_config(config, path=False):
     # We do add paths at the end without any parameter
     if path:
         valid.append(path)
+
+    del values
+
     return parse_args(parse=valid)
 
 
@@ -1332,6 +1338,7 @@ def main():
     # parallel execution
 
     printresults(results=results, options=options)
+    del results
 
     totaltime = time.time() - start_time
 
