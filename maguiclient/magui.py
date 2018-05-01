@@ -192,6 +192,19 @@ def callcitellus(path=False, plugins=False, forcerun=False, include=None, exclud
     for item in results:
         name = results[item]['id']
         new_dict[name] = dict(results[item])
+    del results
+
+    # cleanup new_dict of unused data
+    # trimmed = {}
+    # for item in new_dict:
+    #     trimmed[item] = {}
+    #     # 'id', 'plugin', 'backend', 'path', 'name',
+    #     for key in ['result']:
+    #         if key in new_dict[item]:
+    #             trimmed[item][key] = new_dict[item][key]
+
+    # del new_dict
+
     return new_dict
 
 
@@ -510,6 +523,8 @@ def main():
 
         return result
 
+    print(_("\nStarting check updates and comparison"))
+
     results = runmaguiandplugs(sosreports=sosreports, citellusplugins=citellusplugins, filename=options.output, serveruri=options.call_home)
 
     # Now we've Magui saved for the whole execution provided in 'results' var
@@ -519,15 +534,40 @@ def main():
         if result['plugin'] == 'metadata-outputs':
             autodata = result['result']['err']
 
-    print(_("Running magui for autogroups:\n"))
+    print(_("\nGenerating autogroups:\n"))
 
     groups = autogroups(autodata)
     processedgroups = {}
+
     filenames = []
+
+    # loop over filenames first so that full results are saved and freed from memory
     for group in groups:
         basefilename = os.path.splitext(options.output)
         filename = basefilename[0] + "-" + group + basefilename[1]
-        print(filename)
+        runautogroup = True
+        for progroup in processedgroups:
+            if groups[group] == processedgroups[progroup]:
+                runautogroup = False
+                runautofile = progroup
+        if runautogroup:
+            # Analisys will be generated
+            filenames.append(filename)
+
+    if len(filenames) > 0:
+        # We've written additional files, so save again magui.json with additional references
+        runmaguiandplugs(sosreports=sosreports, citellusplugins=citellusplugins, filename=options.output, extranames=filenames, onlysave=True, result=results)
+
+    # Results stored, removing variable
+    del results
+    print("\nFull results written to %s" % options.output)
+
+    # reset list of processed groups
+    processedgroups = {}
+    for group in groups:
+        basefilename = os.path.splitext(options.output)
+        filename = basefilename[0] + "-" + group + basefilename[1]
+        print(_("\nRunning for group: %s" % filename))
         runautogroup = True
         for progroup in processedgroups:
             if groups[group] == processedgroups[progroup]:
@@ -544,13 +584,10 @@ def main():
             shutil.copyfile(runautofile, filename)
         processedgroups[filename] = groups[group]
 
+    del groups
+    del processedgroups
+
     print(_("\nFinished autogroup generation."))
-    if len(filenames) > 0:
-        # We've written additional files, so save again magui.json with additional references
-
-        results = runmaguiandplugs(sosreports=sosreports, citellusplugins=citellusplugins, filename=options.output, extranames=filenames, onlysave=True, result=results)
-
-    print("\nResults written to %s" % options.output)
 
 
 if __name__ == "__main__":
