@@ -300,7 +300,7 @@ def main():
             exitCode = RC_FAILED
             errorMsg += "- System was down for more than 10m\n"
             numErrors += 1
-        rebootList += format_rebootlist_ev.format(e.time, e.context, e.desc, e.status, e.duration_bootloader, e.duration_os, e.duration_down)
+        rebootList += format_rebootlist_ev.format(e.time, e.context, e.desc, str(e.status), e.duration_bootloader, e.duration_os, e.duration_down)
     out = str(numErrors) + " problem(s) found\n" + errorMsg + "\nEvents:\n" + format_rebootlist_hd.format('Time', 'Context', 'Description', 'Status', 'Boot', 'OS', 'Down') + rebootList
     exitcitellus(code=exitCode, msg=out)
 
