@@ -61,14 +61,6 @@ flag=0
 # Execute only on OSP nodes
 is_required_rpm openstack.*common
 
-# Run this code on controllers, not on computes nor director
-if ! is_process nova-compute; then
-    if ! is_lineinfile "^scheduler_defaults.*NUMATopologyFilter" "${CITELLUS_ROOT}/etc/nova/nova.conf"; then
-        echo $"missing NUMATopologyFilter in nova.conf" >&2
-        flag=1
-    fi
-fi
-
 if [[ ${CITELLUS_LIVE} -eq 0 ]]; then
     FILE="${CITELLUS_ROOT}/sos_commands/openvswitch/ovs-vsctl_-t_5_get_Open_vSwitch_._other_config"
 elif [[ ${CITELLUS_LIVE} -eq 1 ]];then
