@@ -47,7 +47,7 @@ fi
 
 if [[ ! -z ${VCPUPINSET} ]]; then
     if ! is_lineinfile "cpu-partitioning" "${CITELLUS_ROOT}/etc/tuned/active_profile"; then
-        echo $"For CPU pinning recomended tuned profile is cpu-partitioning provided by tuned-profiles-cpu-partitioning package" >&2
+        echo $"For CPU pinning recomended tuned profile is cpu-partitioning provided by tuned-profiles-cpu-partitioning package " >&2
         flag=1
     fi
 fi
