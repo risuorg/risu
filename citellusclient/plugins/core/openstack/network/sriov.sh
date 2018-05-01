@@ -43,15 +43,6 @@ if [[ "$RELEASE" -gt 7 ]]; then
     fi
 fi
 
-if ! is_rpm tuned-profiles-cpu-partitioning > /dev/null 2>&1;then
-    echo $"missing rpm tuned-profiles-cpu-partitioning" >&2
-    flag=1
-fi
-if ! is_lineinfile "^isolated_cores=.*" "${CITELLUS_ROOT}/etc/tuned/cpu-partitioning-variables.conf";then
-    echo $"missing isolated_cores in /etc/tuned/cpu-partitioning-variables.conf" >&2
-    flag=1
-fi
-
 if [[ "x$CITELLUS_LIVE" = "x1" ]];  then
     if [[ "$(lspci|grep "Virtual Function"|wc -l)" -eq "0" ]]; then
         vfflag=1
@@ -88,11 +79,6 @@ if ! is_lineinfile "hugepages=" "${CITELLUS_ROOT}/proc/cmdline";then
     flag=1
 fi
 
-if ! is_lineinfile "isolcpus=" "${CITELLUS_ROOT}/proc/cmdline";then
-    echo $"missing isolcpus= on kernel cmdline" >&2
-    flag=1
-fi
-
 if ! is_lineinfile "mechanism_drivers.*sriovnicswitch" "${CITELLUS_ROOT}/etc/neutron/plugins/ml2/ml2_conf.ini";then
     echo $"missing sriovnicswitch in ml2_conf.ini" >&2
     flag=1
@@ -114,11 +100,6 @@ fi
 
 if [[ "$missingpcipasstru" -eq "1" ]]; then
     echo $"missing PciPassthroughFilter in nova.conf" >&2
-fi
-
-if ! is_lineinfile "^vcpu_pin_set.*" "${CITELLUS_ROOT}/etc/nova/nova.conf";then
-    echo $"missing vcpu_pin_set in nova.conf" >&2
-    flag=1
 fi
 
 if ! is_lineinfile "^pci_passthrough_whitelist" "${CITELLUS_ROOT}/etc/nova/nova.conf";then
