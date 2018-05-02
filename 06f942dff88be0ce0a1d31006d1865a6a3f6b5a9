@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1091b916_c80adb1f",
+        "filename": "citellusclient/plugins/core/openstack/network/common-dpdk-sriov.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2018-05-02T13:52:11Z",
+      "side": 1,
+      "message": "trailing space",
+      "revId": "06f942dff88be0ce0a1d31006d1865a6a3f6b5a9",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c06ea85e_27d54c43",
+        "filename": "citellusclient/plugins/core/openstack/nova/numa.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2018-05-02T13:52:11Z",
+      "side": 1,
+      "message": "2018",
+      "revId": "06f942dff88be0ce0a1d31006d1865a6a3f6b5a9",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87b2918e_6fbf0267",
+        "filename": "citellusclient/plugins/core/openstack/nova/numa.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2018-05-02T13:52:11Z",
+      "side": 1,
+      "message": "this interacts with the actual test as this is provided via citellus",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 66
+      },
+      "revId": "06f942dff88be0ce0a1d31006d1865a6a3f6b5a9",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
