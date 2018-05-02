@@ -51,7 +51,7 @@ mode: selfcontained
     - missing parameters in expired ceilometer data, which can lead to filling up your hard drive.
     - unsynced ntp.
     - outdated packages that have known critical issues.
-    - others! (200 plugins as of this writting some of them with more than one issue detected)
+    - others! (200+ plugins as of this writting some of them with more than one issue detected)
 - Whatever else you can imagine or code 😉
 
 ----
@@ -61,7 +61,7 @@ mode: selfcontained
 <small>
 
 ~~~py
-- bugzilla : 20 ['docker: 1', 'httpd: 1', 'openstack/ceilometer: 1', 'openstack/ceph: 1', 'openstack/httpd: 1', 'openstack/keystone: 1', 'openstack/keystone/templates: 1', 'openstack/neutron: 5', 'openstack/nova: 4', 'openstack/swift: 1', 'openstack/tripleo: 2', 'systemd: 1']
+- bugzilla : 21 ['docker: 1', 'httpd: 1', 'openstack/ceilometer: 1', 'openstack/ceph: 1', 'openstack/cinder: 1', 'openstack/httpd: 1', 'openstack/keystone: 1', 'openstack/keystone/templates: 1', 'openstack/neutron: 5', 'openstack/nova: 4', 'openstack/swift: 1', 'openstack/tripleo: 2', 'systemd: 1']
 - ceph : 3 []
 - cluster : 1 []
 - docker : 1 []
@@ -70,17 +70,17 @@ mode: selfcontained
 - negative : 2 ['system: 1', 'system/iscsi: 1']
 - network : 2 []
 - openshift : 2 ['etcd: 1', 'node: 1']
-- openstack : 69 ['ceilometer: 2', 'ceph: 1', 'cinder: 3', 'containers: 4', 'containers/docker: 2', 'containers/rabbitmq: 1', 'crontab: 3', 'glance: 1', 'haproxy: 2', 'hardware: 1', 'iptables: 1', 'keystone: 3', 'mysql: 8', 'network: 4', 'neutron: 2', 'nova: 10', 'openvswitch: 2', 'pacemaker: 1', 'rabbitmq: 5', 'redis: 1', 'swift: 3', 'system: 2', 'systemd: 1']
+- openstack : 70 ['ceilometer: 2', 'ceph: 1', 'cinder: 4', 'containers: 4', 'containers/docker: 2', 'containers/rabbitmq: 1', 'crontab: 3', 'glance: 1', 'haproxy: 2', 'hardware: 1', 'iptables: 1', 'keystone: 3', 'mysql: 8', 'network: 4', 'neutron: 2', 'nova: 10', 'openvswitch: 2', 'pacemaker: 1', 'rabbitmq: 5', 'redis: 1', 'swift: 3', 'system: 2', 'systemd: 1']
 - pacemaker : 10 []
 - positive : 19 ['cluster/cman: 1', 'openstack: 16', 'openstack/ceilometer: 1', 'system: 1']
 - security : 12 ['meltdown: 2', 'spectre: 8']
 - supportability : 2 []
-- system : 54 ['iscsi: 1']
-- virtualization : 1 []
+- system : 59 ['iscsi: 1']
+- virtualization : 2 []
+-------
+total : 208
 ~~~
 
--------
-total : 200
 </small>
 
 ---

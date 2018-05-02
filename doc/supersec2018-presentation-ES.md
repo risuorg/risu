@@ -9,7 +9,7 @@ mode: selfcontained
 ---
 
 ## [Citellus](https://citellus.org):
-### Citellus - Herramienta para validar sistemas/ficheros de configuración, logs etc mediante scripts en bash, python, ruby, etc
+### Citellus - Verifica tus sistemas!!
 
 <img src="citellus.png" width="15%" border=0>
 
@@ -19,9 +19,19 @@ SuperSec 2018 Almería 12-13 Mayo
 
 ---
 
+## ¿Quién soy?
+
+Pablo Iranzo Gómez (<https://linkedin.com/in/iranzo/>) .
+
+Relacionado con Linux desde algo antes de comenzar los estudios y luego durante ellos, estando involucrado con las asociaciones LinUV y Valux.org.
+
+Empecé a 'vivir' del software libre en 2004 y a trabajar en Red Hat en 2006 como Consultor, luego como Technical Account Manager y ahora como Software Maintenance Engineer.
+
+---
+
 ## ¿Qué es Citellus?
 
-- Citellus proporciona una base de ejecución complementada por scripts contribuidos por la comunidad que automatizan la detección de problemas, incluyendo problemas de configuración, conflictos con paquetes de versiones instaladas, problemas de seguridad o configuraciones in seguras y mucho más.
+- Citellus proporciona un framework acompañado de scripts proporcionados por la comunidad, que automatizan la detección de problemas, incluyendo problemas de configuración, conflictos con paquetes de versiones instaladas, problemas de seguridad o configuraciones inseguras y mucho más.
 
 ----
 
@@ -31,7 +41,7 @@ SuperSec 2018 Almería 12-13 Mayo
 
 - Unos scripts sencillos y un 'wrapper' después, la herramienta fue tomando forma, poco después, [Pablo Iranzo](https://iranzo.github.io) adaptó el 'wrapper' a python para proporcionarle características más avanzadas.
 
-- En esos primeros momentos también se mantuvieron conversaciones con ingeniería y como resultado, un informe y diseño de los tests más sencillo fue adoptado.
+- En esos primeros momentos también se mantuvieron conversaciones con ingeniería y como resultado, un nuevo diseño de los tests más sencillo fue adoptado.
 
 ---
 
@@ -39,9 +49,9 @@ SuperSec 2018 Almería 12-13 Mayo
 
 - Ejecutarlo contra un sistema en vivo o un sosreport.
 - Resolver problemas antes gracias a la información que proporciona.
-- Utilizar los complementos para detecatr problemas actuales o futuros.
-- Programar nuevos complementos en tu lenguaje de programación preferido (bash, python, ruby, etc.) para extender la funcionalidad.
-    - Contribuir al proyecto esos nuevos complementos para beneficio de otros.
+- Utilizar los plugins para detecatr problemas actuales o futuros.
+- Programar nuevos plugins en tu lenguaje de programación preferido (bash, python, ruby, etc.) para extender la funcionalidad.
+    - Contribuir al proyecto esos nuevos plugins para beneficio de otros.
 - Utilizar dicha información como parte de acciones proactivas en sus sistemas.
 
 ---
@@ -52,7 +62,7 @@ SuperSec 2018 Almería 12-13 Mayo
     - Parámetros faltantes para expirar y purgar datos de ceilometer que pueden llevar a llenar el disco duro.
     - NTP no sincronizado
     - paquetes obsoletos que están afectados por fallos críticos o de seguridad.
-    - otros! (200) complentos en este momento, con más de una comprobación por plugin en muchos de ellos
+    - otros! (200+) complentos en este momento, con más de una comprobación por plugin en muchos de ellos
 - Cualquier otra cosa que puedas imaginar o programar 😉
 
 ----
@@ -65,12 +75,12 @@ SuperSec 2018 Almería 12-13 Mayo
 
 ----
 
-## Algunos números acerca del número de complementos:
+## Algunos números acerca del número de plugins:
 
 <small>
 
 ~~~py
-- bugzilla : 20 ['docker: 1', 'httpd: 1', 'openstack/ceilometer: 1', 'openstack/ceph: 1', 'openstack/httpd: 1', 'openstack/keystone: 1', 'openstack/keystone/templates: 1', 'openstack/neutron: 5', 'openstack/nova: 4', 'openstack/swift: 1', 'openstack/tripleo: 2', 'systemd: 1']
+- bugzilla : 21 ['docker: 1', 'httpd: 1', 'openstack/ceilometer: 1', 'openstack/ceph: 1', 'openstack/cinder: 1', 'openstack/httpd: 1', 'openstack/keystone: 1', 'openstack/keystone/templates: 1', 'openstack/neutron: 5', 'openstack/nova: 4', 'openstack/swift: 1', 'openstack/tripleo: 2', 'systemd: 1']
 - ceph : 3 []
 - cluster : 1 []
 - docker : 1 []
@@ -79,26 +89,26 @@ SuperSec 2018 Almería 12-13 Mayo
 - negative : 2 ['system: 1', 'system/iscsi: 1']
 - network : 2 []
 - openshift : 2 ['etcd: 1', 'node: 1']
-- openstack : 69 ['ceilometer: 2', 'ceph: 1', 'cinder: 3', 'containers: 4', 'containers/docker: 2', 'containers/rabbitmq: 1', 'crontab: 3', 'glance: 1', 'haproxy: 2', 'hardware: 1', 'iptables: 1', 'keystone: 3', 'mysql: 8', 'network: 4', 'neutron: 2', 'nova: 10', 'openvswitch: 2', 'pacemaker: 1', 'rabbitmq: 5', 'redis: 1', 'swift: 3', 'system: 2', 'systemd: 1']
+- openstack : 70 ['ceilometer: 2', 'ceph: 1', 'cinder: 4', 'containers: 4', 'containers/docker: 2', 'containers/rabbitmq: 1', 'crontab: 3', 'glance: 1', 'haproxy: 2', 'hardware: 1', 'iptables: 1', 'keystone: 3', 'mysql: 8', 'network: 4', 'neutron: 2', 'nova: 10', 'openvswitch: 2', 'pacemaker: 1', 'rabbitmq: 5', 'redis: 1', 'swift: 3', 'system: 2', 'systemd: 1']
 - pacemaker : 10 []
 - positive : 19 ['cluster/cman: 1', 'openstack: 16', 'openstack/ceilometer: 1', 'system: 1']
 - security : 12 ['meltdown: 2', 'spectre: 8']
 - supportability : 2 []
-- system : 54 ['iscsi: 1']
-- virtualization : 1 []
+- system : 59 ['iscsi: 1']
+- virtualization : 2 []
+-------
+total : 208
 ~~~
 
--------
-total : 200
 </small>
 
 ---
 
 ## El Objetivo
 
-- Hacer ridículamente sencillo escribir nuevos complementos de forma que cualquiera pueda hacerlos.
+- Hacer ridículamente sencillo escribir nuevos plugins de forma que cualquiera pueda hacerlos.
 - Escribirlos en lenguaje de programación de su elección con tal de que cumpla ciertos estándares.
-- Permitir a cualquiera enviar nuevos complementos al repositorio.
+- Permitir a cualquiera enviar nuevos plugins al repositorio.
 
 ---
 
@@ -108,7 +118,7 @@ total : 200
 ---
 
 ## A destacar
-- Complementos en su lenguaje preferido
+- plugins en su lenguaje preferido
 - Permite sacar la salida a un fichero json para ser procesada por otras herramientas.
     - Permite visualizar via html el json generado
 - Soporte de playbooks ansible (en vivo y también contra un sosreport si se adaptan)
@@ -126,7 +136,7 @@ total : 200
 
 ## ¿Por qué upstream?
 
-- Citellus es un proyecto de código abierto. Todos los complementos se envían al repositorio en github para compartirlos (es lo que queremos fomentar, reutilización del conocimiento).
+- Citellus es un proyecto de código abierto. Todos los plugins se envían al repositorio en github para compartirlos (es lo que queremos fomentar, reutilización del conocimiento).
     - Project on GitHub: <https://github.com/citellusorg/citellus/>
 - Cada uno es experto en su área: queremos que todos contribuyan
 - Utilizamos un acercamiento similar a otros proyectos de código abierto: usamos gerrit para revisar el código y UnitTesting para validar la funcionalidad básica.
@@ -135,7 +145,7 @@ total : 200
 
 ## ¿Cómo contribuir?
 
-Actualmente hay una gran presencia de complementos de OpenStack, ya que es enese área donde trabajamos diariamente, pero Citellus no está limitado a una tecnología o producto.
+Actualmente hay una gran presencia de plugins de OpenStack, ya que es enese área donde trabajamos diariamente, pero Citellus no está limitado a una tecnología o producto.
 
 Por ejemplo, es fácil realizar comprobaciones acerca de si un sistema está configurado correctamente para recibir actualizaciones, comprobar versiones específicas con fallos (Meltdown/Spectre) y que no hayan sido deshabilitadas las protecciones, consumo excesivo de memoria por algún proceso, fallos de autenticación, etc.
 
@@ -166,16 +176,16 @@ Por ejemplo, es fácil realizar comprobaciones acerca de si un sistema está con
 Filosofía sencilla:
 
 - Citellus es el 'wrapper' que ejecuta.
-- Permite especificar carpetas con sosreports
-- Busca los complementos disponibles en el sistema
-- Lanza los complementos contra cada sosreport y devuelve el estado.
+- Permite especificar la carpeta con el sosreport
+- Busca los plugins disponibles en el sistema
+- Lanza los plugins contra cada sosreport y devuelve el estado.
 - El framework de Citellus en python permite manejo de opciones, filtrado, ejecución paralela, etc.
 
 ---
 
-## ¿Y los complementos?
+## ¿Y los plugins?
 
-Los complementos son aún más sencillos:
+Los plugins son aún más sencillos:
 
 - En cualquier lenguaje que pueda ser ejecutado desde una shell.
 - Mensajes de salida a 'stderr' (>&2)
@@ -184,7 +194,7 @@ Los complementos son aún más sencillos:
 
 ----
 
-## ¿Y los complementos? (continuación)
+## ¿Y los plugins? (continuación)
 
 - Heredan variables del entorno como la carpeta raíz para el sosreport (vacía en modo Live) (`CITELLUS_ROOT`) o si se está ejecutando en modo live (`CITELLUS_LIVE`). No se necesita introducir datos vía el teclado
 - Por ejemplo los tests en 'vivo' pueden consultar valores en la base de datos y los basados en sosreport, limitarse a los logs existentes.
@@ -223,14 +233,14 @@ fi
 
 ---
 
-## ¿Listos para profundizar en los complementos?
+## ¿Listos para profundizar en los plugins?
 
-- Cada complemento debe validar si debe o no ejecutarse y mostrar la salida a 'stderr', código de retorno. 
+- Cada plugin debe validar si debe o no ejecutarse y mostrar la salida a 'stderr', código de retorno.
 - Citellus ejecutará e informará de los tests en base a los filtros usados.
 
 ----
 
-## ¿Cómo empezar un nuevo complemento (por ejemplo)?
+## ¿Cómo empezar un nuevo plugin (por ejemplo)?
 - Crea un script en  `~/~/.../plugins/core/rhev/hosted-engine.sh`
 - `chmod +x hosted-engine.sh`
 
@@ -238,13 +248,13 @@ fi
 
 ## Requisitos:
 - El código de retorno debe ser `$RC_OKAY` (ok), `$RC_FAILED` (fallo)  or `$RC_SKIPPED` (omitido).
-- Los mensajes impresos a stderr se muestran si el complemento falla o se omite (si se usa el modo detallado)
+- Los mensajes impresos a stderr se muestran si el plugin falla o se omite (si se usa el modo detallado)
 - Si se ejecuta contra un 'sosreport', la variable `CITELLUS_ROOT` tiene la ruta a la carpeta del sosreport indicada.
 - `CITELLUS_LIVE` contiene `0` ó `1` si es una ejecución en vivo o no.
 
 ----
 
-## ¿Cómo empezar un nuevo complemento (continuación)?
+## ¿Cómo empezar un nuevo plugin (continuación)?
 
 ~~~sh
 if [ “$CITELLUS_LIVE” = “0” ]; then
@@ -264,7 +274,7 @@ fi
 
 ----
 
-## ¿Cómo empezar un nuevo complemento (con funciones)?
+## ¿Cómo empezar un nuevo plugin (con funciones)?
 
 ~~~sh
 # Load common functions
@@ -280,9 +290,9 @@ fi
 
 ----
 
-## ¿Cómo probar un complemento?
+## ¿Cómo probar un plugin?
 
-- Use `tox` para ejecutar algunas pruebas UT (utf8, bashate, python 2.7, python 3.5)
+- Use `tox` para ejecutar algunas pruebas UT (utf8, bashate, python 2.7, python 3)
 
 - Diga a Citellus qué plugin utilizar:
 ~~~sh
@@ -304,7 +314,7 @@ mode: fs snapshot sosreport-20170724-175510/crta02
 
 ### Introducción
 
-- Citellus trabaja al nivel individual del sosreport, pero algunos problemas se manifiestan entre conjuntos de equipos (clústeres, virtualización, granjas, etc)
+- Citellus trabaja a nivel de sosreport individual, pero algunos problemas se manifiestan entre conjuntos de equipos (clústeres, virtualización, granjas, etc)
 
 <small>Por ejemplo, Galera debe comprobar el seqno entre los diversos miembros para ver cúal es el que contiene los datos más actualizados.</small>
 
@@ -376,10 +386,11 @@ Gracias por asistir!!
 
 ### ¿Preguntas?
 
-For additional questions, come to #citellus on Freenode or email us:
+Ven a #citellus en Freenode o contacta con nosotros:
 
 - https://citellus.org
 - citellus-dev _AT_ redhat.com
+- Issue en github <https://github.com/citellusorg/citellus/issues>
 - <https://www.redhat.com/mailman/listinfo/citellus-dev>
 
 ---
