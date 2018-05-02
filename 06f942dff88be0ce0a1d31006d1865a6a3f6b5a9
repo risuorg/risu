@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "bb825c7c_a5605fe4",
+        "filename": "citellusclient/plugins/core/openstack/network/common-dpdk-sriov.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1012950
+      },
+      "writtenOn": "2018-05-02T14:11:15Z",
+      "side": 1,
+      "message": "I added the trailing space to have this check included in 2 script files.\nElse validation fails due to duplicate message.\nsince i included pinned core check in numa.sh i thought it would be good to move the check there.\nBasically it makes since to include both places, because there are customers using dpdk without cpu pinning for nova vcpu_pin_set .\nWhat do you suggest?",
+      "parentUuid": "1091b916_c80adb1f",
+      "revId": "06f942dff88be0ce0a1d31006d1865a6a3f6b5a9",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c06ea85e_27d54c43",
         "filename": "citellusclient/plugins/core/openstack/nova/numa.sh",
         "patchSetId": 1
