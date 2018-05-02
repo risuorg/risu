@@ -30,7 +30,7 @@ import subprocess
 # Import the _() function
 import gettext
 citellusdir = os.path.abspath(os.path.dirname(__file__) + '/../../')
-localedir = os.path.join(citellusdir, 'locale')
+localedir = os.environ['TEXTDOMAINDIR']
 # This will use system defined LANGUAGE
 trad = gettext.translation('citellus', localedir, fallback=True)
 
