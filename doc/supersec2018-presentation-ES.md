@@ -145,7 +145,7 @@ total : 208
 
 ## ¿Cómo contribuir?
 
-Actualmente hay una gran presencia de plugins de OpenStack, ya que es enese área donde trabajamos diariamente, pero Citellus no está limitado a una tecnología o producto.
+Actualmente hay una gran presencia de plugins de OpenStack, ya que es en ese área donde trabajamos diariamente, pero Citellus no está limitado a una tecnología o producto.
 
 Por ejemplo, es fácil realizar comprobaciones acerca de si un sistema está configurado correctamente para recibir actualizaciones, comprobar versiones específicas con fallos (Meltdown/Spectre) y que no hayan sido deshabilitadas las protecciones, consumo excesivo de memoria por algún proceso, fallos de autenticación, etc.
 
