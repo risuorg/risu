@@ -366,12 +366,60 @@ For additional questions, come to #citellus on Freenode or email us:
 - citellus-dev _AT_ redhat.com
 - <https://www.redhat.com/mailman/listinfo/citellus-dev>
 
+----
+
+### Quiz 1/2!!
+
+<small>
+
+1. What sort of logic are scripts using to determine if the check is failed/ok or should be skipped
+
+    - Exit status for commands like `grep`, etc
+    - Check requirements to run, target environment and matching details
+    - bash conditionals
+    - custom functions checks
+
+1. What do I need to do if I want to add my scripts
+
+    - Modify citellus.py to define new path
+    - Use include filter to add it
+    - chmod +x the script in the plugins folder
+    - Append path to the script after sosreport
+
+</small>
+
 Note:
 
-- What sort of logic are scripts using to determine if the check is failed/ok or should be skipped
+<small>
 
-- What do I need to do if I want to add my scripts
+1. Skipped: no requirements satisfied, ok: no problem detected, Fail: test is failed (2)
 
+1. Create a new script, chmod +x and return valid status code (3)
+
+</small>
+
+----
+
+### Quiz 2/2!!
+
+1. What languages are supported for scripts?
+
+    - bash, python, ruby
+    - python, bash, c++
+    - golang, perl
+    - all of above
+
+1. What are the valid return status for scripts?
+
+    - RC_WARNING
+    - RC_OKAY
+    - RC_SKIPPED
+    - RC_FAILED
+
+Note:
+
+1. All of above
+1. RC_OKAY, RC_SKIPPED, RC_FAILED
 
 ---
 
