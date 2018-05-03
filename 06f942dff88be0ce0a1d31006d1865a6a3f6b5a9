@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "3acfabf2_190bbc36",
+        "filename": "citellusclient/plugins/core/openstack/network/common-dpdk-sriov.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2018-05-03T08:24:55Z",
+      "side": 1,
+      "message": "We could prepend it with dpdk: or \u0027numa:\u0027 on the other?\n\nI\u0027ll need to check the duplicate message thing to see if that can be fixed somehow in extractpot too",
+      "parentUuid": "bb825c7c_a5605fe4",
+      "revId": "06f942dff88be0ce0a1d31006d1865a6a3f6b5a9",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c06ea85e_27d54c43",
         "filename": "citellusclient/plugins/core/openstack/nova/numa.sh",
         "patchSetId": 1
