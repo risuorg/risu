@@ -102,6 +102,9 @@ Note: Change speaker after this
 ---
 
 ## Highlights
+
+<small>
+
 - Plugins in your language of choice.
 - Allows dumping output to json file to be processed by other tools.
     - Allow the visualization of html from the json output.
@@ -110,30 +113,40 @@ Note: Change speaker after this
 - Save / restore default settings.
 - Run via pip/pipsi if you don't want to git clone from repo or using a container.
 
+</small>
+
 ----
 
 ## HTML Interface
-- Create by using --output and --web, open the generated `citellus.html` over http.
+- Create by using --web, open the generated `citellus.html` over http.
 <img src="images/www.png" width="80%" border=0><!-- .element height="50%"  width="70%" -->
 
 ---
 
 ## Why upstream?
 
+<small>
+
 - This is an open source project. All the scripts should be committed upstream and shared (and we are willing to foster this).
     - Project on GitHub: <https://github.com/citellusorg/citellus/>
 - We want contributions from anyone.
 - We follow an approach similar to other opensource projects: we use Gerrit for reviewing the code and UT's for validating basic functionality.
 
+</small>
+
 ---
 
 ## How do I contribute?
+
+<small>
 
 At the moment, there’s a strong presence on OpenStack plugins as it is where we solve our issues on everyday basis, but allows anything, as long as there are tests written for it.
 
 For example, it will be easy to report on systems registered against RHN instead of CDN or systems with a specific version of pacemaker known to have lot of issues or check amount of free memory or memory usage from a process.
 
-<small> Read contributing doc at:  <https://github.com/citellusorg/citellus/blob/master/CONTRIBUTING.md> for more details.</small>
+Read contributing doc at:  <https://github.com/citellusorg/citellus/blob/master/CONTRIBUTING.md> for more details.
+
+</small>
 
 ---
 
@@ -147,10 +160,14 @@ For example, it will be easy to report on systems registered against RHN instead
 
 ## Why not sosreports?
 
+<small>
+
 - It’s not Citellus or ‘sosreports’, SOS collects data from the system, Citellus, runs tests/plugins against the data collected.
 - Sosreport is installed in RHEL base channels, this makes it well spread, but also, slower to get changes.
 - Frequently, data about errors or errors to be, is already in sosreports.
 - Citellus is based on known issues and easy to extend with new ones, requires faster devel cycle, targeting more a devops or support teams as target audience.
+
+</small>
 
 
 Note: Change speaker after this
@@ -310,6 +327,9 @@ mode: fs snapshot sosreport-20170724-175510/crta02
 ----
 
 ## How does it looks like?
+
+<small>
+
 It’s delivered in citellus repo and can be executed by specifying sosreports:
 ~~~sh
 [piranzo@collab-shell]$ ~/citellus/magui.py * -i seqno
@@ -331,6 +351,8 @@ It’s delivered in citellus repo and can be executed by specifying sosreports:
 ~~~
 
 - In this example, UUID and SEQNO is shown for each controller and we can see that controller 2 has different SEQNO from the other two nodes.
+
+</small>
 
 ----
 
@@ -354,11 +376,9 @@ It’s delivered in citellus repo and can be executed by specifying sosreports:
 
 ---
 
-## Are you still there?
+## Questions?
 
 THANK YOU FOR ATTENDING!!
-
-### Questions?
 
 For additional questions, come to #citellus on Freenode or email us:
 
@@ -402,6 +422,8 @@ Note:
 
 ### Quiz 2/2!!
 
+<small>
+
 1. What languages are supported for scripts?
 
     - bash, python, ruby
@@ -416,6 +438,8 @@ Note:
     - RC_SKIPPED
     - RC_FAILED
 
+</small>
+
 Note:
 
 1. All of above
@@ -426,6 +450,7 @@ Note:
 ## Other resources
 Blog posts:
 <small>
+
 - Citellus tagged posts: https://iranzo.github.io/blog/tag/citellus/
 - <http://iranzo.github.io/blog/2017/07/26/Citellus-framework-for-detecting-known-issues/>
 - <https://iranzo.github.io/blog/2017/07/31/Magui-for-analysis-of-issues-across-several-hosts/>
@@ -433,4 +458,5 @@ Blog posts:
 - <https://iranzo.github.io/blog/2017/10/26/i18n-and-bash8-in-bash/>
 - <https://iranzo.github.io/blog/2018/01/16/recent-changes-in-magui-and-citellus/>
 - DevConf.cz 2018 recording <https://www.youtube.com/watch?v=SDzzqrUdn5A>
+
 </small>
