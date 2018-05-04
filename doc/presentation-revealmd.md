@@ -388,7 +388,7 @@ For additional questions, come to #citellus on Freenode or email us:
 
 ----
 
-### Quiz 1/2!!
+### Quiz 1/4!!
 
 <small>
 
@@ -398,6 +398,23 @@ For additional questions, come to #citellus on Freenode or email us:
     - Check requirements to run, target environment and matching details
     - bash conditionals
     - custom functions checks
+
+</small>
+
+Note:
+
+<small>
+
+1. Skipped: no requirements satisfied, ok: no problem detected, Fail: test is failed (2)
+
+
+</small>
+
+----
+
+### Quiz 2/4!!
+
+<small>
 
 1. What do I need to do if I want to add my scripts
 
@@ -412,15 +429,13 @@ Note:
 
 <small>
 
-1. Skipped: no requirements satisfied, ok: no problem detected, Fail: test is failed (2)
-
 1. Create a new script, chmod +x and return valid status code (3)
 
 </small>
 
 ----
 
-### Quiz 2/2!!
+### Quiz 3/4!!
 
 <small>
 
@@ -430,6 +445,18 @@ Note:
     - python, bash, c++
     - golang, perl
     - all of above
+
+</small>
+
+Note:
+
+1. All of above
+
+----
+
+### Quiz 4/4!!
+
+<small>
 
 1. What are the valid return status for scripts?
 
@@ -442,7 +469,6 @@ Note:
 
 Note:
 
-1. All of above
 1. RC_OKAY, RC_SKIPPED, RC_FAILED
 
 ---
