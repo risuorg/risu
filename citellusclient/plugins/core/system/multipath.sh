@@ -18,7 +18,7 @@
 # we can run this against fs snapshot or live system
 
 # long_name: multipath failed/faulty/offline path detector
-# description: This plugin chechs multipath related issues
+# description: This plugin checks multipath related issues
 # priority: 800
 
 # Load common functions
