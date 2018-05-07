@@ -24,37 +24,6 @@
 # Load common functions
 [[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
-expand_ranges(){
-    (
-    for CPU in $(echo $*|tr "," "\n");do
-        if [[ "$CPU" == *"-"* ]];then
-            echo ${CPU}|awk -F "-" '{print $1" "$2}'|xargs seq
-        else
-            echo "$CPU"
-        fi
-    done
-    )|xargs echo
-}
-
-expand_and_remove_excludes(){
-    RANGE=$(expand_ranges $*)
-    CPUs=$(echo ${RANGE}|tr " " "\n"|egrep -v "\^.*")
-    EXCLUDES=$(echo ${RANGE}|tr " " "\n"|egrep "\^.*")
-    (
-    for CPU in ${CPUs}; do
-        exclude=0
-        for EXCL in ${EXCLUDES};do
-            if [[ "^$CPU" == "$EXCL" ]]; then
-                exclude=1
-            fi
-        done
-        if [[ "$exclude" == "0" ]];then
-            echo ${CPU}
-        fi
-    done
-    )|xargs echo
-}
-
 # Actual code execution
 flag=0
 
