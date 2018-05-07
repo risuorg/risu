@@ -214,3 +214,6 @@ location of various files. To use this script you can source it at the top:
         ~~~sh
         are_dates_diff_over 5 "2017-12-01 14:40" "2017-12-31 14:45"
         ~~~
+
+- `is_filemode $mode $file` -- Checks file mode on disk to be XXXX, for example 0755
+- `is_required_filemode $mode $file` -- Fallsback to is_filemode requiring file and mode to exist and being equal

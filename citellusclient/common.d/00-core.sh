@@ -179,3 +179,21 @@ strip_and_trim() {
     local file="$1"
     egrep -v "^\s*($|#.*)" $file | sed -e 's/^[ \t]*//' -e 's/[ \t]*$//'
 }
+
+
+is_filemode() {
+    # $1 Mode
+    # $2 Filename
+    MODE=$(LANG=C stat "$2" |grep ^Access.*Uid|cut -d ":"  -f 2|cut -d "/" -f 1|tr -d '() ')
+    [[ "${MODE}" == "$1" ]]
+}
+
+is_required_filemode() {
+    # $1 Mode
+    # $2 Filename
+    is_required_file $2
+    if ! is_filemode "$1" "$2" ; then
+        echo "File $1 doesn't have require mode $2" >&2
+        exit ${RC_SKIPPED}
+    fi
+}
