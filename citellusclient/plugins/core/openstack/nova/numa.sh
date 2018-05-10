@@ -234,15 +234,19 @@ else
 
         # instances are not overlapping pinned cpu.
         all_pinned_cores=''
+        misconfigured_cores=''
         for libvirt_xml in `ls ${CITELLUS_ROOT}/etc/libvirt/qemu/instance-*.xml`; do
             all_pinned_cores="$(echo 'cat //cputune/vcpupin/@cpuset' | xmllint --shell ${libvirt_xml} | awk -F\" 'NR % 2 == 0 { print $2 }') "${all_pinned_cores}
         done
         for i in ${all_pinned_cores}; do
             if [[ ! $(echo ${all_pinned_cores} |egrep  -o " $i |^$i | $i$" | wc -l ) = '1' ]]; then
-                echo "Core ${i} is overlapping $(echo ${all_pinned_cores} |egrep  -o " $i |^$i | $i$" | wc -l ) pinned vcpus .\nThis may be an outcome of resize / live-migration on older version / live-migration of cpu pinned instances using destination host which will by-pass nova scheduler.\nLive-Migration of pinned instances are not fully supported: https://access.redhat.com/solutions/2191071" >&2
-                flag=1
+                misconfigured_cores=${misconfigured_cores}" ${i}"
             fi
         done
+        if [[ ! -z "${misconfigured_cores}" ]]; then
+            echo "Multiple instance's pinned vcpus are overlapping Core(s) ${i} .\nThis may be an outcome of resize / live-migration on older version / live-migration of cpu pinned instances using destination host which will by-pass nova scheduler.\nLive-Migration of instances with pinned vcpus are not fully supported: https://access.redhat.com/solutions/2191071" >&2
+            flag=1
+        fi
     fi
 fi
 
