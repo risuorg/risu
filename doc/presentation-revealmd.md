@@ -376,6 +376,22 @@ It’s delivered in citellus repo and can be executed by specifying sosreports:
 
 ---
 
+## Other resources
+Blog posts:
+<small>
+
+- Citellus tagged posts: https://iranzo.github.io/blog/tag/citellus/
+- <http://iranzo.github.io/blog/2017/07/26/Citellus-framework-for-detecting-known-issues/>
+- <https://iranzo.github.io/blog/2017/07/31/Magui-for-analysis-of-issues-across-several-hosts/>
+- <https://iranzo.github.io/blog/2017/08/17/Jenkins-for-running-CI-tests/>
+- <https://iranzo.github.io/blog/2017/10/26/i18n-and-bash8-in-bash/>
+- <https://iranzo.github.io/blog/2018/01/16/recent-changes-in-magui-and-citellus/>
+- DevConf.cz 2018 recording <https://www.youtube.com/watch?v=SDzzqrUdn5A>
+
+</small>
+
+---
+
 ## Questions?
 
 THANK YOU FOR ATTENDING!!
@@ -470,19 +486,3 @@ Note:
 Note:
 
 1. RC_OKAY, RC_SKIPPED, RC_FAILED
-
----
-
-## Other resources
-Blog posts:
-<small>
-
-- Citellus tagged posts: https://iranzo.github.io/blog/tag/citellus/
-- <http://iranzo.github.io/blog/2017/07/26/Citellus-framework-for-detecting-known-issues/>
-- <https://iranzo.github.io/blog/2017/07/31/Magui-for-analysis-of-issues-across-several-hosts/>
-- <https://iranzo.github.io/blog/2017/08/17/Jenkins-for-running-CI-tests/>
-- <https://iranzo.github.io/blog/2017/10/26/i18n-and-bash8-in-bash/>
-- <https://iranzo.github.io/blog/2018/01/16/recent-changes-in-magui-and-citellus/>
-- DevConf.cz 2018 recording <https://www.youtube.com/watch?v=SDzzqrUdn5A>
-
-</small>

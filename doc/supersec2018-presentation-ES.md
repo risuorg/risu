@@ -453,23 +453,6 @@ mode: fs snapshot sosreport-20170724-175510/crta02
 
 ---
 
-### ¿Preguntas?
-
-Gracias por asistir!!
-
-Ven a #citellus en Freenode o contacta con nosotros:
-
-<small>
-
-- https://citellus.org
-- citellus-dev _AT_ redhat.com
-    - <https://www.redhat.com/mailman/listinfo/citellus-dev>
-- Issue en github <https://github.com/citellusorg/citellus/issues>
-
-</small>
-
----
-
 ## Otros recursos
 Blog posts:
 
@@ -482,5 +465,22 @@ Blog posts:
 - <https://iranzo.github.io/blog/2017/10/26/i18n-and-bash8-in-bash/>
 - <https://iranzo.github.io/blog/2018/01/16/recent-changes-in-magui-and-citellus/>
 - DevConf.cz 2018 recording <https://www.youtube.com/watch?v=SDzzqrUdn5A>
+
+</small>
+
+---
+
+### ¿Preguntas?
+
+Gracias por asistir!!
+
+Ven a #citellus en Freenode o contacta con nosotros:
+
+<small>
+
+- https://citellus.org
+- citellus-dev _AT_ redhat.com
+    - <https://www.redhat.com/mailman/listinfo/citellus-dev>
+- Issue en github <https://github.com/citellusorg/citellus/issues>
 
 </small>
