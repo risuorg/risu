@@ -4,8 +4,10 @@ author: Pablo Iranzo Gómez
 
 theme: "solarized"
 highlightTheme: "Zenburn"
-transition: cube
 mode: selfcontained
+revealOptions:
+    transition: 'cube'
+    slideNumber: true
 ---
 
 ## [Citellus](https://citellus.org):
@@ -22,8 +24,14 @@ SuperSec 2018 Almería 12-13 Mayo
 ## ¿Quién soy?
 
 <small>
-
-Pablo Iranzo Gómez (<https://linkedin.com/in/iranzo/>) .
+- Pablo Iranzo Gómez (Pablo.Iranzo _AT_ gmail.com)
+    - Principal Software Maintenance Engineer - OpenStack - Enterprise Cloud Support
+        - RHCA Level V: #110-215-852 (RHC{A,SS,DS,VA,E,SA,SP,AOSP}, JBCAA)
+- URLS
+    - blog: https://iranzo.github.io
+    - <https://linkedin.com/in/iranzo/>
+    - <https://github.com/iranzo>
+    - <https://twitter.com/iranzop>
 
 Involucrado con Linux desde algo antes de comenzar los estudios universitarios y luego durante ellos, estando involucrado con las asociaciones LinUV y Valux.org.
 
@@ -98,10 +106,8 @@ Empecé a 'vivir' del software libre en 2004 y a trabajar en Red Hat en 2006 com
 ----
 
 ## Algunos números sobre plugins:
-
 <small>
-
-~~~py
+<small>
 - bugzilla : 21 ['docker: 1', 'httpd: 1', 'openstack/ceilometer: 1', 'openstack/ceph: 1', 'openstack/cinder: 1', 'openstack/httpd: 1', 'openstack/keystone: 1', 'openstack/keystone/templates: 1', 'openstack/neutron: 5', 'openstack/nova: 4', 'openstack/swift: 1', 'openstack/tripleo: 2', 'systemd: 1']
 - ceph : 3 []
 - cluster : 1 []
@@ -120,8 +126,7 @@ Empecé a 'vivir' del software libre en 2004 y a trabajar en Red Hat en 2006 com
 - virtualization : 2 []
 -------
 total : 215
-~~~
-
+</small>
 </small>
 
 ---
@@ -249,11 +254,11 @@ Los plugins son aún más sencillos:
 
 ----
 
-## Algunos ejemplos de ejecución y de scripts
+## Ejemplo de script
 
 <small>
 
-Por ejemplo [Uso de disco](<https://github.com/citellusorg/citellus/blob/master/citellus/plugins/system/disk_usage.sh>):
+- Por ejemplo [Uso de disco](<https://github.com/citellusorg/citellus/blob/master/citellus/plugins/system/disk_usage.sh>):
 
 ```sh
 #!/bin/bash
@@ -290,13 +295,7 @@ fi
 - Cada plugin debe validar si debe o no ejecutarse y mostrar la salida a 'stderr', código de retorno.
 - Citellus ejecutará e informará de los tests en base a los filtros usados.
 
-----
-
-## ¿Cómo empezar un nuevo plugin (por ejemplo)?
-- Crea un script en  `~/~/.../plugins/core/rhev/hosted-engine.sh`
-- `chmod +x hosted-engine.sh`
-
-----
+---
 
 ## Requisitos:
 
@@ -308,6 +307,12 @@ fi
 - `CITELLUS_LIVE` contiene `0` ó `1` si es una ejecución en vivo o no.
 
 </small>
+
+----
+
+## ¿Cómo empezar un nuevo plugin (por ejemplo)?
+- Crea un script en  `~/~/.../plugins/core/rhev/hosted-engine.sh`
+- `chmod +x hosted-engine.sh`
 
 ----
 

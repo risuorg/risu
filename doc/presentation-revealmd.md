@@ -4,8 +4,10 @@ author: Pablo Iranzo Gómez
 
 theme: "solarized"
 highlightTheme: "Zenburn"
-transition: cube
 mode: selfcontained
+revealOptions:
+    transition: 'cube'
+    slideNumber: true
 ---
 
 ## [Citellus](https://citellus.org):
@@ -59,8 +61,7 @@ mode: selfcontained
 ## Some numbers on plugin count:
 
 <small>
-
-~~~py
+<small>
 - bugzilla : 21 ['docker: 1', 'httpd: 1', 'openstack/ceilometer: 1', 'openstack/ceph: 1', 'openstack/cinder: 1', 'openstack/httpd: 1', 'openstack/keystone: 1', 'openstack/keystone/templates: 1', 'openstack/neutron: 5', 'openstack/nova: 4', 'openstack/swift: 1', 'openstack/tripleo: 2', 'systemd: 1']
 - ceph : 3 []
 - cluster : 1 []
@@ -79,8 +80,7 @@ mode: selfcontained
 - virtualization : 2 []
 -------
 total : 215
-~~~
-
+</small>
 </small>
 
 ---
@@ -239,19 +239,19 @@ fi
 
 - Each test should take care of checking if it should run or not and output return code and stderr. Wrapper just runs all the tests or specific ones (filtering options).
 
-----
-
-## How to start a new plugin (example)
-- Write a script in `~/~/.../plugins/core/rhev/hosted-engine.sh`
-- `chmod +x hosted-engine.sh`
-
-----
+---
 
 ## Requirements:
 - return code must be `$RC_OKAY` (ok), `$RC_FAILED` (failed)  or `$RC_SKIPPED` (skipped).
 - Messages to be printed on stderr are displayed on 'failed' or 'skipped' if verbose enabled.
 - Running against ‘sosreport’, `CITELLUS_ROOT` contains path to sosreport folder provided.
 - `CITELLUS_LIVE` contains `0` or `1` if running against live or not.
+
+----
+
+## How to start a new plugin (example)
+- Write a script in `~/~/.../plugins/core/rhev/hosted-engine.sh`
+- `chmod +x hosted-engine.sh`
 
 ----
 
