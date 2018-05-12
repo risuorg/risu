@@ -25,7 +25,7 @@ SuperSec 2018 Almería 12-13 Mayo
 
 Pablo Iranzo Gómez (<https://linkedin.com/in/iranzo/>) .
 
-Relacionado con Linux desde algo antes de comenzar los estudios y luego durante ellos, estando involucrado con las asociaciones LinUV y Valux.org.
+Involucrado con Linux desde algo antes de comenzar los estudios universitarios y luego durante ellos, estando involucrado con las asociaciones LinUV y Valux.org.
 
 Empecé a 'vivir' del software libre en 2004 y a trabajar en Red Hat en 2006 como Consultor, luego como Technical Account Manager y ahora como Software Maintenance Engineer.
 
