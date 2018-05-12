@@ -70,15 +70,15 @@ mode: selfcontained
 - negative : 2 ['system: 1', 'system/iscsi: 1']
 - network : 2 []
 - openshift : 2 ['etcd: 1', 'node: 1']
-- openstack : 70 ['ceilometer: 2', 'ceph: 1', 'cinder: 4', 'containers: 4', 'containers/docker: 2', 'containers/rabbitmq: 1', 'crontab: 3', 'glance: 1', 'haproxy: 2', 'hardware: 1', 'iptables: 1', 'keystone: 3', 'mysql: 8', 'network: 4', 'neutron: 2', 'nova: 10', 'openvswitch: 2', 'pacemaker: 1', 'rabbitmq: 5', 'redis: 1', 'swift: 3', 'system: 2', 'systemd: 1']
+- openstack : 75 ['ceilometer: 2', 'ceph: 1', 'cinder: 4', 'containers: 4', 'containers/docker: 2', 'containers/rabbitmq: 1', 'crontab: 3', 'glance: 1', 'haproxy: 2', 'hardware: 1', 'iptables: 1', 'keystone: 3', 'mysql: 8', 'network: 4', 'neutron: 4', 'nova: 12', 'openvswitch: 2', 'pacemaker: 1', 'rabbitmq: 5', 'redis: 1', 'swift: 3', 'system: 2', 'systemd: 1']
 - pacemaker : 10 []
 - positive : 19 ['cluster/cman: 1', 'openstack: 16', 'openstack/ceilometer: 1', 'system: 1']
 - security : 12 ['meltdown: 2', 'spectre: 8']
 - supportability : 2 []
-- system : 59 ['iscsi: 1']
+- system : 60 ['iscsi: 1']
 - virtualization : 2 []
 -------
-total : 208
+total : 215
 ~~~
 
 </small>
@@ -178,7 +178,7 @@ Note: Change speaker after this
 
 Philosophy is very simple:
 - Citellus is just a simple wrapper.
-- Allows to specify on sosreport and test folders.
+- Allows to specify on sosreport and test filters.
 - Finds tests available in test folders.
 - Executes each test against sosreport and reports return status.
 - Framework written in python which features option parsing, parallel execution of tests, filtering, etc.
@@ -339,15 +339,15 @@ It’s delivered in citellus repo and can be executed by specifying sosreports:
   /(_)   Multiple Analisis Generic Unifier and Interpreter
  \|
   |/
-{'~/~/.../plugins/core/openstack/mysql/seqno.sh': {'controller0': {'err': u'2b65adb0-787e-11e7-81a8-26480628c14c:285019879\n',
-                                                                                                                          'out': u'',
-                                                                                                                          'rc': 10},
-                                                                                        'controller1': {'err': u'2b65adb0-787e-11e7-81a8-26480628c14c:285019879\n',
-                                                                                                                          'out': u'',
-                                                                                                                          'rc': 10},
-                                                                                        'controller2': {'err': u'2b65adb0-787e-11e7-81a8-26480628c14c:285019878\n',
-                                                                                                                          'out': u'',
-                                                                                                                          'rc': 10}}}
+{'~/~/.../core/openstack/mysql/seqno.sh': {'controller0': {'err': u'2b65adb0-787e-11e7-81a8-26480628c14c:285019879\n',
+                                                                'out': u'',
+                                                                'rc': 10},
+                                                'controller1': {'err': u'2b65adb0-787e-11e7-81a8-26480628c14c:285019879\n',
+                                                                'out': u'',
+                                                                'rc': 10},
+                                                'controller2': {'err': u'2b65adb0-787e-11e7-81a8-26480628c14c:285019878\n',
+                                                                'out': u'',
+                                                                'rc': 10}}}
 ~~~
 
 - In this example, UUID and SEQNO is shown for each controller and we can see that controller 2 has different SEQNO from the other two nodes.
