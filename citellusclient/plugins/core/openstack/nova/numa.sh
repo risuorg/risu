@@ -27,6 +27,7 @@
 # Actual code execution
 flag=0
 
+is_required_file "${CITELLUS_ROOT}/etc/nova/nova.conf"
 # Run this code on controllers, not on computes nor director
 if ! is_process nova-compute; then
     if ! is_lineinfile "^scheduler_defaults.*NUMATopologyFilter" "${CITELLUS_ROOT}/etc/nova/nova.conf"; then
