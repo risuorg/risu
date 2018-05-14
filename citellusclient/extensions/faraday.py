@@ -74,12 +74,7 @@ def get_metadata(plugin):
     :return: metadata dict for that plugin
     """
 
-    metadata = {'description': citellus.regexpfile(filename=plugin['plugin'], regexp='\A# description:')[14:].strip(),
-                'long_name': citellus.regexpfile(filename=plugin['plugin'], regexp='\A# long_name:')[12:].strip(),
-                'bugzilla': citellus.regexpfile(filename=plugin['plugin'], regexp='\A# bugzilla:')[11:].strip(),
-                'priority': int(citellus.regexpfile(filename=plugin['plugin'], regexp='\A# priority:')[11:].strip() or 0),
-                'path': citellus.regexpfile(filename=plugin['plugin'], regexp='\A# path:')[8:].strip() or 0}
-    return metadata
+    return citellus.generic_get_metadata(plugin)
 
 
 def run(plugin):  # do not edit this line
