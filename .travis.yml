@@ -8,6 +8,12 @@ python:
 before_install:
 - pip install tox
 - pip install python-coveralls
+addons:
+  sonarcloud:
+    organization: "citellus" # the key of the org you chose at step #3
+script:
+  # other script steps might be done before running the actual analysis
+  - sonar-scanner
 script:
 - tox
 deploy:
