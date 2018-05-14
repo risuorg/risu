@@ -56,7 +56,7 @@ else
     pinned=''
     unpinned=''
 
-    for libvirt_xml in `ls ${CITELLUS_ROOT}/etc/libvirt/qemu/instance-*.xml`; do
+    for libvirt_xml in `find ${CITELLUS_ROOT}/etc/ -type f -name "instance-*.xml"`; do
         if $(grep -q vcpupin ${libvirt_xml} ); then
             pinned="$(xmllint --xpath "string(//name)" ${libvirt_xml} ) "${pinned}
         elif ! $(grep -q vcpupin $libvirt_xml); then
