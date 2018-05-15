@@ -65,7 +65,7 @@ else
     done
 
     if [ ! -z "${pinned}" -a ! -z "${unpinned}" ]; then
-        echo "computes have both type instances using pinned & unpinned cores. It should not. We need to use host aggregates to separate cpu dedicated & non dedicated workloads.\n Refer KCS: https://access.redhat.com/solutions/3422081" >&2
+        echo -ne "computes have both type instances using pinned & unpinned cores. It should not. We need to use host aggregates to separate cpu dedicated & non dedicated workloads.\n Refer KCS: https://access.redhat.com/solutions/3422081" >&2
         flag=1
     elif [[ ! -z "${unpinned}" ]]; then
         if [[ ! -z "${ISOLCPUS}" ]]; then
@@ -245,7 +245,7 @@ else
             fi
         done
         if [[ ! -z "${misconfigured_cores}" ]]; then
-            echo "Multiple instance's pinned vcpus are overlapping Core(s) ${i} .\nThis may be an outcome of resize / live-migration on older version / live-migration of cpu pinned instances using destination host which will by-pass nova scheduler.\nLive-Migration of instances with pinned vcpus are not fully supported: https://access.redhat.com/solutions/2191071" >&2
+            echo -ne "Multiple instance's pinned vcpus are overlapping Core(s) ${i} .\nThis may be an outcome of resize / live-migration on older version / live-migration of cpu pinned instances using destination host which will by-pass nova scheduler.\nLive-Migration of instances with pinned vcpus are not fully supported: https://access.redhat.com/solutions/2191071" >&2
             flag=1
         fi
     fi
