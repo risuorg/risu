@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7bf4c10_901475f8",
+        "filename": "citellusclient/plugins/core/system/hardware_virtualization.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2018-05-18T16:39:54Z",
+      "side": 1,
+      "message": "-x should not be used for tests, debug should be done via loading:\n\n. ~/citelluspath/env-for-debug.sh \n\n# and then use:\n\nsh -x /path/to/script",
+      "revId": "9101e64bbc1bcfee2886fe8115d87c2930574212",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "94f19fb8_f633fcba",
+        "filename": "citellusclient/plugins/core/system/hardware_virtualization.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2018-05-18T16:39:54Z",
+      "side": 1,
+      "message": "Skipped should also contain a reason for skipping written to \u003e\u00262",
+      "revId": "9101e64bbc1bcfee2886fe8115d87c2930574212",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
