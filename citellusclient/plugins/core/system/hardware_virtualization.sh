@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 
 # Copyright (C) 2017   Robin Černín (rcernin@redhat.com)
 
@@ -25,6 +25,9 @@
 # check baremetal node
 
 is_required_file "${CITELLUS_ROOT}/proc/cpuinfo"
+if ! is_enabled libvirtd ; then
+    exit ${RC_SKIPPED}
+fi
 
 if ! is_lineinfile "svm|vmx" "${CITELLUS_ROOT}/proc/cpuinfo"; then
     echo $"no hardware virt support found in /proc/cpuinfo" >&2
