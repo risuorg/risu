@@ -45,20 +45,26 @@ Check how does it look in an execution at:
 [![asciicast](https://asciinema.org/a/169814.png)](https://asciinema.org/a/169814)
 
 ## HTML Interface
-<img src="doc/images/www.png" height="40%" border=0>
+<img src="doc/images/www.png" width="95%" border=0>
 
 ## Additional resources
 
 - Devconf.cz 2018 Presentation:
     - Slot link [devconf.cz 2018!!](https://devconfcz2018.sched.com/event/DJXG/detect-pitfalls-of-osp-deployments-with-citellus)
-    - Slides <doc/devconfcz2018-presentation-revealmd.md>
+    - Slides: <doc/devconfcz2018-presentation-revealmd.md>
     - Recording <https://www.youtube.com/watch?v=SDzzqrUdn5A>
+- SuperSec 2018 Presentation:
+    - Slot link: <https://supersec.es/programa/>
+    - Slides: <doc/supersec2018-presentation-ES.md>
+    - Recording:  not yet available
 - Blog posts
-    - <https://iranzo.github.io/blog/2017/07/26/Citellus-framework-for-detecting-known-issues/>
-    - <https://iranzo.github.io/blog/2017/07/31/Magui-for-analysis-of-issues-across-several-hosts/>
-    - <https://iranzo.github.io/blog/2017/08/17/Jenkins-for-running-CI-tests/>
-    - <https://iranzo.github.io/blog/2017/10/26/i18n-and-bash8-in-bash/>
-    - <https://iranzo.github.io/blog/2018/01/16/recent-changes-in-magui-and-citellus/>
+    - Citellus.org <https://citellus.org/>
+    - Pablo Iranzo's Blog: <https://iranzo.github.io/blog/tag/citellus/>
+        - <https://iranzo.github.io/blog/2017/07/26/Citellus-framework-for-detecting-known-issues/>
+        - <https://iranzo.github.io/blog/2017/07/31/Magui-for-analysis-of-issues-across-several-hosts/>
+        - <https://iranzo.github.io/blog/2017/08/17/Jenkins-for-running-CI-tests/>
+        - <https://iranzo.github.io/blog/2017/10/26/i18n-and-bash8-in-bash/>
+        - <https://iranzo.github.io/blog/2018/01/16/recent-changes-in-magui-and-citellus/>
 
 ## Collaborate
 
