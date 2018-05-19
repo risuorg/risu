@@ -25,6 +25,10 @@
 # check baremetal node
 
 is_required_file "${CITELLUS_ROOT}/proc/cpuinfo"
+if ! is_enabled libvirtd ; then
+    echo $"skipping check for HW virtualization support as libvirtd is not enabled" >&2
+    exit ${RC_SKIPPED}
+fi
 
 if ! is_lineinfile "svm|vmx" "${CITELLUS_ROOT}/proc/cpuinfo"; then
     echo $"no hardware virt support found in /proc/cpuinfo" >&2
