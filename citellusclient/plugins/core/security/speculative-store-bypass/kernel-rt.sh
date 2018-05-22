@@ -15,15 +15,15 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# long_name: Checks for fixed qemu-kvm package
-# description: Checks if package is affected of Spectre/Meltdown
+# long_name: Checks for fixed kernel-rt package
+# description: Checks if package is affected of Speculative Store Bypass
 # priority: 400
 
 # Load common functions
 [[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
 exitoudated(){
-    echo "Please do check https://access.redhat.com/security/vulnerabilities/speculativeexecution for guidance" >&2
+    echo "Please do check https://access.redhat.com/security/vulnerabilities/ssbd for guidance" >&2
 }
 
 RELEASE=$(discover_rhrelease)
@@ -31,9 +31,6 @@ RELEASE=$(discover_rhrelease)
 
 if [[ "${RELEASE}" -eq "7" ]]; then
     exitoudated
-    is_required_rpm_over qemu-img qemu-img-1.5.3-141.el7_4.6
-elif [[ "${RELEASE}" -eq "6" ]]; then
-    exitoudated
-    is_required_rpm_over qemu-kvm qemu-kvm-0.12.1.2-2.503.el6_9.4
+    is_required_rpm_over kernel-rt kernel-rt-3.10.0-862.3.2.rt56.808
 fi
 exit ${RC_OKAY}

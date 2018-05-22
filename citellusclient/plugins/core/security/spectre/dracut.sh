@@ -31,6 +31,6 @@ RELEASE=$(discover_rhrelease)
 
 if [[ "${RELEASE}" -eq "7" ]]; then
     exitoudated
-    is_required_rpm_over dracut-033-502.el7_4.1
+    is_required_rpm_over dracut dracut-033-502.el7_4.1
 fi
 exit ${RC_OKAY}
