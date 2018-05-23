@@ -3,6 +3,10 @@ dist: trusty
 sudo: required
 notifications:
   email: false
+  irc:
+    channels:
+      - "us.freenode.net#citellus"
+    on_success: change
 
 python:
 - '3.5'
