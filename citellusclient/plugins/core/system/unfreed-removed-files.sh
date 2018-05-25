@@ -37,7 +37,7 @@ else
 fi
 
 NOFILES=$(cat ${lsoffile}  |grep '(deleted)'|sed 's/\s\s*/ /g'|cut -d ' ' -f 8|wc -l)
-SZFILES=$(echo $(cat lsof  |grep '(deleted)'|sed 's/\s\s*/ /g'|cut -d ' ' -f 8-9|sort|uniq|awk '{print $2" "$1}'|grep ^/|awk '{print $2}'|tr "\n" "+")0|bc)
+SZFILES=$(echo $(cat ${lsoffile} |grep '(deleted)'|sed 's/\s\s*/ /g'|cut -d ' ' -f 8-9|sort|uniq|awk '{print $2" "$1}'|grep ^/|awk '{print $2}'|tr "\n" "+")0|bc)
 
 if [[ "${NOFILES}" -gt 99 ]] || [[ "${SZFILES}" -ge "1000000000" ]]; then
     echo "A total of $NOFILES deleted files are consuming $SZFILES bytes on disk" >&2
