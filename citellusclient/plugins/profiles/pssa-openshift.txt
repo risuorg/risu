@@ -1,0 +1,9 @@
+# PSSA profiles
+
+
+
+
++clock
++hardware_virtualization
++cpu-speed
+
