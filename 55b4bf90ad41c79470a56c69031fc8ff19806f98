@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "540320f1_03266717",
+        "filename": "citellusclient/plugins/profiles/pssa-openshift.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2018-05-30T21:43:57Z",
+      "side": 1,
+      "message": "# PSSA Openshift (or something descriptive, even if it\u0027s at the name)",
+      "revId": "55b4bf90ad41c79470a56c69031fc8ff19806f98",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ccda0e6_d89c73b4",
+        "filename": "citellusclient/plugins/pssa/PSSA.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2018-05-30T21:43:57Z",
+      "side": 1,
+      "message": "In the documentation area probably better\n\nReview wording of doc in general",
+      "revId": "55b4bf90ad41c79470a56c69031fc8ff19806f98",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    }
+  ]
+}
