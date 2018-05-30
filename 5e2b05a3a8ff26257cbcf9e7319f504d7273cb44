@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "c0ac12ae_e284c8d5",
+        "filename": "citellusclient/plugins/core/supportability/btrfs-deprecated.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2018-05-30T21:34:36Z",
+      "side": 1,
+      "message": "Fix long_name, description and adjust priority.",
+      "range": {
+        "startLine": 18,
+        "startChar": 30,
+        "endLine": 20,
+        "endChar": 13
+      },
+      "revId": "5e2b05a3a8ff26257cbcf9e7319f504d7273cb44",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "33b50f94_bea3c35c",
         "filename": "citellusclient/plugins/core/supportability/btrfs-deprecated.sh",
         "patchSetId": 2
@@ -13,6 +36,23 @@
       "writtenOn": "2018-05-30T21:31:25Z",
       "side": 1,
       "message": "This is outputed to STDOUT, hence the failure",
+      "revId": "5e2b05a3a8ff26257cbcf9e7319f504d7273cb44",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40b0f489_82dd5acd",
+        "filename": "citellusclient/plugins/core/supportability/btrfs-deprecated.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2018-05-30T21:34:36Z",
+      "side": 1,
+      "message": "Also consider that based on RHEL release issue should be informational or critical, so probably two tests required and as this is only for EL7.X it should skip Red Hat release is lower than 7",
       "revId": "5e2b05a3a8ff26257cbcf9e7319f504d7273cb44",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": true
