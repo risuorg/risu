@@ -511,8 +511,14 @@ def execonshell(filename):
         out = ""
         err = traceback.format_exc()
 
-    out = out.decode('utf-8').strip()
-    err = err.decode('utf-8').strip()
+    # Pid killed because of timer?
+    if returncode == -9:
+        out = ''
+        err = _('Skipped because of execution timeout')
+        returncode = int(os.environ['RC_SKIPPED'])
+    else:
+        out = out.decode('utf-8').strip()
+        err = err.decode('utf-8').strip()
 
     return returncode, out, err
 
