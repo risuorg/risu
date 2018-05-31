@@ -39,12 +39,14 @@ def run(data, quiet=False):  # do not edit this line
     # Use calculate ID instead of getid because of execution loop
     sourceid = citellus.calcid(string='/plugins/core/system/clock-1-ntpd.sh')
     targetid = citellus.calcid(string='/plugins/core/system/clock-1-chrony.sh')
+    skipped = int(os.environ['RC_SKIPPED'])
+    okay = int(os.environ['RC_OKAY'])
 
     mangle = False
 
     # Grab source data
     if sourceid in data:
-        if data[sourceid]['result']['rc'] == citellus.RC_OKAY:
+        if data[sourceid]['result']['rc'] == okay:
             mangle = True
 
     if mangle:
@@ -52,7 +54,7 @@ def run(data, quiet=False):  # do not edit this line
         data[targetid]['datahook'] = {}
         data[targetid]['datahook']['prior'] = dict(data[targetid]['result'])
         newresults = dict(data[targetid]['result'])
-        newresults['rc'] = citellus.RC_SKIPPED
+        newresults['rc'] = skipped
         newresults['err'] = 'Marked as skipped by data hook %s' % os.path.basename(__file__).split(os.sep)[0]
         data[targetid]['result'] = newresults
         citellus.LOG.debug("Data mangled for plugin %s:" % data[targetid]['plugin'])
