@@ -42,6 +42,7 @@ except:
 import shutil
 import subprocess
 import sys
+from threading import Timer
 import time
 import traceback
 from itertools import groupby
@@ -499,6 +500,8 @@ def execonshell(filename):
     """
     try:
         p = subprocess.Popen(filename.split(" "), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        timer = Timer(10, p.kill)
+        timer.start()
         out, err = p.communicate(str.encode('utf8'))
         returncode = p.returncode
         del p
@@ -506,6 +509,8 @@ def execonshell(filename):
         returncode = 3
         out = ""
         err = traceback.format_exc()
+    finally:
+        timer.cancel()
 
     out = out.decode('utf-8').strip()
     err = err.decode('utf-8').strip()
