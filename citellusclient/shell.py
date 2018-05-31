@@ -505,12 +505,11 @@ def execonshell(filename):
         out, err = p.communicate(str.encode('utf8'))
         returncode = p.returncode
         del p
+        timer.cancel()
     except:
         returncode = 3
         out = ""
         err = traceback.format_exc()
-    finally:
-        timer.cancel()
 
     out = out.decode('utf-8').strip()
     err = err.decode('utf-8').strip()
