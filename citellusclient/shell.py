@@ -814,7 +814,6 @@ def parse_args(default=False, parse=False):
                    help=_("Report time spent on each plugin"),
                    default=False)
     g.add_argument("--lang",
-                   action="store_true",
                    help=_("Define locale to use"),
                    default='en_US')
     g.add_argument("-v", "--verbose",
