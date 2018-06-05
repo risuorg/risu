@@ -1,0 +1,13 @@
+# Author: Edu Alcaniz (ealcaniz@redhat.com)
+# description: Checks for several plugins related with PSSA
+# long_name: Openshift PSSA profile checks
+#
+# Defines which plugins to include, exclude, etc
+# Syntax
+# +keyword : includes keyword in plugin search
+# -keyword : excludes keyword in plugin search
+
++clock
+-openstack
++openshift
+
