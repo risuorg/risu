@@ -217,3 +217,5 @@ location of various files. To use this script you can source it at the top:
 
 - `is_filemode $mode $file` -- Checks file mode on disk to be XXXX, for example 0755
 - `is_required_filemode $mode $file` -- Fallsback to is_filemode requiring file and mode to exist and being equal
+- `virt_type` -- Reports virtualization type in use or empty for baremetal
+- `is_virtual` -- True for Virtual, False for baremetal

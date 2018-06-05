@@ -23,33 +23,9 @@
 [[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
 # check baremetal node
-
-if [[ "x$CITELLUS_LIVE" = "x0" ]];  then
-    is_required_file "${CITELLUS_ROOT}/sos_commands/hardware/dmidecode"
-
-    is_lineinfile "Product Name: VMware" "${CITELLUS_ROOT}/sos_commands/hardware/dmidecode" && echo "VMware" >&2 && exit ${RC_FAILED}
-    is_lineinfile "Product Name: VirtualBox" "${CITELLUS_ROOT}/sos_commands/hardware/dmidecode" && echo "Virtualbox" >&2 && exit ${RC_FAILED}
-    is_lineinfile "Product Name: KVM|Manufacturer: QEMU" "${CITELLUS_ROOT}/sos_commands/hardware/dmidecode" && echo "KVM" >&2 && exit ${RC_FAILED}
-    is_lineinfile "Product Name: Bochs" "${CITELLUS_ROOT}/sos_commands/hardware/dmidecode" && echo "Bochs" >&2 && exit ${RC_FAILED}
-    is_lineinfile "Product Name: RHEV Hypervisor" "${CITELLUS_ROOT}/sos_commands/hardware/dmidecode" && echo "RHEV" >&2 && exit ${RC_FAILED}
-    exit ${RC_OKAY}
-
-elif [[ "x$CITELLUS_LIVE" = "x1" ]]; then
-    if dmidecode | grep -q "Product Name: VMware" ; then
-        echo "VMware" >&2
-        exit ${RC_FAILED}
-    elif dmidecode | grep -q "Product Name: VirtualBox"; then
-        echo "Virtualbox" >&2
-        exit ${RC_FAILED}
-    elif dmidecode | egrep -q "Product Name: KVM|Manufacturer: QEMU"; then
-        echo "KVM" >&2
-        exit ${RC_FAILED}
-    elif dmidecode | grep -q "Product Name: Bochs"; then
-        echo "Bosch" >&2
-        exit ${RC_FAILED}
-    elif dmidecode | grep -q "Product Name: RHEV Hypervisor"; then
-        echo "RHEV" >&2
-    else
-        exit ${RC_OKAY}
-    fi
+if is_virtual; then
+    virt_type >&2
+    exit ${RC_FAILED}
 fi
+
+exit ${RC_OKAY}
