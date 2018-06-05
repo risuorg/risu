@@ -401,7 +401,7 @@ def findplugins(folders=None, include=None, exclude=None, executables=True, file
     return metaplugins
 
 
-def runplugin(plugin, step=progress):
+def runplugin(plugin):
     """
     Runs provided plugin and outputs message
     :param step: indicator of plugin executed
@@ -424,6 +424,9 @@ def runplugin(plugin, step=progress):
         extensions = initPymodules()[0]
 
     found = 0
+
+    global progress
+    step = progress
 
     # Loop tru extensions to find which one should handle it and run it
     for extension in extensions:
