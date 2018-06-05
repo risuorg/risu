@@ -10,4 +10,4 @@
 +clock
 -openstack
 +openshift
-
++baremetal
