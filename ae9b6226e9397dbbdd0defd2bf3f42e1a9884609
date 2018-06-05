@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b67dc32_af575ed9",
+        "filename": "citellusclient/plugins/core/openshift/cluster/check-ocp-versions.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2018-06-05T20:09:48Z",
+      "side": 1,
+      "message": "so far we just run un live mode, this might be confusing",
+      "revId": "ae9b6226e9397dbbdd0defd2bf3f42e1a9884609",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d3d38f6_b9009fd4",
+        "filename": "citellusclient/plugins/core/openshift/cluster/check-ocp-versions.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2018-06-05T20:09:48Z",
+      "side": 1,
+      "message": "As we don\u0027t have yet sosreport support, we can \n- raise issue in citellus that is flagged \u0027Depends-on-others\u0027 and link sosreport \u0027issue\u0027 for having this reported so this is tracked\n- In the meantime, instead of using is_required on a file that will not exist, just exit the test and state that it\u0027s pending on sosreport support\n\nsomething like:\necho \"This test only allows live operations\" \u003e\u00262\nexit ${RC_SKIPPED}\n\nBut still leaving the other code that can be used once sosreport has the code in place",
+      "revId": "ae9b6226e9397dbbdd0defd2bf3f42e1a9884609",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    }
+  ]
+}

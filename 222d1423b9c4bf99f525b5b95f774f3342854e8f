@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a998fb5b_89920e17",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2018-06-05T20:09:48Z",
+      "side": 1,
+      "message": "Closes should go to a separate line to not mess with commit line and ensure that github takes it, fixed in #2",
+      "revId": "222d1423b9c4bf99f525b5b95f774f3342854e8f",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    }
+  ]
+}
