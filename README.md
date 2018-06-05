@@ -89,6 +89,7 @@ Check how does it look in an execution at:
 |[Extensions documentation](doc/extensions-documentation.md)|for plugin developers|
 |[Extension development](doc/extension-development.md)|for extension developers willing to extend citellus plugin system|
 |[Magui plugin development](doc/magui-plugin-development.md)|for Magui plugin developers|
+|[GDPR](GDPR.md)|On data usage|
 
 ## Contact us!!
 You can reach to us via:
