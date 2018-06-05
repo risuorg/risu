@@ -11,3 +11,5 @@
 -openstack
 +openshift
 +baremetal
++selinux_runtime
++selinux_config
