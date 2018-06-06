@@ -25,27 +25,7 @@
 # check VM
 flag=1 # We're baremetal, so we exit
 
-if [[ "x$CITELLUS_LIVE" = "x0" ]];  then
-    is_required_file "${CITELLUS_ROOT}/sos_commands/hardware/dmidecode"
-
-    is_lineinfile "Product Name: VMware" "${CITELLUS_ROOT}/sos_commands/hardware/dmidecode" && flag=0
-    is_lineinfile "Product Name: VirtualBox" "${CITELLUS_ROOT}/sos_commands/hardware/dmidecode" && flag=0
-    is_lineinfile "Product Name: KVM|Manufacturer: QEMU" "${CITELLUS_ROOT}/sos_commands/hardware/dmidecode" && flag=0
-    is_lineinfile "Product Name: Bochs" "${CITELLUS_ROOT}/sos_commands/hardware/dmidecode" && flag=0
-
-elif [[ "x$CITELLUS_LIVE" = "x1" ]]; then
-    if dmidecode | grep -q "Product Name: VMware"; then
-        flag=0
-    elif dmidecode | grep -q "Product Name: VirtualBox"; then
-        flag=0
-    elif dmidecode | egrep -q "Product Name: KVM|Manufacturer: QEMU"; then
-        flag=0
-    elif dmidecode | grep -q "Product Name: Bochs"; then
-        flag=0
-    fi
-fi
-
-if [[ "${flag}" != "0" ]]; then
+if ! is_virtual ; then
     echo "Not running on a VM" >&2
     exit ${RC_SKIPPED}
 fi
