@@ -42,7 +42,7 @@ fi
 
 for log_file in ${log_files}; do
     [ -f "$log_file" ] || continue
-    events=$(grep -i 'DBError' ${log_file} | grep -oP "^([0-9\-]+)" | uniq -c | tail)
+    events=$(grep -i 'DBError' ${log_file} | egrep -o '^([a-Z]+\ [0-9]+)|^([0-9\-]+)' | uniq -c | tail)
     if [[ -n "${events}" ]]; then
         # to remove the ${CITELLUS_ROOT} from the stderr.
         log_file=${log_file#${CITELLUS_ROOT}}
