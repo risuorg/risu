@@ -38,7 +38,7 @@ Check `README` above for detailed instructions outside os simple ones:
 - Just clone the git repository and execute it from there 'or'
 - use 'pipsi' or create a python virtual env to install package 'citellus'
 
-- Give it a try running as 'root' on your system with: `./citellus.py -l -F"` so it will show `live execution` and only `Failed` tests.
+- Give it a try running as 'root' on your system with: `./citellus.py -l` so it will show `live execution` and only `Failed` tests.
 
 ## How does it looks like?
 Check how does it look in an execution at:
