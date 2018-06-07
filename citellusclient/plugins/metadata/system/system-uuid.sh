@@ -26,7 +26,7 @@ if [[ ${CITELLUS_LIVE} -eq 0 ]]; then
     is_required_file ${DMIDECODE}
     UUID=$(cat ${DMIDECODE} | grep -oP "UUID: \K(.*)")
 elif [[ ${CITELLUS_LIVE} -eq 1 ]];then
-    UUID=$(sudo dmidecode -s system-uuid)
+    UUID=$(dmidecode -s system-uuid)
 fi
 
 echo ${UUID} >&2
