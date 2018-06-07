@@ -28,7 +28,7 @@ is_required_containerized
 
 for log_file in $(ls ${CITELLUS_ROOT}/var/log/containers/*/*.log); do
     [ -f "$log_file" ] || continue
-    events=$(grep -i 'traceback' ${log_file} | grep -oP "^([0-9\-]+)" | uniq -c | tail)
+    events=$(grep -i 'traceback' ${log_file} | egrep -o '^([a-Z]+\ [0-9]+)|^([0-9\-]+)' | uniq -c | tail)
     if [[ -n "${events}" ]]; then
         # to remove the ${CITELLUS_ROOT} from the stderr.
         log_file=${log_file#${CITELLUS_ROOT}}
