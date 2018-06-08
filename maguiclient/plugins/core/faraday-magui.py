@@ -1,12 +1,7 @@
 #!/usr/bin/env python
 # encoding: utf-8
-
 # Description: Plugin for reporting failed affinity on the faraday citellus plugin
-
-# Copyright (C) 2018  Pablo Iranzo Gómez (Pablo.Iranzo@redhat.com)
-
-# Modifications (2018) by Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
-
+# Copyright (C) 2018 Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
 
 from __future__ import print_function
 

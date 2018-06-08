@@ -3,7 +3,7 @@
 #
 # Description: Hook for removing failed firewall status when node is openstack
 # Author: Pablo Iranzo Gomez (Pablo.Iranzo@gmail.com)
-# Modifications (2018) by Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
+# Copyright (C) 2018 Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
 
 from __future__ import print_function
 

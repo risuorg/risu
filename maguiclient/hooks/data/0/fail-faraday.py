@@ -4,7 +4,7 @@
 # Description: Hook for making as failed faraday plugins
 # Author: Pablo Iranzo Gomez (Pablo.Iranzo@gmail.com)
 
-# Modifications (2018) by Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
+# Copyright (C) 2018 Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
 
 from __future__ import print_function
 
