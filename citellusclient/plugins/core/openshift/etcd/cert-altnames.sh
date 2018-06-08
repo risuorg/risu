@@ -1,6 +1,7 @@
 #!/bin/bash
-
 # Copyright (C) 2018 Juan Luis de Sousa-Valadas (jdesousa@redhat.com)
+# Modifications (2018) by Juan Luis de Sousa-Valadas Castaño <juanlu@redhat.com>
+# Modifications (2018) by Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -42,4 +43,5 @@ else
     echo 'etcd is not enabled' >&2
     exit ${RC_SKIPPED}
 fi
+
 

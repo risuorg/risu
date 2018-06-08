@@ -2,6 +2,9 @@
 
 # Copyright (C) 2018 Pablo Iranzo Gómez (Pablo.Iranzo@redhat.com)
 
+# Modifications (2018) by Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
+# Modifications (2018) by George Angelopoulos <gangelop@redhat.com>
+
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -41,3 +44,4 @@ if [[ ${VALUE} -ge 1000 ]]; then
 else
     exit ${RC_OKAY}
 fi
+

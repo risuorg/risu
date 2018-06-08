@@ -128,3 +128,4 @@ def help():  # do not edit this line
 
     commandtext = _("This hook proceses Citellus profiles and assembles data for each one to be appended to results json")
     return commandtext
+

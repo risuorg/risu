@@ -2,6 +2,9 @@
 
 # Copyright (C) 2018 Mikel Olasagasti Uranga (mikel@redhat.com)
 
+# Modifications (2018) by Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
+# Modifications (2018) by Mikel Olasagasti Uranga <mikel@redhat.com>
+
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -15,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# long_name: Hardware issues, over-current detected over the usb internal hub 
+# long_name: Hardware issues, over-current detected over the usb internal hub
 # description: Detects over-current hardware issue on internal hub
 # priority: 500
 
@@ -36,3 +39,4 @@ fi
 
 # exit as OK if haven't failed earlier
 exit ${RC_OKAY}
+

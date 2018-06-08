@@ -32,3 +32,4 @@
       pcs_cluster_status.rc == 0
       and
       '^(?!amq\\\\.).*\t{"ha-mode":"all"}' not in actual_rabbitmq_policies.stdout
+

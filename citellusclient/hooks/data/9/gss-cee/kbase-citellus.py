@@ -75,3 +75,4 @@ def help():  # do not edit this line
 
     commandtext = _("This hook proceses citellus outputs and appends kbase to link to cases where citellus helped")
     return commandtext
+

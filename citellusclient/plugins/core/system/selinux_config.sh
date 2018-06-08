@@ -1,6 +1,12 @@
 #!/bin/bash
 
 # Copyright (C) 2017   Robin Černín (rcernin@redhat.com)
+
+# Modifications (2018) by David Valle Delisle <dvd@redhat.com>
+# Modifications (2017) by Lars Kellogg-Stedman <lars@redhat.com>
+# Modifications (2018) by Mikel Olasagasti Uranga <mikel@redhat.com>
+# Modifications (2017, 2018) by Robin Černín <rcernin@redhat.com>
+# Modifications (2017, 2018) by Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
 # Copyright (C) 2018   Mikel Olasagasti Uranga (mikel@redhat.com)
 
 # This program is free software: you can redistribute it and/or modify
@@ -51,3 +57,4 @@ else
     echo "failed to determined persistent selinux mode" >&2
     exit ${RC_FAILED}
 fi
+

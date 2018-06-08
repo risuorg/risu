@@ -69,3 +69,4 @@ def help():  # do not edit this line
 
     commandtext = _("This hook proceses Citellus outputs and unfails firewall if openstack is used")
     return commandtext
+

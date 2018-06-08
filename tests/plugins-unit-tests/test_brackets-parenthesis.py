@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # encoding: utf-8
 
+# Modifications (2018) by Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
+
 
 import os
 from unittest import TestCase
@@ -33,3 +35,4 @@ class CitellusTest(TestCase):
                 pluginscit.append(filename)
 
         assert len(pluginscit) == 0
+

@@ -1,7 +1,7 @@
 #!/bin/bash
-
 # Copyright (C) 2018   Pablo Iranzo Gómez (Pablo.Iranzo@redhat.com)
 # Based on code snippet by Miguel Ángel Ajo Pelayo (majopela@redhat.com)
+# Modifications (2018) by Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -67,3 +67,4 @@ if [[ ${flag} -eq '1' ]]; then
 fi
 
 exit ${RC_OKAY}
+

@@ -1,6 +1,8 @@
+# Modifications (2018) by Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
 # bugzilla:
 # long_name: Check same RHEL release across hosts
 # priority: 500
 # description: Checks /etc/redhat-release across hosts
 # path: ${CITELLUS_ROOT}/etc/redhat-release
 # CITELLUS_HYBRID
+

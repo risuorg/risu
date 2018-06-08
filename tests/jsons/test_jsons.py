@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # encoding: utf-8
 
+# Modifications (2018) by Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
+
 from __future__ import print_function
 
 import os
@@ -36,3 +38,4 @@ class CitellusTest(TestCase):
                     flag = 1
                     # Force it to fail after we've printed so we can notize error failing
         assert flag == 0
+

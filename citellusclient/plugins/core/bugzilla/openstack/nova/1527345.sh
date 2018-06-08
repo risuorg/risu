@@ -1,6 +1,8 @@
 #!/bin/bash
-
 # Copyright (C) 2017 Pablo Iranzo Gómez (Pablo.Iranzo@redhat.com)
+# Modifications (2018) by David Valle Delisle <dvd@redhat.com>
+# Modifications (2017, 2018) by Robin Černín <rcernin@redhat.com>
+# Modifications (2017, 2018) by Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -33,3 +35,4 @@ if is_lineinfile 'libvirtError: XML error: Invalid PCI address 0000:00:00, at le
 else
     exit ${RC_OKAY}
 fi
+

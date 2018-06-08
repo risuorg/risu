@@ -99,3 +99,4 @@ def help():  # do not edit this line
 
     commandtext = _("This hook proceses faraday results and fakes individual plugins out of them")
     return commandtext
+

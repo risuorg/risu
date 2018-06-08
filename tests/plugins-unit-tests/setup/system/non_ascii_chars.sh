@@ -3,6 +3,9 @@
 #              test named like this one against and check correct behavior
 #
 # Copyright (C) 2018  Benoit Welterlen (bwelterl@redhat.com)
+
+# Modifications (2018) by Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
+# Modifications (2018) by Benoit Welterlen <bwelterl@redhat.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -76,3 +79,4 @@ EOF
         ;;
 
 esac
+

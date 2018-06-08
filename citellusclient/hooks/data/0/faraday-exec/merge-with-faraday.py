@@ -52,3 +52,4 @@ def help():  # do not edit this line
 
     commandtext = _("This hook proceses faraday-exec results and converts to faraday for Magui plugin to work")
     return commandtext
+
