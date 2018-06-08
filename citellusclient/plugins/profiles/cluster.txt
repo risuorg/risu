@@ -1,4 +1,6 @@
 # Author: Pablo Iranzo Gómez (Pablo.Iranzo@redhat.com)
+
+# Modifications (2018) by Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
 # description: Checks for several plugins related with ClusterHA environments
 # long_name: Cluster profile checks
 #
@@ -11,3 +13,4 @@
 +pacemaker
 -openstack
 +cman
+

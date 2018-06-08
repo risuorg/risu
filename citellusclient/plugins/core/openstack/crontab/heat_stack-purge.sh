@@ -1,6 +1,8 @@
 #!/bin/bash
-
 # Copyright (C) 2017   Robin Černín (rcernin@redhat.com)
+# Modifications (2018) by David Valle Delisle <dvd@redhat.com>
+# Modifications (2017, 2018) by Robin Černín <rcernin@redhat.com>
+# Modifications (2017, 2018) by Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -31,3 +33,4 @@ if ! awk '/heat-manage purge_deleted/ && /^[^#]/ { print $0 }' "${CITELLUS_ROOT}
 elif awk '/heat-manage purge_deleted/ && /^[^#]/ { print $0 }' "${CITELLUS_ROOT}/var/spool/cron/heat" > /dev/null 2>&1; then
     exit ${RC_OKAY}
 fi
+

@@ -1,8 +1,12 @@
 #!/usr/bin/env python
 # encoding: utf-8
-#
-# Copyright (C) 2018  Pablo Iranzo Gómez (Pablo.Iranzo@redhat.com)
+
 # Description: Plugin for reporting failed affinity on the faraday citellus plugin
+
+# Copyright (C) 2018  Pablo Iranzo Gómez (Pablo.Iranzo@redhat.com)
+
+# Modifications (2018) by Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
+
 
 from __future__ import print_function
 
@@ -72,3 +76,4 @@ def help():  # do not edit this line
 
     commandtext = _("Plugin for reporting back files that should BE or NOT BE different across sosreports")
     return commandtext
+

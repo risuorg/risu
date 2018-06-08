@@ -1,5 +1,7 @@
 #!/bin/bash
 # Copyright (C) 2018   Mario Vazquez Cebrian (mario.vazquez@redhat.com)
+# Modifications (2018) by Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
+# Modifications (2018) by Mario Vazquez <mavazque@redhat.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -84,3 +86,4 @@ fi
 
 echo "Test should have skipped before reaching this point" >&2
 exit ${RC_FAILED}
+

@@ -2,6 +2,10 @@
 
 # Copyright (C) 2018   Pablo Iranzo Gómez (Pablo.Iranzo@redhat.com)
 
+# Modifications (2018) by David Valle Delisle <dvd@redhat.com>
+# Modifications (2018) by Robin Černín <rcernin@redhat.com>
+# Modifications (2018) by Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
+
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -57,3 +61,4 @@ else
     echo $"detected running kernel-rt: $running_kernel latest installed $installed_kernel" >&2
     exit ${RC_FAILED}
 fi
+

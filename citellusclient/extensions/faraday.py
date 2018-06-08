@@ -5,6 +5,7 @@
 #              similar way to metadata and later processed by corresponding plugin in Magui
 #
 # Author: Pablo Iranzo Gomez (Pablo.Iranzo@gmail.com)
+# Modifications (2018) by Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
 
 from __future__ import print_function
 
@@ -124,3 +125,4 @@ def help():  # do not edit this line
 
     commandtext = _("This extension creates fake plugins based on affinity/antiaffinity file list for later processing")
     return commandtext
+

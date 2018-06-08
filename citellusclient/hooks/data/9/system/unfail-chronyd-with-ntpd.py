@@ -70,3 +70,4 @@ def help():  # do not edit this line
 
     commandtext = _("This hook proceses Citellus outputs and unfails Chronyd if NTP is used")
     return commandtext
+

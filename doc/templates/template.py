@@ -2,6 +2,8 @@
 # encoding: utf-8
 #
 # Copyright (C) 2017  Pablo Iranzo Gómez (Pablo.Iranzo@redhat.com)
+
+# Modifications (2017, 2018) by Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -113,3 +115,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

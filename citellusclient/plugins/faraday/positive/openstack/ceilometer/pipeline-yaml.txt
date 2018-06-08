@@ -1,6 +1,8 @@
+# Modifications (2018) by Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
 # bugzilla:
 # long_name: Ceilometer pipeline-yaml
 # priority: 500
 # description: Checks Ceilometer pipeline-yaml file
 # path: ${CITELLUS_ROOT}/etc/ceilometer/pipeline.yaml
 # CITELLUS_HYBRID
+

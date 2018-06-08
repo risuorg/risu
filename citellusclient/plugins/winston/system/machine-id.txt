@@ -1,6 +1,8 @@
+# Modifications (2018) by Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
 # bugzilla:
 # long_name: Machine Identifier
 # priority: 500
 # description: Checks Machine Identifier
 # path: ${CITELLUS_ROOT}/etc/machine-id
 # CITELLUS_HYBRID
+

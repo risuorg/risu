@@ -1,6 +1,8 @@
 #!/bin/bash
-
 # Copyright (C) 2017   Robin Černín (rcernin@redhat.com)
+# Modifications (2018) by David Valle Delisle <dvd@redhat.com>
+# Modifications (2017, 2018) by Robin Černín <rcernin@redhat.com>
+# Modifications (2017, 2018) by Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -29,3 +31,4 @@ is_required_file "${CITELLUS_ROOT}/var/log/keystone/keystone.log"
 
 is_lineinfile "Got error 5 during COMMIT" "${CITELLUS_ROOT}/var/log/keystone/keystone.log" && echo $"https://bugs.launchpad.net/keystone/+bug/1649616/" >&2 && exit ${RC_FAILED}
 exit ${RC_OKAY}
+

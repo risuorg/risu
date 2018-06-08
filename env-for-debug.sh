@@ -1,6 +1,8 @@
 #!/bin/bash
 # Copyright (C) 2018 Pablo Iranzo Gómez (Pablo.Iranzo@redhat.com)
 
+# Modifications (2018) by Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
+
 # description: Setup environment for manual debug of plugin
 # This script tries to mimic what citellus.py does so it has some hardcoded defaults that must be kept in sync with Citellus
 #
@@ -31,3 +33,4 @@ export CITELLUS_LIVE=0
 
 
 echo -e "Citellus environment loaded, now you can run from current directory for sosreport root the plugin to debug via sh -x script\n\n"
+

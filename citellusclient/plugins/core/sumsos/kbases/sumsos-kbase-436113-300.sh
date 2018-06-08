@@ -1,6 +1,8 @@
 #!/bin/bash
 
 # Copyright (C) 2018 Pablo Iranzo Gómez (Pablo.Iranzo@redhat.com)
+
+# Modifications (2018) by Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
 # Code based on the regexps from sumsos from John Devereux (john_devereux@yahoo.com)
 
 # This program is free software: you can redistribute it and/or modify
@@ -18,8 +20,8 @@
 
 # we can run this against fs snapshot or live system
 
-# long_name: Finds matches of kernel: qla2xxx .*-.*: \*\*\*\* Failed mbx\[0\]=4005, .* cmd=31 
-# description: Finds matches of error kernel: qla2xxx .*-.*: \*\*\*\* Failed mbx\[0\]=4005, .* cmd=31 
+# long_name: Finds matches of kernel: qla2xxx .*-.*: \*\*\*\* Failed mbx\[0\]=4005, .* cmd=31
+# description: Finds matches of error kernel: qla2xxx .*-.*: \*\*\*\* Failed mbx\[0\]=4005, .* cmd=31
 
 REGEXP="kernel: qla2xxx .*-.*: \*\*\*\* Failed mbx\[0\]=4005, .* cmd=31 "
 KCS=436113
@@ -44,3 +46,4 @@ if is_lineinfile "${REGEXP}" ${journal} ${CITELLUS_ROOT}/var/log/messages ; then
 else
     exit ${RC_OKAY}
 fi
+

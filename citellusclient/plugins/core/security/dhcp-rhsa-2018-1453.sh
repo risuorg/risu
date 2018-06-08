@@ -1,6 +1,6 @@
 #!/bin/bash
-
 # Copyright (C) 2018  Pablo Iranzo Gómez (Pablo.Iranzo@redhat.com)
+# Modifications (2018) by Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -37,3 +37,4 @@ elif [[ "${RELEASE}" -eq "6" ]]; then
     is_required_rpm_over dhclient dhclient-4.1.1-53.P1.el6_9.4
 fi
 exit ${RC_OKAY}
+

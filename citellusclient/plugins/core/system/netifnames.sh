@@ -2,6 +2,9 @@
 
 # Copyright (C) 2018 Mikel Olasagasti Uranga (mikel@redhat.com)
 
+# Modifications (2018) by Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
+# Modifications (2018) by Mikel Olasagasti Uranga <mikel@redhat.com>
+
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -16,7 +19,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 # long_name: Detects if netifnames is actived on non-KVM systems
-# description: Detects if net.ifnames=0 has been setup for the system. net.ifnames for RHEL7 is only supported for KVM systems. 
+# description: Detects if net.ifnames=0 has been setup for the system. net.ifnames for RHEL7 is only supported for KVM systems.
 # priority: 500
 
 # Load common functions
@@ -60,3 +63,4 @@ fi
 
 # exit as OK if haven't failed earlier
 exit ${RC_OKAY}
+

@@ -1,8 +1,12 @@
 #!/usr/bin/env python
 # encoding: utf-8
-#
-# Copyright (C) 2018  Pablo Iranzo Gómez (Pablo.Iranzo@redhat.com)
+
 # Description: Plugin for checking galera/mysql sequence number across servers
+
+# Copyright (C) 2018  Pablo Iranzo Gómez (Pablo.Iranzo@redhat.com)
+
+# Modifications (2018) by Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
+
 
 from __future__ import print_function
 
@@ -85,3 +89,4 @@ def help():  # do not edit this line
 
     commandtext = _("This plugin checks Galera sequence number across sosreports")
     return commandtext
+

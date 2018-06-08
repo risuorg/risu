@@ -1,6 +1,6 @@
 #!/bin/bash
-
 # Copyright (C) 2018  Pablo Iranzo Gómez (Pablo.Iranzo@redhat.com)
+# Modifications (2018) by Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -34,3 +34,4 @@ if [[ "${RELEASE}" -eq "7" ]]; then
     is_required_rpm_over kernel-rt kernel-rt-3.10.0-862.3.2.rt56.808
 fi
 exit ${RC_OKAY}
+

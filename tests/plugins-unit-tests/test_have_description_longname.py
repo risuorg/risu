@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # encoding: utf-8
 
+# Modifications (2018) by Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
+
 
 import os
 from unittest import TestCase
@@ -53,3 +55,4 @@ class CitellusTest(TestCase):
             if plugin['long_name'] == '':
                 print(plugin)
             assert plugin['long_name'] != ''
+

@@ -1,6 +1,7 @@
 #!/bin/bash
-
 # Copyright (C) 2018 Luca Miccini <luca.miccini@redhat.com>
+# Modifications (2018) by Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
+# Modifications (2018) by Luca Miccini <lmiccini@redhat.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -36,3 +37,4 @@ if is_lineinfile "disable_ipv6=1" ${files}; then
 fi
 
 exit ${RC_OKAY}
+

@@ -1,6 +1,7 @@
 #!/bin/bash
-
 # Copyright (C) 2018 Mikel Olasagasti Uranga (mikel@redhat.com)
+# Modifications (2018) by Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
+# Modifications (2018) by Mikel Olasagasti Uranga <mikel@redhat.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -15,8 +16,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# long_name: soft lockup with _raw_spin_lock in ovs_flow_stats_update 
-# description: A deadlock could occur when the system attempts to read ovs flow stats 
+# long_name: soft lockup with _raw_spin_lock in ovs_flow_stats_update
+# description: A deadlock could occur when the system attempts to read ovs flow stats
 # bugzilla: https://bugzilla.redhat.com/show_bug.cgi?id=1094867
 # priority: 100
 
@@ -41,3 +42,4 @@ if [[ "x$errcount" != "x0" ]] ; then
 fi
 
 exit ${RC_OKAY}
+

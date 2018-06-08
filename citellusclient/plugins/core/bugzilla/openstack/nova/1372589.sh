@@ -1,6 +1,7 @@
 #!/bin/bash
-
 # Copyright (C) 2018   Robin Černín (rcernin@redhat.com)
+# Modifications (2018) by Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
+# Modifications (2018) by Robin Černín <rcernin@redhat.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -38,3 +39,4 @@ if [[ "${max_files}" -ge "32768" ]] || [[ "${max_processes}" -ge "131072" ]]; th
 else
     exit ${RC_OKAY}
 fi
+

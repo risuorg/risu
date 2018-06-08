@@ -1,6 +1,8 @@
 #!/bin/bash
 # Copyright (C) 2018 Mikel Olasagasti Uranga (mikel@redhat.com)
-#
+# Modifications (2018) by Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
+# Modifications (2018) by Mikel Olasagasti Uranga <mikel@redhat.com>
+
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -58,3 +60,4 @@ if [[ "x$DRIVER" != "x0" ]]; then
 else
     exit ${RC_OKAY}
 fi
+

@@ -1,8 +1,11 @@
 #!/usr/bin/env python
 # encoding: utf-8
-#
+# Description: Plugin for reporting back citellus data from all sosreports#
+
 # Copyright (C) 2018  Pablo Iranzo Gómez (Pablo.Iranzo@redhat.com)
-# Description: Plugin for reporting back citellus data from all sosreports
+
+# Modifications (2018) by Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
+# Modifications (2018) by Robin Černín <rcernin@redhat.com>
 
 from __future__ import print_function
 
@@ -61,3 +64,4 @@ def help():  # do not edit this line
 
     commandtext = _("Plugin for reporting back citellus data from all sosreports")
     return commandtext
+

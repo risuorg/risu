@@ -3,6 +3,7 @@
 #
 # Description: Extension for running and reporting metadata
 # Author: Pablo Iranzo Gomez (Pablo.Iranzo@gmail.com)
+# Modifications (2018) by Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
 
 from __future__ import print_function
 
@@ -75,3 +76,4 @@ def help():  # do not edit this line
 
     commandtext = _("This extension proceses Citellus metadata plugins to fill details about system")
     return commandtext
+

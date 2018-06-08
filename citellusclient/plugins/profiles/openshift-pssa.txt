@@ -1,4 +1,7 @@
 # Author: Edu Alcaniz (ealcaniz@redhat.com)
+
+# Modifications (2018) by Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
+# Modifications (2018) by Edu Alcaniz <ealcaniz@redhat.com>
 # description: Checks for several plugins related with PSSA
 # long_name: Openshift PSSA profile checks
 #
@@ -13,3 +16,4 @@
 +baremetal
 +selinux_runtime
 +selinux_config
+

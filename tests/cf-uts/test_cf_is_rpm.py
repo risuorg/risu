@@ -4,6 +4,9 @@
 # Description: This UT run scripts to validate CF
 #
 # Copyright (C) 2017  Pablo Iranzo Gómez (Pablo.Iranzo@redhat.com)
+
+# Modifications (2017, 2018) by Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
+# Modifications (2017) by Robin Černín <rcernin@redhat.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -82,3 +85,4 @@ class CitellusTest(TestCase):
         # testtype will be 'pass', 'fail', 'skipped'
         testtype = 'fail'
         assert runtest(testtype=testtype) == rcs[testtype]
+

@@ -51,3 +51,4 @@ is_required_rpm_over(){
 
     is_required_pkg_over $*
 }
+

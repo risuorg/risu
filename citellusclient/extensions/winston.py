@@ -3,6 +3,7 @@
 #
 # Description: Extension for processing file-based metadata generators in a similar way to what Faraday does
 # Author: Pablo Iranzo Gomez (Pablo.Iranzo@gmail.com)
+# Modifications (2018) by Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
 #
 # https://en.wikipedia.org/wiki/Winston_Smith
 
@@ -105,3 +106,4 @@ def help():  # do not edit this line
 
     commandtext = _("This extension creates fake plugins based on affinity/antiaffinity file list for later processing")
     return commandtext
+
