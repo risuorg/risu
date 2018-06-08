@@ -3,8 +3,7 @@
 #
 # Description: Script to update contributors for each plugin
 #
-# Copyright (C) 2018 Pablo Iranzo Gómez (Pablo.Iranzo@redhat.com)
-# Modifications (2018) by Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
+# Copyright (C) 2018 Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
 
 # Find files that misses the header:
 # for file in $(find . -type f|grep -v .git|grep -v pyc|grep -v .citellus_tests|egrep '(.py|.txt|.yml|.sh)$'); do grep -q "^# Modifications" $file|| echo $file;done
@@ -77,7 +76,8 @@ for plugin in plugins:
         del p
 
         newname = out.strip()
-        modificatstring = modificatstring + "\n" + "# Modifications (%s) by %s" % (years, newname)
+        modificatstring = modificatstring + "\n" + "# Copyright (C) %s %s" % (years, newname)
+
     modificatstring = modificatstring + "\n"
 
     lines = []
@@ -98,7 +98,7 @@ for plugin in plugins:
 
     # Now modify the file with the new lines
 
-    regexp = '\A# Modifications .*'
+    regexp = '\A# Copyright .*'
     pluginfile = plugin['plugin']
     newpluginfile = "%s.modif" % pluginfile
     print pluginfile

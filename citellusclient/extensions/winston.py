@@ -3,7 +3,7 @@
 #
 # Description: Extension for processing file-based metadata generators in a similar way to what Faraday does
 # Author: Pablo Iranzo Gomez (Pablo.Iranzo@gmail.com)
-# Modifications (2018) by Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
+# Copyright (C) 2018 Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
 #
 # https://en.wikipedia.org/wiki/Winston_Smith
 

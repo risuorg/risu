@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 # encoding: utf-8
 
-# Modifications (2017, 2018) by Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
-# Modifications (2017) by Lars Kellogg-Stedman <lars@redhat.com>
-# Modifications (2017) by Robin Černín <rcernin@redhat.com>
+# Copyright (C) 2017, 2018 Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
+# Copyright (C) 2017, 2018 Lars Kellogg-Stedman <lars@redhat.com>
+# Copyright (C) 2017 Robin Černín <rcernin@redhat.com>
 
 import os
 from unittest import TestCase
