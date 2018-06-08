@@ -2,6 +2,8 @@
 
 # Copyright (C) 2018 Pablo Iranzo Gómez (Pablo.Iranzo@redhat.com)
 
+# Modifications (2018) by Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
+
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -43,3 +45,4 @@ for lun in $(cat ${FILE}|grep ^36|awk '{print $1}'|sort); do
 done
 ) | tr "\n" ";" >&2
 exit ${RC_OKAY}
+

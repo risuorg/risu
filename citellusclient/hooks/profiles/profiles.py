@@ -3,6 +3,7 @@
 #
 # Description: Hook for procesing profile definitions and appending results formated to json
 # Author: Pablo Iranzo Gomez (Pablo.Iranzo@gmail.com)
+# Modifications (2018) by Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
 
 from __future__ import print_function
 

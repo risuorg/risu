@@ -1,6 +1,8 @@
 #!/bin/bash
-
 # Copyright (C) 2018  Pablo Iranzo Gómez (Pablo.Iranzo@redhat.com)
+# Modifications (2018) by David Valle Delisle <dvd@redhat.com>
+# Modifications (2018) by Robin Černín <rcernin@redhat.com>
+# Modifications (2018) by Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -34,3 +36,4 @@ if [[ "${RELEASE}" -eq "7" ]]; then
     is_required_rpm_over dracut dracut-033-502.el7_4.1
 fi
 exit ${RC_OKAY}
+

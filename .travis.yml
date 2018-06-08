@@ -1,3 +1,5 @@
+# Modifications (2017, 2018) by Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
+
 language: python
 dist: trusty
 sudo: required

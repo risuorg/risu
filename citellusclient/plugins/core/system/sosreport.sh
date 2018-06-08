@@ -2,6 +2,10 @@
 
 # Copyright (C) 2017-2018   Pablo Iranzo Gómez (Pablo.Iranzo@redhat.com)
 
+# Modifications (2018) by David Valle Delisle <dvd@redhat.com>
+# Modifications (2017, 2018) by Robin Černín <rcernin@redhat.com>
+# Modifications (2017, 2018) by Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
+
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -27,3 +31,4 @@
 # Latest sos for el7.4 is sos-3.4-13.el7_4.noarch
 is_required_rpm_over sos sos-3.4-13.el7_4.noarch
 exit ${RC_OKAY}
+

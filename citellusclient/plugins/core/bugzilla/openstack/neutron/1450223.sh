@@ -1,6 +1,8 @@
 #!/bin/bash
-
 # Copyright (C) 2017 David Vallee Delisle (dvd@redhat.com)
+# Modifications (2017, 2018) by David Valle Delisle <dvd@redhat.com>
+# Modifications (2017, 2018) by Robin Černín <rcernin@redhat.com>
+# Modifications (2017, 2018) by Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -45,3 +47,4 @@ is_required_file "${CITELLUS_ROOT}/var/log/neutron/openvswitch-agent.log"
 grep -Pzo "(?s)ERROR[\s]+ryu.lib.hub\N*Traceback\N*(\n\N*){2,10}KeyError: 'ofctl_service'" "${CITELLUS_ROOT}/var/log/neutron/openvswitch-agent.log" && echo $"possible python-ryu bug in ovs-agent https://bugzilla.redhat.com/show_bug.cgi?id=1450223" >&2 && exit ${RC_FAILED}
 
 exit ${RC_OKAY}
+

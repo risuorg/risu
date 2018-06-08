@@ -1,6 +1,6 @@
 #!/bin/bash
-
 # Copyright (C) 2017   Robin Černín (rcernin@redhat.com)
+# Modifications (2018) by Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -30,3 +30,4 @@ is_required_file "${CITELLUS_ROOT}/var/log/httpd/error_log"
 is_lineinfile "MaxRequestWorkers" "${CITELLUS_ROOT}/var/log/httpd/error_log" && echo $"httpd MaxRequestWorkers reached" >&2 && exit ${RC_FAILED}
 
 exit ${RC_OKAY}
+

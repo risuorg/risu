@@ -1,7 +1,8 @@
 #!/bin/bash
 
 # Copyright (C) 2018 John Devereux (john_devereux@yahoo.com) at sumsos
-# Modifications by Pablo Iranzo Gómez (Pablo.Iranzo@redhat.com)
+
+# Modifications (2018) by Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -45,3 +46,4 @@ if [[ "${NOFILES}" -gt 99 ]] || [[ "${SZFILES}" -ge "1000000000" ]]; then
 fi
 
 exit ${RC_OKAY}
+

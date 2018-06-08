@@ -1,7 +1,8 @@
 #!/bin/bash
+# Code based on the regexps from sumsos from John Devereux (john_devereux@yahoo.com)
 
 # Copyright (C) 2018 Pablo Iranzo Gómez (Pablo.Iranzo@redhat.com)
-# Code based on the regexps from sumsos from John Devereux (john_devereux@yahoo.com)
+# Modifications (2018) by Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -45,3 +46,4 @@ if is_lineinfile "${REGEXP}" ${journal} ${CITELLUS_ROOT}/var/log/messages ; then
 else
     exit ${RC_OKAY}
 fi
+

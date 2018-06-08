@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # encoding: utf-8
 
+# Modifications (2017, 2018) by Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
+
 import setuptools
 import os
 import re
@@ -41,3 +43,4 @@ else:
     os.environ['PBR_VERSION'] = "%s.%s.%s" % (version, 0, "".join(numbers))
 
 setuptools.setup(setup_requires=['pbr>=2.0.0'], pbr=True)
+

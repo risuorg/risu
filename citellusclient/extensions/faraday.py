@@ -5,6 +5,7 @@
 #              similar way to metadata and later processed by corresponding plugin in Magui
 #
 # Author: Pablo Iranzo Gomez (Pablo.Iranzo@gmail.com)
+# Modifications (2018) by Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
 
 from __future__ import print_function
 

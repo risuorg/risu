@@ -1,6 +1,6 @@
 #!/bin/bash
-
 # Copyright (C) 2018 Pablo Iranzo Gómez (Pablo.Iranzo@redhat.com)
+# Modifications (2018) by Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
 
 # long_name: Perf events enabled in nova
 # description: Checks if perf events are enabled in nova
-# bugzilla: 
+# bugzilla:
 # priority: 900
 
 
@@ -37,3 +37,4 @@ if [[ "x$(iniparser "${CITELLUS_ROOT}/etc/nova/nova.conf" libvirt enabled_perf_e
 fi
 
 exit ${RC_OKAY}
+

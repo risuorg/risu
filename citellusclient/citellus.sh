@@ -1,7 +1,7 @@
 #!/bin/bash
 # Copyright (C) 2017 Robin Černín (rcernin@redhat.com)
-#                    Lars Kellogg-Stedman <lars@redhat.com>
-#                    Pablo Iranzo Gómez (Pablo.Iranzo@redhat.com)
+# Modifications (2017, 2018) by Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
+# Modifications (2017) by Robin Černín <rcernin@redhat.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -140,3 +140,4 @@ while read test; do
     fi
 
 done < ${tmpdir}/tests
+

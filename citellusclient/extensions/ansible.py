@@ -3,6 +3,8 @@
 #
 # Description: Extension for processing ansible playbooks
 # Author: Pablo Iranzo Gomez (Pablo.Iranzo@gmail.com)
+# Modifications (2017, 2018) by Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
+# Modifications (2017) by Robin Černín <rcernin@redhat.com>
 
 from __future__ import print_function
 

@@ -1,6 +1,8 @@
+# Modifications (2018) by Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
 # bugzilla:
 # long_name: Check same cluster.conf across hosts
 # priority: 500
 # description: Checks /etc/cluster/cluster.conf across hosts
 # path: ${CITELLUS_ROOT}/etc/cluster/cluster.conf
 # CITELLUS_HYBRID
+

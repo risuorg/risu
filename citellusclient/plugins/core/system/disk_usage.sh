@@ -2,6 +2,12 @@
 
 # Copyright (C) 2017   Robin Černín (rcernin@redhat.com)
 
+# Modifications (2018) by David Valle Delisle <dvd@redhat.com>
+# Modifications (2017) by Lars Kellogg-Stedman <lars@redhat.com>
+# Modifications (2018) by Mikel Olasagasti Uranga <mikel@redhat.com>
+# Modifications (2017, 2018) by Robin Černín <rcernin@redhat.com>
+# Modifications (2017, 2018) by Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
+
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -40,3 +46,4 @@ if [[ -n "$result" ]]; then
 else
     exit ${RC_OKAY}
 fi
+
