@@ -3,6 +3,7 @@
 #
 # Description: Hook for moving faraday-exec results into regular faraday
 # Author: Pablo Iranzo Gomez (Pablo.Iranzo@gmail.com)
+# Copyright (C) 2018 Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
 # Copyright (C) 2018 Robin Černín <rcernin@redhat.com>
 
 from __future__ import print_function

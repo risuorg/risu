@@ -1,6 +1,6 @@
 #!/bin/bash
 # Copyright (C) 2018 David Valle Delisle <dvd@redhat.com>
-# Copyright (C) 2017, 2018 Marc Methot <mmethot@redhat.com>
+# Copyright (C) 2017 Marc Methot <mmethot@redhat.com>
 # Copyright (C) 2017, 2018 Robin Černín <rcernin@redhat.com>
 # Copyright (C) 2017, 2018 Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
 
