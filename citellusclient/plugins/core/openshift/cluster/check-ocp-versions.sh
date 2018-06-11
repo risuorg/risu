@@ -21,26 +21,16 @@
 # Load common functions
 [[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
-# At the moment this only runs in live mode
 
 if [[ ! "x$CITELLUS_LIVE" = "x1" ]]; then
-    echo "This test only allows live operations" >&2
-    exit ${RC_SKIPPED}
-    # This command is not comming to sosreport in the near future, if the output changes, we should re-write this
-    FILE="${CITELLUS_ROOT}/sos_commands/openshift/oc_get_nodes"
+    FILE="${CITELLUS_ROOT}/sos_commands/kubernetes/kubectl_get_-o_json_nodes"
     is_required_file "${FILE}"
 
-    # Sort for unique OCP versions on the output
-    # Current output for oc get node is something like:
-    # NAME         STATUS     ROLES     AGE       VERSION
-    # localhost    Ready      <none>    7h        v1.9.1+a0ce1bc657
-    # localhost2   Ready      <none>    7h        v1.9.1+a0ce1bc657
-
-    LINES="$(sed -n "s/.*\(v[0-9]\+\?.[0-9]\+\?.[0-9]\+\?\+[a-zA-Z0-9].\+\)/\1/gp" ${FILE} | sort -u | wc -l)"
+    LINES="$(grep kubeletVersion ${FILE} | sed -n "s/\",//gp" | sed -n "s/.*\(v[0-9]\+\?.[0-9]\+\?.[0-9]\+\?\+[a-zA-Z0-9].\+\)/\1/gp" | sort -u | wc -l)"
 
     if [[ "${LINES}" -gt 1 ]]; then
         echo "Multiple OpenShift versions found" >&2
-        sed -n "s/.*\(v[0-9]\+\?.[0-9]\+\?.[0-9]\+\?\+[a-zA-Z0-9].\+\)/\1/gp" ${FILE} | sort -u >&2
+        grep kubeletVersion ${FILE} | sed -n "s/\",//gp" | sed -n "s/.*\(v[0-9]\+\?.[0-9]\+\?.[0-9]\+\?\+[a-zA-Z0-9].\+\)/\1/gp" | sort -u >&2
         exit ${RC_FAILED}
     else
         exit ${RC_OKAY}
@@ -48,6 +38,13 @@ if [[ ! "x$CITELLUS_LIVE" = "x1" ]]; then
 
 else
     # This test requires oc command and being authenticated on OCP
+
+    # Sort for unique OCP versions on the output
+    # Current output for oc get node is something like:
+    # NAME         STATUS     ROLES     AGE       VERSION
+    # localhost    Ready      <none>    7h        v1.9.1+a0ce1bc657
+    # localhost2   Ready      <none>    7h        v1.9.1+a0ce1bc657
+
     which oc > /dev/null 2>&1
     RC=$?
 
