@@ -71,7 +71,8 @@ citplugs = citellus.findplugins(folders=[plugins], include=[us])
 # Setup commands and expected return codes
 rcs = {"pass": citellus.RC_OKAY,
        "fail": citellus.RC_FAILED,
-       "skipped": citellus.RC_SKIPPED}
+       "skipped": citellus.RC_SKIPPED,
+       "info": citellus.RC_INFO}
 
 
 def runtest(testtype='False'):

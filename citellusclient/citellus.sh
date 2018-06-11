@@ -22,6 +22,7 @@ export LANG=en_US
 TEST_OKAY=$(tput setaf 2; echo "okay"; tput sgr0)
 TEST_SKIPPED=$(tput setaf 3; echo "skipped"; tput sgr0)
 TEST_FAILED=$(tput setaf 1; echo "failed"; tput sgr0)
+TEST_INFO=$(tput setaf 5; echo "info"; tput sgr0)
 TEST_WTF=$(tput setaf 1; echo "unexpected result"; tput sgr0)
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
@@ -32,6 +33,7 @@ export CITELLUS_BASE=${DIR}
 export RC_OKAY=10
 export RC_FAILED=20
 export RC_SKIPPED=30
+export RC_INFO=40
 export TEXTDOMAIN='citellus'
 export TEXTDOMAINDIR=${CITELLUS_BASE}/locale
 
@@ -132,6 +134,9 @@ while read test; do
         echo ${TEST_SKIPPED}
     elif [[ ${result} -eq ${RC_FAILED} ]]; then
         echo ${TEST_FAILED}
+        show_stderr
+    elif [[ ${result} -eq ${RC_INFO} ]]; then
+        echo ${TEST_INFO}
         show_stderr
     else
         echo ${TEST_WTF}
