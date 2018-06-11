@@ -192,7 +192,7 @@ Tests are even simpler:
 - Written in whatever language as long as they can be executed from shell
 - Output messages to ‘stderr’ (>&2)
 - When using strings like echo $”string” bash’s built-in i18n is used so you can translate to your language
-- Return `$RC_OKAY` for success / `$RC_FAILED` for error / `$RC_SKIPPED` for skipped tests / Other for unexpected error.
+- Return `$RC_OKAY` for success / `$RC_FAILED` for error / `$RC_SKIPPED` for skipped tests / `$RC_INFO` for informational tests / Other for unexpected error.
 
 ----
 
@@ -242,7 +242,7 @@ fi
 ---
 
 ## Requirements:
-- return code must be `$RC_OKAY` (ok), `$RC_FAILED` (failed)  or `$RC_SKIPPED` (skipped).
+- return code must be `$RC_OKAY` (ok), `$RC_FAILED` (failed), `$RC_SKIPPED` (skipped) or `$RC_INFO` (informational/warning).
 - Messages to be printed on stderr are displayed on 'failed' or 'skipped' if verbose enabled.
 - Running against ‘sosreport’, `CITELLUS_ROOT` contains path to sosreport folder provided.
 - `CITELLUS_LIVE` contains `0` or `1` if running against live or not.
@@ -485,4 +485,4 @@ Note:
 
 Note:
 
-1. RC_OKAY, RC_SKIPPED, RC_FAILED
+1. RC_OKAY, RC_SKIPPED, RC_FAILED, RC_INFO

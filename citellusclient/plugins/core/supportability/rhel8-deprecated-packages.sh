@@ -42,7 +42,7 @@ done
 
 if [[ "$flag" -eq "1" ]]; then
     echo $"Check RHEL7.5 deprecation notice" >&2
-    exit ${RC_FAILED}
+    exit ${RC_INFO}
 fi
 
 exit ${RC_OKAY}

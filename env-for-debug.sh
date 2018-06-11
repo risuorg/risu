@@ -15,6 +15,7 @@ export CITELLUS_BASE=${DIR}/citellusclient/
 export RC_OKAY=10
 export RC_FAILED=20
 export RC_SKIPPED=30
+export RC_INFO=40
 
 # i18n for bash support
 export LANG='en_US'

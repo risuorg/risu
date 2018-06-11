@@ -31,15 +31,17 @@ folder = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'setup')
 uttest = citellus.findplugins(folders=[folder])
 citplugs = citellus.findplugins(folders=[plugins])
 
-okay = random.randint(10, 30)
-failed = random.randint(40, 60)
-skipped = random.randint(60, 90)
+okay = random.randint(10, 29)
+failed = random.randint(30, 49)
+skipped = random.randint(50, 69)
+info = random.randint(70, 89)
 
 
 # Setup commands and expected return codes
 rcs = {"pass": okay,
        "fail": failed,
-       "skipped": skipped}
+       "skipped": skipped,
+       'info': info}
 
 
 class CitellusTest(TestCase):

@@ -44,7 +44,7 @@ fi
 
 if is_lineinfile "btrfs" "${FILE}"; then
     echo $"Check RHEL7.5 BTRFS deprecation" >&2
-    exit ${RC_FAILED}
+    exit ${RC_INFO}
 fi
 
 exit ${RC_OKAY}

@@ -89,6 +89,7 @@ except AttributeError:
 RC_OKAY = 10
 RC_FAILED = 20
 RC_SKIPPED = 30
+RC_INFO = 40
 
 
 class bcolors:
@@ -526,7 +527,7 @@ def execonshell(filename):
 
 
 def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=False, savepath=False, include=None,
-               exclude=None, okay=RC_OKAY, skipped=RC_SKIPPED, failed=RC_FAILED, web=False, dontsave=False, quiet=False, pgstart=None, pgend=None, serveruri=False):
+               exclude=None, okay=RC_OKAY, skipped=RC_SKIPPED, failed=RC_FAILED, info=RC_INFO, web=False, dontsave=False, quiet=False, pgstart=None, pgend=None, serveruri=False):
     """
     Runs citellus scripts on specified root folder
     :param pgstart: progress start
@@ -566,6 +567,7 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
     os.environ['RC_OKAY'] = "%s" % okay
     os.environ['RC_FAILED'] = "%s" % failed
     os.environ['RC_SKIPPED'] = "%s" % skipped
+    os.environ['RC_INFO'] = "%s" % info
     os.environ['TEXTDOMAIN'] = 'citellus'
     os.environ['TEXTDOMAINDIR'] = "%s/locale" % citellusdir
 
@@ -745,7 +747,8 @@ def formattext(returncode):
     colors = {
         RC_OKAY: ('okay', 'green'),
         RC_FAILED: ('failed', 'red'),
-        RC_SKIPPED: ('skipped', 'cyan')
+        RC_SKIPPED: ('skipped', 'cyan'),
+        RC_INFO: ('info', 'orange')
     }
 
     try:
@@ -1119,7 +1122,7 @@ def printresults(results, options):
         if rc == RC_FAILED:
             text = text + " [%s]" % colorize(text=priority, color=priocolor)
 
-        if not options.verbose and rc in [RC_OKAY, RC_SKIPPED]:
+        if not options.verbose and rc in [RC_OKAY, RC_SKIPPED, RC_INFO]:
             continue
 
         if not options.blame:
@@ -1130,7 +1133,7 @@ def printresults(results, options):
         show_err = (
                    (rc in [RC_FAILED]) or
                    (rc not in [RC_OKAY, RC_FAILED, RC_SKIPPED]) or
-                   (rc in [RC_SKIPPED] and options.verbose > 0) or
+                   (rc in [RC_SKIPPED, RC_INFO] and options.verbose > 0) or
                    (options.verbose > 1)
         )
 
