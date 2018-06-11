@@ -36,15 +36,17 @@ folder = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'setup')
 uttest = citellus.findplugins(folders=[folder])
 citplugs = citellus.findplugins(folders=[plugins])
 
-okay = random.randint(10, 30)
-failed = random.randint(40, 60)
-skipped = random.randint(60, 90)
+okay = random.randint(10, 29)
+failed = random.randint(30, 49)
+skipped = random.randint(50, 69)
+info = random.randint(70, 89)
 
 
 # Setup commands and expected return codes
 rcs = {"pass": okay,
        "fail": failed,
-       "skipped": skipped}
+       "skipped": skipped,
+       'info': info}
 
 
 class CitellusTest(TestCase):
@@ -59,7 +61,7 @@ class CitellusTest(TestCase):
             subprocess.call([test['plugin'], test['plugin'], testtype, tmpdir2])
 
         # Run citellus once against them
-        results = citellus.docitellus(path=tmpdir, plugins=citplugs, okay=okay, failed=failed, skipped=skipped, web=True)
+        results = citellus.docitellus(path=tmpdir, plugins=citplugs, okay=okay, failed=failed, skipped=skipped, info=info, web=True)
         maguiresults = magui.domagui(sosreports=[tmpdir, tmpdir2], citellusplugins=citplugs)
 
         # Check that citellus.html has been copied
@@ -88,11 +90,12 @@ class CitellusTest(TestCase):
                 assert results[item]['result']['out'] == ""
             out_dict.append(results[item]['result']['out'])
 
-        assert sorted(set(new_dict)) == sorted({okay, failed, skipped})
+        for each in sorted(set(new_dict)):
+            assert each in sorted({okay, failed, skipped, info})
 
     def test_all_plugins_live(self):
         # Run citellus once against them
-        results = citellus.docitellus(live=True, plugins=citplugs, okay=okay, failed=failed, skipped=skipped)
+        results = citellus.docitellus(live=True, plugins=citplugs, okay=okay, failed=failed, skipped=skipped, info=info)
 
         # Process plugin output from multiple plugins
         new_dict = []
@@ -112,5 +115,5 @@ class CitellusTest(TestCase):
 
             new_dict.append(rc)
 
-        assert sorted(set(new_dict)) == sorted({okay, failed, skipped})
-
+        for each in sorted(set(new_dict)):
+            assert each in sorted({okay, failed, skipped, info})

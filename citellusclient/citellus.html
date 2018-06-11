@@ -137,6 +137,7 @@
                                     <span class="fa fa-filter" title="Apply filter"></span>
                                 </button>
                             <ul class="dropdown-menu table-view-pf-colvis-menu">
+                                <li><input type="checkbox" value="info" data-filter="info" class="nx-check-item nx-filter-status"><label> Info</label></li>
                                 <li><input type="checkbox" value="okay" data-filter="okay" class="nx-check-item nx-filter-status"><label> Okay</label></li>
                                 <li><input type="checkbox" value="failed" data-filter="failed" class="nx-check-item nx-filter-status" checked><label> Failed</label></li>
                                 <li><input type="checkbox" value="skipped" data-filter="skipped" class="nx-check-item nx-filter-status"><label> Skipped</label></li>
@@ -291,6 +292,11 @@
             if (rc == 30) {
                 plugin_icon = "pficon pficon-help";
                 plugin_state = "skipped";
+                plugin_class = "info";
+                plugin_text_color = "text-black";
+            } else if (rc == 40) {
+                plugin_icon = "fa fa-check-circle-o";
+                plugin_state = "info";
                 plugin_class = "info";
                 plugin_text_color = "text-black";
             } else if (rc == 10) {

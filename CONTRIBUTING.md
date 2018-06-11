@@ -90,6 +90,7 @@ This  environment file will define the standard variables Citellus does use like
 - RC_OKAY
 - RC_FAILED
 - RC_SKIPPED
+- RC_INFO
 - TEXTDOMAIN
 - TEXTOMAINDIR
 - CITELLUS_BASE
