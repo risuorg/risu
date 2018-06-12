@@ -58,11 +58,15 @@ We are developing framework in python, the bash framework has been deprecated. P
 usage: citellus.py [arguments] [-h] [-l] [--list-plugins] [--list-extensions]
                                [--list-categories] [--description]
                                [--list-hooks] [--output FILENAME] [--web]
-                               [--run] [--find] [--blame] [--lang]
-                               [--only-failed] [-v]
+                               [--run] [--find] [--blame] [--lang LANG] [-v]
                                [-d {INFO,DEBUG,WARNING,ERROR,CRITICAL}] [-q]
-                               [-i SUBSTRING] [-x SUBSTRING] [-p [0-1000]]
-                               [-hf SUBSTRING] [--dump-config] [--no-config]
+                               [--progress PROGRESS]
+                               [--progress-colour {black,red,green,orange,blue,magenta,purple,cyan,lightgrey,darkgrey,lightred,lightgreen,yellow,lightblue,pink,lightcyan}]
+                               [--progress-start PROGRESS_START]
+                               [--progress-end PROGRESS_END] [-i SUBSTRING]
+                               [-x SUBSTRING] [-p [0-1000]] [-hf SUBSTRING]
+                               [--anon] [--dump-config] [--no-config]
+                               [--call-home serveruri]
                                [sosreport]
 
 Citellus allows to analyze a directory against common set of tests, useful for
@@ -91,13 +95,19 @@ optional arguments:
 
 Output and logging options:
   --blame               Report time spent on each plugin
-  --lang                Define locale to use
-  --only-failed, -F     Only show failed tests
+  --lang LANG           Define locale to use
   -v, --verbose         Increase verbosity of output (may be specified more
                         than once)
   -d {INFO,DEBUG,WARNING,ERROR,CRITICAL}, --loglevel {INFO,DEBUG,WARNING,ERROR,CRITICAL}
                         Set log level
   -q, --quiet           Enable quiet mode
+  --progress PROGRESS   Character to use as progress meter
+  --progress-colour {black,red,green,orange,blue,magenta,purple,cyan,lightgrey,darkgrey,lightred,lightgreen,yellow,lightblue,pink,lightcyan}
+                        Colour to use for progress meter
+  --progress-start PROGRESS_START
+                        String to use as progress start
+  --progress-end PROGRESS_END
+                        String to use as progress end
 
 Filtering options:
   -i SUBSTRING, --include SUBSTRING
@@ -108,13 +118,16 @@ Filtering options:
                         Only include plugins are equal or above specified prio
   -hf SUBSTRING, --hfilter SUBSTRING
                         Only include hooks that contain substring
+  --anon                Anonymize output
 
 Config options:
   --dump-config         Dump config to console to be saved into file
   --no-config           Do not read configuration from file /home/iranzo/DEVEL
-                        /citellus/citellusclient/citellus.conf or
+                        /citellus/citellus/citellusclient/citellus.conf or
                         ~/.citellus.conf
-
+  --call-home serveruri
+                        Server URI to HTTP-post upload generated citellus.json
+                        for metrics
 ```
 
 Check how does it look in an execution at:

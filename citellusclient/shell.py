@@ -527,7 +527,8 @@ def execonshell(filename):
 
 
 def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=False, savepath=False, include=None,
-               exclude=None, okay=RC_OKAY, skipped=RC_SKIPPED, failed=RC_FAILED, info=RC_INFO, web=False, dontsave=False, quiet=False, pgstart=None, pgend=None, serveruri=False):
+               exclude=None, okay=RC_OKAY, skipped=RC_SKIPPED, failed=RC_FAILED, info=RC_INFO, web=False,
+               dontsave=False, quiet=False, pgstart=None, pgend=None, serveruri=False, anon=False):
     """
     Runs citellus scripts on specified root folder
     :param pgstart: progress start
@@ -547,6 +548,7 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
     :param live:  Test is to be executed live or on snapshot/sosreport
     :param plugins:  plugins to execute against the system
     :param quiet: make no progress output
+    :param anon: Anonymize output
     :return: Dict of plugins and results
     """
 
@@ -699,13 +701,15 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
 
     # Write results if possible
     if filename:
+        branding = _("                                                  ")
+        write_results(results, filename, path=path, time=time.time() - start_time, branding=branding, web=web, serveruri=serveruri, anon=anon)
         try:
             # Write results to disk
             branding = _("                                                  ")
-            write_results(results, filename, path=path, time=time.time() - start_time, branding=branding, web=web, serveruri=serveruri)
+            write_results(results, filename, path=path, time=time.time() - start_time, branding=branding, web=web, serveruri=serveruri, anon=anon)
         except:
             # Couldn't write
-            LOG.err("Couldn't write to file %s" % filename)
+            LOG.error("Couldn't write to file %s" % filename)
 
     # We've filters defined, so filter data
     if include or exclude:
@@ -873,6 +877,10 @@ def parse_args(default=False, parse=False):
                    default=[],
                    action='append')
 
+    g.add_argument("--anon", dest='anon',
+                   action="store_true",
+                   help=_("Anonymize output"))
+
     s = p.add_argument_group('Config options')
     s.add_argument("--dump-config", help=_("Dump config to console to be saved into file"), default=False, action="store_true")
     s.add_argument("--no-config", default=False, help=_("Do not read configuration from file %s or ~/.citellus.conf" % os.path.join(citellusdir, "citellus.conf")), action="store_true")
@@ -1003,7 +1011,7 @@ def generic_get_metadata(plugin):
 
 
 def write_results(results, filename, live=False, path=None, time=0, source='citellus', branding='', web=False,
-                  extranames=None, serveruri=False):
+                  extranames=None, serveruri=False, anon=False):
     """
     Writes result
     :param extranames: Additional filenames to write in the json section
@@ -1045,6 +1053,28 @@ def write_results(results, filename, live=False, path=None, time=0, source='cite
         src = os.path.join(citellusdir, 'citellus.html')
         if os.path.isfile(src):
             shutil.copyfile(src, os.path.join(basefolder, os.path.basename(src)))
+
+    if anon:
+        LOG.debug("Anonymizing results as request..")
+        # Clearing path and extranames that might be revealing some data
+        data['metadata']['path'] = ''
+        data['metadata']['extranames'] = ''
+
+        if 'magui' not in data['metadata']['source']:
+            # Citellus.json
+            for plugin in data['results']:
+                # Citellus json
+                if 'result' in results[plugin]:
+                    results[plugin]['result']['out'] = ''
+                    results[plugin]['result']['err'] = ''
+        else:
+            # Magui.json
+            for ourdata in data['results']:
+                if 'citellus-outputs' in ourdata['name']:
+                    for element in ourdata['result']['err']:
+                        for sosreport in element['sosreport']:
+                            element['sosreport'][sosreport]['err'] = ''
+                            element['sosreport'][sosreport]['out'] = ''
 
     try:
         with open(filename, 'w') as fd:
@@ -1360,7 +1390,7 @@ def main():
     # By default
     forcerun = options.run
 
-    results = docitellus(live=options.live, path=CITELLUS_ROOT, plugins=allplugins, lang=options.lang, forcerun=forcerun, savepath=options.output, include=options.include, exclude=options.exclude, web=options.web, pgstart=options.progress_start, pgend=options.progress_end, serveruri=options.call_home)
+    results = docitellus(live=options.live, path=CITELLUS_ROOT, plugins=allplugins, lang=options.lang, forcerun=forcerun, savepath=options.output, include=options.include, exclude=options.exclude, web=options.web, pgstart=options.progress_start, pgend=options.progress_end, serveruri=options.call_home, anon=options.anon)
 
     # Print results based on the sorted order based on returned results from
     # parallel execution

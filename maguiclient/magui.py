@@ -144,8 +144,10 @@ def parse_args():
                    help=_("Only include Magui plugins that contains in full path that substring"),
                    default=[],
                    action='append')
-    g.add_argument("--lang",
+    g.add_argument("--anon", dest='anon',
                    action="store_true",
+                   help=_("Anonymize output"))
+    g.add_argument("--lang",
                    help=_("Define locale to use"),
                    default='en_US')
     g.add_argument("--call-home", default=False, help=_("Server URI to HTTP-post upload generated citellus.json for metrics"), metavar='serveruri')
@@ -467,7 +469,7 @@ def main():
 
     citellusplugins = newplugins
 
-    def runmaguiandplugs(sosreports, citellusplugins, filename=dooutput, extranames=None, serveruri=False, onlysave=False, result=None):
+    def runmaguiandplugs(sosreports, citellusplugins, filename=dooutput, extranames=None, serveruri=False, onlysave=False, result=None, anon=False):
         """
         Runs magui and magui plugins
         :param serveruri:
@@ -520,7 +522,7 @@ def main():
                 result.append(mydata)
         if filename:
             branding = _("                                                  ")
-            citellus.write_results(results=result, filename=filename, source='magui', path=sosreports, time=time.time() - start_time, branding=branding, web=True, extranames=extranames, serveruri=serveruri)
+            citellus.write_results(results=result, filename=filename, source='magui', path=sosreports, time=time.time() - start_time, branding=branding, web=True, extranames=extranames, serveruri=serveruri, anon=anon)
 
         return result
 
@@ -557,7 +559,7 @@ def main():
 
     if len(filenames) > 0:
         # We've written additional files, so save again magui.json with additional references
-        runmaguiandplugs(sosreports=sosreports, citellusplugins=citellusplugins, filename=options.output, extranames=filenames, onlysave=True, result=results)
+        runmaguiandplugs(sosreports=sosreports, citellusplugins=citellusplugins, filename=options.output, extranames=filenames, onlysave=True, result=results, anon=options.anon)
 
     # Results stored, removing variable
     del results
@@ -577,7 +579,7 @@ def main():
 
         if runautogroup:
             # Analisys was missing for this group, run
-            runmaguiandplugs(sosreports=groups[group], citellusplugins=citellusplugins, filename=filename, extranames=options.output)
+            runmaguiandplugs(sosreports=groups[group], citellusplugins=citellusplugins, filename=filename, extranames=options.output, anon=options.anon)
             filenames.append(filename)
         else:
             # Copy file instead of run as it was already existing
