@@ -61,9 +61,10 @@ Plugins for Magui are to be written in Python, check next section for details.
 ```
 usage: magui.py [arguments] [-h] [-d {INFO,DEBUG,WARNING,ERROR,CRITICAL}]
                             [--list-plugins] [--description] [-m MPATH]
-                            [--output FILENAME] [--run] [--hosts hosts] [-q]
-                            [-i SUBSTRING] [-x SUBSTRING] [-p [0-1000]]
-                            [-mf MFILTER] [--lang]
+                            [--output FILENAME] [--run] [--hosts hosts]
+                            [--max-hosts max-hosts] [-q] [-i SUBSTRING]
+                            [-x SUBSTRING] [-p [0-1000]] [-mf MFILTER]
+                            [--anon] [--lang LANG] [--call-home serveruri]
                             [sosreports [sosreports ...]]
 
 Processes several generic archives/sosreports scripts in a uniform way, to
@@ -85,6 +86,8 @@ optional arguments:
   --run, -r             Force run of citellus instead of reading existing
                         'citellus.json'
   --hosts hosts         Gather data via ansible from remote hosts to process.
+  --max-hosts max-hosts
+                        Define the number of maximum symultaneus hosts checks
 
 Filtering options:
   -q, --quiet           Enable quiet mode
@@ -97,9 +100,11 @@ Filtering options:
   -mf MFILTER, --mfilter MFILTER
                         Only include Magui plugins that contains in full path
                         that substring
-  --lang                Define locale to use
-
-```
+  --anon                Anonymize output
+  --lang LANG           Define locale to use
+  --call-home serveruri
+                        Server URI to HTTP-post upload generated citellus.json
+                        for metrics```
 
 Magui can be executed using the citellus docker image as well, by modifying
 the entrypoint:
