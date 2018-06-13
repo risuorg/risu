@@ -60,17 +60,12 @@ def get_metadata(plugin):
     :return: metadata dict for that plugin
     """
 
-    path = citellus.regexpfile(filename=plugin['plugin'], regexp='\A# path:')[7:].strip()
-    path = path.replace('${CITELLUS_ROOT}', '')
+    metadata = citellus.generic_get_metadata(plugin=plugin)
 
-    subcategory = os.path.split(plugin['plugin'])[0].replace(pluginsdir, '')[1:]
-    metadata = {'description': citellus.regexpfile(filename=plugin['plugin'], regexp='\A# description:')[14:].strip(),
-                'long_name': citellus.regexpfile(filename=plugin['plugin'], regexp='\A# long_name:')[12:].strip(),
-                'bugzilla': citellus.regexpfile(filename=plugin['plugin'], regexp='\A# bugzilla:')[11:].strip(),
-                'priority': int(citellus.regexpfile(filename=plugin['plugin'], regexp='\A# priority:')[11:].strip() or 0),
-                'path': path,
-                'subcategory': subcategory,
-                'category': os.path.normpath(subcategory).split(os.sep)[1] or ''}
+    subcategory = os.path.split(plugin['plugin'])[0].replace(pluginsdir, '')
+    category = os.path.normpath(subcategory).split(os.sep)[1] or ''
+    metadata.update({'subcategory': subcategory, 'category': category})
+
     return metadata
 
 
