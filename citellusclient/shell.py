@@ -1002,11 +1002,16 @@ def generic_get_metadata(plugin):
     :param plugin: plugin object
     :return: metadata dict for that plugin
     """
+
+    path = regexpfile(filename=plugin['plugin'], regexp='\A# path:')[7:].strip()
+    path = path.replace('${CITELLUS_ROOT}', '')
+
     metadata = {'description': regexpfile(filename=plugin['plugin'], regexp='\A# description:')[14:].strip(),
                 'long_name': regexpfile(filename=plugin['plugin'], regexp='\A# long_name:')[12:].strip(),
                 'bugzilla': regexpfile(filename=plugin['plugin'], regexp='\A# bugzilla:')[11:].strip(),
                 'priority': int(regexpfile(filename=plugin['plugin'], regexp='\A# priority:')[11:].strip() or 0),
-                'path': regexpfile(filename=plugin['plugin'], regexp='\A# path:')[8:].strip() or 0}
+                'path': path,
+                'kb': ''}
     return metadata
 
 

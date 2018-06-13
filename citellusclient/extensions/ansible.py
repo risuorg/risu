@@ -71,10 +71,8 @@ def get_metadata(plugin):
     except:
         description = ""
 
-    metadata = {'description': description,
-                'long_name': citellus.regexpfile(filename=plugin['plugin'], regexp='\A# long_name:')[12:].strip(),
-                'bugzilla': citellus.regexpfile(filename=plugin['plugin'], regexp='\A# bugzilla:')[11:].strip(),
-                'priority': int(citellus.regexpfile(filename=plugin['plugin'], regexp='\A# priority:')[11:].strip() or 0)}
+    metadata = citellus.generic_get_metadata(plugin=plugin)
+    metadata.update({'description': description})
 
     return metadata
 
