@@ -699,6 +699,18 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
     if not quiet:
         print('%s\n' % pgend)
 
+    # Check kb mapping file
+    try:
+        overrides = json.load(open(os.path.join(citellusdir, 'plugins/overrides.json'), 'r'))
+    except:
+        overrides = {}
+
+    # Update each item with overrides dictionary for overrides
+    for item in overrides:
+        if item in results:
+            resultforitem = results[item]
+            resultforitem.update(overrides[item])
+
     # Write results if possible
     if filename:
         branding = _("                                                  ")
