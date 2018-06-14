@@ -16,6 +16,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+# long_name: plug long name for webui
+# description: plug description
+# bugzilla: bz url
+# priority: 0<>1000 for likelihood to break your environment if this test reports fail
+# kb: url-to-kbase
+
 [[ "x$CITELLUS_LIVE" = "x1" ]] || exit ${RC_SKIPPED}
 
 if true
