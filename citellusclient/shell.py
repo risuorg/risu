@@ -710,6 +710,7 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
         if item in results:
             resultforitem = results[item]
             resultforitem.update(overrides[item])
+    del overrides
 
     # Write results if possible
     if filename:
@@ -815,6 +816,9 @@ def parse_args(default=False, parse=False):
     p.add_argument("--list-hooks",
                    action="store_true",
                    help=_("Print a list of discovered hooks and exit"))
+    p.add_argument("--dump-overrides",
+                   action="store_true",
+                   help=_("Dumps full options of overrides.json to current directory"))
     p.add_argument("--output", "-o",
                    metavar="FILENAME",
                    help=_("Write results to JSON file FILENAME"))
@@ -934,7 +938,7 @@ def array_to_config(config, path=False):
                     if value is not True and value != "True":
                         valid.append(value)
             else:
-                if key in ['verbose', 'live', 'darth', 'mace', 'luke', 'list-plugins', 'list-extensions', 'list-categories', 'description', 'list-hooks', 'web', 'run', 'find', 'blame', 'quiet']:
+                if key in ['verbose', 'live', 'darth', 'mace', 'luke', 'list-plugins', 'list-extensions', 'list-categories', 'description', 'list-hooks', 'web', 'run', 'find', 'blame', 'quiet', 'dump-overrides']:
                     valid.append("--%s" % key)
                 else:
                     valid.append("--%s" % key.encode('ascii', 'ignore'))
@@ -1250,7 +1254,7 @@ def main():
         if options.sosreport:
             # Live not specified, so we will use file snapshot
             CITELLUS_ROOT = os.path.abspath(options.sosreport)
-        elif not options.list_plugins and not options.list_extensions and not options.list_hooks:
+        elif not options.list_plugins and not options.list_extensions and not options.list_hooks and not options.dump_overrides:
             LOG.error(_("When not running in Live mode, snapshot path is required"))
             sys.exit(1)
     else:
@@ -1349,6 +1353,16 @@ def main():
                 total += elem
 
             print("-------\ntotal", ":", total)
+        return
+
+    if options.dump_overrides:
+        overridefile = {}
+        for item in plugins:
+            overridefile[item['id']] = item
+        print("Dumping 'overrides.json'...")
+        with open('overrides.json', 'w') as fd:
+            json.dump(overridefile, fd, indent=2)
+
         return
 
     # Reinstall language in case it has changed
