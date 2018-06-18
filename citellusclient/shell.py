@@ -1023,7 +1023,7 @@ def generic_get_metadata(plugin):
                 'bugzilla': regexpfile(filename=plugin['plugin'], regexp='\A# bugzilla:')[11:].strip(),
                 'priority': int(regexpfile(filename=plugin['plugin'], regexp='\A# priority:')[11:].strip() or 0),
                 'path': path,
-                'kb': ''}
+                'kb': regexpfile(filename=plugin['plugin'], regexp='\A# kb:')[5:].strip()}
     return metadata
 
 

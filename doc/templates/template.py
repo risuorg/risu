@@ -17,8 +17,11 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-# Description: Sample template for writing python plugins/tests for citellus
-
+# long_name: plug long name for webui
+# description: plug description
+# bugzilla: bz url
+# priority: 0<>1000 for likelihood to break your environment if this test reports fail
+# kb: url-to-kbase
 
 # Note a more pythonic way of running 'main' could be implemented by:
 # Running tests as new functions like:

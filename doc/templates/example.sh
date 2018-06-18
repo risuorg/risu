@@ -24,6 +24,13 @@
 # CITELLUS_LIVE=0 means we are running against fs snapshot and another check
 # for CITELLUS_ROOT is done.
 
+# long_name: plug long name for webui
+# description: plug description
+# bugzilla: bz url
+# priority: 0<>1000 for likelihood to break your environment if this test reports fail
+# kb: url-to-kbase
+
+
 # CITELLUS_ROOT if set contains the location of the fs snapshot.
 
 if [ "x$CITELLUS_LIVE" = "x1" ];  then

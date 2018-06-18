@@ -78,6 +78,18 @@ Please refer to the
 [templates](https://github.com/citellusorg/citellus/tree/master/doc/templates)
 folder for examples.
 
+Specially remember about the headers:
+
+~~~
+# long_name: plug long name for webui
+# description: plug description
+# bugzilla: bz url
+# priority: 0<>1000 for likelihood to break your environment if this test reports fail
+# kb: url-to-kbase
+~~~
+
+That are used by Citellus to fill json metadata.
+
 If you want to contribute also Unittests for your plugins, check [TESTING.md](TESTING.md)
 
 For contributing translations check [i18n.md](doc/i18n.md)
