@@ -27,7 +27,7 @@ regexpemail = '\\<(.*@.*)\\>'
 # Find all plugins
 print("Finding all possible files to modify...")
 #plugins = citellus.findallplugins()
-plugins = citellus.findplugins(folders=[os.path.abspath(os.path.dirname(__file__))], executables=False, exclude=['.git', '.tox', '.pyc', '.history'], include=['.yml', '.py', '.sh', '.txt'])
+plugins = citellus.findplugins(folders=[os.path.abspath(os.path.dirname(__file__))], executables=False, exclude=['.git', '.tox', '.pyc', '.history', 'doc/templates'], include=['.yml', '.py', '.sh', '.txt'])
 
 # Iterate over found plugins
 for plugin in plugins:

@@ -26,30 +26,9 @@
 # Load common functions
 [[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
-if [[ "x$CITELLUS_LIVE" = "x0" ]];  then
-    if [[ -z "${journalctl_file}" ]]; then
-        echo "file /sos_commands/logs/journalctl_--no-pager_--boot not found." >&2
-        echo "file /sos_commands/logs/journalctl_--all_--this-boot_--no-pager not found." >&2
-        exit ${RC_SKIPPED}
-    fi
-    is_lineinfile "oom-killer" "${journalctl_file}" && echo "oom-killer detected" >&2 && flag=1
-    is_lineinfile "soft lockup" "${journalctl_file}" && echo "soft lockup detected" >&2 && flag=1
-    is_lineinfile "blocked for more than 120 seconds"  "${journalctl_file}" && echo "hung task detected"  >&2 && flag=1
-
-elif [[ "x$CITELLUS_LIVE" = "x1" ]]; then
-    if journalctl -u kernel --no-pager --boot | grep -q "oom-killer"; then
-        echo "oom-killer detected" >&2
-        flag=1
-    fi
-    if journalctl -u kernel --no-pager --boot | grep -q "soft lockup"; then
-        echo "soft lockup detected" >&2
-        flag=1
-    fi
-    if journalctl -u kernel --no-pager --boot | grep -q "blocked for more than 120 seconds"; then
-        echo "hung task detected" >&2
-        flag=1
-    fi
-fi
+is_lineinfile "oom-killer" "${journalctl_file}" && echo "oom-killer detected" >&2 && flag=1
+is_lineinfile "soft lockup" "${journalctl_file}" && echo "soft lockup detected" >&2 && flag=1
+is_lineinfile "blocked for more than 120 seconds"  "${journalctl_file}" && echo "hung task detected"  >&2 && flag=1
 
 if [[ "x$flag" = "x1" ]]; then
     exit ${RC_FAILED}

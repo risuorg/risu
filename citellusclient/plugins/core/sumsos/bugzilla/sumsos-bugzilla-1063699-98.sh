@@ -32,13 +32,7 @@ BZ=1063699
 # Load common functions
 [[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
-if [[ "x$CITELLUS_LIVE" = "x0" ]]; then
-    journal="$journalctl_file"
-else
-    journal="$(mktemp)"
-    trap "/bin/rm ${journal}" EXIT
-    journalctl -t systemd --no-pager --boot > ${journal}
-fi
+journal="$journalctl_file"
 
 if is_lineinfile "${REGEXP}" ${journal} ${CITELLUS_ROOT}/var/log/messages ; then
     echo $"Check bugzilla: https://bugzilla.redhat.com/show_bug.cgi?id=$BZ for more details about error: $REGEXP found in logs" >&2

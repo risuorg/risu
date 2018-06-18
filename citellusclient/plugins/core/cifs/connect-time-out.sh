@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# Copyright (C) 2018 Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
 # Copyright (C) 2018 Robin Černín <rcernin@redhat.com>
 
 # This program is free software: you can redistribute it and/or modify
@@ -27,13 +28,7 @@ REGEXP="kernel.*cifs_mount failed w/return code = -110"
 # Load common functions
 [[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
-if [[ "x$CITELLUS_LIVE" = "x0" ]]; then
-    journal="$journalctl_file"
-else
-    journal="$(mktemp)"
-    trap "/bin/rm ${journal}" EXIT
-    journalctl -t systemd --no-pager --boot > ${journal}
-fi
+journal="$journalctl_file"
 
 if is_lineinfile "${REGEXP}" ${journal} ${CITELLUS_ROOT}/var/log/messages ; then
     echo $"CIFS: connection between client & server timed out." >&2

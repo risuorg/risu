@@ -25,17 +25,7 @@
 
 # check baremetal node
 
-if [[ "x$CITELLUS_LIVE" = "x0" ]]; then
-    if [[ -z "${journalctl_file}" ]]; then
-        echo "file /sos_commands/logs/journalctl_--no-pager_--boot not found." >&2
-        echo "file /sos_commands/logs/journalctl_--all_--this-boot_--no-pager not found." >&2
-    fi
-    journal="$journalctl_file"
-else
-    journal="$(mktemp)"
-    trap "/bin/rm ${journal}" EXIT
-    journalctl -t systemd --no-pager --boot > ${journal}
-fi
+journal="$journalctl_file"
 
 if is_lineinfile "Verify sudoer rules configuration" "${journal}" "${CITELLUS_ROOT}/var/log/messages"; then
     echo $"sudoers does miss entry for including sudoers.d folder and causes vdsm fail to start" >&2

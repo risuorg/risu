@@ -31,6 +31,7 @@ import json
 import logging
 import os
 import re
+import tempfile
 
 # Do not require everyone to use requests
 try:
@@ -565,6 +566,7 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
     os.environ['CITELLUS_ROOT'] = "%s" % path
     os.environ['CITELLUS_LIVE'] = "%s" % CITELLUS_LIVE
     os.environ['CITELLUS_BASE'] = "%s" % citellusdir
+    os.environ['CITELLUS_TMP'] = "%s" % tempfile.mkdtemp()
     os.environ['LANG'] = "%s" % lang
     os.environ['RC_OKAY'] = "%s" % okay
     os.environ['RC_FAILED'] = "%s" % failed
