@@ -24,25 +24,11 @@
 # Load common functions
 [[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
-if [[ "x$CITELLUS_LIVE" = "x0" ]];  then
-    if [[ -z "${journalctl_file}" ]]; then
-        echo "file /sos_commands/logs/journalctl_--no-pager_--boot not found." >&2
-        echo "file /sos_commands/logs/journalctl_--all_--this-boot_--no-pager not found." >&2
-        exit ${RC_SKIPPED}
-    fi
 
-    if is_lineinfile "segfault at" "${journalctl_file}"; then
-        echo "SEGV detected" >&2
-        grep "segfault at" "${journalctl_file}" >&2
-        exit ${RC_FAILED}
-    fi
-
-elif [[ "x$CITELLUS_LIVE" = "x1" ]]; then
-    if journalctl -u kernel --no-pager --boot | grep -q "segfault at"; then
-        echo "SEGV detected" >&2
-        journalctl -u kernel --no-pager --boot | grep "segfault at" >&2
-        exit ${RC_FAILED}
-    fi
+if is_lineinfile "segfault at" "${journalctl_file}"; then
+    echo "SEGV detected" >&2
+    grep "segfault at" "${journalctl_file}" >&2
+    exit ${RC_FAILED}
 fi
 
 # If the above conditions did not trigger RC_FAILED we are good.

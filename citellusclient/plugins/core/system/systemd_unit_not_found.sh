@@ -26,22 +26,9 @@
 
 REGEXP="systemd\[[0-9]+\]: Cannot add dependency job for unit ([^,]+), ignoring: Unit not found."
 
-if [[ "x$CITELLUS_LIVE" = "x0" ]]; then
-    if [[ -z "${journalctl_file}" ]]; then
-        echo "file /sos_commands/logs/journalctl_--no-pager_--boot not found." >&2
-        echo "file /sos_commands/logs/journalctl_--all_--this-boot_--no-pager not found." >&2
-        exit ${RC_SKIPPED}
-    fi
-    journal="$journalctl_file"
-else
-    journal="$(mktemp)"
-    trap "/bin/rm ${journal}" EXIT
-    journalctl -t systemd --no-pager --boot > ${journal}
-fi
-
-if is_lineinfile "$REGEXP" "${journal}"; then
+if is_lineinfile "$REGEXP" "${journalctl_file}"; then
     summary_printed=0
-    for unit in $(perl -n -e "m#$REGEXP# && print \"\$1\\n\"" "${journal}"); do
+    for unit in $(perl -n -e "m#$REGEXP# && print \"\$1\\n\"" "${journalctl_file}"); do
         found=0
         for path in "/usr/lib/systemd/system/$unit" "/etc/systemd/system/$unit"; do
             [[ -L "${CITELLUS_ROOT}/$path" ]] || continue
