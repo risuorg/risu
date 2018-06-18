@@ -38,6 +38,15 @@ if [ "x$CITELLUS_LIVE" = "x0" ];  then
     for file in "${journal[@]}"; do
         [[ -f "${file}" ]] && journalctl_file="${file}"
     done
+else
+    journalctl_file="${CITELLUS_TMP}/journalctl_--no-pager_--boot"
+    if ! -f ${journalctl_file}; then
+        if which journalctl >/dev/null 2>&1; then
+            journalctl --no-pager --boot > ${journalctl_file}
+        else
+            touch ${journalctl_file}
+        fi
+    fi
 fi
 
 iniparser(){

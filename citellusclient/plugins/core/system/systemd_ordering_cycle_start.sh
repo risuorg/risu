@@ -26,22 +26,9 @@
 
 REGEXP="Breaking ordering cycle by deleting job ([^/]+)/start"
 
-if [[ "x$CITELLUS_LIVE" = "x0" ]]; then
-    if [[ -z "${journalctl_file}" ]]; then
-        echo "file /sos_commands/logs/journalctl_--no-pager_--boot not found." >&2
-        echo "file /sos_commands/logs/journalctl_--all_--this-boot_--no-pager not found." >&2
-        exit ${RC_SKIPPED}
-    fi
-    journal="$journalctl_file"
-else
-    journal="$(mktemp)"
-    trap "/bin/rm ${journal}" EXIT
-    journalctl -t systemd --no-pager --boot > ${journal}
-fi
-
-if is_lineinfile "$REGEXP" ${journal}; then
+if is_lineinfile "$REGEXP" ${journalctl_file}; then
     echo $">>> systemd deleted some 'start' jobs" >&2
-    egrep "$REGEXP" ${journal} >&2
+    egrep "$REGEXP" ${journalctl_file} >&2
     exit ${RC_FAILED}
 fi
 
