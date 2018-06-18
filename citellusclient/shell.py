@@ -1283,11 +1283,10 @@ def main():
                     print(indent(text=desc, amount=4))
         return
 
-    # Prefill plugin list as we'll be still using it for execution
-    if options.live:
-        filter = True
-    else:
-        filter = False
+    # Always filter the plugins to use to the ones passed on commandline.
+    # In the past it was only done for Live, but with the increased number of filters it still takes too much time.
+
+    filter = True
     plugins = findallplugins(options, filter=filter)
 
     global allplugins
