@@ -66,6 +66,7 @@ show_help(){
 
 export CITELLUS_LIVE="0"
 export CITELLUS_ROOT
+export CITELLUS_TMP=`mktemp -d`
 
 while :; do
     case "$1" in
