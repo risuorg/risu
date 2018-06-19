@@ -16,6 +16,24 @@
       "revId": "4292efe5d0416591c14adc01855a8f1c19da2ffa",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a34d6e0f_062f62dd",
+        "filename": "citellusclient/plugins/core/openshift/etcd/cert-altnames.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1013298
+      },
+      "writtenOn": "2018-06-19T13:15:36Z",
+      "side": 1,
+      "message": "OpenShift generated the certificate using the variable etcd_hostname[1] which is defines as openshift.common.hostname[2] which is acquired with some twisted logic in openshift_facts.py but ultimately has its  logic here[3]. Although maybe a grep -qi instead of the tr is more reliable.\n\nI\u0027m not quite sure what is the best choice, what do you think?\n\n1- https://github.com/openshift/openshift-ansible/blob/cf96994f3b75780a03d9ea6f7a5053ea58cfae49/roles/etcd/tasks/certificates/fetch_server_certificates_from_ca.yml#L49\n2- https://github.com/openshift/openshift-ansible/blob/93f92386b225472afe56417f0e25534f0d1f2d7b/roles/etcd/defaults/main.yaml#L72\n3- https://github.com/openshift/openshift-ansible/blob/cf96994f3b75780a03d9ea6f7a5053ea58cfae49/roles/openshift_facts/library/openshift_facts.py#L1065",
+      "parentUuid": "57306457_014ab3c2",
+      "revId": "4292efe5d0416591c14adc01855a8f1c19da2ffa",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
     }
   ]
 }
