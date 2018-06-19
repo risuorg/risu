@@ -27,8 +27,7 @@
 if is_enabled etcd || is_enabled etcd_container ; then
     if openssl x509 -noout -text -in "${CITELLUS_ROOT}"/etc/etcd/server.crt |
         grep 'X509v3 Subject Alternative Name' -A1 |
-        grep -q DNS:$(hostname -f) ; then
-
+        grep -q DNS:$(cat "${CITELLUS_ROOT}/etc/hostname" | tr '[:upper:]' '[:lower:]') ; then
         echo 'OpenShift and NetworkManager are both enabled' >&2
         exit ${RC_OKAY}
     else
