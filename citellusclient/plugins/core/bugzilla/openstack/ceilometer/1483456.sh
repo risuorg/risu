@@ -38,7 +38,7 @@ if is_process nova-compute; then
 
     NOVAHOST=$(grep ^host.* "${CITELLUS_ROOT}/etc/nova/nova.conf"|cut -d "=" -f2|tail -1)
 
-    if [[ "$NOVAHOST" -eq "" ]]; then
+    if [[ -z "$NOVAHOST" ]]; then
         echo "nova.conf host= undefined" >&2
         exit ${RC_SKIPPED}
     fi
