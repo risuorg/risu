@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57306457_014ab3c2",
+        "filename": "citellusclient/plugins/core/openshift/etcd/cert-altnames.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2018-06-19T10:49:38Z",
+      "side": 1,
+      "message": "Extra line with \u0027I\u0027 ?",
+      "revId": "4292efe5d0416591c14adc01855a8f1c19da2ffa",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    }
+  ]
+}
