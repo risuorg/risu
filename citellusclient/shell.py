@@ -333,7 +333,7 @@ def findplugins(folders=None, include=None, exclude=None, executables=True, file
     plugins = []
     # Walk the folders and subfolders for files based on our criteria
     for folder in folders:
-        for items in os.walk(folder):
+        for items in os.walk(folder, followlinks=True):
             root = items[0]
             filenames = items[2]
             for filename in filenames:
