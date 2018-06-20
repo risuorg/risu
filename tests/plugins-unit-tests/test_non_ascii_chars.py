@@ -3,7 +3,7 @@
 #
 # Description: This UT run scripts to validate the rules/tests created for citellus for $NAME_OF_TEST
 #
-# Copyright (C) 2018 Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
+# Copyright (C) 2018 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 # Copyright (C) 2018 Benoit Welterlen <bwelterl@redhat.com>
 
 #

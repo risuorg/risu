@@ -1,5 +1,5 @@
 # Copyright (C) 2018 Juan Luis de Sousa-Valadas Castaño <juanlu@redhat.com>
-# Copyright (C) 2018 Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
+# Copyright (C) 2018 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # Requires: Ansible 2.2 (due to check_mode and timezone)
 # Uploads citellus folder to /tmp on target host and runs from there and stores it back on local host for magui analysis

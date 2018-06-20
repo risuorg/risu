@@ -2,8 +2,8 @@
 # encoding: utf-8
 # Description: Plugin for reporting back citellus data from all sosreports#
 
-# Copyright (C) 2018 Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
-# Copyright (C) 2018 Robin Černín <rcernin@redhat.com>
+# Copyright (C) 2018 Robin Černín <cerninr@gmail.com>
+# Copyright (C) 2018 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 
 from __future__ import print_function
