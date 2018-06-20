@@ -70,7 +70,7 @@ def run(data, quiet=False):  # do not edit this line
                 # Write plugin entry for the individual result
                 newitem = {newid: {'name': 'rhv-log-collector-analyzer: %s' % item['label'],
                                    'description': item['message'],
-                                   'long_name': item['label'],
+                                   'long_name': item['message'],
                                    'id': newid,
                                    'category': '',
                                    'priority': 400,
