@@ -1,0 +1,3 @@
+# long_name: Runs rhv-log-collector-analizer
+# description: Grabs data from rhv-log-collector-analizer
+# priority: 300
