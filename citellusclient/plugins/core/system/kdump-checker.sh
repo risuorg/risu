@@ -37,13 +37,13 @@ fi
 
 is_required_file "${CITELLUS_ROOT}/etc/kdump.conf"
 
-grubs=( /boot/grub2/grub.cfg \
-        /boot/grub/grub.conf \
-        /etc/grub2.cfg       \
-        /etc/grub.conf       \
-        /boot/efi/EFI/redhat/grub.cfg )
+grubs=( "${CITELLUS_ROOT}"/boot/grub2/grub.cfg \
+        "${CITELLUS_ROOT}"/boot/grub/grub.conf \
+        "${CITELLUS_ROOT}"/etc/grub2.cfg       \
+        "${CITELLUS_ROOT}"/etc/grub.conf       \
+        "${CITELLUS_ROOT}"/boot/efi/EFI/redhat/grub.cfg )
 
-for f in "${CITELLUS_ROOT}/${grubs[@]}"; do
+for f in "${grubs[@]}"; do
     [ -f "$f" ] && grub_conf="$f" && break
 done
 [ -z "$grub_conf" ] && echo "Could not locate grub configuration. Skipping" && exit ${RC_SKIPPED}
