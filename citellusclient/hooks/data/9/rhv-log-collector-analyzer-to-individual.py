@@ -77,11 +77,11 @@ def run(data, quiet=False):  # do not edit this line
                                    'bugzilla': '',
                                    'time': 0,
                                    'subcategory': '',
-                                   'hash': item['filemd5'],
+                                   'hash': item['hash'],
                                    'result': {'out': '', 'err': "%s" % item['result'], 'rc': returncode},
-                                   'plugin': item['filepath'],
+                                   'plugin': item['path'],
                                    'backend': 'rhv-log-collector-analyzer',
-                                   'kb': ''}}
+                                   'kb': item['kb']}}
 
                 datatoadd.append(newitem)
 
