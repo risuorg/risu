@@ -16,3 +16,4 @@
 .pytest_cache
 rhinternal
 overrides.json
+tags
