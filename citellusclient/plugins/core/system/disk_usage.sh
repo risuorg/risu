@@ -2,9 +2,9 @@
 
 # Copyright (C) 2018 David Valle Delisle <dvd@redhat.com>
 # Copyright (C) 2017 Lars Kellogg-Stedman <lars@redhat.com>
-# Copyright (C) 2018 Mikel Olasagasti Uranga <mikel@redhat.com>
-# Copyright (C) 2017, 2018 Robin Černín <rcernin@redhat.com>
-# Copyright (C) 2017, 2018 Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
+# Copyright (C) 2017, 2018 Robin Černín <cerninr@gmail.com>
+# Copyright (C) 2017, 2018 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2018 Mikel Olasagasti Uranga <mikel@olasagasti.info>
 
 
 # This program is free software: you can redistribute it and/or modify

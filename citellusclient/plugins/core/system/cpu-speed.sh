@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# Copyright (C) 2018 Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
 # Copyright (C) 2018 Purandhar Sairam Mannidi <pmannidi@redhat.com>
-# Copyright (C) 2018 Robin Černín <rcernin@redhat.com>
+# Copyright (C) 2018 Robin Černín <cerninr@gmail.com>
+# Copyright (C) 2018 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 
 # This program is free software: you can redistribute it and/or modify

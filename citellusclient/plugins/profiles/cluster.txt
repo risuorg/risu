@@ -1,6 +1,6 @@
 # Author: Pablo Iranzo Gómez (Pablo.Iranzo@redhat.com)
 
-# Copyright (C) 2018 Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
+# Copyright (C) 2018 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 # description: Checks for several plugins related with ClusterHA environments
 # long_name: Cluster profile checks
 #

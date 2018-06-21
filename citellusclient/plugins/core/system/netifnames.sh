@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Copyright (C) 2018 Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
-# Copyright (C) 2018 Mikel Olasagasti Uranga <mikel@redhat.com>
+# Copyright (C) 2018 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2018 Mikel Olasagasti Uranga <mikel@olasagasti.info>
 
 
 # This program is free software: you can redistribute it and/or modify
