@@ -3,7 +3,7 @@
 #
 # Description: Script to update contributors for each plugin
 #
-# Copyright (C) 2018 Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
+# Copyright (C) 2018 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # Find files that misses the header:
 # for file in $(find . -type f|grep -v .git|grep -v pyc|grep -v .citellus_tests|egrep '(.py|.txt|.yml|.sh)$'); do grep -q "^# Modifications" $file|| echo $file;done

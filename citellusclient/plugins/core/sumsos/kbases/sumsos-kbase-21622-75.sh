@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright (C) 2018 Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
+
 
 # Code based on the regexps from sumsos from John Devereux (john_devereux@yahoo.com)
 

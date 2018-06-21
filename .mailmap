@@ -1,22 +1,31 @@
 Andreas Karis <akaris@redhat.com> <akaris@collab-shell.usersys.redhat.com>
 Benoit Welterlen <bwelterl@redhat.com> <bwelterl@redhat.com>
-Chen Chen <cchen@redhat.com> <cchenlp@126.com>
-Chris Fields <cfields@redhat.com> <cfields651@gmail.com>
-Chris Jones <chjones@redhat.com> <cmsj@tenshu.net>
+Chen Chen <cchenlp@126.com> <cchen@redhat.com>
+Chen Chen <cchenlp@126.com> <cchenlp@126.com>
+Chris Fields <cfields651@gmail.com> <cfields651@gmail.com>
+Chris Fields <cfields651@gmail.com> <cfields@redhat.com>
+Chris Jones <cmsj@tenshu.net> <chjones@redhat.com>
 David Valle Delisle <dvd@redhat.com> <dvalleed@redhat.com>
 David Valle Delisle <dvd@redhat.com> <dvd@redhat.com>
-Eduardo Mínguez Pérez <eminguez@redhat.com> <e.minguez@gmail.com>
-Ganesh Kadam <gkadam@redhat.com> <meganeshkadam@gmail.com>
-George Angelopoulos <gangelop@redhat.com> <george@usermod.net>
-Jaison Raju <jraju@redhat.com> <jaison1984@gmail.com>
-Luca Miccini <lmiccini@redhat.com> <luca.miccini@gmail.com>
-Masaki Furuta <mfuruta@redhat.com> <masaki.furuta@gmail.com>
-Mikel Olasagasti Uranga <mikel@redhat.com> <mikel@olasagasti.info>
-Pablo Caruana <pcaruana@redhat.com> <pablo.caruana@gmail.com>
-Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com> <Pablo.Iranzo@gmail.com>
-Robin Černín <rcernin@redhat.com> <cerninr@gmail.com>
-Robin Černín <rcernin@redhat.com> <rcernin@collab-shell.usersys.redhat.com>
-Robin Černín <rcernin@redhat.com> <rcernin@redhat.com>
-Robin Černín <rcernin@redhat.com> <root@undercloud-0.redhat.local>
-Robin Černín <rcernin@redhat.com> <zerodayz@users.noreply.github.com>
-Shatadru Bandyopadhyay <sbandyop@redhat.com> <shatadru1@gmail.com>
+Eduardo Mínguez Pérez <e.minguez@gmail.com> <e.minguez@gmail.com>
+Eduardo Mínguez Pérez <e.minguez@gmail.com> <eminguez@redhat.com>
+Ganesh Kadam <meganeshkadam@gmail.com> <gkadam@redhat.com>
+George Angelopoulos <george@usermod.net> <gangelop@redhat.com>
+Jaison Raju <jaison1984@gmail.com> <jaison1984@gmail.com>
+Jaison Raju <jaison1984@gmail.com> <jraju@redhat.com>
+Luca Miccini <luca.miccini@gmail.com> <lmiccini@redhat.com>
+Luca Miccini <Luca.Miccini@gmail.com> <luca.miccini@gmail.com>
+Masaki Furuta <masaki.furuta@gmail.com> <mfuruta@redhat.com>
+Mikel Olasagasti Uranga <mikel@olasagasti.info> <mikel@redhat.com>
+Pablo Caruana <Pablo.Caruana@gmail.com> <pablo.caruana@gmail.com>
+Pablo Caruana <Pablo.Caruana@gmail.com> <pcaruana@redhat.com>
+Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com> <Pablo.Iranzo@redhat.com>
+Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com> <Pablo.Iranzo@gmail.com>
+Robin Černín <cerninr@gmail.com> <cerninr@gmail.com>
+Robin Černín <cerninr@gmail.com> <rcernin@redhat.com>
+Robin Černín <cerninr@gmail.com> <rcernin@redhat.com>
+Robin Černín <cerninr@gmail.com> <rcernin@collab-shell.usersys.redhat.com>
+Robin Černín <cerninr@gmail.com> <rcernin@redhat.com>
+Robin Černín <cerninr@gmail.com> <root@undercloud-0.redhat.local>
+Robin Černín <cerninr@gmail.com> <zerodayz@users.noreply.github.com>
+Shatadru Bandyopadhyay <shatadru1@gmail.com> <sbandyop@redhat.com>

@@ -1,7 +1,6 @@
 # Author: Edu Alcaniz (ealcaniz@redhat.com)
 
-# Copyright (C) 2018 Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
-# Copyright (C) 2018 Edu Alcaniz <ealcaniz@redhat.com>
+
 # description: Checks for several plugins related with PSSA
 # long_name: Openshift PSSA profile checks
 #

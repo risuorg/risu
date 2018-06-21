@@ -1,4 +1,3 @@
-# Copyright (C) 2018 Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
 # bugzilla:
 # long_name: Check same cluster.conf across hosts
 # priority: 500
