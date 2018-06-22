@@ -62,20 +62,20 @@ def run(data, quiet=False):  # do not edit this line
                 # Item ID in log-collector is not unique
                 newid = item['id']
 
-                if 'WARNING' in item['message_type']:
+                if 'WARNING' in item['type']:
                     returncode = citellus.RC_FAILED
                 else:
                     returncode = citellus.RC_OKAY
 
                 # Write plugin entry for the individual result
-                newitem = {newid: {'name': 'rhv-log-collector-analyzer: %s' % item['label'],
-                                   'description': item['message'],
-                                   'long_name': item['message'],
+                newitem = {newid: {'name': 'rhv-log-collector-analyzer: %s' % item['name'],
+                                   'description': item['description'],
+                                   'long_name': item['name'],
                                    'id': newid,
                                    'category': '',
                                    'priority': 400,
-                                   'bugzilla': '',
-                                   'time': 0,
+                                   'bugzilla': item['bugzilla'],
+                                   'time': item['time'],
                                    'subcategory': '',
                                    'hash': item['hash'],
                                    'result': {'out': '', 'err': "%s" % item['result'], 'rc': returncode},
