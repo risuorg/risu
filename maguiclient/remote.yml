@@ -17,14 +17,23 @@
   become: true
   become_user: root
   vars:
-    citellus_base: "{{ lookup('env','CITELLUS_BASE') }}"
+    # citellus_base: "{{ lookup('env','CITELLUS_BASE') }}"
+    citellus_base: '{{ playbook_dir | dirname + "/citellusclient"}}'
   tasks:
     - name: Do citellus
       block:
+      - name: Mkdir target path
+        file:
+          state: directory
+          path: "/root/citellus/citellusclient/"
+          recurse: yes
+          mode: 0775
+
       - name: Upload citellus
         synchronize:
           src: "{{ citellus_base }}/"
-          dest: /root/citellus/citellusclient/
+          dest: "/root/citellus/citellusclient/"
+          rsync_path: "sudo rsync"
           rsync_opts:
             - "--exclude=.git"
             - "--exclude=.tox"
