@@ -1,11 +1,11 @@
 # Based on https://github.com/RHsyseng/container-rhel-examples/blob/master/starter-rhel-atomic/Dockerfile
 FROM registry.centos.org/centos/centos7-atomic:latest
-MAINTAINER Citellus developers <citellus-dev _AT_ redhat.com>
+MAINTAINER Citellus developers <citellus _AT_ googlegroups.com>
 
 LABEL name="citellus/citellus" \
-      maintainer="citellus-dev _AT_ redhat.com" \
+      maintainer="citellus _AT_ googlegroups.com.com" \
       vendor="Citellus" \
-      version="0.1.9" \
+      version="0.2.2" \
       release="1" \
       summary="System configuration validation program" \
       description="Citellus is a program that should help with system configuration validation on either live system or any sort of snapshot of the filesystem."

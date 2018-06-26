@@ -57,23 +57,13 @@ How does it looks like?
 
 Check how does it look in an execution at: `asciicast`_
 
-HTML Interface
---------------
 
 Additional resources
 --------------------
 
--  Devconf.cz 2018 Presentation:
+Check https://citellus.org for more details and information
 
-   -  Slot link `devconf.cz 2018!!`_
-   -  Slides: <doc/devconfcz2018-presentation-revealmd.md>
-   -  Recording https://www.youtube.com/watch?v=SDzzqrUdn5A
 
--  SuperSec 2018 Presentation:
-
-   -  Slot link: https://supersec.es/programa/
-   -  Slides: <doc/supersec2018-presentation-ES.md>
-   -  Recording:
 
 .. _Citellus-www: http://htmlpreview.github.io/?https://github.com/citellusorg/citellus/blob/master/doc/sampleweb/citellus.html
 .. _Changelog.md: Changelog.md

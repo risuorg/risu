@@ -359,8 +359,8 @@ THANK YOU FOR ATTENDING!!
 
 For additional questions, come to #citellus on Freenode or email us:
 
-- <mailto:citellus-dev _AT_ redhat.com>
-- <https://www.redhat.com/mailman/listinfo/citellus-dev>
+- <mailto:citellus _AT_ googlegroups.com.com>
+- <https://groups.google.com/forum/#!forum/citellus>
 
 ---
 

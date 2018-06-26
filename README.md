@@ -95,5 +95,5 @@ Check how does it look in an execution at:
 You can reach to us via:
 - irc at #citellus in Freenode
 - our mailing list:
-    - <mailto:citellus-dev _AT_ redhat.com>
-    - <https://www.redhat.com/mailman/listinfo/citellus-dev>
+    - <mailto:citellus _AT_ googlegroups.com>
+    - <https://groups.google.com/forum/#!forum/citellus>
