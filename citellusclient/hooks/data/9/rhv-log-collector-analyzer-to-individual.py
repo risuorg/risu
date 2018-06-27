@@ -47,7 +47,7 @@ def run(data, quiet=False):  # do not edit this line
         if data[pluginid]['id'] == rhvlcid and data[pluginid]['result']['rc'] == citellus.RC_OKAY:
             # Make a copy of dict for working on it
             try:
-                plugin = json.loads(data[pluginid]['result']['err'])['rhv-log-collector-live']
+                plugin = json.loads(data[pluginid]['result']['err'])['rhv-log-collector-analyzer']
             except:
                 plugin = None
 
