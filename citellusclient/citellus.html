@@ -478,6 +478,8 @@
                 row += '             <dd>' + result.backend + '</dd>\n';
                 row += '             <dt>Priority</dt>\n';
                 row += '             <dd>' + result.priority + '</dd>\n';
+                row += '             <dt>KBase</dt>\n';
+                row += '             <dd><a href="' + result.kb + '" target="_blank">'+ result.kb + '</a></dd>\n';
                 row += '             <dt>Bugzilla</dt>\n';
                 if (/([0-9])+$/.test(result.bugzilla)) {
                     row += '        <dd><a href="' + result.bugzilla + '" target="_blank"><span class="badge badge-danger">' + /([0-9]+)$/.exec(result.bugzilla)[1] + '</span></a></dd>\n';
