@@ -504,7 +504,7 @@ def execonshell(filename):
     """
     try:
         p = subprocess.Popen(filename.split(" "), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        timer = Timer(10, p.kill)
+        timer = Timer(30, p.kill)
         timer.start()
         out, err = p.communicate(str.encode('utf8'))
         returncode = p.returncode
