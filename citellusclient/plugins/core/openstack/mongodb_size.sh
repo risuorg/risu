@@ -49,7 +49,7 @@ else
         exit ${RC_OKAY}
     else
         echo "$MONGODB_DIR doesn't exist" >&2
-        exit ${RC_FAILED}
+        exit ${RC_SKIPPED}
     fi
 fi
 
