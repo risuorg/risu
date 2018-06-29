@@ -62,7 +62,8 @@ def run(data, quiet=False):  # do not edit this line
                     "time": 0,
                     "backend": "core",
                     "id": fakeid,
-                    "subcategory": "gss/cee"}
+                    "subcategory": "gss/cee",
+                    'kb': 'https://access.redhat.com/solutions/3405671'}
         data.update({fakeid: fakedata})
 
     return data
