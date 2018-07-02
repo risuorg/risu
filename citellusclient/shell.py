@@ -496,7 +496,7 @@ def getids(plugins=None, include=None, exclude=None):
     return ids
 
 
-def execonshell(filename):
+def execonshell(filename, timeout=30):
     """
     Executes command on shell
     :param filename: command to run or script name
@@ -504,7 +504,7 @@ def execonshell(filename):
     """
     try:
         p = subprocess.Popen(filename.split(" "), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        timer = Timer(10, p.kill)
+        timer = Timer(timeout, p.kill)
         timer.start()
         out, err = p.communicate(str.encode('utf8'))
         returncode = p.returncode
