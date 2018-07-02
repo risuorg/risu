@@ -484,8 +484,8 @@ Ven a #citellus en Freenode o contacta con nosotros:
 <small>
 
 - https://citellus.org
-- citellus-dev _AT_ redhat.com
-    - <https://www.redhat.com/mailman/listinfo/citellus-dev>
+- citellus _AT_ googlegroups.com
+    - <https://groups.google.com/forum/#!forum/citellus>
 - Issue en github <https://github.com/citellusorg/citellus/issues>
 
 </small>
