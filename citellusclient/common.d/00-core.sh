@@ -40,7 +40,7 @@ if [ "x$CITELLUS_LIVE" = "x0" ];  then
     done
 else
     journalctl_file="${CITELLUS_TMP}/journalctl_--no-pager_--boot"
-    if ! -f ${journalctl_file}; then
+    if [[ ! -f ${journalctl_file} ]]; then
         if which journalctl >/dev/null 2>&1; then
             journalctl --no-pager --boot > ${journalctl_file}
         else
