@@ -18,7 +18,7 @@ class CitellusTest(TestCase):
         pluginpath = [os.path.join(citellus.citellusdir, 'plugins', 'core')]
         plugins = []
         for folder in pluginpath:
-            for root, dirnames, filenames in os.walk(folder):
+            for root, dirnames, filenames in os.walk(folder, followlinks=True):
                 for filename in filenames:
                     filepath = os.path.join(root, filename)
                     if ".citellus_tests" not in filepath:
