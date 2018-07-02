@@ -19,6 +19,7 @@
 # long_name: Checks for DPDK memory pages
 # description: Checks for configured dpdk pages in nova
 # priority: 300
+# kb: https://access.redhat.com/solutions/3250441
 
 # Load common functions
 [[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"

@@ -22,6 +22,7 @@
 # description: Checks for outdated ceph packages
 # bugzilla: https://bugzilla.redhat.com/show_bug.cgi?id=1358697
 # priority: 400
+# kb: https://access.redhat.com/site/solutions/2462281
 
 # Load common functions
 [[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"

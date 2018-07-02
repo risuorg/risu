@@ -20,6 +20,7 @@
 # long_name: Detects packet drops when ip_conntrack or nf_conntrack tables are full
 # description: Detects packet drops when using ip_conntrack or nf_conntrack, logs say 'ip_conntrack: table full, dropping packet.' or 'nf_conntrack: table full, dropping packet'
 # priority: 500
+# kb: https://access.redhat.com/solutions/8721
 
 # Load common functions
 [[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"

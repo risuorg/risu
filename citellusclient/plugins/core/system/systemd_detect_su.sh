@@ -20,6 +20,7 @@
 # long_name: 'su' is called in initscript, causing services to not be shut down correctly
 # description: Detects the use of 'su' in initscripts (there may be false positives)
 # priority: 400
+# kb: https://access.redhat.com/solutions/3184471
 
 # Load common functions
 [[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"

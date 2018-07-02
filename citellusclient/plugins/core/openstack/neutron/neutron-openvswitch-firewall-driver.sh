@@ -21,6 +21,7 @@
 # long_name: Check OSP10 and firewall configuration not supported
 # description: Checks for invalid OSP10 firewall configuration in neutron
 # priority: 200
+# kb: https://access.redhat.com/solutions/3298031
 
 # Load common functions
 [[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"

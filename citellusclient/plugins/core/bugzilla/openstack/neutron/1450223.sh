@@ -25,6 +25,7 @@
 # description: Checks python-ryu tracebacks
 # bugzilla: https://bugzilla.redhat.com/show_bug.cgi?id=1450223
 # priority: 300
+# kb: https://access.redhat.com/solutions/3128111
 
 # Load common functions
 [[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"

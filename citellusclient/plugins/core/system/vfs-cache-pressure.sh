@@ -20,6 +20,7 @@
 # long_name: Detects if vfs_cache_pressure is over sane defaults
 # description: Detects if vfs_cache_pressure is over sane defaults
 # priority: 700
+# kb: https://access.redhat.com/solutions/16995
 
 # Load common functions
 [[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"

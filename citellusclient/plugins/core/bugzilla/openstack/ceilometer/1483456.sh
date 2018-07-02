@@ -22,6 +22,7 @@
 # description: Checks missconfigured host in nova vs hostname
 # bugzilla: https://bugzilla.redhat.com/show_bug.cgi?id=1483456
 # priority: 700
+# kb: https://access.redhat.com/solutions/3198662
 
 # Load common functions
 [[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"

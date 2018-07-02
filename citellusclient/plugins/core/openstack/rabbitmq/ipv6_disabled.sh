@@ -20,6 +20,7 @@
 # long_name: Checks whether ipv6 has been disabled via sysctl
 # description: Reports if ipv6 has been disabled via sysctl
 # priority: 900
+# kb: https://access.redhat.com/solutions/3357631
 
 # Load common functions
 [[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"

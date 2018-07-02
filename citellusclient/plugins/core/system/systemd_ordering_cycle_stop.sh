@@ -20,6 +20,7 @@
 # long_name: systemd deleted a 'stop' job because of an ordering cycle
 # description: Looks for "Breaking ordering cycle ... /stop" messages
 # priority: 400
+# kb: https://access.redhat.com/solutions/3032831
 
 # Load common functions
 [[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"

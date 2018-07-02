@@ -19,6 +19,7 @@
 # long_name: Checks for instance HA configured
 # description: Reports if instanceHA is configured.
 # priority: 900
+# kb: https://access.redhat.com/articles/1544823
 
 # Load common functions
 [[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"

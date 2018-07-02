@@ -43,3 +43,4 @@ else
     exit ${RC_OKAY}
 fi
 
+# kb: https://access.redhat.com/solutions/2162451

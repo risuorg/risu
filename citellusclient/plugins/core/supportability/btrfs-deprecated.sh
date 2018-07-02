@@ -20,6 +20,7 @@
 # long_name: Reports if BTRFS is used as it is deprecated for +RHEL-7.5
 # description: Checks if any BTRFS filesystem is mounted as BTRFS is deprecated since +RHEL-7.5
 # priority: 1
+# https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/7.5_release_notes/chap-red_hat_enterprise_linux-7.5_release_notes-deprecated_functionality
 
 # Load common functions
 [[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"

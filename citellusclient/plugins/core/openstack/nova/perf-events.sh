@@ -20,6 +20,7 @@
 # description: Checks if perf events are enabled in nova
 # bugzilla:
 # priority: 900
+# kb: https://access.redhat.com/solutions/3408891
 
 
 # Load common functions

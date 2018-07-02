@@ -19,6 +19,7 @@
 # long_name: Reports modules documented to be deprecated in RHEL 8
 # description: Reports in-use modules that will be deprecated in next major release
 # priority: 1
+# kb: https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/7.5_release_notes/chap-red_hat_enterprise_linux-7.5_release_notes-deprecated_functionality
 
 # Load common functions
 [[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"

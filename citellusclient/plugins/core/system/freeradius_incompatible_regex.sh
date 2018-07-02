@@ -20,6 +20,7 @@
 # long_name: freeradius correct_escapes and regular expressions
 # description: Freeradius using 'correct_escapes' but with old regular expressions or the opposite
 # priority: 400
+# kb: https://access.redhat.com/solutions/3241961
 
 # Load common functions
 [[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"

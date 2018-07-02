@@ -19,6 +19,7 @@
 # long_name: SELinux console.log permission
 # description: Checks for SELinux errors on console.log access on computes
 # priority: 400
+# kb: https://access.redhat.com/solutions/3215031 , https://access.redhat.com/solutions/3175381
 
 # Load common functions
 [[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"

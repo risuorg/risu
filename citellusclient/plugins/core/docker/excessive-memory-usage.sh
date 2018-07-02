@@ -20,6 +20,7 @@
 # long_name: Checks for high mem usage docker version
 # description: Some docker versions have excessive memory usage
 # priority: 700
+# kb: https://access.redhat.com/solutions/3223811
 
 # Load common functions
 [[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"

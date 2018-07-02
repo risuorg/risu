@@ -20,6 +20,7 @@
 # long_name: Ceph BlackList op detected
 # description: Checks For missing blacklist permission
 # priority: 600
+# kb: https://access.redhat.com/solutions/3377231
 
 is_required_file ${CITELLUS_ROOT}/var/log/ceph/ceph.audit.log
 if is_lineinfile "osd blacklist.*blacklistop.*access denied" "${CITELLUS_ROOT}/var/log/ceph/ceph.audit.log"; then

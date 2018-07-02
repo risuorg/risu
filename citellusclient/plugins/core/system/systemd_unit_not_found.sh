@@ -20,6 +20,7 @@
 # long_name: systemd didn't start a unit because it was not found
 # description: Looks for "Cannot add dependency job ..." messages
 # priority: 400
+# kb: https://access.redhat.com/solutions/3372291
 
 # Load common functions
 [[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
