@@ -49,7 +49,7 @@ def run(data, quiet=False):  # do not edit this line
         if data[sourceid]['result']['err'] != 'unknown':
             mangle = True
 
-    if mangle:
+    if mangle and targetid in data:
         # We now fake result as SKIPPED and copy to datahook dict the new data
         data[targetid]['datahook'] = {}
         data[targetid]['datahook']['prior'] = dict(data[targetid]['result'])
