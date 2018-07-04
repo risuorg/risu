@@ -40,10 +40,9 @@ virt_type(){
 }
 
 is_virtual(){
-    if [[ "x`virt_type`" -ne "x" ]] ; then
+    if [[ "x`virt_type`" == "x" ]] ; then
         return 1
     else
         return 0
     fi
 }
-
