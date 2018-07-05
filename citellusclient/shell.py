@@ -1031,6 +1031,36 @@ def generic_get_metadata(plugin):
     return metadata
 
 
+def anonymize(data, keeppath=False):
+    """
+    Removes data from json that might identify
+    :param data: json with data from plugins
+    :param keeppath: do not remove path to sosreport
+    """
+    # Clearing path and extranames that might be revealing some data
+    if not keeppath:
+        data['metadata']['path'] = ''
+
+    data['metadata']['extranames'] = ''
+
+    if 'magui' not in data['metadata']['source']:
+        # Citellus.json
+        for plugin in data['results']:
+            # Citellus json
+            if 'result' in data['results'][plugin]:
+                data['results'][plugin]['result']['out'] = ''
+                data['results'][plugin]['result']['err'] = ''
+    else:
+        # Magui.json
+        for ourdata in data['results']:
+            if 'citellus-outputs' in ourdata['name']:
+                for element in ourdata['result']['err']:
+                    for sosreport in element['sosreport']:
+                        element['sosreport'][sosreport]['err'] = ''
+                        element['sosreport'][sosreport]['out'] = ''
+    return data
+
+
 def write_results(results, filename, live=False, path=None, time=0, source='citellus', branding='', web=False,
                   extranames=None, serveruri=False, anon=False):
     """
@@ -1077,25 +1107,7 @@ def write_results(results, filename, live=False, path=None, time=0, source='cite
 
     if anon:
         LOG.debug("Anonymizing results as request..")
-        # Clearing path and extranames that might be revealing some data
-        data['metadata']['path'] = ''
-        data['metadata']['extranames'] = ''
-
-        if 'magui' not in data['metadata']['source']:
-            # Citellus.json
-            for plugin in data['results']:
-                # Citellus json
-                if 'result' in results[plugin]:
-                    results[plugin]['result']['out'] = ''
-                    results[plugin]['result']['err'] = ''
-        else:
-            # Magui.json
-            for ourdata in data['results']:
-                if 'citellus-outputs' in ourdata['name']:
-                    for element in ourdata['result']['err']:
-                        for sosreport in element['sosreport']:
-                            element['sosreport'][sosreport]['err'] = ''
-                            element['sosreport'][sosreport]['out'] = ''
+        data = anonymize(data=data)
 
     try:
         with open(filename, 'w') as fd:
@@ -1106,7 +1118,7 @@ def write_results(results, filename, live=False, path=None, time=0, source='cite
     # Code to upload file
     if serveruri and requests:
         try:
-            requests.post(serveruri, json=data)
+            requests.post(serveruri, json=anonymize(data=data, keeppath=True))
         except:
             LOG.debug("Upload to serveruri failed")
 
