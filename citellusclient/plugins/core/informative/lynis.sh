@@ -24,7 +24,7 @@
 [[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
 if ! which lynis >/dev/null 2>&1; then
-    echo "lynis (https://github.com/CISOfy/Lynis) support not found, exitting" >&2
+    echo "lynis (https://github.com/CISOfy/Lynis) support not found, exiting" >&2
     exit ${RC_SKIPPED}
 fi
 
