@@ -451,7 +451,7 @@ def main():
         dooutput = False
 
     if len(sosreports) > options.max_hosts:
-        print("Maximum number of sosreports provided, exitting")
+        print("Maximum number of sosreports provided, exiting")
         sys.exit(0)
 
     citellusplugins = []
