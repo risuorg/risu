@@ -716,8 +716,6 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
 
     # Write results if possible
     if filename:
-        branding = _("                                                  ")
-        write_results(results, filename, path=path, time=time.time() - start_time, branding=branding, web=web, serveruri=serveruri, anon=anon)
         try:
             # Write results to disk
             branding = _("                                                  ")
@@ -1107,10 +1105,8 @@ def write_results(results, filename, live=False, path=None, time=0, source='cite
 
     # Code to upload file
     if serveruri and requests:
-        files = {'upload_file': open(filename, 'rb')}
-        values = {}
         try:
-            requests.post(serveruri, files=files, data=values)
+            requests.post(serveruri, json=data)
         except:
             LOG.debug("Upload to serveruri failed")
 
