@@ -28,5 +28,5 @@ if ! which xsos >/dev/null 2>&1; then
     exit ${RC_SKIPPED}
 fi
 
-xsos -a ${CITELLUS_ROOT} >&2
+xsos -x -a ${CITELLUS_ROOT} >&2
 exit ${RC_INFO}
