@@ -59,6 +59,7 @@ def run(data, quiet=False):  # do not edit this line
             ln = str(plugin['long_name'])
             desc = str(plugin['description'])
             name = str(plugin['name'])
+            kb = str(plugin['kb'])
 
             # Iterate over NIC pairs
             for pair in err.split(";"):
@@ -68,7 +69,7 @@ def run(data, quiet=False):  # do not edit this line
                     update = {'id': newid, 'description': '%s: %s' % (desc, pair.split(":")[0]),
                               'long_name': '%s: %s' % (ln, pair.split(":")[0]),
                               'plugin': '%s-%s' % (plugpath, pair.split(":")[0]),
-                              'name': 'Faraday: %s' % name}
+                              'name': 'Faraday: %s' % name, 'kb': kb}
 
                     resultupdate = {'result': {'err': pair, 'out': '', 'rc': rc}}
                     update.update(resultupdate)
