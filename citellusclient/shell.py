@@ -1107,7 +1107,7 @@ def write_results(results, filename, live=False, path=None, time=0, source='cite
 
     if anon:
         LOG.debug("Anonymizing results as request..")
-        data = anonymize(data=data)
+        data = anonymize(data=data.copy())
 
     try:
         with open(filename, 'w') as fd:
@@ -1117,10 +1117,12 @@ def write_results(results, filename, live=False, path=None, time=0, source='cite
 
     # Code to upload file
     if serveruri and requests:
+        newdata = data.copy()
         try:
-            requests.post(serveruri, json=anonymize(data=data, keeppath=True))
+            requests.post(serveruri, json=newdata)
         except:
             LOG.debug("Upload to serveruri failed")
+        del newdata
 
 
 def regexpfile(filename=False, regexp=False):
