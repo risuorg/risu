@@ -615,25 +615,6 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
     # Check all sosreports for data for all plugins
     allids = getids(plugins=plugins)
 
-    # Now check in results for id's no longer existing for removal:
-    delete = []
-    for key in iter(results.keys()):
-        if key not in allids:
-            # Plugin ID no longer appears in found plugins.
-            delete.append(key)
-
-    LOG.debug("Removing old plugins from results: %s" % delete)
-
-    for plugid in allids:
-        if plugid not in results and '-' not in plugid:
-            missingplugins.append(plugid)
-
-    LOG.debug("Adding new plugin id's missing to be executed: %s" % missingplugins)
-
-    # Remove old plugins no longer existing from results
-    for key in delete:
-        del results[key]
-
     # Prefill hashes of known plugins for checking same id's with changed hash
     hashes = []
     for plug in plugins:
@@ -654,10 +635,9 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
             LOG.debug("Smart: rerunning plugin with modified hash on disk: %s" % results[plugin]['plugin'])
 
     # If some plugin is missing, rerun smart
-    if len(missingplugins) != 0 or len(delete) != 0:
+    if len(missingplugins) != 0:
         missingplugins = sorted(set(missingplugins))
         LOG.debug("Running smartrun for plugins added %s" % missingplugins)
-        LOG.debug("Running smartrun for plugins deleted %s" % delete)
 
     # We need to filter plugins only for the new id's what we were missing
     LOG.debug("Smart: We need to run some plugins that were missing")
