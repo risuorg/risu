@@ -613,7 +613,7 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
     # We do need to check that we've the results for all the plugins we know, if not, rerun.
 
     # Check all sosreports for data for all plugins
-    allids = getids(plugins=plugins)
+    allids = getids()
 
     # Now check in results for id's no longer existing for removal:
     delete = []

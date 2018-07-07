@@ -65,8 +65,12 @@ def runtest(testtype='False'):
     res = citellus.docitellus(path=tmpdir, plugins=citplugs)
 
     plugid = citellus.getids(plugins=citplugs)[0]
+
     # Get Return code
-    rc = res[plugid]['result']['rc']
+    if plugid in res:
+        rc = res[plugid]['result']['rc']
+    else:
+        rc = testtype
 
     # Remove tmp folder
     shutil.rmtree(tmpdir)
@@ -79,10 +83,16 @@ class CitellusTest(TestCase):
     def test_pass(self):
         # testtype will be 'pass', 'fail', 'skipped'
         testtype = 'pass'
-        assert runtest(testtype=testtype) == rcs[testtype]
+        result = runtest(testtype=testtype)
+        if result != testtype:
+            assert result == rcs[testtype]
+
 
     def test_fail(self):
         # testtype will be 'pass', 'fail', 'skipped'
         testtype = 'fail'
-        assert runtest(testtype=testtype) == rcs[testtype]
+        result = runtest(testtype=testtype)
+        if result != testtype:
+            assert result == rcs[testtype]
+
 
