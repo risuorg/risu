@@ -23,6 +23,7 @@
 from __future__ import print_function
 
 import argparse
+import copy
 import datetime
 import gettext
 import hashlib
@@ -1117,9 +1118,9 @@ def write_results(results, filename, live=False, path=None, time=0, source='cite
 
     # Code to upload file
     if serveruri and requests:
-        newdata = data.copy()
+        newdata = copy.deepcopy(data)
         try:
-            requests.post(serveruri, json=newdata)
+            requests.post(serveruri, json=anonymize(data=newdata, keeppath=True))
         except:
             LOG.debug("Upload to serveruri failed")
         del newdata
