@@ -342,8 +342,9 @@ def autogroups(autodata):
                 value = item['sosreport'][host]['err']
             else:
                 value = ''
-            update = {name: value}
-            hostsdict[host].update(update)
+            if value != '':
+                update = {name: value}
+                hostsdict[host].update(update)
 
     # At this point we have a dict of dicts, being at first level the host with the output of the metadata, similar to:
     # print(hostsdict)={'host1': {'release': 'xxxx', 'UUID': 'YYYYY'}, 'host2': .... }
