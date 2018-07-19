@@ -31,6 +31,7 @@ __osp_version_with_nova(){
         openstack-nova-common-16.*) OSP=12 ;;
         openstack-nova-common-17.*) OSP=13 ;;
         openstack-nova-common-18.*) OSP=14 ;;
+        openstack-nova-common-19.*) OSP=15 ;;
         *) OSP=0 ;;
     esac
     echo ${OSP}
@@ -48,6 +49,7 @@ __osp_version_with_cinder(){
         openstack-cinder-11.*) OSP=12 ;;
         openstack-cinder-12.*) OSP=13 ;;
         openstack-cinder-13.*) OSP=14 ;;
+        openstack-cinder-14.*) OSP=15 ;;
         *) OSP=0 ;;
     esac
     echo ${OSP}
@@ -74,6 +76,7 @@ name_osp_version(){
         12) echo "pike" ;;
         13) echo "queens" ;;
         14) echo "rocky" ;;
+        14) echo "stein" ;;
         *) echo "not recognized" ;;
     esac
 }
