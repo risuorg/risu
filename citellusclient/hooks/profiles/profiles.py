@@ -101,6 +101,7 @@ def run(data, quiet=False):  # do not edit this line
         # start with OK status
         overall = int(os.environ['RC_OKAY'])
         failed = int(os.environ['RC_FAILED'])
+        info = int(os.environ['RC_INFO'])
 
         # Start asembling data for the plugins relevant for profile
         data[uid]['result']['err'] = ''
@@ -113,6 +114,12 @@ def run(data, quiet=False):  # do not edit this line
                 if data[id]['result']['rc'] == failed:
                     # If test is failed, return global as failed
                     overall = failed
+                elif data[id]['result']['rc'] == info and overall != failed:
+                    overall = info
+
+        # Force sysinfo profile to report as info
+        if 'sysinfo' in name:
+            overall = info
 
         data[uid]['result']['err'] = json.dumps(new_results)
         data[uid]['components'] = ids

@@ -78,9 +78,9 @@ class CitellusTest(TestCase):
         out_dict = []
         for item in results:
             rc = results[item]['result']['rc']
-            if rc not in sorted({okay, failed, skipped}):
+            if rc not in sorted({okay, failed, skipped, info}):
                 print(results[item])
-            assert rc in sorted({okay, failed, skipped})
+            assert rc in sorted({okay, failed, skipped, info})
             if rc == failed or rc == skipped:
                 print(results[item])
                 assert results[item]['result']['err'] != ""
@@ -102,9 +102,9 @@ class CitellusTest(TestCase):
         out_dict = []
         for item in results:
             rc = results[item]['result']['rc']
-            if rc not in sorted({okay, failed, skipped}):
+            if rc not in sorted({okay, failed, skipped, info}):
                 print(results[item])
-            assert rc in sorted({okay, failed, skipped})
+            assert rc in sorted({okay, failed, skipped, info})
             if rc == failed or rc == skipped:
                 print(results[item])
                 assert results[item]['result']['err'] != ""
