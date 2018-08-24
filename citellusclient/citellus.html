@@ -283,7 +283,7 @@
             $("#numresults").html(count);
         }
         // function that returns various metadata depending on RC
-        function getPluginState(rc) {
+        function getPluginState(rc, priority) {
             var plugin_icon;
             var plugin_state;
             var plugin_class;
@@ -305,7 +305,13 @@
                 plugin_class = "success";
                 plugin_text_color = "text-black";
             } else {
-                plugin_icon = "pficon pficon-error-circle-o";
+                if (priority >= 666) {
+                    plugin_icon = "pficon pficon-error-circle-o";
+                } else if (priority >= 333) {
+                    plugin_icon = "pficon pficon-warning-triangle-o";
+                } else {
+                    plugin_icon = "pficon pficon-info";
+                }
                 plugin_state = "failed";
                 plugin_class = "danger";
                 plugin_text_color = "text-black";
@@ -402,7 +408,7 @@
             row += '                  </thead>\n';
             row += '                  <tbody>\n';
             $.each(plugins, function(i, p) {
-                var plugin_state = getPluginState(p.rc);
+                var plugin_state = getPluginState(p.rc, p.priority);
                 row += '                <tr><td>' + p.hostname + '</td><td><a href="#plugin-' + p.plugin_id + '">' + p.plugin_name + '</a></td><td>' + plugin_state.badge + '</td><td>' + p.msg + ' </td></tr>\n';
             });
             row += '                  </tbody>\n';
@@ -416,7 +422,7 @@
                 plugin_names.cat = "metadata";
             }
             var plugin_cats = getPluginCats(result.category, result.subcategory)
-            var plugin_state = getPluginState(rc);
+            var plugin_state = getPluginState(rc, result.priority);
             if (result.priority == "undefined") {
                 result.priority = 0;
             }
@@ -737,7 +743,7 @@
                                                     if (obj.rc == 10 && grc != 20) {
                                                         grc = 10;
                                                     }
-                                                    var plugin_state = getPluginState(obj.rc);
+                                                    var plugin_state = getPluginState(obj.rc, obj.priority);
                                                     gout += plugin_state.badge + " " + server + ": " + obj.out + "<br>";
                                                     gerr += plugin_state.badge + " " + server + ": " + obj.err + "<br>";
                                                     if (pdata.backend == "profile") {
