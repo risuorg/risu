@@ -181,6 +181,21 @@
             <!-- /col -->
         </div>
         <!-- /row -->
+        <div class="clearfix">
+            <div class="col-sm">
+                <table id="info_table_citellus" class="table table-hover table-bordered">
+                    <thead>
+                        <tr id="info_table_citellus_header">
+                            <th colspan=2 class="text-left">Citellus System Info</th>
+                        </tr>
+                    </thead>
+                    <tbody id="info_table_citellus_body" style="display: none;"></tbody>
+                </table>
+            </div>
+            <!-- /col -->
+        </div>
+        <!-- /row -->
+
         <div class="clearfix row-cards-pf">
             <!-- Table HTML -->
             <table class="table table-striped table-bordered table-hover" id="table1">
@@ -606,6 +621,9 @@
             $("body").on("click", '#metadata_table_citellus_header', function(e) {
                 $("#metadata_table_citellus_body").toggle()
             });
+            $("body").on("click", '#info_table_citellus_header', function(e) {
+                $("#info_table_citellus_body").toggle()
+            });
             $("body").on("click", '#report_table_citellus_header', function(e) {
                 $("#report_table_citellus_body").toggle()
             });
@@ -677,6 +695,10 @@
                         $.each(data.metadata, function(i, item) {
                             var row = '<tr><th>' + i + '</th><td>' + item + '</td></tr>\n';
                             $("#metadata_table_citellus > tbody:last-child").append(row);
+                        });
+                        $.each(data.sysinfo, function(i, item) {
+                            var row = '<tr><th>' + i + '</th><td>' + item + '</td></tr>\n';
+                            $("#info_table_citellus > tbody:last-child").append(row);
                         });
                         div_otherJsons.children("button").html(jsonFile + ' <span class="caret"></span>');
                         div_otherJsons.children("button").data("jsonFile", jsonFile)
