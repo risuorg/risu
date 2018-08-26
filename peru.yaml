@@ -1,0 +1,6 @@
+imports:
+    dmidecode: citellusclient/tools/
+
+git module dmidecode:
+    url: git@github.com:iranzo/dmidecode.git
+    pick: dmidecode.py
