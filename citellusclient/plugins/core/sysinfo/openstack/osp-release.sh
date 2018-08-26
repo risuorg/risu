@@ -23,6 +23,13 @@
 # Load common functions
 [[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
-echo "OSP Version: $(discover_osp_version), codename: $(name_osp_version)" >&2
+OSPVER=$(discover_osp_version)
 
-exit ${RC_OKAY}
+if [[ ${OSPVER} -gt 0 ]]; then
+    echo "OSP Version: $(discover_osp_version), codename: $(name_osp_version)" >&2
+    exit ${RC_OKAY}
+fi
+
+echo "Possible not osp system" >&2
+exit ${RC_SKIPPED}
+
