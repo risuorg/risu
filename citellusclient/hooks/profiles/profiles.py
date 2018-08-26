@@ -99,8 +99,9 @@ def run(data, quiet=False):  # do not edit this line
         data[uid].update(metadata)
 
         # start with OK status
-        overall = int(os.environ['RC_OKAY'])
+        okay = int(os.environ['RC_OKAY'])
         failed = int(os.environ['RC_FAILED'])
+        skipped = int(os.environ['RC_SKIPPED'])
         info = int(os.environ['RC_INFO'])
 
         # Start asembling data for the plugins relevant for profile
@@ -108,18 +109,24 @@ def run(data, quiet=False):  # do not edit this line
         ids = plugidsforprofile(profile=profile, plugins=plugins)
 
         new_results = []
+        overallitems = []
+
         for id in ids:
             if id in data:
                 new_results.append({'plugin_id': id, 'plugin': data[id]['plugin'].replace(os.path.join(citellus.citellusdir, 'plugins'), ''), 'err': data[id]['result']['err'].strip(), 'rc': data[id]['result']['rc']})
-                if data[id]['result']['rc'] == failed:
-                    # If test is failed, return global as failed
-                    overall = failed
-                elif data[id]['result']['rc'] == info and overall != failed:
-                    overall = info
+                overallitems.append(data[id]['result']['rc'])
 
-        # Force sysinfo profile to report as info
-        if 'sysinfo' in name:
+        if failed in overallitems:
+            overall = failed
+        elif info in overallitems:
             overall = info
+        elif skipped in overallitems:
+            overall = skipped
+        elif 'sysinfo' in name:
+            # If not skipped because not applicable, make it show up as info (as it's a briefing table)
+            overall = info
+        else:
+            overall = okay
 
         data[uid]['result']['err'] = json.dumps(new_results)
         data[uid]['components'] = ids
