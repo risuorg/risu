@@ -1,20 +1,23 @@
+#!/usr/bin/env python
+
 from __future__ import print_function
-import os, sys
+import os
+import sys
 
 __version__ = "0.9.0"
 
 TYPE = {
-    0:  'bios',
-    1:  'system',
-    2:  'base board',
-    3:  'chassis',
-    4:  'processor',
-    7:  'cache',
-    8:  'port connector',
-    9:  'system slot',
+    0: 'bios',
+    1: 'system',
+    2: 'base board',
+    3: 'chassis',
+    4: 'processor',
+    7: 'cache',
+    8: 'port connector',
+    9: 'system slot',
     10: 'on board device',
     11: 'OEM strings',
-    #13: 'bios language',
+    # 13: 'bios language',
     15: 'system event log',
     16: 'physical memory array',
     17: 'memory device',
@@ -24,7 +27,7 @@ TYPE = {
     27: 'cooling device',
     32: 'system boot',
     41: 'onboard device',
-    }
+}
 
 
 def parse_dmi(content):
@@ -58,7 +61,9 @@ def _parse_handle_section(lines):
     """
     data = {
         '_title': next(lines).rstrip(),
-        }
+    }
+
+    k = None
 
     for line in lines:
         line = line.rstrip()
@@ -91,13 +96,13 @@ def _get_output():
     import subprocess
     try:
         output = subprocess.check_output(
-        'PATH=$PATH:/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin '
-        'sudo dmidecode', shell=True)
+            'PATH=$PATH:/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin '
+            'sudo dmidecode', shell=True)
     except Exception as e:
         print(e, file=sys.stderr)
         if str(e).find("command not found") == -1:
             print("please install dmidecode", file=sys.stderr)
-            print("e.g. sudo apt install dmidecode",file=sys.stderr)
+            print("e.g. sudo apt install dmidecode", file=sys.stderr)
 
         sys.exit(1)
     return output.decode()
@@ -108,26 +113,32 @@ def _show(info):
         return [v for j, v in info if j == i]
 
     system = _get('system')[0]
-    print ('%s %s (SN: %s, UUID: %s)' % (
+    print('%s %s (SN: %s, UUID: %s)' % (
         system['Manufacturer'],
         system['Product Name'],
         system['Serial Number'],
         system['UUID'],
-        ))
+    ))
 
     for cpu in _get('processor'):
-        #fix for output in virtual machine environments
+        # fix for output in virtual machine environments
         if 'Thread Count' in cpu:
             threads = cpu['Thread Count']
         else:
             threads = "-"
-        print ('%s %s %s (Core: %s, Thead: %s)' % (
+
+        if 'Core Count' in cpu:
+            cores = cpu['Core Count']
+        else:
+            cores = "-"
+
+        print('%s %s %s (Core: %s, Thead: %s)' % (
             cpu['Manufacturer'],
             cpu['Family'],
             cpu['Max Speed'],
-            cpu['Core Count'],
+            cores,
             threads,
-            ))
+        ))
 
     cnt, total, unit = 0, 0, None
     for mem in _get('memory device'):
@@ -136,18 +147,19 @@ def _show(info):
         i, unit = mem['Size'].split()
         cnt += 1
         total += int(i)
-    print ('%d memory stick(s), %d %s in total' % (
+    print('%d memory stick(s), %d %s in total' % (
         cnt,
         total,
         unit,
-        ))
+    ))
     bios = _get('bios')[0]
-    print ('BIOS: %s v.%s %s Systemversion: %s' % (
+    print('BIOS: %s v.%s %s Systemversion: %s' % (
         bios['Vendor'],
         bios['Version'],
         bios['Release Date'],
         system['Version']
-        ))
+    ))
+
 
 if __name__ == '__main__':
     profile()
