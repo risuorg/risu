@@ -297,20 +297,20 @@
             var plugin_text_color;
             var plugin_badge;
             if (rc == 30) {
-                plugin_icon = "pficon pficon-help";
+                plugin_icon = "fa fa-angle-double-right";
                 plugin_state = "skipped";
                 plugin_class = "info";
-                plugin_text_color = "text-black";
+                plugin_text_color = "";
             } else if (rc == 40) {
                 plugin_icon = "pficon pficon-info";
                 plugin_state = "info";
                 plugin_class = "info";
-                plugin_text_color = "text-black";
+                plugin_text_color = "blue";
             } else if (rc == 10) {
                 plugin_icon = "fa fa-check-circle-o";
                 plugin_state = "okay";
                 plugin_class = "success";
-                plugin_text_color = "text-black";
+                plugin_text_color = "";
             } else {
                 if (priority >= 666) {
                     plugin_icon = "pficon pficon-error-circle-o";
@@ -321,7 +321,7 @@
                 }
                 plugin_state = "failed";
                 plugin_class = "danger";
-                plugin_text_color = "text-black";
+                plugin_text_color = "";
             }
             plugin_badge = '<span class="badge badge-pill badge-' + plugin_class + '">' + plugin_state + '</span>';
             return {
@@ -451,7 +451,7 @@
             row += '          </div> <!-- /list-view-pf-expand -->\n';
             row += '          <div class="list-view-pf-main-info">\n';
             row += '           <div class="list-view-pf-left">\n';
-            row += '            <span class="' + plugin_state.icon + ' list-view-pf-icon-sm list-view-pf-icon-' + plugin_state.pclass + '" title="'+ plugin_state.state +'"></span>';
+            row += '            <span class="' + plugin_state.icon + ' list-view-pf-icon-sm list-view-pf-icon-' + plugin_state.pclass + '" title="'+ plugin_state.state +'" style="color: '+plugin_state.text_color+'"></span>';
             row += '           </div><!-- /list-view-pf-left -->\n';
             row += '           <div class="list-view-pf-body">\n';
             row += '            <div class="list-view-pf-description">\n';
