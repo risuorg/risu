@@ -90,6 +90,10 @@
             box-shadow: 0 1px 0 rgba(3, 3, 3, .045);
             padding-top: 10px;
         }
+
+        .category-badge{
+            margin-right: 10px;
+        }
     </style>
 </head>
 
@@ -312,16 +316,17 @@
                 plugin_class = "success";
                 plugin_text_color = "";
             } else {
+                plugin_state = "failed";
+                plugin_class = "danger";
+                plugin_text_color = "";
                 if (priority >= 666) {
                     plugin_icon = "pficon pficon-error-circle-o";
                 } else if (priority >= 333) {
                     plugin_icon = "pficon pficon-warning-triangle-o";
                 } else {
                     plugin_icon = "pficon pficon-info";
+                    plugin_text_color = "red";
                 }
-                plugin_state = "failed";
-                plugin_class = "danger";
-                plugin_text_color = "";
             }
             plugin_badge = '<span class="badge badge-pill badge-' + plugin_class + '">' + plugin_state + '</span>';
             return {
@@ -365,7 +370,7 @@
             }
             $.each(plugin_cats, function(c, cname) {
                 if (cname != "undefined") {
-                    plugin_cats_visual += '<a href="#" data-category="' + cname + '" class="badge badge-primary category-badge">' + cname + '</a> ';
+                    plugin_cats_visual += '<a href="#" data-category="' + cname + '" class="label label-primary category-badge">' + cname + '</a> ';
                     plugin_cats_list += cname + ',';
                     plugin_cats_array.push(cname);
                 }
@@ -451,7 +456,7 @@
             row += '          </div> <!-- /list-view-pf-expand -->\n';
             row += '          <div class="list-view-pf-main-info">\n';
             row += '           <div class="list-view-pf-left">\n';
-            row += '            <span class="' + plugin_state.icon + ' list-view-pf-icon-sm list-view-pf-icon-' + plugin_state.pclass + '" title="'+ plugin_state.state +'" style="color: '+plugin_state.text_color+'"></span>';
+            row += '            <span class="' + plugin_state.icon + '" title="'+ plugin_state.state +'" style="color: '+plugin_state.text_color+'"></span>';
             row += '           </div><!-- /list-view-pf-left -->\n';
             row += '           <div class="list-view-pf-body">\n';
             row += '            <div class="list-view-pf-description">\n';
@@ -459,14 +464,7 @@
             row += '             <div class="list-group-item-text pull-left">' + plugin_names.long_name + '</div>\n';
             row += '            </div><!-- /list-view-pf-description -->\n';
             row += '             <div class="list-view-pf-additional-info-item" style="width: 25%">\n';
-            if (result.priority >= 666) {
-                row += '            <span class="badge badge-danger">Critical</span> \n';
-            } else if (result.priority >= 333) {
-                row += '            <span class="badge badge-warning">Important</span> \n';
-            } else {
-                row += '            <span class="badge badge-info">Informative</span> \n';
-            }
-            row += '              <span class="pficon pficon-replicator"></span> ' + plugin_cats.visual;
+            row += '              ' + plugin_cats.visual;
             row += '             </div> <!-- /list-view-pf-additional-info-item -->\n';
             row += '           </div><!-- /list-view-pf-body -->\n';
             row += '          </div><!-- /list-view-pf-main-info -->\n';
