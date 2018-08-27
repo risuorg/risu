@@ -165,7 +165,7 @@
                 </form>
                 <div class="clearfix toolbar-pf-results">
                     <div class="col-sm-12">
-                        <h5>Filtered results: <span id="numresults"></span></h5>
+                        <h5>Total tests <span id="numtests"></span> - Filtered results: <span id="numresults"></span></h5>
                     </div>
                     <!-- /col -->
                 </div>
@@ -782,6 +782,7 @@
                                 } // if citellus-outputs
                             } // if data source == "magui"
                         }); // each data.result
+                        $("#numtests").html(counter);
                         sortPlugins("priority");
                         filterCards()
                         scrollToPlugin()
