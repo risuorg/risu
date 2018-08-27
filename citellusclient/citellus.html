@@ -739,10 +739,16 @@
                                                     if (obj.rc == 20) {
                                                         grc = 20;
                                                     }
-                                                    // We make sur to not override a failure with an okay
-                                                    if (obj.rc == 10 && grc != 20) {
+                                                    if (obj.rc == 40 && grc != 20) {
+                                                        grc = 40
+                                                    }
+                                                    if (obj.rc == 10 && grc != 20 && grc != 40){
                                                         grc = 10;
                                                     }
+                                                    if (obj.rc == 30 && grc != 20 && grc != 40 && grc !=10){
+                                                        rc = 30;
+                                                    }
+
                                                     var plugin_state = getPluginState(obj.rc, obj.priority);
                                                     gout += plugin_state.badge + " " + server + ": " + obj.out + "<br>";
                                                     gerr += plugin_state.badge + " " + server + ": " + obj.err + "<br>";
