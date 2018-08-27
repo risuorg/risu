@@ -6,6 +6,7 @@
 #              and processes citellus output for combined issues via plugins
 #              that search for specific plugin and data
 #
+# Copyright (C) 2018 David Sastre Medina <d.sastre.medina@gmail.com>
 # Copyright (C) 2017, 2018 Robin Černín <cerninr@gmail.com>
 # Copyright (C) 2017, 2018 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 #

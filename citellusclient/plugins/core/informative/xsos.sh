@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# Copyright (C) 2018 David Sastre Medina <d.sastre.medina@gmail.com>
 # Copyright (C) 2018 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 
