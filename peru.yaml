@@ -1,6 +1,7 @@
 imports:
     dmidecode: citellusclient/tools/
     citellus: ./
+    tripleo-common-healtcheck: citellusclient/plugins/tripleo-common-healtcheck
 
 git module dmidecode:
     url: git@github.com:iranzo/dmidecode.git
@@ -10,3 +11,7 @@ git module citellus:
     url: git@github.com:citellusorg/citellus.git
     pick: citellusclient/plugins/
     rev: 1ee1c6a36f51e8a7c809d5162004fb57ee99b168
+
+git module tripleo-common-healtcheck:
+    url: git@github.com:openstack/tripleo-common.git
+    pick: healthcheck

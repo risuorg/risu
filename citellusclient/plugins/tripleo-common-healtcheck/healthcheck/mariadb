@@ -1,0 +1,16 @@
+#!/bin/bash
+
+. ${HEALTHCHECK_SCRIPTS:-/usr/share/openstack-tripleo-common/healthcheck}/common.sh
+GALERA_XINETD_CONF='/etc/xinetd.d/galera-monitor'
+
+# If the mariadb container is running xinetd with galera-monitor then it is a
+# clustercheck container, otherwise a mysql/mariadb one
+if pgrep xinetd &> /dev/null && grep -qe 'disable.*no' $GALERA_XINETD_CONF; then
+        PORT=$(awk '/port.*=/{ print $3 }' $GALERA_XINETD_CONF)
+        ADDR=$(awk '/bind.*=/{ print $3 }' $GALERA_XINETD_CONF)
+        bind_host=${ADDR:-$(hostname)}
+        bind_port=${PORT:-9200}
+        healthcheck_curl http://${bind_host}:${bind_port}/
+else
+        mysql -e 'select 1' || exit 1
+fi

@@ -1,0 +1,12 @@
+#!/bin/bash
+
+. ${HEALTHCHECK_SCRIPTS:-/usr/share/openstack-tripleo-common/healthcheck}/common.sh
+
+bind_host=$(get_config_val /etc/glance/glance-api.conf DEFAULT bind_host 127.0.0.1)
+bind_port=$(get_config_val /etc/glance/glance-api.conf DEFAULT bind_port 9292)
+# Add brackets if IPv6
+if [[ $bind_host =~ ":" ]]; then
+    bind_host="[${bind_host}]"
+fi
+# glance-api is still eventlet
+healthcheck_curl http://${bind_host}:${bind_port}/
