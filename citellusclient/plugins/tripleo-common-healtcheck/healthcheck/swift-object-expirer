@@ -1,0 +1,12 @@
+#!/bin/sh
+
+. ${HEALTHCHECK_SCRIPTS:-/usr/share/openstack-tripleo-common/healthcheck}/common.sh
+
+conf=/etc/swift/object-expirer.conf
+cache=/var/cache/swift/object.recon
+interval=$(get_config_val $conf object-expirer interval 300)
+
+if ! healthcheck_file_modification $cache $interval; then
+    echo "Cache file $cache was not updated within interval of $interval seconds."
+    exit 1
+fi

@@ -1,0 +1,7 @@
+#!/bin/bash
+
+. ${HEALTHCHECK_SCRIPTS:-/usr/share/openstack-tripleo-common/healthcheck}/common.sh
+
+bind_host=$(cat /etc/fluentd/config.d/110-monitoring-agent.conf | grep bind | awk '{print $2}')
+bind_port=$(cat /etc/fluentd/config.d/110-monitoring-agent.conf | grep port | awk '{print $2}')
+healthcheck_curl http://${bind_host}:${bind_port}/api/config.json

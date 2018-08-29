@@ -1,0 +1,4 @@
+#!/bin/bash
+
+socat - ABSTRACT-CONNECT:ISCSIADM_ABSTRACT_NAMESPACE </dev/null
+exit $?

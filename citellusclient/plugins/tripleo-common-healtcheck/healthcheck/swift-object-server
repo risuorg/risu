@@ -1,0 +1,44 @@
+#!/bin/bash
+
+. ${HEALTHCHECK_SCRIPTS:-/usr/share/openstack-tripleo-common/healthcheck}/common.sh
+
+conf=/etc/swift/object-server.conf
+cache=/var/cache/swift/object.recon
+
+if ps -e | grep --quiet swift-object-server; then
+    if ! crudini --get $conf pipeline:main pipeline | grep -q healthcheck; then
+        echo "healthcheck is not available" >&2
+        exit 0
+    fi
+
+    # swift-object-server is still eventlet
+    bind_host=$(get_config_val $conf DEFAULT bind_ip 127.0.0.1)
+    bind_port=$(get_config_val $conf DEFAULT bind_port 6000)
+    # Add brackets if IPv6
+    if [[ $bind_host =~ ":" ]]; then
+        bind_host="[${bind_host}]"
+    fi
+    healthcheck_curl http://${bind_host}:${bind_port}/healthcheck
+elif ps -e | grep --quiet rsync; then
+    process='rsync'
+    args="${@:-873}"
+
+    if ! healthcheck_listen $process $args; then
+        ports=${args// /,}
+        echo "There is no $process process, listening on port(s) $ports, running in the container."
+        exit 1
+    fi
+else
+    if ps -e | grep --quiet swift-account-auditor; then
+        interval=$(get_config_val $conf object-auditor interval 300)
+    elif ps -e | grep --quiet swift-account-reaper; then
+        interval=$(get_config_val $conf object-replicator interval 300)
+    else
+        interval=$(get_config_val $conf object-updater interval 300)
+    fi
+
+    if ! healthcheck_file_modification $cache $interval; then
+        echo "Cache file $cache was not updated within interval of $interval seconds."
+        exit 1
+    fi
+fi

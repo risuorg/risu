@@ -1,0 +1,6 @@
+#!/bin/bash
+
+. ${HEALTHCHECK_SCRIPTS:-/usr/share/openstack-tripleo-common/healthcheck}/common.sh
+
+check_url=$(get_url_from_vhost /etc/httpd/conf.d/10-barbican_wsgi_main.conf)
+healthcheck_curl ${check_url}
