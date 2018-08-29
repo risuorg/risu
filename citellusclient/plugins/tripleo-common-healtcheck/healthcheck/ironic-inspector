@@ -1,0 +1,16 @@
+#!/bin/sh
+
+. ${HEALTHCHECK_SCRIPTS:-/usr/share/openstack-tripleo-common/healthcheck}/common.sh
+
+process='dnsmasq'
+if pgrep $process; then
+    ports="${@:-67}"
+    if ! healthcheck_listen $process $ports; then
+        echo "There is no $process process listening on port(s) $ports in the container."
+        exit 1
+    fi
+else
+    bind_host=$(get_config_val /etc/ironic-inspector/inspector.conf DEFAULT listen_address 127.0.0.1)
+    bind_port=$(get_config_val /etc/ironic-inspector/inspector.conf DEFAULT listen_port 5050)
+    healthcheck_curl http://${bind_host}:${bind_port}
+fi

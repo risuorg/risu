@@ -1,0 +1,16 @@
+#!/bin/bash
+
+. ${HEALTHCHECK_SCRIPTS:-/usr/share/openstack-tripleo-common/healthcheck}/common.sh
+
+if grep "/httpd " /run_command ; then
+        bind_host=127.0.0.1
+        bind_port=$(grep "^Listen " /etc/httpd/conf.d/10-ipxe_vhost.conf | awk '{print $2}')
+        protocol=http
+        path=
+else
+        bind_host=$(ps -ef | grep -oe '--address \([0-9]\+\.\?\)\+' | awk '{print $2}')
+        bind_port=69
+        protocol=tftp
+        path=map-file
+fi
+healthcheck_curl ${protocol}://${bind_host}:${bind_port}/${path}

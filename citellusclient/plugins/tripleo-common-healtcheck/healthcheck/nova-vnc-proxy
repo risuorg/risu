@@ -1,0 +1,15 @@
+#!/bin/bash
+
+. ${HEALTHCHECK_SCRIPTS:-/usr/share/openstack-tripleo-common/healthcheck}/common.sh
+
+bind_host=$(get_config_val /etc/nova/nova.conf vnc novncproxy_host 127.0.0.1)
+bind_port=$(get_config_val /etc/nova/nova.conf vnc novncproxy_port 6080)
+proto_is_ssl=$(get_config_val /etc/nova/nova.conf DEFAULT ssl_only false)
+
+bind_proto=http
+
+if [ "${proto_is_ssl,,}" = true ] ; then
+    bind_proto=https
+fi
+
+healthcheck_curl ${bind_proto}://${bind_host}:${bind_port}/
