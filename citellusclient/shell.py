@@ -397,7 +397,10 @@ def findplugins(folders=None, include=None, exclude=None, executables=True, file
         if dictupdate:
             dictionary.update(dictupdate)
         # Only add if plugin priority is over specified value
-        if dictionary['priority'] >= prio:
+        if 'priority' in dictionary:
+            if dictionary['priority'] >= prio:
+                metaplugins.append(dictionary)
+        else:
             metaplugins.append(dictionary)
 
     return metaplugins
