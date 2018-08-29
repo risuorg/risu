@@ -1,0 +1,13 @@
+#!/bin/bash
+
+. ${HEALTHCHECK_SCRIPTS:-/usr/share/openstack-tripleo-common/healthcheck}/common.sh
+
+process='ovn-northd'
+sockets="${@:-/run/openvswitch/ovnnb_db.sock /run/openvswitch/ovnsb_db.sock}"
+
+for sock in sockets; do
+    if ! healthcheck_socket $process $sock; then
+        echo "There is no $process process connected to socket $sock running in the container"
+        exit 1
+    fi
+done
