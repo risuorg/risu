@@ -1,0 +1,35 @@
+#!/bin/bash
+
+. ${HEALTHCHECK_SCRIPTS:-/usr/share/openstack-tripleo-common/healthcheck}/common.sh
+
+conf=/etc/swift/account-server.conf
+cache=/var/cache/swift/account.recon
+
+if ps -e | grep --quiet swift-account-server; then
+    if ! crudini --get $conf pipeline:main pipeline | grep -q healthcheck; then
+        echo "healthcheck is not available" >&2
+        exit 0
+    fi
+
+    # swift-account-server is still eventlet
+    bind_host=$(get_config_val $conf DEFAULT bind_ip 127.0.0.1)
+    bind_port=$(get_config_val $conf DEFAULT bind_port 6002)
+    # Add brackets if IPv6
+    if [[ $bind_host =~ ":" ]]; then
+        bind_host="[${bind_host}]"
+    fi
+    healthcheck_curl http://${bind_host}:${bind_port}/healthcheck
+else
+    if ps -e | grep --quiet swift-account-auditor; then
+        interval=$(get_config_val $conf account-auditor interval 1800)
+    elif ps -e | grep --quiet swift-account-reaper; then
+        interval=$(get_config_val $conf account-reaper interval 3600)
+    else
+        interval=$(get_config_val $conf account-replicator interval 30)
+    fi
+
+    if ! healthcheck_file_modification $cache $interval; then
+        echo "Cache file $cache was not updated within interval of $interval seconds."
+        exit 1
+    fi
+fi

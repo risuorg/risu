@@ -1,0 +1,14 @@
+#!/bin/bash
+
+. ${HEALTHCHECK_SCRIPTS:-/usr/share/openstack-tripleo-common/healthcheck}/common.sh
+
+file=/opt/opendaylight/etc/org.ops4j.pax.web.cfg
+bind_host=$(awk -F "= *" '/^org.ops4j.pax.web.listening.addresses/ {print $2}' $file)
+tls_enabled=$(awk -F "= *" '/^org.osgi.service.http.secure.enabled/ {print $2}' $file)
+if [[ -z "$tls_enabled" || "$tls_enabled" != "true" ]]; then
+    bind_port=$(awk -F "= *" '/^org.osgi.service.http.port\s*=/ {print $2}' $file)
+else
+    bind_port=$(awk -F "= *" '/^org.osgi.service.http.port.secure/ {print $2}' $file)
+fi
+
+healthcheck_curl http://$bind_host:$bind_port/diagstatus

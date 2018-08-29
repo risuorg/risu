@@ -1,0 +1,14 @@
+#!/bin/bash
+
+. ${HEALTHCHECK_SCRIPTS:-/usr/share/openstack-tripleo-common/healthcheck}/common.sh
+
+process='ovn-controller'
+args="${@:-6642}"
+
+if healthcheck_port $process $args; then
+    exit 0
+else
+    ports=${args// /,}
+    echo "There is no $process process connected to ovsdb ports $ports running in the container"
+    exit 1
+fi

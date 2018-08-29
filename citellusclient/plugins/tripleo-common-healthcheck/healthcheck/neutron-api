@@ -1,0 +1,13 @@
+#!/bin/bash
+
+. ${HEALTHCHECK_SCRIPTS:-/usr/share/openstack-tripleo-common/healthcheck}/common.sh
+
+bind_host=$(get_config_val /etc/neutron/neutron.conf DEFAULT bind_host 127.0.0.1)
+bind_port=$(get_config_val /etc/neutron/neutron.conf DEFAULT bind_port 9696)
+
+# Add brackets if IPv6
+if [[ $bind_host =~ ":" ]]; then
+    bind_host="[${bind_host}]"
+fi
+
+healthcheck_curl http://${bind_host}:${bind_port}/

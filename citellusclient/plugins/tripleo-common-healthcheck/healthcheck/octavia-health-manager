@@ -1,0 +1,14 @@
+#!/bin/bash
+
+. ${HEALTHCHECK_SCRIPTS:-/usr/share/openstack-tripleo-common/healthcheck}/common.sh
+
+process='octavia-health-manager'
+args="${@:-5555}"
+
+if healthcheck_listen $process $args; then
+    exit 0
+else
+    ports=${args// /,}
+    echo "There is no $process process listening on ports $ports."
+    exit 1
+fi

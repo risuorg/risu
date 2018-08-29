@@ -1,0 +1,32 @@
+#!/bin/bash
+
+. ${HEALTHCHECK_SCRIPTS:-/usr/share/openstack-tripleo-common/healthcheck}/common.sh
+
+if ps -e | grep --quiet swift-proxy-server; then
+    conf=/etc/swift/proxy-server.conf
+
+    if ! crudini --get $conf pipeline:main pipeline | grep -q healthcheck; then
+        echo "healthcheck is not available" >&2
+        exit 0
+    fi
+
+    # swift-proxy is still eventlet
+    bind_host=$(get_config_val $conf DEFAULT bind_ip 127.0.0.1)
+    bind_port=$(get_config_val $conf DEFAULT bind_port 8080)
+    # Add brackets if IPv6
+    if [[ $bind_host =~ ":" ]]; then
+        bind_host="[${bind_host}]"
+    fi
+    healthcheck_curl http://${bind_host}:${bind_port}/healthcheck
+else
+    # TODO(mmagr): Remove this once swift_object_expirer container will start
+    #              using swift-object-expirer kolla image
+    conf=/etc/swift/object-expirer.conf
+    cache=/var/cache/swift/object.recon
+    interval=$(get_config_val $conf object-expirer interval 300)
+
+    if ! healthcheck_file_modification $cache $interval; then
+        echo "Cache file $cache was not updated within interval of $interval seconds."
+        exit 1
+    fi
+fi

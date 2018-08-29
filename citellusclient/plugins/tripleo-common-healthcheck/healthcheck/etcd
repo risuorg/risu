@@ -1,0 +1,5 @@
+#!/bin/bash
+
+export ETCDCTL_API=3
+etcdctl endpoint health | grep "is healthy"
+exit $?
