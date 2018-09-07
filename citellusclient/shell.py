@@ -1415,7 +1415,7 @@ def main():
         if options.live:
             print(_("mode: live"))
         else:
-            print(_("mode: fs snapshot %s" % CITELLUS_ROOT))
+            print(_("mode: fs snapshot: "), "%s" % CITELLUS_ROOT)
 
     global progress
     if options.luke:
