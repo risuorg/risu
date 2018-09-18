@@ -33,6 +33,7 @@ virt_type(){
         is_lineinfile "Product Name: KVM|Manufacturer: QEMU" "${FILE}" && echo "KVM"
         is_lineinfile "Product Name: Bochs" "${FILE}" && echo "Bochs"
         is_lineinfile "Product Name: RHEV Hypervisor" "${FILE}" && echo "RHEV"
+        is_lineinfile "Product Name: OpenStack Compute" "${FILE}" && echo "OpenStack"
     )|xargs echo
     else
         echo "Unable to determine"
