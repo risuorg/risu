@@ -34,6 +34,13 @@ virt_type(){
         is_lineinfile "Product Name: Bochs" "${FILE}" && echo "Bochs"
         is_lineinfile "Product Name: RHEV Hypervisor" "${FILE}" && echo "RHEV"
         is_lineinfile "Product Name: OpenStack Compute" "${FILE}" && echo "OpenStack"
+        uuid=$(cat "${FILE}"| python ${CITELLUS_BASE}/tools/dmidecode.py| grep UUID |awk '{print $7}' |sed 's/)//')
+        amazon=$(cat "${FILE}"| python ${CITELLUS_BASE}/tools/dmidecode.py| grep -c amazon)
+        if [[ $(echo $uuid |grep -c ^EC2) -eq 1 ]] || [[ $amazon -gt 0 ]]; then
+            echo "AWS"
+        fi
+
+
     )|xargs echo
     else
         echo "Unable to determine"
