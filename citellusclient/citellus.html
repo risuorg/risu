@@ -666,6 +666,7 @@
                     if (jqXHR.status === 0) {
                         warnMessage("danger", "Unable to get JSON file. [0]");
                     } else if (jqXHR.status == 404) {
+                        // FIXME infinite loop
                         for (i = 0; i < jsonFilesList.length; ++i) {
                             if (jsonFilesList[i] != jsonFile) {
                                 window.location.href = [location.protocol, '//', location.host, location.pathname].join('') + "?json=" + jsonFilesList[i]
@@ -683,7 +684,12 @@
                         warnMessage("danger", "Uncaught Error.\n" + jqXHR.responseText);
                     }
                 },
+                beforeSend: function() {
+                        $("#report_table_citellus_body").append('<tr id="loading"><td>Loading ' +jsonFile+'... <span class="fa fa-refresh"/></td></tr>');
+                },
                 success: function(data) {
+                        // delete row with "loading" message
+                        $('tbody#report_table_citellus_body tr#loading').remove();
                         // We need to generate some kind of plugin id with the filename
                         $.each(data.metadata, function(i, item) {
                             var row = '<tr><th>' + i + '</th><td>' + item + '</td></tr>\n';
