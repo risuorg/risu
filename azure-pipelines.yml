@@ -7,9 +7,6 @@ pool:
   vmImage: 'Ubuntu 16.04'
 
 steps:
-- script: pip install --upgrade pip setuptools
-  displayName: 'Upgrade pip and setuptools'
-
 - script: pip install -r requirements.txt
   displayName: 'Install requirements'
 
