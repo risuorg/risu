@@ -7,11 +7,14 @@ pool:
   vmImage: 'Ubuntu 16.04'
 
 steps:
-- script: pip install -r requirements.txt
-  displayName: 'Install requirements'
+- script: |
+      python -m pip install --upgrade pip && pip3 install --upgrade setuptools gnureadline
+      pip install -e .
+  displayName: 'Upgrade pip and setuptools'
+  continueOnError: false
 
-- script: pip install -r test-requirements.txt
-  displayName: 'Install test-requirements'
+- script: pip install tox
+  displayName: 'Install tox'
 
 - script: tox
   displayName: 'Test with tox'
