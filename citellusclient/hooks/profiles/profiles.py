@@ -116,15 +116,18 @@ def run(data, quiet=False):  # do not edit this line
                 new_results.append({'plugin_id': id, 'plugin': data[id]['plugin'].replace(os.path.join(citellus.citellusdir, 'plugins'), ''), 'err': data[id]['result']['err'].strip(), 'rc': data[id]['result']['rc']})
                 overallitems.append(data[id]['result']['rc'])
 
-        if failed in overallitems:
+        if 'sysinfo' in name:
+            if okay not in overallitems or failed not in overallitems or info not in overallitems:
+                # No plugins matched, so skip it
+                overall = skipped
+            else:
+                overall = info
+        elif failed in overallitems:
             overall = failed
         elif info in overallitems:
             overall = info
         elif skipped in overallitems:
             overall = skipped
-        elif 'sysinfo' in name:
-            # If not skipped because not applicable, make it show up as info (as it's a briefing table)
-            overall = info
         else:
             overall = okay
 
