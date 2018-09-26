@@ -43,6 +43,15 @@ virt_type(){
             echo "AWS"
         fi
 
+        azure=$(grep -A2 "Manufacturer: Microsoft Corporation" "${FILE}" |grep -A1 "Product Name: Virtual Machine" |grep "Version: 7.0" -c)
+        if [[ $azure -gt 0 ]]; then
+            echo "Azure"
+        fi
+
+        hyperv=$(grep -A2 "Manufacturer: Microsoft Corporation" "${FILE}" |grep -A1 "Product Name: Virtual Machine" |grep "Version: Hyper-V" -c)
+        if [[ $hyperv -gt 0 ]]; then
+            echo "Hyper-V"
+        fi
 
     )|xargs echo
     else
