@@ -163,6 +163,26 @@ discover_rhrelease(){
     fi
 }
 
+discover_release(){
+    FILE="${CITELLUS_ROOT}/etc/os-release"
+    if [[ ! -f ${FILE} ]]; then
+        echo 0
+    else
+        VERSION=$(grep "^VERSION_ID=" ${FILE}|cut -d "=" -f 2-|tr -d '"'|cut -d "." -f 1)
+        echo ${VERSION}
+    fi
+}
+
+discover_osbrand(){
+    FILE="${CITELLUS_ROOT}/etc/os-release"
+    if [[ ! -f ${FILE} ]]; then
+        echo 0
+    else
+        BRAND=$(grep "^ID=" ${FILE}|cut -d "=" -f 2-|tr -d '"')
+        echo ${BRAND}
+    fi
+}
+
 # We do check on ID_LIKE so we can discard between dpkg or rpm access
 discover_os(){
     FILE="${CITELLUS_ROOT}/etc/os-release"
