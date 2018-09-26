@@ -113,8 +113,12 @@ def run(data, quiet=False):  # do not edit this line
 
         for id in ids:
             if id in data:
-                new_results.append({'plugin_id': id, 'plugin': data[id]['plugin'].replace(os.path.join(citellus.citellusdir, 'plugins'), ''), 'err': data[id]['result']['err'].strip(), 'rc': data[id]['result']['rc']})
-                overallitems.append(data[id]['result']['rc'])
+                if 'sysinfo' in name and data[id]['result']['rc'] == skipped:
+                    # Do nothing as we don't want to show skipped in sysinfo
+                    pass
+                else:
+                    new_results.append({'plugin_id': id, 'plugin': data[id]['plugin'].replace(os.path.join(citellus.citellusdir, 'plugins'), ''), 'err': data[id]['result']['err'].strip(), 'rc': data[id]['result']['rc']})
+                    overallitems.append(data[id]['result']['rc'])
 
         if 'sysinfo' in name:
             if okay in overallitems or failed in overallitems or info in overallitems:
