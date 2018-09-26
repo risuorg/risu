@@ -10,16 +10,16 @@
         pre {
             white-space: pre-wrap;
         }
-        
+
         #cat_list {
             padding-top: 1.5rem;
             padding-bottom: 1.5rem;
         }
-        
+
         #label_check_all {
             margin-bottom: 1.5rem;
         }
-        
+
         #category-list {
             padding: 1.5rem;
             margin: 1.5rem;
@@ -34,30 +34,40 @@
         .alert strong {
             text-transform: capitalize;
         }
-        
+
         .navbar-pf .navbar-brand img {
             display: inline;
         }
-        
+
         .navbar {
             width: 100%;
         }
-        
+
         .navbar-header {
             float: left;
             height: 58px;
         }
-        
+
         .badge-danger {
             color: #fff;
             background-color: #cc0000;
         }
-        
+
+        .badge-info {
+            color: #fff;
+            background-color: #2b18f9;
+        }
+
+        .badge-skipped {
+            color: #fff;
+            background-color: #808080;
+        }
+
         .badge-success {
             color: #fff;
             background-color: #3f9c35;
         }
-        
+
         .badge {
             display: inline-block;
             padding: 0.1875rem 0.4375rem;
@@ -69,21 +79,21 @@
             vertical-align: baseline;
             margin-left: 0px;
         }
-        
+
         input[type="search"]::-webkit-search-cancel-button {
             -webkit-appearance: searchfield-cancel-button;
         }
-        
+
         .toolbar-pf-results {
             border-top: 0px solid #d1d1d1;
             margin-top: 10px;
         }
-        
+
         .row-cards-pf {
             margin-left: 0;
             margin-right: 0;
         }
-        
+
         .toolbar-pf {
             background: #fff;
             border-bottom: 0px solid #d1d1d1;
@@ -303,7 +313,7 @@
             if (rc == 30) {
                 plugin_icon = "fa fa-angle-double-right";
                 plugin_state = "skipped";
-                plugin_class = "info";
+                plugin_class = "skipped";
                 plugin_text_color = "gray";
             } else if (rc == 40) {
                 plugin_icon = "pficon pficon-info";
