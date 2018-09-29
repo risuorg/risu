@@ -1,8 +1,8 @@
 # Author: Pablo Iranzo Gómez (Pablo.Iranzo@redhat.com)
 
 # Copyright (C) 2018 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
-# description: Reports several useful system information
-# long_name: System information data
+# description: Lifecycle information data for installed products
+# long_name: Lifecycle information data for installed products
 # priority: 1000
 #
 # Defines which plugins to include, exclude, etc
@@ -10,6 +10,4 @@
 # +keyword : includes keyword in plugin search
 # -keyword : excludes keyword in plugin search
 
-+sysinfo
--openstack
--sysinfo/lifecycle
++sysinfo/lifecycle
