@@ -39,12 +39,12 @@ are_dates_diff_over(){
     fi
 
     if [[ ${EPOCH1} -gt ${EPOCH2} ]]; then
-        DIFF="$(( ($EPOCH1 - $EPOCH2) ))"
+        DIFF="$(( $EPOCH1 - $EPOCH2 ))"
     else
-        DIFF="$(( ($EPOCH2 - $EPOCH1) ))"
+        DIFF="$(( $EPOCH2 - $EPOCH1 ))"
     fi
 
-    (( DDAYS=${DIFF}/(60*60*24) ))
+    DDAYS=$(( $DIFF/86400 ))
     if [[ ${DDAYS} -gt "${diffdays}" ]]; then
         return 0
     else
