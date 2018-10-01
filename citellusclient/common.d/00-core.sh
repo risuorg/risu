@@ -261,3 +261,20 @@ expand_and_remove_excludes(){
     done
     )|xargs echo
 }
+
+is_higher(){
+    # $1 string1
+    # $2 string2
+    LATEST=$(echo $1 $2|tr " " "\n"|sort -V|tail -1)
+
+    if [ "$(echo $1 $2|tr " " "\n"|sort -V|uniq|wc -l)" == "1" ];then
+        # Version and $2 are the same (only one line, so we're on latest)
+        return 0
+    fi
+
+    if [ "$1" != "$LATEST" ]; then
+        # "package $1 version $VERSION is lower than required ($2)."
+        return 1
+    fi
+    return 0
+}
