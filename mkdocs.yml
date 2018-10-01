@@ -1,0 +1,7 @@
+site_name: Citellus
+docs_dir: doc/
+theme: readthedocs
+repo_url: https://github.com/citellusorg/citellus/
+site_url: https://citellus.org
+repo_name: GitHub
+use_directory_urls: false

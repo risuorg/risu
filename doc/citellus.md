@@ -1,6 +1,4 @@
-<img src="doc/citellus.png" width="20%" border=0 align="right">
-
-# Introduction
+## Introduction
 
 Citellus is a program that should help with system configuration validation on either live system or any sort of snapshot of the filesystem.
 
@@ -16,7 +14,7 @@ Please if you have any idea on any improvements please do not hesitate to open a
 - Ansible playbook support.
 - Save / restore default settings
 
-Check latest changes on [Changelog.md](Changelog.md)
+Check latest changes on [changelog.md](changelog.md)
 
 Check for plugins listing on [citellusclient/plugins/](citellusclient/plugins/)
 
@@ -207,7 +205,7 @@ INFO:citellus:using default plugin path
 ## HTML Interface
 - Create by using `--output $FOLDER` and `--web`, open the generated `citellus.html`.
 
-<img src="doc/images/www.png" height="40%" border=0>
+<img src="images/www.png" height="40%" border=0>
 
 - Citellus-web now supports the parsing of magui.json.
 
@@ -219,7 +217,7 @@ http://host/citellus.html?json=magui.json
 ## Ansible playbooks
 Citellus can also run Ansible playbooks via extension
 
-The are some additional conventions that are detailed in [ansible-playbooks.md](doc/ansible-playbooks.md) that determine how to code them to be executed in live or snapshoot mode.
+The are some additional conventions that are detailed in [ansible-playbooks.md](development/ansible-playbooks.md) that determine how to code them to be executed in live or snapshoot mode.
 
 Commands have been extended to allow `--list-plugins` to list them and include /exclude filters to work with them.
 

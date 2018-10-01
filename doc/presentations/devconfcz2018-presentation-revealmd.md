@@ -11,7 +11,7 @@ mode: selfcontained
 ## [Citellus](https://github.com/citellusorg/citellus):
 ### Detecting common pitfalls of deployments
 
-<img src="citellus.png" width="15%" border=0>
+<img src="../citellus.png" width="15%" border=0>
 
 
 <https://github.com/citellusorg/citellus>

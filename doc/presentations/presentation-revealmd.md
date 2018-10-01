@@ -13,7 +13,7 @@ revealOptions:
 ## [Citellus](https://citellus.org):
 ### Detecting common pitfalls of deployments
 
-<img src="citellus.png" width="15%" border=0>
+<img src="../citellus.png" width="15%" border=0>
 
 
 <https://citellus.org>

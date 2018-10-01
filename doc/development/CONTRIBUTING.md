@@ -1,9 +1,9 @@
-# How to file a bug report
+## How to file a bug report
 
 If you have any suggestions for improvements please do not hesitate to
 open an [issue](https://github.com/citellusorg/citellus/issues/new).
 
-# How to contribute code
+## How to contribute code
 
 We encourage you to contribute new plugins.  We use [gerrithub][] for
 reviewing proposed changes.  The submission process looking something
@@ -72,7 +72,7 @@ You can see pending and already merged actual changes at: <https://review.gerrit
 
 5. If Jenkins gives 'Verified +1', next step is wait for one reviewer to give final ACK and merge the change.
 
-# How to write tests
+## How to write tests
 
 Please refer to the
 [templates](https://github.com/citellusorg/citellus/tree/master/doc/templates)
@@ -92,9 +92,9 @@ That are used by Citellus to fill json metadata.
 
 If you want to contribute also Unittests for your plugins, check [TESTING.md](TESTING.md)
 
-For contributing translations check [i18n.md](doc/i18n.md)
+For contributing translations check [i18n.md](i18n.md)
 
-# How to debug your test
+## How to debug your test
 
 We've included a file named `env-for.debug.sh` in the root folder of citellus repo that allows to be sourced and later execute your script.
 

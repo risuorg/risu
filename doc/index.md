@@ -6,6 +6,7 @@
 [![PyPI version](https://badge.fury.io/py/citellus.svg)](https://badge.fury.io/py/citellus)
 [![](https://images.microbadger.com/badges/image/citellus/citellus.svg)](https://microbadger.com/images/citellus/citellus "Get your own image badge on microbadger.com")
 
+
 <img src="citellus.png" width="20%" border=0 align="right">
 
 ## Introduction
@@ -30,9 +31,39 @@ Framework contains additional readmes for the tools included:
 - [Citellus](citellus.md)
 - [Magui](magui.md)
 
+## Installation
+
+Check `README` above for detailed instructions outside os simple ones:
+- Just clone the git repository and execute it from there 'or'
+- use 'pipsi' or create a python virtual env to install package 'citellus'
+
+- Give it a try running as 'root' on your system with: `./citellus.py -l` so it will show `live execution` and only `Failed` tests.
+
 ## How does it looks like?
 Check how does it look in an execution at:
 [![asciicast](https://asciinema.org/a/169814.png)](https://asciinema.org/a/169814)
+
+## HTML Interface
+<img src="images/www.png" width="95%" border=0>
+
+## Additional resources
+
+- Devconf.cz 2018 Presentation:
+    - Slot link [devconf.cz 2018!!](https://devconfcz2018.sched.com/event/DJXG/detect-pitfalls-of-osp-deployments-with-citellus)
+    - Slides: <devconfcz2018-presentation-revealmd.md>
+    - Recording <https://www.youtube.com/watch?v=SDzzqrUdn5A>
+- SuperSec 2018 Presentation:
+    - Slot link: <https://supersec.es/programa/>
+    - Slides: <supersec2018-presentation-ES.md>
+    - Recording:  not yet available
+- Blog posts
+    - Citellus.org <https://citellus.org/>
+    - Pablo Iranzo's Blog: <https://iranzo.github.io/blog/tag/citellus/>
+        - <https://iranzo.github.io/blog/2017/07/26/Citellus-framework-for-detecting-known-issues/>
+        - <https://iranzo.github.io/blog/2017/07/31/Magui-for-analysis-of-issues-across-several-hosts/>
+        - <https://iranzo.github.io/blog/2017/08/17/Jenkins-for-running-CI-tests/>
+        - <https://iranzo.github.io/blog/2017/10/26/i18n-and-bash8-in-bash/>
+        - <https://iranzo.github.io/blog/2018/01/16/recent-changes-in-magui-and-citellus/>
 
 ## Collaborate
 

@@ -1,6 +1,7 @@
-# Introduction
+## Introduction
 
-Magui is a wrapper that calls functions from the Python library of Citellus [README.md](README.md).
+
+Magui is a wrapper that calls functions from the Python library of Citellus [citellus.md](citellus.md).
 
 Some problems are not detected only one one node, but are made by the aggregation of data across them, for example:
 
@@ -22,7 +23,7 @@ Magui aims to use Citellus for gathering the data and later, write plugins to an
 
 - Web interface using `citellus.html?json=magui.json`
 
-Check latest changes on <Changelog.md>
+Check latest changes on [changelog](changelog.md)
 
 
 ## Installation
@@ -158,6 +159,6 @@ Magui does check `metadata` for finding host roles or hostnames that should be c
 
 # Plugin development for Magui
 
-Please do check <doc/magui-plugin-development.md> for more details.
+Please do check [plugin development](development/magui-plugin-development.md) for more details.
 
 Please if you have any idea on any improvements please do not hesitate to open an issue or submit your contributions.
