@@ -47,17 +47,21 @@ else
         echo $"Your RHOS Release is already out of support phase: https://access.redhat.com/support/policy/updates/openstack/platform" >&2
         exit $RC_FAILED
     else
-        if is_date_over_today "${RHOSEOL[${DR}]}"; then
-            if are_dates_diff_over 360 "${RHOSEOL[${DR}]}" "$(date)"; then
-                exit ${RC_OKAY}
-            else
-                echo $"Your system is within the year period to become unsupported" >&2
-                exit ${RC_INFO}
+        if [[ ${RHOSEOL[${DR}]} != "" ]]; then
+            if is_date_over_today "${RHOSEOL[${DR}]}"; then
+                if are_dates_diff_over 360 "${RHOSEOL[${DR}]}" "$(date)"; then
+                    exit ${RC_OKAY}
+                else
+                    echo $"Your system is within the year period to become unsupported" >&2
+                    exit ${RC_INFO}
+                fi
             fi
+            echo $"Your current RHOS release is unsupported" >&2
+            exit ${RC_FAILED}
+        else
+            echo $"Your OSP version has not defined EOL on file" >&2
+            exit ${RC_INFO}
         fi
-
-        echo $"Your current RHOS release is unsupported" >&2
-        exit ${RC_FAILED}
     fi
 fi
 exit ${RC_OKAY}

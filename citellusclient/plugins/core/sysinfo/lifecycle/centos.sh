@@ -39,16 +39,21 @@ else
         echo $"Your CentOS Release is already out of support phase: https://wiki.centos.org/FAQ/General#head-fe8a0be91ee3e7dea812e8694491e1dde5b75e6d" >&2
         exit $RC_FAILED
     else
-        if is_date_over_today "${CentOSEOL[${DR}]}"; then
-            if are_dates_diff_over 360 "${CentOSEOL[${DR}]}" "$(date)"; then
-                exit ${RC_OKAY}
+        if [[ ${CentOSEOL[${DR}]} != "" ]]; then
+            if is_date_over_today "${CentOSEOL[${DR}]}"; then
+                if are_dates_diff_over 360 "${CentOSEOL[${DR}]}" "$(date)"; then
+                    exit ${RC_OKAY}
+                else
+                    echo $"Your system is within the year period to become unsupported" >&2
+                    exit ${RC_INFO}
+                fi
             else
-                echo $"Your system is within the year period to become unsupported" >&2
-                exit ${RC_INFO}
+                echo $"Your current CentOS release is unsupported" >&2
+                exit ${RC_FAILED}
             fi
         else
-            echo $"Your current CentOS release is unsupported" >&2
-            exit ${RC_FAILED}
+            echo $"Your CentOS version has not defined EOL on file" >&2
+            exit ${RC_INFO}
         fi
     fi
 fi

@@ -24,6 +24,8 @@
 
 if is_rpm atomic-openshift-master; then
     ROLE='master'
+elif [[ -f ${CITELLUS_ROOT}/etc/origin/master/master-config.yaml ]]; then
+    ROLE='master'
 elif is_rpm atomic-openshift-node; then
     ROLE='node'
 else

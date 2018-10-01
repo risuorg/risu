@@ -43,22 +43,27 @@ else
         echo $"Your RHEL Release is already out of support phase: https://access.redhat.com/support/policy/updates/errata" >&2
         exit $RC_FAILED
     else
-        # Check first ELS
-        if is_date_over_today "${RHELELS[${DR}]}"; then
-            if is_date_over_today "${RHELEOL[${DR}]}"; then
-                if are_dates_diff_over 360 "${RHELEOL[${DR}]}" "$(date)"; then
-                    exit ${RC_OKAY}
+        if [[ ${RHELEOL[${DR}]} != "" ]]; then
+            # Check first ELS
+            if is_date_over_today "${RHELELS[${DR}]}"; then
+                if is_date_over_today "${RHELEOL[${DR}]}"; then
+                    if are_dates_diff_over 360 "${RHELEOL[${DR}]}" "$(date)"; then
+                        exit ${RC_OKAY}
+                    else
+                        echo $"Your system is within the year period to become unsupported outside of ELS" >&2
+                        exit ${RC_INFO}
+                    fi
                 else
-                    echo $"Your system is within the year period to become unsupported outside of ELS" >&2
-                    exit ${RC_INFO}
+                    echo $"Your current RHEL release is unsupported unless you've ELS subscription" >&2
+                    exit ${RC_FAILED}
                 fi
-            else
-                echo $"Your current RHEL release is unsupported unless you've ELS subscription" >&2
-                exit ${RC_FAILED}
             fi
+            echo $"Your current RHEL release is unsupported" >&2
+            exit ${RC_FAILED}
+        else
+            echo $"Your RHEL version has not defined EOL on file" >&2
+            exit ${RC_INFO}
         fi
-        echo $"Your current RHEL release is unsupported" >&2
-        exit ${RC_FAILED}
     fi
 fi
 exit ${RC_OKAY}

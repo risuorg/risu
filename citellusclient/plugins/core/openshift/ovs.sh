@@ -24,13 +24,19 @@
 
 # We're OCP node
 if is_rpm atomic-openshift-node; then
-    if ! is_enabled openvswitch; then
-        if is_active openvswitch; then
-            exit ${RC_OKAY}
+    OCPREL=`discover_ocp_version`
+    if ! is_higher $OCPREL "3.9"; then
+        if ! is_enabled openvswitch; then
+            if is_active openvswitch; then
+                exit ${RC_OKAY}
+            fi
         fi
+        echo $"OVS service should be disabled and active" >&2
+        exit ${RC_FAILED}
+    else
+        echo $"Not applicable for OCP > 3.9" >&2
+        exit ${RC_SKIPPED}
     fi
-    echo $"OVS service should be disabled and active" >&2
-    exit ${RC_FAILED}
 fi
 
 echo $"Non Openshift node" >&2
