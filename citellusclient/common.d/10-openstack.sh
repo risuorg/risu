@@ -76,7 +76,7 @@ name_osp_version(){
         12) echo "pike" ;;
         13) echo "queens" ;;
         14) echo "rocky" ;;
-        14) echo "stein" ;;
+        15) echo "stein" ;;
         *) echo "not recognized" ;;
     esac
 }
