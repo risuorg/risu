@@ -8,3 +8,4 @@ bashate
 PyYAML
 requests
 tox
+misspellings

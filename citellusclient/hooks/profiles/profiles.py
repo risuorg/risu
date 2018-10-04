@@ -35,7 +35,7 @@ def plugidsforprofile(profile, plugins):
     """
     Gets plugin id's related with profile includes/excludes
     :param profile: profile file to open
-    :param plugins: plugins in citellus exection
+    :param plugins: plugins in citellus execution
     :return: array of id's
     """
     # Open Profile definition for read and fill filters for plugins
