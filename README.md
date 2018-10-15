@@ -6,7 +6,7 @@
 [![PyPI version](https://badge.fury.io/py/citellus.svg)](https://badge.fury.io/py/citellus)
 [![](https://images.microbadger.com/badges/image/citellus/citellus.svg)](https://microbadger.com/images/citellus/citellus "Get your own image badge on microbadger.com")
 
-<img src="citellus.png" width="20%" border=0 align="right">
+<img src="doc/citellus.png" width="20%" border=0 align="right">
 
 ## Introduction
 
