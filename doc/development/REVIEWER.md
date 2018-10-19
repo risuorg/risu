@@ -1,3 +1,13 @@
+**Table of contents**
+<!-- TOC depthFrom:1 insertAnchor:true orderedList:true -->
+
+1. [How to review a code change](#how-to-review-a-code-change)
+    1. [Things to review](#things-to-review)
+
+<!-- /TOC -->
+
+
+<a id="markdown-how-to-review-a-code-change" name="how-to-review-a-code-change"></a>
 # How to review a code change
 
 We encourage you to contribute new plugins.  We use [gerrithub](https://review.gerrithub.io) for
@@ -26,6 +36,7 @@ like this:
 
 1. Provide comments and feedback on the gerrithub page for the proposed change
 
+<a id="markdown-things-to-review" name="things-to-review"></a>
 ## Things to review
 
 Below are some examples of things we do usually review:

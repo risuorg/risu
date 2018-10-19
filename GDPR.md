@@ -1,3 +1,11 @@
+**Table of contents**
+<!-- TOC depthFrom:1 insertAnchor:true orderedList:true -->
+
+1. [GDPR](#gdpr)
+
+<!-- /TOC -->
+
+<a id="markdown-gdpr" name="gdpr"></a>
 # GDPR
 
 GDPR <https://www.eugdpr.org/> is a Regulation created to safeguard private data access, rectification, removal, etc.

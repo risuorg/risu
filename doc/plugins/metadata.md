@@ -1,3 +1,11 @@
+**Table of contents**
+<!-- TOC depthFrom:1 insertAnchor:true orderedList:true -->
+
+1. [Metadata extension and its plugins](#metadata-extension-and-its-plugins)
+
+<!-- /TOC -->
+
+<a id="markdown-metadata-extension-and-its-plugins" name="metadata-extension-and-its-plugins"></a>
 # Metadata extension and its plugins
 
 This extension and its plugins do output data in the following approach:

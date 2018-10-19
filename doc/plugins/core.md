@@ -1,3 +1,13 @@
+**Table of contents**
+<!-- TOC depthFrom:1 insertAnchor:true orderedList:true -->
+
+1. [Writing checks](#writing-checks)
+2. [Common Functions](#common-functions)
+    1. [List of implemented functions](#list-of-implemented-functions)
+
+<!-- /TOC -->
+
+<a id="markdown-writing-checks" name="writing-checks"></a>
 ## Writing checks
 
 Citellus tests should conform to the following standards:
@@ -54,6 +64,7 @@ fi
 - `$PLUGIN_BASEDIR` -- this contains the folder of the plugin that is being executed.
   The `$PLUGIN_BASEDIR` can be used to source files within the plugin folder.
 
+<a id="markdown-common-functions" name="common-functions"></a>
 ## Common Functions
 We provide helper script `common-functions.sh` to help define
 location of various files. To use this script you can source it at the top:
@@ -63,6 +74,7 @@ location of various files. To use this script you can source it at the top:
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 ```
 
+<a id="markdown-list-of-implemented-functions" name="list-of-implemented-functions"></a>
 ### List of implemented functions
 - `$systemctl_list_units_file` -- if tests are running against a filesystem
   snapshot of some sort. This variable can be used to easier identify the

@@ -1,3 +1,13 @@
+**Table of contents**
+<!-- TOC depthFrom:1 insertAnchor:true orderedList:true -->
+
+1. [Writing Unit tests for plugins](#writing-unit-tests-for-plugins)
+2. [Creating the tests](#creating-the-tests)
+3. [Briefing](#briefing)
+
+<!-- /TOC -->
+
+<a id="markdown-writing-unit-tests-for-plugins" name="writing-unit-tests-for-plugins"></a>
 ## Writing Unit tests for plugins
 Citellus uses unittesting for the main python wrappers (citellus.py and magui.py), but tests are mostly written in `bash` so no UT is performed.
 
@@ -6,6 +16,7 @@ As a workaround and to detect issues in your code you can:
 - Test the code as part of functional testing (like we do for each test we develop)
 - Consider creating unittests for it
 
+<a id="markdown-creating-the-tests" name="creating-the-tests"></a>
 ## Creating the tests
 Tests require two things:
 - Script that setups a fake folder with relevant contents to either `pass`, `skipped` or `fail` a test
@@ -114,6 +125,7 @@ class CitellusTest(TestCase):
         assert runtest(testtype=testtype) == rcs[testtype]
 ~~~
 
+<a id="markdown-briefing" name="briefing"></a>
 ## Briefing
 For a new plugin and test you'll then require:
 - `citellus/citellusclient/plugins/core/path-to-your-plugin/$NAME.sh`

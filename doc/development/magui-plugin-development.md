@@ -1,3 +1,11 @@
+**Table of contents**
+<!-- TOC depthFrom:1 insertAnchor:true orderedList:true -->
+
+1. [Writing plugins](#writing-plugins)
+
+<!-- /TOC -->
+
+<a id="markdown-writing-plugins" name="writing-plugins"></a>
 ## Writing plugins
 
 Magui plugins should conform to the following standards:

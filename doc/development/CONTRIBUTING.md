@@ -1,8 +1,21 @@
+**Table of contents**
+<!-- TOC depthFrom:1 insertAnchor:true orderedList:true -->
+
+1. [How to file a bug report](#how-to-file-a-bug-report)
+2. [How to contribute code](#how-to-contribute-code)
+3. [How to write tests](#how-to-write-tests)
+4. [How to debug your test](#how-to-debug-your-test)
+
+<!-- /TOC -->
+
+
+<a id="markdown-how-to-file-a-bug-report" name="how-to-file-a-bug-report"></a>
 ## How to file a bug report
 
 If you have any suggestions for improvements please do not hesitate to
 open an [issue](https://github.com/citellusorg/citellus/issues/new).
 
+<a id="markdown-how-to-contribute-code" name="how-to-contribute-code"></a>
 ## How to contribute code
 
 We encourage you to contribute new plugins.  We use [gerrithub][] for
@@ -72,6 +85,7 @@ You can see pending and already merged actual changes at: <https://review.gerrit
 
 5. If Jenkins gives 'Verified +1', next step is wait for one reviewer to give final ACK and merge the change.
 
+<a id="markdown-how-to-write-tests" name="how-to-write-tests"></a>
 ## How to write tests
 
 Please refer to the
@@ -94,6 +108,7 @@ If you want to contribute also Unittests for your plugins, check [TESTING.md](TE
 
 For contributing translations check [i18n.md](i18n.md)
 
+<a id="markdown-how-to-debug-your-test" name="how-to-debug-your-test"></a>
 ## How to debug your test
 
 We've included a file named `env-for.debug.sh` in the root folder of citellus repo that allows to be sourced and later execute your script.

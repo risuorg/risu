@@ -1,7 +1,17 @@
+**Table of contents**
+<!-- TOC depthFrom:1 insertAnchor:true orderedList:true -->
+
+1. [Introduction](#introduction)
+2. [How to add a new file to monitor](#how-to-add-a-new-file-to-monitor)
+
+<!-- /TOC -->
+
+<a id="markdown-introduction" name="introduction"></a>
 ## Introduction
 
 This extension allows to define files that must be outputed to stderr as metadata source.
 
+<a id="markdown-how-to-add-a-new-file-to-monitor" name="how-to-add-a-new-file-to-monitor"></a>
 ## How to add a new file to monitor
 
 - Create a new text file in the folder (try recreating path or context in path) so include/exclude filters do also work
