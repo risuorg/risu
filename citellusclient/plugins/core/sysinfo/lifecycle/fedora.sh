@@ -51,7 +51,7 @@ else
         else
             # Fedora is supported until 30 days after release of next two versions
             if is_date_over_today "${fedoraRD[((${FR} + 2))]}"; then
-                if are_dates_diff_over 210 "${fedoraRD[((${FR} + 2))]}" "$(date)"; then
+                if are_dates_diff_over 210 "${fedoraRD[((${FR} + 2))]}" "$(LANG=C date)"; then
                     exit ${RC_OKAY}
                 else
                     echo $"Your system is within the half-year period to become unsupported" >&2

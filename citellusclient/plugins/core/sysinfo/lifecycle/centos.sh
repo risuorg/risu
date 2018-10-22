@@ -41,7 +41,7 @@ else
     else
         if [[ ${CentOSEOL[${DR}]} != "" ]]; then
             if is_date_over_today "${CentOSEOL[${DR}]}"; then
-                if are_dates_diff_over 360 "${CentOSEOL[${DR}]}" "$(date)"; then
+                if are_dates_diff_over 360 "${CentOSEOL[${DR}]}" "$(LANG=C date)"; then
                     exit ${RC_OKAY}
                 else
                     echo $"Your system is within the year period to become unsupported" >&2

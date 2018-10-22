@@ -47,7 +47,7 @@ else
             # Check first ELS
             if is_date_over_today "${RHELELS[${DR}]}"; then
                 if is_date_over_today "${RHELEOL[${DR}]}"; then
-                    if are_dates_diff_over 360 "${RHELEOL[${DR}]}" "$(date)"; then
+                    if are_dates_diff_over 360 "${RHELEOL[${DR}]}" "$(LANG=C date)"; then
                         exit ${RC_OKAY}
                     else
                         echo $"Your system is within the year period to become unsupported outside of ELS" >&2

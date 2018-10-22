@@ -49,7 +49,7 @@ else
     fi
     if [[ ${OCPEOL[${DR}]} != "" ]]; then
         if is_date_over_today "${OCPEOL[${DR}]}"; then
-            if are_dates_diff_over 180 "${OCPEOL[${DR}]}" "$(date)"; then
+            if are_dates_diff_over 180 "${OCPEOL[${DR}]}" "$(LANG=C date)"; then
                 exit ${RC_OKAY}
             else
                 echo $"Your OCP version is within the half-year period to become unsupported" >&2
