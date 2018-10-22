@@ -34,6 +34,7 @@ virt_type(){
         is_lineinfile "Product Name: Bochs" "${FILE}" && echo "Bochs"
         is_lineinfile "Product Name: RHEV Hypervisor" "${FILE}" && echo "RHEV"
         is_lineinfile "Product Name: OpenStack Compute" "${FILE}" && echo "OpenStack"
+        is_lineinfile "Product Name: OpenStack Nova" "${FILE}" && echo "OpenStack"
         is_lineinfile "Product Name: Google Compute Engine" "${FILE}" && echo "Google Compute Engine"
         is_lineinfile "Product Name: AHV" "${FILE}" && echo "Nutanix AHV"
         is_lineinfile "Manufacturer: DigitalOcean" "${FILE}" && echo "DigitalOcean"
