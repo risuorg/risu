@@ -29,6 +29,7 @@ Citellus tests should conform to the following standards:
     - $RC_OKAY -- success
     - $RC_FAILED -- failure
     - $RC_SKIPPED -- skipped
+    - $RC_INFO -- info
 
 - Plugin output should we written to STDERR, for example with:
 
