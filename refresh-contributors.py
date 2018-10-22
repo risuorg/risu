@@ -39,7 +39,7 @@ for plugin in plugins:
         name = ''
         date = ''
 
-        command = "git blame -e %s | awk '{print $2\" \"$3\" \"$4}'|egrep -o '<.*>.*[0-9][0-9][0-9][0-9]-' | sed 's/  */ /g' | cut -d ' ' -f 1-2 | sort -u" % plugin['plugin']
+        command = "cd $(dirname %s) && git blame -e %s | awk '{print $2\" \"$3\" \"$4}'|egrep -o '<.*>.*[0-9][0-9][0-9][0-9]-' | sed 's/  */ /g' | cut -d ' ' -f 1-2 | sort -u|grep -v not.commited.yet" % (plugin['plugin'], plugin['plugin'])
 
         p = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
         out, err = p.communicate(str.encode('utf8'))
