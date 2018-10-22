@@ -23,9 +23,9 @@
 # Load common functions
 [[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
-OSPVER=$(discover_ocp_version)
+OCPVER=$(discover_ocp_version)
 
-if [[ ${OSPVER} != 0 ]]; then
+if [[ ${OCPVER} != 0 ]]; then
     echo "OCP Version: $(discover_ocp_version)" >&2
     exit ${RC_OKAY}
 fi
