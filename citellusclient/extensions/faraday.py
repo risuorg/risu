@@ -107,7 +107,7 @@ def run(plugin):  # do not edit this line
     if os.access(filename, os.R_OK):
         # We can read the file, so let's calculate md5sum
         out = ''
-        err = hashlib.md5(open(filename, 'rb').read()).hexdigest()
+        err = hashlib.sha512(open(filename, 'rb').read()).hexdigest()
         returncode = citellus.RC_OKAY
     else:
         returncode = citellus.RC_SKIPPED

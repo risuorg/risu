@@ -62,7 +62,7 @@ def get_metadata(plugin):
 
     with open(plugin['plugin'], 'r') as stream:
         try:
-            doc = (yaml.load(stream))
+            doc = (yaml.safe_load(stream))
         except:
             doc = ""
 

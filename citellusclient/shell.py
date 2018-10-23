@@ -296,7 +296,7 @@ def generate_file_hash(filename, blocksize=2 ** 20):
     :param blocksize: block size for chunks read
     :return: hash
     """
-    hash = hashlib.md5()
+    hash = hashlib.sha512()
     # Open File
     with open(filename, "rb") as f:
         while True:
@@ -455,11 +455,11 @@ def runplugin(plugin):
 def calcid(string, replace=citellusdir):
     """
     Returns ID for defined string
-    :param string: String to calculate md5 on
+    :param string: String to calculate sha512 on
     :param replace: String to replace previous to calculation
-    :return: md5sum of string
+    :return: sha512 of string
     """
-    return hashlib.md5(string.replace(replace, '').encode('UTF-8')).hexdigest()
+    return hashlib.sha512(string.replace(replace, '').encode('UTF-8')).hexdigest()
 
 
 def getids(plugins=None, include=None, exclude=None):
@@ -468,7 +468,7 @@ def getids(plugins=None, include=None, exclude=None):
     :param plugins: all plugins available
     :param include: keywords to include
     :param exclude: keywords to exclude
-    :return: array of md5 hashes
+    :return: array of sha512 hashes
     """
     if not plugins:
         plugins = findallplugins()

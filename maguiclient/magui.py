@@ -513,7 +513,7 @@ def main():
 
                 mydata = {'plugin': plugin.__name__.split(".")[-1],
                           'name': "magui: %s" % os.path.basename(plugin.__name__.split(".")[-1]),
-                          'id': hashlib.md5(plugin.__file__.replace(maguidir, '').encode('UTF-8')).hexdigest(),
+                          'id': hashlib.sha512(plugin.__file__.replace(maguidir, '').encode('UTF-8')).hexdigest(),
                           'description': plugin.help(),
                           'long_name': plugin.help(),
                           'result': updates,
