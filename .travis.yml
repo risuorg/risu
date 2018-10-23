@@ -15,7 +15,9 @@ python:
 
 before_install:
 - pip install tox
+- pip install coverage
 - pip install python-coveralls
+- pip install codacy-coverage
 
 addons:
   apt:
@@ -28,6 +30,8 @@ addons:
 script:
 - tox
 - sonar-scanner
+- coverage xml
+- python-codacy-coverage -r coverage.xml
 
 deploy:
   provider: pypi
