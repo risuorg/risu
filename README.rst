@@ -4,6 +4,7 @@
 .. image:: https://img.shields.io/github/release/citellusorg/citellus.svg :alt:  Releases
 .. image:: https://badge.fury.io/py/citellus.svg :alt:  Pypi version
 .. image:: https://images.microbadger.com/badges/image/citellus/citellus.svg :alt:  Microbadger
+.. image:: https://api.codacy.com/project/badge/Grade/50c01175b64a4417b270d4dc29a0c0c6 :alt: Codacy review
 
 
 Introduction
