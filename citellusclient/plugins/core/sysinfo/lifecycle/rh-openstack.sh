@@ -24,7 +24,7 @@
 # priority: 500
 # kb: https://access.redhat.com/support/policy/updates/openstack/platform
 
-OSBRAND=`discover_osbrand`
+OSBRAND=$(discover_osbrand)
 
 declare -A RHOSEOL
 RHOSEOL=(   ["8"]="2019-04-20"\
@@ -38,7 +38,7 @@ if [[ "$OSBRAND" != "rhel" ]]; then
     echo "RHEL OS required" >&2
     exit ${RC_SKIPPED}
 else
-    DR=`discover_osp_version`
+    DR=$(discover_osp_version)
     if [[ ${DR} -eq 0 ]]; then
         echo "Non OSP host" >&2
         exit ${RC_SKIPPED}

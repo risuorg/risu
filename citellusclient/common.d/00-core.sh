@@ -151,7 +151,7 @@ discover_rhrelease(){
     if [[ ! -f ${FILE} ]]; then
         echo 0
     else
-        VERSION=$(cat ${FILE}|egrep -o "\(.*\)"|tr -d "()")
+        VERSION=$(egrep -o "\(.*\)" ${FILE}|tr -d "()")
         case ${VERSION} in
             Maipo) echo 7 ;;
             Santiago) echo 6 ;;

@@ -37,6 +37,5 @@ fi
 
 is_required_file ${FILE}
 
-cat ${FILE}|awk '/^[0-9].*(br|tun|lan|docker|ovs).*:/ {print $2 $5}'|tr "\n" ";" >&2
+awk '/^[0-9].*(br|tun|lan|docker|ovs).*:/ {print $2 $5}' ${FILE}|tr "\n" ";" >&2
 exit ${RC_OKAY}
-

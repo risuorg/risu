@@ -39,12 +39,12 @@ function validate_firewall {
     echo ${_SERVICE}
 }
 
-OS=`discover_os`
+OS=$(discover_os)
 
 if [[ "$OS" == "debian" ]] || [[ "$OS" == "fedora" ]]; then
     _FW='firewalld'
 else
-    RH_RELEASE=`discover_rhrelease`
+    RH_RELEASE=$(discover_rhrelease)
     case ${RH_RELEASE} in
         6) _FW='iptables' ;;
         7) _FW='firewalld' ;;
@@ -52,7 +52,7 @@ else
     esac
 fi
 
-_STATUS=`validate_firewall "${_FW}"`
+_STATUS=$(validate_firewall "${_FW}")
 
 if [[ $_STATUS -eq 0 ]]; then
     exit ${RC_OKAY}

@@ -25,7 +25,7 @@
 
 if [[ "x$CITELLUS_LIVE" = "x0" ]];  then
     is_required_file ${CITELLUS_ROOT}/dmidecode
-    cat ${CITELLUS_ROOT}/dmidecode| python ${CITELLUS_BASE}/tools/dmidecode.py| grep ^BIOS >&2
+    python ${CITELLUS_BASE}/tools/dmidecode.py < ${CITELLUS_ROOT}/dmidecode | grep ^BIOS >&2
 else
     dmidecode| python ${CITELLUS_BASE}/tools/dmidecode.py| grep ^BIOS >&2
 fi

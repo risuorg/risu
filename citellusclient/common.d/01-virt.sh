@@ -39,8 +39,8 @@ virt_type(){
         is_lineinfile "Product Name: Google Compute Engine" "${FILE}" && echo "Google Compute Engine"
         is_lineinfile "Product Name: AHV" "${FILE}" && echo "Nutanix AHV"
         is_lineinfile "Manufacturer: DigitalOcean" "${FILE}" && echo "DigitalOcean"
-        uuid=$(cat "${FILE}"| python ${CITELLUS_BASE}/tools/dmidecode.py| grep UUID |awk '{print $7}' |sed 's/)//')
-        amazon=$(cat "${FILE}"| python ${CITELLUS_BASE}/tools/dmidecode.py| grep -c amazon)
+        uuid=$(python ${CITELLUS_BASE}/tools/dmidecode.py < ${FILE}| grep UUID |awk '{print $7}' |sed 's/)//')
+        amazon=$(python ${CITELLUS_BASE}/tools/dmidecode.py < ${FILE}| grep -c amazon)
         if [[ $(echo $uuid |grep -c ^EC2) -eq 1 ]] || [[ $amazon -gt 0 ]]; then
             echo "AWS"
         fi
@@ -62,7 +62,7 @@ virt_type(){
 }
 
 is_virtual(){
-    if [[ "x`virt_type`" == "x" ]] ; then
+    if [[ "$(virt_type)" == "" ]] ; then
         return 1
     else
         return 0

@@ -28,7 +28,7 @@
 [[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
 is_required_file "${CITELLUS_ROOT}/etc/sysconfig/iptables"
-MD5SUM=$(cat "${CITELLUS_ROOT}/etc/sysconfig/iptables" | sed '1d;$d'| md5sum|awk '{print $1}')
+MD5SUM=$(sed '1d;$d' "${CITELLUS_ROOT}/etc/sysconfig/iptables"| md5sum|awk '{print $1}')
 
 echo "${MD5SUM}" >&2
 exit ${RC_OKAY}

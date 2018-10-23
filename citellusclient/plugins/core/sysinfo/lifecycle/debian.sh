@@ -24,7 +24,7 @@
 # priority: 500
 # kb: https://wiki.debian.org/es/DebianReleases
 
-OS=`discover_os`
+OS=$(discover_os)
 
 declare -A DebianRD
 DebianRD=(["8"]="2020-06-06")
@@ -33,7 +33,7 @@ if [[ "$OS" != "debian" ]]; then
     echo "Debian OS required" >&2
     exit ${RC_SKIPPED}
 else
-    DR=`discover_release`
+    DR=$(discover_release)
     if [[ ${DR} -lt 8 ]]; then
         echo $"Your Debian Release is already out of support phase: https://wiki.debian.org/es/DebianReleases" >&2
         exit $RC_FAILED

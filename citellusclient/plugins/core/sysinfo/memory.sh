@@ -24,7 +24,7 @@
 [[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
 if [[ "x$CITELLUS_LIVE" = "x0" ]];  then
-    MEMORY=$(cat ${CITELLUS_ROOT}/free|awk '/Mem/ {print $2}')
+    MEMORY=$(awk '/Mem/ {print $2}' ${CITELLUS_ROOT}/free)
 else
     MEMORY=$(LANG=C free|awk '/Mem/ {print $2}')
 fi

@@ -27,7 +27,7 @@
 # Fedora 27 will be maintained until 1 month after the release of Fedora 29.
 # Fedora 28 will be maintained until 1 month after the release of Fedora 30.
 
-OSBRAND=`discover_osbrand`
+OSBRAND=$(discover_osbrand)
 
 declare -A fedoraRD
 fedoraRD=(  ["27"]="2017-11-14" \
@@ -39,7 +39,7 @@ if [[ "$OSBRAND" != "fedora" ]]; then
     echo "Fedora OS required" >&2
     exit ${RC_SKIPPED}
 else
-    FR=`discover_release`
+    FR=$(discover_release)
     if [[ ${FR} -lt 27 ]]; then
         echo $"Your Fedora Release is already out of support phase: https://fedoraproject.org/wiki/End_of_life" >&2
         exit $RC_FAILED

@@ -24,7 +24,7 @@
 # priority: 500
 # kb: https://wiki.centos.org/FAQ/General#head-fe8a0be91ee3e7dea812e8694491e1dde5b75e6d
 
-OSBRAND=`discover_osbrand`
+OSBRAND=$(discover_osbrand)
 
 declare -A CentOSEOL
 CentOSEOL=( ["6"]="2020-11-30" \
@@ -34,7 +34,7 @@ if [[ "$OSBRAND" != "centos" ]]; then
     echo "CentOS OS required" >&2
     exit ${RC_SKIPPED}
 else
-    DR=`discover_release`
+    DR=$(discover_release)
     if [[ ${DR} -lt 6 ]]; then
         echo $"Your CentOS Release is already out of support phase: https://wiki.centos.org/FAQ/General#head-fe8a0be91ee3e7dea812e8694491e1dde5b75e6d" >&2
         exit $RC_FAILED

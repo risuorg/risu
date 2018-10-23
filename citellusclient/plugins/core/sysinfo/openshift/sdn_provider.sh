@@ -22,14 +22,14 @@
 # Load common functions
 [[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
-OCPVERSION=`discover_ocp_version`
+OCPVERSION=$(discover_ocp_version)
 
 if [[ "${OCPVERSION}" == "0" ]]; then
     echo "Not running on OCP node" >&2
     exit ${RC_SKIPPED}
 else
     is_required_file ${CITELLUS_ROOT}/etc/origin/master/master-config.yaml
-    NETWORKPLUGIN=`grep 'networkPluginName' ${CITELLUS_ROOT}/etc/origin/master/master-config.yaml`
+    NETWORKPLUGIN=$(grep 'networkPluginName' ${CITELLUS_ROOT}/etc/origin/master/master-config.yaml)
     echo "configured OpenShift network-plugin: ${NETWORKPLUGIN}" >&2
 fi
 exit ${RC_OKAY}

@@ -24,7 +24,7 @@
 # priority: 500
 # kb: https://access.redhat.com/support/policy/updates/errata
 
-OSBRAND=`discover_osbrand`
+OSBRAND=$(discover_osbrand)
 
 declare -A RHELEOL
 RHELEOL=(   ["6"]="2020-11-30" \
@@ -38,7 +38,7 @@ if [[ "$OSBRAND" != "rhel" ]]; then
     echo "RHEL OS required" >&2
     exit ${RC_SKIPPED}
 else
-    DR=`discover_release`
+    DR=$(discover_release)
     if [[ ${DR} -lt 5 ]]; then
         echo $"Your RHEL Release is already out of support phase: https://access.redhat.com/support/policy/updates/errata" >&2
         exit $RC_FAILED

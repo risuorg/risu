@@ -24,7 +24,7 @@
 # priority: 200
 # kb: https://www.debian.org/releases/stretch/amd64/release-notes/ch-information.en.html#deprecation-of-ftp-apt-mirrors
 
-OS=`discover_os`
+OS=$(discover_os)
 
 if [[ "$OS" != "debian" ]]; then
     echo "Non Debian system" >&2

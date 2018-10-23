@@ -38,7 +38,7 @@ fi
 is_required_file ${FILE}
 
 (
-for lun in $(cat ${FILE}|grep ^36|awk '{print $1}'|sort); do
+for lun in $(grep ^36 ${FILE}|awk '{print $1}'|sort); do
     NUMLUNS=$(sed -n '/'^$lun'.*/,/^360/p' ${FILE} |grep ":" |wc -l)
     echo ${lun}:${NUMLUNS}
 done

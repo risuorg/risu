@@ -24,7 +24,7 @@
 # priority: 500
 # kb: https://access.redhat.com/support/policy/updates/openshift
 
-OSBRAND=`discover_osbrand`
+OSBRAND=$(discover_osbrand)
 
 declare -A OCPEOL
 OCPEOL=(    ["3.0"]="2018-11-30"\
@@ -42,7 +42,7 @@ if [[ "$OSBRAND" != "rhel" ]]; then
     echo "RHEL OS required" >&2
     exit ${RC_SKIPPED}
 else
-    DR=`discover_ocp_version`
+    DR=$(discover_ocp_version)
     if [[ "${DR}" == "0" ]]; then
         echo "Non OCP host" >&2
         exit ${RC_SKIPPED}
