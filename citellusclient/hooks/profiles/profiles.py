@@ -43,9 +43,9 @@ def plugidsforprofile(profile, plugins):
     exclude = []
     with open(profile, 'r') as f:
         for line in f:
-            if re.match('\A\+.*', line):
+            if re.match(r'\A\+.*', line):
                 include.append(line[1:].strip())
-            if re.match('\A\-.*', line):
+            if re.match(r'\A\-.*', line):
                 exclude.append(line[1:].strip())
     ids = citellus.getids(plugins=plugins, include=include, exclude=exclude)
 
@@ -92,10 +92,10 @@ def run(data, quiet=False):  # do not edit this line
                      "id": uid,
                      "subcategory": subcategory}
 
-        metadata = {'description': citellus.regexpfile(filename=plugin['plugin'], regexp='\A# description:')[14:].strip(),
-                    'long_name': citellus.regexpfile(filename=plugin['plugin'], regexp='\A# long_name:')[12:].strip(),
-                    'bugzilla': citellus.regexpfile(filename=plugin['plugin'], regexp='\A# bugzilla:')[11:].strip(),
-                    'priority': int(citellus.regexpfile(filename=plugin['plugin'], regexp='\A# priority:')[11:].strip() or 0)}
+        metadata = {'description': citellus.regexpfile(filename=plugin['plugin'], regexp=r'\A# description:')[14:].strip(),
+                    'long_name': citellus.regexpfile(filename=plugin['plugin'], regexp=r'\A# long_name:')[12:].strip(),
+                    'bugzilla': citellus.regexpfile(filename=plugin['plugin'], regexp=r'\A# bugzilla:')[11:].strip(),
+                    'priority': int(citellus.regexpfile(filename=plugin['plugin'], regexp=r'\A# priority:')[11:].strip() or 0)}
         data[uid].update(metadata)
 
         # start with OK status

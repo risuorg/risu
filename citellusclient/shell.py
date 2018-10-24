@@ -1023,15 +1023,15 @@ def generic_get_metadata(plugin):
     :return: metadata dict for that plugin
     """
 
-    path = regexpfile(filename=plugin['plugin'], regexp='\A# path:')[7:].strip()
+    path = regexpfile(filename=plugin['plugin'], regexp=r'\A# path:')[7:].strip()
     path = path.replace('${CITELLUS_ROOT}', '')
 
-    metadata = {'description': regexpfile(filename=plugin['plugin'], regexp='\A# description:')[14:].strip(),
-                'long_name': regexpfile(filename=plugin['plugin'], regexp='\A# long_name:')[12:].strip(),
-                'bugzilla': regexpfile(filename=plugin['plugin'], regexp='\A# bugzilla:')[11:].strip(),
-                'priority': int(regexpfile(filename=plugin['plugin'], regexp='\A# priority:')[11:].strip() or 0),
+    metadata = {'description': regexpfile(filename=plugin['plugin'], regexp=r'\A# description:')[14:].strip(),
+                'long_name': regexpfile(filename=plugin['plugin'], regexp=r'\A# long_name:')[12:].strip(),
+                'bugzilla': regexpfile(filename=plugin['plugin'], regexp=r'\A# bugzilla:')[11:].strip(),
+                'priority': int(regexpfile(filename=plugin['plugin'], regexp=r'\A# priority:')[11:].strip() or 0),
                 'path': path,
-                'kb': regexpfile(filename=plugin['plugin'], regexp='\A# kb:')[5:].strip()}
+                'kb': regexpfile(filename=plugin['plugin'], regexp=r'\A# kb:')[5:].strip()}
     return metadata
 
 
@@ -1197,12 +1197,7 @@ def printresults(results, options):
         else:
             print("# %s (%s): %s" % (results[result]['plugin'], results[result]['time'], text))
 
-        show_err = (
-                   (rc in [RC_FAILED]) or
-                   (rc not in [RC_OKAY, RC_FAILED, RC_SKIPPED]) or
-                   (rc in [RC_SKIPPED, RC_INFO] and options.verbose > 0) or
-                   (options.verbose > 1)
-        )
+        show_err = ((rc in [RC_FAILED]) or (rc not in [RC_OKAY, RC_FAILED, RC_SKIPPED]) or (rc in [RC_SKIPPED, RC_INFO] and options.verbose > 0) or (options.verbose > 1))
 
         show_out = (options.verbose > 1)
 
