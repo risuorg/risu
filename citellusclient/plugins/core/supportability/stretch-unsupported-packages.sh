@@ -33,7 +33,7 @@ else
     echo $"The following installed packages have been deprecated as per release notes at https://www.debian.org/releases/stretch/amd64/release-notes/ch-information.en.html#noteworthy-obsolete-packages :" >&2
     flag=0
     for package in fpm2 kedpm nagios3 net-tools iscsitarget; do
-        if is_pkg $package >&2; then
+        if is_pkg ${package} >&2; then
             flag=1
         fi
     done

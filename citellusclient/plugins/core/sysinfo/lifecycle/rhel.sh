@@ -41,7 +41,7 @@ else
     DR=$(discover_release)
     if [[ ${DR} -lt 5 ]]; then
         echo $"Your RHEL Release is already out of support phase: https://access.redhat.com/support/policy/updates/errata" >&2
-        exit $RC_FAILED
+        exit ${RC_FAILED}
     else
         if [[ ${RHELEOL[${DR}]} != "" ]]; then
             # Check first ELS

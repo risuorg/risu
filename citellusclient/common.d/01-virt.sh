@@ -41,17 +41,17 @@ virt_type(){
         is_lineinfile "Manufacturer: DigitalOcean" "${FILE}" && echo "DigitalOcean"
         uuid=$(python ${CITELLUS_BASE}/tools/dmidecode.py < ${FILE}| grep UUID |awk '{print $7}' |sed 's/)//')
         amazon=$(python ${CITELLUS_BASE}/tools/dmidecode.py < ${FILE}| grep -c amazon)
-        if [[ $(echo $uuid |grep -c ^EC2) -eq 1 ]] || [[ $amazon -gt 0 ]]; then
+        if [[ $(echo ${uuid} |grep -c ^EC2) -eq 1 ]] || [[ ${amazon} -gt 0 ]]; then
             echo "AWS"
         fi
 
         azure=$(grep -A2 "Manufacturer: Microsoft Corporation" "${FILE}" |grep -A1 "Product Name: Virtual Machine" |grep "Version: 7.0" -c)
-        if [[ $azure -gt 0 ]]; then
+        if [[ ${azure} -gt 0 ]]; then
             echo "Azure"
         fi
 
         hyperv=$(grep -A2 "Manufacturer: Microsoft Corporation" "${FILE}" |grep -A1 "Product Name: Virtual Machine" |grep "Version: Hyper-V" -c)
-        if [[ $hyperv -gt 0 ]]; then
+        if [[ ${hyperv} -gt 0 ]]; then
             echo "Hyper-V"
         fi
 

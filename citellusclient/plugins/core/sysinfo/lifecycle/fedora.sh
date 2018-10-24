@@ -42,7 +42,7 @@ else
     FR=$(discover_release)
     if [[ ${FR} -lt 27 ]]; then
         echo $"Your Fedora Release is already out of support phase: https://fedoraproject.org/wiki/End_of_life" >&2
-        exit $RC_FAILED
+        exit ${RC_FAILED}
     else
         # Check dates for release + 2
         if [[ ${fedoraRD[((${FR} + 2 ))]} == "" ]]; then

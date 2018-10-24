@@ -45,7 +45,7 @@ else
     fi
     if [[ ${DR} -lt 8 ]]; then
         echo $"Your RHOS Release is already out of support phase: https://access.redhat.com/support/policy/updates/openstack/platform" >&2
-        exit $RC_FAILED
+        exit ${RC_FAILED}
     else
         if [[ ${RHOSEOL[${DR}]} != "" ]]; then
             if is_date_over_today "${RHOSEOL[${DR}]}"; then
