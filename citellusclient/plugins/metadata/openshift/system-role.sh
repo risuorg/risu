@@ -34,5 +34,5 @@ else
     exit ${RC_SKIPPED}
 fi
 
-echo ${ROLE} >&2
+echo $(get_ocp_node_type) >&2
 exit ${RC_OKAY}
