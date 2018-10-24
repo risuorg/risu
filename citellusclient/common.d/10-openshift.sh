@@ -44,7 +44,7 @@ get_ocp_node_type(){
     HNAME=$(cat ${CITELLUS_ROOT}/etc/hostname)
 
     NODELISTFILELIST=$(ls ${CITELLUS_ROOT}/../../*_all_nodes.out)
-    for file in ${CITELLUS_ROOT}/../../*_all_nodes.out; do
+    for file in ${NODELISTFILELIST}; do
         NODELISTFILE=${file}
     done
 
