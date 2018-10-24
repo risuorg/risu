@@ -54,7 +54,7 @@ fi
 
 _STATUS=$(validate_firewall "${_FW}")
 
-if [[ $_STATUS -eq 0 ]]; then
+if [[ ${_STATUS} -eq 0 ]]; then
     exit ${RC_OKAY}
 else
     echo "Service ${_FW} not active: ${_STATUS}" >&2

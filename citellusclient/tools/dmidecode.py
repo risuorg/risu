@@ -1,6 +1,8 @@
 #!/usr/bin/env python
+# coding=utf-8
 
 from __future__ import print_function
+
 import os
 import sys
 
@@ -83,6 +85,9 @@ def _parse_handle_section(lines):
 
 
 def profile():
+    """
+    Parse output from dmidecode dump or tool
+    """
     if os.isatty(sys.stdin.fileno()):
         content = _get_output()
     else:

@@ -36,7 +36,7 @@ else
     DR=$(discover_release)
     if [[ ${DR} -lt 8 ]]; then
         echo $"Your Debian Release is already out of support phase: https://wiki.debian.org/es/DebianReleases" >&2
-        exit $RC_FAILED
+        exit ${RC_FAILED}
     else
         if is_date_over_today "${DebianRD[${DR}]}"; then
             exit ${RC_OKAY}

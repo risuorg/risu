@@ -25,7 +25,7 @@
 # We're OCP node
 if is_rpm atomic-openshift-node; then
     OCPREL=$(discover_ocp_version)
-    if ! is_higher $OCPREL "3.9"; then
+    if ! is_higher ${OCPREL} "3.9"; then
         if ! is_enabled openvswitch; then
             if is_active openvswitch; then
                 exit ${RC_OKAY}

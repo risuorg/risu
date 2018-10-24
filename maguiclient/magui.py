@@ -23,7 +23,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-
 from __future__ import print_function
 
 import argparse
@@ -32,9 +31,14 @@ import glob
 import hashlib
 import logging
 import os.path
-import time
 import shutil
 import sys
+
+import time
+
+from citellusclient.shell import anonymize
+
+
 sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/' + '../'))
 
 from citellusclient import shell as citellus
@@ -474,7 +478,8 @@ def main():
     def runmaguiandplugs(sosreports, citellusplugins, filename=dooutput, extranames=None, serveruri=False, onlysave=False, result=None, anon=False):
         """
         Runs magui and magui plugins
-        :param serveruri:
+        :param anon: anonymize results on execution
+        :param serveruri: Server uri to POST the analysis
         :param sosreports: sosreports to process
         :param citellusplugins: citellusplugins to run
         :param filename: filename to save to

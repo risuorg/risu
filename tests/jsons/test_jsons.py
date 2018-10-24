@@ -5,9 +5,10 @@
 
 from __future__ import print_function
 
+import json
 import os
 from unittest import TestCase
-import json
+
 import citellusclient.shell as citellus
 
 testplugins = os.path.join(citellus.citellusdir, 'plugins', 'test')
