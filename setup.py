@@ -2,10 +2,11 @@
 # encoding: utf-8
 # Copyright (C) 2017, 2018 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
-import setuptools
 import os
 import re
 import time
+
+import setuptools
 
 # In python < 2.7.4, a lazy loading of package `pbr` will break
 # setuptools if some other modules registered functions in `atexit`.

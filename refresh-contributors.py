@@ -13,13 +13,12 @@
 # Check results on your git repo and commit a new PR
 
 
-import subprocess
-import re
-import citellusclient.shell as citellus
-import shutil
-import sys
-import os.path
 import os
+import re
+import shutil
+import subprocess
+
+import citellusclient.shell as citellus
 
 regexpyear = '[0-9][0-9][0-9][0-9]-'
 regexpemail = '\\<(.*@.*)\\>'

@@ -37,7 +37,7 @@ else
     DR=$(discover_release)
     if [[ ${DR} -lt 6 ]]; then
         echo $"Your CentOS Release is already out of support phase: https://wiki.centos.org/FAQ/General#head-fe8a0be91ee3e7dea812e8694491e1dde5b75e6d" >&2
-        exit $RC_FAILED
+        exit ${RC_FAILED}
     else
         if [[ ${CentOSEOL[${DR}]} != "" ]]; then
             if is_date_over_today "${CentOSEOL[${DR}]}"; then
