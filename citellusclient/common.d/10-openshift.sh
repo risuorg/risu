@@ -35,11 +35,11 @@ discover_ocp_minor(){
 }
 
 discover_ocp_version(){
-    discover_ocp_version|cut -d "." -f 1-2
+    discover_ocp_minor|cut -d "." -f 1-2
 }
 
 get_ocp_node_type(){
-    OCPVERSION=$(discover_ocp_version)
+    OCPVERSION=$(discover_ocp_minor)
     OCPMINORVERSION=`echo ${OCPVERSION} | awk -F "." '{print $2}'`
     HNAME=`cat ${CITELLUS_ROOT}/etc/hostname`
 
@@ -63,32 +63,31 @@ get_ocp_node_type(){
 }
 
 calculate_cluster_pod_capacity(){
-   DEFAULT_PODS_PER_CORE=10
-   DEFAULT_MAX_PODS=250
+    DEFAULT_PODS_PER_CORE=10
+    DEFAULT_MAX_PODS=250
 
-   CLUSTERNODELIST=`find ${CITELLUS_ROOT}/../../ -maxdepth 1 -type d`
+    CLUSTERNODELIST=`find ${CITELLUS_ROOT}/../../ -maxdepth 1 -type d`
 
-   MAXPODCLUSTER=0
-   for nodes in ${CLUSTERNODELIST}
-   do
-      if [ -d ${nodes}/sosreport-*/sos_commands ]; then
-         PODS_PER_CORE=${DEFAULT_PODS_PER_CORE}
-         MAX_PODS=${DEFAULT_MAX_PODS}
-         NUMBER_CPU=`cat ${nodes}/sosreport-*/sos_commands/processor/lscpu | grep 'CPU(s):'`
+    MAXPODCLUSTER=0
+    for nodes in ${CLUSTERNODELIST}; do
+        if [ -d ${nodes}/sosreport-*/sos_commands ]; then
+            PODS_PER_CORE=${DEFAULT_PODS_PER_CORE}
+            MAX_PODS=${DEFAULT_MAX_PODS}
+            NUMBER_CPU=`cat ${nodes}/sosreport-*/sos_commands/processor/lscpu | grep 'CPU(s):'`
 
-         XXX=`cat ${nodes}/sosreport-*/etc/origin/node/node-config.yaml | grep 'pods-per-core:' -A1 `
-         if [[ ! -z ${XXX} ]] ;then
-            PODS_PER_CORE=( $(echo ${XXX} | awk -F "['\"]" '{print $2}') )
-         fi
-         ZZZ=`cat ${nodes}/sosreport-*/etc/origin/node/node-config.yaml | grep 'max-pods:' -A1 `
-         if [[ ! -z ${ZZZ} ]] ;then
-            MAX_PODS=( $(echo ${ZZZ} | awk -F "['\"]" '{print $2}') )
-         fi
+            XXX=`cat ${nodes}/sosreport-*/etc/origin/node/node-config.yaml | grep 'pods-per-core:' -A1 `
+            if [[ ! -z ${XXX} ]] ;then
+                PODS_PER_CORE=( $(echo ${XXX} | awk -F "['\"]" '{print $2}') )
+            fi
+            ZZZ=`cat ${nodes}/sosreport-*/etc/origin/node/node-config.yaml | grep 'max-pods:' -A1 `
+            if [[ ! -z ${ZZZ} ]] ;then
+                MAX_PODS=( $(echo ${ZZZ} | awk -F "['\"]" '{print $2}') )
+            fi
 
-         NOCPU=( $(echo ${NUMBER_CPU} | awk -F " " '{print $2}') )
-         MAXPOD=$( (( "$MAX_PODS" <= $NOCPU*$PODS_PER_CORE )) && echo "$MAX_PODS" || echo "$(( $NOCPU*$PODS_PER_CORE ))" )
-         MAXPODCLUSTER=$(( $MAXPODCLUSTER+$MAXPOD ))
-      fi
-   done
-   echo ${MAXPODCLUSTER}
+            NOCPU=( $(echo ${NUMBER_CPU} | awk -F " " '{print $2}') )
+            MAXPOD=$( (( "$MAX_PODS" <= $NOCPU*$PODS_PER_CORE )) && echo "$MAX_PODS" || echo "$(( $NOCPU*$PODS_PER_CORE ))" )
+            MAXPODCLUSTER=$(( $MAXPODCLUSTER+$MAXPOD ))
+        fi
+    done
+    echo ${MAXPODCLUSTER}
 }
