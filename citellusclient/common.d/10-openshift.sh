@@ -18,17 +18,21 @@
 
 # Helper script to define location of various files.
 
-discover_ocp_version(){
+discover_ocp_minor(){
     if is_rpm atomic-openshift >/dev/null 2>&1; then
         RPMINSTALLED=$(is_rpm atomic-openshift)
-        VERSION=$(echo ${RPMINSTALLED}|cut -d "-" -f 3|cut -d "." -f 1-2)
+        VERSION=$(echo ${RPMINSTALLED}|cut -d "-" -f 3|cut -d "." -f 1-3)
     else
         if is_rpm atomic-openshift-node >/dev/null 2>&1; then
             RPMINSTALLED=$(is_rpm atomic-openshift-node)
-            VERSION=$(echo ${RPMINSTALLED}|cut -d "-" -f 4|cut -d "." -f 1-2)
+            VERSION=$(echo ${RPMINSTALLED}|cut -d "-" -f 4|cut -d "." -f 1-3)
         else
             VERSION="0"
         fi
     fi
     echo ${VERSION}
+}
+
+discover_ocp_version(){
+    discover_ocp_version|cut -d "." -f 1-2
 }
