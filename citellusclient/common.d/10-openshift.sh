@@ -35,11 +35,11 @@ discover_ocp_minor(){
 }
 
 discover_ocp_version(){
-    discover_ocp_version|cut -d "." -f 1-2
+    discover_ocp_minor|cut -d "." -f 1-2
 }
 
 get_ocp_node_type(){
-    OCPVERSION=$(discover_ocp_version)
+    OCPVERSION=$(discover_ocp_minor)
     OCPMINORVERSION=`echo ${OCPVERSION} | awk -F "." '{print $2}'`
     HNAME=`cat ${CITELLUS_ROOT}/etc/hostname`
 
