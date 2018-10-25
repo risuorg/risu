@@ -30,6 +30,9 @@ elif is_rpm ovirt-engine >/dev/null 2>&1; then
     ROLE="rhevm"
 elif is_rpm qemu-kvm-rhev >/dev/null 2>&1; then
     ROLE="ovirt-host"
+else
+    echo "unknown ovirt role" >&2
+    exit ${RC_SKIPPED}
 fi
 
 echo ${ROLE} >&2
