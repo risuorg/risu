@@ -25,6 +25,11 @@
 
 # Find release
 RELEASE=$(name_osp_version)
-echo $"${RELEASE}" >&2
-exit ${RC_OKAY}
-
+OSPNUM=$(discover_osp_version)
+if [[ "${OSPNUM}" != "0" ]]; then
+    echo $"${RELEASE}" >&2
+    exit ${RC_OKAY}
+else
+    echo "Not recognized or no OSP system" >&2
+    exit ${RC_SKIPPED}
+fi
