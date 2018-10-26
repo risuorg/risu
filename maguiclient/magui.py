@@ -26,6 +26,7 @@
 from __future__ import print_function
 
 import argparse
+import copy
 import gettext
 import glob
 import hashlib
@@ -212,93 +213,145 @@ def callcitellus(path=False, plugins=False, forcerun=False, include=None, exclud
     return new_dict
 
 
-def domagui(sosreports, citellusplugins, options=False):
+def findtarget(data):
+    """
+    Sorts autogroup to find next target to reduce memory usage and data reuse
+    :param data: autogroup dictionary
+    :return: array made of target, data and elem to del (if any)
+    """
+
+    target = ''
+    todel = False
+
+    subitemcount = {}
+    # Find subitems
+
+    for item in data:
+        for subitem in data[item]:
+            if subitem not in subitemcount:
+                subitemcount[subitem] = {'count': 1, 'where': [item]}
+            else:
+                subitemcount[subitem]['count'] = 1 + subitemcount[subitem]['count']
+                subitemcount[subitem]['where'].append(item)
+
+    minitems = subitemcount
+
+    for item in subitemcount:
+        if subitemcount[item]['count'] < minitems:
+            target = subitemcount[item]['where'][0]
+            minitems = subitemcount[item]['count']
+            if minitems == 1:
+                todel = item
+                break
+
+    return target, data, todel
+
+
+def domagui(sosreports, citellusplugins, options=False, grouped={}, runhooks=True):
     """
     Do actual execution against sosreports
     :return: dict of result
     """
 
-    # Check if we've been provided options
-    if options:
-        forcerun = options.run
-        citinclude = options.include
-        citexclude = options.exclude
-        hosts = options.hosts
+    if grouped != {}:
+        # Cleanup grouped for sosreports we're not interested at all
+        cleansosreports = []
+
+        for plugin in grouped:
+            # Walk plugins
+            for sosreport in grouped[plugin]['sosreport']:
+                # Walk sosreports for plugin
+                if sosreport not in sosreports:
+                    # Add sosreport to cleanup list
+                    cleansosreports.append(sosreport)
+
+        for sosreport in sorted(set(cleansosreports)):
+            for plugin in grouped:
+                if sosreport in grouped[plugin]['sosreport']:
+                    del grouped[plugin]['sosreport'][sosreport]
     else:
-        forcerun = False
-        citinclude = None
-        citexclude = None
-        hosts = False
+        # Check if we've been provided options
+        if options:
+            forcerun = options.run
+            citinclude = options.include
+            citexclude = options.exclude
+            hosts = options.hosts
+        else:
+            forcerun = False
+            citinclude = None
+            citexclude = None
+            hosts = False
 
-    # Grab data from citellus for the sosreports provided
-    result = {}
+        # Grab data from citellus for the sosreports provided
+        result = {}
 
-    for sosreport in sosreports:
-        result[sosreport] = callcitellus(path=sosreport, plugins=citellusplugins, forcerun=forcerun, include=citinclude, exclude=citexclude)
-
-    # Sanity check in case we do need to force run because of inconsistencies between saved data
-    if not forcerun:
-        # Prefill all plugins
-        plugins = []
         for sosreport in sosreports:
+            result[sosreport] = callcitellus(path=sosreport, plugins=citellusplugins, forcerun=forcerun, include=citinclude, exclude=citexclude)
+
+        # Sanity check in case we do need to force run because of inconsistencies between saved data
+        if not forcerun:
+            # Prefill all plugins
+            plugins = []
+            for sosreport in sosreports:
+                for plugin in result[sosreport]:
+                    plugins.append(plugin)
+
+            plugins = sorted(set(plugins))
+
+            rerun = False
+            # Check all sosreports for data for all plugins
+            for sosreport in sosreports:
+                for plugin in plugins:
+                    # Skip composed plugins as they will cause rerun
+                    if '-' not in plugin:
+                        try:
+                            result[sosreport][plugin]['result']
+                        except:
+                            rerun = True
+
+                # If we were running against a folder with just json, cancel rerun as it will fail
+                if rerun:
+                    try:
+                        access = os.access(os.path.join(sosreport, 'version.txt'), os.R_OK)
+                    except:
+                        access = False
+
+                    if not access:
+                        # We're running against a folder that misses version.txt, so probably just folder with json, skip rerun
+                        rerun = False
+
+                # Forcing rerun but not if we've specified ansible hosts
+                if rerun and not hosts:
+                    LOG.debug("Forcing rerun of citellus for %s because of missing %s" % (sosreport, plugin))
+                    # Sosreport contains non uniform data, rerun
+                    result[sosreport] = callcitellus(path=sosreport, plugins=citellusplugins, forcerun=True)
+
+        # Precreate multidimensional array
+        grouped = {}
+        for sosreport in sosreports:
+            plugins = []
             for plugin in result[sosreport]:
                 plugins.append(plugin)
+                grouped[plugin] = {}
+                grouped[plugin]['sosreport'] = {}
 
-        plugins = sorted(set(plugins))
-
-        rerun = False
-        # Check all sosreports for data for all plugins
+        # Fill the data
         for sosreport in sosreports:
-            for plugin in plugins:
-                # Skip composed plugins as they will cause rerun
-                if '-' not in plugin:
-                    try:
-                        result[sosreport][plugin]['result']
-                    except:
-                        rerun = True
+            for plugin in result[sosreport]:
+                grouped[plugin]['sosreport'][sosreport] = result[sosreport][plugin]['result']
+                for element in result[sosreport][plugin]:
+                    # Some of the elements are not useful as they are sosreport specific, so we do skip them completely
+                    # In this approach we don't need to update this code each time the plugin exports new metadata
+                    if element not in ['time', 'result']:
+                        grouped[plugin][element] = result[sosreport][plugin][element]
 
-            # If we were running against a folder with just json, cancel rerun as it will fail
-            if rerun:
-                try:
-                    access = os.access(os.path.join(sosreport, 'version.txt'), os.R_OK)
-                except:
-                    access = False
-
-                if not access:
-                    # We're running against a folder that misses version.txt, so probably just folder with json, skip rerun
-                    rerun = False
-
-            # Forcing rerun but not if we've specified ansible hosts
-            if rerun and not hosts:
-                LOG.debug("Forcing rerun of citellus for %s because of missing %s" % (sosreport, plugin))
-                # Sosreport contains non uniform data, rerun
-                result[sosreport] = callcitellus(path=sosreport, plugins=citellusplugins, forcerun=True)
-
-    # Precreate multidimensional array
-    grouped = {}
-    for sosreport in sosreports:
-        plugins = []
-        for plugin in result[sosreport]:
-            plugins.append(plugin)
-            grouped[plugin] = {}
-            grouped[plugin]['sosreport'] = {}
-
-    # Fill the data
-    for sosreport in sosreports:
-        for plugin in result[sosreport]:
-            grouped[plugin]['sosreport'][sosreport] = result[sosreport][plugin]['result']
-            for element in result[sosreport][plugin]:
-                # Some of the elements are not useful as they are sosreport specific, so we do skip them completely
-                # In this approach we don't need to update this code each time the plugin exports new metadata
-                if element not in ['time', 'result']:
-                    grouped[plugin][element] = result[sosreport][plugin][element]
-
-    # Run the hook processing hooks on the results
-    for maguihook in citellus.initPymodules(extensions=citellus.getPymodules(options=options, folders=[MaguiHooksFolder]))[0]:
-        LOG.debug("Running hook: %s" % maguihook.__name__.split('.')[-1])
-        newresults = maguihook.run(data=grouped)
-        if newresults:
-            grouped = dict(newresults)
+    if runhooks:
+        # Run the hook processing hooks on the results
+        for maguihook in citellus.initPymodules(extensions=citellus.getPymodules(options=options, folders=[MaguiHooksFolder]))[0]:
+            LOG.debug("Running hook: %s" % maguihook.__name__.split('.')[-1])
+            newresults = maguihook.run(data=copy.deepcopy(grouped))
+            if newresults:
+                grouped = newresults
 
     # We've now a matrix of grouped[plugin][sosreport] and then [text] [out] [err] [rc]
     return grouped
@@ -370,6 +423,15 @@ def autogroups(autodata):
                 results[name] = groups[category][subcategory]
 
     # Here we've a list of groups based on 'metadata' plugin name and the hosts in the same group if more than one host.
+    #
+    #  {u'5:system-role-node': ['sosreport-apps1.lab.example.com-20180928160549',
+    #                        'sosreport-infra1.lab.example.com-20180928160443',
+    #                        'sosreport-infra3.lab.example.com-20180928160521',
+    #                        'sosreport-apps2.lab.example.com-20180928160605',
+    #                        'sosreport-infra2.lab.example.com-20180928160506'],
+    #  u'system-role-master': ['sosreport-master1.lab.example.com-20180928155907',
+    #                          'sosreport-master2.lab.example.com-20180928160411',
+    #                          'sosreport-master3.lab.example.com-20180928160415']}
 
     return results
 
@@ -471,9 +533,10 @@ def main():
 
     citellusplugins = newplugins
 
-    def runmaguiandplugs(sosreports, citellusplugins, filename=dooutput, extranames=None, serveruri=False, onlysave=False, result=None, anon=False):
+    def runmaguiandplugs(sosreports, citellusplugins, filename=dooutput, extranames=None, serveruri=False, onlysave=False, result=None, anon=False, grouped={}):
         """
         Runs magui and magui plugins
+        :param grouped: Grouped results from sosreports to speedup processing (domagui)
         :param anon: anonymize results on execution
         :param serveruri: Server uri to POST the analysis
         :param sosreports: sosreports to process
@@ -488,7 +551,7 @@ def main():
         start_time = time.time()
         if not onlysave and not result:
             # Run with all plugins so that we get all data back
-            grouped = domagui(sosreports=sosreports, citellusplugins=citellusplugins)
+            grouped = domagui(sosreports=sosreports, citellusplugins=citellusplugins, grouped=grouped)
 
             # Run Magui plugins
             result = []
@@ -527,11 +590,17 @@ def main():
             branding = _("                                                  ")
             citellus.write_results(results=result, filename=filename, source='magui', path=sosreports, time=time.time() - start_time, branding=branding, web=True, extranames=extranames, serveruri=serveruri, anon=anon)
 
-        return result
+        return result, grouped
 
     print(_("\nStarting check updates and comparison"))
 
-    results = runmaguiandplugs(sosreports=sosreports, citellusplugins=citellusplugins, filename=options.output, serveruri=options.call_home)
+    metadataplugins = []
+    for plugin in citellusplugins:
+        if plugin['backend'] == 'metadata':
+            metadataplugins.append(plugin)
+
+    # Prepare metadata execution to find groups
+    results, grouped = runmaguiandplugs(sosreports=sosreports, citellusplugins=metadataplugins, filename=options.output, serveruri=options.call_home)
 
     # Now we've Magui saved for the whole execution provided in 'results' var
 
@@ -545,6 +614,10 @@ def main():
     groups = autogroups(autodata)
     processedgroups = {}
 
+    # TODO(iranzo): Review this
+    # This code was used to provide a field in json for citellus.html to get
+    # other groups in dropdown, but is not in use so commenting meanwhile
+
     filenames = []
 
     # loop over filenames first so that full results are saved and freed from memory
@@ -553,42 +626,66 @@ def main():
         filename = basefilename[0] + "-" + group + basefilename[1]
         runautogroup = True
         for progroup in processedgroups:
-            if groups[group] == processedgroups[progroup]:
+            if sorted(set(groups[group])) == sorted(set(processedgroups[progroup])):
                 runautogroup = False
                 runautofile = progroup
         if runautogroup:
-            # Analisys will be generated
+            # Analysis will be generated
             filenames.append(filename)
 
-    if len(filenames) > 0:
-        # We've written additional files, so save again magui.json with additional references
-        runmaguiandplugs(sosreports=sosreports, citellusplugins=citellusplugins, filename=options.output, extranames=filenames, onlysave=True, result=results, anon=options.anon)
+    print("\nRunning full comparison:... %s" % options.output)
 
-    # Results stored, removing variable
+    # Run full (not only metadata plugins) so that we've the data stored and save filenames in magui.json
+    results, grouped = runmaguiandplugs(sosreports=sosreports, citellusplugins=citellusplugins, extranames=filenames, filename=options.output, serveruri=options.call_home)
+
+    # Here 'grouped' obtained from above contains the full set of data
+
+    # Results stored, removing variable to free up memory
     del results
-    print("\nFull results written to %s" % options.output)
 
     # reset list of processed groups
+
+    # while len(data) != 0:
+    #     print "loop: ", loop
+    #     loop = loop +1
+    #     target, data, todel = findtarget(data)
+
     processedgroups = {}
-    for group in groups:
-        basefilename = os.path.splitext(options.output)
+    basefilename = os.path.splitext(options.output)
+
+    while len(groups) != 0:
+        target, newgroups, todel = findtarget(groups)
+        group = target
         filename = basefilename[0] + "-" + group + basefilename[1]
         print(_("\nRunning for group: %s" % filename))
         runautogroup = True
+
         for progroup in processedgroups:
-            if groups[group] == processedgroups[progroup]:
+            if groups[target] == processedgroups[progroup]:
                 runautogroup = False
                 runautofile = progroup
 
         if runautogroup:
-            # Analisys was missing for this group, run
-            runmaguiandplugs(sosreports=groups[group], citellusplugins=citellusplugins, filename=filename, extranames=options.output, anon=options.anon)
-            filenames.append(filename)
+            # Analysis was missing for this group, run it
+            # pass grouped as 'dict' to avoid mutable
+            newgrouped = copy.deepcopy(grouped)
+            runmaguiandplugs(sosreports=groups[target], citellusplugins=citellusplugins, filename=filename, extranames=filenames, anon=options.anon, grouped=newgrouped)
         else:
             # Copy file instead of run as it was already existing
             LOG.debug("Copying old file from %s to %s" % (runautofile, filename))
             shutil.copyfile(runautofile, filename)
-        processedgroups[filename] = groups[group]
+
+        processedgroups[filename] = groups[target]
+
+        if todel:
+            # We can remove a sosreport from the dataset
+            for plugin in grouped:
+                if todel in grouped[plugin]['sosreport']:
+                    del grouped[plugin]['sosreport'][todel]
+
+        del newgroups[target]
+        # Put remaining groups to work
+        groups = dict(newgroups)
 
     del groups
     del processedgroups
