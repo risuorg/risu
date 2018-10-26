@@ -24,16 +24,12 @@
 [[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
 if [[ ${CITELLUS_LIVE} -eq 0 ]]; then
-    FILE="${CITELLUS_ROOT}/date"
-elif [[ ${CITELLUS_LIVE} -eq 1 ]];then
-    FILE=$(mktemp)
-    trap "rm ${FILE}" EXIT
-    LANG=C TZ='UTC' date  > ${FILE}
+    sosdate=$(LANG=C date -d "$(cat ${CITELLUS_ROOT}/date)" +%Y-%m-%d)
+else
+    sosdate=$(LANG=C TZ='UTC' date +%Y-%m-%d)
 fi
-
 
 # Fill metadata 'sosreport-date' to value
 echo "sosreport-date"
-cat ${FILE} >&2
+echo ${sosdate} >&2
 exit ${RC_OKAY}
-
