@@ -16,23 +16,23 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# long_name: prepares hostname metadata
-# description: Sets hostname metadata
+# long_name: prepares cluster-name metadata
+# description: Sets cluster-name metadata
 
 # Load common functions
 [[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
 if [[ ${CITELLUS_LIVE} -eq 0 ]]; then
-    FILE="${CITELLUS_ROOT}/hostname"
+    FILE="${CITELLUS_ROOT}/sos_commands/pacemaker/pcs_status"
 elif [[ ${CITELLUS_LIVE} -eq 1 ]];then
     FILE=$(mktemp)
     trap "rm ${FILE}" EXIT
-    hostname  > ${FILE}
+    pcs status  > ${FILE}
 fi
 
 is_required_file ${FILE}
 
 # Fill metadata 'hostname' to value
 echo "node-pacemaker-ip"
-grep "$(cat ${FILE})$" "${CITELLUS_ROOT}/etc/hosts"|awk '{print $1}' |sort -u >&2
+grep "^Cluster name:" ${FILE}|cut -d ":" -f 2- >&2
 exit ${RC_OKAY}
