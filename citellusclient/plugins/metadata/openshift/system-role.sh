@@ -22,17 +22,13 @@
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 
-if is_rpm atomic-openshift-master; then
-    ROLE='master'
-elif [[ -f ${CITELLUS_ROOT}/etc/origin/master/master-config.yaml ]]; then
-    ROLE='master'
-elif is_rpm atomic-openshift-node; then
-    ROLE='node'
-else
+ROLE="$(get_ocp_node_type)"
+
+if [[ ${ROLE} == "unknown" ]]; then
     echo "Couldn't determine OCP role" >&2
-    ROLE='unknown'
     exit ${RC_SKIPPED}
 fi
 
-echo $(get_ocp_node_type) >&2
+echo "ocp-role"
+echo ${ROLE} >&2
 exit ${RC_OKAY}
