@@ -122,10 +122,6 @@ def parse_args():
                    metavar="max-hosts",
                    help=_("Define the number of maximum simultaneous hosts checks"))
 
-    p.add_argument("--dumpgroups",
-                   action='store_true',
-                   help=_("Dump autogroups and exit ignoring max-hosts"))
-
     g = p.add_argument_group('Filtering options')
     g.add_argument("-q", "--quiet",
                    help=_("Enable quiet mode"),
@@ -342,17 +338,12 @@ def domagui(sosreports, citellusplugins, options=False, grouped={}, runhooks=Tru
         # Fill the data
         for sosreport in sosreports:
             for plugin in result[sosreport]:
-                there = False
-                for each in citellusplugins:
-                    if plugin == each['id']:
-                        there = True
-                if there:
-                    grouped[plugin]['sosreport'][sosreport] = result[sosreport][plugin]['result']
-                    for element in result[sosreport][plugin]:
-                        # Some of the elements are not useful as they are sosreport specific, so we do skip them completely
-                        # In this approach we don't need to update this code each time the plugin exports new metadata
-                        if element not in ['time', 'result']:
-                            grouped[plugin][element] = result[sosreport][plugin][element]
+                grouped[plugin]['sosreport'][sosreport] = result[sosreport][plugin]['result']
+                for element in result[sosreport][plugin]:
+                    # Some of the elements are not useful as they are sosreport specific, so we do skip them completely
+                    # In this approach we don't need to update this code each time the plugin exports new metadata
+                    if element not in ['time', 'result']:
+                        grouped[plugin][element] = result[sosreport][plugin][element]
 
     if runhooks:
         # Run the hook processing hooks on the results
@@ -381,9 +372,8 @@ def filterresults(data, triggers=[]):
     for trigger in triggers:
         for elem in data:
             # We do use this approach in case of 'faked' id's like multi-Faraday bundles
-            if 'id' in data[elem]:
-                if trigger in data[elem]['id']:
-                    ourdata[data[elem]['id']] = dict(data[elem])
+            if trigger in data[elem]['id']:
+                ourdata[data[elem]['id']] = dict(data[elem])
     return ourdata
 
 
@@ -524,7 +514,7 @@ def main():
     else:
         dooutput = False
 
-    if not options.dumpgroups and len(sosreports) > options.max_hosts:
+    if len(sosreports) > options.max_hosts:
         print("Maximum number of sosreports provided, exiting")
         sys.exit(0)
 
@@ -662,10 +652,6 @@ def main():
 
     processedgroups = {}
     basefilename = os.path.splitext(options.output)
-
-    if options.dumpgroups:
-        print("Target groups", findtarget(groups))
-        sys.exit(0)
 
     while len(groups) != 0:
         target, newgroups, todel = findtarget(groups)
