@@ -372,8 +372,9 @@ def filterresults(data, triggers=[]):
     for trigger in triggers:
         for elem in data:
             # We do use this approach in case of 'faked' id's like multi-Faraday bundles
-            if trigger in data[elem]['id']:
-                ourdata[data[elem]['id']] = dict(data[elem])
+            if 'id' in data[elem]:
+                if trigger in data[elem]['id']:
+                    ourdata[data[elem]['id']] = dict(data[elem])
     return ourdata
 
 
