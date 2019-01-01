@@ -5,7 +5,7 @@ MAINTAINER Citellus developers <citellus _AT_ googlegroups.com>
 LABEL name="citellus/citellus" \
       maintainer="citellus _AT_ googlegroups.com.com" \
       vendor="Citellus" \
-      version="0.2.2" \
+      version="1.0.0" \
       release="1" \
       summary="System configuration validation program" \
       description="Citellus is a program that should help with system configuration validation on either live system or any sort of snapshot of the filesystem."
