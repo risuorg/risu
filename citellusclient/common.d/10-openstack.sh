@@ -55,12 +55,49 @@ __osp_version_with_cinder(){
     echo ${OSP}
 }
 
+__osp_version_with_neutron(){
+    PKG=$(is_pkg openstack-neutron)
+    case ${PKG} in
+        openstack-neutron-2014.*) OSP=6 ;;
+        openstack-neutron-2015.*) OSP=7 ;;
+        openstack-neutron-7.*) OSP=8 ;;
+        openstack-neutron-8.*) OSP=9 ;;
+        openstack-neutron-9.*) OSP=10 ;;
+        openstack-neutron-10.*) OSP=11 ;;
+        openstack-neutron-11.*) OSP=12 ;;
+        openstack-neutron-12.*) OSP=13 ;;
+        openstack-neutron-13.*) OSP=14 ;;
+        openstack-neutron-14.*) OSP=15 ;;
+        *) OSP=0 ;;
+    esac
+    echo ${OSP}
+}
+
 discover_osp_version(){
+    GOTIT="NO"
+
     NOVA=$(__osp_version_with_nova)
     if [[ "x$NOVA" != "x0" ]]; then
         echo ${NOVA};
+        GOTIT="YES"
     else
-        echo $(__osp_version_with_cinder)
+        CINDER=$(__osp_version_with_cinder)
+    fi
+
+    if [ "$GOTIT" != "YES" ] && [ "x$CINDER" != "x0" ]; then
+        echo ${CINDER}
+        GOTIT="YES"
+    else
+        NEUTRON=$(__osp_version_with_neutron)
+    fi
+
+    if [ "$GOTIT" != "YES" ] && [ "x$NEUTRON" != "x0" ]; then
+        echo ${NEUTRON}
+        GOTIT="YES"
+    fi
+
+    if [[ "$GOTIT" != "YES" ]]; then
+        echo ""
     fi
 }
 
@@ -80,4 +117,3 @@ name_osp_version(){
         *) echo "not recognized" ;;
     esac
 }
-
