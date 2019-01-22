@@ -33,7 +33,7 @@ if [[ "${RELEASE}" != "0" ]]; then
         ROLE="undercloud"
     elif is_process nova-compute;then
         ROLE="compute"
-    elif is_process pcsd;then
+    elif is_process pcsd || is_process nova-api;then
         ROLE="controller"
     elif is_process neutron-server;then
         # So if neutron-server is running and there's no pcsd, then it's a network node
