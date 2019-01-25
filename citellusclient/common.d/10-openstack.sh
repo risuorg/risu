@@ -97,7 +97,7 @@ discover_osp_version(){
     fi
 
     if [[ "$GOTIT" != "YES" ]]; then
-        echo ""
+        echo "0"
     fi
 }
 
