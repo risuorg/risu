@@ -53,33 +53,28 @@ revealOptions:
     - missing parameters in expired ceilometer data, which can lead to filling up your hard drive.
     - unsynced ntp.
     - outdated packages that have known critical issues.
-    - others! (200+ plugins as of this writting some of them with more than one issue detected)
+    - others! (200+ plugins as of this writing some of them with more than one issue detected)
 - Whatever else you can imagine or code 😉
 
 ----
 
-## Some numbers on plugin count:
+## Some numbers on plugin count (862):
 
 <small>
 <small>
-- bugzilla : 21 ['docker: 1', 'httpd: 1', 'openstack/ceilometer: 1', 'openstack/ceph: 1', 'openstack/cinder: 1', 'openstack/httpd: 1', 'openstack/keystone: 1', 'openstack/keystone/templates: 1', 'openstack/neutron: 5', 'openstack/nova: 4', 'openstack/swift: 1', 'openstack/tripleo: 2', 'systemd: 1']
-- ceph : 3 []
-- cluster : 1 []
-- docker : 1 []
-- httpd : 1 []
-- launchpad : 1 ['openstack/keystone: 1']
-- negative : 2 ['system: 1', 'system/iscsi: 1']
-- network : 2 []
-- openshift : 2 ['etcd: 1', 'node: 1']
-- openstack : 75 ['ceilometer: 2', 'ceph: 1', 'cinder: 4', 'containers: 4', 'containers/docker: 2', 'containers/rabbitmq: 1', 'crontab: 3', 'glance: 1', 'haproxy: 2', 'hardware: 1', 'iptables: 1', 'keystone: 3', 'mysql: 8', 'network: 4', 'neutron: 4', 'nova: 12', 'openvswitch: 2', 'pacemaker: 1', 'rabbitmq: 5', 'redis: 1', 'swift: 3', 'system: 2', 'systemd: 1']
-- pacemaker : 10 []
-- positive : 19 ['cluster/cman: 1', 'openstack: 16', 'openstack/ceilometer: 1', 'system: 1']
-- security : 12 ['meltdown: 2', 'spectre: 8']
-- supportability : 2 []
-- system : 60 ['iscsi: 1']
-- virtualization : 2 []
--------
-total : 215
+- healthcheck : 79
+- informative : 2
+- negative : 3 ['system: 1', 'system/iscsi: 1']
+- openshift : 5
+- openstack : 4 ['rabbitmq: 1']
+- ovirt-rhv : 1
+- pacemaker : 2
+- positive : 35 ['cluster/cman: 1', 'openstack: 16', 'openstack/ceilometer: 1', 'system: 1']
+- rhinternal : 697 ['bugzilla/docker: 1', 'bugzilla/httpd: 1', 'bugzilla/openstack/ceilometer: 1', 'bugzilla/openstack/ceph: 1', 'bugzilla/openstack/cinder: 1', - 'bugzilla/openstack/httpd: 1', 'bugzilla/openstack/keystone: 1', 'bugzilla/openstack/keystone/templates: 1', 'bugzilla/openstack/neutron: 5', 'bugzilla/openstack/nova: 4', 'bugzilla/openstack/swift: 1', 'bugzilla/openstack/tripleo: 2', 'bugzilla/systemd: 1', 'ceph: 4', 'cifs: 5', 'docker: 1', 'httpd: 1', 'launchpad/openstack/keystone: 1', 'launchpad/openstack/oslo.db: 1', 'network: 7', 'ocp-pssa/etcd: 1', 'ocp-pssa/master: 12', 'ocp-pssa/node: 14', 'openshift/cluster: 1', 'openshift/etcd: 2', 'openshift/node: 1', 'openshift/ocp-pssa/master: 2', 'openstack: 6', 'openstack/ceilometer: 2', 'openstack/ceph: 1', 'openstack/cinder: 5', 'openstack/containers: 4', 'openstack/containers/docker: 2', 'openstack/containers/rabbitmq: 1', 'openstack/crontab: 4', 'openstack/glance: 1', 'openstack/haproxy: 2', 'openstack/hardware: 1', 'openstack/iptables: 1', 'openstack/keystone: 3', 'openstack/mysql: 8', 'openstack/network: 6', 'openstack/neutron: 5', 'openstack/nova: 12', 'openstack/openvswitch: 3', 'openstack/pacemaker: 1', 'openstack/rabbitmq: 5', 'openstack/redis: 1', 'openstack/swift: 3', 'openstack/system: 4', 'openstack/systemd: 1', 'pacemaker: 10', 'satellite: 1', 'security: 3', 'security/meltdown: 2', 'security/spectre: 8', 'security/speculative-store-bypass: 8', 'storage: 1', 'sumsos/bugzilla: 11', 'sumsos/kbases: 426', 'supportability: 11', 'sysinfo: 2', 'system: 56', 'virtualization: 2']
+- supportability : 3 ['openshift: 1']
+- sysinfo : 18 ['lifecycle: 6', 'openshift: 4', 'openstack: 2']
+- system : 12 ['iscsi: 1']
+- virtualization : 1
 </small>
 </small>
 
@@ -94,7 +89,7 @@ total : 215
 ---
 
 ## How to run it manually?
-<img src="images/citellusrun.png" width="80%" border=0><!-- .element height="50%"  width="90%" -->
+<img src="../images/citellusrun.png" width="80%" border=0><!-- .element height="50%"  width="90%" -->
 
 
 Note: Change speaker after this
@@ -119,7 +114,7 @@ Note: Change speaker after this
 
 ## HTML Interface
 - Create by using --web, open the generated `citellus.html` over http.
-<img src="images/www.png" width="80%" border=0><!-- .element height="50%"  width="70%" -->
+<img src="../images/www.png" width="80%" border=0><!-- .element height="50%"  width="70%" -->
 
 ---
 
@@ -326,7 +321,7 @@ mode: fs snapshot sosreport-20170724-175510/crta02
 
 ----
 
-## How does it looks like?
+## How does it look like?
 
 <small>
 
