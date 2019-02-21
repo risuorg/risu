@@ -113,9 +113,10 @@ Note: Change speaker after this
 ----
 
 ## HTML Interface
-- Create by using --web, open the generated `citellus.html` over http.
+<small>
+Create by using --web, open the generated `citellus.html` over http.
 <img src="../images/www.png" width="80%" border=0><!-- .element height="50%"  width="70%" -->
-
+</small>
 ---
 
 ## Why upstream?
