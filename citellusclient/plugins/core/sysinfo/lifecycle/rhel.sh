@@ -28,7 +28,8 @@ OSBRAND=$(discover_osbrand)
 
 declare -A RHELEOL
 RHELEOL=(   ["6"]="2020-11-30" \
-            ["7"]="2024-06-30")
+            ["7"]="2024-06-30" \
+            ["8"]="2029-05-30"  )
 
 declare -A RHELELS
 RHELELS=(   ["5"]="2020-11-30" \
