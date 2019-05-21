@@ -99,8 +99,8 @@ def run(plugin):  # do not edit this line
             # We do not satisfy conditions, exit early
             skipped = 1
     else:
-            # We do not satisfy conditions, exit early
-            skipped = 1
+        # We do not satisfy conditions, exit early
+        skipped = 1
 
     if skipped == 1:
         return citellus.RC_SKIPPED, '', _('Plugin does not satisfy conditions for running')
