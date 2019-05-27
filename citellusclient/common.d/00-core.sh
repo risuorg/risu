@@ -153,6 +153,7 @@ discover_rhrelease(){
     else
         VERSION=$(egrep -o "\(.*\)" ${FILE}|tr -d "()")
         case ${VERSION} in
+            Ootpa) echo 8 ;;
             Maipo) echo 7 ;;
             Santiago) echo 6 ;;
             Tikanga) echo 5 ;;
