@@ -43,7 +43,7 @@ get_ocp_node_type(){
     OCPMINORVERSION=$(echo ${OCPVERSION} | awk -F "." '{print $2}')
     HNAME=$(cat ${CITELLUS_ROOT}/etc/hostname)
 
-    NODELISTFILELIST=$(ls ${CITELLUS_ROOT}/../../*_all_nodes.out)
+    NODELISTFILELIST=$(find ${CITELLUS_ROOT}/../../ -name *_all_nodes.out)
     for file in ${NODELISTFILELIST}; do
         NODELISTFILE=${file}
     done
@@ -90,4 +90,14 @@ calculate_cluster_pod_capacity(){
         fi
     done
     echo ${MAXPODCLUSTER}
+}
+
+discover_ocs_version()
+{
+   OCSVERSION=`cat ${CITELLUS_ROOT}/../var/tmp/pssa/tmp/*ocs.out | grep 'access.redhat.com/rhgs3/rhgs' | awk -F ":" '{print $3}'`
+   ARR=($OCSVERSION)
+   OCSVERSION=`echo ${ARR[0]}`
+   OCSMAJORVERSION=`echo "$OCSVERSION" | awk -F "." '{print $1}'`
+   OCSMINORVERSION=`echo "$OCSVERSION" | awk -F "." '{print $2}'`
+   echo ${OCSVERSION}
 }
