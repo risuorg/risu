@@ -94,10 +94,10 @@ calculate_cluster_pod_capacity(){
 
 discover_ocs_version()
 {
-   OCSVERSION=`cat ${CITELLUS_ROOT}/../var/tmp/pssa/tmp/*ocs.out | grep 'access.redhat.com/rhgs3/rhgs' | awk -F ":" '{print $3}'`
-   ARR=($OCSVERSION)
-   OCSVERSION=`echo ${ARR[0]}`
-   OCSMAJORVERSION=`echo "$OCSVERSION" | awk -F "." '{print $1}'`
-   OCSMINORVERSION=`echo "$OCSVERSION" | awk -F "." '{print $2}'`
-   echo ${OCSVERSION}
+    OCSVERSION=`cat ${CITELLUS_ROOT}/../var/tmp/pssa/tmp/*ocs.out | grep 'access.redhat.com/rhgs3/rhgs' | awk -F ":" '{print $3}'`
+    ARR=($OCSVERSION)
+    OCSVERSION=`echo ${ARR[0]}`
+    OCSMAJORVERSION=`echo "$OCSVERSION" | awk -F "." '{print $1}'`
+    OCSMINORVERSION=`echo "$OCSVERSION" | awk -F "." '{print $2}'`
+    echo ${OCSVERSION}
 }
