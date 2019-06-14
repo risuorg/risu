@@ -6,18 +6,19 @@
 [![PyPI version](https://badge.fury.io/py/citellus.svg)](https://badge.fury.io/py/citellus)
 [![](https://images.microbadger.com/badges/image/citellus/citellus.svg)](https://microbadger.com/images/citellus/citellus "Get your own image badge on microbadger.com")
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/50c01175b64a4417b270d4dc29a0c0c6)](https://www.codacy.com/app/citellus/citellus?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=citellusorg/citellus&amp;utm_campaign=Badge_Grade)
+<a href="https://t.me/citellusUG"><img src="https://img.shields.io/badge/Citellus%20User%20Group-190cde.svg?logo=telegram" alt="Citellus User Group on Telegram"/></a>
 
 <img src="doc/citellus.png" width="20%" border=0 align="right">
 
 **Table of contents**
 <!-- TOC depthFrom:1 insertAnchor:true orderedList:true -->
 
-1. [Introduction](#introduction)
-2. [Highlights](#highlights)
-3. [How does it looks like?](#how-does-it-looks-like)
-4. [Collaborate](#collaborate)
-5. [Documentation](#documentation)
-6. [Contact us!!](#contact-us)
+- [Introduction](#introduction)
+- [Highlights](#highlights)
+- [How does it looks like?](#how-does-it-looks-like)
+- [Collaborate](#collaborate)
+- [Documentation](#documentation)
+- [Contact us!!](#contact-us)
 
 <!-- /TOC -->
 
