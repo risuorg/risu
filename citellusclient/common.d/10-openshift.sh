@@ -62,6 +62,28 @@ get_ocp_node_type(){
     echo ${NODEROLE}
 }
 
+discover_ocp_node_config(){
+    node-config = "dummyfile"
+    nodeconfigs=( "${CITELLUS_ROOT}/etc/origin/node/node-config.yaml" "${CITELLUS_ROOT}/../etc/origin/node/node-config.yaml" "${CITELLUS_ROOT}/../tmp/node-config.yaml")
+
+    # find available one and use it, the ones at back with highest priority
+    for file in ${nodeconfigs[@]}; do
+        [[ -f "${file}" ]] && node-config="${file}"
+    done
+    echo ${node-config}
+}
+
+discover_ocp_master_config(){
+    master-config = "dummyfile"
+    masterconfigs=( "${CITELLUS_ROOT}/etc/origin/master/master-config.yaml" "${CITELLUS_ROOT}/../etc/origin/master/master-config.yaml")
+
+    # find available one and use it, the ones at back with highest priority
+    for file in ${masterconfigs[@]}; do
+        [[ -f "${file}" ]] && master-config="${file}"
+    done
+    echo ${master-config}
+}
+
 calculate_cluster_pod_capacity(){
     DEFAULT_PODS_PER_CORE=10
     DEFAULT_MAX_PODS=250
