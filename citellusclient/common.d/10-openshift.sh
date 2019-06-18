@@ -97,11 +97,13 @@ calculate_cluster_pod_capacity(){
             MAX_PODS=${DEFAULT_MAX_PODS}
             NUMBER_CPU=$(grep 'CPU(s):' ${nodes}/sosreport-*/sos_commands/processor/lscpu)
 
-            XXX=$(grep 'pods-per-core:' -A1 ${nodes}/sosreport-*/etc/origin/node/node-config.yaml)
+            node-config=$(discover_ocp_node_config)
+            XXX=$(cat ${node-config}| grep 'pods-per-core:' -A1)
+            ZZZ=$(cat ${node-config}|grep 'max-pods:' -A1)
+
             if [[ ! -z ${XXX} ]] ;then
                 PODS_PER_CORE=( $(echo ${XXX} | awk -F "['\"]" '{print $2}') )
             fi
-            ZZZ=$(grep 'max-pods:' -A1 ${nodes}/sosreport-*/etc/origin/node/node-config.yaml)
             if [[ ! -z ${ZZZ} ]] ;then
                 MAX_PODS=( $(echo ${ZZZ} | awk -F "['\"]" '{print $2}') )
             fi
@@ -116,6 +118,8 @@ calculate_cluster_pod_capacity(){
 
 discover_ocs_version()
 {
+    OCSVERSION=`cat ${CITELLUS_ROOT}/../var/tmp/pssa/tmp/*ocs.out | grep 'access.redhat.com/rhgs3/rhgs' | awk -F ":" '{print $3}'`
+    OCSVERSION=`cat ${CITELLUS_ROOT}/../var/tmp/pssa/tmp/*ocs.out | grep 'access.redhat.com/rhgs3/rhgs' | awk -F ":" '{print $3}'`
     OCSVERSION=`cat ${CITELLUS_ROOT}/../var/tmp/pssa/tmp/*ocs.out | grep 'access.redhat.com/rhgs3/rhgs' | awk -F ":" '{print $3}'`
     ARR=($OCSVERSION)
     OCSVERSION=`echo ${ARR[0]}`
