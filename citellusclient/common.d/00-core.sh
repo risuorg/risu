@@ -24,7 +24,7 @@
 if [ "x$CITELLUS_LIVE" = "x0" ];  then
 
     # List of systemd/systemctl_list-units files
-    systemctl_list_units=( "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units" "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all" )
+    systemctl_list_units=( "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units" "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all" "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-unit-files" )
 
     # find available one and use it, the ones at back with highest priority
     for file in ${systemctl_list_units[@]}; do
@@ -122,7 +122,7 @@ is_enabled(){
         fi
     elif [ "x$CITELLUS_LIVE" = "x0" ]; then
         if [[ -f "${systemctl_list_units}" ]]; then
-            grep -q "$1.* enabled" "${systemctl_list_units}"
+            grep -q "$1.* enabled" "${systemctl_list_units[@]}"
         elif [ -f "${CITELLUS_ROOT}"/chkconfig ]; then
             grep -q "$1.*3:on" "${CITELLUS_ROOT}"/chkconfig
         else
