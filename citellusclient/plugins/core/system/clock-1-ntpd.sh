@@ -30,8 +30,16 @@
 
 : ${CITELLUS_MAX_CLOCK_OFFSET:=1000}
 
-if ! is_active ntpd;then
-    echo "ntpd is not active" >&2
+OS=$(discover_os)
+
+if [[ ${OS} == 'debian' ]]; then
+    SERVICE='ntp'
+else
+    SERVICE='ntpd'
+fi
+
+if ! is_active ${SERVICE};then
+    echo "${SERVICE} is not active" >&2
     exit ${RC_FAILED}
 fi
 
