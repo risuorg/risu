@@ -24,9 +24,9 @@
 [[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
 if [[ ${CITELLUS_LIVE} -eq 0 ]]; then
-    sosdate=$(LANG=C date -d "$(cat ${CITELLUS_ROOT}/date)" +%Y-%m-%d)
+    sosdate=$(LC_ALL=C LANG=C date -d "$(cat ${CITELLUS_ROOT}/date)" +%Y-%m-%d)
 else
-    sosdate=$(LANG=C TZ='UTC' date +%Y-%m-%d)
+    sosdate=$(LC_ALL=C LANG=C TZ='UTC' date +%Y-%m-%d)
 fi
 
 # Fill metadata 'sosreport-date' to value

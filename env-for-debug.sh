@@ -19,6 +19,7 @@ export RC_INFO=40
 
 # i18n for bash support
 export LANG='en_US'
+export LC_ALL=C
 export TEXTDOMAIN='citellus'
 export TEXTDOMAINDIR=${CITELLUS_BASE}/locale
 
