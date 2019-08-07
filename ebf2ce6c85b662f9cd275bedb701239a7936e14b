@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0fa24c16_6c13a492",
+        "filename": "citellusclient/plugins/core/system/clock-1-ntpd.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2019-08-07T14:16:26Z",
+      "side": 1,
+      "message": "is_file_required instead? it automates the skipped and the test",
+      "revId": "ebf2ce6c85b662f9cd275bedb701239a7936e14b",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c7d22f8_1c4f50b3",
+        "filename": "citellusclient/plugins/core/system/clock-1-ntpd.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2019-08-07T14:16:26Z",
+      "side": 1,
+      "message": "remove then this duplicate when put above",
+      "revId": "ebf2ce6c85b662f9cd275bedb701239a7936e14b",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    }
+  ]
+}
