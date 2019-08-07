@@ -21,6 +21,20 @@
 
 # Helper script to define location of various files.
 
+first_file_available(){
+    (
+    flag=0
+    for file in "$@"; do
+        if [[ $flag -eq 0 ]]; then
+            if [[ -f ${file} ]];  then
+                flag=1
+                echo ${file}
+            fi
+        fi
+    done
+    )|xargs echo
+}
+
 if [ "x$CITELLUS_LIVE" = "x0" ];  then
 
     # List of systemd/systemctl_list-units files
@@ -31,26 +45,13 @@ if [ "x$CITELLUS_LIVE" = "x0" ];  then
     systemctl_list_units_service_running=( "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units" "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all"  )
 
     # find available one and use it, the ones at back with highest priority
-    for file in ${systemctl_list_units_active[@]}; do
-        [[ -f "${file}" ]] && systemctl_list_units_active_file="${file}"
-    done
-
-    for file in ${systemctl_list_units_enabled[@]}; do
-        [[ -f "${file}" ]] && systemctl_list_units_enabled_file="${file}"
-    done
-
-    for file in ${systemctl_list_units_service_running[@]}; do
-        [[ -f "${file}" ]] && systemctl_list_units_service_running_file="${file}"
-    done
-
+    systemctl_list_units_active_file=$(first_file_available ${systemctl_list_units_active[@]})
+    systemctl_list_units_enabled_file=$(first_file_available ${systemctl_list_units_enabled[@]})
+    systemctl_list_units_service_running_file=$(first_file_available ${systemctl_list_units_service_running[@]})
 
     # List of logs/journalctl files
-    journal=( "${CITELLUS_ROOT}/sos_commands/logs/journalctl_--no-pager_--boot" "${CITELLUS_ROOT}/sos_commands/logs/journalctl_--all_--this-boot_--no-pager" )
+    journalctl_file=$(first_file_available "${CITELLUS_ROOT}/sos_commands/logs/journalctl_--no-pager_--boot" "${CITELLUS_ROOT}/sos_commands/logs/journalctl_--all_--this-boot_--no-pager" )
 
-    # find available one and use it, the ones at back with highest priority
-    for file in "${journal[@]}"; do
-        [[ -f "${file}" ]] && journalctl_file="${file}"
-    done
 else
     journalctl_file="${CITELLUS_TMP}/journalctl_--no-pager_--boot"
     if [[ ! -f ${journalctl_file} ]]; then
@@ -309,18 +310,4 @@ is_higher(){
         return 1
     fi
     return 0
-}
-
-first_file_available(){
-    (
-    flag=0
-    for file in "$@"; do
-        if [[ $flag -eq 0 ]]; then
-            if [[ -f ${file} ]];  then
-                flag=1
-                echo ${file}
-            fi
-        fi
-    done
-    )|xargs echo
 }
