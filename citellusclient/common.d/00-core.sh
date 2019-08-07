@@ -310,3 +310,17 @@ is_higher(){
     fi
     return 0
 }
+
+first_file_available(){
+    (
+    flag=0
+    for file in "$@"; do
+        if [[ $flag -eq 0 ]]; then
+            if [[ -f ${file} ]];  then
+                flag=1
+                echo ${file}
+            fi
+        fi
+    done
+    )|xargs echo
+}
