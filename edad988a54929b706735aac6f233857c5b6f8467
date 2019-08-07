@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51597658_301cee91",
+        "filename": "citellusclient/plugins/core/sysinfo/lifecycle/centos.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2019-08-07T21:01:34Z",
+      "side": 1,
+      "message": "should LANG\u003d\u0027C\u0027 be removed and leave only LC_ALL\u003dC ?",
+      "revId": "edad988a54929b706735aac6f233857c5b6f8467",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a1c76b8_09fb911d",
+        "filename": "citellusclient/plugins/core/sysinfo/lifecycle/fedora.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2019-08-07T21:01:34Z",
+      "side": 1,
+      "message": "should LANG\u003d\u0027C\u0027 be removed and leave only LC_ALL\u003dC ?",
+      "revId": "edad988a54929b706735aac6f233857c5b6f8467",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e92773c_b98ba193",
+        "filename": "citellusclient/plugins/core/sysinfo/lifecycle/ocp.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2019-08-07T21:01:34Z",
+      "side": 1,
+      "message": "should LANG\u003d\u0027C\u0027 be removed and leave only LC_ALL\u003dC ?",
+      "revId": "edad988a54929b706735aac6f233857c5b6f8467",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83492aa2_54f6c552",
+        "filename": "citellusclient/plugins/core/sysinfo/lifecycle/rh-openstack.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2019-08-07T21:01:34Z",
+      "side": 1,
+      "message": "should LANG\u003d\u0027C\u0027 be removed and leave only LC_ALL\u003dC ?",
+      "revId": "edad988a54929b706735aac6f233857c5b6f8467",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a80637b1_f9ee66fb",
+        "filename": "citellusclient/plugins/core/sysinfo/lifecycle/rhel.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2019-08-07T21:01:34Z",
+      "side": 1,
+      "message": "should LANG\u003d\u0027C\u0027 be removed and leave only LC_ALL\u003dC ?",
+      "revId": "edad988a54929b706735aac6f233857c5b6f8467",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a89f3b6_119dcd00",
+        "filename": "citellusclient/plugins/metadata/system/sosreport-date.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2019-08-07T21:01:34Z",
+      "side": 1,
+      "message": "should LANG\u003d\u0027C\u0027 be removed and leave only LC_ALL\u003dC ?",
+      "revId": "edad988a54929b706735aac6f233857c5b6f8467",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dbb84d1_699f4973",
+        "filename": "citellusclient/plugins/metadata/system/sosreport-date.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2019-08-07T21:01:34Z",
+      "side": 1,
+      "message": "same here",
+      "revId": "edad988a54929b706735aac6f233857c5b6f8467",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35eaa861_e74d875d",
+        "filename": "env-for-debug.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2019-08-07T21:01:34Z",
+      "side": 1,
+      "message": "This overrides LANG so code checks will not show custom messages, this should be removed",
+      "revId": "edad988a54929b706735aac6f233857c5b6f8467",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    }
+  ]
+}
