@@ -24,12 +24,25 @@
 if [ "x$CITELLUS_LIVE" = "x0" ];  then
 
     # List of systemd/systemctl_list-units files
-    systemctl_list_units=( "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units" "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all" "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-unit-files" )
+    systemctl_list_units_active=( "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units" "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all"  )
+
+    systemctl_list_units_enabled=( "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_status_--all" "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-unit-files" )
+
+    systemctl_list_units_service_running=( "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units" "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all"  )
 
     # find available one and use it, the ones at back with highest priority
-    for file in ${systemctl_list_units[@]}; do
-        [[ -f "${file}" ]] && systemctl_list_units_file="${file}"
+    for file in ${systemctl_list_units_active[@]}; do
+        [[ -f "${file}" ]] && systemctl_list_units_active_file="${file}"
     done
+
+    for file in ${systemctl_list_units_enabled[@]}; do
+        [[ -f "${file}" ]] && systemctl_list_units_enabled_file="${file}"
+    done
+
+    for file in ${systemctl_list_units_service_running[@]}; do
+        [[ -f "${file}" ]] && systemctl_list_units_service_running_file="${file}"
+    done
+
 
     # List of logs/journalctl files
     journal=( "${CITELLUS_ROOT}/sos_commands/logs/journalctl_--no-pager_--boot" "${CITELLUS_ROOT}/sos_commands/logs/journalctl_--all_--this-boot_--no-pager" )
@@ -89,8 +102,8 @@ is_active(){
             exit ${RC_SKIPPED}
         fi
     elif [ "x$CITELLUS_LIVE" = "x0" ]; then
-        if [[ -f "${systemctl_list_units_file}" ]]; then
-            grep -q "$1.* active" "${systemctl_list_units_file}"
+        if [[ -f "${systemctl_list_units_active_file}" ]]; then
+            grep -q "$1.* active" "${systemctl_list_units_active_file}"
         else
             echo "required systemd files not found for validating $1 being active or not." >&2
             exit ${RC_SKIPPED}
@@ -121,10 +134,28 @@ is_enabled(){
             exit ${RC_SKIPPED}
         fi
     elif [ "x$CITELLUS_LIVE" = "x0" ]; then
-        if [[ -f "${systemctl_list_units_file}" ]]; then
-            grep -q "$1.* enabled" "${systemctl_list_units_file[@]}"
+        if [[ -f "${systemctl_list_units_enabled_file}" ]]; then
+            grep -q "$1.* enabled" "${systemctl_list_units_enabled_file[@]}"
         elif [ -f "${CITELLUS_ROOT}"/chkconfig ]; then
             grep -q "$1.*3:on" "${CITELLUS_ROOT}"/chkconfig
+        else
+            echo "could not check for enabled service $1" >&2
+            exit ${RC_SKIPPED}
+        fi
+    fi
+}
+
+is_service_running(){
+    if [ "x$CITELLUS_LIVE" = "x1" ]; then
+        if [ ! -z "$(which systemctl 2>/dev/null)" ]; then
+            systemctl list-units | grep running |grep -q "$1.* running" > /dev/null 2>&1
+        else
+            echo "could not check for enabled service $1 during live execution" >&2
+            exit ${RC_SKIPPED}
+        fi
+    elif [ "x$CITELLUS_LIVE" = "x0" ]; then
+        if [[ -f "${systemctl_list_units_service_running_file}" ]]; then
+            grep -q "$1.* running" "${systemctl_list_units_service_running_file[@]}"
         else
             echo "could not check for enabled service $1" >&2
             exit ${RC_SKIPPED}
