@@ -47,21 +47,22 @@ is_required_file "${CITELLUS_ROOT}/etc/ntp.conf"
 grep "^server" "${CITELLUS_ROOT}/etc/ntp.conf" >&2
 
 if [[ ${CITELLUS_LIVE} = 0 ]]; then
-    is_required_file "${CITELLUS_ROOT}/sos_commands/ntp/ntpq_-p"
+    FILE=$(first_file_available "${CITELLUS_ROOT}/sos_commands/ntp/ntpq_-p" "${CITELLUS_ROOT}/sos_commands/ntp/ntpq_-pn" )
 
-    if grep -q "Connection refused" "${CITELLUS_ROOT}/sos_commands/ntp/ntpq_-p"; then
+    is_required_file "${FILE}"
+
+    if grep -q "Connection refused" "${FILE}"; then
         echo "ntpq: read: Connection refused" >&2
         exit ${RC_FAILED}
     fi
 
-    is_required_file "${CITELLUS_ROOT}/sos_commands/ntp/ntpq_-p"
-    is_lineinfile "timed out" "${CITELLUS_ROOT}/sos_commands/ntp/ntpq_-p" && \
+    is_lineinfile "timed out" "${FILE}" && \
         echo "localhost: timed out, nothing received" >&2 && exit ${RC_FAILED}
 
-    offset=$(awk '/^\*/ {print $9}' "${CITELLUS_ROOT}/sos_commands/ntp/ntpq_-p")
+    offset=$(awk '/^\*/ {print $9}' "${FILE}")
     if [[ -z "$offset" ]]; then
         echo "currently not synchronized to any clock" >&2
-        candidates=$(awk '/^\+/ {print $1" ("$9"ms)"}' "${CITELLUS_ROOT}/sos_commands/ntp/ntpq_-p" | tr '\n' ' ')
+        candidates=$(awk '/^\+/ {print $1" ("$9"ms)"}' "${FILE}" | tr '\n' ' ')
         if [[ ! -z "$candidates" ]]; then
             echo "possible candidates: ${candidates}" >&2
         fi
@@ -73,7 +74,7 @@ if [[ ${CITELLUS_LIVE} = 0 ]]; then
 
     [[ "x$RC" = "x1" ]] && exit ${RC_OKAY} || exit ${RC_FAILED}
 else
-    is_required_file /usr/bin/bc
+    is_required_command /usr/bin/bc
 
     if ! out=$(ntpq -c peers); then
         echo "failed to contact ntpd" >&2
