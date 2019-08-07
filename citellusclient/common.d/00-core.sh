@@ -121,8 +121,8 @@ is_enabled(){
             exit ${RC_SKIPPED}
         fi
     elif [ "x$CITELLUS_LIVE" = "x0" ]; then
-        if [[ -f "${systemctl_list_units}" ]]; then
-            grep -q "$1.* enabled" "${systemctl_list_units[@]}"
+        if [[ -f "${systemctl_list_units_file}" ]]; then
+            grep -q "$1.* enabled" "${systemctl_list_units_file[@]}"
         elif [ -f "${CITELLUS_ROOT}"/chkconfig ]; then
             grep -q "$1.*3:on" "${CITELLUS_ROOT}"/chkconfig
         else
