@@ -57,7 +57,7 @@ is_date_over_today(){
     # $2 date to check against today
 
     date1="$2"
-    date2="$(LANG=C date)"
+    date2="$(LANG=C LC_ALL=C date)"
 
     EPOCH1="$(date -d "$date1" "+%s" 2>/dev/null)"
     if [[ "$?" == "1" ]]; then
