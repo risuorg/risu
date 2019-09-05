@@ -1,0 +1,5 @@
+---
+fixes:
+  - |
+    In case of IPv6 URLs brackets are required. This adds a check for IPv6 and
+    adds brackets if needed.

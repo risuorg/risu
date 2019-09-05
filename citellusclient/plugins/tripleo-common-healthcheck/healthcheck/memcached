@@ -7,5 +7,5 @@ if [[ $listen_addr =~ ":" ]]; then
     listen_addr="[${listen_addr}]"
 fi
 
-echo "stats" | socat - TCP:$listen_addr:11211
-exit
+echo "version" | socat - TCP:$listen_addr:11211 1>/dev/null
+exit $?

@@ -2,7 +2,7 @@
 
 . ${HEALTHCHECK_SCRIPTS:-/usr/share/openstack-tripleo-common/healthcheck}/common.sh
 
-if ps -e | grep --quiet swift-proxy-server; then
+if pgrep -f swift-proxy-server; then
     conf=/etc/swift/proxy-server.conf
 
     if ! crudini --get $conf pipeline:main pipeline | grep -q healthcheck; then

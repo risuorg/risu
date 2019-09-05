@@ -1,0 +1,10 @@
+#!/bin/bash
+
+file="${1:-root}"
+if [ -f /var/spool/cron/${file} ]; then
+    nb_lines=$(grep -cEv '^#' /var/spool/cron/${file})
+    if [ $nb_lines -ge 2 ]; then
+        exit 0
+    fi
+fi
+exit 1
