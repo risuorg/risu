@@ -63,25 +63,25 @@ get_ocp_node_type(){
 }
 
 discover_ocp_node_config(){
-    node-config = "dummyfile"
+    export nodeconfig="dummyfile"
     nodeconfigs=( "${CITELLUS_ROOT}/etc/origin/node/node-config.yaml" "${CITELLUS_ROOT}/../etc/origin/node/node-config.yaml" "${CITELLUS_ROOT}/../tmp/node-config.yaml")
 
     # find available one and use it, the ones at back with highest priority
     for file in ${nodeconfigs[@]}; do
-        [[ -f "${file}" ]] && node-config="${file}"
+        [[ -f "${file}" ]] && export nodeconfig="${file}"
     done
-    echo ${node-config}
+    echo ${nodeconfig}
 }
 
 discover_ocp_master_config(){
-    master-config = "dummyfile"
+    export masterconfig="dummyfile"
     masterconfigs=( "${CITELLUS_ROOT}/etc/origin/master/master-config.yaml" "${CITELLUS_ROOT}/../etc/origin/master/master-config.yaml")
 
     # find available one and use it, the ones at back with highest priority
     for file in ${masterconfigs[@]}; do
-        [[ -f "${file}" ]] && master-config="${file}"
+        [[ -f "${file}" ]] && export masterconfig="${file}"
     done
-    echo ${master-config}
+    echo ${masterconfig}
 }
 
 calculate_cluster_pod_capacity(){
@@ -97,7 +97,7 @@ calculate_cluster_pod_capacity(){
             MAX_PODS=${DEFAULT_MAX_PODS}
             NUMBER_CPU=$(grep 'CPU(s):' ${nodes}/sosreport-*/sos_commands/processor/lscpu)
 
-            node-config=$(discover_ocp_node_config)
+            export node-config=$(discover_ocp_node_config)
             XXX=$(cat ${node-config}| grep 'pods-per-core:' -A1)
             ZZZ=$(cat ${node-config}|grep 'max-pods:' -A1)
 
