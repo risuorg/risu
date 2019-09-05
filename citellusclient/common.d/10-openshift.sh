@@ -97,9 +97,9 @@ calculate_cluster_pod_capacity(){
             MAX_PODS=${DEFAULT_MAX_PODS}
             NUMBER_CPU=$(grep 'CPU(s):' ${nodes}/sosreport-*/sos_commands/processor/lscpu)
 
-            export node-config=$(discover_ocp_node_config)
-            XXX=$(cat ${node-config}| grep 'pods-per-core:' -A1)
-            ZZZ=$(cat ${node-config}|grep 'max-pods:' -A1)
+            export nodeconfig=$(discover_ocp_node_config)
+            XXX=$(cat ${nodeconfig}| grep 'pods-per-core:' -A1)
+            ZZZ=$(cat ${nodeconfig}|grep 'max-pods:' -A1)
 
             if [[ ! -z ${XXX} ]] ;then
                 PODS_PER_CORE=( $(echo ${XXX} | awk -F "['\"]" '{print $2}') )
