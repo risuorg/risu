@@ -2,9 +2,11 @@
 : ${HEALTHCHECK_CURL_MAX_TIME:=10}
 : ${HEALTHCHECK_CURL_USER_AGENT:=curl-healthcheck}
 : ${HEALTHCHECK_CURL_WRITE_OUT:='\n%{http_code} %{remote_ip}:%{remote_port} %{time_total} seconds\n'}
+: ${HEALTHCHECK_CURL_OUTPUT:='/dev/null'}
 
 healthcheck_curl () {
-    curl -g -k -q --fail \
+    export NSS_SDB_USE_CACHE=no
+    curl -g -k -q -s -S --fail -o "${HEALTHCHECK_CURL_OUTPUT}" \
         --max-time "${HEALTHCHECK_CURL_MAX_TIME}" \
         --user-agent "${HEALTHCHECK_CURL_USER_AGENT}" \
         --write-out "${HEALTHCHECK_CURL_WRITE_OUT}" \
@@ -14,31 +16,21 @@ healthcheck_curl () {
 healthcheck_port () {
     process=$1
 
-    # ss truncate command name to 15 characters and this behaviour
-    # cannot be disabled
-    if [ ${#process} -gt 15 ] ; then
-        process=${process:0:15}
-    fi
-
     shift 1
     args=$@
     ports=${args// /|}
-    ss -ntp | awk '{print $5,"-",$6}' | egrep ":($ports)" | grep "$process"
+    pids=$(pgrep -d '|' -f $process)
+    ss -ntp | grep -qE ":($ports).*,pid=($pids),"
 }
 
 healthcheck_listen () {
     process=$1
 
-    # ss truncate command name to 15 characters and this behaviour
-    # cannot be disabled
-    if [ ${#process} -gt 15 ] ; then
-        process=${process:0:15}
-    fi
-
     shift 1
     args=$@
     ports=${args// /|}
-    ss -lnp | awk '{print $5,"-",$7}' | egrep ":($ports)" | grep "$process"
+    pids=$(pgrep -d '|' -f $process)
+    ss -lnp | grep -qE ":($ports).*,pid=($pids),"
 }
 
 healthcheck_socket () {
@@ -50,17 +42,22 @@ healthcheck_socket () {
     if [ ${#process} -gt 15 ] ; then
         process=${process:0:15}
     fi
-    lsof -Fc -Ua $socket | grep "c$process"
+    lsof -Fc -Ua $socket | grep -q "c$process"
 }
 
 healthcheck_file_modification () {
     file_path=$1
     limit_seconds=$2
 
+    # if the file doesn't exist, return 1
+    if [ ! -f $file_path ]; then
+        echo "${file_path} does not exist for file modification check"
+        return 1
+    fi
     curr_time=$(date +%s)
     last_mod=$(stat -c '%Y' $file_path)
     limit_epoch=$(( curr_time-limit_seconds ))
-    if [ "$limit_epoch" -gt "$last_mod" ]; then
+    if [ ${limit_epoch} -gt ${last_mod} ]; then
         return 1
     fi
 }
