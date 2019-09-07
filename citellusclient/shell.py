@@ -620,17 +620,10 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
     allids = getids()
 
     # Now check in results for id's no longer existing for removal:
-    delete = []
-    for key in iter(results.keys()):
-        if key not in allids:
-            # Plugin ID no longer appears in found plugins.
-            delete.append(key)
+    delete = [ key for key in iter(results.keys()) if key not in allids]
 
     LOG.debug("Removing old plugins from results: %s" % delete)
-
-    for plugid in allids:
-        if plugid not in results and '-' not in plugid:
-            missingplugins.append(plugid)
+    newmissingplugins = [ plugid for plugid in allids if plugid not in results and '-' not in plugid]
 
     LOG.debug("Adding new plugin id's missing to be executed: %s" % missingplugins)
 
@@ -639,9 +632,7 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
         del results[key]
 
     # Prefill hashes of known plugins for checking same id's with changed hash
-    hashes = []
-    for plug in plugins:
-        hashes.append(plug['hash'])
+    hashes = [plug['hash'] for plug in plugins]
 
     # Check for changed plugins on disk vs stored
     for plugin in results:
@@ -667,10 +658,7 @@ def docitellus(live=False, path=False, plugins=False, lang='en_US', forcerun=Fal
     LOG.debug("Smart: We need to run some plugins that were missing")
 
     # We clear list of plugins to run to just grab the missing data on them, and leave others
-    pluginstorun = []
-    for plugin in plugins:
-        if plugin['id'] in missingplugins and '-' not in plugin['id']:
-            pluginstorun.append(plugin)
+    pluginstorun = [ plugin for plugin in plugins if plugin['id'] in missingplugins and '-' not in plugin['id']]
 
     if not quiet:
         sys.stdout.write('%s' % pgstart)
