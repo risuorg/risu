@@ -2,6 +2,7 @@ imports:
     dmidecode: citellusclient/tools/
     citellus: ./
     tripleo-common-healthcheck: citellusclient/plugins/tripleo-common-healthcheck
+    node-problem-detector: citellusclient/plugins/node-problem-detector
 
 git module dmidecode:
     url: git@github.com:iranzo/dmidecode.git
@@ -15,3 +16,7 @@ git module citellus:
 git module tripleo-common-healthcheck:
     url: git@github.com:openstack/tripleo-common.git
     pick: healthcheck
+
+git module node-problem-detector:
+    url: git@github.com:kubernetes/node-problem-detector.git
+    pick: config
