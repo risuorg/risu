@@ -40,9 +40,7 @@ def run(data, quiet=False):  # do not edit this line
     for ourdata in data:
         # 'err' in this case is something like: 08a94e67-bae0-11e6-8239-9a6188749d23:36117633
         # being UUID: seqno
-        err = []
-        for sosreport in data[ourdata]['sosreport']:
-            err.append(data[ourdata]['sosreport'][sosreport]['err'])
+        err = [data[ourdata]['sosreport'][sosreport]['err'] for sosreport in data[ourdata['sosreport']]]
 
         if len(sorted(set(err))) != 1:
             message = _("Galera sequence number differ across sosreports")

@@ -43,9 +43,7 @@ def run(data, quiet=False):  # do not edit this line
     for plugin in data:
         if 'plugin' in data[plugin]:
             if 'faraday/' in data[plugin]['plugin']:
-                results = []
-                for sosreport in data[plugin]['sosreport']:
-                    results.append(data[plugin]['sosreport'][sosreport]['err'])
+                results = [data[plugin]['sosreport'][sosreport]['err'] for sosreport in data[plugin]['sosreport']]
 
                 makeitfail = False
                 results = sorted(set(results))

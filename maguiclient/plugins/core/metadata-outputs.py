@@ -45,11 +45,7 @@ def run(data, quiet=False):  # do not edit this line
         toprint = data
 
     # We should filter metadata extension as is to be processed separately
-    err = []
-    for item in toprint:
-        if 'backend' in toprint[item]:
-            if toprint[item]['backend'] == 'metadata':
-                err.append(toprint[item])
+    err = [toprint[item] for item in toprint if 'backend' in toprint[item] and toprint[item]['backend'] == 'metadata']
 
     # Do return different code if we've data
     if len(err) > 0:
