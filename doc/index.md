@@ -12,15 +12,15 @@
 **Table of contents**
 <!-- TOC depthFrom:1 insertAnchor:true orderedList:true -->
 
-1. [Introduction](#introduction)
-2. [Highlights](#highlights)
-3. [Installation](#installation)
-4. [How does it looks like?](#how-does-it-looks-like)
-5. [HTML Interface](#html-interface)
-6. [Additional resources](#additional-resources)
-7. [Collaborate](#collaborate)
-8. [Documentation](#documentation)
-9. [Contact us!!](#contact-us)
+- [Introduction](#introduction)
+- [Highlights](#highlights)
+- [Installation](#installation)
+- [How does it looks like?](#how-does-it-looks-like)
+- [HTML Interface](#html-interface)
+- [Additional resources](#additional-resources)
+- [Collaborate](#collaborate)
+- [Documentation](#documentation)
+- [Contact us!!](#contact-us)
 
 <!-- /TOC -->
 
@@ -38,7 +38,7 @@ Please if you have any idea on any improvements please do not hesitate to open a
 - Plugins written in your language of choice.
 - Allows to dump output to json file to be processed by other tools.
     - Allow to visualize html from json output.
-    - Check our sample at: [Citellus-www](http://htmlpreview.github.io/?https://github.com/citellusorg/citellus/blob/master/doc/sampleweb/citellus.html)
+    - Check our sample at: [Citellus-www](https://citellus.org/citellus.html)
 - Ansible playbook support.
 - Save / restore default settings
 

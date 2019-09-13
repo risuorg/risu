@@ -66,7 +66,7 @@ Check https://citellus.org for more details and information
 
 
 
-.. _Citellus-www: http://htmlpreview.github.io/?https://github.com/citellusorg/citellus/blob/master/doc/sampleweb/citellus.html
+.. _Citellus-www: https://citellus.org/citellus.html
 .. _Changelog.md: Changelog.md
 .. _citellusclient/plugins/: citellusclient/plugins/
 .. _Citellus README: README.citellus.md
