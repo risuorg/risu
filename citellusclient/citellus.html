@@ -2,6 +2,7 @@
 <html class="layout-pf layout-pf-fixed">
 
 <head>
+    <meta charset="utf-8">
     <title>Citellus</title>
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/patternfly/3.59.3/css/patternfly.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/patternfly/3.59.3/css/patternfly-additions.min.css">
@@ -427,6 +428,7 @@
             var piepass = 0;
             var pieerr = 0;
             var pieinfo = 0;
+            var pietotal = 0;
 
             $.each(plugins, function(i, p) {
                 var plugin_state = getPluginState(p.rc, p.priority);
@@ -453,6 +455,7 @@
                 ['Skip', pieskip],
                 ['Info', pieinfo]
                 ],
+                pietotal: pieskip + piepass + pieerr + pieinfo
             };
             return pieData
         }
@@ -589,7 +592,9 @@
             row += '       </div><!-- /list-group-item -->\n';
             $("#list-group").append(row);
             if (itisprofile == "1") {
-                c3.generate(pieChartSmallConfig);
+                if(pieChartSmallConfig.data.pietotal != '0') {
+                    c3.generate(pieChartSmallConfig);
+                }
             }
         }
         // function that prints alert message at the top
