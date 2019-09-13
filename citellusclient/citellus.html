@@ -131,6 +131,11 @@
             </nav>
         </nav>
     </header>
+
+    <!-- scripts for pie chart-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.7.8/c3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.12.0/d3.min.js"></script>
+
     <div class="container-fluid container-cards-pf collapsed-nav">
         <div id="alert_list"></div>
         <div class="clearfix toolbar-pf">
@@ -416,6 +421,42 @@
                 mylist.append(itm);
             });
         };
+        // Get profile counts #FIXME
+        function getProfileCounts(plugins) {
+            var pieskip = 0;
+            var piepass = 0;
+            var pieerr = 0;
+            var pieinfo = 0;
+
+            $.each(plugins, function(i, p) {
+                var plugin_state = getPluginState(p.rc, p.priority);
+                if (plugin_state.state == 'okay') {
+                    piepass += 1
+                } else if (plugin_state.state == 'error') {
+                    pieerr += 1
+                } else if (plugin_state.state == 'skipped') {
+                    pieskip += 1
+                } else if (plugin_state.state == 'info'){
+                    pieinfo +=1
+                }})
+            var pieData = {
+                type : 'pie',
+                colors: {
+                Error: "#cc0000",
+                Info: "#2b18f9",
+                Skip: "#d1d1d1",
+                Pass: "#3f9c35"
+                },
+                columns: [
+                ['Error', pieerr],
+                ['Pass', piepass],
+                ['Skip', pieskip],
+                ['Info', pieinfo]
+                ],
+            };
+            return pieData
+        }
+
         // Formats the profile table from the object stored in the err field of the check
         function printProfileTable(plugins) {
             var row = ""
@@ -455,6 +496,20 @@
                 }
                 var error_text = err.replace(/\bhttp[s]*:\/\/([^\s]+)+\b/gi, '<a href="$&" target="_blank">$&</a>');
             }
+
+            var c3ChartDefaults = $().c3ChartDefaults();
+            var pieChartSmallConfig = c3ChartDefaults.getDefaultPieConfig();
+
+            pieChartSmallConfig.legend = {
+                show: true,
+                position: 'right'
+            };
+            pieChartSmallConfig.size = {
+                width: 260,
+                height: 115
+            };
+
+
             var item_id = result.id;
             var row = "";
             // we build the text that is going to be appended to the container
@@ -487,6 +542,7 @@
             row += '           <div class="col-md-9">\n';
             if (result.backend == "profile") {
                 row += printProfileTable(err)
+                var itisprofile=1
             } else {
                 row += '            <dl class="dl-horizontal">\n';
                 row += '             <dt>Description</dt>\n';
@@ -522,11 +578,19 @@
             row += '          </div><!-- /col-md-9 -->\n';
             row += '          <div class="col-md-3">\n';
             row += '            <a href="#plugin-' + item_id + '"><span class="fa fa-link"></span> Link</a>\n';
+            if (itisprofile == "1") {
+                row += '<div id="pie-chart-8' + item_id +'" class="pie-chart-pf example-pie-chart-mini"></div>\n';
+                pieChartSmallConfig.bindto = '#pie-chart-8' + item_id;
+                pieChartSmallConfig.data = getProfileCounts(err);
+            }
             row += '          </div><!-- /col-md-3 -->\n';
             row += '         </div><!-- /row -->\n';
             row += '        </div><!-- /list-group-item-container -->\n';
             row += '       </div><!-- /list-group-item -->\n';
             $("#list-group").append(row);
+            if (itisprofile == "1") {
+                c3.generate(pieChartSmallConfig);
+            }
         }
         // function that prints alert message at the top
         function warnMessage(level, m) {
@@ -804,6 +868,7 @@
             }); // ajax query
         }); // doc ready
     </script>
+
 </body>
 
 </html>
