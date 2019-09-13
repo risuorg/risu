@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "370b7b42_fca940ac",
+        "filename": "citellusclient/citellus.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1013485
+      },
+      "writtenOn": "2019-09-13T10:01:11Z",
+      "side": 1,
+      "message": "I prefer to force https to avoid plain connections if citellus.html is server on non-https server",
+      "revId": "e2de3b005cdc8f7e2ff6e77c69a98c009cc41ba5",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f6fc541_b3aabb03",
+        "filename": "citellusclient/citellus.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1013485
+      },
+      "writtenOn": "2019-09-13T10:01:11Z",
+      "side": 1,
+      "message": "Why log these 3 actions?",
+      "revId": "e2de3b005cdc8f7e2ff6e77c69a98c009cc41ba5",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ca7f80e_67d317d2",
+        "filename": "citellusclient/citellus.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1013485
+      },
+      "writtenOn": "2019-09-13T10:01:11Z",
+      "side": 1,
+      "message": "maybe change from itwas to itis ?",
+      "revId": "e2de3b005cdc8f7e2ff6e77c69a98c009cc41ba5",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d685a221_df02cead",
+        "filename": "citellusclient/citellus.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1013485
+      },
+      "writtenOn": "2019-09-13T10:01:11Z",
+      "side": 1,
+      "message": "Why generate the chart twice?",
+      "revId": "e2de3b005cdc8f7e2ff6e77c69a98c009cc41ba5",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    }
+  ]
+}

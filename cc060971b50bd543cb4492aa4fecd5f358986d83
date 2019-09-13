@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9622c5c8_87cab5e6",
+        "filename": "citellusclient/citellus.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 875,
+      "author": {
+        "id": 1013485
+      },
+      "writtenOn": "2019-09-13T10:01:11Z",
+      "side": 1,
+      "message": "remove?",
+      "revId": "cc060971b50bd543cb4492aa4fecd5f358986d83",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    }
+  ]
+}
