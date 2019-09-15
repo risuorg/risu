@@ -1,0 +1,18 @@
+#!/bin/bash
+
+LISTENER_HOST=$(grep -m1 -A7 listener /etc/qpid-dispatch/qdrouterd.conf | awk -F: '/:/{gsub(/ /, "", $1); /:/gsub(/ /, "", $2); if ($1 == "host") print $2}')
+LISTENER_PORT=$(grep -m1 -A7 listener /etc/qpid-dispatch/qdrouterd.conf | awk -F: '/:/{gsub(/ /, "", $1); /:/gsub(/ /, "", $2); if ($1 == "port") print $2}')
+CONNECTION_URL=amqp://$LISTENER_HOST:$LISTENER_PORT
+
+SSLPROFILE=$(grep -m1 -A7 listener /etc/qpid-dispatch/qdrouterd.conf | awk -F: '/:/{gsub(/ /, "", $1); /:/gsub(/ /, "", $2); if ($1 == "sslProfile") print $2}')
+
+if [ -z "$SSLPROFILE" ]; then
+  SSLARGS=""
+else
+  CERTDB=$(grep -m1 -A5 "name: $SSLPROFILE" /etc/qpid-dispatch/qdrouterd.conf | awk -F: '/:/{gsub(/ /, "", $1); /:/gsub(/ /, "", $2); if ($1 == "certDb") print $2}')
+  CERT=$(grep -m1 -A5 "name: $SSLPROFILE" /etc/qpid-dispatch/qdrouterd.conf | awk -F: '/:/{gsub(/ /, "", $1); /:/gsub(/ /, "", $2); if ($1 == "certFile") print $2}')
+  KEY=$(grep -m1 -A5 "name: $SSLPROFILE" /etc/qpid-dispatch/qdrouterd.conf | awk -F: '/:/{gsub(/ /, "", $1); /:/gsub(/ /, "", $2); if ($1 == "keyFile") print $2}')
+  SSLARGS="--ssl-certificate=$CERT --ssl-key=$KEY --ssl-trustfile=$CERTDB"
+fi
+
+qdstat -c $SSLARGS -b $CONNECTION_URL
