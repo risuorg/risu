@@ -12,4 +12,9 @@ if [ "${proto_is_ssl,,}" = true ] ; then
     bind_proto=https
 fi
 
+# Add brackets if IPv6
+if [[ $bind_host =~ ":" ]]; then
+    bind_host="[${bind_host}]"
+fi
+
 healthcheck_curl ${bind_proto}://${bind_host}:${bind_port}/

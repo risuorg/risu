@@ -5,7 +5,7 @@
 process='octavia-health-manager'
 args="${@:-5555}"
 
-if healthcheck_listen $process $args; then
+if healthcheck_port $process $args; then
     exit 0
 else
     ports=${args// /,}
