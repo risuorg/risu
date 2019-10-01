@@ -93,6 +93,17 @@ is_required_file(){
     done
 }
 
+is_mandatory_file(){
+    for file in "$@"; do
+        if [[ ! -f ${file} ]];  then
+            # to remove the ${CITELLUS_ROOT} from the stderr.
+            file=${file#${CITELLUS_ROOT}}
+            echo "required file $file not found." >&2
+            exit ${RC_FAILED}
+        fi
+    done
+}
+
 is_active(){
     if [ "x$CITELLUS_LIVE" = "x1" ]; then
         if [ ! -z "$(which systemctl 2>/dev/null)" ]; then
