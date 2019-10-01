@@ -1,0 +1,15 @@
+# Author: Pablo Iranzo Gómez (Pablo.Iranzo@redhat.com)
+
+# Copyright (C) 2019 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# description: CCN-STIC-619 compliance-related checks
+# long_name: CCN-STIC-619 checks
+# priority: 1000
+#
+# https://www.ccn-cert.cni.es/pdf/guias/series-ccn-stic/guias-de-acceso-publico-ccn-stic/3674-ccn-stic-619-implementacion-de-seguridad-sobre-centos7/file.html
+#
+# Defines which plugins to include, exclude, etc
+# Syntax
+# +keyword : includes keyword in plugin search
+# -keyword : excludes keyword in plugin search
+
++CCN-STIC-619
