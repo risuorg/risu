@@ -208,6 +208,21 @@
             <!-- /col -->
         </div>
         <!-- /row -->
+        <div class="clearfix row-cards-pro">
+            <!-- Table HTML -->
+            <table class="table table-striped table-bordered table-hover" id="table1">
+                <thead>
+                    <tr id="profile_table_citellus_header">
+                        <th>Citellus Profiles</th>
+                    </tr>
+                </thead>
+                <tbody id="profile_table_citellus_body" style="">
+                    <tr id="profile-group" class="list-group list-view-pf list-view-pf-view">
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- /row -->
         <div class="clearfix row-cards-pf">
             <!-- Table HTML -->
             <table class="table table-striped table-bordered table-hover" id="table1">
@@ -512,7 +527,7 @@
                 height: 115
             };
 
-
+            var itisprofile = 0;
             var item_id = result.id;
             var row = "";
             // we build the text that is going to be appended to the container
@@ -590,8 +605,11 @@
             row += '         </div><!-- /row -->\n';
             row += '        </div><!-- /list-group-item-container -->\n';
             row += '       </div><!-- /list-group-item -->\n';
-            $("#list-group").append(row);
+            if (itisprofile == "0") {
+                $("#list-group").append(row);
+            }
             if (itisprofile == "1") {
+                $("#profile-group").append(row);
                 if(pieChartSmallConfig.data.pietotal != '0') {
                     c3.generate(pieChartSmallConfig);
                 }
@@ -695,6 +713,9 @@
             });
             $("body").on("click", '#metadata_table_citellus_header', function(e) {
                 $("#metadata_table_citellus_body").toggle()
+            });
+            $("body").on("click", '#profile_table_citellus_header', function(e) {
+                $("#profile_table_citellus_body").toggle()
             });
             $("body").on("click", '#report_table_citellus_header', function(e) {
                 $("#report_table_citellus_body").toggle()
