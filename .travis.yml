@@ -34,13 +34,21 @@ script:
 - python-codacy-coverage -r coverage.xml
 
 deploy:
-  provider: pypi
-  user: citellus
-  distributions: sdist
-  password:
-    secure: gFTqF7ykv230d3M0Ql99TY3mXGEwYZBfpQKxjxhBxaI+lT4VpUhCz6NpoZ+B5JLBF9s0aHUuBli1Fhf6fhRgbPm8aWiihvw5g7YxSR9BWcxV6C0qjptrx7nTEh+5UO+ohpWIDnPVX2hwz3fj9gxCF1y/12bEWGMc1MCmrf97NBbA8+LXDP3fI5Oz9PK1qTwOL2jv3eYI2jexq/wfA643OQqqDZ0MHRwtjAeMjOaMuQ4DQGHHn03Ht6X83LxNn24YZ47jo9dKJOmg3ZxelLpA6ZGwaTaXjIUdv4gDCXtrTA4UDHL49d4hCqOcEbq+8b9hemRC/lpy00sw4cH9agskDVRjolzhUwzqQBrwG7Os/9wMJZwb8WAqbEUNjJNdkp87TF/N5MY4iCFQvl3ITmDC3j0n1IZWqH7tTv3NAu6nl24HSECdfGzdLVdAN0aduug2rN2Xm+657P4nNpM6u4WFJvC2hhHD+MxYnhdCrgUNc3WH9vu4u4i4pEYKvwHIPRzeKRg+wj6NtiMcm49N+aR+RXo5Ym3TH321CP10ZACKx8MQCqo//cCliViTgeC/FbP+mWvJp/EOXuqyylaMihjlnHELcp+h3Q+P5aNNSTpvo+x5gPN4RZB2KuNZEDn7lXKVE50fx5VsYXpe70bbVJH0TLLFVSfHg2IjGXsBMgzzeC8=
-  on:
-    branch: master
+  - provider: pypi
+    user: citellus
+    distributions: sdist
+    password:
+      secure: "gFTqF7ykv230d3M0Ql99TY3mXGEwYZBfpQKxjxhBxaI+lT4VpUhCz6NpoZ+B5JLBF9s0aHUuBli1Fhf6fhRgbPm8aWiihvw5g7YxSR9BWcxV6C0qjptrx7nTEh+5UO+ohpWIDnPVX2hwz3fj9gxCF1y/12bEWGMc1MCmrf97NBbA8+LXDP3fI5Oz9PK1qTwOL2jv3eYI2jexq/wfA643OQqqDZ0MHRwtjAeMjOaMuQ4DQGHHn03Ht6X83LxNn24YZ47jo9dKJOmg3ZxelLpA6ZGwaTaXjIUdv4gDCXtrTA4UDHL49d4hCqOcEbq+8b9hemRC/lpy00sw4cH9agskDVRjolzhUwzqQBrwG7Os/9wMJZwb8WAqbEUNjJNdkp87TF/N5MY4iCFQvl3ITmDC3j0n1IZWqH7tTv3NAu6nl24HSECdfGzdLVdAN0aduug2rN2Xm+657P4nNpM6u4WFJvC2hhHD+MxYnhdCrgUNc3WH9vu4u4i4pEYKvwHIPRzeKRg+wj6NtiMcm49N+aR+RXo5Ym3TH321CP10ZACKx8MQCqo//cCliViTgeC/FbP+mWvJp/EOXuqyylaMihjlnHELcp+h3Q+P5aNNSTpvo+x5gPN4RZB2KuNZEDn7lXKVE50fx5VsYXpe70bbVJH0TLLFVSfHg2IjGXsBMgzzeC8="
+    on:
+      tags: true
+    skip_existing: true
+  - provider: releases
+    user: nemakacenko
+    api_key:
+      secure: "c4tGqVdw0p9MB4RyDjXdJ/Q1xNAijqkZOUSuq+cBXyCmKNBZAXaDXheW7elaXJK37GS1ID7N3Q1lCbzHF2gIe3o2LxYpbRHG4BgBYl/ZCna7wwA35jVpApwe11L5bcX4oufpu4KRM1oP4RnEtuFQCMoOEVwBNzkWcGkfyIIo1tZAusEKwX7lCFI896LHZJKTJhEY7f3hcS9sUV0OVWzdtUim7sWnoLR0niN6yyGbfekZW89vBrLrKs0usqJfaHgeAJUtkmU2aC1PuYygAMdRhDtfxUg3UjSE5oZcjfGk1e8FIwMlv+txxuIg/qDXxFJYCdQbXGj1NNUnZ/lFg/UR07zoqXrzACX1HpqDnnGBHwmA8V8NDaBrrnCE7Dk0NoEZ56xm3zbgbfnctx655cpGXaOsVAnxz/0jqPYEuCraM10pUlRAERIKbM9gTjJK/hp0J8yW3iN5sLmqQXUh/DwbRxU7Ew8bcdRp5Dsp9qRJ72IjstzKq8tAO5/r2KyZZ6tD8pN9M7oOfNIg2GoSQk9prZdudm1FkL7ag2UxVAu7mub/RHIhR95aL/XZvOkVM6ZN1oONMk7OY8gL87XfZCsv52U54VDyHV3XahXlcqHQfMaJbL3tQo19dxhywgnSRVBjNWNq2raYd6R1O4JbwhBBg3UqdIWvX0BSDs8D1FEAbDY="
+    skip_cleanup: true
+    on:
+      tags: true
 
 after_success:
 - coveralls
