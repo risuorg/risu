@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b8f584e_7ed8363a",
+        "filename": "citellusclient/citellus.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1013485
+      },
+      "writtenOn": "2019-10-13T21:33:37Z",
+      "side": 1,
+      "message": "id\u003dtable1 is already used",
+      "revId": "8314dd8a7432fb10c3c4076a51ae1faf487dd743",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    }
+  ]
+}
