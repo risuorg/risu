@@ -44,29 +44,31 @@ for plugin in plugins:
         out, err = p.communicate(str.encode('utf8'))
         returncode = p.returncode
         del p
+        out = out.decode("utf-8")
 
         modifications = {}
 
         regexyear = re.compile(regexpyear)
         regexemail = re.compile(regexpemail)
 
-        for line in out.split('\n'):
-            for field in line.split():
-                if '@' in field:
-                    name = field.strip()
-                if regexyear.match(field):
-                    date = field.strip()
+        if out:
+            for line in out.split('\n'):
+                for field in line.split():
+                    if '@' in field:
+                        name = field.strip()
+                    if regexyear.match(field):
+                        date = field.strip()
 
-            year = date[0:4]
+                year = date[0:4]
 
-            for elem in ['<', '>', '(', ')']:
-                name = name.replace(elem,'')
+                for elem in ['<', '>', '(', ')']:
+                    name = name.replace(elem,'')
 
-            if name and name != '' and not name in modifications:
-                modifications.update({name:[]})
-            if name in modifications:
-                if year and year != '' and not year in modifications[name]:
-                    modifications[name].append(year)
+                if name and name != '' and not name in modifications:
+                    modifications.update({name:[]})
+                if name in modifications:
+                    if year and year != '' and not year in modifications[name]:
+                        modifications[name].append(year)
 
         modificatstring = ""
         for name in modifications:
@@ -76,6 +78,7 @@ for plugin in plugins:
 
             p = subprocess.Popen(command.split(" "), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             out, err = p.communicate(str.encode('utf8'))
+            out = out.decode("utf-8")
             returncode = p.returncode
             del p
 
