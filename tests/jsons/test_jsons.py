@@ -48,8 +48,6 @@ class CitellusTest(TestCase):
                         flag = 0
         assert flag == 0
 
-
-class CitellusTest(TestCase):
     def test_domagui_againstjsons(self):
         print("Running magui against set of jsons, might take a while...")
         # Find all jsons
@@ -65,3 +63,27 @@ class CitellusTest(TestCase):
         # Call with no arguments
         res = magui.domagui(sosreports=jsons, citellusplugins=[])
         assert res != {}
+
+    def test_jsons_for_printresults(self):
+        mypath = os.path.dirname(__file__)
+        print(mypath)
+
+        jsons = citellus.findplugins(
+            folders=[mypath], executables=False, fileextension=".json"
+        )
+
+        flag = 0
+        citellusjson = jsons[0]
+
+        try:
+            results = json.load(open(citellusjson["plugin"], "r"))["results"]
+        except:
+            print(
+                "Skipping json: %s as cannot be loaded by citellus" % citellusjson
+            )
+            results = []
+
+        options = citellus.parse_args(default=True)
+        citellus.printresults(results, options)
+
+        assert True
