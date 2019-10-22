@@ -16,7 +16,7 @@ import maguiclient.magui as magui
 _ = citellus._
 
 extension = "metadata-outputs"
-pluginsdir = os.path.join(citellus.citellusdir, 'plugins', extension)
+pluginsdir = os.path.join(citellus.citellusdir, "plugins", extension)
 
 
 def init():
@@ -24,7 +24,7 @@ def init():
     Initializes module
     :return: List of triggers for Plugin
     """
-    triggers = ['*']
+    triggers = ["*"]
     return triggers
 
 
@@ -45,7 +45,11 @@ def run(data, quiet=False):  # do not edit this line
         toprint = data
 
     # We should filter metadata extension as is to be processed separately
-    err = [toprint[item] for item in toprint if 'backend' in toprint[item] and toprint[item]['backend'] == 'metadata']
+    err = [
+        toprint[item]
+        for item in toprint
+        if "backend" in toprint[item] and toprint[item]["backend"] == "metadata"
+    ]
 
     # Do return different code if we've data
     if len(err) > 0:
@@ -53,7 +57,7 @@ def run(data, quiet=False):  # do not edit this line
     else:
         returncode = citellus.RC_OKAY
 
-    out = ''
+    out = ""
     return returncode, out, err
 
 

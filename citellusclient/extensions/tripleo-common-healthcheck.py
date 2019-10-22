@@ -18,7 +18,7 @@ except:
 _ = citellus._
 
 extension = "tripleo-common-healthcheck"
-pluginsdir = os.path.join(citellus.citellusdir, 'plugins', extension)
+pluginsdir = os.path.join(citellus.citellusdir, "plugins", extension)
 
 
 def init():
@@ -26,7 +26,7 @@ def init():
     Initializes module
     :return: List of triggers for extension
     """
-    triggers = ['tripleo-common-healthcheck']
+    triggers = ["tripleo-common-healthcheck"]
     return triggers
 
 
@@ -44,7 +44,12 @@ def listplugins(options=None):
         except:
             pass
 
-    yield citellus.findplugins(folders=[pluginsdir], executables=True, extension='tripleo-common-healthcheck', prio=prio)
+    yield citellus.findplugins(
+        folders=[pluginsdir],
+        executables=True,
+        extension="tripleo-common-healthcheck",
+        prio=prio,
+    )
 
 
 def get_metadata(plugin):
@@ -57,7 +62,7 @@ def get_metadata(plugin):
     description = ""
 
     metadata = citellus.generic_get_metadata(plugin=plugin)
-    metadata.update({'description': description, 'priority': 333})
+    metadata.update({"description": description, "priority": 333})
 
     return metadata
 
@@ -77,9 +82,13 @@ def run(plugin):  # do not edit this line
         skipped = 1
 
     if skipped == 1:
-        return citellus.RC_SKIPPED, '', _('Plugin does not satisfy conditions for running')
+        return (
+            citellus.RC_SKIPPED,
+            "",
+            _("Plugin does not satisfy conditions for running"),
+        )
 
-    command = "sh %s " % plugin['plugin']
+    command = "sh %s " % plugin["plugin"]
 
     # Call exec to run playbook
     returncode, out, err = citellus.execonshell(filename=command)
@@ -92,7 +101,7 @@ def run(plugin):  # do not edit this line
 
     # Convert stdout to stderr for citellus handling
     err = out
-    out = ''
+    out = ""
 
     return returncode, out, err
 
@@ -103,5 +112,7 @@ def help():  # do not edit this line
     :return: help text
     """
 
-    commandtext = _("This extension processes openstack-tripleo-common healthcheck scripts")
+    commandtext = _(
+        "This extension processes openstack-tripleo-common healthcheck scripts"
+    )
     return commandtext

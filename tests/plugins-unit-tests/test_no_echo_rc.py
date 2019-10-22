@@ -25,9 +25,9 @@ from unittest import TestCase
 
 import citellusclient.shell as citellus
 
-testplugins = os.path.join(citellus.citellusdir, 'plugins', 'test')
-plugins = os.path.join(citellus.citellusdir, 'plugins', 'core')
-folder = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'setup')
+testplugins = os.path.join(citellus.citellusdir, "plugins", "test")
+plugins = os.path.join(citellus.citellusdir, "plugins", "core")
+folder = os.path.join(os.path.abspath(os.path.dirname(__file__)), "setup")
 uttest = citellus.findplugins(folders=[folder])
 citplugs = citellus.findplugins(folders=[plugins])
 
@@ -38,17 +38,15 @@ info = random.randint(70, 89)
 
 
 # Setup commands and expected return codes
-rcs = {"pass": okay,
-       "fail": failed,
-       "skipped": skipped,
-       'info': info}
+rcs = {"pass": okay, "fail": failed, "skipped": skipped, "info": info}
 
 
 class CitellusTest(TestCase):
     def test_plugins_no_echo_RC(self):
         for plugin in citplugs:
-            result = citellus.regexpfile(filename=plugin['plugin'], regexp='.*echo \$RC_.*')
-            if result == '':
-                print(plugin['plugin'])
-                assert result == ''
-
+            result = citellus.regexpfile(
+                filename=plugin["plugin"], regexp=".*echo \$RC_.*"
+            )
+            if result == "":
+                print(plugin["plugin"])
+                assert result == ""

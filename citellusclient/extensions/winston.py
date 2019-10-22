@@ -20,7 +20,7 @@ except:
 _ = citellus._
 
 extension = "winston"
-pluginsdir = os.path.join(citellus.citellusdir, 'plugins', extension)
+pluginsdir = os.path.join(citellus.citellusdir, "plugins", extension)
 
 
 def init():
@@ -28,7 +28,7 @@ def init():
     Initializes module
     :return: List of triggers for extension
     """
-    triggers = ['winston']
+    triggers = ["winston"]
     return triggers
 
 
@@ -46,7 +46,13 @@ def listplugins(options=None):
         except:
             pass
 
-    yield citellus.findplugins(folders=[pluginsdir], executables=False, fileextension=".txt", extension=extension, prio=prio)
+    yield citellus.findplugins(
+        folders=[pluginsdir],
+        executables=False,
+        fileextension=".txt",
+        extension=extension,
+        prio=prio,
+    )
 
 
 def get_metadata(plugin):
@@ -64,15 +70,19 @@ def run(plugin):  # do not edit this line
     Executes plugin
     :return: returncode, out, err
     """
-    filename = plugin['path']
+    filename = plugin["path"]
 
     skipped = 0
-    if os.environ['CITELLUS_LIVE'] == 0 and citellus.regexpfile(filename=filename, regexp="CITELLUS_ROOT"):
+    if os.environ["CITELLUS_LIVE"] == 0 and citellus.regexpfile(
+        filename=filename, regexp="CITELLUS_ROOT"
+    ):
         # We're running in snapshoot and faraday file has CITELLUS_ROOT
         skipped = 0
     else:
-        if os.environ['CITELLUS_LIVE'] == 1:
-            if citellus.regexpfile(filename=plugin['plugin'], regexp="CITELLUS_HYBRID") or not citellus.regexpfile(filename=filename, regexp="CITELLUS_ROOT"):
+        if os.environ["CITELLUS_LIVE"] == 1:
+            if citellus.regexpfile(
+                filename=plugin["plugin"], regexp="CITELLUS_HYBRID"
+            ) or not citellus.regexpfile(filename=filename, regexp="CITELLUS_ROOT"):
                 # We're running in Live mode and either plugin supports HYBRID or has no CITELLUS_ROOT
                 skipped = 0
             else:
@@ -80,20 +90,24 @@ def run(plugin):  # do not edit this line
                 skipped = 1
 
     if skipped == 1:
-        return citellus.RC_SKIPPED, '', _('Plugin does not satisfy conditions for running')
+        return (
+            citellus.RC_SKIPPED,
+            "",
+            _("Plugin does not satisfy conditions for running"),
+        )
 
-    if '${CITELLUS_ROOT}' in filename:
-        filename = filename.replace('${CITELLUS_ROOT}', os.environ['CITELLUS_ROOT'])
+    if "${CITELLUS_ROOT}" in filename:
+        filename = filename.replace("${CITELLUS_ROOT}", os.environ["CITELLUS_ROOT"])
 
     if os.access(filename, os.R_OK):
         # We can read the file, so let's calculate md5sum
-        out = ''
-        err = open(filename, 'rb').read()
+        out = ""
+        err = open(filename, "rb").read()
         returncode = citellus.RC_OKAY
     else:
         returncode = citellus.RC_SKIPPED
-        out = ''
-        err = 'File %s is not accessible in read mode' % filename
+        out = ""
+        err = "File %s is not accessible in read mode" % filename
 
     return returncode, out, err
 
@@ -104,5 +118,7 @@ def help():  # do not edit this line
     :return: help text
     """
 
-    commandtext = _("This extension creates fake plugins based on affinity/antiaffinity file list for later processing")
+    commandtext = _(
+        "This extension creates fake plugins based on affinity/antiaffinity file list for later processing"
+    )
     return commandtext

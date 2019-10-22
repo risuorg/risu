@@ -13,7 +13,7 @@ import citellusclient.shell as citellus
 _ = citellus._
 
 extension = "faraday"
-pluginsdir = os.path.join(citellus.citellusdir, 'plugins', extension)
+pluginsdir = os.path.join(citellus.citellusdir, "plugins", extension)
 
 
 def init():
@@ -22,7 +22,7 @@ def init():
     :return: List of triggers for Plugin
     """
 
-    triggers = citellus.getids(include=['faraday/positive', 'faraday/negative'])
+    triggers = citellus.getids(include=["faraday/positive", "faraday/negative"])
     return triggers
 
 
@@ -40,24 +40,34 @@ def run(data, quiet=False):  # do not edit this line
         # 'err' in this case should be always equal to the md5sum of the file so that we can report the problem
         err = []
         allskipped = True
-        for sosreport in data[ourdata]['sosreport']:
-            err.append(data[ourdata]['sosreport'][sosreport]['err'])
-            if data[ourdata]['sosreport'][sosreport]['rc'] != citellus.RC_SKIPPED:
+        for sosreport in data[ourdata]["sosreport"]:
+            err.append(data[ourdata]["sosreport"][sosreport]["err"])
+            if data[ourdata]["sosreport"][sosreport]["rc"] != citellus.RC_SKIPPED:
                 allskipped = False
 
-        if data[ourdata]['path'].strip() != '':
+        if data[ourdata]["path"].strip() != "":
             if not allskipped:
-                if 'positive' in data[ourdata]['plugin']:
+                if "positive" in data[ourdata]["plugin"]:
                     if len(sorted(set(err))) != 1:
-                        message.append(_("%s contents differ across hosts, ensure proper behavior.") % data[ourdata]['path'].replace("${CITELLUS_ROOT}", ""))
+                        message.append(
+                            _(
+                                "%s contents differ across hosts, ensure proper behavior."
+                            )
+                            % data[ourdata]["path"].replace("${CITELLUS_ROOT}", "")
+                        )
                         returncode = citellus.RC_FAILED
 
-                if 'negative' in data[ourdata]['plugin']:
+                if "negative" in data[ourdata]["plugin"]:
                     if len(sorted(set(err))) == 1:
-                        message.append(_("%s contents are the same across hosts, ensure proper behavior.") % data[ourdata]['path'].replace("${CITELLUS_ROOT}", ""))
+                        message.append(
+                            _(
+                                "%s contents are the same across hosts, ensure proper behavior."
+                            )
+                            % data[ourdata]["path"].replace("${CITELLUS_ROOT}", "")
+                        )
                         returncode = citellus.RC_FAILED
 
-    out = ''
+    out = ""
     err = "\n".join(message)
 
     return returncode, out, err
@@ -69,5 +79,7 @@ def help():  # do not edit this line
     :return: help text
     """
 
-    commandtext = _("Plugin for reporting back files that should BE or NOT BE different across sosreports")
+    commandtext = _(
+        "Plugin for reporting back files that should BE or NOT BE different across sosreports"
+    )
     return commandtext

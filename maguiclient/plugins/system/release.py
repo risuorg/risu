@@ -23,7 +23,7 @@ def init():
     Initializes module
     :return: List of triggers for Plugin
     """
-    ids = citellus.getids(include=['/metadata/system/release.sh'])
+    ids = citellus.getids(include=["/metadata/system/release.sh"])
     return ids
 
 
@@ -37,16 +37,21 @@ def run(data, quiet=False):  # do not edit this line
 
     returncode = citellus.RC_OKAY
 
-    message = ''
+    message = ""
     for ourdata in data:
         # 'err' in this case should be always equal to the md5sum of the file so that we can report the problem
-        err = [data[ourdata]['sosreport'][sosreport]['err'] for sosreport in data[ourdata]['sosreport']]
+        err = [
+            data[ourdata]["sosreport"][sosreport]["err"]
+            for sosreport in data[ourdata]["sosreport"]
+        ]
 
         if len(sorted(set(err))) != 1:
-            message = _("Hosts contains different releases of operating system and can cause issues.")
+            message = _(
+                "Hosts contains different releases of operating system and can cause issues."
+            )
             returncode = citellus.RC_FAILED
 
-    out = ''
+    out = ""
     err = message
     return returncode, out, err
 

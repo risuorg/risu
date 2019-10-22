@@ -24,7 +24,7 @@ except:
 _ = citellus._
 
 extension = "rhv-log-collector-analyzer"
-pluginsdir = os.path.join(citellus.citellusdir, 'plugins', extension)
+pluginsdir = os.path.join(citellus.citellusdir, "plugins", extension)
 
 
 def init():
@@ -32,7 +32,7 @@ def init():
     Initializes module
     :return: List of triggers for extension
     """
-    triggers = ['rhv-log-collector-analyzer']
+    triggers = ["rhv-log-collector-analyzer"]
     return triggers
 
 
@@ -50,7 +50,13 @@ def listplugins(options=None):
         except:
             pass
 
-    yield citellus.findplugins(folders=[pluginsdir], executables=False, fileextension=".txt", extension='rhv-log-collector-analyzer', prio=prio)
+    yield citellus.findplugins(
+        folders=[pluginsdir],
+        executables=False,
+        fileextension=".txt",
+        extension="rhv-log-collector-analyzer",
+        prio=prio,
+    )
 
 
 def get_metadata(plugin):
@@ -60,19 +66,19 @@ def get_metadata(plugin):
     :return: metadata dict for that plugin
     """
 
-    with open(plugin['plugin'], 'r') as stream:
+    with open(plugin["plugin"], "r") as stream:
         try:
-            doc = (yaml.safe_load(stream))
+            doc = yaml.safe_load(stream)
         except:
             doc = ""
 
     try:
-        description = doc[0]['vars']['metadata']['description']
+        description = doc[0]["vars"]["metadata"]["description"]
     except:
         description = ""
 
     metadata = citellus.generic_get_metadata(plugin=plugin)
-    metadata.update({'description': description})
+    metadata.update({"description": description})
 
     return metadata
 
@@ -87,7 +93,11 @@ def run(plugin):  # do not edit this line
     rhvlc = citellus.which("rhv-log-collector-analyzer-live")
     # rhv-log-collector-analyzer-live --json
     if not rhvlc:
-        return citellus.RC_SKIPPED, '', _('rhv-log-collector-analyzer-live support not found')
+        return (
+            citellus.RC_SKIPPED,
+            "",
+            _("rhv-log-collector-analyzer-live support not found"),
+        )
 
     if citellus.CITELLUS_LIVE == 0:
         # We're running in snapshoot
@@ -100,7 +110,11 @@ def run(plugin):  # do not edit this line
         skipped = 1
 
     if skipped == 1:
-        return citellus.RC_SKIPPED, '', _('Plugin does not satisfy conditions for running')
+        return (
+            citellus.RC_SKIPPED,
+            "",
+            _("Plugin does not satisfy conditions for running"),
+        )
 
     command = "%s --json" % rhvlc
 
@@ -117,10 +131,10 @@ def run(plugin):  # do not edit this line
     try:
         err = out
     except:
-        err = 'Failed to convert output from log-analyzer'
+        err = "Failed to convert output from log-analyzer"
         returncode = citellus.RC_SKIPPED
 
-    out = ''
+    out = ""
 
     return returncode, out, err
 

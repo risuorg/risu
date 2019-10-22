@@ -31,22 +31,24 @@ import citellusclient.shell as citellus
 # To create your own test, update NAME with plugin name and copy this file to test_$NAME.py
 NAME = "test_cf_is_rpm"
 
-testplugins = os.path.join(citellus.citellusdir, 'plugins', 'test')
-plugins = os.path.join(citellus.citellusdir, 'plugins', 'core')
-folder = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'setup')
-uttest = citellus.findplugins(folders=[folder], include=[NAME])[0]['plugin']
+testplugins = os.path.join(citellus.citellusdir, "plugins", "test")
+plugins = os.path.join(citellus.citellusdir, "plugins", "core")
+folder = os.path.join(os.path.abspath(os.path.dirname(__file__)), "setup")
+uttest = citellus.findplugins(folders=[folder], include=[NAME])[0]["plugin"]
 us = os.path.basename(uttest)
 citplugs = citellus.findplugins(folders=[folder], include=[us])
 
 
 # Setup commands and expected return codes
-rcs = {"pass": citellus.RC_OKAY,
-       "fail": citellus.RC_FAILED,
-       "skipped": citellus.RC_SKIPPED,
-       "info": citellus.RC_INFO}
+rcs = {
+    "pass": citellus.RC_OKAY,
+    "fail": citellus.RC_FAILED,
+    "skipped": citellus.RC_SKIPPED,
+    "info": citellus.RC_INFO,
+}
 
 
-def runtest(testtype='False'):
+def runtest(testtype="False"):
     """
     Actually run the test for UT
     :param testtype: argument to pass to setup script
@@ -56,7 +58,7 @@ def runtest(testtype='False'):
     # testtype will be 'pass', 'fail', 'skipped'
 
     # We're iterating against the different UT tests defined in UT-tests folder
-    tmpdir = tempfile.mkdtemp(prefix='citellus-tmp')
+    tmpdir = tempfile.mkdtemp(prefix="citellus-tmp")
 
     # Setup test for 'testtype'
     subprocess.check_output([uttest, uttest, testtype, tmpdir])
@@ -67,10 +69,9 @@ def runtest(testtype='False'):
     plugid = citellus.getids(plugins=citplugs)[0]
     # Get Return code
     if plugid in res:
-        rc = res[plugid]['result']['rc']
+        rc = res[plugid]["result"]["rc"]
     else:
         rc = testtype
-
 
     # Remove tmp folder
     shutil.rmtree(tmpdir)
@@ -82,17 +83,14 @@ def runtest(testtype='False'):
 class CitellusTest(TestCase):
     def test_pass(self):
         # testtype will be 'pass', 'fail', 'skipped'
-        testtype = 'pass'
+        testtype = "pass"
         result = runtest(testtype=testtype)
         if result != testtype:
             assert result == rcs[testtype]
-
 
     def test_fail(self):
         # testtype will be 'pass', 'fail', 'skipped'
-        testtype = 'fail'
+        testtype = "fail"
         result = runtest(testtype=testtype)
         if result != testtype:
             assert result == rcs[testtype]
-
-

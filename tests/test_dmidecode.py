@@ -8,9 +8,10 @@ from unittest import TestCase
 
 from citellusclient.tools.dmidecode import *
 
+
 class CitellusTest(TestCase):
     def test_dmidecode(self):
-        with open("tests/other/dmidecode","r") as f:
+        with open("tests/other/dmidecode", "r") as f:
             content = f.read()
             output = parse_dmi(content)
             assert output != "1"

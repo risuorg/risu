@@ -49,9 +49,9 @@ def runninglive():
     Checks if we're running against a live environment
     :return: Bool
     """
-    if os.environ['CITELLUS_LIVE'] == 1:
+    if os.environ["CITELLUS_LIVE"] == 1:
         return True
-    elif os.environ['CITELLUS_LIVE'] == 0:
+    elif os.environ["CITELLUS_LIVE"] == 0:
         return False
 
 
@@ -72,7 +72,7 @@ def main():
     """
 
     # Base path to find files
-    CITELLUS_ROOT = os.environ['CITELLUS_ROOT']
+    CITELLUS_ROOT = os.environ["CITELLUS_ROOT"]
 
     if runninglive():
         # Running on LIVE environment
@@ -90,7 +90,9 @@ def main():
                 # Error with plugin tests
 
                 # Provide messages on STDERR
-                exitcitellus(code=citellus.RC_FAILED, msg="There was an error because of 'xxx'")
+                exitcitellus(
+                    code=citellus.RC_FAILED, msg="There was an error because of 'xxx'"
+                )
         else:
             # Plugin script skipped per conditions
 
@@ -107,7 +109,9 @@ def main():
                 # Error with plugin tests
 
                 # Provide messages on STDERR
-                exitcitellus(code=citellus.RC_FAILED, msg="There was an error because of 'xxx'")
+                exitcitellus(
+                    code=citellus.RC_FAILED, msg="There was an error because of 'xxx'"
+                )
         else:
             # Plugin script skipped per conditions
 
@@ -117,4 +121,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

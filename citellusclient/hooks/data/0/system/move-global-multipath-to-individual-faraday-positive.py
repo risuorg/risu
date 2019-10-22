@@ -18,7 +18,7 @@ except:
 _ = citellus._
 
 extension = "__file__"
-pluginsdir = os.path.join(citellus.citellusdir, 'plugins', extension)
+pluginsdir = os.path.join(citellus.citellusdir, "plugins", extension)
 
 
 def init():
@@ -41,41 +41,49 @@ def run(data, quiet=False):  # do not edit this line
     idstodel = []
     datatoadd = []
 
-    mpathids = citellus.calcid(string='/plugins/faraday/positive/system/multipathluns.sh')
+    mpathids = citellus.calcid(
+        string="/plugins/faraday/positive/system/multipathluns.sh"
+    )
     # Loop over plugin id's in data
     for pluginid in data:
-        if data[pluginid]['id'] == mpathids:
+        if data[pluginid]["id"] == mpathids:
             # Make a copy of dict for working on it
             plugin = dict(data[pluginid])
 
             # Add plugin ID to be removed for resulting data so magui doesn't compare the whole set of nics at the same time
             idstodel.append(str(pluginid))
 
-            err = str(plugin['result']['err'])
-            rc = int(plugin['result']['rc'])
-            plugpath = str(plugin['plugin'])
-            id = str(plugin['id'])
-            ln = str(plugin['long_name'])
-            desc = str(plugin['description'])
+            err = str(plugin["result"]["err"])
+            rc = int(plugin["result"]["rc"])
+            plugpath = str(plugin["plugin"])
+            id = str(plugin["id"])
+            ln = str(plugin["long_name"])
+            desc = str(plugin["description"])
 
             # Iterate over NIC pairs
             if ";" in err:
                 for pair in err.split(";"):
-                    if pair != '':
+                    if pair != "":
                         # For each device:size pair, split on ":" for LUN/size and fake plugin entry
-                        newid = "%s-%s" % (id, citellus.calcid(string=pair.split(":")[0]))
-                        update = {'id': newid, 'description': '%s: %s' % (desc, pair.split(":")[0]),
-                                  'long_name': '%s: %s' % (ln, pair.split(":")[0]),
-                                  'plugin': '%s-%s' % (plugpath, pair.split(":")[0]),
-                                  'name': 'mpath: %s' % pair.split(":")[0]}
+                        newid = "%s-%s" % (
+                            id,
+                            citellus.calcid(string=pair.split(":")[0]),
+                        )
+                        update = {
+                            "id": newid,
+                            "description": "%s: %s" % (desc, pair.split(":")[0]),
+                            "long_name": "%s: %s" % (ln, pair.split(":")[0]),
+                            "plugin": "%s-%s" % (plugpath, pair.split(":")[0]),
+                            "name": "mpath: %s" % pair.split(":")[0],
+                        }
 
-                        resultupdate = {'result': {'err': pair, 'out': '', 'rc': rc}}
+                        resultupdate = {"result": {"err": pair, "out": "", "rc": rc}}
                         update.update(resultupdate)
 
                         # Update plugin dictionary with forged values
                         plugin.update(dict(update))
 
-                        plugin['result']['err'] = str(pair)
+                        plugin["result"]["err"] = str(pair)
 
                         # Append new modified plugin to dataset
                         datatoadd.append({newid: dict(plugin)})
@@ -97,5 +105,7 @@ def help():  # do not edit this line
     :return: help text
     """
 
-    commandtext = _("This hook proceses faraday-exec results and converts to faraday for Magui plugin to work")
+    commandtext = _(
+        "This hook proceses faraday-exec results and converts to faraday for Magui plugin to work"
+    )
     return commandtext

@@ -18,7 +18,7 @@ except:
 _ = citellus._
 
 extension = "__file__"
-pluginsdir = os.path.join(citellus.citellusdir, 'plugins', extension)
+pluginsdir = os.path.join(citellus.citellusdir, "plugins", extension)
 
 
 def init():
@@ -38,26 +38,29 @@ def run(data, quiet=False):  # do not edit this line
     """
 
     # Use calculate ID instead of getid because of execution loop
-    sourceid = citellus.calcid(string='/plugins/metadata/openstack/system-role.sh')
-    targetid = citellus.calcid(string='/plugins/core/system/firewall.sh')
-    skipped = int(os.environ['RC_SKIPPED'])
+    sourceid = citellus.calcid(string="/plugins/metadata/openstack/system-role.sh")
+    targetid = citellus.calcid(string="/plugins/core/system/firewall.sh")
+    skipped = int(os.environ["RC_SKIPPED"])
 
     mangle = False
 
     # Grab source data
     if sourceid in data:
-        if data[sourceid]['result']['err'] != 'unknown':
+        if data[sourceid]["result"]["err"] != "unknown":
             mangle = True
 
     if mangle and targetid in data:
         # We now fake result as SKIPPED and copy to datahook dict the new data
-        data[targetid]['datahook'] = {}
-        data[targetid]['datahook']['prior'] = dict(data[targetid]['result'])
-        newresults = dict(data[targetid]['result'])
-        newresults['rc'] = skipped
-        newresults['err'] = 'Marked as skipped by data hook %s' % os.path.basename(__file__).split(os.sep)[0]
-        data[targetid]['result'] = newresults
-        citellus.LOG.debug("Data mangled for plugin %s:" % data[targetid]['plugin'])
+        data[targetid]["datahook"] = {}
+        data[targetid]["datahook"]["prior"] = dict(data[targetid]["result"])
+        newresults = dict(data[targetid]["result"])
+        newresults["rc"] = skipped
+        newresults["err"] = (
+            "Marked as skipped by data hook %s"
+            % os.path.basename(__file__).split(os.sep)[0]
+        )
+        data[targetid]["result"] = newresults
+        citellus.LOG.debug("Data mangled for plugin %s:" % data[targetid]["plugin"])
 
     return data
 
@@ -68,5 +71,7 @@ def help():  # do not edit this line
     :return: help text
     """
 
-    commandtext = _("This hook proceses Citellus outputs and unfails firewall if openstack is used")
+    commandtext = _(
+        "This hook proceses Citellus outputs and unfails firewall if openstack is used"
+    )
     return commandtext

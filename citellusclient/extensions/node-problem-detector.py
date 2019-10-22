@@ -20,7 +20,7 @@ except:
 _ = citellus._
 
 extension = "node-problem-detector"
-pluginsdir = os.path.join(citellus.citellusdir, 'plugins', extension)
+pluginsdir = os.path.join(citellus.citellusdir, "plugins", extension)
 
 
 def init():
@@ -28,7 +28,7 @@ def init():
     Initializes module
     :return: List of triggers for extension
     """
-    triggers = ['node-problem-detector']
+    triggers = ["node-problem-detector"]
     return triggers
 
 
@@ -48,22 +48,34 @@ def listplugins(options=None):
 
     plugins = []
 
-    for plugin in citellus.findplugins(folders=[pluginsdir], executables=False, fileextension=".json", extension=extension, prio=prio):
-        filename = plugin['plugin']
-        data = json.load(open(filename, 'r'))
-        if 'logPath' in data and 'rules' in data:
-            path = data['logPath']
+    for plugin in citellus.findplugins(
+        folders=[pluginsdir],
+        executables=False,
+        fileextension=".json",
+        extension=extension,
+        prio=prio,
+    ):
+        filename = plugin["plugin"]
+        data = json.load(open(filename, "r"))
+        if "logPath" in data and "rules" in data:
+            path = data["logPath"]
 
-            for rule in data['rules']:
+            for rule in data["rules"]:
                 # Clone plugin dictionary:
                 newplugin = dict(plugin)
-                newplugin['name'] = "Check %s for %s" % (path, rule['pattern'])
-                newplugin['category'] = 'node-problem-detector'
-                newplugin['path'] = '%s%s' % ("${CITELLUS_ROOT}", path)
-                newplugin['description'] = "%s: %s" % (plugin['description'], path.replace('${CITELLUS_ROOT}', ''))
-                newplugin['id'] = "%s%s" % (plugin['id'], citellus.calcid(string=rule['pattern']))
-                newplugin['pattern'] = rule['pattern']
-                newplugin['reason'] = rule['reason']
+                newplugin["name"] = "Check %s for %s" % (path, rule["pattern"])
+                newplugin["category"] = "node-problem-detector"
+                newplugin["path"] = "%s%s" % ("${CITELLUS_ROOT}", path)
+                newplugin["description"] = "%s: %s" % (
+                    plugin["description"],
+                    path.replace("${CITELLUS_ROOT}", ""),
+                )
+                newplugin["id"] = "%s%s" % (
+                    plugin["id"],
+                    citellus.calcid(string=rule["pattern"]),
+                )
+                newplugin["pattern"] = rule["pattern"]
+                newplugin["reason"] = rule["reason"]
                 plugins.append(dict(newplugin))
 
     yield plugins
@@ -85,16 +97,16 @@ def run(plugin):  # do not edit this line
     : return: returncode, out, err
     """
 
-    filename = plugin['path']
+    filename = plugin["path"]
 
-    if '${CITELLUS_ROOT}' in filename:
-        filename = filename.replace('${CITELLUS_ROOT}', os.environ['CITELLUS_ROOT'])
+    if "${CITELLUS_ROOT}" in filename:
+        filename = filename.replace("${CITELLUS_ROOT}", os.environ["CITELLUS_ROOT"])
 
-    pattern = plugin['pattern']
-    reason = plugin['reason']
+    pattern = plugin["pattern"]
+    reason = plugin["reason"]
 
-    out = ''
-    err = ''
+    out = ""
+    err = ""
     returncode = citellus.RC_FAILED
 
     if os.access(filename, os.R_OK) and os.path.isfile(filename):
@@ -105,7 +117,7 @@ def run(plugin):  # do not edit this line
             returncode = citellus.RC_OKAY
     else:
         returncode = citellus.RC_SKIPPED
-        err = 'File %s is not accessible in read mode' % filename
+        err = "File %s is not accessible in read mode" % filename
 
     return returncode, out, err
 
@@ -116,5 +128,7 @@ def help():  # do not edit this line
     :return: help text
     """
 
-    commandtext = _("This extension creates fake plugins based on node-plugin-detector jsons")
+    commandtext = _(
+        "This extension creates fake plugins based on node-plugin-detector jsons"
+    )
     return commandtext

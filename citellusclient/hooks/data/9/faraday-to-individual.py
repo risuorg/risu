@@ -18,7 +18,7 @@ except:
 _ = citellus._
 
 extension = "__file__"
-pluginsdir = os.path.join(citellus.citellusdir, 'plugins', extension)
+pluginsdir = os.path.join(citellus.citellusdir, "plugins", extension)
 
 
 def init():
@@ -42,42 +42,46 @@ def run(data, quiet=False):  # do not edit this line
     datatoadd = []
 
     # Loop over plugin id's in data
-    faradayids = citellus.getids(include=['faraday/positive', 'faraday/negative'])
+    faradayids = citellus.getids(include=["faraday/positive", "faraday/negative"])
 
     for pluginid in data:
-        if data[pluginid]['id'] in faradayids:
+        if data[pluginid]["id"] in faradayids:
             # Make a copy of dict for working on it
             plugin = dict(data[pluginid])
 
             # Add plugin ID to be removed for resulting data so magui doesn't compare the whole set of nics at the same time
             idstodel.append(str(pluginid))
 
-            err = str(plugin['result']['err'])
-            rc = int(plugin['result']['rc'])
-            plugpath = str(plugin['plugin'])
-            id = str(plugin['id'])
-            ln = str(plugin['long_name'])
-            desc = str(plugin['description'])
-            name = str(plugin['name'])
-            kb = str(plugin['kb'])
+            err = str(plugin["result"]["err"])
+            rc = int(plugin["result"]["rc"])
+            plugpath = str(plugin["plugin"])
+            id = str(plugin["id"])
+            ln = str(plugin["long_name"])
+            desc = str(plugin["description"])
+            name = str(plugin["name"])
+            kb = str(plugin["kb"])
 
             # Iterate over NIC pairs
             for pair in err.split(";"):
-                if pair != '':
+                if pair != "":
                     # For each value split and fake plugin entry
                     newid = "%s-%s" % (id, citellus.calcid(string=pair.split(":")[0]))
-                    update = {'id': newid, 'description': '%s: %s' % (desc, pair.split(":")[0]),
-                              'long_name': '%s: %s' % (ln, pair.split(":")[0]),
-                              'plugin': '%s-%s' % (plugpath, pair.split(":")[0]),
-                              'name': 'Faraday: %s' % name, 'kb': kb}
+                    update = {
+                        "id": newid,
+                        "description": "%s: %s" % (desc, pair.split(":")[0]),
+                        "long_name": "%s: %s" % (ln, pair.split(":")[0]),
+                        "plugin": "%s-%s" % (plugpath, pair.split(":")[0]),
+                        "name": "Faraday: %s" % name,
+                        "kb": kb,
+                    }
 
-                    resultupdate = {'result': {'err': pair, 'out': '', 'rc': rc}}
+                    resultupdate = {"result": {"err": pair, "out": "", "rc": rc}}
                     update.update(resultupdate)
 
                     # Update plugin dictionary with forged values
                     plugin.update(dict(update))
 
-                    plugin['result']['err'] = str(pair)
+                    plugin["result"]["err"] = str(pair)
 
                     # Append new modified plugin to dataset
                     datatoadd.append({newid: dict(plugin)})
@@ -99,5 +103,7 @@ def help():  # do not edit this line
     :return: help text
     """
 
-    commandtext = _("This hook proceses faraday results and fakes individual plugins out of them")
+    commandtext = _(
+        "This hook proceses faraday results and fakes individual plugins out of them"
+    )
     return commandtext

@@ -25,8 +25,8 @@ from unittest import TestCase
 
 import citellusclient.shell as citellus
 
-testplugins = os.path.join(citellus.citellusdir, 'plugins', 'test')
-pluginsdir = os.path.join(citellus.citellusdir, 'plugins', 'core')
+testplugins = os.path.join(citellus.citellusdir, "plugins", "test")
+pluginsdir = os.path.join(citellus.citellusdir, "plugins", "core")
 plugins = citellus.findplugins(folders=[pluginsdir])
 
 
@@ -36,25 +36,28 @@ class CitellusTest(TestCase):
         # Check list of plugins for regexp sourcing common functions and skip them
         nonsourcing = []
         for plugin in plugins:
-            if not citellus.regexpfile(filename=plugin['plugin'], regexp='.*common-functions'):
-                nonsourcing.append(plugin['plugin'])
+            if not citellus.regexpfile(
+                filename=plugin["plugin"], regexp=".*common-functions"
+            ):
+                nonsourcing.append(plugin["plugin"])
 
         commonfunctions = []
 
-        for script in citellus.findplugins(folders=[os.path.join(citellus.citellusdir, 'common.d')],
-                                           fileextension='.sh'):
-            filename = script['plugin']
-            with open(filename, 'r') as f:
+        for script in citellus.findplugins(
+            folders=[os.path.join(citellus.citellusdir, "common.d")],
+            fileextension=".sh",
+        ):
+            filename = script["plugin"]
+            with open(filename, "r") as f:
                 for line in f:
-                    find = re.match('^(([a-z]+_+)+[a-z]*)', line)
-                    if find and find.groups()[0] != '':
+                    find = re.match("^(([a-z]+_+)+[a-z]*)", line)
+                    if find and find.groups()[0] != "":
                         commonfunctions.append(find.groups()[0])
 
         usingcf = []
         for plugin in nonsourcing:
             for func in commonfunctions:
-                if citellus.regexpfile(filename=plugin, regexp='.*%s' % func):
+                if citellus.regexpfile(filename=plugin, regexp=".*%s" % func):
                     usingcf.append(plugin)
 
         assert sorted(set(usingcf)) == []
-

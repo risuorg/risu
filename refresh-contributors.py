@@ -20,28 +20,38 @@ import subprocess
 
 import citellusclient.shell as citellus
 
-regexpyear = '[0-9][0-9][0-9][0-9]-'
-regexpemail = '\\<(.*@.*)\\>'
+regexpyear = "[0-9][0-9][0-9][0-9]-"
+regexpemail = "\\<(.*@.*)\\>"
 
 # Find all plugins
 print("Finding all possible files to modify...")
-#plugins = citellus.findallplugins()
-plugins = citellus.findplugins(folders=[os.path.abspath(os.path.dirname(__file__))], executables=False, exclude=['.git', '.tox', '.pyc', '.history', 'doc/templates'], include=['.yml', '.py', '.sh', '.txt'])
+# plugins = citellus.findallplugins()
+plugins = citellus.findplugins(
+    folders=[os.path.abspath(os.path.dirname(__file__))],
+    executables=False,
+    exclude=[".git", ".tox", ".pyc", ".history", "doc/templates"],
+    include=[".yml", ".py", ".sh", ".txt"],
+)
 
-os.environ['LANG'] = 'en_US.UTF-8'
+os.environ["LANG"] = "en_US.UTF-8"
 
 # Iterate over found plugins
 for plugin in plugins:
 
-    if not 'citellus/plugins' in plugin['plugin']:
+    if not "citellus/plugins" in plugin["plugin"]:
 
-        name = ''
-        date = ''
+        name = ""
+        date = ""
 
-        command = "cd $(dirname %s) && git blame -e %s | awk '{print $2\" \"$3\" \"$4}'|egrep -o '<.*>.*[0-9][0-9][0-9][0-9]-' | sed 's/  */ /g' | cut -d ' ' -f 1-2 | sort -u|grep -v not.committed.yet" % (plugin['plugin'], plugin['plugin'])
+        command = (
+            "cd $(dirname %s) && git blame -e %s | awk '{print $2\" \"$3\" \"$4}'|egrep -o '<.*>.*[0-9][0-9][0-9][0-9]-' | sed 's/  */ /g' | cut -d ' ' -f 1-2 | sort -u|grep -v not.committed.yet"
+            % (plugin["plugin"], plugin["plugin"])
+        )
 
-        p = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
-        out, err = p.communicate(str.encode('utf8'))
+        p = subprocess.Popen(
+            command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True
+        )
+        out, err = p.communicate(str.encode("utf8"))
         returncode = p.returncode
         del p
         out = out.decode("utf-8")
@@ -52,22 +62,22 @@ for plugin in plugins:
         regexemail = re.compile(regexpemail)
 
         if out:
-            for line in out.split('\n'):
+            for line in out.split("\n"):
                 for field in line.split():
-                    if '@' in field:
+                    if "@" in field:
                         name = field.strip()
                     if regexyear.match(field):
                         date = field.strip()
 
                 year = date[0:4]
 
-                for elem in ['<', '>', '(', ')']:
-                    name = name.replace(elem,'')
+                for elem in ["<", ">", "(", ")"]:
+                    name = name.replace(elem, "")
 
-                if name and name != '' and not name in modifications:
-                    modifications.update({name:[]})
+                if name and name != "" and not name in modifications:
+                    modifications.update({name: []})
                 if name in modifications:
-                    if year and year != '' and not year in modifications[name]:
+                    if year and year != "" and not year in modifications[name]:
                         modifications[name].append(year)
 
         modificatstring = ""
@@ -76,57 +86,61 @@ for plugin in plugins:
 
             command = "grep -i %s AUTHORS" % name
 
-            p = subprocess.Popen(command.split(" "), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-            out, err = p.communicate(str.encode('utf8'))
+            p = subprocess.Popen(
+                command.split(" "), stdout=subprocess.PIPE, stderr=subprocess.PIPE
+            )
+            out, err = p.communicate(str.encode("utf8"))
             out = out.decode("utf-8")
             returncode = p.returncode
             del p
 
             newname = out.strip()
             if years.strip() is not None and newname.strip() is not None:
-                modificatstring = modificatstring + "\n" + "# Copyright (C) %s %s" % (years, newname)
+                modificatstring = (
+                    modificatstring + "\n" + "# Copyright (C) %s %s" % (years, newname)
+                )
 
         modificatstring = modificatstring + "\n"
         modificatstring = modificatstring.strip()
 
         lines = []
         for line in (l.rstrip() for l in modificatstring.split("\n")):
-            if line != '':
-                lines.append(line + '\n')
-            elif len(lines) >0 and lines[-1] != '\n':
-                lines.append(line + '\n')
+            if line != "":
+                lines.append(line + "\n")
+            elif len(lines) > 0 and lines[-1] != "\n":
+                lines.append(line + "\n")
 
         modificatstring = "".join(lines)
         modificatstring = modificatstring.strip()
 
-        if modificatstring == '':
-            print("\nDEBUG, no modifications to file %s found" % plugin['plugin'])
+        if modificatstring == "":
+            print("\nDEBUG, no modifications to file %s found" % plugin["plugin"])
             print("grep output")
             print(out)
             print("modifications")
             print(modifications)
 
-        elif modificatstring != '':
+        elif modificatstring != "":
             # Now modify the file with the new lines
-            regexp = '\A# Copyright .*'
-            pluginfile = plugin['plugin']
+            regexp = "\A# Copyright .*"
+            pluginfile = plugin["plugin"]
             newpluginfile = "%s.modif" % pluginfile
 
-            with open(pluginfile, 'r') as f:
+            with open(pluginfile, "r") as f:
                 lines = []
                 first = True
                 for line in (l.rstrip() for l in f):
-                    if line != '' and first:
-                        lines.append(line + '\n')
+                    if line != "" and first:
+                        lines.append(line + "\n")
                         first = False
                     else:
-                        lines.append(line + '\n')
+                        lines.append(line + "\n")
                 sourceFileContents = "".join(lines)
 
                 matchmodif = False
-                with open(newpluginfile, 'w') as fd:
+                with open(newpluginfile, "w") as fd:
                     newlines = []
-                    for line in sourceFileContents.split('\n'):
+                    for line in sourceFileContents.split("\n"):
                         line = "%s\n" % line
                         if re.match(regexp, line):
                             if not matchmodif:
@@ -140,13 +154,13 @@ for plugin in plugins:
                     lines = []
                     first = True
                     for line in (l.rstrip() for l in newlines):
-                        if line == '' and first:
+                        if line == "" and first:
                             first = False
                         else:
-                            if line != '' and first:
+                            if line != "" and first:
                                 lines.append(line)
                                 first = False
-                            elif len(lines) >0 and lines[-1] != '\n':
+                            elif len(lines) > 0 and lines[-1] != "\n":
                                 lines.append(line)
                             else:
                                 lines.append(line)

@@ -30,9 +30,9 @@ from unittest import TestCase
 import citellusclient.shell as citellus
 import maguiclient.magui as magui
 
-testplugins = os.path.join(citellus.citellusdir, 'plugins', 'test')
-plugins = os.path.join(citellus.citellusdir, 'plugins', 'core')
-folder = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'setup')
+testplugins = os.path.join(citellus.citellusdir, "plugins", "test")
+plugins = os.path.join(citellus.citellusdir, "plugins", "core")
+folder = os.path.join(os.path.abspath(os.path.dirname(__file__)), "setup")
 uttest = citellus.findplugins(folders=[folder])
 citplugs = citellus.findplugins(folders=[plugins])
 
@@ -43,30 +43,37 @@ info = random.randint(70, 89)
 
 
 # Setup commands and expected return codes
-rcs = {"pass": okay,
-       "fail": failed,
-       "skipped": skipped,
-       'info': info}
+rcs = {"pass": okay, "fail": failed, "skipped": skipped, "info": info}
 
 
 class CitellusTest(TestCase):
     def test_all_plugins_snapshot(self):
-        tmpdir = tempfile.mkdtemp(prefix='citellus-tmp')
-        tmpdir2 = tempfile.mkdtemp(prefix='citellus-tmp')
+        tmpdir = tempfile.mkdtemp(prefix="citellus-tmp")
+        tmpdir2 = tempfile.mkdtemp(prefix="citellus-tmp")
 
         # Setup folder for all tests
-        testtype = 'pass'
+        testtype = "pass"
         for test in uttest:
-            subprocess.call([test['plugin'], test['plugin'], testtype, tmpdir])
-            subprocess.call([test['plugin'], test['plugin'], testtype, tmpdir2])
+            subprocess.call([test["plugin"], test["plugin"], testtype, tmpdir])
+            subprocess.call([test["plugin"], test["plugin"], testtype, tmpdir2])
 
         # Run citellus once against them
-        results = citellus.docitellus(path=tmpdir, plugins=citplugs, okay=okay, failed=failed, skipped=skipped, info=info, web=True)
-        maguiresults = magui.domagui(sosreports=[tmpdir, tmpdir2], citellusplugins=citplugs)
+        results = citellus.docitellus(
+            path=tmpdir,
+            plugins=citplugs,
+            okay=okay,
+            failed=failed,
+            skipped=skipped,
+            info=info,
+            web=True,
+        )
+        maguiresults = magui.domagui(
+            sosreports=[tmpdir, tmpdir2], citellusplugins=citplugs
+        )
 
         # Check that citellus.html has been copied
-        assert os.access(os.path.join(tmpdir, 'citellus.json'), os.R_OK)
-        assert os.access(os.path.join(tmpdir, 'citellus.html'), os.R_OK)
+        assert os.access(os.path.join(tmpdir, "citellus.json"), os.R_OK)
+        assert os.access(os.path.join(tmpdir, "citellus.html"), os.R_OK)
         assert maguiresults
 
         # Remove tmp folder
@@ -77,41 +84,48 @@ class CitellusTest(TestCase):
         new_dict = []
         out_dict = []
         for item in results:
-            rc = results[item]['result']['rc']
+            rc = results[item]["result"]["rc"]
             if rc not in sorted({okay, failed, skipped, info}):
                 print(results[item])
             assert rc in sorted({okay, failed, skipped, info})
             if rc == failed or rc == skipped:
                 print(results[item])
-                assert results[item]['result']['err'] != ""
+                assert results[item]["result"]["err"] != ""
             new_dict.append(rc)
-            if results[item]['result']['out'] != "":
+            if results[item]["result"]["out"] != "":
                 print(results[item])
-                assert results[item]['result']['out'] == ""
-            out_dict.append(results[item]['result']['out'])
+                assert results[item]["result"]["out"] == ""
+            out_dict.append(results[item]["result"]["out"])
 
         for each in sorted(set(new_dict)):
             assert each in sorted({okay, failed, skipped, info})
 
     def test_all_plugins_live(self):
         # Run citellus once against them
-        results = citellus.docitellus(live=True, plugins=citplugs, okay=okay, failed=failed, skipped=skipped, info=info)
+        results = citellus.docitellus(
+            live=True,
+            plugins=citplugs,
+            okay=okay,
+            failed=failed,
+            skipped=skipped,
+            info=info,
+        )
 
         # Process plugin output from multiple plugins
         new_dict = []
         out_dict = []
         for item in results:
-            rc = results[item]['result']['rc']
+            rc = results[item]["result"]["rc"]
             if rc not in sorted({okay, failed, skipped, info}):
                 print(results[item])
             assert rc in sorted({okay, failed, skipped, info})
             if rc == failed or rc == skipped:
                 print(results[item])
-                assert results[item]['result']['err'] != ""
-            if results[item]['result']['out'] != "":
+                assert results[item]["result"]["err"] != ""
+            if results[item]["result"]["out"] != "":
                 print(results[item])
-                assert results[item]['result']['out'] == ""
-            out_dict.append(results[item]['result']['out'])
+                assert results[item]["result"]["out"] == ""
+            out_dict.append(results[item]["result"]["out"])
 
             new_dict.append(rc)
 

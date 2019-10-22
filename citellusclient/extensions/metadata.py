@@ -18,7 +18,7 @@ except:
 _ = citellus._
 
 extension = "metadata"
-pluginsdir = os.path.join(citellus.citellusdir, 'plugins', extension)
+pluginsdir = os.path.join(citellus.citellusdir, "plugins", extension)
 
 
 def init():
@@ -26,7 +26,7 @@ def init():
     Initializes module
     :return: List of triggers for extension
     """
-    triggers = ['metadata']
+    triggers = ["metadata"]
     return triggers
 
 
@@ -44,7 +44,7 @@ def listplugins(options=None):
         except:
             pass
 
-    yield citellus.findplugins(folders=[pluginsdir], extension='metadata', prio=prio)
+    yield citellus.findplugins(folders=[pluginsdir], extension="metadata", prio=prio)
 
 
 def get_metadata(plugin):
@@ -62,7 +62,7 @@ def run(plugin):  # do not edit this line
     Executes plugin
     :return: returncode, out, err
     """
-    return citellus.execonshell(filename=plugin['plugin'])
+    return citellus.execonshell(filename=plugin["plugin"])
 
 
 def help():  # do not edit this line
@@ -71,5 +71,7 @@ def help():  # do not edit this line
     :return: help text
     """
 
-    commandtext = _("This extension proceses Citellus metadata plugins to fill details about system")
+    commandtext = _(
+        "This extension proceses Citellus metadata plugins to fill details about system"
+    )
     return commandtext

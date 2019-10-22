@@ -19,7 +19,7 @@ except:
 _ = citellus._
 
 extension = "__file__"
-pluginsdir = os.path.join(citellus.citellusdir, 'plugins', extension)
+pluginsdir = os.path.join(citellus.citellusdir, "plugins", extension)
 
 
 def init():
@@ -40,8 +40,8 @@ def run(data, quiet=False):  # do not edit this line
 
     # Act on all faraday-exec plugins
     for pluginid in data:
-        if data[pluginid]['backend'] == 'faraday-exec':
-            data[pluginid]['backend'] = 'faraday'
+        if data[pluginid]["backend"] == "faraday-exec":
+            data[pluginid]["backend"] = "faraday"
 
     return data
 
@@ -52,5 +52,7 @@ def help():  # do not edit this line
     :return: help text
     """
 
-    commandtext = _("This hook proceses faraday-exec results and converts to faraday for Magui plugin to work")
+    commandtext = _(
+        "This hook proceses faraday-exec results and converts to faraday for Magui plugin to work"
+    )
     return commandtext

@@ -22,7 +22,7 @@ _ = citellus._
 
 extension = "faraday-exec"
 # We look for plugins in standard faraday path
-pluginsdir = os.path.join(citellus.citellusdir, 'plugins', 'faraday')
+pluginsdir = os.path.join(citellus.citellusdir, "plugins", "faraday")
 
 
 def init():
@@ -30,7 +30,7 @@ def init():
     Initializes module
     :return: List of triggers for extension
     """
-    triggers = ['faraday-exec']
+    triggers = ["faraday-exec"]
     return triggers
 
 
@@ -48,7 +48,9 @@ def listplugins(options=None):
         except:
             pass
 
-    plugins = citellus.findplugins(folders=[pluginsdir], fileextension=".sh", extension=extension, prio=prio)
+    plugins = citellus.findplugins(
+        folders=[pluginsdir], fileextension=".sh", extension=extension, prio=prio
+    )
 
     yield plugins
 
@@ -62,9 +64,9 @@ def get_metadata(plugin):
 
     metadata = citellus.generic_get_metadata(plugin=plugin)
 
-    subcategory = os.path.split(plugin['plugin'])[0].replace(pluginsdir, '')
-    category = os.path.normpath(subcategory).split(os.sep)[1] or ''
-    metadata.update({'subcategory': subcategory, 'category': category})
+    subcategory = os.path.split(plugin["plugin"])[0].replace(pluginsdir, "")
+    category = os.path.normpath(subcategory).split(os.sep)[1] or ""
+    metadata.update({"subcategory": subcategory, "category": category})
 
     return metadata
 
@@ -75,7 +77,7 @@ def run(plugin):  # do not edit this line
     :return: returncode, out, err
     """
 
-    return citellus.execonshell(filename=plugin['plugin'])
+    return citellus.execonshell(filename=plugin["plugin"])
 
 
 def help():  # do not edit this line
@@ -84,5 +86,7 @@ def help():  # do not edit this line
     :return: help text
     """
 
-    commandtext = _("This extension creates fake plugins based on affinity/antiaffinity file list for later processing")
+    commandtext = _(
+        "This extension creates fake plugins based on affinity/antiaffinity file list for later processing"
+    )
     return commandtext

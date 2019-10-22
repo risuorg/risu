@@ -24,7 +24,7 @@ except:
 _ = citellus._
 
 extension = "ansible"
-pluginsdir = os.path.join(citellus.citellusdir, 'plugins', extension)
+pluginsdir = os.path.join(citellus.citellusdir, "plugins", extension)
 
 
 def init():
@@ -32,7 +32,7 @@ def init():
     Initializes module
     :return: List of triggers for extension
     """
-    triggers = ['ansible']
+    triggers = ["ansible"]
     return triggers
 
 
@@ -50,7 +50,13 @@ def listplugins(options=None):
         except:
             pass
 
-    yield citellus.findplugins(folders=[pluginsdir], executables=False, fileextension=".yml", extension='ansible', prio=prio)
+    yield citellus.findplugins(
+        folders=[pluginsdir],
+        executables=False,
+        fileextension=".yml",
+        extension="ansible",
+        prio=prio,
+    )
 
 
 def get_metadata(plugin):
@@ -60,19 +66,19 @@ def get_metadata(plugin):
     :return: metadata dict for that plugin
     """
 
-    with open(plugin['plugin'], 'r') as stream:
+    with open(plugin["plugin"], "r") as stream:
         try:
-            doc = (yaml.safe_load(stream))
+            doc = yaml.safe_load(stream)
         except:
             doc = ""
 
     try:
-        description = doc[0]['vars']['metadata']['description']
+        description = doc[0]["vars"]["metadata"]["description"]
     except:
         description = ""
 
     metadata = citellus.generic_get_metadata(plugin=plugin)
-    metadata.update({'description': description})
+    metadata.update({"description": description})
 
     return metadata
 
@@ -86,13 +92,17 @@ def run(plugin):  # do not edit this line
 
     ansible = citellus.which("ansible-playbook")
     if not ansible:
-        return citellus.RC_SKIPPED, '', _('ansible-playbook support not found')
+        return citellus.RC_SKIPPED, "", _("ansible-playbook support not found")
 
-    if citellus.CITELLUS_LIVE == 0 and citellus.regexpfile(filename=plugin['plugin'], regexp="CITELLUS_ROOT"):
+    if citellus.CITELLUS_LIVE == 0 and citellus.regexpfile(
+        filename=plugin["plugin"], regexp="CITELLUS_ROOT"
+    ):
         # We're running in snapshoot and playbook has CITELLUS_ROOT
         skipped = 0
     elif citellus.CITELLUS_LIVE == 1:
-        if citellus.regexpfile(filename=plugin['plugin'], regexp="CITELLUS_HYBRID") or not citellus.regexpfile(filename=plugin['plugin'], regexp="CITELLUS_ROOT"):
+        if citellus.regexpfile(
+            filename=plugin["plugin"], regexp="CITELLUS_HYBRID"
+        ) or not citellus.regexpfile(filename=plugin["plugin"], regexp="CITELLUS_ROOT"):
             # We're running in Live mode and either plugin supports HYBRID or has no CITELLUS_ROOT
             skipped = 0
         else:
@@ -103,12 +113,16 @@ def run(plugin):  # do not edit this line
         skipped = 1
 
     if skipped == 1:
-        return citellus.RC_SKIPPED, '', _('Plugin does not satisfy conditions for running')
+        return (
+            citellus.RC_SKIPPED,
+            "",
+            _("Plugin does not satisfy conditions for running"),
+        )
 
-    command = "%s -i localhost, --connection=local %s" % (ansible, plugin['plugin'])
+    command = "%s -i localhost, --connection=local %s" % (ansible, plugin["plugin"])
 
     # Disable Ansible retry files creation:
-    os.environ['ANSIBLE_RETRY_FILES_ENABLED'] = "0"
+    os.environ["ANSIBLE_RETRY_FILES_ENABLED"] = "0"
 
     # Call exec to run playbook
     returncode, out, err = citellus.execonshell(filename=command)
@@ -121,12 +135,12 @@ def run(plugin):  # do not edit this line
 
     # Convert stdout to stderr for citellus handling
     err = out
-    out = ''
+    out = ""
 
     # Rewrite error messages to not contain all playbook execution but just the actual error
-    if 'FAILED!' in err:
-        start = err.find('FAILED!', 0) + 11
-        end = err.find('PLAY RECAP', 0) - 10
+    if "FAILED!" in err:
+        start = err.find("FAILED!", 0) + 11
+        end = err.find("PLAY RECAP", 0) - 10
         newtext = err[start:end]
         err = newtext
 

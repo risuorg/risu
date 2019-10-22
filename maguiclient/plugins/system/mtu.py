@@ -15,7 +15,7 @@ import citellusclient.shell as citellus
 _ = citellus._
 
 extension = "mtu"
-pluginsdir = os.path.join(citellus.citellusdir, 'plugins', extension)
+pluginsdir = os.path.join(citellus.citellusdir, "plugins", extension)
 
 
 def init():
@@ -24,7 +24,7 @@ def init():
     :return: List of triggers for Plugin
     """
 
-    triggers = [citellus.calcid(string='/plugins/faraday/positive/network/mtus.sh')]
+    triggers = [citellus.calcid(string="/plugins/faraday/positive/network/mtus.sh")]
     return triggers
 
 
@@ -42,17 +42,20 @@ def run(data, quiet=False):  # do not edit this line
         # 'err' in this case should be always equal to the md5sum of the file so that we can report the problem
         err = []
         allskipped = True
-        for sosreport in data[ourdata]['sosreport']:
-            err.append(data[ourdata]['sosreport'][sosreport]['err'])
-            if data[ourdata]['sosreport'][sosreport]['rc'] != citellus.RC_SKIPPED:
+        for sosreport in data[ourdata]["sosreport"]:
+            err.append(data[ourdata]["sosreport"][sosreport]["err"])
+            if data[ourdata]["sosreport"][sosreport]["rc"] != citellus.RC_SKIPPED:
                 allskipped = False
 
         if not allskipped:
             if len(sorted(set(err))) != 1:
-                message.append(_("%s mtu values differ across hosts, ensure proper behavior.") % data[ourdata]['name'].split(':')[1])
+                message.append(
+                    _("%s mtu values differ across hosts, ensure proper behavior.")
+                    % data[ourdata]["name"].split(":")[1]
+                )
                 returncode = citellus.RC_FAILED
 
-    out = ''
+    out = ""
     err = "\n".join(message)
 
     return returncode, out, err

@@ -15,7 +15,7 @@ import citellusclient.shell as citellus
 _ = citellus._
 
 extension = "multipathluns"
-pluginsdir = os.path.join(citellus.citellusdir, 'plugins', extension)
+pluginsdir = os.path.join(citellus.citellusdir, "plugins", extension)
 
 
 def init():
@@ -24,7 +24,9 @@ def init():
     :return: List of triggers for Plugin
     """
 
-    triggers = [citellus.calcid(string='/plugins/faraday/positive/system/multipathluns.sh')]
+    triggers = [
+        citellus.calcid(string="/plugins/faraday/positive/system/multipathluns.sh")
+    ]
     return triggers
 
 
@@ -42,20 +44,25 @@ def run(data, quiet=False):  # do not edit this line
         # 'err' in this case should be always equal to the md5sum of the file so that we can report the problem
         err = []
         allskipped = True
-        for sosreport in data[ourdata]['sosreport']:
-            err.append(data[ourdata]['sosreport'][sosreport]['err'])
-            if data[ourdata]['sosreport'][sosreport]['rc'] != citellus.RC_SKIPPED:
+        for sosreport in data[ourdata]["sosreport"]:
+            err.append(data[ourdata]["sosreport"][sosreport]["err"])
+            if data[ourdata]["sosreport"][sosreport]["rc"] != citellus.RC_SKIPPED:
                 allskipped = False
 
-        if len(data[ourdata]['sosreport'].keys()) == 1:
+        if len(data[ourdata]["sosreport"].keys()) == 1:
             # only one host has this mpath device, make it fail
             allskipped = False
 
         if not allskipped:
-            message.append(_("%s mpath values differ or path missing across hosts, ensure proper behavior.") % data[ourdata]['name'].split(':')[1])
+            message.append(
+                _(
+                    "%s mpath values differ or path missing across hosts, ensure proper behavior."
+                )
+                % data[ourdata]["name"].split(":")[1]
+            )
             returncode = citellus.RC_FAILED
 
-    out = ''
+    out = ""
     err = "\n".join(message)
 
     return returncode, out, err
