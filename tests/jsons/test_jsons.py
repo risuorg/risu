@@ -10,6 +10,7 @@ import os
 from unittest import TestCase
 
 import citellusclient.shell as citellus
+from maguiclient import magui
 
 testplugins = os.path.join(citellus.citellusdir, 'plugins', 'test')
 citellusdir = citellus.citellusdir
@@ -42,3 +43,18 @@ class CitellusTest(TestCase):
                         # If it's a metadata plugin, it's expected to have STDOUT
                         flag = 0
         assert flag == 0
+
+class CitellusTest(TestCase):
+    def test_domagui_againstjsons(self):
+        print("Running magui against set of jsons, might take a while...")
+        # Find all jsons
+        mypath = os.path.dirname(__file__)
+        alljsons = citellus.findplugins(folders=[mypath], executables=False, fileextension='.json')
+        jsons = []
+        # Convert from plugin list to json list
+        for json in alljsons:
+            jsons.append(json['plugin'])
+
+        # Call with no arguments
+        res = magui.domagui(sosreports=jsons, citellusplugins=[])
+        assert res != {}
