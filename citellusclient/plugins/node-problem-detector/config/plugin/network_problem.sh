@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # This plugin checks for common network issues. Currently, it only checks
-# if the conntrack table is full.
+# if the conntrack table is full. 
 
 OK=0
 NONOK=1
