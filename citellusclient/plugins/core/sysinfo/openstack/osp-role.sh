@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Copyright (C) 2018, 2019 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 # Copyright (C) 2019 Manuel Valle <manuvaldi@gmail.com>
+# Copyright (C) 2018, 2019 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 
 # This program is free software: you can redistribute it and/or modify
