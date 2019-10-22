@@ -37,6 +37,8 @@ class CitellusTest(TestCase):
                     print("PLUGIN: %s" % results[result]['plugin'])
                     print("STDOUT: %s" % data)
                     flag = 1
-                    # Force it to fail after we've printed so we can notize error failing
+                    # Force it to fail after we've printed so we can notice error failing
+                    if 'plugins/metadata' in results[result]['plugin']:
+                        # If it's a metadata plugin, it's expected to have STDOUT
+                        flag = 0
         assert flag == 0
-
