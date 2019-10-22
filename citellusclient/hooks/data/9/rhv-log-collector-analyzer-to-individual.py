@@ -18,7 +18,7 @@ except:
 _ = citellus._
 
 extension = "__file__"
-pluginsdir = os.path.join(citellus.citellusdir, 'plugins', extension)
+pluginsdir = os.path.join(citellus.citellusdir, "plugins", extension)
 
 
 def init():
@@ -41,13 +41,19 @@ def run(data, quiet=False):  # do not edit this line
     idstodel = []
     datatoadd = []
 
-    rhvlcid = citellus.calcid(string='/plugins/rhv-log-collector-analyzer/virtualization/base.txt')
+    rhvlcid = citellus.calcid(
+        string="/plugins/rhv-log-collector-analyzer/virtualization/base.txt"
+    )
     # Loop over plugin id's in data
     for pluginid in data:
-        if data[pluginid]['id'] == rhvlcid and data[pluginid]['result']['rc'] == citellus.RC_OKAY:
+        if (
+            data[pluginid]["id"] == rhvlcid and data[pluginid]["result"]["rc"] == citellus.RC_OKAY
+        ):
             # Make a copy of dict for working on it
             try:
-                plugin = json.loads(data[pluginid]['result']['err'])['rhv-log-collector-analyzer']
+                plugin = json.loads(data[pluginid]["result"]["err"])[
+                    "rhv-log-collector-analyzer"
+                ]
             except:
                 plugin = None
 
@@ -60,28 +66,36 @@ def run(data, quiet=False):  # do not edit this line
             # Iterate over plugindata items
             for item in plugin:
                 # Item ID in log-collector is not unique
-                newid = item['id']
+                newid = item["id"]
 
-                if 'WARNING' in item['type']:
+                if "WARNING" in item["type"]:
                     returncode = citellus.RC_FAILED
                 else:
                     returncode = citellus.RC_OKAY
 
                 # Write plugin entry for the individual result
-                newitem = {newid: {'name': 'rhv-log-collector-analyzer: %s' % item['name'],
-                                   'description': item['description'],
-                                   'long_name': item['name'],
-                                   'id': newid,
-                                   'category': '',
-                                   'priority': 400,
-                                   'bugzilla': item['bugzilla'],
-                                   'time': item['time'],
-                                   'subcategory': '',
-                                   'hash': item['hash'],
-                                   'result': {'out': '', 'err': "%s" % item['result'], 'rc': returncode},
-                                   'plugin': item['path'],
-                                   'backend': 'rhv-log-collector-analyzer',
-                                   'kb': item['kb']}}
+                newitem = {
+                    newid: {
+                        "name": "rhv-log-collector-analyzer: %s" % item["name"],
+                        "description": item["description"],
+                        "long_name": item["name"],
+                        "id": newid,
+                        "category": "",
+                        "priority": 400,
+                        "bugzilla": item["bugzilla"],
+                        "time": item["time"],
+                        "subcategory": "",
+                        "hash": item["hash"],
+                        "result": {
+                            "out": "",
+                            "err": "%s" % item["result"],
+                            "rc": returncode,
+                        },
+                        "plugin": item["path"],
+                        "backend": "rhv-log-collector-analyzer",
+                        "kb": item["kb"],
+                    }
+                }
 
                 datatoadd.append(newitem)
 
@@ -102,5 +116,7 @@ def help():  # do not edit this line
     :return: help text
     """
 
-    commandtext = _("This hook proceses rhv-log-collector-analyzer results and converts to individual plugins")
+    commandtext = _(
+        "This hook proceses rhv-log-collector-analyzer results and converts to individual plugins"
+    )
     return commandtext

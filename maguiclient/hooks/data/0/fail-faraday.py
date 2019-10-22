@@ -19,7 +19,7 @@ except:
 _ = citellus._
 
 extension = "__file__"
-pluginsdir = os.path.join(citellus.citellusdir, 'plugins', extension)
+pluginsdir = os.path.join(citellus.citellusdir, "plugins", extension)
 
 
 def init():
@@ -41,21 +41,28 @@ def run(data, quiet=False):  # do not edit this line
     # data is a matrix of grouped[plugin][sosreport] and then [text] [out] [err] [rc]
 
     for plugin in data:
-        if 'plugin' in data[plugin]:
-            if 'faraday/' in data[plugin]['plugin']:
-                results = [data[plugin]['sosreport'][sosreport]['err'] for sosreport in data[plugin]['sosreport']]
+        if "plugin" in data[plugin]:
+            if "faraday/" in data[plugin]["plugin"]:
+                results = [
+                    data[plugin]["sosreport"][sosreport]["err"]
+                    for sosreport in data[plugin]["sosreport"]
+                ]
 
                 makeitfail = False
                 results = sorted(set(results))
 
-                if len(results) > 1 and 'positive' in data[plugin]['plugin']:
+                if len(results) > 1 and "positive" in data[plugin]["plugin"]:
                     makeitfail = True
-                if len(results) < len(data[plugin]['sosreport']) and 'negative' in data[plugin]['plugin']:
+                if (
+                    len(results) < len(data[plugin]["sosreport"]) and "negative" in data[plugin]["plugin"]
+                ):
                     makeitfail = True
 
                 if makeitfail:
-                    for sosreport in data[plugin]['sosreport']:
-                        data[plugin]['sosreport'][sosreport].update({'rc': citellus.RC_FAILED})
+                    for sosreport in data[plugin]["sosreport"]:
+                        data[plugin]["sosreport"][sosreport].update(
+                            {"rc": citellus.RC_FAILED}
+                        )
 
     return data
 
@@ -66,5 +73,7 @@ def help():  # do not edit this line
     :return: help text
     """
 
-    commandtext = _("This hook proceses faraday results and marks them as failed as needed")
+    commandtext = _(
+        "This hook proceses faraday results and marks them as failed as needed"
+    )
     return commandtext

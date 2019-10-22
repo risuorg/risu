@@ -20,7 +20,7 @@ except:
 _ = citellus._
 
 extension = "profiles"
-pluginsdir = os.path.join(citellus.citellusdir, 'plugins', extension)
+pluginsdir = os.path.join(citellus.citellusdir, "plugins", extension)
 
 
 def init():
@@ -41,11 +41,11 @@ def plugidsforprofile(profile, plugins):
     # Open Profile definition for read and fill filters for plugins
     include = []
     exclude = []
-    with open(profile, 'r') as f:
+    with open(profile, "r") as f:
         for line in f:
-            if re.match(r'\A\+.*', line):
+            if re.match(r"\A\+.*", line):
                 include.append(line[1:].strip())
-            if re.match(r'\A\-.*', line):
+            if re.match(r"\A\-.*", line):
                 exclude.append(line[1:].strip())
     ids = citellus.getids(plugins=plugins, include=include, exclude=exclude)
 
@@ -63,49 +63,64 @@ def run(data, quiet=False):  # do not edit this line
     # prefill plugins we had used:
     plugins = []
     for item in data:
-        plugin = {'plugin': data[item]['plugin'],
-                  'id': data[item]['id']}
+        plugin = {"plugin": data[item]["plugin"], "id": data[item]["id"]}
         plugins.append(plugin)
 
     # Find available profile definitions
-    profiles = citellus.findplugins(folders=[pluginsdir], executables=False, fileextension='.txt')
+    profiles = citellus.findplugins(
+        folders=[pluginsdir], executables=False, fileextension=".txt"
+    )
     for item in profiles:
         uid = citellus.getids(plugins=[item])[0]
-        profile = item['plugin']
+        profile = item["plugin"]
 
         plugin = dict(item)
 
         # Precreate storage for this profile
-        name = "Profiles: %s" % os.path.basename(os.path.splitext(profile.replace(pluginsdir, ''))[0])
-        subcategory = ''
+        name = "Profiles: %s" % os.path.basename(
+            os.path.splitext(profile.replace(pluginsdir, ""))[0]
+        )
+        subcategory = ""
         category = name
 
-        data[uid] = {"category": category,
-                     "hash": item['hash'],
-                     "plugin": item['plugin'],
-                     "name": name,
-                     "result": {"rc": 0,
-                                "err": "",
-                                "out": ""},
-                     "time": 0,
-                     "backend": "profile",
-                     "id": uid,
-                     "subcategory": subcategory}
+        data[uid] = {
+            "category": category,
+            "hash": item["hash"],
+            "plugin": item["plugin"],
+            "name": name,
+            "result": {"rc": 0, "err": "", "out": ""},
+            "time": 0,
+            "backend": "profile",
+            "id": uid,
+            "subcategory": subcategory,
+        }
 
-        metadata = {'description': citellus.regexpfile(filename=plugin['plugin'], regexp=r'\A# description:')[14:].strip(),
-                    'long_name': citellus.regexpfile(filename=plugin['plugin'], regexp=r'\A# long_name:')[12:].strip(),
-                    'bugzilla': citellus.regexpfile(filename=plugin['plugin'], regexp=r'\A# bugzilla:')[11:].strip(),
-                    'priority': int(citellus.regexpfile(filename=plugin['plugin'], regexp=r'\A# priority:')[11:].strip() or 0)}
+        metadata = {
+            "description": citellus.regexpfile(
+                filename=plugin["plugin"], regexp=r"\A# description:"
+            )[14:].strip(),
+            "long_name": citellus.regexpfile(
+                filename=plugin["plugin"], regexp=r"\A# long_name:"
+            )[12:].strip(),
+            "bugzilla": citellus.regexpfile(
+                filename=plugin["plugin"], regexp=r"\A# bugzilla:"
+            )[11:].strip(),
+            "priority": int(
+                citellus.regexpfile(filename=plugin["plugin"], regexp=r"\A# priority:")[
+                    11:
+                ].strip() or 0
+            ),
+        }
         data[uid].update(metadata)
 
         # start with OK status
-        okay = int(os.environ['RC_OKAY'])
-        failed = int(os.environ['RC_FAILED'])
-        skipped = int(os.environ['RC_SKIPPED'])
-        info = int(os.environ['RC_INFO'])
+        okay = int(os.environ["RC_OKAY"])
+        failed = int(os.environ["RC_FAILED"])
+        skipped = int(os.environ["RC_SKIPPED"])
+        info = int(os.environ["RC_INFO"])
 
         # Start asembling data for the plugins relevant for profile
-        data[uid]['result']['err'] = ''
+        data[uid]["result"]["err"] = ""
         ids = plugidsforprofile(profile=profile, plugins=plugins)
 
         new_results = []
@@ -113,14 +128,23 @@ def run(data, quiet=False):  # do not edit this line
 
         for id in ids:
             if id in data:
-                if 'sysinfo' in name and data[id]['result']['rc'] == skipped:
+                if "sysinfo" in name and data[id]["result"]["rc"] == skipped:
                     # Do nothing as we don't want to show skipped in sysinfo
                     pass
                 else:
-                    new_results.append({'plugin_id': id, 'plugin': data[id]['plugin'].replace(os.path.join(citellus.citellusdir, 'plugins'), ''), 'err': data[id]['result']['err'].strip(), 'rc': data[id]['result']['rc']})
-                    overallitems.append(data[id]['result']['rc'])
+                    new_results.append(
+                        {
+                            "plugin_id": id,
+                            "plugin": data[id]["plugin"].replace(
+                                os.path.join(citellus.citellusdir, "plugins"), ""
+                            ),
+                            "err": data[id]["result"]["err"].strip(),
+                            "rc": data[id]["result"]["rc"],
+                        }
+                    )
+                    overallitems.append(data[id]["result"]["rc"])
 
-        if 'sysinfo' in name:
+        if "sysinfo" in name:
             if okay in overallitems or failed in overallitems or info in overallitems:
                 overall = info
             else:
@@ -136,9 +160,9 @@ def run(data, quiet=False):  # do not edit this line
             else:
                 overall = okay
 
-        data[uid]['result']['err'] = json.dumps(new_results)
-        data[uid]['components'] = ids
-        data[uid]['result']['rc'] = overall
+        data[uid]["result"]["err"] = json.dumps(new_results)
+        data[uid]["components"] = ids
+        data[uid]["result"]["rc"] = overall
 
     return data
 
@@ -149,5 +173,7 @@ def help():  # do not edit this line
     :return: help text
     """
 
-    commandtext = _("This hook proceses Citellus profiles and assembles data for each one to be appended to results json")
+    commandtext = _(
+        "This hook proceses Citellus profiles and assembles data for each one to be appended to results json"
+    )
     return commandtext
