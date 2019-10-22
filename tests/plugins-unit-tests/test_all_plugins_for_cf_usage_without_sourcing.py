@@ -3,7 +3,7 @@
 #
 # Description: This UT will check all core scripts to validate that common functions is loaded
 #
-# Copyright (C) 2017, 2018 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2017, 2018, 2019 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 #
 # This program is free software: you can redistribute it and/or modify

@@ -2,7 +2,7 @@
 # encoding: utf-8
 #
 # Description: Hook for moving rhv-log-collector-analyzer results to individual tests results
-# Copyright (C) 2018 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2018, 2019 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 from __future__ import print_function
 

@@ -3,7 +3,7 @@
 #
 # Description: Hook for moving MTU global results to individual tests results
 # Author: Pablo Iranzo Gomez (Pablo.Iranzo@gmail.com)
-# Copyright (C) 2018 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2018, 2019 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 from __future__ import print_function
 
