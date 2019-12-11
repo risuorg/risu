@@ -20,7 +20,7 @@
 is_dpkg(){
     PACKAGE=$1
     if [ "x$CITELLUS_LIVE" = "x1" ]; then
-        dpkg -l *$1*|egrep ^ii | awk -v PACKAGE=${PACKAGE} '$2==PACKAGE {print $3}'|egrep "."
+        dpkg -l *$1* 2>&1|grep -v 'no packages found matching'|egrep ^ii | awk -v PACKAGE=${PACKAGE} '$2==PACKAGE {print $3}'|egrep "."
     elif [ "x$CITELLUS_LIVE" = "x0" ]; then
         is_required_file "${CITELLUS_ROOT}/installed-debs"
         awk -v PACKAGE=${PACKAGE} '$2==PACKAGE {print $3}' "${CITELLUS_ROOT}/installed-debs"|egrep "."
