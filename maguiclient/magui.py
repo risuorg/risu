@@ -280,7 +280,7 @@ def findtarget(data):
                 subitemcount[subitem]["count"] = 1 + subitemcount[subitem]["count"]
                 subitemcount[subitem]["where"].append(item)
 
-    minitems = subitemcount
+    minitems = len(subitemcount)
 
     for item in subitemcount:
         if subitemcount[item]["count"] < minitems:
