@@ -63,7 +63,10 @@ def run(data, quiet=False):  # do not edit this line
                 data[pluginid] = {}
                 data[pluginid]['id'] = pluginid
                 data[pluginid]["plugin"] = "insights.%s" % plugin["component"]
-                data[pluginid]["kb"] = plugin["links"]["kcs"] or ""
+                if 'links' in plugin and 'kcs' in plugin['links']:
+                    data[pluginid]["kb"] = plugin["links"]["kcs"]
+                else:
+                    data[pluginid]["kb"] = ""
                 data[pluginid]["category"] = "insights"
                 data[pluginid]["hash"] = pluginid
                 data[pluginid]["backend"] = "insights-core-unifier-merge-loader"
