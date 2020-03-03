@@ -9,6 +9,7 @@ from __future__ import print_function
 
 import os
 import json
+import glob
 
 try:
     import citellusclient.shell as citellus
@@ -41,16 +42,18 @@ def run(data, quiet=False):  # do not edit this line
     skipped = int(os.environ["RC_SKIPPED"])
     failed = int(os.environ["RC_FAILED"])
 
-    jsons = ["insights-shared_rules.json", "insights-telemetry.json"]
+    jsons = glob.glob("insights-*.json")
     mydata = []
     for insijson in jsons:
         filenamewithpath = os.path.join(os.environ["CITELLUS_ROOT"], insijson)
-        if os.path.exists(filenamewithpath) and os.path.isfile(filenamewithpath) and os.access(filenamewithpath, os.R_OK):
+        if (os.path.exists(filenamewithpath) and os.path.isfile(filenamewithpath) and os.access(filenamewithpath, os.R_OK)):
             with open(filenamewithpath) as json_file:
                 try:
                     mydata = json.load(json_file)
                 except:
-                    citellus.LOG.debug("Error processing data in %s, skipping" % json_file)
+                    citellus.LOG.debug(
+                        "Error processing data in %s, skipping" % json_file
+                    )
                     mydata = []
         else:
             mydata = []
@@ -61,10 +64,10 @@ def run(data, quiet=False):  # do not edit this line
                 # Fake plugin entries to integrate into 'data' dictionary
                 pluginid = citellus.calcid(plugin["component"])
                 data[pluginid] = {}
-                data[pluginid]['id'] = pluginid
+                data[pluginid]["id"] = pluginid
                 data[pluginid]["plugin"] = "insights.%s" % plugin["component"]
-                if 'links' in plugin and 'kcs' in plugin['links']:
-                    data[pluginid]["kb"] = plugin["links"]["kcs"]
+                if "links" in plugin and "kcs" in plugin["links"]:
+                    data[pluginid]["kb"] = plugin["links"]["kcs"].split()
                 else:
                     data[pluginid]["kb"] = ""
                 data[pluginid]["category"] = "insights"
@@ -89,10 +92,10 @@ def run(data, quiet=False):  # do not edit this line
 
         # Process plugins in skip to fake skipped entries
         if "skips" in mydata:
-            for plugin in mydata['skips']:
+            for plugin in mydata["skips"]:
                 pluginid = citellus.calcid(plugin["rule_fqdn"])
                 data[pluginid] = {}
-                data[pluginid]['id'] = pluginid
+                data[pluginid]["id"] = pluginid
                 data[pluginid]["plugin"] = "insights.%s" % plugin["rule_fqdn"]
                 data[pluginid]["category"] = "insights"
                 data[pluginid]["hash"] = pluginid
@@ -110,7 +113,8 @@ def run(data, quiet=False):  # do not edit this line
                     "path",
                     "time",
                     "long_name",
-                    "subcategory", "kb"
+                    "subcategory",
+                    "kb",
                 ]:
                     data[pluginid]["%s" % key] = ""
 
