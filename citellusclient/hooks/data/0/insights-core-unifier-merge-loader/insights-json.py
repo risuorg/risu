@@ -42,10 +42,10 @@ def run(data, quiet=False):  # do not edit this line
     skipped = int(os.environ["RC_SKIPPED"])
     failed = int(os.environ["RC_FAILED"])
 
-    jsons = glob.glob("insights-*.json")
+    jsons = glob.glob(os.path.join(os.environ["CITELLUS_ROOT"], "insights-*.json"))
     mydata = []
     for insijson in jsons:
-        filenamewithpath = os.path.join(os.environ["CITELLUS_ROOT"], insijson)
+        filenamewithpath = insijson
         if (os.path.exists(filenamewithpath) and os.path.isfile(filenamewithpath) and os.access(filenamewithpath, os.R_OK)):
             with open(filenamewithpath) as json_file:
                 try:
@@ -65,7 +65,7 @@ def run(data, quiet=False):  # do not edit this line
                 pluginid = citellus.calcid(plugin["component"])
                 data[pluginid] = {}
                 data[pluginid]["id"] = pluginid
-                data[pluginid]["plugin"] = "insights.%s" % plugin["component"]
+                data[pluginid]["plugin"] = "%s.%s" % (insijson, plugin["component"])
                 if "links" in plugin and "kcs" in plugin["links"]:
                     data[pluginid]["kb"] = plugin["links"]["kcs"].split()
                 else:
@@ -73,7 +73,7 @@ def run(data, quiet=False):  # do not edit this line
                 data[pluginid]["category"] = "insights"
                 data[pluginid]["hash"] = pluginid
                 data[pluginid]["backend"] = "insights-core-unifier-merge-loader"
-                data[pluginid]["name"] = plugin["rule_id"]
+                data[pluginid]["name"] = "%s-%s" % (insijson, plugin["rule_id"])
                 data[pluginid]["result"] = {}
                 data[pluginid]["result"]["err"] = "%s" % plugin["details"]
                 data[pluginid]["result"]["rc"] = failed
