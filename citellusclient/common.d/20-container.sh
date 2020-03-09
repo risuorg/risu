@@ -47,4 +47,3 @@ docker_runit(){
         exit ${RC_SKIPPED}
     fi
 }
-

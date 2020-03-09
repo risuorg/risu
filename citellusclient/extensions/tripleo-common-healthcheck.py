@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# encoding: utf-8
+# -*- coding: utf-8 -*-
 #
 # Description: Extension for processing tripleo-common-healthcheck playbooks
 # Author: Pablo Iranzo Gomez (Pablo.Iranzo@gmail.com)

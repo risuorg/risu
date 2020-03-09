@@ -1,10 +1,10 @@
-_________ .__  __         .__  .__                
+_________ .__  __         .__  .__
 \_   ___ \|__|/  |_  ____ |  | |  |  __ __  ______
 /    \  \/|  \   __\/ __ \|  | |  | |  |  \/  ___/
-\     \___|  ||  | \  ___/|  |_|  |_|  |  /\___ \ 
+\     \___|  ||  | \  ___/|  |_|  |_|  |  /\___ \
  \______  /__||__|  \___  >____/____/____//____  >
-        \/              \/                     \/ 
-                                                  
+        \/              \/                     \/
+
 found #6 extensions with #168 plugins
 mode: fs snapshot /cases/02016541/sosreport-controller-0.02016541-20180225232251
 # /citellus/citellusclient/plugins/core/security/spectre/vdsm.sh: skipped
@@ -196,16 +196,16 @@ mode: fs snapshot /cases/02016541/sosreport-controller-0.02016541-20180225232251
 # /citellus/citellusclient/plugins/core/openstack/traceback.sh: okay
 # /citellus/citellusclient/plugins/core/openstack/network/dpdk.sh: failed
     missing NUMATopologyFilter in nova.conf
-    KERNEL used CPU's: 
-    CPU's isolated from kernel scheduler 
-    CPU's pinned in nova 
-    Nova used CPU's (from isolated pool): 
-    -- available CPU's after this step from isolated pool: 
+    KERNEL used CPU's:
+    CPU's isolated from kernel scheduler
+    CPU's pinned in nova
+    Nova used CPU's (from isolated pool):
+    -- available CPU's after this step from isolated pool:
     dc: stack empty
-    DPDK PMD used CPU's: 
-    -- available CPU's after this step from isolated pool: 
+    DPDK PMD used CPU's:
+    -- available CPU's after this step from isolated pool:
     dc: stack empty
-    DPDK CORE used CPU's: 
+    DPDK CORE used CPU's:
     There are CPU's unallocated:  0 1 2 3
 # /citellus/citellusclient/plugins/core/system/netifnames.sh: skipped
 # /citellus/citellusclient/plugins/core/openstack/nova/osp10plus-versioned-notifications.sh: skipped

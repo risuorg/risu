@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# coding=utf-8
+# -*- coding: utf-8 -*-
 
 from __future__ import print_function
 
@@ -46,7 +46,7 @@ def parse_dmi(content):
             break
 
         if line.startswith("Handle 0x"):
-            typ = int(line.split(",", 2)[1].strip()[len("DMI type"):])
+            typ = int(line.split(",", 2)[1].strip()[len("DMI type") :])
             if typ in TYPE:
                 info.append((TYPE[typ], _parse_handle_section(lines)))
     return info

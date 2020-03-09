@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# encoding: utf-8
+# -*- coding: utf-8 -*-
 #
 # Description: This UT check that no test has echo $RC_
 #
@@ -45,7 +45,7 @@ class CitellusTest(TestCase):
     def test_plugins_no_echo_RC(self):
         for plugin in citplugs:
             result = citellus.regexpfile(
-                filename=plugin["plugin"], regexp=".*echo \$RC_.*"
+                filename=plugin["plugin"], regexp=r".*echo \$RC_.*"
             )
             if result == "":
                 print(plugin["plugin"])

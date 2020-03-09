@@ -12,4 +12,3 @@ else
     echo "There is no $process process, listening on port(s) $ports, running in the container."
     exit 1
 fi
-

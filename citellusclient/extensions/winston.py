@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# encoding: utf-8
+# -*- coding: utf-8 -*-
 #
 # Description: Extension for processing file-based metadata generators in a similar way to what Faraday does
 # Author: Pablo Iranzo Gomez (Pablo.Iranzo@gmail.com)

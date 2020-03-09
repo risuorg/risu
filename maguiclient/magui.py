@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# encoding: utf-8
+# -*- coding: utf-8 -*-
 #
 # Description: Multiple Analysis Generic Unifier and Interpreter aka Magui
 #              This program processes several snapshoot/sosreport files

@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# encoding: utf-8
+# -*- coding: utf-8 -*-
 #
 # Description: Extension for processing ansible playbooks
 # Author: Pablo Iranzo Gomez (Pablo.Iranzo@gmail.com)

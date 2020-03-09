@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# encoding: utf-8
+# -*- coding: utf-8 -*-
 #
 # Description: Extension for processing file affinities/antiaffinities to be reported in a
 #              similar way to metadata and later processed by corresponding plugin in Magui

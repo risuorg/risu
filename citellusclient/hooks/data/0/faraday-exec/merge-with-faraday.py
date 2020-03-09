@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# encoding: utf-8
+# -*- coding: utf-8 -*-
 #
 # Description: Hook for moving faraday-exec results into regular faraday
 # Author: Pablo Iranzo Gomez (Pablo.Iranzo@gmail.com)

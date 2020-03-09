@@ -35,4 +35,3 @@ else
 fi
 
 exit ${RC_OKAY}
-

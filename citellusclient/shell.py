@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# encoding: utf-8
+# -*- coding: utf-8 -*-
 #
 # Description: Runs set of scripts against system or snapshot to
 #              detect common pitfalls in configuration/status
@@ -1165,7 +1165,10 @@ def diff_config(options, defaults=parse_args(default=True), path=False):
         keydef = vars(defaults)[key]
         keyset = vars(options)[key]
         if (
-            keyset != keydef and key != "dump_config" and key != "no_config" and key != "sosreport"
+            keyset != keydef
+            and key != "dump_config"
+            and key != "no_config"
+            and key != "sosreport"
         ):
             # argparse replaces "-" by "_" on keys so we revert
             key = key.replace("_", "-")
@@ -1209,7 +1212,8 @@ def generic_get_metadata(plugin):
             11:
         ].strip(),
         "priority": int(
-            regexpfile(filename=plugin["plugin"], regexp=r"\A# priority:")[11:].strip() or 0
+            regexpfile(filename=plugin["plugin"], regexp=r"\A# priority:")[11:].strip()
+            or 0
         ),
         "path": path,
         "kb": regexpfile(filename=plugin["plugin"], regexp=r"\A# kb:")[5:].strip(),
@@ -1394,7 +1398,10 @@ def printresults(results, options):
             )
 
         show_err = (
-            (rc in [RC_FAILED]) or (rc not in [RC_OKAY, RC_FAILED, RC_SKIPPED]) or (rc in [RC_SKIPPED, RC_INFO] and options.verbose > 0) or (options.verbose > 1)
+            (rc in [RC_FAILED])
+            or (rc not in [RC_OKAY, RC_FAILED, RC_SKIPPED])
+            or (rc in [RC_SKIPPED, RC_INFO] and options.verbose > 0)
+            or (options.verbose > 1)
         )
 
         show_out = options.verbose > 1
@@ -1466,7 +1473,10 @@ def main():
             # Live not specified, so we will use file snapshot
             CITELLUS_ROOT = os.path.abspath(options.sosreport)
         elif (
-            not options.list_plugins and not options.list_extensions and not options.list_hooks and not options.dump_overrides
+            not options.list_plugins
+            and not options.list_extensions
+            and not options.list_hooks
+            and not options.dump_overrides
         ):
             LOG.error(_("When not running in Live mode, snapshot path is required"))
             sys.exit(1)

@@ -1,14 +1,15 @@
 **Table of contents**
-<!-- TOC depthFrom:1 insertAnchor:true orderedList:true -->
 
-1. [Writing Unit tests for plugins](#writing-unit-tests-for-plugins)
-2. [Creating the tests](#creating-the-tests)
-3. [Briefing](#briefing)
+<!-- TOC depthFrom:1 insertAnchor:false orderedList:false -->
+
+- [Writing Unit tests for plugins](#writing-unit-tests-for-plugins)
+- [Creating the tests](#creating-the-tests)
+- [Briefing](#briefing)
 
 <!-- /TOC -->
 
-<a id="markdown-writing-unit-tests-for-plugins" name="writing-unit-tests-for-plugins"></a>
 ## Writing Unit tests for plugins
+
 Citellus uses unittesting for the main python wrappers (citellus.py and magui.py), but tests are mostly written in `bash` so no UT is performed.
 
 As a workaround and to detect issues in your code you can:
@@ -16,9 +17,10 @@ As a workaround and to detect issues in your code you can:
 - Test the code as part of functional testing (like we do for each test we develop)
 - Consider creating unittests for it
 
-<a id="markdown-creating-the-tests" name="creating-the-tests"></a>
 ## Creating the tests
+
 Tests require two things:
+
 - Script that setups a fake folder with relevant contents to either `pass`, `skipped` or `fail` a test
 - The actual `unittest` that `tox` executes via `py.test`
 
@@ -29,7 +31,7 @@ For example, for bugzilla_httpd_bug_1406417 we create:
 
 First file (in the `setup/` folder) does the proper setup of the fake root:
 
-~~~sh
+```sh
 # The way we're executed, $1 is the script name, $2 is the mode and $3 is the folder
 FOLDER=$3
 
@@ -54,13 +56,13 @@ case $2 in
         # Do nothing, the folder will be empty and test should be skipped
         ;;
 esac
-~~~
+```
 
 You'll need to adapt above code or use it as template for creating your own `setup` script.
 
-Once done, the actual `unittest` should be checked, for example (note that test is named test_$PLUGINNAME):
+Once done, the actual `unittest` should be checked, for example (note that test is named test\_\$PLUGINNAME):
 
-~~~py
+```py
 import os
 import subprocess
 from unittest import TestCase
@@ -123,16 +125,17 @@ class CitellusTest(TestCase):
         # testtype will be 'pass', 'fail', 'skipped'
         testtype = 'skipped'
         assert runtest(testtype=testtype) == rcs[testtype]
-~~~
+```
 
-<a id="markdown-briefing" name="briefing"></a>
 ## Briefing
+
 For a new plugin and test you'll then require:
+
 - `citellus/citellusclient/plugins/core/path-to-your-plugin/$NAME.sh`
-- `tests/plugins-unit-tests/setup/bugzilla/$NAME.sh`    
+- `tests/plugins-unit-tests/setup/bugzilla/$NAME.sh`
 - `tests/plugins-unit-tests/test_$NAME.py`
 
-You'll still have to code your plugin and the setup, and for the test, copy one of the provided test_.py like `test_pacemaker_stonith_enabled.py`
+You'll still have to code your plugin and the setup, and for the test, copy one of the provided test\_.py like `test_pacemaker_stonith_enabled.py`
 and edit the 'NAME' variable inside the python file to match your plugin.
 
 `tox` should now pick it up and report status.

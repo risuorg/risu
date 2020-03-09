@@ -20,4 +20,3 @@
 # combines them into one POT file to be used by translation tools
 
 python setup.py extract_messages -F babel.cfg -k _L && find -L citellusclient -name "*.sh" -exec bash --dump-po-strings "{}" \;  |msguniq > citellusclient/locale/citellus-plugins.pot && cat citellusclient/locale/citellus.pot citellusclient/locale/citellus-plugins.pot|msguniq > citellusclient/locale/citellus-new.pot && cat citellusclient/locale/citellus-new.pot > citellusclient/locale/citellus.pot && rm -f citellusclient/locale/citellus-new.pot citellusclient/locale/citellus-plugins.pot
-

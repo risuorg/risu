@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# encoding: utf-8
+# -*- coding: utf-8 -*-
 # Description: Plugin for reporting back citellus data from all sosreports#
 
 # Copyright (C) 2018 Robin Černín <cerninr@gmail.com>

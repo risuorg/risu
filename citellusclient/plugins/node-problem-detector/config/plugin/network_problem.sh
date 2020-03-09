@@ -20,4 +20,3 @@ fi
 
 echo "Conntrack table available"
 exit $OK
-

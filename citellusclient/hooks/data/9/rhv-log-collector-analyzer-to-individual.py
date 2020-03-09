@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# encoding: utf-8
+# -*- coding: utf-8 -*-
 #
 # Description: Hook for moving rhv-log-collector-analyzer results to individual tests results
 # Copyright (C) 2018, 2019 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
@@ -47,7 +47,8 @@ def run(data, quiet=False):  # do not edit this line
     # Loop over plugin id's in data
     for pluginid in data:
         if (
-            data[pluginid]["id"] == rhvlcid and data[pluginid]["result"]["rc"] == citellus.RC_OKAY
+            data[pluginid]["id"] == rhvlcid
+            and data[pluginid]["result"]["rc"] == citellus.RC_OKAY
         ):
             # Make a copy of dict for working on it
             try:

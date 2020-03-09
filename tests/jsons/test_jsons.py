@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# encoding: utf-8
+# -*- coding: utf-8 -*-
 
 # Copyright (C) 2018, 2019 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
@@ -57,8 +57,8 @@ class CitellusTest(TestCase):
         )
         jsons = []
         # Convert from plugin list to json list
-        for json in alljsons:
-            jsons.append(json["plugin"])
+        for jsonfile in alljsons:
+            jsons.append(jsonfile["plugin"])
 
         # Call with no arguments
         res = magui.domagui(sosreports=jsons, citellusplugins=[])
@@ -72,15 +72,12 @@ class CitellusTest(TestCase):
             folders=[mypath], executables=False, fileextension=".json"
         )
 
-        flag = 0
         citellusjson = jsons[0]
 
         try:
             results = json.load(open(citellusjson["plugin"], "r"))["results"]
         except:
-            print(
-                "Skipping json: %s as cannot be loaded by citellus" % citellusjson
-            )
+            print("Skipping json: %s as cannot be loaded by citellus" % citellusjson)
             results = []
 
         options = citellus.parse_args(default=True)

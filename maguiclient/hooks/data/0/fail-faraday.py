@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# encoding: utf-8
+# -*- coding: utf-8 -*-
 #
 # Description: Hook for making as failed faraday plugins
 # Author: Pablo Iranzo Gomez (Pablo.Iranzo@gmail.com)
@@ -54,7 +54,8 @@ def run(data, quiet=False):  # do not edit this line
                 if len(results) > 1 and "positive" in data[plugin]["plugin"]:
                     makeitfail = True
                 if (
-                    len(results) < len(data[plugin]["sosreport"]) and "negative" in data[plugin]["plugin"]
+                    len(results) < len(data[plugin]["sosreport"])
+                    and "negative" in data[plugin]["plugin"]
                 ):
                     makeitfail = True
 

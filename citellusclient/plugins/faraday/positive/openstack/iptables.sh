@@ -32,4 +32,3 @@ MD5SUM=$(sed '1d;$d' "${CITELLUS_ROOT}/etc/sysconfig/iptables"| md5sum|awk '{pri
 
 echo "${MD5SUM}" >&2
 exit ${RC_OKAY}
-

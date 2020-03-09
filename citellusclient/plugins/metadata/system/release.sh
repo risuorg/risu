@@ -31,4 +31,3 @@ is_required_file ${FILE}
 echo "release"
 cat ${FILE} >&2
 exit ${RC_OKAY}
-

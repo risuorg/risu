@@ -13,7 +13,7 @@
 
 **Table of contents**
 
-<!-- TOC depthFrom:1 insertAnchor:true orderedList:true -->
+<!-- TOC depthFrom:1 insertAnchor:false orderedList:false -->
 
 - [Introduction](#introduction)
 - [Highlights](#highlights)
@@ -24,8 +24,6 @@
 
 <!-- /TOC -->
 
-
-<a id="markdown-introduction" name="introduction"></a>
 ## Introduction
 
 Citellus is a framework to help with system configuration validation on either live system or a `sosreport` snapshot of the filesystem. This empowers the user to quickly troubleshoot known issues found in the system or the ones arising from different settings across a group of systems.
@@ -34,8 +32,6 @@ Via execution of 'plugins' it reports status on each one execution against the s
 
 Please if you have any idea on any improvements please do not hesitate to open an issue.
 
-
-<a id="markdown-highlights" name="highlights"></a>
 ## Highlights
 
 - Plugins written in your language of choice.
@@ -50,29 +46,21 @@ Framework contains additional readmes for the tools included:
 - [Citellus](citellus.md)
 - [Magui](magui.md)
 
-
-<a id="markdown-how-does-it-looks-like" name="how-does-it-looks-like"></a>
 ## How does it looks like?
 
 Check how does it look in an execution at:
 [![asciicast](https://asciinema.org/a/169814.png)](https://asciinema.org/a/169814)
 
-
-<a id="markdown-collaborate" name="collaborate"></a>
 ## Collaborate
 
 - Open issues/feature requests, etc at <https://github.com/citellusorg/citellus/issues>
 - Read the [Contributing](development/CONTRIBUTING.md) document on how to submit patches
 - Provide sosreports to check against via <https://www.dropbox.com/request/8LGneF9i9nc9RB6aqXge>, specially if running Debian based distributions and or Fedora/CentOS based ones so that we can improve support for it
 
-
-<a id="markdown-documentation" name="documentation"></a>
 ## Documentation
 
 Documentation is available at [Read the docs](https://citellus.readthedocs.io)
 
-
-<a id="markdown-contact-us" name="contact-us"></a>
 ## Contact us!!
 
 You can reach to us via:

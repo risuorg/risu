@@ -1,23 +1,19 @@
-
 **Table of contents**
 
-<!-- TOC depthFrom:1 insertAnchor:true orderedList:true -->
+<!-- TOC depthFrom:1 insertAnchor:false orderedList:false -->
 
-1. [Introduction](#introduction)
-2. [Highlights](#highlights)
-3. [Installation](#installation)
-4. [Usage help](#usage-help)
-    1. [Running a check](#running-a-check)
-        1. [Running a check against remote hosts](#running-a-check-against-remote-hosts)
-        2. [Autogrouping](#autogrouping)
-5. [Plugin development for Magui](#plugin-development-for-magui)
+- [Introduction](#introduction)
+- [Highlights](#highlights)
+- [Installation](#installation)
+- [Usage help](#usage-help)
+  - [Running a check](#running-a-check)
+    - [Running a check against remote hosts](#running-a-check-against-remote-hosts)
+    - [Autogrouping](#autogrouping)
+- [Plugin development for Magui](#plugin-development-for-magui)
 
 <!-- /TOC -->
 
-
-<a id="markdown-introduction" name="introduction"></a>
 ## Introduction
-
 
 Magui is a wrapper that calls functions from the Python library of Citellus [citellus.md](citellus.md).
 
@@ -30,8 +26,8 @@ Some problems are not detected only one one node, but are made by the aggregatio
 
 Magui aims to use Citellus for gathering the data and later, write plugins to analyze that information.
 
-<a id="markdown-highlights" name="highlights"></a>
 ## Highlights
+
 - Reuse saved citellus.json to speed up analisys on several files, retrigger if inconsistencies
 
 - Plugins use uuid to identify plugin properly and act on them.
@@ -44,43 +40,41 @@ Magui aims to use Citellus for gathering the data and later, write plugins to an
 
 Check latest changes on [changelog](changelog.md)
 
-
-<a id="markdown-installation" name="installation"></a>
 ## Installation
 
 - Just clone the git repository and execute it from there 'or'
 - use 'pipsi' or create a python virtual env to install package 'citellus'
-    ~~~sh
-    # pipsi install citellus
-    Already using interpreter /usr/bin/python3
-    Using base prefix '/usr'
-    New python executable in /home/iranzo/.local/venvs/citellus/bin/python3
-    Also creating executable in /home/iranzo/.local/venvs/citellus/bin/python
-    Installing setuptools, pip, wheel...done.
-    Collecting citellus
-    Installing collected packages: citellus
-    Successfully installed citellus-0.1.0.dev1072
-      Linked script /home/iranzo/.local/bin/citellus.py
-      Linked script /home/iranzo/.local/bin/magui.py
-    Done.
-    ~~~
-    - Pipsi will take care of installing a virtual environment and link to binary folder so you can call citellus.py or magui.py directly
-    - Remember that pypi package might not contain all the latests plugins features as the github repo one.
+  ```sh
+  # pipsi install citellus
+  Already using interpreter /usr/bin/python3
+  Using base prefix '/usr'
+  New python executable in /home/iranzo/.local/venvs/citellus/bin/python3
+  Also creating executable in /home/iranzo/.local/venvs/citellus/bin/python
+  Installing setuptools, pip, wheel...done.
+  Collecting citellus
+  Installing collected packages: citellus
+  Successfully installed citellus-0.1.0.dev1072
+    Linked script /home/iranzo/.local/bin/citellus.py
+    Linked script /home/iranzo/.local/bin/magui.py
+  Done.
+  ```
+  - Pipsi will take care of installing a virtual environment and link to binary folder so you can call citellus.py or magui.py directly
+  - Remember that pypi package might not contain all the latests plugins features as the github repo one.
 - Container:
-    - Use our automatically built container in docker hub:
-        - ```docker run --user=$(id -u) --rm -v $PATHTOSOSREPORT:/data:Z citellus/citellus:latest /data --entrypoint="magui.py"```
-    - or build your own using the included ```Dockerfile``` in the git checkout.
-        - ```docker build . -f Dockerfile.centos7-atomic -t citellus:latest ``` # (from git checkout, then note image id)
-        - ```docker run --user=$(id -u) --rm -v $PATHTOSOSREPORT:/data:Z citellus:latest /data --entrypoint="magui.py"```
-    - Notes about using docker:
-        - Docker passes as volume the path specified under /data so we do use that parameter with citellus for running the tests.
-        - The default user id within the container is 10001 and the commands or sosreport permissions doesn't allow that user to gather all the information, so the container is required to run as the current user.
+  - Use our automatically built container in docker hub:
+    - `docker run --user=$(id -u) --rm -v $PATHTOSOSREPORT:/data:Z citellus/citellus:latest /data --entrypoint="magui.py"`
+  - or build your own using the included `Dockerfile` in the git checkout.
+    - `docker build . -f Dockerfile.centos7-atomic -t citellus:latest` # (from git checkout, then note image id)
+    - `docker run --user=$(id -u) --rm -v $PATHTOSOSREPORT:/data:Z citellus:latest /data --entrypoint="magui.py"`
+  - Notes about using docker:
+    - Docker passes as volume the path specified under /data so we do use that parameter with citellus for running the tests.
+    - The default user id within the container is 10001 and the commands or sosreport permissions doesn't allow that user to gather all the information, so the container is required to run as the current user.
 
-<a id="markdown-usage-help" name="usage-help"></a>
 ## Usage help
+
 Plugins for Magui are to be written in Python, check next section for details.
 
-```
+````
 usage: magui.py [arguments] [-h] [-d {INFO,DEBUG,WARNING,ERROR,CRITICAL}]
                             [--list-plugins] [--description] [-m MPATH]
                             [--output FILENAME] [--run] [--hosts hosts]
@@ -133,16 +127,17 @@ the entrypoint:
 
 In a directory structure as:
 
-```
+````
+
 /path/to/my/sosreports/
 ├── sosreport-overcloud-controller-0
 ├── sosreport-overcloud-controller-1
 └── sosreport-overcloud-controller-2
-```
+
+````
 
 ```docker run --user=$(id -u) --rm --entrypoint="magui.py" -v /path/to/my/sosreports/:/data:Z citellus:latest -q /data/sosreport-overcloud-controller-0/ /data/sosreport-overcloud-controller-1/ /data/sosreport-overcloud-controller-2/```
 
-<a id="markdown-running-a-check" name="running-a-check"></a>
 ### Running a check
 
 This is an example of execution of Magui against a set of sosreports with `seqno` plugin of Citellus enabled.
@@ -162,7 +157,6 @@ This is an example of execution of Magui against a set of sosreports with `seqno
 On this example, UUID and SEQNO is shown for each controller.
 ~~~
 
-<a id="markdown-running-a-check-against-remote-hosts" name="running-a-check-against-remote-hosts"></a>
 #### Running a check against remote hosts
 
 ~~~sh
@@ -174,7 +168,6 @@ echo "host2" >> hostsfile
 ./magui.py --hosts hostsfile
 ~~~
 
-<a id="markdown-autogrouping" name="autogrouping"></a>
 #### Autogrouping
 
 [![asciicast](https://asciinema.org/a/170429.png)](https://asciinema.org/a/170429)
@@ -182,9 +175,9 @@ echo "host2" >> hostsfile
 Magui does check `metadata` for finding host roles or hostnames that should be checked together and generates additional json files for them.
 
 
-<a id="markdown-plugin-development-for-magui" name="plugin-development-for-magui"></a>
 ## Plugin development for Magui
 
 Please do check [plugin development](development/magui-plugin-development.md) for more details.
 
 Please if you have any idea on any improvements please do not hesitate to open an issue or submit your contributions.
+````

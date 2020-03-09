@@ -1,13 +1,13 @@
 **Table of contents**
-<!-- TOC depthFrom:1 insertAnchor:true orderedList:true -->
 
-1. [Introduction](#introduction)
-2. [How to add a new file to monitor](#how-to-add-a-new-file-to-monitor)
-3. [Execution](#execution)
+<!-- TOC depthFrom:1 insertAnchor:false orderedList:false -->
+
+- [Introduction](#introduction)
+- [How to add a new file to monitor](#how-to-add-a-new-file-to-monitor)
+- [Execution](#execution)
 
 <!-- /TOC -->
 
-<a id="markdown-introduction" name="introduction"></a>
 ## Introduction
 
 This extension allows to define files that must be equal or different in a sosreport (across several of them)
@@ -18,20 +18,18 @@ For doing so, this extension does find files named with 'filename.sh' in the pos
 
 Then the listplugins and runplugin functions do take that 'fake' plugin to be processed as it should (reporting md5sum on the file so then Magui can also process this affinity or not.
 
-<a id="markdown-how-to-add-a-new-file-to-monitor" name="how-to-add-a-new-file-to-monitor"></a>
 ## How to add a new file to monitor
 
 - Create a new script in the folder (try recreating path or context in path) so include/exclude filters do also work
 
 - Inside that file introduce same tags as other plugins:
-    - bugzilla: URL of the bug containing info if any
-    - long_name: Long name of the file
-    - priority: how likely is this to be a big problem in the environment
-    - description: Description of the file to monitor
-    - path: Path to the file checked
-    - Write required code for getting value that will be compared, for example md5sum after excluding comments (like in iptables example)
+  - bugzilla: URL of the bug containing info if any
+  - long_name: Long name of the file
+  - priority: how likely is this to be a big problem in the environment
+  - description: Description of the file to monitor
+  - path: Path to the file checked
+  - Write required code for getting value that will be compared, for example md5sum after excluding comments (like in iptables example)
 
-<a id="markdown-execution" name="execution"></a>
 ## Execution
 
 During execution will run the plugin like 'metadata' plugins but use results later via datahook with magui plugins for faraday positive or negative.

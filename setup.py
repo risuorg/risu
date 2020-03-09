@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# encoding: utf-8
+# -*- coding: utf-8 -*-
 # Copyright (C) 2017, 2018, 2019 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 import os
@@ -18,7 +18,7 @@ except ImportError:
     pass
 
 filename = "setup.cfg"
-regexp = "\Aversion.*([0-9]+)"
+regexp = r"\Aversion.*([0-9]+)"
 
 line = ""
 with open(filename, "r") as f:

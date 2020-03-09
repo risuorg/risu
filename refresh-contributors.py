@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# encoding: utf-8
+# -*- coding: utf-8 -*-
 #
 # Description: Script to update contributors for each plugin
 # Copyright (C) 2018, 2019 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
@@ -38,7 +38,7 @@ os.environ["LANG"] = "en_US.UTF-8"
 # Iterate over found plugins
 for plugin in plugins:
 
-    if not "citellus/plugins" in plugin["plugin"]:
+    if "citellus/plugins" not in plugin["plugin"]:
 
         name = ""
         date = ""
@@ -74,10 +74,10 @@ for plugin in plugins:
                 for elem in ["<", ">", "(", ")"]:
                     name = name.replace(elem, "")
 
-                if name and name != "" and not name in modifications:
+                if name and name != "" and name not in modifications:
                     modifications.update({name: []})
                 if name in modifications:
-                    if year and year != "" and not year in modifications[name]:
+                    if year and year != "" and year not in modifications[name]:
                         modifications[name].append(year)
 
         modificatstring = ""
@@ -122,7 +122,7 @@ for plugin in plugins:
 
         elif modificatstring != "":
             # Now modify the file with the new lines
-            regexp = "\A# Copyright .*"
+            regexp = r"\A# Copyright .*"
             pluginfile = plugin["plugin"]
             newpluginfile = "%s.modif" % pluginfile
 

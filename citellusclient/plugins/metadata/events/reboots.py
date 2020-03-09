@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# coding=utf-8
+# -*- coding: utf-8 -*-
 # Based on reboot.py from David Vallee Delisle
 # Copyright (C) 2019 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
@@ -72,7 +72,17 @@ def gettime(line):
     """
     mg = re.match(r"([a-zA-Z]{3})[\s]+([0-9]+)[\s]+([0-9]+):([0-9]+):([0-9]+)", line)
     if mg is not None:
-        ts = mg.group(1) + " " + mg.group(2) + " " + mg.group(3) + ":" + mg.group(4) + ":" + mg.group(5)
+        ts = (
+            mg.group(1)
+            + " "
+            + mg.group(2)
+            + " "
+            + mg.group(3)
+            + ":"
+            + mg.group(4)
+            + ":"
+            + mg.group(5)
+        )
         thisyear = now.year
         # With UTC, we can consider that now in 12h later
         nnow = now + timedelta(hours=12)
@@ -92,7 +102,20 @@ def gettime(line):
             line,
         )
         if mg is not None:
-            return datetime.strptime(mg.group(1) + "-" + mg.group(2) + "-" + mg.group(3) + " " + mg.group(4) + ":" + mg.group(5) + ":" + mg.group(6), "%Y-%m-%d %H:%M:%S")
+            return datetime.strptime(
+                mg.group(1)
+                + "-"
+                + mg.group(2)
+                + "-"
+                + mg.group(3)
+                + " "
+                + mg.group(4)
+                + ":"
+                + mg.group(5)
+                + ":"
+                + mg.group(6),
+                "%Y-%m-%d %H:%M:%S",
+            )
 
 
 def setcontext(context):
@@ -288,7 +311,10 @@ def main():
                 e.duration_os = (e.time - mpe.time).total_seconds()
         # calculate the duration of the bootloader sequence
         elif (
-            e.context == "bootloader" and e.desc == "stop" and pe.context == "bootloader" and pe.desc == "start"
+            e.context == "bootloader"
+            and e.desc == "stop"
+            and pe.context == "bootloader"
+            and pe.desc == "start"
         ):
             e.duration_bootloader = (e.time - pe.time).total_seconds()
         # calculates the duration of the downtime

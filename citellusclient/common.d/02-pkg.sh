@@ -59,4 +59,3 @@ is_required_pkg_over(){
         exit ${RC_SKIPPED}
     fi
 }
-

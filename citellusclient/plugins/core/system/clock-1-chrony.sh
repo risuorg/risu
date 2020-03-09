@@ -65,4 +65,3 @@ fi
 
 # Check the return code from the offset calculation
 [[ "x$RC" = "x1" ]] && exit ${RC_OKAY} || exit ${RC_FAILED}
-

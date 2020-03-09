@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# encoding: utf-8
+# -*- coding: utf-8 -*-
 #
 # Description: Hook for moving faraday results to individual ones
 # Author: Pablo Iranzo Gomez (Pablo.Iranzo@gmail.com)

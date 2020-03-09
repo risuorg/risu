@@ -37,4 +37,3 @@ is_required_file ${FILE}
 echo "hostname"
 cat ${FILE} >&2
 exit ${RC_OKAY}
-

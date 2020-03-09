@@ -5,4 +5,3 @@
 # description: Checks /etc/cluster/cluster.conf across hosts
 # path: ${CITELLUS_ROOT}/etc/cluster/cluster.conf
 # CITELLUS_HYBRID
-

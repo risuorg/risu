@@ -60,4 +60,3 @@ else
     echo "Service ${_FW} not active: ${_STATUS}" >&2
     exit ${RC_FAILED}
 fi
-

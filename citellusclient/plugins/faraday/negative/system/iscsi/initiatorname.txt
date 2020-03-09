@@ -5,4 +5,3 @@
 # description: Checks iSCSI initiator name file
 # path: ${CITELLUS_ROOT}/etc/iscsi/initiatorname.iscsi
 # CITELLUS_HYBRID
-

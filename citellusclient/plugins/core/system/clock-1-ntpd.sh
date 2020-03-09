@@ -95,4 +95,3 @@ else
 
     [[ "x$RC" = "x1" ]] && exit ${RC_OKAY} || exit ${RC_FAILED}
 fi
-

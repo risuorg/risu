@@ -30,7 +30,7 @@ RUN PRERREQ_PKGS="shadow-utils \
     microdnf clean all
 
 RUN pip install --upgrade pip --no-cache-dir && \
-    pip install --upgrade pbr --no-cache-dir && \ 
+    pip install --upgrade pbr --no-cache-dir && \
     pip install --upgrade citellus --no-cache-dir && \
     mkdir -p /data && \
     chmod -R u+x /data && \

@@ -145,4 +145,3 @@ while read test; do
     fi
 
 done < ${tmpdir}/tests
-

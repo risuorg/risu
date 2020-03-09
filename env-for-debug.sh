@@ -33,4 +33,3 @@ export CITELLUS_LIVE=0
 
 
 echo -e "Citellus environment loaded, now you can run from current directory for sosreport root the plugin to debug via sh -x script\n\n"
-

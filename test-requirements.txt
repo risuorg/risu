@@ -1,11 +1,11 @@
-coverage!=4.4,>=4.0 # Apache-2.0
-pytest>=3.2.0 # MIT
-pytest-cov>=2.5.1 # MIT
-pymarkdownlint
-flake8
-setuptools>=30
 bashate
+coverage!=4.4,>=4.0 # Apache-2.0
+flake8
+misspellings
+pymarkdownlint
+pytest-cov>=2.5.1 # MIT
+pytest>=3.2.0 # MIT
 PyYAML
 requests
+setuptools>=30
 tox
-misspellings

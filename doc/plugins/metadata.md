@@ -1,11 +1,11 @@
 **Table of contents**
-<!-- TOC depthFrom:1 insertAnchor:true orderedList:true -->
 
-1. [Metadata extension and its plugins](#metadata-extension-and-its-plugins)
+<!-- TOC depthFrom:1 insertAnchor:false orderedList:false -->
+
+- [Metadata extension and its plugins](#metadata-extension-and-its-plugins)
 
 <!-- /TOC -->
 
-<a id="markdown-metadata-extension-and-its-plugins" name="metadata-extension-and-its-plugins"></a>
 # Metadata extension and its plugins
 
 This extension and its plugins do output data in the following approach:
@@ -17,14 +17,14 @@ The data is obtained by executing (citellus-style) plugins under the 'metadata' 
 
 This data is then reported separately from remaining citellus output via Magui, for example:
 
-~~~
+```
  ./magui.py -mf metadata ../sosreport-controller-*
-    _    
+    _
   _( )_  Magui:
- (_(ø)_) 
+ (_(ø)_)
   /(_)   Multiple Analisis Generic Unifier and Interpreter
- \|      
-  |/     
+ \|
+  |/
 
 [{'description': u'Plugin for reporting back citellus metadata from all sosreports',
   'id': '0cff7ccb03e2cf61b73327953b9ce799',
@@ -58,7 +58,7 @@ This data is then reported separately from remaining citellus output via Magui, 
               'out': '',
               'rc': 10},
   'time': 8.106231689453125e-05}]
-~~~
+```
 
 In this case, we selected the magui plugin for metadata (`metadata-outputs`) and executed against a folder containing the same sosreport data.
 

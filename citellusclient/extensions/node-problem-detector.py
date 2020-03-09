@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# encoding: utf-8
+# -*- coding: utf-8 -*-
 #
 # Description: Extension for processing node-problem-detector rules
 # Author: Pablo Iranzo Gomez (Pablo.Iranzo@gmail.com)

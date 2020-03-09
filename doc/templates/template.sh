@@ -47,4 +47,3 @@ elif [ "x$CITELLUS_LIVE" = "x0" ];  then
     exit ${RC_SKIPPED}
   fi
 fi
-

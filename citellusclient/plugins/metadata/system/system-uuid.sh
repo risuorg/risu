@@ -34,4 +34,3 @@ fi
 
 echo ${UUID} >&2
 exit ${RC_OKAY}
-

@@ -49,5 +49,3 @@ case $2 in
 esac
 
 exit ${RC_SKIPPED}
-
-

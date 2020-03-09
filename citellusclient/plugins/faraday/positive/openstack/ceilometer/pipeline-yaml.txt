@@ -5,4 +5,3 @@
 # description: Checks Ceilometer pipeline-yaml file
 # path: ${CITELLUS_ROOT}/etc/ceilometer/pipeline.yaml
 # CITELLUS_HYBRID
-

@@ -6,11 +6,12 @@ theme: "solarized"
 highlightTheme: "Zenburn"
 mode: selfcontained
 revealOptions:
-    transition: 'cube'
-    slideNumber: true
+  transition: "cube"
+  slideNumber: true
 ---
 
 ## [Citellus](https://citellus.org):
+
 ### Citellus - Verifica tus sistemas!!
 
 <img src="../citellus.png" width="15%" border=0>
@@ -45,7 +46,7 @@ Empecé a 'vivir' del software libre en 2004 y a trabajar en Red Hat en 2006 com
 
 - Citellus proporciona un framework acompañado de scripts proporcionados por la comunidad, que automatizan la detección de problemas, incluyendo problemas de configuración, conflictos con paquetes de versiones instaladas, problemas de seguridad o configuraciones inseguras y mucho más.
 
-----
+---
 
 ## Historia: ¿cómo comenzó el proyecto?
 
@@ -69,7 +70,7 @@ Empecé a 'vivir' del software libre en 2004 y a trabajar en Red Hat en 2006 com
 - Resolver problemas antes gracias a la información que proporciona.
 - Utilizar los plugins para detecatr problemas actuales o futuros.
 - Programar nuevos plugins en tu lenguaje de programación preferido (bash, python, ruby, etc.) para extender la funcionalidad.
-    - Contribuir al proyecto esos nuevos plugins para beneficio de otros.
+  - Contribuir al proyecto esos nuevos plugins para beneficio de otros.
 - Utilizar dicha información como parte de acciones proactivas en sus sistemas.
 
 </small>
@@ -81,18 +82,18 @@ Empecé a 'vivir' del software libre en 2004 y a trabajar en Red Hat en 2006 com
 <small>
 
 - Por ejemplo, con Citellus puedes detectar:
-    - Borrados incorrectos de tokens de keystone
-    - Parámetros faltantes para expirar y purgar datos de ceilometer que pueden llevar a llenar el disco duro.
-    - NTP no sincronizado
-    - paquetes obsoletos que están afectados por fallos críticos o de seguridad.
-    - otros! (200+) complentos en este momento, con más de una comprobación por plugin en muchos de ellos
+  - Borrados incorrectos de tokens de keystone
+  - Parámetros faltantes para expirar y purgar datos de ceilometer que pueden llevar a llenar el disco duro.
+  - NTP no sincronizado
+  - paquetes obsoletos que están afectados por fallos críticos o de seguridad.
+  - otros! (200+) complentos en este momento, con más de una comprobación por plugin en muchos de ellos
 - Cualquier otra cosa que puedas imaginar o programar 😉
 
 </small>
 
-----
+---
 
-##  Cambios derivados de ejemplos reales?
+## Cambios derivados de ejemplos reales?
 
 <small>
 
@@ -103,9 +104,10 @@ Empecé a 'vivir' del software libre en 2004 y a trabajar en Red Hat en 2006 com
 
 </small>
 
-----
+---
 
 ## Algunos números sobre plugins:
+
 <small>
 <small>
 - bugzilla : 21 ['docker: 1', 'httpd: 1', 'openstack/ceilometer: 1', 'openstack/ceph: 1', 'openstack/cinder: 1', 'openstack/httpd: 1', 'openstack/keystone: 1', 'openstack/keystone/templates: 1', 'openstack/neutron: 5', 'openstack/nova: 4', 'openstack/swift: 1', 'openstack/tripleo: 2', 'systemd: 1']
@@ -140,6 +142,7 @@ total : 215
 ---
 
 ## Cómo ejecutarlo?
+
 <img src="images/citellusrun.png" width="80%" border=0><!-- .element height="50%"  width="90%" -->
 
 ---
@@ -150,19 +153,20 @@ total : 215
 
 - plugins en su lenguaje preferido
 - Permite sacar la salida a un fichero json para ser procesada por otras herramientas.
-    - Permite visualizar via html el json generado
+  - Permite visualizar via html el json generado
 - Soporte de playbooks ansible (en vivo y también contra un sosreport si se adaptan)
-    - Las extensiones (core, ansible), permiten extender el tipo de plugins soportado fácilmente.
+  - Las extensiones (core, ansible), permiten extender el tipo de plugins soportado fácilmente.
 - Salvar/restaurar la configuración
 - Instalar desde pip/pipsi si no quieres usar el git clone del repositorio o ejecutar desde un contenedor.
 
 </small>
 
-----
+---
 
 ## Interfaz HTML
+
 - Creado al usar --web, abriendo fichero `citellus.html` por http se visualiza.
-<img src="images/www.png" width="80%" border=0><!-- .element height="50%"  width="70%" -->
+  <img src="images/www.png" width="80%" border=0><!-- .element height="50%"  width="70%" -->
 
 ---
 
@@ -171,7 +175,7 @@ total : 215
 <small>
 
 - Citellus es un proyecto de código abierto. Todos los plugins se envían al repositorio en github para compartirlos (es lo que queremos fomentar, reutilización del conocimiento).
-    - Project on GitHub: <https://github.com/citellusorg/citellus/>
+  - Project on GitHub: <https://github.com/citellusorg/citellus/>
 - Cada uno es experto en su área: queremos que todos contribuyan
 - Utilizamos un acercamiento similar a otros proyectos de código abierto: usamos gerrit para revisar el código y UnitTesting para validar la funcionalidad básica.
 
@@ -187,7 +191,7 @@ Actualmente hay una gran presencia de plugins de OpenStack, ya que es en ese ár
 
 Por ejemplo, es fácil realizar comprobaciones acerca de si un sistema está configurado correctamente para recibir actualizaciones, comprobar versiones específicas con fallos (Meltdown/Spectre) y que no hayan sido deshabilitadas las protecciones, consumo excesivo de memoria por algún proceso, fallos de autenticación, etc.
 
-Lea la guía del colaborador en :  <https://github.com/citellusorg/citellus/blob/master/CONTRIBUTING.md> para más detalles.</small>
+Lea la guía del colaborador en : <https://github.com/citellusorg/citellus/blob/master/CONTRIBUTING.md> para más detalles.</small>
 
 ---
 
@@ -236,12 +240,12 @@ Los plugins son aún más sencillos:
 
 - En cualquier lenguaje que pueda ser ejecutado desde una shell.
 - Mensajes de salida a 'stderr' (>&2)
-- Si en bash se utilizan cadenas como $"cadena", se puede usar el soporte incluido de i18n para traducirlos al idioma que se quiera.
+- Si en bash se utilizan cadenas como \$"cadena", se puede usar el soporte incluido de i18n para traducirlos al idioma que se quiera.
 - Devuelve `$RC_OKAY` si el test es satisfactorio / `$RC_FAILED` para error / `$RC_SKIPPED` para los omitidos / Otro para fallos no esperados.
 
 </small>
 
-----
+---
 
 ## ¿Y los plugins? (continuación)
 
@@ -252,13 +256,13 @@ Los plugins son aún más sencillos:
 
 </small>
 
-----
+---
 
 ## Ejemplo de script
 
 <small>
 
-- Por ejemplo [Uso de disco](<https://github.com/citellusorg/citellus/blob/master/citellus/plugins/system/disk_usage.sh>):
+- Por ejemplo [Uso de disco](https://github.com/citellusorg/citellus/blob/master/citellus/plugins/system/disk_usage.sh):
 
 ```sh
 #!/bin/bash
@@ -301,24 +305,25 @@ fi
 
 <small>
 
-- El código de retorno debe ser `$RC_OKAY` (ok), `$RC_FAILED` (fallo)  or `$RC_SKIPPED` (omitido).
+- El código de retorno debe ser `$RC_OKAY` (ok), `$RC_FAILED` (fallo) or `$RC_SKIPPED` (omitido).
 - Los mensajes impresos a stderr se muestran si el plugin falla o se omite (si se usa el modo detallado)
 - Si se ejecuta contra un 'sosreport', la variable `CITELLUS_ROOT` tiene la ruta a la carpeta del sosreport indicada.
 - `CITELLUS_LIVE` contiene `0` ó `1` si es una ejecución en vivo o no.
 
 </small>
 
-----
+---
 
 ## ¿Cómo empezar un nuevo plugin (por ejemplo)?
-- Crea un script en  `~/~/.../plugins/core/rhev/hosted-engine.sh`
+
+- Crea un script en `~/~/.../plugins/core/rhev/hosted-engine.sh`
 - `chmod +x hosted-engine.sh`
 
-----
+---
 
 ## ¿Cómo empezar un nuevo plugin (continuación)?
 
-~~~sh
+```sh
 if [ “$CITELLUS_LIVE” = “0” ]; then
     grep -q ovirt-hosted-engine-ha $CITELLUS_ROOT/installed-rpms
     returncode=$?
@@ -332,13 +337,13 @@ else
     echo “No funciona en modo Live” >&2
     exit $RC_SKIPPED
 fi
-~~~
+```
 
-----
+---
 
 ## ¿Cómo empezar un nuevo plugin (con funciones)?
 
-~~~sh
+```sh
 # Load common functions
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 
@@ -348,9 +353,9 @@ else
     echo “ovirt-hosted-engine no instalado“ >&2
     exit $RC_FAILED
 fi
-~~~
+```
 
-----
+---
 
 ## ¿Cómo probar un plugin?
 
@@ -359,7 +364,8 @@ fi
 - Use `tox` para ejecutar algunas pruebas UT (utf8, bashate, python 2.7, python 3)
 
 - Diga a Citellus qué plugin utilizar:
-~~~sh
+
+```sh
 [piranzo@host citellus]$ ~/citellus/citellus.py sosreport-20170724-175510/crta02 -i hosted-engine.sh -r
 _________ .__  __         .__  .__
 \_   ___ \|__|/  |_  ____ |  | |  |  __ __  ______
@@ -370,7 +376,7 @@ _________ .__  __         .__  .__
 mode: fs snapshot sosreport-20170724-175510/crta02
 # ~/~/.../plugins/core/rhev/hosted-engine.sh: failed
     “ovirt-hosted-engine no instalado“
-~~~
+```
 
 </small>
 
@@ -387,11 +393,12 @@ mode: fs snapshot sosreport-20170724-175510/crta02
 ---
 
 ### Qué hace M.a.g.u.i. ?
+
 - Ejecuta citellus contra cada sosreport o sistema, obtiene los datos y los agrupa por plugin.
 - Ejecuta sus propios plugins contra los datos obtenidos, destacando problemas que afectan al conjunto.
 - Permite obtener datos de equipos remotos via ansible-playbook.
 
-----
+---
 
 ## ¿Qué aspecto tiene?
 
@@ -399,29 +406,31 @@ mode: fs snapshot sosreport-20170724-175510/crta02
 
 - Viene en el mismo repositorio que Citellus y se ejecuta especificando los diversos sosreports:
 
-    ~~~sh
-    [piranzo@collab-shell]$ ~/citellus/magui.py * -i seqno
-        _
-    _( )_  Magui:
-    (_(ø)_)
-    /(_)   Multiple Analisis Generic Unifier and Interpreter
-    \|
-    |/
+  ```sh
+  [piranzo@collab-shell]$ ~/citellus/magui.py * -i seqno
+      _
+  _( )_  Magui:
+  (_(ø)_)
+  /(_)   Multiple Analisis Generic Unifier and Interpreter
+  \|
+  |/
 
-    ....
+  ....
 
-    [piranzo@collab-shell]]$ cat magui.json:
+  [piranzo@collab-shell]]$ cat magui.json:
 
-    {'~/~/.../core/openstack/mysql/seqno.sh': {'controller0': {'err': u'2b65adb0-787e-11e7-81a8-26480628c14c:285019879\n',
-                                                                'out': u'',
-                                                                'rc': 10},
-                                                'controller1': {'err': u'2b65adb0-787e-11e7-81a8-26480628c14c:285019879\n',
-                                                                'out': u'',
-                                                                'rc': 10},
-                                                'controller2': {'err': u'2b65adb0-787e-11e7-81a8-26480628c14c:285019878\n',
-                                                                'out': u'',
-                                                                'rc': 10}}}
-~~~
+  {'~/~/.../core/openstack/mysql/seqno.sh': {'controller0': {'err': u'2b65adb0-787e-11e7-81a8-26480628c14c:285019879\n',
+                                                              'out': u'',
+                                                              'rc': 10},
+                                              'controller1': {'err': u'2b65adb0-787e-11e7-81a8-26480628c14c:285019879\n',
+                                                              'out': u'',
+                                                              'rc': 10},
+                                              'controller2': {'err': u'2b65adb0-787e-11e7-81a8-26480628c14c:285019878\n',
+                                                              'out': u'',
+                                                              'rc': 10}}}
+  ```
+
+```
 
 - En este ejemplo (UUID and SEQNO se muestra para cada controlador y vemos que el controller2 tiene una sequencia distinta y menos actualizada.
 
@@ -489,3 +498,4 @@ Ven a #citellus en Freenode o contacta con nosotros:
 - Issue en github <https://github.com/citellusorg/citellus/issues>
 
 </small>
+```

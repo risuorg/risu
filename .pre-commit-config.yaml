@@ -1,0 +1,40 @@
+fail_fast: true
+repos:
+- repo: meta
+  hooks:
+  - id: check-useless-excludes
+- repo: https://github.com/prettier/prettier
+  rev: 1.19.1
+  hooks:
+  - id: prettier
+    files: \.(css|js|md|markdown|json)
+- repo: https://github.com/python/black
+  rev: 19.10b0
+  hooks:
+  - id: black
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v2.4.0
+  hooks:
+  - id: check-added-large-files
+  - id: check-ast
+  - id: check-case-conflict
+  - id: check-executables-have-shebangs
+  - id: check-json
+  - id: check-merge-conflict
+  - id: check-symlinks
+  - id: check-vcs-permalinks
+  - id: check-xml
+  - id: check-yaml
+    args: [--unsafe]
+  - id: end-of-file-fixer
+  - id: fix-encoding-pragma
+  - id: forbid-new-submodules
+  - id: no-commit-to-branch
+    args: [--branch, next]
+  - id: requirements-txt-fixer
+  - id: sort-simple-yaml
+  - id: trailing-whitespace
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v1.2.3
+  hooks:
+  - id: flake8

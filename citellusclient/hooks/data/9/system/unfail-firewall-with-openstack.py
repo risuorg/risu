@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# encoding: utf-8
+# -*- coding: utf-8 -*-
 #
 # Description: Hook for removing failed firewall status when node is openstack
 # Author: Pablo Iranzo Gomez (Pablo.Iranzo@gmail.com)

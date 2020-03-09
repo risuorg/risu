@@ -1,11 +1,11 @@
 **Table of contents**
-<!-- TOC depthFrom:1 insertAnchor:true orderedList:true -->
 
-1. [GDPR](#gdpr)
+<!-- TOC depthFrom:1 insertAnchor:false orderedList:false -->
+
+- [GDPR](#gdpr)
 
 <!-- /TOC -->
 
-<a id="markdown-gdpr" name="gdpr"></a>
 # GDPR
 
 GDPR <https://www.eugdpr.org/> is a Regulation created to safeguard private data access, rectification, removal, etc.
@@ -26,11 +26,12 @@ In case of remote execution in Magui, a temporary folder with the contents of th
 So, briefing:
 
 - For LIVE executions
-    - No data is stored
+  - No data is stored
 - For non-LIVE executions
-    - `citellus.json` in sosreport folder or the path you've defined with -o
-    - `magui*.json` in the folder where you executed `magui`
+
+  - `citellus.json` in sosreport folder or the path you've defined with -o
+  - `magui*.json` in the folder where you executed `magui`
 
 - When using Magui's ansible host file for remote execution, additionally:
-    - `/tmp/citellus.json` on remote hosts 
-    - `/tmp/citellus` folder on calling host
+  - `/tmp/citellus.json` on remote hosts
+  - `/tmp/citellus` folder on calling host

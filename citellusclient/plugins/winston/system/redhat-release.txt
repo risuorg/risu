@@ -5,4 +5,3 @@
 # description: Checks /etc/redhat-release across hosts
 # path: ${CITELLUS_ROOT}/etc/redhat-release
 # CITELLUS_HYBRID
-

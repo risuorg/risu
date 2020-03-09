@@ -44,4 +44,3 @@ for lun in $(grep ^36 ${FILE}|awk '{print $1}'|sort); do
 done
 ) | tr "\n" ";" >&2
 exit ${RC_OKAY}
-

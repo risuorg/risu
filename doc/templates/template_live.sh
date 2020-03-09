@@ -34,4 +34,3 @@ then
 else
   exit ${RC_SKIPPED}
 fi
-

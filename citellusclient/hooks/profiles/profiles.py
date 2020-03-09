@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# encoding: utf-8
+# -*- coding: utf-8 -*-
 #
 # Description: Hook for procesing profile definitions and appending results formated to json
 # Author: Pablo Iranzo Gomez (Pablo.Iranzo@gmail.com)
@@ -108,7 +108,8 @@ def run(data, quiet=False):  # do not edit this line
             "priority": int(
                 citellus.regexpfile(filename=plugin["plugin"], regexp=r"\A# priority:")[
                     11:
-                ].strip() or 0
+                ].strip()
+                or 0
             ),
         }
         data[uid].update(metadata)

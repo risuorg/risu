@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# encoding: utf-8
+# -*- coding: utf-8 -*-
 #
 # Copyright (C) 2017, 2018 Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
 
@@ -72,7 +72,7 @@ def main():
     """
 
     # Base path to find files
-    CITELLUS_ROOT = os.environ["CITELLUS_ROOT"]
+    # CITELLUS_ROOT = os.environ["CITELLUS_ROOT"]
 
     if runninglive():
         # Running on LIVE environment

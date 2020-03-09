@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# encoding: utf-8
+# -*- coding: utf-8 -*-
 
 # Copyright (C) 2017 Robin Černín <cerninr@gmail.com>
 # Copyright (C) 2017 Lars Kellogg-Stedman <lars@redhat.com>

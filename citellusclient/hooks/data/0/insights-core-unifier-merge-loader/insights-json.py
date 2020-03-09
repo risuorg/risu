@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# encoding: utf-8
+# -*- coding: utf-8 -*-
 #
 # Description: Hook for integrating insights execution json into citellus results
 # Author: Pablo Iranzo Gomez (Pablo.Iranzo@gmail.com)
@@ -46,7 +46,11 @@ def run(data, quiet=False):  # do not edit this line
     mydata = []
     for insijson in jsons:
         filenamewithpath = insijson
-        if (os.path.exists(filenamewithpath) and os.path.isfile(filenamewithpath) and os.access(filenamewithpath, os.R_OK)):
+        if (
+            os.path.exists(filenamewithpath)
+            and os.path.isfile(filenamewithpath)
+            and os.access(filenamewithpath, os.R_OK)
+        ):
             with open(filenamewithpath) as json_file:
                 try:
                     mydata = json.load(json_file)
@@ -67,7 +71,10 @@ def run(data, quiet=False):  # do not edit this line
                 data[pluginid]["id"] = pluginid
                 data[pluginid]["plugin"] = "%s.%s" % (insijson, plugin["component"])
                 if "links" in plugin and "kcs" in plugin["links"]:
-                    data[pluginid]["kb"] = plugin["links"]["kcs"].split()
+                    if isinstance(plugin["links"]["kcs"], str):
+                        data[pluginid]["kb"] = plugin["links"]["kcs"].split()
+                    elif isinstance(plugin["links"]["kcs"], list):
+                        data[pluginid]["kb"] = " ".join(plugin["links"]["kcs"])
                 else:
                     data[pluginid]["kb"] = ""
                 data[pluginid]["category"] = "insights"

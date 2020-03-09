@@ -54,4 +54,3 @@
       debug:
         msg: "CITELLUS_BASE undefined"
       when: citellus_base | trim == ''
-

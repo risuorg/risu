@@ -32,4 +32,3 @@ fi
 
 echo "Possible not osp system" >&2
 exit ${RC_SKIPPED}
-
