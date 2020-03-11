@@ -4,7 +4,6 @@
 # Copyright (C) 2018 David Valle Delisle <dvd@redhat.com>
 # Copyright (C) 2018, 2019 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
-
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -28,7 +27,7 @@ if [[ ${CITELLUS_LIVE} -eq 0 ]]; then
     DMIDECODE="${CITELLUS_ROOT}/dmidecode"
     is_required_file ${DMIDECODE}
     UUID=$(grep -oP "UUID: \K(.*)" ${DMIDECODE})
-elif [[ ${CITELLUS_LIVE} -eq 1 ]];then
+elif [[ ${CITELLUS_LIVE} -eq 1 ]]; then
     UUID=$(dmidecode -s system-uuid)
 fi
 

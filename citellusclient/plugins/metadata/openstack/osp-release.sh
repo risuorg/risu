@@ -3,7 +3,6 @@
 # Copyright (C) 2018 Robin Černín <cerninr@gmail.com>
 # Copyright (C) 2018 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
-
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -26,7 +25,7 @@
 # Find release
 RELEASE=$(name_osp_version)
 OSPNUM=$(discover_osp_version)
-if [[ "${OSPNUM}" != "0" ]]; then
+if [[ ${OSPNUM} != "0" ]]; then
     echo $"${RELEASE}" >&2
     exit ${RC_OKAY}
 else

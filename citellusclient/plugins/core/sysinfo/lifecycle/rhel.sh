@@ -3,7 +3,6 @@
 # Copyright (C) 2019 Mikel Olasagasti Uranga <mikel@olasagasti.info>
 # Copyright (C) 2018, 2019 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
-
 # This program is Free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -28,15 +27,15 @@
 OSBRAND=$(discover_osbrand)
 
 declare -A RHELEOL
-RHELEOL=(   ["6"]="2020-11-30" \
-        ["7"]="2024-06-30" \
-    ["8"]="2029-05-30"  )
+RHELEOL=(["6"]="2020-11-30"
+    ["7"]="2024-06-30"
+    ["8"]="2029-05-30")
 
 declare -A RHELELS
-RHELELS=(   ["5"]="2020-11-30" \
+RHELELS=(["5"]="2020-11-30"
     ["6"]="2024-06-30")
 
-if [[ "$OSBRAND" != "rhel" ]]; then
+if [[ $OSBRAND != "rhel" ]]; then
     echo "RHEL OS required" >&2
     exit ${RC_SKIPPED}
 else

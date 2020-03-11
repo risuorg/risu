@@ -2,7 +2,6 @@
 
 # Copyright (C) 2018 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
-
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -23,11 +22,11 @@
 # Load common functions
 [[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
-if [[ "x$CITELLUS_LIVE" = "x0" ]];  then
+if [[ "x$CITELLUS_LIVE" == "x0" ]]; then
     is_required_file ${CITELLUS_ROOT}/dmidecode
-    python ${CITELLUS_BASE}/tools/dmidecode.py < ${CITELLUS_ROOT}/dmidecode | grep ^BIOS >&2
+    python ${CITELLUS_BASE}/tools/dmidecode.py <${CITELLUS_ROOT}/dmidecode | grep ^BIOS >&2
 else
-    dmidecode| python ${CITELLUS_BASE}/tools/dmidecode.py| grep ^BIOS >&2
+    dmidecode | python ${CITELLUS_BASE}/tools/dmidecode.py | grep ^BIOS >&2
 fi
 
 exit ${RC_OKAY}

@@ -5,7 +5,6 @@
 # Copyright (C) 2017 Lars Kellogg-Stedman <lars@redhat.com>
 # Copyright (C) 2017, 2018, 2019 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
-
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -30,12 +29,12 @@
 
 : ${CITELLUS_MAX_CLOCK_OFFSET:=1}
 
-if ! is_active chronyd;then
+if ! is_active chronyd; then
     echo "chronyd is not active" >&2
     exit ${RC_FAILED}
 fi
 
-if [[ ${CITELLUS_LIVE} = 0 ]]; then
+if [[ ${CITELLUS_LIVE} == 0 ]]; then
     is_required_file ${CITELLUS_ROOT}/sos_commands/chrony/chronyc_tracking
 
     if grep -q "Not synchronised\|Cannot talk to daemon" "${CITELLUS_ROOT}/sos_commands/chrony/chronyc_tracking"; then
@@ -63,4 +62,4 @@ else
 fi
 
 # Check the return code from the offset calculation
-[[ "x$RC" = "x1" ]] && exit ${RC_OKAY} || exit ${RC_FAILED}
+[[ "x$RC" == "x1" ]] && exit ${RC_OKAY} || exit ${RC_FAILED}

@@ -26,17 +26,17 @@ RHPLUGIN="redhat/openshift"
 
 OCPVERSION=$(discover_ocp_version)
 
-if [[ "${OCPVERSION}" == "0" ]]; then
+if [[ ${OCPVERSION} == "0" ]]; then
     echo "Not running on OCP node" >&2
     exit ${RC_SKIPPED}
 else
     is_required_file ${CITELLUS_ROOT}/etc/origin/master/master-config.yaml
     NETWORKPLUGIN=$(grep 'networkPluginName' ${CITELLUS_ROOT}/etc/origin/master/master-config.yaml)
 
-    if [[ -z ${NETWORKPLUGIN} ]] ;then
+    if [[ -z ${NETWORKPLUGIN} ]]; then
         echo "configured OpenShift network-plugin: ${NETWORKPLUGIN}" >&2
 
-        if [[ ! "${NETWORKPLUGIN}" =~ "${RHPLUGIN}" ]] ; then
+        if [[ ! ${NETWORKPLUGIN} =~ ${RHPLUGIN} ]]; then
             echo "Plugin ${NETWORKPLUGIN} is not a supported plugin by Red Hat!" >&2
             exit ${RC_INFO}
         fi

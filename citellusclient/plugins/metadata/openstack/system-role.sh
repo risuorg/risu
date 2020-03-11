@@ -3,7 +3,6 @@
 # Copyright (C) 2018 David Valle Delisle <dvd@redhat.com>
 # Copyright (C) 2018 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
-
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -26,20 +25,20 @@
 
 RELEASE=$(discover_osp_version)
 
-if [[ "${RELEASE}" != "0" ]]; then
+if [[ ${RELEASE} != "0" ]]; then
     ROLE="unknown"
-    if is_containerized;then
+    if is_containerized; then
         ROLE="container-host"
-    elif is_process ironic-conductor;then
+    elif is_process ironic-conductor; then
         ROLE="undercloud"
-    elif is_process nova-compute;then
+    elif is_process nova-compute; then
         ROLE="compute"
-    elif is_process pcsd;then
+    elif is_process pcsd; then
         ROLE="controller"
-    elif is_process neutron-server;then
+    elif is_process neutron-server; then
         # So if neutron-server is running and there's no pcsd, then it's a network node
         ROLE="network"
-    elif is_process ceilometer-collector;then
+    elif is_process ceilometer-collector; then
         ROLE="telemetry"
     fi
 else

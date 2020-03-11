@@ -8,7 +8,7 @@ proto_is_ssl=$(get_config_val /etc/nova/nova.conf DEFAULT ssl_only false)
 
 bind_proto=http
 
-if [ "${proto_is_ssl,,}" = true ] ; then
+if [ "${proto_is_ssl,,}" = true ]; then
     bind_proto=https
 fi
 

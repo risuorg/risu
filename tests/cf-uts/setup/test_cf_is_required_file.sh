@@ -22,24 +22,24 @@
 FOLDER=$3
 
 case $2 in
-    pass)
-        mkdir -p ${FOLDER}
-        echo test-my-rpm-1.2.23.noarch > ${FOLDER}/installed-rpms
-        exit 0
-        ;;
+pass)
+    mkdir -p ${FOLDER}
+    echo test-my-rpm-1.2.23.noarch >${FOLDER}/installed-rpms
+    exit 0
+    ;;
 
-    skipped)
-        mkdir -p ${FOLDER}
-        exit 0
-        ;;
+skipped)
+    mkdir -p ${FOLDER}
+    exit 0
+    ;;
 
-    *)
-        # Load common functions
-        [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
+*)
+    # Load common functions
+    [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 
-        # When no pass or fail is passed we're running the test for common function
-        is_required_file "${CITELLUS_ROOT}/installed-rpms" && exit ${RC_OKAY} || exit ${RC_SKIPPED}
-        ;;
+    # When no pass or fail is passed we're running the test for common function
+    is_required_file "${CITELLUS_ROOT}/installed-rpms" && exit ${RC_OKAY} || exit ${RC_SKIPPED}
+    ;;
 esac
 
 exit ${RC_SKIPPED}

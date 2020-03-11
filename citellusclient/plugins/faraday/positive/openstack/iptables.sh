@@ -3,7 +3,6 @@
 # Copyright (C) 2018 Robin Černín <cerninr@gmail.com>
 # Copyright (C) 2018 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
-
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -28,7 +27,7 @@
 [[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
 is_required_file "${CITELLUS_ROOT}/etc/sysconfig/iptables"
-MD5SUM=$(sed '1d;$d' "${CITELLUS_ROOT}/etc/sysconfig/iptables"| md5sum|awk '{print $1}')
+MD5SUM=$(sed '1d;$d' "${CITELLUS_ROOT}/etc/sysconfig/iptables" | md5sum | awk '{print $1}')
 
 echo "${MD5SUM}" >&2
 exit ${RC_OKAY}

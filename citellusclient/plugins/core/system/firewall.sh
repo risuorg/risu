@@ -3,7 +3,6 @@
 # Copyright (C) 2018 Juan Manuel Parrilla Madrid <jparrill@redhat.com>
 # Copyright (C) 2018 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
-
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -26,7 +25,7 @@
 # description: Validate RHEL firewall and check if is up
 # priority: 200
 
-function validate_firewall {
+validate_firewall() {
     # Check linux firewall to validate if it's running and active
     if is_active $1; then
         # True when service is up
@@ -41,14 +40,14 @@ function validate_firewall {
 
 OS=$(discover_os)
 
-if [[ "$OS" == "debian" ]] || [[ "$OS" == "fedora" ]]; then
+if [[ $OS == "debian" ]] || [[ $OS == "fedora" ]]; then
     _FW='firewalld'
 else
     RH_RELEASE=$(discover_rhrelease)
     case ${RH_RELEASE} in
-        6) _FW='iptables' ;;
-        7) _FW='firewalld' ;;
-        0) _FW='undef' ;;
+    6) _FW='iptables' ;;
+    7) _FW='firewalld' ;;
+    0) _FW='undef' ;;
     esac
 fi
 

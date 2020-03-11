@@ -3,7 +3,6 @@
 # Copyright (C) 2018 Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
 # Copyright (C) 2017 Robin Černín <rcernin@redhat.com>
 
-
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -23,11 +22,9 @@
 # priority: 0<>1000 for likelihood to break your environment if this test reports fail
 # kb: url-to-kbase
 
-
-if [ "x$CITELLUS_LIVE" = "x1" ];  then
-    if true
-    then
-        if true ; then
+if [ "x$CITELLUS_LIVE" = "x1" ]; then
+    if true; then
+        if true; then
             exit ${RC_OKAY}
         else
             exit ${RC_FAILED}
@@ -35,10 +32,9 @@ if [ "x$CITELLUS_LIVE" = "x1" ];  then
     else
         exit ${RC_SKIPPED}
     fi
-elif [ "x$CITELLUS_LIVE" = "x0" ];  then
-    if true
-    then
-        if true ; then
+elif [ "x$CITELLUS_LIVE" = "x0" ]; then
+    if true; then
+        if true; then
             exit ${RC_OKAY}
         else
             exit ${RC_FAILED}

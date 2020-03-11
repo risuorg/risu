@@ -24,7 +24,7 @@ get_user_from_process() {
     ps -eo user,pid,cmd | grep $process | grep -E $pids | awk 'NR==1{print $1}'
 }
 
-healthcheck_curl () {
+healthcheck_curl() {
     export NSS_SDB_USE_CACHE=no
     curl -g -k -q -s -S --fail -o "${HEALTHCHECK_CURL_OUTPUT}" \
         --max-time "${HEALTHCHECK_CURL_MAX_TIME}" \
@@ -33,7 +33,7 @@ healthcheck_curl () {
         "$@" || return 1
 }
 
-healthcheck_port () {
+healthcheck_port() {
     process=$1
 
     shift 1
@@ -47,10 +47,13 @@ healthcheck_port () {
     # port by using "sudo -u" to get the right output.
     # Note: the privileged containers have the correct ss output with root
     # user; which is why we need to run with both users, as a best effort.
-    (ss -ntuap; sudo -u $puser ss -ntuap) | sort -u | grep -qE ":($ports).*,pid=($pids),"
+    (
+        ss -ntuap
+        sudo -u $puser ss -ntuap
+    ) | sort -u | grep -qE ":($ports).*,pid=($pids),"
 }
 
-healthcheck_listen () {
+healthcheck_listen() {
     process=$1
 
     shift 1
@@ -60,19 +63,19 @@ healthcheck_listen () {
     ss -lnp | grep -qE ":($ports).*,pid=($pids),"
 }
 
-healthcheck_socket () {
+healthcheck_socket() {
     process=$1
     socket=$2
 
     # lsof truncate command name to 15 characters and this behaviour
     # cannot be disabled
-    if [ ${#process} -gt 15 ] ; then
+    if [ ${#process} -gt 15 ]; then
         process=${process:0:15}
     fi
     lsof -Fc -Ua $socket | grep -q "c$process"
 }
 
-healthcheck_file_modification () {
+healthcheck_file_modification() {
     file_path=$1
     limit_seconds=$2
 
@@ -83,18 +86,18 @@ healthcheck_file_modification () {
     fi
     curr_time=$(date +%s)
     last_mod=$(stat -c '%Y' $file_path)
-    limit_epoch=$(( curr_time-limit_seconds ))
+    limit_epoch=$((curr_time - limit_seconds))
     if [ ${limit_epoch} -gt ${last_mod} ]; then
         return 1
     fi
 }
 
-get_config_val () {
-    crudini --get "$1" "$2" "$3" 2> /dev/null || echo "$4"
+get_config_val() {
+    crudini --get "$1" "$2" "$3" 2>/dev/null || echo "$4"
 }
 
 # apachectl -S is slightly harder to parse and doesn't say if the vhost is serving SSL
-get_url_from_vhost () {
+get_url_from_vhost() {
     vhost_file=$1
     server_name=$(awk '/ServerName/ {print $2}' $vhost_file)
     ssl_enabled=$(awk '/SSLEngine/ {print $2}' $vhost_file)

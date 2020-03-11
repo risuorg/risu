@@ -3,7 +3,6 @@
 # Copyright (C) 2019 Mikel Olasagasti Uranga <mikel@olasagasti.info>
 # Copyright (C) 2018, 2019 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
-
 # This program is Free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -28,16 +27,16 @@
 OSBRAND=$(discover_osbrand)
 
 declare -A RHOSEOL
-RHOSEOL=(   ["8"]="2019-04-20"\
-        ["9"]="2019-08-24"\
-        ["10"]="2019-12-16"\
-        ["11"]="2018-05-18"\
-        ["12"]="2018-12-13"\
-        ["13"]="2021-06-27"\
-        ["14"]="2020-01-10"\
+RHOSEOL=(["8"]="2019-04-20"
+    ["9"]="2019-08-24"
+    ["10"]="2019-12-16"
+    ["11"]="2018-05-18"
+    ["12"]="2018-12-13"
+    ["13"]="2021-06-27"
+    ["14"]="2020-01-10"
     ["15"]="2020-03-17")
 
-if [[ "$OSBRAND" != "rhel" ]]; then
+if [[ $OSBRAND != "rhel" ]]; then
     echo "RHEL OS required" >&2
     exit ${RC_SKIPPED}
 else

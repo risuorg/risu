@@ -18,6 +18,6 @@
 
 # Load all common functions defined in common.d
 
-for file in $(find ${CITELLUS_BASE}/common.d -maxdepth 1 -type f -name '*.sh'|sort -n);do
+for file in $(find ${CITELLUS_BASE}/common.d -maxdepth 1 -type f -name '*.sh' | sort -n); do
     . ${file}
 done

@@ -1,14 +1,12 @@
 #!/bin/bash
 # Copyright (C) 2018 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
-
 # description: Setup environment for manual debug of plugin
 # This script tries to mimic what citellus.py does so it has some hardcoded defaults that must be kept in sync with Citellus
 #
 
-
 # Folder for citellus
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 export CITELLUS_BASE=${DIR}/citellusclient/
 
 # Error code definition
@@ -30,6 +28,5 @@ export CITELLUS_LIVE=0
 
 # Load common functions
 . ${CITELLUS_BASE}/common-functions.sh
-
 
 echo -e "Citellus environment loaded, now you can run from current directory for sosreport root the plugin to debug via sh -x script\n\n"

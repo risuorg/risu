@@ -38,14 +38,12 @@ repos:
   rev: v1.2.3
   hooks:
   - id: flake8
-- repo: https://github.com/bemeurer/beautysh
-  rev:  master
+- repo: https://github.com/pecigonzalo/pre-commit-shfmt.git
+  rev: master
   hooks:
-  - id: beautysh
-- repo: https://github.com/openstack/bashate
-  rev:  master
-  hooks:
-  - id: bashate
+  - id: shell-fmt
+    args:
+    - --indent=4
 - repo: https://github.com/asottile/blacken-docs
   rev:  master
   hooks:

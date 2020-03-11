@@ -3,7 +3,6 @@
 # Copyright (C) 2019 Mikel Olasagasti Uranga <mikel@olasagasti.info>
 # Copyright (C) 2018, 2019 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
-
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -31,13 +30,13 @@
 OSBRAND=$(discover_osbrand)
 
 declare -A fedoraRD
-fedoraRD=(  ["27"]="2017-11-14" \
-        ["28"]="2018-05-01" \
-        ["29"]="2018-10-23" \
-        ["30"]="2019-04-30" \
+fedoraRD=(["27"]="2017-11-14"
+    ["28"]="2018-05-01"
+    ["29"]="2018-10-23"
+    ["30"]="2019-04-30"
     ["31"]="2019-10-31")
 
-if [[ "$OSBRAND" != "fedora" ]]; then
+if [[ $OSBRAND != "fedora" ]]; then
     echo "Fedora OS required" >&2
     exit ${RC_SKIPPED}
 else
@@ -47,13 +46,13 @@ else
         exit ${RC_FAILED}
     else
         # Check dates for release + 2
-        if [[ ${fedoraRD[((${FR} + 2 ))]} == "" ]]; then
+        if [[ ${fedoraRD[FR + 2]} == "" ]]; then
             # Next release is not yet defined, exit as OK
             exit ${RC_OKAY}
         else
             # Fedora is supported until 30 days after release of next two versions
-            if is_date_over_today "${fedoraRD[((${FR} + 2))]}"; then
-                if are_dates_diff_over 210 "${fedoraRD[((${FR} + 2))]}" "$(LC_ALL=C LANG=C date)"; then
+            if is_date_over_today "${fedoraRD[FR + 2]}"; then
+                if are_dates_diff_over 210 "${fedoraRD[FR + 2]}" "$(LC_ALL=C LANG=C date)"; then
                     exit ${RC_OKAY}
                 else
                     echo $"Your system is within the half-year period to become unsupported" >&2

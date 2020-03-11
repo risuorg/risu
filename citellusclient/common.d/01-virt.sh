@@ -19,13 +19,13 @@
 
 # Helper script to define location of various files.
 
-virt_type(){
-    if [[ "x$CITELLUS_LIVE" = "x0" ]]; then
+virt_type() {
+    if [[ "x$CITELLUS_LIVE" == "x0" ]]; then
         FILE="${CITELLUS_ROOT}/sos_commands/hardware/dmidecode"
-    elif [[ "x$CITELLUS_LIVE" = "x1" ]];then
+    elif [[ "x$CITELLUS_LIVE" == "x1" ]]; then
         FILE=$(mktemp)
         trap "rm ${FILE}" EXIT
-        dmidecode > ${FILE}
+        dmidecode >${FILE}
     fi
     if [[ -f ${FILE} ]]; then
         (
@@ -39,30 +39,30 @@ virt_type(){
             is_lineinfile "Product Name: Google Compute Engine" "${FILE}" && echo "Google Compute Engine"
             is_lineinfile "Product Name: AHV" "${FILE}" && echo "Nutanix AHV"
             is_lineinfile "Manufacturer: DigitalOcean" "${FILE}" && echo "DigitalOcean"
-            uuid=$(python ${CITELLUS_BASE}/tools/dmidecode.py < ${FILE}| grep UUID |awk '{print $7}' |sed 's/)//')
-            amazon=$(python ${CITELLUS_BASE}/tools/dmidecode.py < ${FILE}| grep -c amazon)
-            if [[ $(echo ${uuid} |grep -c ^EC2) -eq 1 ]] || [[ ${amazon} -gt 0 ]]; then
+            uuid=$(python ${CITELLUS_BASE}/tools/dmidecode.py <${FILE} | grep UUID | awk '{print $7}' | sed 's/)//')
+            amazon=$(python ${CITELLUS_BASE}/tools/dmidecode.py <${FILE} | grep -c amazon)
+            if [[ $(echo ${uuid} | grep -c ^EC2) -eq 1 ]] || [[ ${amazon} -gt 0 ]]; then
                 echo "AWS"
             fi
 
-            azure=$(grep -A2 "Manufacturer: Microsoft Corporation" "${FILE}" |grep -A1 "Product Name: Virtual Machine" |grep "Version: 7.0" -c)
+            azure=$(grep -A2 "Manufacturer: Microsoft Corporation" "${FILE}" | grep -A1 "Product Name: Virtual Machine" | grep "Version: 7.0" -c)
             if [[ ${azure} -gt 0 ]]; then
                 echo "Azure"
             fi
 
-            hyperv=$(grep -A2 "Manufacturer: Microsoft Corporation" "${FILE}" |grep -A1 "Product Name: Virtual Machine" |grep "Version: Hyper-V" -c)
+            hyperv=$(grep -A2 "Manufacturer: Microsoft Corporation" "${FILE}" | grep -A1 "Product Name: Virtual Machine" | grep "Version: Hyper-V" -c)
             if [[ ${hyperv} -gt 0 ]]; then
                 echo "Hyper-V"
             fi
 
-        )|xargs echo
+        ) | xargs echo
     else
         echo "Unable to determine"
     fi
 }
 
-is_virtual(){
-    if [[ "$(virt_type)" == "" ]] ; then
+is_virtual() {
+    if [[ "$(virt_type)" == "" ]]; then
         return 1
     else
         return 0

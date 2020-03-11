@@ -2,7 +2,6 @@
 
 . ${HEALTHCHECK_SCRIPTS:-/usr/share/openstack-tripleo-common/healthcheck}/common.sh
 
-
 if pgrep -f nova_metadata; then
     check_url=$(get_url_from_vhost /etc/httpd/conf.d/10-nova_metadata_wsgi.conf)
 else

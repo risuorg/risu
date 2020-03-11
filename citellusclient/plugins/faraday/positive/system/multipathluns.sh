@@ -2,7 +2,6 @@
 
 # Copyright (C) 2018 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
-
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -29,17 +28,17 @@
 
 if [[ ${CITELLUS_LIVE} -eq 0 ]]; then
     FILE="${CITELLUS_ROOT}/sos_commands/multipath/multipath_-l"
-elif [[ ${CITELLUS_LIVE} -eq 1 ]];then
+elif [[ ${CITELLUS_LIVE} -eq 1 ]]; then
     FILE=$(mktemp)
     trap "rm ${FILE}" EXIT
-    multipath -l > ${FILE} 2>&1
+    multipath -l >${FILE} 2>&1
 fi
 
 is_required_file ${FILE}
 
 (
-    for lun in $(grep ^36 ${FILE}|awk '{print $1}'|sort); do
-        NUMLUNS=$(sed -n '/'^${lun}'.*/,/^360/p' ${FILE} |grep ":" |wc -l)
+    for lun in $(grep ^36 ${FILE} | awk '{print $1}' | sort); do
+        NUMLUNS=$(sed -n '/'^${lun}'.*/,/^360/p' ${FILE} | grep ":" | wc -l)
         echo ${lun}:${NUMLUNS}
     done
 ) | tr "\n" ";" >&2

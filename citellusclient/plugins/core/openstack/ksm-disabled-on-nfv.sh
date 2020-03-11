@@ -30,7 +30,7 @@ fi
 
 flag=0
 
-if is_lineinfile "hugepages" "${CITELLUS_ROOT}/proc/cmdline";then
+if is_lineinfile "hugepages" "${CITELLUS_ROOT}/proc/cmdline"; then
     # DPDK is supposedly enabled, do further checks
     if is_enabled ksmtuned; then
         flag=1
@@ -43,7 +43,7 @@ if is_lineinfile "hugepages" "${CITELLUS_ROOT}/proc/cmdline";then
     fi
 fi
 
-if [[ "${flag}" == "1" ]]; then
+if [[ ${flag} == "1" ]]; then
     echo $"KSM could affect performance when using Hugepages (NFV), please disable it" >&2
     exit ${RC_FAILED}
 else

@@ -24,7 +24,7 @@
 
 OCPVERSION=$(discover_ocp_version)
 
-if [[ "${OCPVERSION}" == "0" ]]; then
+if [[ ${OCPVERSION} == "0" ]]; then
     echo "Not running on OCP node" >&2
     exit ${RC_SKIPPED}
 else

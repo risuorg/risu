@@ -2,7 +2,6 @@
 
 # Copyright (C) 2018 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
-
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -26,9 +25,9 @@
 # Load common functions
 [[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
-if [[ "${CITELLUS_LIVE}" -eq "1" ]]; then
+if [[ ${CITELLUS_LIVE} -eq "1" ]]; then
     is_required_command pcs
-    pcs property list --all |grep dc-version >&2
+    pcs property list --all | grep dc-version >&2
 else
     is_required_file "${CITELLUS_ROOT}/sos_commands/pacemaker/pcs_property_list_--all"
     grep dc-version "${CITELLUS_ROOT}/sos_commands/pacemaker/pcs_property_list_--all" >&2

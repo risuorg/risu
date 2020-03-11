@@ -19,12 +19,32 @@
 
 export LANG=en_US
 
-TEST_OKAY=$(tput setaf 2; echo "okay"; tput sgr0)
-TEST_SKIPPED=$(tput setaf 3; echo "skipped"; tput sgr0)
-TEST_FAILED=$(tput setaf 1; echo "failed"; tput sgr0)
-TEST_INFO=$(tput setaf 5; echo "info"; tput sgr0)
-TEST_WTF=$(tput setaf 1; echo "unexpected result"; tput sgr0)
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+TEST_OKAY=$(
+    tput setaf 2
+    echo "okay"
+    tput sgr0
+)
+TEST_SKIPPED=$(
+    tput setaf 3
+    echo "skipped"
+    tput sgr0
+)
+TEST_FAILED=$(
+    tput setaf 1
+    echo "failed"
+    tput sgr0
+)
+TEST_INFO=$(
+    tput setaf 5
+    echo "info"
+    tput sgr0
+)
+TEST_WTF=$(
+    tput setaf 1
+    echo "unexpected result"
+    tput sgr0
+)
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # Add the extra vars we added on citelus.py to keep some
 # level of compatibility for this script to keep working as fallback
@@ -50,7 +70,7 @@ show_stderr() {
     sed 's/^/    /' ${tmpdir}/stderr && echo ""
 }
 
-show_logo(){
+show_logo() {
     echo "_________ .__  __         .__  .__                "
     echo "\_   ___ \|__|/  |_  ____ |  | |  |  __ __  ______"
     echo "/    \  \/|  \   __\/ __ \|  | |  | |  |  \/  ___/"
@@ -60,7 +80,7 @@ show_logo(){
     echo $"                                                  "
 }
 
-show_help(){
+show_help() {
     echo "Usage: ${0##*/} [-h] [--live] [DIRECTORY] [script folder] ... "
 }
 
@@ -70,22 +90,25 @@ export CITELLUS_TMP=$(mktemp -d)
 
 while :; do
     case "$1" in
-        --live) CITELLUS_LIVE="1"
-            shift
-            ;;
-        -h|-\?|--help)
-            show_help
-            exit
-            ;;
-        --) shift
-            break
-            ;;
-        -?*)
-            echo "unknown option: ${1}" >&2
-            exit ${RC_FAILED}
-            ;;
-        *) break
-            ;;
+    --live)
+        CITELLUS_LIVE="1"
+        shift
+        ;;
+    -h | -\? | --help)
+        show_help
+        exit
+        ;;
+    --)
+        shift
+        break
+        ;;
+    -?*)
+        echo "unknown option: ${1}" >&2
+        exit ${RC_FAILED}
+        ;;
+    *)
+        break
+        ;;
     esac
 done
 
@@ -105,27 +128,26 @@ fi
 if [ -n "$*" ]; then
     specs=("$@")
 else
-    specs=( $(find "${DIR}" -type d -execdir test -f {}/.citellus_tests \; -print) )
+    specs=($(find "${DIR}" -type d -execdir test -f {}/.citellus_tests \; -print))
 fi
 
 for spec in "${specs[@]}"; do
     [ -d "$spec" ] || continue
-    discover_tests "$spec" >> ${tmpdir}/tests-unsorted
+    discover_tests "$spec" >>${tmpdir}/tests-unsorted
 done
 
-[ -e "$tmpdir/tests-unsorted" ] && sort -u ${tmpdir}/tests-unsorted > ${tmpdir}/tests || exit ${RC_FAILED}
-
+[ -e "$tmpdir/tests-unsorted" ] && sort -u ${tmpdir}/tests-unsorted >${tmpdir}/tests || exit ${RC_FAILED}
 
 show_logo
-test_count=$(wc -l < ${tmpdir}/tests)
+test_count=$(wc -l <${tmpdir}/tests)
 scriptname "found $test_count tests"
-[[ ${CITELLUS_LIVE} = 1 ]] && echo "mode: live" || echo "mode: fs snapshot $CITELLUS_ROOT"
+[[ ${CITELLUS_LIVE} == 1 ]] && echo "mode: live" || echo "mode: fs snapshot $CITELLUS_ROOT"
 
 while read test; do
     echo -n "# $test: "
     (
         cd $(dirname ${test})
-        ./$(basename ${test}) > ${tmpdir}/stdout 2> ${tmpdir}/stderr
+        ./$(basename ${test}) >${tmpdir}/stdout 2>${tmpdir}/stderr
     )
     result=$?
 
@@ -144,4 +166,4 @@ while read test; do
         show_stderr
     fi
 
-done < ${tmpdir}/tests
+done <${tmpdir}/tests

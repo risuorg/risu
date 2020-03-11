@@ -17,8 +17,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-
-are_dates_diff_over(){
+are_dates_diff_over() {
     # $1 days of difference
     # $2 date 1
     # $3 date 2
@@ -28,32 +27,32 @@ are_dates_diff_over(){
     date2="$3"
 
     EPOCH1="$(date -d "$date1" "+%s" 2>/dev/null)"
-    if [[ "$?" == "1" ]]; then
+    if [[ $? == "1" ]]; then
         # failure when converting date, happened with one specific TZ, so let's approx by removing TZ
-        EPOCH1=$(date -d "$(echo "$date1" |awk '{print $1" "$2" "$3" "$4" "$6}')" "+%s")
+        EPOCH1=$(date -d "$(echo "$date1" | awk '{print $1" "$2" "$3" "$4" "$6}')" "+%s")
     fi
 
     EPOCH2="$(date -d "$date2" "+%s" 2>/dev/null)"
-    if [[ "$?" == "1" ]]; then
+    if [[ $? == "1" ]]; then
         # failure when converting date, happened with one specific TZ, so let's approx by removing TZ
-        EPOCH2=$(date -d "$(echo "$date2" |awk '{print $1" "$2" "$3" "$4" "$6}')" "+%s")
+        EPOCH2=$(date -d "$(echo "$date2" | awk '{print $1" "$2" "$3" "$4" "$6}')" "+%s")
     fi
 
     if [[ ${EPOCH1} -gt ${EPOCH2} ]]; then
-        DIFF="$(( $EPOCH1 - $EPOCH2 ))"
+        DIFF="$((EPOCH1 - EPOCH2))"
     else
-        DIFF="$(( $EPOCH2 - $EPOCH1 ))"
+        DIFF="$((EPOCH2 - EPOCH1))"
     fi
 
-    DDAYS=$(( $DIFF/86400 ))
-    if [[ ${DDAYS} -gt "${diffdays}" ]]; then
+    DDAYS=$((DIFF / 86400))
+    if [[ ${DDAYS} -gt ${diffdays} ]]; then
         return 0
     else
         return 1
     fi
 }
 
-is_date_over_today(){
+is_date_over_today() {
     # $1 days of difference
     # $2 date to check against today
 
@@ -61,15 +60,15 @@ is_date_over_today(){
     date2="$(LANG=C LC_ALL=C date)"
 
     EPOCH1="$(date -d "$date1" "+%s" 2>/dev/null)"
-    if [[ "$?" == "1" ]]; then
+    if [[ $? == "1" ]]; then
         # failure when converting date, happened with one specific TZ, so let's approx by removing TZ
-        EPOCH1=$(date -d "$(echo "$date1" |awk '{print $1" "$2" "$3" "$4" "$6}')" "+%s")
+        EPOCH1=$(date -d "$(echo "$date1" | awk '{print $1" "$2" "$3" "$4" "$6}')" "+%s")
     fi
 
     EPOCH2="$(date -d "$date2" "+%s" 2>/dev/null)"
-    if [[ "$?" == "1" ]]; then
+    if [[ $? == "1" ]]; then
         # failure when converting date, happened with one specific TZ, so let's approx by removing TZ
-        EPOCH2=$(date -d "$(echo "$date2" |awk '{print $1" "$2" "$3" "$4" "$6}')" "+%s")
+        EPOCH2=$(date -d "$(echo "$date2" | awk '{print $1" "$2" "$3" "$4" "$6}')" "+%s")
     fi
 
     if [[ ${EPOCH1} -gt ${EPOCH2} ]]; then

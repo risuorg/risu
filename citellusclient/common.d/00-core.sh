@@ -22,28 +22,28 @@
 
 # Helper script to define location of various files.
 
-first_file_available(){
+first_file_available() {
     (
         flag=0
         for file in "$@"; do
             if [[ $flag -eq 0 ]]; then
-                if [[ -f ${file} ]];  then
+                if [[ -f ${file} ]]; then
                     flag=1
                     echo ${file}
                 fi
             fi
         done
-    )|xargs echo
+    ) | xargs echo
 }
 
-if [ "x$CITELLUS_LIVE" = "x0" ];  then
+if [ "x$CITELLUS_LIVE" = "x0" ]; then
 
     # List of systemd/systemctl_list-units files
-    systemctl_list_units_active=( "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units" "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all"  )
+    systemctl_list_units_active=("${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units" "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all")
 
-    systemctl_list_units_enabled=( "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_status_--all" "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-unit-files" )
+    systemctl_list_units_enabled=("${CITELLUS_ROOT}/sos_commands/systemd/systemctl_status_--all" "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-unit-files")
 
-    systemctl_list_units_service_running=( "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units" "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all"  )
+    systemctl_list_units_service_running=("${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units" "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_list-units_--all")
 
     # find available one and use it, the ones at back with highest priority
     systemctl_list_units_active_file=$(first_file_available ${systemctl_list_units_active[@]})
@@ -51,29 +51,29 @@ if [ "x$CITELLUS_LIVE" = "x0" ];  then
     systemctl_list_units_service_running_file=$(first_file_available ${systemctl_list_units_service_running[@]})
 
     # List of logs/journalctl files
-    journalctl_file=$(first_file_available "${CITELLUS_ROOT}/sos_commands/logs/journalctl_--no-pager_--boot" "${CITELLUS_ROOT}/sos_commands/logs/journalctl_--all_--this-boot_--no-pager" )
+    journalctl_file=$(first_file_available "${CITELLUS_ROOT}/sos_commands/logs/journalctl_--no-pager_--boot" "${CITELLUS_ROOT}/sos_commands/logs/journalctl_--all_--this-boot_--no-pager")
 
 else
     journalctl_file="${CITELLUS_TMP}/journalctl_--no-pager_--boot"
     if [[ ! -f ${journalctl_file} ]]; then
         if which journalctl >/dev/null 2>&1; then
-            journalctl --no-pager --boot > ${journalctl_file}
+            journalctl --no-pager --boot >${journalctl_file}
         else
             touch ${journalctl_file}
         fi
     fi
 fi
 
-iniparser(){
+iniparser() {
     awk -F'=' -v topic="[$2]" -v key="$3" \
         '$0==topic { flag=1; next } /^\[/ { flag=0; next } \
     flag && tolower($1)~"^"key { gsub(" ", "") ; value=$2 } \
         END{ print tolower(value) }' $1
 }
 
-is_required_directory(){
+is_required_directory() {
     for dir in "$@"; do
-        if [[ ! -d ${dir} ]];  then
+        if [[ ! -d ${dir} ]]; then
             # to remove the ${CITELLUS_ROOT} from the stderr.
             dir=${dir#${CITELLUS_ROOT}}
             echo "required directory $dir not found." >&2
@@ -82,9 +82,9 @@ is_required_directory(){
     done
 }
 
-is_required_file(){
+is_required_file() {
     for file in "$@"; do
-        if [[ ! -f ${file} ]];  then
+        if [[ ! -f ${file} ]]; then
             # to remove the ${CITELLUS_ROOT} from the stderr.
             file=${file#${CITELLUS_ROOT}}
             echo "required file $file not found." >&2
@@ -93,9 +93,9 @@ is_required_file(){
     done
 }
 
-is_mandatory_file(){
+is_mandatory_file() {
     for file in "$@"; do
-        if [[ ! -f ${file} ]];  then
+        if [[ ! -f ${file} ]]; then
             # to remove the ${CITELLUS_ROOT} from the stderr.
             file=${file#${CITELLUS_ROOT}}
             echo "required file $file not found." >&2
@@ -104,18 +104,18 @@ is_mandatory_file(){
     done
 }
 
-is_active(){
+is_active() {
     if [ "x$CITELLUS_LIVE" = "x1" ]; then
         if [ ! -z "$(which systemctl 2>/dev/null)" ]; then
-            systemctl is-active "$1" > /dev/null 2>&1
+            systemctl is-active "$1" >/dev/null 2>&1
         elif [ ! -z "$(which service 2>/dev/null)" ]; then
-            service "$1" status > /dev/null 2>&1
+            service "$1" status >/dev/null 2>&1
         else
             echo "could not check for active service $1 during live execution" >&2
             exit ${RC_SKIPPED}
         fi
     elif [ "x$CITELLUS_LIVE" = "x0" ]; then
-        if [[ -f "${systemctl_list_units_active_file}" ]]; then
+        if [[ -f ${systemctl_list_units_active_file} ]]; then
             grep -q "$1.* active" "${systemctl_list_units_active_file}"
         else
             echo "required systemd files not found for validating $1 being active or not." >&2
@@ -124,10 +124,10 @@ is_active(){
     fi
 }
 
-is_required_command(){
+is_required_command() {
     for program in "$@"; do
         file=$(which ${program})
-        if [[ ! -x ${file} ]];  then
+        if [[ ! -x ${file} ]]; then
             # to remove the ${CITELLUS_ROOT} from the stderr.
             file=${file#${CITELLUS_ROOT}}
             echo "required program $program not found or not executable." >&2
@@ -136,10 +136,10 @@ is_required_command(){
     done
 }
 
-is_enabled(){
+is_enabled() {
     if [ "x$CITELLUS_LIVE" = "x1" ]; then
         if [ ! -z "$(which systemctl 2>/dev/null)" ]; then
-            systemctl list-unit-files | grep enabled|grep -q "$1.* enabled" > /dev/null 2>&1
+            systemctl list-unit-files | grep enabled | grep -q "$1.* enabled" >/dev/null 2>&1
         elif [ ! -z "$(which chkconfig 2>/dev/null)" ]; then
             chkconfig --list | grep -q "$1.*3:on"
         else
@@ -147,7 +147,7 @@ is_enabled(){
             exit ${RC_SKIPPED}
         fi
     elif [ "x$CITELLUS_LIVE" = "x0" ]; then
-        if [[ -f "${systemctl_list_units_enabled_file}" ]]; then
+        if [[ -f ${systemctl_list_units_enabled_file} ]]; then
             grep -q "$1.* enabled" "${systemctl_list_units_enabled_file[@]}"
         elif [ -f "${CITELLUS_ROOT}"/chkconfig ]; then
             grep -q "$1.*3:on" "${CITELLUS_ROOT}"/chkconfig
@@ -158,16 +158,16 @@ is_enabled(){
     fi
 }
 
-is_service_running(){
+is_service_running() {
     if [ "x$CITELLUS_LIVE" = "x1" ]; then
         if [ ! -z "$(which systemctl 2>/dev/null)" ]; then
-            systemctl list-units | grep running |grep -q "$1.* running" > /dev/null 2>&1
+            systemctl list-units | grep running | grep -q "$1.* running" >/dev/null 2>&1
         else
             echo "could not check for enabled service $1 during live execution" >&2
             exit ${RC_SKIPPED}
         fi
     elif [ "x$CITELLUS_LIVE" = "x0" ]; then
-        if [[ -f "${systemctl_list_units_service_running_file}" ]]; then
+        if [[ -f ${systemctl_list_units_service_running_file} ]]; then
             grep -q "$1.* running" "${systemctl_list_units_service_running_file[@]}"
         else
             echo "could not check for enabled service $1" >&2
@@ -176,66 +176,66 @@ is_service_running(){
     fi
 }
 
-is_process(){
-    if [ "x$CITELLUS_LIVE" = "x1" ];  then
+is_process() {
+    if [ "x$CITELLUS_LIVE" = "x1" ]; then
         ps -elf | grep "$1" | grep -q -v grep
-    elif [ "x$CITELLUS_LIVE" = "x0" ];  then
-        grep -q "$1" "${CITELLUS_ROOT}/ps";
+    elif [ "x$CITELLUS_LIVE" = "x0" ]; then
+        grep -q "$1" "${CITELLUS_ROOT}/ps"
     fi
 }
 
-is_lineinfile(){
+is_lineinfile() {
     # $1: regexp
     # $*: files
     [ -f "$2" ] && egrep -iq "$1" "${@:2}"
 }
 
-discover_rhrelease(){
+discover_rhrelease() {
     FILE="${CITELLUS_ROOT}/etc/redhat-release"
     if [[ ! -f ${FILE} ]]; then
         echo 0
     else
-        VERSION=$(egrep -o "\(.*\)" ${FILE}|tr -d "()")
+        VERSION=$(egrep -o "\(.*\)" ${FILE} | tr -d "()")
         case ${VERSION} in
-            Ootpa) echo 8 ;;
-            Maipo) echo 7 ;;
-            Santiago) echo 6 ;;
-            Tikanga) echo 5 ;;
-            Nahant) echo 4 ;;
-            Taroon) echo 3 ;;
-            *) echo 0 ;;
+        Ootpa) echo 8 ;;
+        Maipo) echo 7 ;;
+        Santiago) echo 6 ;;
+        Tikanga) echo 5 ;;
+        Nahant) echo 4 ;;
+        Taroon) echo 3 ;;
+        *) echo 0 ;;
         esac
     fi
 }
 
-discover_release(){
+discover_release() {
     FILE="${CITELLUS_ROOT}/etc/os-release"
     if [[ ! -f ${FILE} ]]; then
         echo 0
     else
-        VERSION=$(grep "^VERSION_ID=" ${FILE}|cut -d "=" -f 2-|tr -d '"'|cut -d "." -f 1)
+        VERSION=$(grep "^VERSION_ID=" ${FILE} | cut -d "=" -f 2- | tr -d '"' | cut -d "." -f 1)
         echo ${VERSION}
     fi
 }
 
-discover_osbrand(){
+discover_osbrand() {
     FILE="${CITELLUS_ROOT}/etc/os-release"
     if [[ ! -f ${FILE} ]]; then
         echo 0
     else
-        BRAND=$(grep "^ID=" ${FILE}|cut -d "=" -f 2-|tr -d '"')
+        BRAND=$(grep "^ID=" ${FILE} | cut -d "=" -f 2- | tr -d '"')
         echo ${BRAND}
     fi
 }
 
 # We do check on ID_LIKE so we can discard between dpkg or rpm access
-discover_os(){
+discover_os() {
     FILE="${CITELLUS_ROOT}/etc/os-release"
-    if [[ -f  ${FILE} ]]; then
-        if is_lineinfile ^ID_LIKE ${FILE};then
-            OS=$(awk -F "=" '$1=="ID_LIKE" {print $2}' ${FILE}|tr -d '"')
+    if [[ -f ${FILE} ]]; then
+        if is_lineinfile ^ID_LIKE ${FILE}; then
+            OS=$(awk -F "=" '$1=="ID_LIKE" {print $2}' ${FILE} | tr -d '"')
         else
-            OS=$(awk -F "=" '$1=="ID" {print $2}' ${FILE}|tr -d '"')
+            OS=$(awk -F "=" '$1=="ID" {print $2}' ${FILE} | tr -d '"')
         fi
     elif [[ -f ${CITELLUS_ROOT}/etc/redhat-release ]]; then
         OS='fedora'
@@ -243,9 +243,9 @@ discover_os(){
         OS='debian'
     fi
 
-    if [ "$(echo ${OS}|tr ' ' '\n'|grep -i fedora|wc -l)" != "0" ]; then
+    if [ "$(echo ${OS} | tr ' ' '\n' | grep -i fedora | wc -l)" != "0" ]; then
         OS='fedora'
-    elif [ "$(echo ${OS}|tr ' ' '\n'|grep -i debian|wc -l)" != "0" ]; then
+    elif [ "$(echo ${OS} | tr ' ' '\n' | grep -i debian | wc -l)" != "0" ]; then
         OS='debian'
     fi
     echo "${OS}"
@@ -257,62 +257,61 @@ strip_and_trim() {
     egrep -v "^\s*($|#.*)" ${file} | sed -e 's/^[ \t]*//' -e 's/[ \t]*$//'
 }
 
-
 is_filemode() {
     # $1 Mode
     # $2 Filename
-    MODE=$(LANG=C stat "$2" |grep ^Access.*Uid|cut -d ":"  -f 2|cut -d "/" -f 1|tr -d '() ')
-    [[ "${MODE}" == "$1" ]]
+    MODE=$(LANG=C stat "$2" | grep ^Access.*Uid | cut -d ":" -f 2 | cut -d "/" -f 1 | tr -d '() ')
+    [[ ${MODE} == "$1" ]]
 }
 
 is_required_filemode() {
     # $1 Mode
     # $2 Filename
     is_required_file $2
-    if ! is_filemode "$1" "$2" ; then
+    if ! is_filemode "$1" "$2"; then
         echo "File $1 doesn't have require mode $2" >&2
         exit ${RC_SKIPPED}
     fi
 }
 
-expand_ranges(){
+expand_ranges() {
     (
-        for CPU in $(echo $*|tr "," "\n");do
-            if [[ "$CPU" == *"-"* ]];then
-                echo ${CPU}|awk -F "-" '{print $1" "$2}'|xargs seq
+        for CPU in $(echo $* | tr "," "\n"); do
+            if [[ $CPU == *"-"* ]]; then
+                echo ${CPU} | awk -F "-" '{print $1" "$2}' | xargs seq
             else
                 echo "$CPU"
             fi
         done
-    )|xargs echo
+    ) | xargs echo
 }
 
-expand_and_remove_excludes(){
+expand_and_remove_excludes() {
     RANGE=$(expand_ranges $*)
-    CPUs=$(echo ${RANGE}|tr " " "\n"|egrep -v "\^.*")
-    EXCLUDES=$(echo ${RANGE}|tr " " "\n"|egrep "\^.*")
+    CPUs=$(echo ${RANGE} | tr " " "\n" | egrep -v "\^.*")
+    EXCLUDES=$(echo ${RANGE} | tr " " "\n" | egrep "\^.*")
     (
         for CPU in ${CPUs}; do
             exclude=0
-            for EXCL in ${EXCLUDES};do
+            for EXCL in ${EXCLUDES}; do
                 if [[ "^$CPU" == "$EXCL" ]]; then
                     exclude=1
                 fi
             done
-            if [[ "$exclude" == "0" ]];then
+            if [[ $exclude == "0" ]]; then
                 echo ${CPU}
             fi
 
         done
-    )|xargs echo
+    ) | xargs echo
 }
 
-is_higher(){
+is_higher() {
     # $1 string1
     # $2 string2
-    LATEST=$(echo $1 $2|tr " " "\n"|sort -V|tail -1)
+    LATEST=$(echo $1 $2 | tr " " "\n" | sort -V | tail -1)
 
-    if [ "$(echo $1 $2|tr " " "\n"|sort -V|uniq|wc -l)" == "1" ];then
+    if [ "$(echo $1 $2 | tr " " "\n" | sort -V | uniq | wc -l)" == "1" ]; then
         # Version and $2 are the same (only one line, so we're on latest)
         return 0
     fi

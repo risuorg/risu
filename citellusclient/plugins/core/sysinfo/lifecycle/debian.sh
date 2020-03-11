@@ -2,7 +2,6 @@
 
 # Copyright (C) 2018 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
-
 # This program is Free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -29,7 +28,7 @@ OS=$(discover_os)
 declare -A DebianRD
 DebianRD=(["8"]="2020-06-06")
 
-if [[ "$OS" != "debian" ]]; then
+if [[ $OS != "debian" ]]; then
     echo "Debian OS required" >&2
     exit ${RC_SKIPPED}
 else

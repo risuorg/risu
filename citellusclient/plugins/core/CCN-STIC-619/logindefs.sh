@@ -32,10 +32,10 @@ for config in PASS_MAX_DAYS PASS_MIN_DAYS PASS_MIN_LEN PASS_WARN_AGE; do
     fi
 done
 
-PASS_MAX_DAYS=$(egrep ^PASS_MAX_DAYS ${FILE}|awk '{print $2}')
-PASS_MIN_DAYS=$(egrep ^PASS_MIN_DAYS ${FILE}|awk '{print $2}')
-PASS_MIN_LEN=$(egrep ^PASS_MIN_LEN ${FILE}|awk '{print $2}')
-PASS_WARN_AGE=$(egrep ^PASS_WARN_AGE ${FILE}|awk '{print $2}')
+PASS_MAX_DAYS=$(egrep ^PASS_MAX_DAYS ${FILE} | awk '{print $2}')
+PASS_MIN_DAYS=$(egrep ^PASS_MIN_DAYS ${FILE} | awk '{print $2}')
+PASS_MIN_LEN=$(egrep ^PASS_MIN_LEN ${FILE} | awk '{print $2}')
+PASS_WARN_AGE=$(egrep ^PASS_WARN_AGE ${FILE} | awk '{print $2}')
 
 flag=0
 

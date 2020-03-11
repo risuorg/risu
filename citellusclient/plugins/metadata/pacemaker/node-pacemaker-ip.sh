@@ -2,7 +2,6 @@
 
 # Copyright (C) 2018 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
-
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -24,15 +23,15 @@
 
 if [[ ${CITELLUS_LIVE} -eq 0 ]]; then
     FILE="${CITELLUS_ROOT}/hostname"
-elif [[ ${CITELLUS_LIVE} -eq 1 ]];then
+elif [[ ${CITELLUS_LIVE} -eq 1 ]]; then
     FILE=$(mktemp)
     trap "rm ${FILE}" EXIT
-    hostname  > ${FILE}
+    hostname >${FILE}
 fi
 
 is_required_file ${FILE}
 
 # Fill metadata 'hostname' to value
 echo "node-pacemaker-ip"
-grep "$(cat ${FILE})$" "${CITELLUS_ROOT}/etc/hosts"|awk '{print $1}' |sort -u >&2
+grep "$(cat ${FILE})$" "${CITELLUS_ROOT}/etc/hosts" | awk '{print $1}' | sort -u >&2
 exit ${RC_OKAY}

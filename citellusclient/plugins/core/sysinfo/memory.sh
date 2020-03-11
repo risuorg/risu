@@ -2,7 +2,6 @@
 
 # Copyright (C) 2018 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
-
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -23,11 +22,11 @@
 # Load common functions
 [[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
-if [[ "x$CITELLUS_LIVE" = "x0" ]];  then
+if [[ "x$CITELLUS_LIVE" == "x0" ]]; then
     MEMORY=$(awk '/Mem/ {print $2}' ${CITELLUS_ROOT}/free)
 else
-    MEMORY=$(LANG=C free|awk '/Mem/ {print $2}')
+    MEMORY=$(LANG=C free | awk '/Mem/ {print $2}')
 fi
 
-echo "$(( ${MEMORY} / 1024 ))" >&2
+echo "$((MEMORY / 1024))" >&2
 exit ${RC_OKAY}

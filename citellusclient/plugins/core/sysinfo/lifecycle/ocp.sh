@@ -3,7 +3,6 @@
 # Copyright (C) 2019 Mikel Olasagasti Uranga <mikel@olasagasti.info>
 # Copyright (C) 2018, 2019 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
-
 # This program is Free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -28,23 +27,23 @@
 OSBRAND=$(discover_osbrand)
 
 declare -A OCPEOL
-OCPEOL=(    ["3.0"]="2018-11-30"\
-        ["3.1"]="2018-11-30"\
-        ["3.2"]="2019-01-31"\
-        ["3.3"]="2019-01-31"\
-        ["3.4"]="2019-04-30"\
-        ["3.5"]="2019-04-30"\
-        ["3.6"]="2019-07-31"\
-        ["3.7"]="2019-07-31"\
-        ["3.9"]="2019-10-31"\
+OCPEOL=(["3.0"]="2018-11-30"
+    ["3.1"]="2018-11-30"
+    ["3.2"]="2019-01-31"
+    ["3.3"]="2019-01-31"
+    ["3.4"]="2019-04-30"
+    ["3.5"]="2019-04-30"
+    ["3.6"]="2019-07-31"
+    ["3.7"]="2019-07-31"
+    ["3.9"]="2019-10-31"
     ["3.10"]="2019-10-31")
 
-if [[ "$OSBRAND" != "rhel" ]]; then
+if [[ $OSBRAND != "rhel" ]]; then
     echo "RHEL OS required" >&2
     exit ${RC_SKIPPED}
 else
     DR=$(discover_ocp_version)
-    if [[ "${DR}" == "0" ]]; then
+    if [[ ${DR} == "0" ]]; then
         echo "Non OCP host" >&2
         exit ${RC_SKIPPED}
     fi

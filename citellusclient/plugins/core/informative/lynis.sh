@@ -3,7 +3,6 @@
 # Copyright (C) 2018 David Sastre Medina <d.sastre.medina@gmail.com>
 # Copyright (C) 2018 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
-
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -29,10 +28,10 @@ if ! which lynis >/dev/null 2>&1; then
     exit ${RC_SKIPPED}
 fi
 
-if [[ "x$CITELLUS_LIVE" = "x0" ]];  then
+if [[ "x$CITELLUS_LIVE" == "x0" ]]; then
     echo $"Lynis is not supported for non-live operations" >&2
     exit ${RC_SKIPPED}
-elif [[ "x$CITELLUS_LIVE" = "x1" ]];  then
+elif [[ "x$CITELLUS_LIVE" == "x1" ]]; then
     lynis audit system >&2
     exit ${RC_INFO}
 fi

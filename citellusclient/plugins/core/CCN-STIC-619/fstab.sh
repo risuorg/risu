@@ -29,9 +29,9 @@ is_mandatory_file ${FILE}
 FS="/boot"
 flagboot=0
 if is_lineinfile "$FS" ${FILE}; then
-    OPTIONS=$(cat ${FILE}|awk --assign fs="$FS" '$2 == fs {print $4}')
+    OPTIONS=$(cat ${FILE} | awk --assign fs="$FS" '$2 == fs {print $4}')
     for config in noauto noexec nodev nosuid ro; do
-        if [[ $(echo ${OPTIONS}|grep ${config}|wc -l) == 0 ]]; then
+        if [[ $(echo ${OPTIONS} | grep ${config} | wc -l) == 0 ]]; then
             echo "Missing option ${config} for ${FS}" >&2
             flagboot=1
         fi
@@ -42,9 +42,9 @@ fi
 FS="/boot/efi"
 flagbootefi=0
 if is_lineinfile "$FS" ${FILE}; then
-    OPTIONS=$(cat ${FILE}|awk --assign fs="$FS" '$2 == fs {print $4}')
+    OPTIONS=$(cat ${FILE} | awk --assign fs="$FS" '$2 == fs {print $4}')
     for config in umask=0077 shortname=winnt; do
-        if [[ $(echo ${OPTIONS}|grep ${config}|wc -l) == 0 ]]; then
+        if [[ $(echo ${OPTIONS} | grep ${config} | wc -l) == 0 ]]; then
             echo "Missing option ${config} for ${FS}" >&2
             flagbootefi=1
         fi
@@ -55,9 +55,9 @@ fi
 FS="/usr"
 flagusr=0
 if is_lineinfile "$FS" ${FILE}; then
-    OPTIONS=$(cat ${FILE}|awk --assign fs="$FS" '$2 == fs {print $4}')
+    OPTIONS=$(cat ${FILE} | awk --assign fs="$FS" '$2 == fs {print $4}')
     for config in nodev ro; do
-        if [[ $(echo ${OPTIONS}|grep ${config}|wc -l) == 0 ]]; then
+        if [[ $(echo ${OPTIONS} | grep ${config} | wc -l) == 0 ]]; then
             echo "Missing option ${config} for ${FS}" >&2
             flagusr=1
         fi
@@ -68,9 +68,9 @@ fi
 FS="/opt"
 flagopt=0
 if is_lineinfile "$FS" ${FILE}; then
-    OPTIONS=$(cat ${FILE}|awk --assign fs="$FS" '$2 == fs {print $4}')
+    OPTIONS=$(cat ${FILE} | awk --assign fs="$FS" '$2 == fs {print $4}')
     for config in nodev ro; do
-        if [[ $(echo ${OPTIONS}|grep ${config}|wc -l) == 0 ]]; then
+        if [[ $(echo ${OPTIONS} | grep ${config} | wc -l) == 0 ]]; then
             echo "Missing option ${config} for ${FS}" >&2
             flagopt=1
         fi
@@ -81,23 +81,22 @@ fi
 FS="/var/log/audit"
 flagvarlogaudit=0
 if is_lineinfile "$FS" ${FILE}; then
-    OPTIONS=$(cat ${FILE}|awk --assign fs="$FS" '$2 == fs {print $4}')
+    OPTIONS=$(cat ${FILE} | awk --assign fs="$FS" '$2 == fs {print $4}')
     for config in noexec nodev nosuid rw; do
-        if [[ $(echo ${OPTIONS}|grep ${config}|wc -l) == 0 ]]; then
+        if [[ $(echo ${OPTIONS} | grep ${config} | wc -l) == 0 ]]; then
             echo "Missing option ${config} for ${FS}" >&2
             flagvarlogaudit=1
         fi
     done
 fi
 
-
 # /var/log checks
 FS="/var/log"
 flagvarlog=0
 if is_lineinfile "$FS" ${FILE}; then
-    OPTIONS=$(cat ${FILE}|awk --assign fs="$FS" '$2 == fs {print $4}')
+    OPTIONS=$(cat ${FILE} | awk --assign fs="$FS" '$2 == fs {print $4}')
     for config in noexec nodev nosuid rw; do
-        if [[ $(echo ${OPTIONS}|grep ${config}|wc -l) == 0 ]]; then
+        if [[ $(echo ${OPTIONS} | grep ${config} | wc -l) == 0 ]]; then
             echo "Missing option ${config} for ${FS}" >&2
             flagvarlog=1
         fi
@@ -108,37 +107,35 @@ fi
 FS="/var/www"
 flagvarwww=0
 if is_lineinfile "$FS" ${FILE}; then
-    OPTIONS=$(cat ${FILE}|awk --assign fs="$FS" '$2 == fs {print $4}')
+    OPTIONS=$(cat ${FILE} | awk --assign fs="$FS" '$2 == fs {print $4}')
     for config in noexec nodev nosuid rw; do
-        if [[ $(echo ${OPTIONS}|grep ${config}|wc -l) == 0 ]]; then
+        if [[ $(echo ${OPTIONS} | grep ${config} | wc -l) == 0 ]]; then
             echo "Missing option ${config} for ${FS}" >&2
             flagvarwww=1
         fi
     done
 fi
 
-
 # /var checks
 FS="/var"
 flagvar=0
 if is_lineinfile "$FS" ${FILE}; then
-    OPTIONS=$(cat ${FILE}|awk --assign fs="$FS" '$2 == fs {print $4}')
+    OPTIONS=$(cat ${FILE} | awk --assign fs="$FS" '$2 == fs {print $4}')
     for config in defaults nosuid; do
-        if [[ $(echo ${OPTIONS}|grep ${config}|wc -l) == 0 ]]; then
+        if [[ $(echo ${OPTIONS} | grep ${config} | wc -l) == 0 ]]; then
             echo "Missing option ${config} for ${FS}" >&2
             flagvar=1
         fi
     done
 fi
 
-
 # /home checks
 FS="/home"
 flaghome=0
 if is_lineinfile "$FS" ${FILE}; then
-    OPTIONS=$(cat ${FILE}|awk --assign fs="$FS" '$2 == fs {print $4}')
+    OPTIONS=$(cat ${FILE} | awk --assign fs="$FS" '$2 == fs {print $4}')
     for config in noexec nodev nosuid rw; do
-        if [[ $(echo ${OPTIONS}|grep ${config}|wc -l) == 0 ]]; then
+        if [[ $(echo ${OPTIONS} | grep ${config} | wc -l) == 0 ]]; then
             echo "Missing option ${config} for ${FS}" >&2
             flaghome=1
         fi
@@ -146,7 +143,7 @@ if is_lineinfile "$FS" ${FILE}; then
 fi
 
 for check in flagboot flagbootefi flagusr flagopt flagvarlogaudit flagvarlog flagvarwww flagvar flaghome; do
-    if [[ $(set|grep ^${check}|cut -d "=" -f2) != "0" ]]; then
+    if [[ $(set | grep ^${check} | cut -d "=" -f2) != "0" ]]; then
         exit ${RC_FAILED}
     fi
 done

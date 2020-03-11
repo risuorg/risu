@@ -19,14 +19,14 @@
 
 # Helper script to define location of various files.
 
-discover_ocp_minor(){
+discover_ocp_minor() {
     if is_rpm atomic-openshift >/dev/null 2>&1; then
         RPMINSTALLED=$(is_rpm atomic-openshift)
-        VERSION=$(echo ${RPMINSTALLED}|cut -d "-" -f 3|cut -d "." -f 1-3)
+        VERSION=$(echo ${RPMINSTALLED} | cut -d "-" -f 3 | cut -d "." -f 1-3)
     else
         if is_rpm atomic-openshift-node >/dev/null 2>&1; then
             RPMINSTALLED=$(is_rpm atomic-openshift-node)
-            VERSION=$(echo ${RPMINSTALLED}|cut -d "-" -f 4|cut -d "." -f 1-3)
+            VERSION=$(echo ${RPMINSTALLED} | cut -d "-" -f 4 | cut -d "." -f 1-3)
         else
             VERSION="0"
         fi
@@ -34,11 +34,11 @@ discover_ocp_minor(){
     echo ${VERSION}
 }
 
-discover_ocp_version(){
-    discover_ocp_minor|cut -d "." -f 1-2
+discover_ocp_version() {
+    discover_ocp_minor | cut -d "." -f 1-2
 }
 
-get_ocp_node_type(){
+get_ocp_node_type() {
     OCPVERSION=$(discover_ocp_minor)
     OCPMINORVERSION=$(echo ${OCPVERSION} | awk -F "." '{print $2}')
     HNAME=$(cat ${CITELLUS_ROOT}/etc/hostname)
@@ -49,7 +49,7 @@ get_ocp_node_type(){
     done
 
     if [[ -f ${NODELISTFILE} ]] && [[ ${OCPMINORVERSION} -gt 8 ]]; then
-        NODEROLE=$(grep ${HNAME} ${NODELISTFILE}| awk '{print $3}')
+        NODEROLE=$(grep ${HNAME} ${NODELISTFILE} | awk '{print $3}')
     elif is_rpm atomic-openshift-master >/dev/null 2>&1; then
         NODEROLE='master'
     elif [[ -f ${CITELLUS_ROOT}/etc/origin/master/master-config.yaml ]]; then
@@ -62,29 +62,40 @@ get_ocp_node_type(){
     echo ${NODEROLE}
 }
 
-discover_ocp_node_config(){
+discover_ocp_node_config() {
     export nodeconfig="dummyfile"
-    nodeconfigs=( "${CITELLUS_ROOT}/etc/origin/node/node-config.yaml" "${CITELLUS_ROOT}/../etc/origin/node/node-config.yaml" "${CITELLUS_ROOT}/../tmp/node-config.yaml")
+    nodeconfigs=("${CITELLUS_ROOT}/etc/origin/node/node-config.yaml" "${CITELLUS_ROOT}/../etc/origin/node/node-config.yaml" "${CITELLUS_ROOT}/../tmp/node-config.yaml")
 
     # find available one and use it, the ones at back with highest priority
     for file in ${nodeconfigs[@]}; do
-        [[ -f "${file}" ]] && export nodeconfig="${file}"
+        [[ -f ${file} ]] && export nodeconfig="${file}"
     done
     echo ${nodeconfig}
 }
 
-discover_ocp_master_config(){
+discover_ocp_master_config() {
     export masterconfig="dummyfile"
-    masterconfigs=( "${CITELLUS_ROOT}/etc/origin/master/master-config.yaml" "${CITELLUS_ROOT}/../etc/origin/master/master-config.yaml")
+    masterconfigs=("${CITELLUS_ROOT}/etc/origin/master/master-config.yaml" "${CITELLUS_ROOT}/../etc/origin/master/master-config.yaml")
 
     # find available one and use it, the ones at back with highest priority
     for file in ${masterconfigs[@]}; do
-        [[ -f "${file}" ]] && export masterconfig="${file}"
+        [[ -f ${file} ]] && export masterconfig="${file}"
     done
     echo ${masterconfig}
 }
 
-calculate_cluster_pod_capacity(){
+discover_ocs_version() {
+    OCSVERSION=$(cat ${CITELLUS_ROOT}/../var/tmp/pssa/tmp/*ocs.out | grep 'access.redhat.com/rhgs3/rhgs' | awk -F ":" '{print $3}')
+    OCSVERSION=$(cat ${CITELLUS_ROOT}/../var/tmp/pssa/tmp/*ocs.out | grep 'access.redhat.com/rhgs3/rhgs' | awk -F ":" '{print $3}')
+    OCSVERSION=$(cat ${CITELLUS_ROOT}/../var/tmp/pssa/tmp/*ocs.out | grep 'access.redhat.com/rhgs3/rhgs' | awk -F ":" '{print $3}')
+    ARR=($OCSVERSION)
+    OCSVERSION=$(echo ${ARR[0]})
+    OCSMAJORVERSION=$(echo "$OCSVERSION" | awk -F "." '{print $1}')
+    OCSMINORVERSION=$(echo "$OCSVERSION" | awk -F "." '{print $2}')
+    echo ${OCSVERSION}
+}
+
+calculate_cluster_pod_capacity() {
     DEFAULT_PODS_PER_CORE=10
     DEFAULT_MAX_PODS=250
 
@@ -98,32 +109,21 @@ calculate_cluster_pod_capacity(){
             NUMBER_CPU=$(grep 'CPU(s):' ${nodes}/sosreport-*/sos_commands/processor/lscpu)
 
             export nodeconfig=$(discover_ocp_node_config)
-            XXX=$(cat ${nodeconfig}| grep 'pods-per-core:' -A1)
-            ZZZ=$(cat ${nodeconfig}|grep 'max-pods:' -A1)
+            XXX=$(cat ${nodeconfig} | grep 'pods-per-core:' -A1)
+            ZZZ=$(cat ${nodeconfig} | grep 'max-pods:' -A1)
 
-            if [[ ! -z ${XXX} ]] ;then
-                PODS_PER_CORE=( $(echo ${XXX} | awk -F "['\"]" '{print $2}') )
+            if [[ -n ${XXX} ]]; then
+                PODS_PER_CORE=($(echo ${XXX} | awk -F "['\"]" '{print $2}'))
             fi
-            if [[ ! -z ${ZZZ} ]] ;then
-                MAX_PODS=( $(echo ${ZZZ} | awk -F "['\"]" '{print $2}') )
+            if [[ -n ${ZZZ} ]]; then
+                MAX_PODS=($(echo ${ZZZ} | awk -F "['\"]" '{print $2}'))
             fi
 
-            NOCPU=( $(echo ${NUMBER_CPU} | awk -F " " '{print $2}') )
-            MAXPOD=$( (( "$MAX_PODS" <= $NOCPU*$PODS_PER_CORE )) && echo "$MAX_PODS" || echo "$(( $NOCPU*$PODS_PER_CORE ))" )
-            MAXPODCLUSTER=$(( $MAXPODCLUSTER+$MAXPOD ))
+            NOCPU=($(echo ${NUMBER_CPU} | awk -F " " '{print $2}'))
+            ((CPUPODSPERCORE = NOCPU * PODS_PER_CORE))
+            MAXPOD=$([[ "$MAX_PODS" -lt $CPUPODPERCORE ]] && echo "$MAX_PODS" || echo "$((NOCPU * PODS_PER_CORE))")
+            MAXPODCLUSTER=$((MAXPODCLUSTER + MAXPOD))
         fi
     done
     echo ${MAXPODCLUSTER}
-}
-
-discover_ocs_version()
-{
-    OCSVERSION=`cat ${CITELLUS_ROOT}/../var/tmp/pssa/tmp/*ocs.out | grep 'access.redhat.com/rhgs3/rhgs' | awk -F ":" '{print $3}'`
-    OCSVERSION=`cat ${CITELLUS_ROOT}/../var/tmp/pssa/tmp/*ocs.out | grep 'access.redhat.com/rhgs3/rhgs' | awk -F ":" '{print $3}'`
-    OCSVERSION=`cat ${CITELLUS_ROOT}/../var/tmp/pssa/tmp/*ocs.out | grep 'access.redhat.com/rhgs3/rhgs' | awk -F ":" '{print $3}'`
-    ARR=($OCSVERSION)
-    OCSVERSION=`echo ${ARR[0]}`
-    OCSMAJORVERSION=`echo "$OCSVERSION" | awk -F "." '{print $1}'`
-    OCSMINORVERSION=`echo "$OCSVERSION" | awk -F "." '{print $2}'`
-    echo ${OCSVERSION}
 }

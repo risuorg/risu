@@ -2,7 +2,6 @@
 
 # Copyright (C) 2018 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
-
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -24,15 +23,15 @@
 
 if [[ ${CITELLUS_LIVE} -eq 0 ]]; then
     FILE="${CITELLUS_ROOT}/sos_commands/pacemaker/pcs_status"
-elif [[ ${CITELLUS_LIVE} -eq 1 ]];then
+elif [[ ${CITELLUS_LIVE} -eq 1 ]]; then
     FILE=$(mktemp)
     trap "rm ${FILE}" EXIT
-    pcs status  > ${FILE}
+    pcs status >${FILE}
 fi
 
 is_required_file ${FILE}
 
 # Fill metadata 'hostname' to value
 echo "node-pacemaker-ip"
-grep "^Cluster name:" ${FILE}|cut -d ":" -f 2- >&2
+grep "^Cluster name:" ${FILE} | cut -d ":" -f 2- >&2
 exit ${RC_OKAY}

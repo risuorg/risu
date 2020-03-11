@@ -22,25 +22,25 @@
 FOLDER=$3
 
 case $2 in
-    pass)
-        mkdir -p ${FOLDER}
-        echo kelmer > ${FOLDER}/ps
-        exit 0
-        ;;
+pass)
+    mkdir -p ${FOLDER}
+    echo kelmer >${FOLDER}/ps
+    exit 0
+    ;;
 
-    fail)
-        mkdir -p ${FOLDER}
-        echo > ${FOLDER}/ps
-        exit 0
-        ;;
+fail)
+    mkdir -p ${FOLDER}
+    echo >${FOLDER}/ps
+    exit 0
+    ;;
 
-    *)
-        # Load common functions
-        [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
+*)
+    # Load common functions
+    [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 
-        # When no pass or fail is passed we're running the test for common function
-        is_process kelmer && exit ${RC_OKAY} || exit ${RC_FAILED}
-        ;;
+    # When no pass or fail is passed we're running the test for common function
+    is_process kelmer && exit ${RC_OKAY} || exit ${RC_FAILED}
+    ;;
 esac
 
 exit ${RC_SKIPPED}

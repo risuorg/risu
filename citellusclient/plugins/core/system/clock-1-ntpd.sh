@@ -6,7 +6,6 @@
 # Copyright (C) 2019 Mikel Olasagasti Uranga <mikel@olasagasti.info>
 # Copyright (C) 2017, 2018, 2019 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
-
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -39,7 +38,7 @@ else
     SERVICE='ntpd'
 fi
 
-if ! is_active ${SERVICE};then
+if ! is_active ${SERVICE}; then
     echo "${SERVICE} is not active" >&2
     exit ${RC_FAILED}
 fi
@@ -47,8 +46,8 @@ fi
 is_required_file "${CITELLUS_ROOT}/etc/ntp.conf"
 grep "^server" "${CITELLUS_ROOT}/etc/ntp.conf" >&2
 
-if [[ ${CITELLUS_LIVE} = 0 ]]; then
-    FILE=$(first_file_available "${CITELLUS_ROOT}/sos_commands/ntp/ntpq_-p" "${CITELLUS_ROOT}/sos_commands/ntp/ntpq_-pn" )
+if [[ ${CITELLUS_LIVE} == 0 ]]; then
+    FILE=$(first_file_available "${CITELLUS_ROOT}/sos_commands/ntp/ntpq_-p" "${CITELLUS_ROOT}/sos_commands/ntp/ntpq_-pn")
 
     is_required_file "${FILE}"
 
@@ -60,17 +59,17 @@ if [[ ${CITELLUS_LIVE} = 0 ]]; then
     is_lineinfile "timed out" "${FILE}" && echo "localhost: timed out, nothing received" >&2 && exit ${RC_FAILED}
 
     offset=$(awk '/^\*/ {print $9}' "${FILE}")
-    if [[ -z "$offset" ]]; then
+    if [[ -z $offset ]]; then
         echo "currently not synchronized to any clock" >&2
         candidates=$(awk '/^\+/ {print $1" ("$9"ms)"}' "${FILE}" | tr '\n' ' ')
-        if [[ ! -z "$candidates" ]]; then
+        if [[ -n $candidates ]]; then
             echo "possible candidates: ${candidates}" >&2
         fi
     else
         echo "clock offset is $offset ms" >&2
         RC=$(echo "$offset<${CITELLUS_MAX_CLOCK_OFFSET:-1000} && $offset>-${CITELLUS_MAX_CLOCK_OFFSET:-1000}" | bc -l)
     fi
-    [[ "x$RC" = "x1" ]] && exit ${RC_OKAY} || exit ${RC_FAILED}
+    [[ "x$RC" == "x1" ]] && exit ${RC_OKAY} || exit ${RC_FAILED}
 
 else
     is_required_command /usr/bin/bc
@@ -90,5 +89,5 @@ else
 
     RC=$(echo "$offset<${CITELLUS_MAX_CLOCK_OFFSET:-1000} && $offset>-${CITELLUS_MAX_CLOCK_OFFSET:-1000}" | bc -l)
 
-    [[ "x$RC" = "x1" ]] && exit ${RC_OKAY} || exit ${RC_FAILED}
+    [[ "x$RC" == "x1" ]] && exit ${RC_OKAY} || exit ${RC_FAILED}
 fi
