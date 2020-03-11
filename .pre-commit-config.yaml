@@ -38,3 +38,15 @@ repos:
   rev: v1.2.3
   hooks:
   - id: flake8
+- repo: https://github.com/bemeurer/beautysh
+  rev:  master
+  hooks:
+  - id: beautysh
+- repo: https://github.com/openstack/bashate
+  rev:  master
+  hooks:
+  - id: bashate
+- repo: https://github.com/asottile/blacken-docs
+  rev:  master
+  hooks:
+  - id: blacken-docs

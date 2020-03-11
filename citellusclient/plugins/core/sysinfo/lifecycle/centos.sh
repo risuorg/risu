@@ -29,7 +29,7 @@ OSBRAND=$(discover_osbrand)
 
 declare -A CentOSEOL
 CentOSEOL=( ["6"]="2020-11-30" \
-            ["7"]="2024-06-30")
+    ["7"]="2024-06-30")
 
 if [[ "$OSBRAND" != "centos" ]]; then
     echo "CentOS OS required" >&2

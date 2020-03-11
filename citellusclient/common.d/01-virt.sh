@@ -28,34 +28,34 @@ virt_type(){
         dmidecode > ${FILE}
     fi
     if [[ -f ${FILE} ]]; then
-    (
-        is_lineinfile "Product Name: VMware" "${FILE}" && echo "VMware"
-        is_lineinfile "Product Name: VirtualBox" "${FILE}" && echo "Virtualbox"
-        is_lineinfile "Product Name: KVM|Manufacturer: QEMU" "${FILE}" && echo "KVM"
-        is_lineinfile "Product Name: Bochs" "${FILE}" && echo "Bochs"
-        is_lineinfile "Product Name: RHEV Hypervisor" "${FILE}" && echo "RHEV"
-        is_lineinfile "Product Name: OpenStack Compute" "${FILE}" && echo "OpenStack"
-        is_lineinfile "Product Name: OpenStack Nova" "${FILE}" && echo "OpenStack"
-        is_lineinfile "Product Name: Google Compute Engine" "${FILE}" && echo "Google Compute Engine"
-        is_lineinfile "Product Name: AHV" "${FILE}" && echo "Nutanix AHV"
-        is_lineinfile "Manufacturer: DigitalOcean" "${FILE}" && echo "DigitalOcean"
-        uuid=$(python ${CITELLUS_BASE}/tools/dmidecode.py < ${FILE}| grep UUID |awk '{print $7}' |sed 's/)//')
-        amazon=$(python ${CITELLUS_BASE}/tools/dmidecode.py < ${FILE}| grep -c amazon)
-        if [[ $(echo ${uuid} |grep -c ^EC2) -eq 1 ]] || [[ ${amazon} -gt 0 ]]; then
-            echo "AWS"
-        fi
+        (
+            is_lineinfile "Product Name: VMware" "${FILE}" && echo "VMware"
+            is_lineinfile "Product Name: VirtualBox" "${FILE}" && echo "Virtualbox"
+            is_lineinfile "Product Name: KVM|Manufacturer: QEMU" "${FILE}" && echo "KVM"
+            is_lineinfile "Product Name: Bochs" "${FILE}" && echo "Bochs"
+            is_lineinfile "Product Name: RHEV Hypervisor" "${FILE}" && echo "RHEV"
+            is_lineinfile "Product Name: OpenStack Compute" "${FILE}" && echo "OpenStack"
+            is_lineinfile "Product Name: OpenStack Nova" "${FILE}" && echo "OpenStack"
+            is_lineinfile "Product Name: Google Compute Engine" "${FILE}" && echo "Google Compute Engine"
+            is_lineinfile "Product Name: AHV" "${FILE}" && echo "Nutanix AHV"
+            is_lineinfile "Manufacturer: DigitalOcean" "${FILE}" && echo "DigitalOcean"
+            uuid=$(python ${CITELLUS_BASE}/tools/dmidecode.py < ${FILE}| grep UUID |awk '{print $7}' |sed 's/)//')
+            amazon=$(python ${CITELLUS_BASE}/tools/dmidecode.py < ${FILE}| grep -c amazon)
+            if [[ $(echo ${uuid} |grep -c ^EC2) -eq 1 ]] || [[ ${amazon} -gt 0 ]]; then
+                echo "AWS"
+            fi
 
-        azure=$(grep -A2 "Manufacturer: Microsoft Corporation" "${FILE}" |grep -A1 "Product Name: Virtual Machine" |grep "Version: 7.0" -c)
-        if [[ ${azure} -gt 0 ]]; then
-            echo "Azure"
-        fi
+            azure=$(grep -A2 "Manufacturer: Microsoft Corporation" "${FILE}" |grep -A1 "Product Name: Virtual Machine" |grep "Version: 7.0" -c)
+            if [[ ${azure} -gt 0 ]]; then
+                echo "Azure"
+            fi
 
-        hyperv=$(grep -A2 "Manufacturer: Microsoft Corporation" "${FILE}" |grep -A1 "Product Name: Virtual Machine" |grep "Version: Hyper-V" -c)
-        if [[ ${hyperv} -gt 0 ]]; then
-            echo "Hyper-V"
-        fi
+            hyperv=$(grep -A2 "Manufacturer: Microsoft Corporation" "${FILE}" |grep -A1 "Product Name: Virtual Machine" |grep "Version: Hyper-V" -c)
+            if [[ ${hyperv} -gt 0 ]]; then
+                echo "Hyper-V"
+            fi
 
-    )|xargs echo
+        )|xargs echo
     else
         echo "Unable to determine"
     fi

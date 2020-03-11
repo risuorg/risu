@@ -71,21 +71,21 @@ export CITELLUS_TMP=$(mktemp -d)
 while :; do
     case "$1" in
         --live) CITELLUS_LIVE="1"
-                shift
-                ;;
+            shift
+            ;;
         -h|-\?|--help)
-                show_help
-                exit
-                ;;
+            show_help
+            exit
+            ;;
         --) shift
             break
             ;;
-            -?*)
-                echo "unknown option: ${1}" >&2
-                exit ${RC_FAILED}
-                ;;
+        -?*)
+            echo "unknown option: ${1}" >&2
+            exit ${RC_FAILED}
+            ;;
         *) break
-        ;;
+            ;;
     esac
 done
 
@@ -124,8 +124,8 @@ scriptname "found $test_count tests"
 while read test; do
     echo -n "# $test: "
     (
-    cd $(dirname ${test})
-    ./$(basename ${test}) > ${tmpdir}/stdout 2> ${tmpdir}/stderr
+        cd $(dirname ${test})
+        ./$(basename ${test}) > ${tmpdir}/stdout 2> ${tmpdir}/stderr
     )
     result=$?
 

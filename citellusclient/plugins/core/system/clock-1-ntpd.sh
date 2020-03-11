@@ -57,8 +57,7 @@ if [[ ${CITELLUS_LIVE} = 0 ]]; then
         exit ${RC_FAILED}
     fi
 
-    is_lineinfile "timed out" "${FILE}" && \
-        echo "localhost: timed out, nothing received" >&2 && exit ${RC_FAILED}
+    is_lineinfile "timed out" "${FILE}" && echo "localhost: timed out, nothing received" >&2 && exit ${RC_FAILED}
 
     offset=$(awk '/^\*/ {print $9}' "${FILE}")
     if [[ -z "$offset" ]]; then
@@ -69,11 +68,10 @@ if [[ ${CITELLUS_LIVE} = 0 ]]; then
         fi
     else
         echo "clock offset is $offset ms" >&2
-        RC=$(echo "$offset<${CITELLUS_MAX_CLOCK_OFFSET:-1000} && \
-            $offset>-${CITELLUS_MAX_CLOCK_OFFSET:-1000}" | bc -l)
+        RC=$(echo "$offset<${CITELLUS_MAX_CLOCK_OFFSET:-1000} && $offset>-${CITELLUS_MAX_CLOCK_OFFSET:-1000}" | bc -l)
     fi
-
     [[ "x$RC" = "x1" ]] && exit ${RC_OKAY} || exit ${RC_FAILED}
+
 else
     is_required_command /usr/bin/bc
 
@@ -90,8 +88,7 @@ else
     offset=$(awk '/^\*/ {print $9}' <<<"$out")
     echo "clock offset is $offset ms" >&2
 
-    RC=$(echo "$offset<${CITELLUS_MAX_CLOCK_OFFSET:-1000} && \
-        $offset>-${CITELLUS_MAX_CLOCK_OFFSET:-1000}" | bc -l)
+    RC=$(echo "$offset<${CITELLUS_MAX_CLOCK_OFFSET:-1000} && $offset>-${CITELLUS_MAX_CLOCK_OFFSET:-1000}" | bc -l)
 
     [[ "x$RC" = "x1" ]] && exit ${RC_OKAY} || exit ${RC_FAILED}
 fi

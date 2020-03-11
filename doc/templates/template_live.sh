@@ -26,11 +26,11 @@
 
 if true
 then
-  if true ; then
-    exit ${RC_OKAY}
-  else
-    exit ${RC_FAILED}
-  fi
+    if true ; then
+        exit ${RC_OKAY}
+    else
+        exit ${RC_FAILED}
+    fi
 else
-  exit ${RC_SKIPPED}
+    exit ${RC_SKIPPED}
 fi

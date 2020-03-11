@@ -24,15 +24,15 @@
 
 first_file_available(){
     (
-    flag=0
-    for file in "$@"; do
-        if [[ $flag -eq 0 ]]; then
-            if [[ -f ${file} ]];  then
-                flag=1
-                echo ${file}
+        flag=0
+        for file in "$@"; do
+            if [[ $flag -eq 0 ]]; then
+                if [[ -f ${file} ]];  then
+                    flag=1
+                    echo ${file}
+                fi
             fi
-        fi
-    done
+        done
     )|xargs echo
 }
 
@@ -66,9 +66,9 @@ fi
 
 iniparser(){
     awk -F'=' -v topic="[$2]" -v key="$3" \
-    '$0==topic { flag=1; next } /^\[/ { flag=0; next } \
+        '$0==topic { flag=1; next } /^\[/ { flag=0; next } \
     flag && tolower($1)~"^"key { gsub(" ", "") ; value=$2 } \
-    END{ print tolower(value) }' $1
+        END{ print tolower(value) }' $1
 }
 
 is_required_directory(){
@@ -277,13 +277,13 @@ is_required_filemode() {
 
 expand_ranges(){
     (
-    for CPU in $(echo $*|tr "," "\n");do
-        if [[ "$CPU" == *"-"* ]];then
-            echo ${CPU}|awk -F "-" '{print $1" "$2}'|xargs seq
-        else
-            echo "$CPU"
-        fi
-    done
+        for CPU in $(echo $*|tr "," "\n");do
+            if [[ "$CPU" == *"-"* ]];then
+                echo ${CPU}|awk -F "-" '{print $1" "$2}'|xargs seq
+            else
+                echo "$CPU"
+            fi
+        done
     )|xargs echo
 }
 
@@ -292,18 +292,18 @@ expand_and_remove_excludes(){
     CPUs=$(echo ${RANGE}|tr " " "\n"|egrep -v "\^.*")
     EXCLUDES=$(echo ${RANGE}|tr " " "\n"|egrep "\^.*")
     (
-    for CPU in ${CPUs}; do
-        exclude=0
-        for EXCL in ${EXCLUDES};do
-            if [[ "^$CPU" == "$EXCL" ]]; then
-                exclude=1
+        for CPU in ${CPUs}; do
+            exclude=0
+            for EXCL in ${EXCLUDES};do
+                if [[ "^$CPU" == "$EXCL" ]]; then
+                    exclude=1
+                fi
+            done
+            if [[ "$exclude" == "0" ]];then
+                echo ${CPU}
             fi
-        done
-        if [[ "$exclude" == "0" ]];then
-            echo ${CPU}
-        fi
 
-    done
+        done
     )|xargs echo
 }
 

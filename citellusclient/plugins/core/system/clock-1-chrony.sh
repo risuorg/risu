@@ -46,8 +46,7 @@ if [[ ${CITELLUS_LIVE} = 0 ]]; then
     offset=$(awk '/RMS offset/ {print $4}' "${CITELLUS_ROOT}/sos_commands/chrony/chronyc_tracking")
     echo "clock offset is $offset seconds" >&2
 
-    RC=$(echo "$offset<${CITELLUS_MAX_CLOCK_OFFSET:-1} && \
-    $offset>-${CITELLUS_MAX_CLOCK_OFFSET:-1}" | bc -l)
+    RC=$(echo "$offset<${CITELLUS_MAX_CLOCK_OFFSET:-1} && $offset>-${CITELLUS_MAX_CLOCK_OFFSET:-1}" | bc -l)
 
 else
     is_required_file /usr/bin/bc
