@@ -166,7 +166,7 @@ class Event(object):
         Events are journald stop/start events in syslog. This is how we determine the timestamps
         :param desc: Description: Either stop or start; all events
         :param time: datetime object; all events
-        :param context: This is eiter os or bootloader; all events
+        :param context: This is either os or bootloader; all events
         :param status: only three possible values: clean, hard or None; seen in os start
         :param index: This is the index number of the object once we sort the list of events at the end; all events
         :param duration_down: This is the number of seconds a system was down; seen in bootloader start
