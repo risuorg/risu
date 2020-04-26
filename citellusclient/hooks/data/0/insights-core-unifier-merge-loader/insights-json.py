@@ -52,13 +52,18 @@ def run(data, quiet=False):  # do not edit this line
             and os.access(filenamewithpath, os.R_OK)
         ):
             with open(filenamewithpath) as json_file:
-                try:
-                    mydata = json.load(json_file)
-                except:
-                    citellus.LOG.debug(
-                        "Error processing data in %s, skipping" % json_file
-                    )
+                for line in json_file.readlines():
+                    try:
+                        mydata = json.loads(line)
+                    except:
+                        citellus.LOG.debug(
+                            "Error processing dataline in %s, skipping" % json_file
+                        )
+                if isinstance(mydata, dict):
+                    pass
+                else:
                     mydata = []
+
         else:
             mydata = []
 
