@@ -14,7 +14,7 @@ revealOptions:
 
 ### Citellus - Verifica tus sistemas!!
 
-<img src="../citellus.png" width="15%" border=0>
+<img src="../citellus.png" width="202" height="202" border=0>
 
 <https://citellus.org>
 
