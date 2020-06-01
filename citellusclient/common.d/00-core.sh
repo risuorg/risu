@@ -4,7 +4,7 @@
 # Copyright (C) 2017, 2018 Robin Černín <cerninr@gmail.com>
 # Copyright (C) 2018 George Angelopoulos <george@usermod.net>
 # Copyright (C) 2019 Mikel Olasagasti Uranga <mikel@olasagasti.info>
-# Copyright (C) 2017, 2018, 2019 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2017, 2018, 2019, 2020 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 # Copyright (C) 2018 Renaud Métrich <rmetrich@redhat.com>
 #
 # This program is free software: you can redistribute it and/or modify

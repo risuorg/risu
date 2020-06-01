@@ -54,22 +54,14 @@ Check for plugins listing on [citellusclient/plugins/](citellusclient/plugins/)
 We are developing framework in python, the bash framework has been deprecated. Python framework is the only supported framework.
 
 ```
-usage: citellus.py [arguments] [-h] [-l] [--list-plugins] [--list-extensions]
-                               [--list-categories] [--description]
-                               [--list-hooks] [--output FILENAME] [--web]
-                               [--run] [--find] [--blame] [--lang LANG] [-v]
-                               [-d {INFO,DEBUG,WARNING,ERROR,CRITICAL}] [-q]
-                               [--progress PROGRESS]
-                               [--progress-colour {black,red,green,orange,blue,magenta,purple,cyan,lightgrey,darkgrey,lightred,lightgreen,yellow,lightblue,pink,lightcyan}]
-                               [--progress-start PROGRESS_START]
-                               [--progress-end PROGRESS_END] [-i SUBSTRING]
-                               [-x SUBSTRING] [-p [0-1000]] [-hf SUBSTRING]
-                               [--anon] [--dump-config] [--no-config]
-                               [--call-home serveruri]
+usage: citellus.py [arguments] [-h] [-l] [--list-plugins] [--list-extensions] [--list-categories] [--description] [--list-hooks] [--dump-overrides] [--output FILENAME] [--web] [--run] [--find] [--blame]
+                               [--lang LANG] [-v] [-d {INFO,DEBUG,WARNING,ERROR,CRITICAL}] [-q] [--progress PROGRESS]
+                               [--progress-colour {black,red,green,orange,blue,magenta,purple,cyan,lightgrey,darkgrey,lightred,lightgreen,yellow,lightblue,pink,lightcyan}] [--progress-start PROGRESS_START]
+                               [--progress-end PROGRESS_END] [-i SUBSTRING] [-x SUBSTRING] [-p [0-1000]] [-hf SUBSTRING] [--anon] [--dump-config] [--no-config] [--call-home serveruri]
+                               [--extraplugintree extraplugintree]
                                [sosreport]
 
-Citellus allows to analyze a directory against common set of tests, useful for
-finding common configuration errors
+Citellus allows to analyze a directory against common set of tests, useful for finding common configuration errors
 
 positional arguments:
   sosreport
@@ -79,24 +71,20 @@ optional arguments:
   -l, --live            Work on a live system instead of a snapshot
   --list-plugins        Print a list of discovered plugins and exit
   --list-extensions     Print a list of discovered extensions and exit
-  --list-categories     With list-plugins, also print a list and count of
-                        discovered plugin categories
+  --list-categories     With list-plugins, also print a list and count of discovered plugin categories
   --description         With list-plugins, also outputs plugin description
   --list-hooks          Print a list of discovered hooks and exit
+  --dump-overrides      Dumps full options of overrides.json to current directory
   --output FILENAME, -o FILENAME
                         Write results to JSON file FILENAME
-  --web                 Write results to JSON file citellus.json and copy html
-                        interface in path defined in --output
-  --run, -r             Force run of citellus instead of reading existing
-                        'citellus.json'
-  --find                Use provided path at starting point for finding
-                        citellus.json and print them based on filters defined
+  --web                 Write results to JSON file citellus.json and copy html interface in path defined in --output
+  --run, -r             Force run of citellus instead of reading existing 'citellus.json'
+  --find                Use provided path at starting point for finding citellus.json and print them based on filters defined
 
 Output and logging options:
   --blame               Report time spent on each plugin
   --lang LANG           Define locale to use
-  -v, --verbose         Increase verbosity of output (may be specified more
-                        than once)
+  -v, --verbose         Increase verbosity of output (may be specified more than once)
   -d {INFO,DEBUG,WARNING,ERROR,CRITICAL}, --loglevel {INFO,DEBUG,WARNING,ERROR,CRITICAL}
                         Set log level
   -q, --quiet           Enable quiet mode
@@ -121,12 +109,12 @@ Filtering options:
 
 Config options:
   --dump-config         Dump config to console to be saved into file
-  --no-config           Do not read configuration from file /home/iranzo/DEVEL
-                        /citellus/citellus/citellusclient/citellus.conf or
-                        ~/.citellus.conf
+  --no-config           Do not read configuration from file ${INSTALLDIR}/citellusclient/citellus.conf or ~/.citellus.conf
   --call-home serveruri
-                        Server URI to HTTP-post upload generated citellus.json
-                        for metrics
+                        Server URI to HTTP-post upload generated citellus.json for metrics
+  --extraplugintree extraplugintree
+                        Adds extra plugin tree structure for plugins
+
 ```
 
 Check how does it look in an execution at:
@@ -138,14 +126,14 @@ This is new feature of citellus that will show you available scripts and their d
 
 ```
 ./citellus.py --list-plugins --description
-{'backend': 'core', 'description': 'This plugin checks if Apache reaches its MaxRequestWorkers', 'plugin': '/home/iranzo/DEVEL/citellus/citellusclient/plugins/core/bugzilla/httpd/1406417.sh'}
-{'backend': 'core', 'description': 'Checks missconfigured host in nova vs hostname', 'plugin': '/home/iranzo/DEVEL/citellus/citellusclient/plugins/core/bugzilla/openstack/ceilometer/1483456.sh'}
-{'backend': 'core', 'description': 'Checks for outdated ceph packages', 'plugin': '/home/iranzo/DEVEL/citellus/citellusclient/plugins/core/bugzilla/openstack/ceph/1358697.sh'}
-{'backend': 'core', 'description': 'Checks httpd WSGIApplication defined to avoid wrong redirection', 'plugin': '/home/iranzo/DEVEL/citellus/citellusclient/plugins/core/bugzilla/openstack/httpd/1478042.sh'}
-{'backend': 'core', 'description': 'Checks for keystone transaction errors on cleanup', 'plugin': '/home/iranzo/DEVEL/citellus/citellusclient/plugins/core/bugzilla/openstack/keystone/1473713.sh'}
-{'backend': 'core', 'description': 'Checks for keystone LDAP domain template problem', 'plugin': '/home/iranzo/DEVEL/citellus/citellusclient/plugins/core/bugzilla/openstack/keystone/templates/1519057.sh'}
-{'backend': 'core', 'description': 'Checks for wrong auth_url configuration in metadata_agent.ini', 'plugin': '/home/iranzo/DEVEL/citellus/citellusclient/plugins/core/bugzilla/openstack/neutron/1340001.sh'}
-{'backend': 'core', 'description': 'Checks python-ryu tracebacks', 'plugin': '/home/iranzo/DEVEL/citellus/citellusclient/plugins/core/bugzilla/openstack/neutron/1450223.sh'}
+{'backend': 'core', 'description': 'This plugin checks if Apache reaches its MaxRequestWorkers', 'plugin': '${INSTALLDIR}/citellusclient/plugins/core/bugzilla/httpd/1406417.sh'}
+{'backend': 'core', 'description': 'Checks missconfigured host in nova vs hostname', 'plugin': '${INSTALLDIR}/citellusclient/plugins/core/bugzilla/openstack/ceilometer/1483456.sh'}
+{'backend': 'core', 'description': 'Checks for outdated ceph packages', 'plugin': '${INSTALLDIR}/citellusclient/plugins/core/bugzilla/openstack/ceph/1358697.sh'}
+{'backend': 'core', 'description': 'Checks httpd WSGIApplication defined to avoid wrong redirection', 'plugin': '${INSTALLDIR}/citellusclient/plugins/core/bugzilla/openstack/httpd/1478042.sh'}
+{'backend': 'core', 'description': 'Checks for keystone transaction errors on cleanup', 'plugin': '${INSTALLDIR}/citellusclient/plugins/core/bugzilla/openstack/keystone/1473713.sh'}
+{'backend': 'core', 'description': 'Checks for keystone LDAP domain template problem', 'plugin': '${INSTALLDIR}/citellusclient/plugins/core/bugzilla/openstack/keystone/templates/1519057.sh'}
+{'backend': 'core', 'description': 'Checks for wrong auth_url configuration in metadata_agent.ini', 'plugin': '${INSTALLDIR}/citellusclient/plugins/core/bugzilla/openstack/neutron/1340001.sh'}
+{'backend': 'core', 'description': 'Checks python-ryu tracebacks', 'plugin': '${INSTALLDIR}/citellusclient/plugins/core/bugzilla/openstack/neutron/1450223.sh'}
 ```
 
 ## Doing a live check example
@@ -234,7 +222,7 @@ All of them must end in `.yml`.
 found #1 extensions / found #0 tests at default path
 mode: fs snapshot .
 # Running extension ansible-playbook
-# /home/iranzo/DEVEL/citellus/citellus/playbooks/system/clock-ntpstat.yml: skipped
+# ${INSTALLDIR}/citellus/playbooks/system/clock-ntpstat.yml: skipped
     Skipped for incompatible operating mode
 ```
 
@@ -243,8 +231,8 @@ vs
 ```
 found #2 extensions with #2 plugins
 mode: live
-# /home/iranzo/DEVEL/citellus/citellusclient/plugins/ansible/openstack/rabbitmq/ha-policies.yml: okay
-# /home/iranzo/DEVEL/citellus/citellusclient/plugins/ansible/system/clock-ntpstat.yml: failed
+# ${INSTALLDIR}/citellusclient/plugins/ansible/openstack/rabbitmq/ha-policies.yml: okay
+# ${INSTALLDIR}/citellusclient/plugins/ansible/system/clock-ntpstat.yml: failed
     {"changed": false, "cmd": "ntpstat", "msg": "[Errno 2] No such file or directory",
 
 ```
