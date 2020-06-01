@@ -493,7 +493,7 @@ def calcid(string, replace=citellusdir):
     return hashlib.sha512(string.replace(replace, "").encode("UTF-8")).hexdigest()
 
 
-def getids(plugins=None, include=None, exclude=None):
+def getids(plugins=None, include=None, exclude=None, options=None):
     """
     Gets ID's for specified include/excluded plugins
     :param plugins: all plugins available
@@ -502,7 +502,7 @@ def getids(plugins=None, include=None, exclude=None):
     :return: array of sha512 hashes
     """
     if not plugins:
-        plugins = findallplugins()
+        plugins = findallplugins(options)
 
     allplugins = plugins
     newplugins = []
@@ -587,6 +587,7 @@ def docitellus(
     pgend=None,
     serveruri=False,
     anon=False,
+    options=None,
 ):
     """
     Runs citellus scripts on specified root folder
@@ -671,7 +672,7 @@ def docitellus(
     # We do need to check that we've the results for all the plugins we know, if not, rerun.
 
     # Check all sosreports for data for all plugins
-    allids = getids()
+    allids = getids(options=options)
 
     # Now check in results for id's no longer existing for removal:
     delete = [key for key in iter(results.keys()) if key not in allids]
@@ -1054,6 +1055,13 @@ def parse_args(default=False, parse=False):
         default=False,
         help=_("Server URI to HTTP-post upload generated citellus.json for metrics"),
         metavar="serveruri",
+    )
+
+    s.add_argument(
+        "--extraplugintree",
+        default=False,
+        help=_("Adds extra plugin tree structure for plugins"),
+        metavar="extraplugintree",
     )
 
     p.add_argument("sosreport", nargs="?")
@@ -1635,6 +1643,7 @@ def main():
                 pgstart=options.progress_start,
                 pgend=options.progress_end,
                 quiet=options.quiet,
+                options=options,
             )
             print("Report for path: %s" % path)
             printresults(results, options)
@@ -1686,6 +1695,7 @@ def main():
         pgend=options.progress_end,
         serveruri=options.call_home,
         anon=options.anon,
+        options=options,
     )
 
     # Print results based on the sorted order based on returned results from

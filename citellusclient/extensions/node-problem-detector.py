@@ -48,8 +48,13 @@ def listplugins(options=None):
 
     plugins = []
 
+    if options and options.extraplugintree:
+        folders = [pluginsdir, os.path.join(options.extraplugintree, extension)]
+    else:
+        folders = [pluginsdir]
+
     for plugin in citellus.findplugins(
-        folders=[pluginsdir],
+        folders=folders,
         executables=False,
         fileextension=".json",
         extension=extension,

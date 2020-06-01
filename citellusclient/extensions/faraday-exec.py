@@ -48,8 +48,13 @@ def listplugins(options=None):
         except:
             pass
 
+    if options and options.extraplugintree:
+        folders = [pluginsdir, os.path.join(options.extraplugintree, extension)]
+    else:
+        folders = [pluginsdir]
+
     plugins = citellus.findplugins(
-        folders=[pluginsdir], fileextension=".sh", extension=extension, prio=prio
+        folders=folders, fileextension=".sh", extension=extension, prio=prio
     )
 
     yield plugins
