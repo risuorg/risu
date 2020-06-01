@@ -44,11 +44,17 @@ def listplugins(options=None):
         except:
             pass
 
+    if options and options.extraplugintree:
+        folders = [pluginsdir, os.path.join(options.extraplugintree, extension)]
+    else:
+        folders = [pluginsdir]
+
     yield citellus.findplugins(
-        folders=[pluginsdir],
+        folders=folders,
         executables=True,
         extension="tripleo-common-healthcheck",
         prio=prio,
+        options=options,
     )
 
 
