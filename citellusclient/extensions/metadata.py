@@ -44,7 +44,14 @@ def listplugins(options=None):
         except:
             pass
 
-    yield citellus.findplugins(folders=[pluginsdir], extension="metadata", prio=prio)
+    if options and options.extraplugintree:
+        folders = [pluginsdir, os.path.join(options.extraplugintree, extension)]
+    else:
+        folders = [pluginsdir]
+
+    yield citellus.findplugins(
+        folders=folders, extension="metadata", prio=prio, options=options
+    )
 
 
 def get_metadata(plugin):
