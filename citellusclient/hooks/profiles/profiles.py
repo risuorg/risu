@@ -52,7 +52,7 @@ def plugidsforprofile(profile, plugins):
     return ids
 
 
-def run(data, quiet=False):  # do not edit this line
+def run(data, quiet=False, options=None):  # do not edit this line
     """
     Executes plugin
     :param quiet: be more silent on returned information
@@ -66,9 +66,14 @@ def run(data, quiet=False):  # do not edit this line
         plugin = {"plugin": data[item]["plugin"], "id": data[item]["id"]}
         plugins.append(plugin)
 
+    if options and options.extraplugintree:
+        folders = [pluginsdir, os.path.join(options.extraplugintree, extension)]
+    else:
+        folders = [pluginsdir]
+
     # Find available profile definitions
     profiles = citellus.findplugins(
-        folders=[pluginsdir], executables=False, fileextension=".txt"
+        folders=folders, executables=False, fileextension=".txt"
     )
     for item in profiles:
         uid = citellus.getids(plugins=[item])[0]

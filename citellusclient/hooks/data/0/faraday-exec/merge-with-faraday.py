@@ -30,7 +30,7 @@ def init():
     return []
 
 
-def run(data, quiet=False):  # do not edit this line
+def run(data, quiet=False, options=None):  # do not edit this line
     """
     Executes plugin
     :param quiet: be more silent on returned information

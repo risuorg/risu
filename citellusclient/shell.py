@@ -756,7 +756,7 @@ def docitellus(
             sys.stdout.write(progress)
             sys.stdout.flush()
 
-        newresults = hook.run(data=results)
+        newresults = hook.run(data=results, options=options)
         if newresults:
             results = dict(newresults)
             del newresults
