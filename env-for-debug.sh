@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2018 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2018, 2020 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # description: Setup environment for manual debug of plugin
 # This script tries to mimic what citellus.py does so it has some hardcoded defaults that must be kept in sync with Citellus

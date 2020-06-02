@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Description: This script contains common functions to be used by citellus plugins
 #
-# Copyright (C) 2018, 2019 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2018, 2019, 2020 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 # Copyright (C) 2018 Renaud Métrich <rmetrich@redhat.com>
 #
 # This program is free software: you can redistribute it and/or modify
