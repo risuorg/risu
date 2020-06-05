@@ -52,7 +52,7 @@ elif [[ ${CITELLUS_LIVE} -eq 1 ]]; then
 fi
 
 for interface_name in $(grep -i "state UP" ${IP_ADDRESS_FILE} |cut -f2 -d ":"); do
-        if EMIT_RETURN=$(grep -i "onboot=yes" "${NETWORK_SCRIPTS_PATH}-${interface_name}"); then
+        if grep -iq "onboot=yes" "${NETWORK_SCRIPTS_PATH}-${interface_name}"; then
             echo "[OK] Interface '$interface_name' up and 'onboot=YES' in the '${NETWORK_SCRIPTS_PATH}-${interface_name}' file!" >&2
         else
             echo "[FAIL] Interface '$interface_name' up but not 'onboot=YES' in the ${NETWORK_SCRIPTS_PATH}-${interface_name} file!" >&2
