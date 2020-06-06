@@ -29,35 +29,24 @@
 [[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
 NETWORK_SCRIPTS_PATH="/etc/sysconfig/network-scripts/ifcfg"
-SOS_IP_ADDRESS_PATHS="sos_commands/networking/ip_-d_address sos_commands/networking/ip_address"
 
 if [[ ${CITELLUS_LIVE} -eq 0 ]]; then
     NETWORK_SCRIPTS_PATH="${CITELLUS_ROOT}${NETWORK_SCRIPTS_PATH}"
-    IP_ADDRESS_FILE=""
-    for SOS_IP_ADDRESS_PATH in ${SOS_IP_ADDRESS_PATHS}; do
-        if [ -f "${CITELLUS_ROOT}/${SOS_IP_ADDRESS_PATH}" ]; then
-            IP_ADDRESS_FILE="${CITELLUS_ROOT}/${SOS_IP_ADDRESS_PATH}"
-            break
-        fi
-    done
-    if [ -z "$IP_ADDRESS_FILE" ]; then
-      echo "There is no 'ip address' command result file in the sosreport" >&2
-      echo "List of the known paths: $SOS_IP_ADDRESS_PATHS" >&2
-      exit ${RC_FAILED}
-    fi
+    IP_ADDRESS_FILE=$(first_file_available "${CITELLUS_ROOT}/sos_commands/networking/ip_-d_address" "${CITELLUS_ROOT}/sos_commands/networking/ip_address")
+    is_required_file "${IP_ADDRESS_FILE}"
 elif [[ ${CITELLUS_LIVE} -eq 1 ]]; then
     IP_ADDRESS_FILE=$(mktemp)
     trap "rm ${IP_ADDRESS_FILE}" EXIT
     ip address  > ${IP_ADDRESS_FILE} 2>&1
 fi
 
+RC_STATUS=${RC_OKAY}
 for interface_name in $(grep -i "state UP" ${IP_ADDRESS_FILE} |cut -f2 -d ":"); do
-        if grep -iq "onboot=yes" "${NETWORK_SCRIPTS_PATH}-${interface_name}"; then
-            echo "[OK] Interface '$interface_name' up and 'onboot=YES' in the '${NETWORK_SCRIPTS_PATH}-${interface_name}' file!" >&2
-        else
-            echo "[FAIL] Interface '$interface_name' up but not 'onboot=YES' in the ${NETWORK_SCRIPTS_PATH}-${interface_name} file!" >&2
-            exit ${RC_FAILED}
-        fi
+    NETWORK_INTERFACE_FILE="${NETWORK_SCRIPTS_PATH}-${interface_name}"
+    if ! grep -iq "onboot=yes" "${NETWORK_INTERFACE_FILE}"; then
+        echo "Interface '$interface_name' up but not 'onboot=YES' in the ${NETWORK_INTERFACE_FILE} file!" >&2
+        RC_STATUS=${RC_FAILED}
+    fi
 done
 
-exit ${RC_OKAY}
+exit ${RC_STATUS}
