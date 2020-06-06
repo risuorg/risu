@@ -43,7 +43,10 @@ fi
 RC_STATUS=${RC_OKAY}
 for interface_name in $(grep -i "state UP" ${IP_ADDRESS_FILE} |cut -f2 -d ":"); do
     NETWORK_INTERFACE_FILE="${NETWORK_SCRIPTS_PATH}-${interface_name}"
-    if ! grep -iq "onboot=yes" "${NETWORK_INTERFACE_FILE}"; then
+    if [[ ! -f ${NETWORK_INTERFACE_FILE} ]]; then
+        RC_STATUS=${RC_FAILED}
+        echo "Network interface file does not exist: ${NETWORK_INTERFACE_FILE}" >&2
+    elif ! grep -iqs "onboot=yes" "${NETWORK_INTERFACE_FILE}"; then
         echo "Interface '$interface_name' up but not 'onboot=YES' in the ${NETWORK_INTERFACE_FILE} file!" >&2
         RC_STATUS=${RC_FAILED}
     fi
