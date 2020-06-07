@@ -54,7 +54,7 @@ Check how does it look in an execution at:
 ## Collaborate
 
 - Open issues/feature requests, etc at <https://github.com/citellusorg/citellus/issues>
-- Read the [Contributing](development/CONTRIBUTING.md) document on how to submit patches
+- Read the [Contributing](https://docs.citellus.org/en/latest/development/CONTRIBUTING/) document on how to submit patches
 - Provide sosreports to check against via <https://www.dropbox.com/request/8LGneF9i9nc9RB6aqXge>, specially if running Debian based distributions and or Fedora/CentOS based ones so that we can improve support for it
 
 ## Documentation
