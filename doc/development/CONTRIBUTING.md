@@ -36,8 +36,7 @@ like this:
 
     ```sh
     tox -e pep8
-    tox -e py27
-    # We're skipping tox -e py35 which is also invoked by default when tox is executed without arguments.
+    tox -e py27  # We're skipping tox -e py35 which is also invoked by default when tox is executed without arguments.
     ```
 
     In this way, errors that might be relevant to the test environment can be skipped. For example this one reported at issue tracker as [104](https://github.com/citellusorg/citellus/issues/104))

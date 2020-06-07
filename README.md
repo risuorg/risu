@@ -59,13 +59,14 @@ Check how does it look in an execution at:
 
 ## Documentation
 
-Documentation is available at [Read the docs](https://citellus.readthedocs.io)
+Documentation is available at [Read the docs](https://docs.citellus.org)
 
 ## Contact us!!
 
 You can reach to us via:
 
 - irc at #citellus in Freenode
+- Telegram at <https://t.me/citellusUG>
 - our mailing list:
   - <mailto:citellus _AT_ googlegroups.com>
   - <https://groups.google.com/forum/#!forum/citellus>
