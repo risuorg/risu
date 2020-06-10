@@ -147,6 +147,13 @@ def parse_args():
         help=_("Define the number of maximum simultaneous hosts checks"),
     )
 
+    p.add_argument(
+        "--extraplugintree",
+        default=False,
+        help=_("Adds extra plugin tree structure for plugins"),
+        metavar="extraplugintree",
+    )
+
     g = p.add_argument_group("Filtering options")
     g.add_argument("-q", "--quiet", help=_("Enable quiet mode"), action="store_true")
     g.add_argument(
