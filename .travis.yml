@@ -12,13 +12,13 @@ notifications:
     on_success: change
 
 python:
-- '3.5'
+  - '3.5'
 
 before_install:
-- pip install tox
-- pip install coverage
-- pip install python-coveralls
-- pip install codacy-coverage
+  - pip install tox
+  - pip install coverage
+  - pip install python-coveralls
+  - pip install codacy-coverage
 
 addons:
   apt:
@@ -29,10 +29,10 @@ addons:
       secure: "lW5hXsC1P3wZKeL1TeQai64qYnCpODA7fK8fYbnB42O5cApn/lJtNQyeYFFP1m0tC/ikUn7OPPCSOC06491POqg/CeZ7jDyOyyQ7wPVCoOGotxtC9f1F6MMQd/g6ahUD3IO6lUsJNy2U28307Daj01S5EsrouDqK+Cq7CN7/z/4DT/vFcop3pIjDW4ZDjMqERIGUkb4GslPfTNMPXSWqA2rbPNMGyuqBaPmjnsynNUBbMSXSz7Kz8396XPuMZyl3ZPfdiA2xqn+VJOES/qJNlq8Se059f+2pvqWnOxoqSQb7bKmwcslRXfVJrL13Do+BhUZt3/TwghJOMPTzyxf+LDfesEA7feWFXQgE7fWAA49H2ZkGDi9XepH8prsI3sdLiPpFcJzkKTkzSh060BeF6r/a6/1HnrL2QrYQ5QOB11z6tDwHxMC7qYr7lsFgDnAO0Y7Rf+FLWB8CB4MSxAp9rwcwdzmssOedrjbzwZRWAjzhzwIbToHyQ2R2xtdKRtG/gNE0pu6WlndmBVOnEd3wYUctdqsMszNHH8muXx6UdwNUv/zyrETQHiMO53YZe9IilLWeuyhtqvNM5WGwv7Rrml4KvGzRCJLN+6dmAxwUl5NA0S/CNndSQ4C1r3LDh1yo0LeMWyNkMep3OHvQf9ENjidKlPDwXkcuvzNe1Hy9Pmk="
 
 script:
-- tox
-- sonar-scanner
-- coverage xml
-- python-codacy-coverage -r coverage.xml
+  - tox
+  - sonar-scanner
+  - coverage xml
+  - python-codacy-coverage -r coverage.xml
 
 deploy:
   - provider: pypi
@@ -51,4 +51,4 @@ deploy:
       tags: true
 
 after_success:
-- coveralls
+  - coveralls

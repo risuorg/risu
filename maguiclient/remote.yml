@@ -22,33 +22,33 @@
   tasks:
     - name: Do citellus
       block:
-      - name: Mkdir target path
-        file:
-          state: directory
-          path: "/root/citellus/citellusclient/"
-          recurse: yes
-          mode: 0775
+        - name: Mkdir target path
+          file:
+            state: directory
+            path: "/root/citellus/citellusclient/"
+            recurse: yes
+            mode: 0775
 
-      - name: Upload citellus
-        synchronize:
-          src: "{{ citellus_base }}/"
-          dest: "/root/citellus/citellusclient/"
-          rsync_path: "sudo rsync"
-          rsync_opts:
-            - "--exclude=.git"
-            - "--exclude=.tox"
-      - name: Run citellus on target
-        command: python /root/citellus/citellusclient/shell.py -l -o /tmp/citellus.json
-        args:
-          chdir: /root/citellus/
-          creates: /tmp/citellus.json
-        environment:
-          ANSIBLE_KEEP_REMOTE_FILES: "{{ lookup('env', 'ANSIBLE_KEEP_REMOTE_FILES') }}"
-      - name: Get remote execution results locally
-        fetch:
-          src: /tmp/citellus.json
-          dest: /tmp/citellus/hostrun/{{ inventory_hostname }}/citellus.json
-          flat: yes
+        - name: Upload citellus
+          synchronize:
+            src: "{{ citellus_base }}/"
+            dest: "/root/citellus/citellusclient/"
+            rsync_path: "sudo rsync"
+            rsync_opts:
+              - "--exclude=.git"
+              - "--exclude=.tox"
+        - name: Run citellus on target
+          command: python /root/citellus/citellusclient/shell.py -l -o /tmp/citellus.json
+          args:
+            chdir: /root/citellus/
+            creates: /tmp/citellus.json
+          environment:
+            ANSIBLE_KEEP_REMOTE_FILES: "{{ lookup('env', 'ANSIBLE_KEEP_REMOTE_FILES') }}"
+        - name: Get remote execution results locally
+          fetch:
+            src: /tmp/citellus.json
+            dest: /tmp/citellus/hostrun/{{ inventory_hostname }}/citellus.json
+            flat: yes
       when: citellus_base | trim != ''
     - name: Complain on empty ENVironment variable
       debug:

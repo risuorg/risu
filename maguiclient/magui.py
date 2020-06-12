@@ -35,6 +35,7 @@ import os.path
 import shutil
 import sys
 import time
+from pathlib import Path
 
 sys.path.append(os.path.abspath(os.path.dirname(__file__) + "/" + "../"))
 
@@ -237,7 +238,7 @@ def callcitellus(path=False, plugins=False, forcerun=False, include=None, exclud
 
     # Call citellus normally, if existing prior results those will be loaded or executed + saved
     results = citellus.docitellus(
-        path=path,
+        path=str(Path(path).resolve()),
         plugins=plugins,
         forcerun=forcerun,
         include=include,
@@ -340,7 +341,7 @@ def domagui(sosreports, citellusplugins, options=False, grouped={}, runhooks=Tru
 
         for sosreport in sosreports:
             result[sosreport] = callcitellus(
-                path=sosreport,
+                path=str(Path(sosreport).resolve()),
                 plugins=citellusplugins,
                 forcerun=forcerun,
                 include=citinclude,
@@ -389,7 +390,9 @@ def domagui(sosreports, citellusplugins, options=False, grouped={}, runhooks=Tru
                     )
                     # Sosreport contains non uniform data, rerun
                     result[sosreport] = callcitellus(
-                        path=sosreport, plugins=citellusplugins, forcerun=True
+                        path=str(Path(sosreport).resolve()),
+                        plugins=citellusplugins,
+                        forcerun=True,
                     )
 
         # Precreate multidimensional array

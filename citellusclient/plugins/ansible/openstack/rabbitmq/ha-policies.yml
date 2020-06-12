@@ -15,22 +15,22 @@
   become: true
 
   tasks:
-  - name: Check if we are in HA cluster environment
-    register: pcs_cluster_status
-    command: pcs cluster status
-    failed_when: false
-    changed_when: false
+    - name: Check if we are in HA cluster environment
+      register: pcs_cluster_status
+      command: pcs cluster status
+      failed_when: false
+      changed_when: false
 
-  - name: Get RabbitMQ policies
-    when: "pcs_cluster_status.rc == 0"
-    register: actual_rabbitmq_policies
-    command: "rabbitmqctl list_policies"
-    changed_when: false
+    - name: Get RabbitMQ policies
+      when: "pcs_cluster_status.rc == 0"
+      register: actual_rabbitmq_policies
+      command: "rabbitmqctl list_policies"
+      changed_when: false
 
-  - name: Verify the RabbitMQ HA policies exists
-    fail:
-      msg: "RabbitMQ policies are missing HA policies"
-    when: >
-      pcs_cluster_status.rc == 0
-      and
-      '^(?!amq\\\\.).*\t{"ha-mode":"all"}' not in actual_rabbitmq_policies.stdout
+    - name: Verify the RabbitMQ HA policies exists
+      fail:
+        msg: "RabbitMQ policies are missing HA policies"
+      when: >
+        pcs_cluster_status.rc == 0
+        and
+        '^(?!amq\\\\.).*\t{"ha-mode":"all"}' not in actual_rabbitmq_policies.stdout
