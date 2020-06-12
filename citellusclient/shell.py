@@ -547,6 +547,14 @@ def execonshell(filename, timeout=30):
     :param filename: command to run or script name
     :return: returncode, out, err
     """
+
+    if not os.access(filename.split(" ")[0], os.X_OK):
+        returncode = 3
+        out = ""
+        err = "File is not executable"
+
+        return returncode, out, err
+
     try:
         p = subprocess.Popen(
             filename.split(" "), stdout=subprocess.PIPE, stderr=subprocess.PIPE
@@ -568,8 +576,14 @@ def execonshell(filename, timeout=30):
         err = _("Skipped because of execution timeout")
         returncode = int(os.environ["RC_SKIPPED"])
     else:
-        out = out.decode("utf-8").strip()
-        err = err.decode("utf-8").strip()
+        try:
+            out = out.decode("utf-8").strip()
+        except:
+            out = out
+        try:
+            err = err.decode("utf-8").strip()
+        except:
+            err = err
 
     return returncode, out, err
 
@@ -1352,11 +1366,14 @@ def regexpfile(filename=False, regexp=False):
     if not regexp:
         return False
 
-    with open(filename, "r") as f:
-        for line in f:
-            if re.match(regexp, line):
-                # Return earlier if match found
-                return line
+    try:
+        with open(filename, "r") as f:
+            for line in f:
+                if re.match(regexp, line):
+                    # Return earlier if match found
+                    return line
+    except:
+        pass
 
     return ""
 
