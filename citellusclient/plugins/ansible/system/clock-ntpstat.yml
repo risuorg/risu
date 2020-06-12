@@ -12,8 +12,8 @@
         The deployment should configure and run ntpd. This validation verifies
         that it is indeed running and connected to an NPT server on all nodes.
       groups:
-      - post-deployment
+        - post-deployment
   tasks:
-  - name: Run ntpstat
-    # ntpstat returns 0 if synchronised and non-zero otherwise
-    command: ntpstat
+    - name: Run ntpstat
+      # ntpstat returns 0 if synchronised and non-zero otherwise
+      command: ntpstat

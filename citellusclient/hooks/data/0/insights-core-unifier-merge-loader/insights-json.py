@@ -7,9 +7,9 @@
 
 from __future__ import print_function
 
-import os
-import json
 import glob
+import json
+import os
 
 try:
     import citellusclient.shell as citellus
