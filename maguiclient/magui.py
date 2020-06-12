@@ -237,7 +237,7 @@ def callcitellus(path=False, plugins=False, forcerun=False, include=None, exclud
 
     # Call citellus normally, if existing prior results those will be loaded or executed + saved
     results = citellus.docitellus(
-        path=path,
+        path=os.path.abspath(path),
         plugins=plugins,
         forcerun=forcerun,
         include=include,
@@ -340,7 +340,7 @@ def domagui(sosreports, citellusplugins, options=False, grouped={}, runhooks=Tru
 
         for sosreport in sosreports:
             result[sosreport] = callcitellus(
-                path=sosreport,
+                path=os.path.abspath(sosreport),
                 plugins=citellusplugins,
                 forcerun=forcerun,
                 include=citinclude,
@@ -389,7 +389,9 @@ def domagui(sosreports, citellusplugins, options=False, grouped={}, runhooks=Tru
                     )
                     # Sosreport contains non uniform data, rerun
                     result[sosreport] = callcitellus(
-                        path=sosreport, plugins=citellusplugins, forcerun=True
+                        path=os.path.abspath(sosreport),
+                        plugins=citellusplugins,
+                        forcerun=True,
                     )
 
         # Precreate multidimensional array
