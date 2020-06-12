@@ -1,3 +1,12 @@
 #!/bin/bash
 
-virsh version --daemon
+. ${HEALTHCHECK_SCRIPTS:-/usr/share/openstack-tripleo-common/healthcheck}/common.sh
+
+process=$1
+socket='/run/libvirt/virtlogd-sock'
+if [[ $process == "virtlogd" ]]; then
+    healthcheck_socket $process $socket
+    exit $?
+else
+    virsh version --daemon
+fi

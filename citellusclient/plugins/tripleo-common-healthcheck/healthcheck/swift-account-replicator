@@ -1,0 +1,8 @@
+#!/bin/bash
+
+. ${HEALTHCHECK_SCRIPTS:-/usr/share/openstack-tripleo-common/healthcheck}/common.sh
+
+conf=/etc/swift/account-server.conf
+cache=/var/cache/swift/account.recon
+
+check_swift_interval account-replicator

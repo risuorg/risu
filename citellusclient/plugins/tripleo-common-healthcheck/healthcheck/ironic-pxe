@@ -3,12 +3,12 @@
 . ${HEALTHCHECK_SCRIPTS:-/usr/share/openstack-tripleo-common/healthcheck}/common.sh
 
 if grep "/httpd " /run_command 2>/dev/null; then
-    bind_host=127.0.0.1
+    bind_host=$(wrap_ipv6 $(get_config_val /etc/ironic/ironic.conf DEFAULT my_ip 127.0.0.1))
     bind_port=$(grep "^Listen " /etc/httpd/conf.d/10-ipxe_vhost.conf | awk '{print $2}')
     protocol=http
     path=
 else
-    bind_host=$(ps -ef | grep -oe '--address \([0-9]\+\.\?\)\+' | awk '{print $2}')
+    bind_host=$(hiera ironic::pxe::tftp_bind_host -c /etc/puppet/hiera.yaml)
     bind_port=69
     protocol=tftp
     path=map-file

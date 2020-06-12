@@ -6,11 +6,11 @@
 import os
 from unittest import TestCase
 
-from citellusclient.tools.dmidecode import parse_dmi
-from citellusclient.tools.dmidecode import _parse_handle_section
-from citellusclient.tools.dmidecode import profile
 from citellusclient.tools.dmidecode import _get_output
+from citellusclient.tools.dmidecode import _parse_handle_section
 from citellusclient.tools.dmidecode import _show
+from citellusclient.tools.dmidecode import parse_dmi
+from citellusclient.tools.dmidecode import profile
 
 
 class CitellusTest(TestCase):

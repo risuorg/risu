@@ -12,12 +12,12 @@ if pgrep $process; then
         port="67"
     fi
     echo "Checking $process port(s) $port."
-    if ! healthcheck_listen $process $port; then
+    if ! healthcheck_port $process $port; then
         echo "There is no $process process listening on port(s) $port in the container."
         exit 1
     fi
 else
-    bind_host=$(get_config_val /etc/ironic-inspector/inspector.conf DEFAULT listen_address 127.0.0.1)
+    bind_host=$(wrap_ipv6 $(get_config_val /etc/ironic-inspector/inspector.conf DEFAULT listen_address 127.0.0.1))
     bind_port=$(get_config_val /etc/ironic-inspector/inspector.conf DEFAULT listen_port 5050)
     healthcheck_curl http://${bind_host}:${bind_port}
 fi

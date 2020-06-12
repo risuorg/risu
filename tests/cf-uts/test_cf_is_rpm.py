@@ -38,7 +38,6 @@ uttest = citellus.findplugins(folders=[folder], include=[NAME])[0]["plugin"]
 us = os.path.basename(uttest)
 citplugs = citellus.findplugins(folders=[folder], include=[us])
 
-
 # Setup commands and expected return codes
 rcs = {
     "pass": citellus.RC_OKAY,

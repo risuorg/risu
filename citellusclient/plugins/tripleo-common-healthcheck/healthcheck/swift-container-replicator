@@ -1,0 +1,8 @@
+#!/bin/bash
+
+. ${HEALTHCHECK_SCRIPTS:-/usr/share/openstack-tripleo-common/healthcheck}/common.sh
+
+conf=/etc/swift/container-server.conf
+cache=/var/cache/swift/container.recon
+
+check_swift_interval container-replicator

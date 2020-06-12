@@ -1,11 +1,7 @@
 #!/bin/bash
+. ${HEALTHCHECK_SCRIPTS:-/usr/share/openstack-tripleo-common/healthcheck}/common.sh
 
-listen_addr=$(awk 'match($0, /-l +([0-9a-fA-F\.\:]+) /, a) {print a[1]}' /etc/sysconfig/memcached)
-
-# Add brackets if IPv6
-if [[ $listen_addr =~ ":" ]]; then
-    listen_addr="[${listen_addr}]"
-fi
+listen_addr=$(wrap_ipv6 $(awk 'match($0, /-l +([0-9a-fA-F\.\:]+) /, a) {print a[1]}' /etc/sysconfig/memcached))
 
 echo "version" | socat - TCP:$listen_addr:11211 1>/dev/null
 exit $?
