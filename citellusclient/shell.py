@@ -33,6 +33,7 @@ import logging
 import os
 import re
 import tempfile
+from pathlib import Path
 
 # Do not require everyone to use requests
 try:
@@ -60,7 +61,7 @@ global ExtensionFolder
 global allplugins
 global HooksFolder
 
-citellusdir = os.path.abspath(os.path.dirname(__file__))
+citellusdir = str(Path(os.path.dirname(__file__)).resolve())
 localedir = os.path.join(citellusdir, "locale")
 ExtensionFolder = os.path.join(citellusdir, "extensions")
 HooksFolder = os.path.join(citellusdir, "hooks")
@@ -420,7 +421,7 @@ def findplugins(
         dictionary = {
             "plugin": plugin,
             "backend": extension,
-            "id": calcid(string=plugin),
+            "id": calcid(string=str(plugin)),
             "category": category,
             "subcategory": subcategory,
             "hash": generate_file_hash(filename=plugin),
@@ -451,8 +452,8 @@ def runplugin(plugin):
 
     LOG.debug(msg=_("Running plugin: %s") % plugin)
     start_time = time.time()
-    os.environ["PLUGIN_BASEDIR"] = "%s" % os.path.abspath(
-        os.path.dirname(plugin["plugin"])
+    os.environ["PLUGIN_BASEDIR"] = (
+        "%s" % Path(os.path.dirname(plugin["plugin"])).resolve()
     )
 
     # By default prepare 'error' in case of failed mapping from plugin to extension
@@ -489,14 +490,14 @@ def runplugin(plugin):
     return plugin
 
 
-def calcid(string, replace=citellusdir):
+def calcid(string, replace=str(citellusdir)):
     """
     Returns ID for defined string
     :param string: String to calculate sha512 on
     :param replace: String to replace previous to calculation
     :return: sha512 of string
     """
-    return hashlib.sha512(string.replace(replace, "").encode("UTF-8")).hexdigest()
+    return hashlib.sha512(string.replace(str(replace), "").encode("UTF-8")).hexdigest()
 
 
 def getids(plugins=None, include=None, exclude=None, options=None):
@@ -546,6 +547,14 @@ def execonshell(filename, timeout=30):
     :param filename: command to run or script name
     :return: returncode, out, err
     """
+
+    if not os.access(filename.split(" ")[0], os.X_OK):
+        returncode = 3
+        out = ""
+        err = "File is not executable"
+
+        return returncode, out, err
+
     try:
         p = subprocess.Popen(
             filename.split(" "), stdout=subprocess.PIPE, stderr=subprocess.PIPE
@@ -567,8 +576,14 @@ def execonshell(filename, timeout=30):
         err = _("Skipped because of execution timeout")
         returncode = int(os.environ["RC_SKIPPED"])
     else:
-        out = out.decode("utf-8").strip()
-        err = err.decode("utf-8").strip()
+        try:
+            out = out.decode("utf-8").strip()
+        except:
+            out = out
+        try:
+            err = err.decode("utf-8").strip()
+        except:
+            err = err
 
     return returncode, out, err
 
@@ -1205,32 +1220,41 @@ def dump_config(options, path=False):
     return json.dumps(differences)
 
 
-def generic_get_metadata(plugin):
+def generic_get_metadata(plugin, comment="#"):
     """
     Gets metadata for plugin
     :param plugin: plugin object
+    :param comment: Character to use as comment in text files
     :return: metadata dict for that plugin
     """
 
-    path = regexpfile(filename=plugin["plugin"], regexp=r"\A# path:")[7:].strip()
+    offset = len(comment) - 1
+
+    path = regexpfile(filename=plugin["plugin"], regexp=r"\A%s path:" % comment)[
+        7 + offset :
+    ].strip()
     path = path.replace("${CITELLUS_ROOT}", "")
 
     metadata = {
         "description": regexpfile(
-            filename=plugin["plugin"], regexp=r"\A# description:"
-        )[14:].strip(),
-        "long_name": regexpfile(filename=plugin["plugin"], regexp=r"\A# long_name:")[
-            12:
-        ].strip(),
-        "bugzilla": regexpfile(filename=plugin["plugin"], regexp=r"\A# bugzilla:")[
-            11:
-        ].strip(),
+            filename=plugin["plugin"], regexp=r"\A%s description:" % comment
+        )[14 + offset :].strip(),
+        "long_name": regexpfile(
+            filename=plugin["plugin"], regexp=r"\A%s long_name:" % comment
+        )[12 + offset :].strip(),
+        "bugzilla": regexpfile(
+            filename=plugin["plugin"], regexp=r"\A%s bugzilla:" % comment
+        )[11 + offset :].strip(),
         "priority": int(
-            regexpfile(filename=plugin["plugin"], regexp=r"\A# priority:")[11:].strip()
+            regexpfile(filename=plugin["plugin"], regexp=r"\A%s priority:" % comment)[
+                11 + offset :
+            ].strip()
             or 0
         ),
         "path": path,
-        "kb": regexpfile(filename=plugin["plugin"], regexp=r"\A# kb:")[5:].strip(),
+        "kb": regexpfile(filename=plugin["plugin"], regexp=r"\A%s kb:" % comment)[
+            5 + offset :
+        ].strip(),
     }
     return metadata
 
@@ -1351,11 +1375,14 @@ def regexpfile(filename=False, regexp=False):
     if not regexp:
         return False
 
-    with open(filename, "r") as f:
-        for line in f:
-            if re.match(regexp, line):
-                # Return earlier if match found
-                return line
+    try:
+        with open(filename, "r") as f:
+            for line in f:
+                if re.match(regexp, line):
+                    # Return earlier if match found
+                    return line
+    except:
+        pass
 
     return ""
 
@@ -1485,7 +1512,7 @@ def main():
     if not options.live:
         if options.sosreport:
             # Live not specified, so we will use file snapshot
-            CITELLUS_ROOT = os.path.abspath(options.sosreport)
+            CITELLUS_ROOT = str(Path(options.sosreport).resolve())
         elif (
             not options.list_plugins
             and not options.list_extensions
@@ -1497,7 +1524,7 @@ def main():
     else:
         if options.sosreport:
             # We specified Live but we defined path for access (like Container running against a host mapping)
-            CITELLUS_ROOT = os.path.abspath(options.sosreport)
+            CITELLUS_ROOT = str(Path(options.sosreport).resolve())
         else:
             CITELLUS_ROOT = ""
 
