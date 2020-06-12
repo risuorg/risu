@@ -4,9 +4,8 @@
 
 import os
 import re
-import time
-
 import setuptools
+import time
 
 # In python < 2.7.4, a lazy loading of package `pbr` will break
 # setuptools if some other modules registered functions in `atexit`.
