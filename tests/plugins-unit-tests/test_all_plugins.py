@@ -41,7 +41,6 @@ failed = random.randint(30, 49)
 skipped = random.randint(50, 69)
 info = random.randint(70, 89)
 
-
 # Setup commands and expected return codes
 rcs = {"pass": okay, "fail": failed, "skipped": skipped, "info": info}
 

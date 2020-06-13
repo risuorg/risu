@@ -78,7 +78,6 @@ progress = "="
 global CITELLUS_LIVE
 CITELLUS_LIVE = 0
 
-
 # This will use system defined LANGUAGE
 trad = gettext.translation("citellus", localedir, fallback=True)
 
