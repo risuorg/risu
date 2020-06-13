@@ -1,5 +1,6 @@
 #!/bin/bash
 
 export ETCDCTL_API=3
-etcdctl endpoint health | grep "is healthy"
+export $(grep ETCD_LISTEN_CLIENT_URLS /etc/etcd/etcd.conf)
+ETCDCTL_ENDPOINTS=$ETCD_LISTEN_CLIENT_URLS etcdctl endpoint health | grep -q "is healthy"
 exit $?
