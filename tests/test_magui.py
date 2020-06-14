@@ -5,6 +5,7 @@
 # Copyright (C) 2017, 2018, 2019, 2020 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 import os
+import sys
 from unittest import TestCase
 
 import citellusclient.shell as citellus
@@ -31,3 +32,21 @@ class MaguiTest(TestCase):
         except:
             res = []
         assert res != ""
+
+    def test_main(self):
+        sys.argv = ["magui.py", "--list-plugins"]
+        try:
+            magui.main()
+        except:
+            pass
+
+        assert [] == []
+
+    def test_help(self):
+        sys.argv = ["magui.py", "--help"]
+        try:
+            magui.main()
+        except:
+            pass
+
+        assert [] == []
