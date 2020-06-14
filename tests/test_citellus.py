@@ -15,6 +15,15 @@ citellusdir = citellus.citellusdir
 
 
 class CitellusTest(TestCase):
+    def test_parseargs(self):
+        # Call with no arguments
+
+        try:
+            res = citellus.parse_args()
+        except:
+            res = []
+        assert res != ""
+
     def test_findplugins_positive_filter_include(self):
         plugins = citellus.findplugins([testplugins], include=["exit_passed"])
 
@@ -40,7 +49,9 @@ class CitellusTest(TestCase):
     def test_findplugins_ext(self):
         plugins = []
         folder = [os.path.join(citellus.citellusdir, "plugins", "core")]
-        for each in citellus.findplugins(folders=folder, fileextension=".sh"):
+        for each in citellus.findplugins(
+            folders=folder, fileextension=".sh", include=[".sh"], exclude=["potato"]
+        ):
             plugins.append(each)
         assert len(plugins) != 0
 

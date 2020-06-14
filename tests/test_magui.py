@@ -22,3 +22,12 @@ class MaguiTest(TestCase):
         # Call with no arguments
         res = magui.domagui(sosreports=[], citellusplugins=[])
         assert res == {}
+
+    def test_parseargs(self):
+        # Call with no arguments
+
+        try:
+            res = magui.parse_args()
+        except:
+            res = []
+        assert res != ""
