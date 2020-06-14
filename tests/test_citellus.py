@@ -6,6 +6,7 @@
 # Copyright (C) 2017, 2018, 2019, 2020 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 import os
+import sys
 from unittest import TestCase
 
 import citellusclient.shell as citellus
@@ -17,12 +18,11 @@ citellusdir = citellus.citellusdir
 class CitellusTest(TestCase):
     def test_parseargs(self):
         # Call with no arguments
-
         try:
-            res = citellus.parse_args()
+            citellus.parse_args()
         except:
-            res = []
-        assert res != ""
+            pass
+        assert True
 
     def test_findplugins_positive_filter_include(self):
         plugins = citellus.findplugins([testplugins], include=["exit_passed"])
@@ -58,3 +58,20 @@ class CitellusTest(TestCase):
     def test_readconfig(self):
         parsed = citellus.read_config()
         assert parsed == {}
+
+    def test_main(self):
+        sys.argv = ["citellus.py", "--list-plugins", "--list-categories"]
+        try:
+            citellus.main()
+        except:
+            pass
+        assert True
+
+    def test_help(self):
+        sys.argv = ["citellus.py", "--help"]
+        try:
+            citellus.main()
+        except:
+            pass
+
+        assert True
