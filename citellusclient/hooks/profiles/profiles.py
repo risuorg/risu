@@ -72,9 +72,24 @@ def run(data, quiet=False, options=None):  # do not edit this line
         folders = [pluginsdir]
 
     # Find available profile definitions
+    try:
+        include = options.include
+    except:
+        include = None
+
+    try:
+        exclude = options.exclude
+    except:
+        exclude = None
+
     profiles = citellus.findplugins(
-        folders=folders, executables=False, fileextension=".txt"
+        folders=folders,
+        executables=False,
+        fileextension=".txt",
+        include=include,
+        exclude=exclude,
     )
+
     for item in profiles:
         uid = citellus.getids(plugins=[item])[0]
         profile = item["plugin"]
