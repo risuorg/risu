@@ -803,6 +803,7 @@ def docitellus(
                 path=path,
                 time=time.time() - start_time,
                 branding=branding,
+                title=options.title,
                 web=web,
                 serveruri=serveruri,
                 anon=anon,
@@ -1084,6 +1085,14 @@ def parse_args(default=False, parse=False):
         metavar="extraplugintree",
     )
 
+    b = p.add_argument_group("Branding options")
+    b.add_argument(
+        "--title",
+        default=False,
+        help=_("Define title to use in report header"),
+        metavar="title",
+    )
+
     p.add_argument("sosreport", nargs="?")
 
     if not default and not parse:
@@ -1300,6 +1309,7 @@ def write_results(
     extranames=None,
     serveruri=False,
     anon=False,
+    title=False,
 ):
     """
     Writes result
@@ -1307,6 +1317,7 @@ def write_results(
     :param serveruri: Server URI for HTTP POST upload of results
     :param web: copy html viewer
     :param branding: branding string for metadata
+    :param title: title for report header
     :param source: source of information for metadata
     :param time: date of report
     :param results: Data to write
@@ -1315,15 +1326,22 @@ def write_results(
     :param path: Path to write to file metadata
     :return:
     """
+
+    metadata = {
+        "when": datetime.datetime.utcnow().isoformat(),
+        "live": bool(live),
+        "source": source,
+        "time": time,
+        "branding": branding,
+        "extranames": extranames,
+    }
+
+    # Update title if defined or use default
+    if title:
+        metadata.update({"title": title})
+
     data = {
-        "metadata": {
-            "when": datetime.datetime.utcnow().isoformat(),
-            "live": bool(live),
-            "source": source,
-            "time": time,
-            "branding": branding,
-            "extranames": extranames,
-        },
+        "metadata": metadata,
         "results": results,
     }
 

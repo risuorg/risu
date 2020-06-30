@@ -199,7 +199,7 @@
                 <table id="metadata_table_citellus" class="table table-hover table-bordered">
                     <thead>
                         <tr id="metadata_table_citellus_header">
-                            <th colspan=2 class="text-left">Citellus Runtime Metadata</th>
+                            <th colspan=2 class="text-left">Runtime Metadata</th>
                         </tr>
                     </thead>
                     <tbody id="metadata_table_citellus_body" style="display: none;"></tbody>
@@ -213,7 +213,7 @@
             <table class="table table-striped table-bordered table-hover" id="table1">
                 <thead>
                     <tr id="profile_table_citellus_header">
-                        <th>Citellus Profiles</th>
+                        <th>Profiles</th>
                     </tr>
                 </thead>
                 <tbody id="profile_table_citellus_body" style="">
@@ -228,7 +228,7 @@
             <table class="table table-striped table-bordered table-hover" id="table2">
                 <thead>
                     <tr id="report_table_citellus_header">
-                        <th>Citellus Report</th>
+                        <th>Report</th>
                     </tr>
                 </thead>
                 <tbody id="report_table_citellus_body" style="">
@@ -794,6 +794,12 @@
                         $.each(data.metadata, function(i, item) {
                             var row = '<tr><th>' + i + '</th><td>' + item + '</td></tr>\n';
                             $("#metadata_table_citellus > tbody:last-child").append(row);
+                            // Set title according to metadata
+                            if (i == "title"){
+                                document.querySelector("body > header > nav > div > a > span").innerText=item
+                            } else if (i == "path"){
+                                document.title="Report for " + item.split("/").pop()
+                            }
                         });
                         div_otherJsons.children("button").html(jsonFile + ' <span class="caret"></span>');
                         div_otherJsons.children("button").data("jsonFile", jsonFile)
