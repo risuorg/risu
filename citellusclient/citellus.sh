@@ -46,7 +46,7 @@ TEST_WTF=$(
 )
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-# Add the extra vars we added on citelus.py to keep some
+# Add the extra vars we added on citellus.py to keep some
 # level of compatibility for this script to keep working as fallback
 
 export CITELLUS_BASE=${DIR}
