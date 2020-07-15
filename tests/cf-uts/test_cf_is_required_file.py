@@ -20,17 +20,16 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import citellusclient.shell as citellus
+from unittest import TestCase
+import tempfile
+import subprocess
+import shutil
 import sys
 import os
 
 sys.path.append(os.path.abspath(os.path.dirname(__file__) + "/" + "../"))
-import os
-import shutil
-import subprocess
-import tempfile
-from unittest import TestCase
 
-import citellusclient.shell as citellus
 
 # To create your own test, update NAME with plugin name and copy this file to test_$NAME.py
 NAME = "test_cf_is_required_file"

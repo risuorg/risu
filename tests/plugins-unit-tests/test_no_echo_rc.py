@@ -19,15 +19,14 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import citellusclient.shell as citellus
+from unittest import TestCase
+import random
 import sys
 import os
 
 sys.path.append(os.path.abspath(os.path.dirname(__file__) + "/" + "../"))
-import os
-import random
-from unittest import TestCase
 
-import citellusclient.shell as citellus
 
 testplugins = os.path.join(citellus.citellusdir, "plugins", "test")
 plugins = os.path.join(citellus.citellusdir, "plugins", "core")
