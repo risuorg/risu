@@ -6,7 +6,10 @@
 
 import os
 from unittest import TestCase
+import sys
+import os
 
+sys.path.append(os.path.abspath(os.path.dirname(__file__) + "/" + "../"))
 import citellusclient.shell as citellus
 
 testplugins = os.path.join(citellus.citellusdir, "plugins", "test")
