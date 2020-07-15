@@ -30,20 +30,20 @@
 
 NETWORK_SCRIPTS_PATH="/etc/sysconfig/network-scripts/ifcfg"
 
-if [[ ${CITELLUS_LIVE} -eq 0 ]]; then
+if [[ "${CITELLUS_LIVE}" -eq "0" ]]; then
     NETWORK_SCRIPTS_PATH="${CITELLUS_ROOT}${NETWORK_SCRIPTS_PATH}"
     IP_ADDRESS_FILE=$(first_file_available "${CITELLUS_ROOT}/sos_commands/networking/ip_-d_address" "${CITELLUS_ROOT}/sos_commands/networking/ip_address")
     is_required_file "${IP_ADDRESS_FILE}"
-elif [[ ${CITELLUS_LIVE} -eq 1 ]]; then
+elif [[ "${CITELLUS_LIVE}" -eq "1" ]]; then
     IP_ADDRESS_FILE=$(mktemp)
-    trap "rm ${IP_ADDRESS_FILE}" EXIT
-    ip address  > ${IP_ADDRESS_FILE} 2>&1
+    trap 'rm ${IP_ADDRESS_FILE}' EXIT
+    ip address >"${IP_ADDRESS_FILE}" 2>&1
 fi
 
 RC_STATUS=${RC_OKAY}
-for interface_name in $(grep -i "state UP" ${IP_ADDRESS_FILE} |cut -f2 -d ":"); do
+for interface_name in $(grep -i "state UP" ${IP_ADDRESS_FILE} | cut -f2 -d ":"); do
     NETWORK_INTERFACE_FILE="${NETWORK_SCRIPTS_PATH}-${interface_name}"
-    if [[ ! -f ${NETWORK_INTERFACE_FILE} ]]; then
+    if [[ ! -f "${NETWORK_INTERFACE_FILE}" ]]; then
         RC_STATUS=${RC_FAILED}
         echo "Network interface file does not exist: ${NETWORK_INTERFACE_FILE}" >&2
     elif ! grep -iqs "onboot=yes" "${NETWORK_INTERFACE_FILE}"; then
