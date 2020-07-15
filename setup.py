@@ -11,12 +11,15 @@ import time
 # setuptools if some other modules registered functions in `atexit`.
 # solution from: http://bugs.python.org/issue15881#msg170215
 
+
 try:
+
     import multiprocessing  # noqa
 except ImportError:
+
     pass
 
-filename = "setup.cfg"
+afilename = "setup.cfg"
 regexp = r"\Aversion.*([0-9]+)"
 
 line = ""
