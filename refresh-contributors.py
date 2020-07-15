@@ -104,7 +104,7 @@ for plugin in plugins:
         modificatstring = modificatstring.strip()
 
         lines = []
-        for line in (l.rstrip() for l in modificatstring.split("\n")):
+        for line in (pline.rstrip() for pline in modificatstring.split("\n")):
             if line != "":
                 lines.append(line + "\n")
             elif len(lines) > 0 and lines[-1] != "\n":
@@ -129,7 +129,7 @@ for plugin in plugins:
             with open(pluginfile, "r") as f:
                 lines = []
                 first = True
-                for line in (l.rstrip() for l in f):
+                for line in (pline.rstrip() for pline in f):
                     if line != "" and first:
                         lines.append(line + "\n")
                         first = False
@@ -153,7 +153,7 @@ for plugin in plugins:
 
                     lines = []
                     first = True
-                    for line in (l.rstrip() for l in newlines):
+                    for line in (pline.rstrip() for pline in newlines):
                         if line == "" and first:
                             first = False
                         else:
