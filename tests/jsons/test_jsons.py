@@ -7,9 +7,8 @@ from __future__ import print_function
 
 import json
 import os
-from unittest import TestCase
 import sys
-import os
+from unittest import TestCase
 
 sys.path.append(os.path.abspath(os.path.dirname(__file__) + "/" + "../"))
 import citellusclient.shell as citellus

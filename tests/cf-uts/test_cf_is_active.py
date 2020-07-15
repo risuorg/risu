@@ -17,15 +17,16 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 
+import os
+import shutil
+import subprocess
+import sys
+import tempfile
+from unittest import TestCase
+
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import citellusclient.shell as citellus
-from unittest import TestCase
-import tempfile
-import subprocess
-import shutil
-import sys
-import os
 
 sys.path.append(os.path.abspath(os.path.dirname(__file__) + "/" + "../"))
 

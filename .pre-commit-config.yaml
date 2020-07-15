@@ -38,12 +38,16 @@ repos:
     rev: v1.2.3
     hooks:
       - id: flake8
-  - repo: https://github.com/pecigonzalo/pre-commit-shfmt.git
-    rev: master
+  - repo: local
     hooks:
-      - id: shell-fmt
-        args:
-          - --indent=4
+      - id: shfmt
+        name: shfmt
+        minimum_pre_commit_version: 2.4.0
+        language: golang
+        additional_dependencies: [mvdan.cc/sh/v3/cmd/shfmt@v3.1.1]
+        entry: shfmt
+        args: [-w, -i, "4"]
+        types: [shell]
   - repo: https://github.com/asottile/blacken-docs
     rev:  master
     hooks:
