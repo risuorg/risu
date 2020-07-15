@@ -1,0 +1,9 @@
+linters:
+  flake8:
+    fixer: true
+  shellcheck:
+    shell: bash
+  golint:
+    fixer: true
+fixers:
+  enable: true
