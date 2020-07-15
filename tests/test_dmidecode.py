@@ -5,7 +5,9 @@
 
 import os
 from unittest import TestCase
+import sys
 
+sys.path.append(os.path.abspath(os.path.dirname(__file__) + "/" + "../"))
 from citellusclient.tools.dmidecode import _get_output
 from citellusclient.tools.dmidecode import _parse_handle_section
 from citellusclient.tools.dmidecode import _show

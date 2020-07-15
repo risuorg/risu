@@ -20,6 +20,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import sys
+import os
+
+sys.path.append(os.path.abspath(os.path.dirname(__file__) + "/" + "../"))
 import os
 import shutil
 import subprocess
