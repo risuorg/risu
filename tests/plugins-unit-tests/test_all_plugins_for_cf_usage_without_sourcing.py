@@ -21,8 +21,8 @@
 
 import os
 import re
-from unittest import TestCase
 import sys
+from unittest import TestCase
 
 sys.path.append(os.path.abspath(os.path.dirname(__file__) + "/" + "../"))
 import citellusclient.shell as citellus
