@@ -1,6 +1,7 @@
 .. image:: https://img.shields.io/github/license/citellusorg/citellus.svg :alt: LICENSE
+.. image:: https://github.com/citellusorg/citellus/workflows/Python%20package/badge.svg :alt: Actions status
 .. image:: https://travis-ci.org/citellusorg/citellus.svg?branch=master :alt:  Build Status
-.. image:: https://coveralls.io/repos/github/citellusorg/citellus/badge.svg?branch=master :alt:  Coverage Status
+.. image:: https://codecov.io/gh/citellusorg/citellus/branch/master/graph/badge.svg :alt:  Coverage Status
 .. image:: https://img.shields.io/github/release/citellusorg/citellus.svg :alt:  Releases
 .. image:: https://badge.fury.io/py/citellus.svg :alt:  Pypi version
 .. image:: https://images.microbadger.com/badges/image/citellus/citellus.svg :alt:  Microbadger
