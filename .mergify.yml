@@ -15,7 +15,7 @@ pull_request_rules:
           add:
             - conflict
         comment:
-          message: Could you please fix the conflicts @{{author}}? 🙏
+          message: Could you please fix the conflicts @{{author}}?
     - name: remove label on conflict
       conditions:
          - -conflict
