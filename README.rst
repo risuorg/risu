@@ -5,7 +5,6 @@
 .. image:: https://img.shields.io/github/release/citellusorg/citellus.svg :alt:  Releases
 .. image:: https://badge.fury.io/py/citellus.svg :alt:  Pypi version
 .. image:: https://images.microbadger.com/badges/image/citellus/citellus.svg :alt:  Microbadger
-.. image:: https://api.codacy.com/project/badge/Grade/50c01175b64a4417b270d4dc29a0c0c6 :alt: Codacy review
 
 
 Introduction
@@ -14,7 +13,7 @@ Introduction
 Citellus is a framework to help with system configuration validation on
 either live system or any sort of snapshot of the filesystem.
 
-Via execution of ‘plugins’ it reports status on each one execution
+Via execution of 'plugins' it reports status on each one execution
 against the system that gives you an idea on health status, actual
 problems or problems that will reveal themselves if no preventive action
 is taken.
@@ -47,10 +46,10 @@ Installation
 ------------
 
 Check ``README`` above for detailed instructions outside os simple ones:
-- Just clone the git repository and execute it from there ‘or’ - use
-‘pipsi’ or create a python virtual env to install package ‘citellus’
+- Just clone the git repository and execute it from there 'or' - use
+'pipsi' or create a python virtual env to install package 'citellus'
 
--  Give it a try running as ‘root’ on your system with:
+-  Give it a try running as 'root' on your system with:
    ``./citellus.py -l`` so it will show ``live execution`` and only
    ``Failed`` tests.
 
