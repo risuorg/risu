@@ -16,21 +16,17 @@ open an [issue](https://github.com/citellusorg/citellus/issues/new).
 
 ## How to contribute code
 
-We encourage you to contribute new plugins. We use [gerrithub][] for
-reviewing proposed changes. The submission process looking something
-like this:
+We encourage you to contribute new plugins. Use Pull Requests to provide your contributions to the repo.
 
 [gerrithub]: https://gerrithub.io/
 
 1.  Clone the citellus repository:
     `git clone https://github.com/citellusorg/citellus`
-2.  Configure the `git-review` tool:
-    `git-review -s`
-3.  Install pre-commit (from pipsi for example) and prepare the hook:
+2.  Install pre-commit (from pipsi for example) and prepare the hook:
     `pre-commit install`
-4.  Check out a branch in which to make your changes:
+3.  Check out a branch in which to make your changes:
     `git checkout -b "your-new-branch"`
-5.  Edit your files and validate with tox:
+4.  Edit your files and validate with tox:
     `tox # this will check the changes for some errors`
     NOTE: tox will run python 2.7, pep8 and python 3.5 tests, if your environment lacks for example python 3.5, do execute tox -l to see the available tests and skip that one, for example:
 
@@ -41,14 +37,18 @@ like this:
 
     In this way, errors that might be relevant to the test environment can be skipped. For example this one reported at issue tracker as [104](https://github.com/citellusorg/citellus/issues/104))
 
-6.  Update your local repository:
+5.  Update your local repository:
     `git add $modified_files git commit`
 
         For the message, please use a short line with the fix and the subject like `[plugins][openstack][nova] Check nova configuration XXX`
 
         If the commit fixes a github open issue, also use `Closes #$ISSUEID` so github automatically closes it once merged referencing the commit.
 
-7.  Submit your changes for review:
+6.  Submit your changes for review:
+
+    `git push`
+
+7.  Then, use repository Pull-Request method to request the change to be incorporated/reviewed
 
         git-review
 
@@ -59,20 +59,16 @@ to request changes; when this happens:
 
         tox # this will check the new changes for some errors
 
-2.  Update your existing commit. Do not create a new commit!
+2.  Update your existing commit. Do not create a new commit! We want to get each new PR into one commit.
 
         git add $modified_files
         git commit --amend
 
 3.  Resubmit the change:
 
-        git-review
+        git push --force
 
-You can see pending and already merged actual changes at: <https://review.gerrithub.io/q/citellusorg>
-
-4. Once the new plugin has been submitted you'll see some comments from 'Citellus Jenkins' which is running Unit tests against it (same ones that you run with `tox`)
-
-5. If Jenkins gives 'Verified +1', next step is wait for one reviewer to give final ACK and merge the change.
+4) Once the new plugin has been submitted you'll see some GitHub actions feedback (similars to the ones that you run with `tox`)
 
 ## How to write tests
 
@@ -98,7 +94,7 @@ For contributing translations check [i18n.md](i18n.md)
 
 ## How to debug your test
 
-We've included a file named `env-for.debug.sh` in the root folder of citellus repo that allows to be sourced and later execute your script.
+We've included a file named `env-for.debug.sh` in the root folder of Citellus repo that allows to be sourced and later execute your script.
 
 This environment file will define the standard variables Citellus does use like:
 
