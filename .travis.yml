@@ -31,8 +31,6 @@ addons:
 script:
   - tox
   - sonar-scanner
-  - coverage xml
-  - python-codacy-coverage -r coverage.xml
 
 deploy:
   - provider: pypi
