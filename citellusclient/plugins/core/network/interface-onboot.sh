@@ -41,15 +41,44 @@ elif [[ "${CITELLUS_LIVE}" -eq "1" ]]; then
 fi
 
 RC_STATUS=${RC_OKAY}
-for interface_name in $(grep -i "state UP" ${IP_ADDRESS_FILE} | cut -f2 -d ":"); do
-    NETWORK_INTERFACE_FILE="${NETWORK_SCRIPTS_PATH}-${interface_name}"
-    if [[ ! -f "${NETWORK_INTERFACE_FILE}" ]]; then
-        RC_STATUS=${RC_FAILED}
-        echo "Network interface file does not exist: ${NETWORK_INTERFACE_FILE}" >&2
-    elif ! grep -iqs "onboot=yes" "${NETWORK_INTERFACE_FILE}"; then
-        echo "Interface '$interface_name' up but not 'onboot=YES' in the ${NETWORK_INTERFACE_FILE} file!" >&2
-        RC_STATUS=${RC_FAILED}
+
+# Now check for ONBOOT=YES missing on the interface files for above macs
+# There are several approaches:
+# NIC is defined via IFACE name
+# NIC is defined via MAC via HWADDR
+# NIC is up as it's part of bridge, etc
+
+# Sometimes NIC might have a fancy name instead of ifcfg-$IFNAME, use MACs for matching
+MACS_IN_SYSTEM=$(grep -i -a2 "state UP" ${IP_ADDRESS_FILE} | grep ether | awk '{print $2}' | sort -u)
+IFACES_IN_SYSTEM=$(grep -i "state UP" ${IP_ADDRESS_FILE} | cut -f2 -d ":")
+declare -A IFACES_MACS
+
+for iface in ${IFACES_IN_SYSTEM}; do
+    # Fill array of IFACES-MACS
+    IFACES_MACS[${iface}]=$(cat ${IP_ADDRESS_FILE} | grep ${iface} -A2 | grep ether | awk '{print $2}')
+done
+
+# Check all interfaces
+for iface in ${IFACES_IN_SYSTEM}; do
+    mac=${IFACES_MACS[$iface]}
+    if ! is_lineinfile ${mac} ${CITELLUS_ROOT}/etc/sysconfig/network-scripts/ifcfg-*; then
+        # mac is not there, so check iface based on name
+        if ! is_lineinfile ${iface} ${CITELLUS_ROOT}/etc/sysconfig/network-scripts/ifcfg-*; then
+            echo "Interface ${iface} with MAC ${mac} is in state UP but not defined in ifcfg-* files" >&2
+            RC_STATUS=${RC_FAILED}
+        fi
     fi
+
+    # For each iface, check that onboot=yes is there
+    for ifacefile in ${CITELLUS_ROOT}/etc/sysconfig/network-scripts/ifcfg-*; do
+        if is_lineinfile ${iface} ${ifacefile}; then
+            NETWORK_INTERFACE_FILE=${ifacefile}
+            if ! is_lineinfile 'onboot=yes' ${NETWORK_INTERFACE_FILE}; then
+                echo "Interface '$interface_name' up but not 'onboot=YES' in the ${NETWORK_INTERFACE_FILE} file!" >&2
+                RC_STATUS=${RC_FAILED}
+            fi
+        fi
+    done
 done
 
 exit ${RC_STATUS}
