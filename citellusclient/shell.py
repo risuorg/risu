@@ -1188,16 +1188,19 @@ def read_config(options=False):
 
     config = {}
 
-    custompath = ""
+    possiblepaths = [
+        os.path.join(citellusdir, "citellus.conf"),
+    ]
 
     # Read custom config_path from arguments
     if options and options.config_path:
-        custompath = options.config_path
+        custompath = os.path.join(options.config_path, ".citellus.conf")
+    else:
+        custompath = os.path.expanduser("~/.citellus.conf")
 
-    for filename in [
-        os.path.join(citellusdir, "citellus.conf"),
-        os.path.join(custompath, os.path.expanduser("~/.citellus.conf")),
-    ]:
+    possiblepaths.append(custompath)
+
+    for filename in possiblepaths:
         if os.path.exists(filename):
             try:
                 config = json.load(open(filename, "r"))
