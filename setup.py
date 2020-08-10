@@ -5,6 +5,7 @@
 import os
 import re
 import setuptools
+import subprocess
 import time
 
 # In python < 2.7.4, a lazy loading of package `pbr` will break
@@ -16,17 +17,12 @@ try:
 except ImportError:
     pass
 
-filename = "setup.cfg"
-regexp = r"\Aversion.*([0-9]+)"
+command = "git tag|sort -V|grep -v ^[a-Z]|grep -v 2017|tail -1"
+proc = subprocess.Popen([command], stdout=subprocess.PIPE, shell=True)
+(out, err) = proc.communicate()
 
-line = ""
-with open(filename, "r") as f:
-    for line in f:
-        if re.match(regexp, line):
-            # Return earlier if match found
-            break
+version = out.strip().decode("utf-8")
 
-version = line.split("=")[1].strip()
 try:
     travis = os.environ["TRAVIS_JOB_ID"]
 except:
