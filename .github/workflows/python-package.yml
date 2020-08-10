@@ -87,7 +87,7 @@ jobs:
 
       - name: Build package
         run: |
-          echo ::set-env name=RELEASE_VERSION::${GITHUB_REF#refs/*/}
+          export RELEASE_VERSION=${GITHUB_REF#refs/*/}
           python setup.py sdist bdist_wheel
 
       - name: Publish distribution to PyPI
