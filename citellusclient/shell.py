@@ -1076,6 +1076,12 @@ def parse_args(default=False, parse=False):
         ),
         action="store_true",
     )
+
+    s.add_argument(
+        "--config-path",
+        default="",
+        help=_("Define path for .citellus.conf configuration if not the default of ~/"),
+    )
     s.add_argument(
         "--call-home",
         default=False,
@@ -1167,7 +1173,7 @@ def array_to_config(config, path=False):
     return parse_args(parse=valid)
 
 
-def read_config():
+def read_config(options=False):
     """
     Reads configuration options
     :return: with options stored on file
@@ -1181,9 +1187,16 @@ def read_config():
     # check for valid config files
 
     config = {}
+
+    custompath = ""
+
+    # Read custom config_path from arguments
+    if options and options.config_path:
+        custompath = options.config_path
+
     for filename in [
         os.path.join(citellusdir, "citellus.conf"),
-        os.path.expanduser("~/.citellus.conf"),
+        os.path.join(custompath, os.path.expanduser("~/.citellus.conf")),
     ]:
         if os.path.exists(filename):
             try:
@@ -1498,7 +1511,7 @@ def main():
 
     if not options.no_config:
         # Should be default always to read config
-        savedconfig = read_config()
+        savedconfig = read_config(options)
 
         # Check that saved config is not empty
         if savedconfig != {}:
