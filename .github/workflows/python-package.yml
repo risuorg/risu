@@ -23,9 +23,6 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
 
-    - name: Set env
-      run: echo ::set-env name=RELEASE_VERSION::${GITHUB_REF#refs/*/}
-
     - uses: actions/cache@v2
       with:
         path: ~/.cache/pip
@@ -90,6 +87,7 @@ jobs:
 
       - name: Build package
         run: |
+          echo ::set-env name=RELEASE_VERSION::${GITHUB_REF#refs/*/}
           python setup.py sdist bdist_wheel
 
       - name: Publish distribution to PyPI
