@@ -1,5 +1,5 @@
 [![License](https://img.shields.io/github/license/citellusorg/citellus.svg)](LICENSE)
-![Python package](https://github.com/citellusorg/citellus/workflows/Python%20package/badge.svg)
+![Python Unit Testing](https://github.com/citellusorg/citellus/workflows/Python%20Unit%20Testing/badge.svg)
 [![Build Status](https://travis-ci.org/citellusorg/citellus.svg?branch=master)](https://travis-ci.org/citellusorg/citellus)
 [![](https://readthedocs.org/projects/citellus/badge/?version=latest)](https://readthedocs.org/projects/citellus/builds/ "Read The docs build")
 [![Docker Pulls](https://img.shields.io/docker/pulls/citellus/citellus.svg)](https://img.shields.io/docker/pulls/citellus/citellus.svg)
