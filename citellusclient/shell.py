@@ -1130,13 +1130,17 @@ def array_to_config(config, path=False):
         for key in config:
             values = config[key]
             if isinstance(values, str):
-                values = values.encode("ascii", "ignore")
+                values = values.encode("ascii", "ignore").decode("utf-8")
             if isinstance(values, list):
                 for value in values:
                     if key == "sosreport":
-                        valid.append("%s" % key.encode("ascii", "ignore"))
+                        valid.append(
+                            "%s" % key.encode("ascii", "ignore").decode("utf-8")
+                        )
                     else:
-                        valid.append("--%s" % key.encode("ascii", "ignore"))
+                        valid.append(
+                            "--%s" % key.encode("ascii", "ignore").decode("utf-8")
+                        )
                     if value is not True and value != "True":
                         valid.append(value)
             else:
@@ -1160,7 +1164,7 @@ def array_to_config(config, path=False):
                 ]:
                     valid.append("--%s" % key)
                 else:
-                    valid.append("--%s" % key.encode("ascii", "ignore"))
+                    valid.append("--%s" % key.encode("ascii", "ignore").decode("utf-8"))
                     if values is not True and values != "True":
                         valid.append(values)
 
