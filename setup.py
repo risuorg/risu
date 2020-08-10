@@ -46,7 +46,7 @@ t = strings.split(",")
 numbers = [str(x) for x in t]
 
 if ghversion:
-    os.environ["PBR_VERSION"] = "%s.%s.%s" % (version, ghversion, "".join(numbers))
+    os.environ["PBR_VERSION"] = "%s.%s" % (ghversion, "".join(numbers))
 else:
     os.environ["PBR_VERSION"] = "%s.%s.%s" % (version, 0, "".join(numbers))
 
