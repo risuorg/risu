@@ -15,4 +15,4 @@ jobs:
       - name: Broken Link Check
         uses: technote-space/broken-link-checker-action@v1
         with:
-          EXCLUDE_INTERNAL_LINKS: True
+          EXCLUDED_KEYWORDS: "*.md"
