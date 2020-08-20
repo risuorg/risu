@@ -13,7 +13,7 @@ jobs:
       with:
         fetch-depth: 0
     - uses: actions/setup-python@v2.1.2
-    - uses: actions/cache@v2.1.0
+    - uses: actions/cache@v2.1.1
       with:
         path: |
           ~/.cache/pre-commit
