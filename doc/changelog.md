@@ -21,7 +21,7 @@
 
 ## Changelog hilights
 
-Checkout the 'blog' section of <https://citellus.org/blog/category/blog/>
+Checkout the 'blog' section of <https://citellusorg.github.io/blog/category/blog/>
 
 This file will contain a manually mantained log of hilights between versions, it's not a very extensive detail, but some of the bigger changes/ideas will be added here.
 

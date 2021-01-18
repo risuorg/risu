@@ -10,13 +10,13 @@ revealOptions:
   slideNumber: true
 ---
 
-## [Citellus](https://citellus.org):
+## [Citellus](https://citellusorg.github.io):
 
 ### Citellus - Verifica tus sistemas!!
 
 <img src="../citellus.png" width="202" height="202" border=0>
 
-<https://citellus.org>
+<https://citellusorg.github.io>
 
 SuperSec 2018 Almería 12-13 Mayo
 
@@ -492,7 +492,7 @@ Ven a #citellus en Freenode o contacta con nosotros:
 
 <small>
 
-- https://citellus.org
+- https://citellusorg.github.io
 - citellus _AT_ googlegroups.com
     - <https://groups.google.com/forum/#!forum/citellus>
 - Issue en github <https://github.com/citellusorg/citellus/issues>

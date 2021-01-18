@@ -37,7 +37,7 @@ Please if you have any idea on any improvements please do not hesitate to open a
 - Plugins written in your language of choice.
 - Allows to dump output to json file to be processed by other tools.
   - Allow to visualize html from json output.
-  - Check our sample at: [Citellus-www](https://citellus.org/citellus.html)
+  - Check our sample at: [Citellus-www](https://citellusorg.github.io/citellus.html)
 - Ansible playbook support.
 - Save / restore default settings
 
@@ -75,7 +75,7 @@ Check how does it look in an execution at:
   - Slides: <supersec2018-presentation-ES.md>
   - Recording: not yet available
 - Blog posts
-  - Citellus.org <https://citellus.org/>
+  - Citellus.org <https://citellusorg.github.io/>
   - Pablo Iranzo's Blog: <https://iranzo.github.io/blog/tag/citellus/>
     - <https://iranzo.github.io/blog/2017/07/26/Citellus-framework-for-detecting-known-issues/>
     - <https://iranzo.github.io/blog/2017/07/31/Magui-for-analysis-of-issues-across-several-hosts/>

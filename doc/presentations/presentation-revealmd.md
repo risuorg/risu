@@ -10,13 +10,13 @@ revealOptions:
   slideNumber: true
 ---
 
-## [Citellus](https://citellus.org):
+## [Citellus](https://citellusorg.github.io):
 
 ### Detecting common pitfalls of deployments
 
 <img src="../citellus.png" width="202" height="202" border=0>
 
-<https://citellus.org>
+<https://citellusorg.github.io>
 
 ---
 
@@ -404,7 +404,7 @@ THANK YOU FOR ATTENDING!!
 
 For additional questions, come to #citellus on Freenode or email us:
 
-- https://citellus.org
+- https://citellusorg.github.io
 - citellus _AT_ googlegroups.com
 - <https://groups.google.com/forum/#!forum/citellus>
 

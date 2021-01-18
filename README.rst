@@ -61,11 +61,11 @@ Check how does it look in an execution at: `asciicast`_
 Additional resources
 --------------------
 
-Check https://citellus.org for more details and information
+Check https://citellusorg.github.io for more details and information
 
 
 
-.. _Citellus-www: https://citellus.org/citellus.html
+.. _Citellus-www: https://citellusorg.github.io/citellus.html
 .. _Changelog.md: Changelog.md
 .. _citellusclient/plugins/: citellusclient/plugins/
 .. _Citellus README: README.citellus.md
