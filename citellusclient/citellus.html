@@ -32,6 +32,7 @@
             top: 10px;
             position: relative;
         }
+
         .alert strong {
             text-transform: capitalize;
         }
@@ -102,7 +103,7 @@
             padding-top: 10px;
         }
 
-        .category-badge{
+        .category-badge {
             margin-right: 10px;
         }
     </style>
@@ -272,6 +273,14 @@
         var jsonFilesList = ["citellus.json", "magui.json"]
         var plugin_cats_array = new Array();
         var server_array = new Array();
+
+        var mypath = window.location.pathname;
+        var mypage = mypath.split("/").pop();
+        var myname = mypage.split('.')[0]
+
+        // Append html file as fallback
+        jsonFilesList.push(myname.concat('.json'))
+
         // function to get query string
         function getParameterByName(name) {
             var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
@@ -453,22 +462,23 @@
                     pieerr += 1
                 } else if (plugin_state.state == 'skipped') {
                     pieskip += 1
-                } else if (plugin_state.state == 'info'){
-                    pieinfo +=1
-                }})
+                } else if (plugin_state.state == 'info') {
+                    pieinfo += 1
+                }
+            })
             var pieData = {
-                type : 'pie',
+                type: 'pie',
                 colors: {
-                Failed: "#cc0000",
-                Info: "#2b18f9",
-                Skipped: "#d1d1d1",
-                Okay: "#3f9c35"
+                    Failed: "#cc0000",
+                    Info: "#2b18f9",
+                    Skipped: "#d1d1d1",
+                    Okay: "#3f9c35"
                 },
                 columns: [
-                ['Failed', pieerr],
-                ['Okay', piepass],
-                ['Skipped', pieskip],
-                ['Info', pieinfo]
+                    ['Failed', pieerr],
+                    ['Okay', piepass],
+                    ['Skipped', pieskip],
+                    ['Info', pieinfo]
                 ],
                 pietotal: pieskip + piepass + pieerr + pieinfo
             };
@@ -539,7 +549,7 @@
             row += '          </div> <!-- /list-view-pf-expand -->\n';
             row += '          <div class="list-view-pf-main-info">\n';
             row += '           <div class="list-view-pf-left">\n';
-            row += '            <span class="' + plugin_state.icon + '" title="'+ plugin_state.state +'" style="color: '+plugin_state.text_color+'"></span>';
+            row += '            <span class="' + plugin_state.icon + '" title="' + plugin_state.state + '" style="color: ' + plugin_state.text_color + '"></span>';
             row += '           </div><!-- /list-view-pf-left -->\n';
             row += '           <div class="list-view-pf-body">\n';
             row += '            <div class="list-view-pf-description">\n';
@@ -560,7 +570,7 @@
             row += '           <div class="col-md-9">\n';
             if (result.backend == "profile") {
                 row += printProfileTable(err)
-                var itisprofile=1
+                var itisprofile = 1
             } else {
                 row += '            <dl class="dl-horizontal">\n';
                 row += '             <dt>Description</dt>\n';
@@ -574,7 +584,7 @@
                 row += '             <dt>Priority</dt>\n';
                 row += '             <dd>' + result.priority + '</dd>\n';
                 row += '             <dt>KBase</dt>\n';
-                row += '             <dd><a href="' + result.kb + '" target="_blank">'+ result.kb + '</a></dd>\n';
+                row += '             <dd><a href="' + result.kb + '" target="_blank">' + result.kb + '</a></dd>\n';
                 row += '             <dt>Bugzilla</dt>\n';
                 if (/([0-9])+$/.test(result.bugzilla)) {
                     row += '        <dd><a href="' + result.bugzilla + '" target="_blank"><span class="badge badge-danger">' + /([0-9]+)$/.exec(result.bugzilla)[1] + '</span></a></dd>\n';
@@ -597,7 +607,7 @@
             row += '          <div class="col-md-3">\n';
             row += '            <a href="#plugin-' + item_id + '"><span class="fa fa-link"></span> Link</a>\n';
             if (itisprofile == "1") {
-                row += '<div id="pie-chart-8' + item_id +'" class="pie-chart-pf example-pie-chart-mini"></div>\n';
+                row += '<div id="pie-chart-8' + item_id + '" class="pie-chart-pf example-pie-chart-mini"></div>\n';
                 pieChartSmallConfig.bindto = '#pie-chart-8' + item_id;
                 pieChartSmallConfig.data = getProfileCounts(err);
             }
@@ -610,7 +620,7 @@
             }
             if (itisprofile == "1") {
                 $("#profile-group").append(row);
-                if(pieChartSmallConfig.data.pietotal != '0') {
+                if (pieChartSmallConfig.data.pietotal != '0') {
                     c3.generate(pieChartSmallConfig);
                 }
             }
@@ -785,7 +795,7 @@
                     }
                 },
                 beforeSend: function() {
-                        $("#report_table_citellus_body").append('<tr id="loading"><td>Loading ' +jsonFile+'... <span class="fa fa-refresh"/></td></tr>');
+                    $("#report_table_citellus_body").append('<tr id="loading"><td>Loading ' + jsonFile + '... <span class="fa fa-refresh"/></td></tr>');
                 },
                 success: function(data) {
                         // delete row with "loading" message
@@ -795,10 +805,10 @@
                             var row = '<tr><th>' + i + '</th><td>' + item + '</td></tr>\n';
                             $("#metadata_table_citellus > tbody:last-child").append(row);
                             // Set title according to metadata
-                            if (i == "title"){
-                                document.getElementById("reporttitle").innerText=item
-                            } else if (i == "path"){
-                                document.title="Report for " + item.split("/").pop()
+                            if (i == "title") {
+                                document.getElementById("reporttitle").innerText = item
+                            } else if (i == "path") {
+                                document.title = "Report for " + item.split("/").pop()
                             }
                         });
                         div_otherJsons.children("button").html(jsonFile + ' <span class="caret"></span>');
@@ -827,14 +837,15 @@
                             if (data.metadata.source == "citellus") {
                                 if (item.backend == "profile") {
                                     var plugins = new Array()
-                                    $.each(JSON.parse(item.result.err), function (i,o) {
-                                         plugins.push({ server: "localhost",
+                                    $.each(JSON.parse(item.result.err), function(i, o) {
+                                        plugins.push({
+                                            server: "localhost",
                                             hostname: "localhost",
                                             msg: o.err,
                                             rc: o.rc,
                                             plugin_name: o.plugin,
                                             plugin_id: o.plugin_id
-                                         })
+                                        })
                                     })
                                     console.log(plugins)
                                     item.result.err = plugins
@@ -859,10 +870,10 @@
                                                     if (obj.rc == 40 && grc != 20) {
                                                         grc = 40
                                                     }
-                                                    if (obj.rc == 10 && grc != 20 && grc != 40){
+                                                    if (obj.rc == 10 && grc != 20 && grc != 40) {
                                                         grc = 10;
                                                     }
-                                                    if (obj.rc == 30 && grc != 20 && grc != 40 && grc !=10){
+                                                    if (obj.rc == 30 && grc != 20 && grc != 40 && grc != 10) {
                                                         rc = 30;
                                                     }
 
@@ -871,7 +882,7 @@
                                                     gerr += plugin_state.badge + " " + server + ": " + obj.err + "<br>";
                                                     if (pdata.backend == "profile") {
                                                         subobject = JSON.parse(obj.err)
-                                                        $.each(subobject, function(i,o) {
+                                                        $.each(subobject, function(i, o) {
                                                             plugins.push({
                                                                 hostname: server,
                                                                 msg: o.err,
