@@ -1,3 +1,9 @@
+# [1.3.0](https://github.com/citellusorg/citellus/compare/1.2.0...1.3.0) (2021-04-20)
+
+### Features
+
+- **citellus.html:** Use html file name for finding the json data ([69246dd](https://github.com/citellusorg/citellus/commit/69246dde55f6204bb9ea9a79d0a83f36200fc3f4))
+
 # [1.2.0](https://github.com/citellusorg/citellus/compare/1.1.1...1.2.0) (2021-04-20)
 
 ### Features
