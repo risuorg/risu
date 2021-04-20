@@ -1,3 +1,9 @@
+# [1.2.0](https://github.com/citellusorg/citellus/compare/1.1.1...1.2.0) (2021-04-20)
+
+### Features
+
+- **nagios.py:** Add Nagios extension to process shell scripts with standard return codes 0/1/2 ([1d2776a](https://github.com/citellusorg/citellus/commit/1d2776ae4fab4c825ee8a2f35e53bbdc0e9ec4c4))
+
 ## [1.1.1](https://github.com/citellusorg/citellus/compare/1.1.0...1.1.1) (2020-10-18)
 
 ### Bug Fixes
