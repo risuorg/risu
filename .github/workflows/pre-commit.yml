@@ -21,6 +21,6 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-precommit-
 
-    - uses: pre-commit/action@v2.0.2
+    - uses: pre-commit/action@v2.0.3
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
