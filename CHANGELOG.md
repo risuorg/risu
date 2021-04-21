@@ -1,3 +1,9 @@
+## [1.3.1](https://github.com/citellusorg/citellus/compare/1.3.0...1.3.1) (2021-04-21)
+
+### Bug Fixes
+
+- **nagios.py:** Also process WARNING as RC_INFO for Nagios plugins ([f38efce](https://github.com/citellusorg/citellus/commit/f38efce9a13961d3b9c967390df2846e4cffc6cb))
+
 # [1.3.0](https://github.com/citellusorg/citellus/compare/1.2.0...1.3.0) (2021-04-20)
 
 ### Features
