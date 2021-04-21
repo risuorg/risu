@@ -1,3 +1,9 @@
+## [1.3.2](https://github.com/citellusorg/citellus/compare/1.3.1...1.3.2) (2021-04-21)
+
+### Bug Fixes
+
+- **nagios.py:** Also consider UKNOWN as SKIPPED ([6ca49dd](https://github.com/citellusorg/citellus/commit/6ca49dd2df7a75e1f4fff0318fa8a6c29a8739d6))
+
 ## [1.3.1](https://github.com/citellusorg/citellus/compare/1.3.0...1.3.1) (2021-04-21)
 
 ### Bug Fixes
