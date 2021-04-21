@@ -1,3 +1,9 @@
+## [1.3.3](https://github.com/citellusorg/citellus/compare/1.3.2...1.3.3) (2021-04-21)
+
+### Bug Fixes
+
+- **nagios.py:** unknown is defined as RC 3 ([0ae7617](https://github.com/citellusorg/citellus/commit/0ae7617357d9e4cab3bf45f9523ea207169c8863))
+
 ## [1.3.2](https://github.com/citellusorg/citellus/compare/1.3.1...1.3.2) (2021-04-21)
 
 ### Bug Fixes
