@@ -82,7 +82,7 @@ def run(plugin):  # do not edit this line
         returncode = citellus.RC_OKAY
     elif returncode == 1:  # WARNING
         returncode = citellus.RC_INFO
-    elif returncode == 4:  # UNKNOWN
+    elif returncode == 3:  # UNKNOWN
         returncode = citellus.RC_SKIPPED
 
     # Convert stdout to stderr for citellus handling
