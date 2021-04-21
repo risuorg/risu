@@ -80,6 +80,8 @@ def run(plugin):  # do not edit this line
         returncode = citellus.RC_FAILED
     elif returncode == 0:
         returncode = citellus.RC_OKAY
+    elif returncode == 1:
+        returncode = citellus.RC_INFO
 
     # Convert stdout to stderr for citellus handling
     err = out
