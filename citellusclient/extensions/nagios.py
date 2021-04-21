@@ -76,12 +76,14 @@ def run(plugin):  # do not edit this line
     returncode, out, err = citellus.execonshell(filename=plugin["plugin"])
 
     # Do formatting of results to adjust return codes to citellus standards
-    if returncode == 2:
+    if returncode == 2:  # CRITICAL
         returncode = citellus.RC_FAILED
-    elif returncode == 0:
+    elif returncode == 0:  # OK
         returncode = citellus.RC_OKAY
-    elif returncode == 1:
+    elif returncode == 1:  # WARNING
         returncode = citellus.RC_INFO
+    elif returncode == 4:  # UNKNOWN
+        returncode = citellus.RC_SKIPPED
 
     # Convert stdout to stderr for citellus handling
     err = out
