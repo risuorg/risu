@@ -4,7 +4,7 @@
 
 check_url=$(get_url_from_vhost /etc/httpd/conf.d/10-horizon_vhost.conf)
 if healthcheck_curl ${check_url}; then
-    exit 0
+	exit 0
 else
-    healthcheck_curl $(get_url_from_vhost /etc/httpd/conf.d/10-horizon_ssl_vhost.conf)
+	healthcheck_curl $(get_url_from_vhost /etc/httpd/conf.d/10-horizon_ssl_vhost.conf)
 fi

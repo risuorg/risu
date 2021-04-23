@@ -25,8 +25,8 @@
 OSPVER=$(discover_osp_version)
 
 if [[ ${OSPVER} -gt 0 ]]; then
-    echo "OSP Version: $(discover_osp_version), codename: $(name_osp_version)" >&2
-    exit ${RC_OKAY}
+	echo "OSP Version: $(discover_osp_version), codename: $(name_osp_version)" >&2
+	exit ${RC_OKAY}
 fi
 
 echo "Possible not osp system" >&2

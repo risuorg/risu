@@ -25,24 +25,24 @@
 RELEASE=$(discover_osp_version)
 
 if [[ ${RELEASE} != "0" ]]; then
-    ROLE="unknown"
-    if is_containerized; then
-        ROLE="container-host"
-    elif is_process ironic-conductor; then
-        ROLE="undercloud"
-    elif is_process nova-compute; then
-        ROLE="compute"
-    elif is_process pcsd || is_process nova-api; then
-        ROLE="controller"
-    elif is_process neutron-server; then
-        # So if neutron-server is running and there's no pcsd, then it's a network node
-        ROLE="network"
-    elif is_process ceilometer-collector; then
-        ROLE="telemetry"
-    fi
+	ROLE="unknown"
+	if is_containerized; then
+		ROLE="container-host"
+	elif is_process ironic-conductor; then
+		ROLE="undercloud"
+	elif is_process nova-compute; then
+		ROLE="compute"
+	elif is_process pcsd || is_process nova-api; then
+		ROLE="controller"
+	elif is_process neutron-server; then
+		# So if neutron-server is running and there's no pcsd, then it's a network node
+		ROLE="network"
+	elif is_process ceilometer-collector; then
+		ROLE="telemetry"
+	fi
 else
-    echo "Couldn't determine OSP release, probably not osp system" >&2
-    exit ${RC_SKIPPED}
+	echo "Couldn't determine OSP release, probably not osp system" >&2
+	exit ${RC_SKIPPED}
 fi
 
 echo ${ROLE} >&2

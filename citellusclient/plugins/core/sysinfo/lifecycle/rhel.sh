@@ -28,43 +28,43 @@ OSBRAND=$(discover_osbrand)
 
 declare -A RHELEOL
 RHELEOL=(["6"]="2020-11-30"
-    ["7"]="2024-06-30"
-    ["8"]="2029-05-30")
+	["7"]="2024-06-30"
+	["8"]="2029-05-30")
 
 declare -A RHELELS
 RHELELS=(["5"]="2020-11-30"
-    ["6"]="2024-06-30")
+	["6"]="2024-06-30")
 
 if [[ $OSBRAND != "rhel" ]]; then
-    echo "RHEL OS required" >&2
-    exit ${RC_SKIPPED}
+	echo "RHEL OS required" >&2
+	exit ${RC_SKIPPED}
 else
-    DR=$(discover_release)
-    if [[ ${DR} -lt 5 ]]; then
-        echo $"Your RHEL Release is already out of support phase: https://access.redhat.com/support/policy/updates/errata" >&2
-        exit ${RC_FAILED}
-    else
-        if [[ ${RHELEOL[${DR}]} != "" ]]; then
-            # Check first ELS
-            if is_date_over_today "${RHELELS[${DR}]}"; then
-                if is_date_over_today "${RHELEOL[${DR}]}"; then
-                    if are_dates_diff_over 360 "${RHELEOL[${DR}]}" "$(LC_ALL=C LANG=C date)"; then
-                        exit ${RC_OKAY}
-                    else
-                        echo $"Your system is within the year period to become unsupported outside of ELS" >&2
-                        exit ${RC_INFO}
-                    fi
-                else
-                    echo $"Your current RHEL release is unsupported unless you've ELS subscription" >&2
-                    exit ${RC_FAILED}
-                fi
-            fi
-            echo $"Your current RHEL release is unsupported" >&2
-            exit ${RC_FAILED}
-        else
-            echo $"Your RHEL version has not defined EOL on file" >&2
-            exit ${RC_INFO}
-        fi
-    fi
+	DR=$(discover_release)
+	if [[ ${DR} -lt 5 ]]; then
+		echo $"Your RHEL Release is already out of support phase: https://access.redhat.com/support/policy/updates/errata" >&2
+		exit ${RC_FAILED}
+	else
+		if [[ ${RHELEOL[${DR}]} != "" ]]; then
+			# Check first ELS
+			if is_date_over_today "${RHELELS[${DR}]}"; then
+				if is_date_over_today "${RHELEOL[${DR}]}"; then
+					if are_dates_diff_over 360 "${RHELEOL[${DR}]}" "$(LC_ALL=C LANG=C date)"; then
+						exit ${RC_OKAY}
+					else
+						echo $"Your system is within the year period to become unsupported outside of ELS" >&2
+						exit ${RC_INFO}
+					fi
+				else
+					echo $"Your current RHEL release is unsupported unless you've ELS subscription" >&2
+					exit ${RC_FAILED}
+				fi
+			fi
+			echo $"Your current RHEL release is unsupported" >&2
+			exit ${RC_FAILED}
+		else
+			echo $"Your RHEL version has not defined EOL on file" >&2
+			exit ${RC_INFO}
+		fi
+	fi
 fi
 exit ${RC_OKAY}

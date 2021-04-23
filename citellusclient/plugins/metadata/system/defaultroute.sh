@@ -22,11 +22,11 @@
 [[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
 if [[ ${CITELLUS_LIVE} -eq 0 ]]; then
-    FILE="${CITELLUS_ROOT}/sos_commands/networking/ip_route_show_table_all"
+	FILE="${CITELLUS_ROOT}/sos_commands/networking/ip_route_show_table_all"
 elif [[ ${CITELLUS_LIVE} -eq 1 ]]; then
-    FILE=$(mktemp)
-    trap "rm ${FILE}" EXIT
-    ip route >${FILE}
+	FILE=$(mktemp)
+	trap "rm ${FILE}" EXIT
+	ip route >${FILE}
 fi
 
 is_required_file ${FILE}

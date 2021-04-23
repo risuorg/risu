@@ -23,9 +23,9 @@
 [[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
 if is_virtual; then
-    virt_type >&2
+	virt_type >&2
 else
-    echo baremetal >&2
+	echo baremetal >&2
 fi
 
 exit ${RC_OKAY}

@@ -23,10 +23,10 @@
 [ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
 
 if [[ "$(discover_ocp_version)" != 0 ]]; then
-    if [[ "$(virt_type)" == "OpenStack" ]]; then
-        echo "OCP running on top of OSP" >&2
-        exit ${RC_OKAY}
-    fi
+	if [[ "$(virt_type)" == "OpenStack" ]]; then
+		echo "OCP running on top of OSP" >&2
+		exit ${RC_OKAY}
+	fi
 fi
 echo $"Not running OCP or not on OSP" >&2
 exit ${RC_SKIPPED}

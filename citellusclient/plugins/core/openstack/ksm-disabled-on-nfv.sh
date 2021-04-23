@@ -24,28 +24,28 @@
 
 # check if we are running against compute
 if ! is_process nova-compute; then
-    echo $"Not running on OSP compute host" >&2
-    exit ${RC_SKIPPED}
+	echo $"Not running on OSP compute host" >&2
+	exit ${RC_SKIPPED}
 fi
 
 flag=0
 
 if is_lineinfile "hugepages" "${CITELLUS_ROOT}/proc/cmdline"; then
-    # DPDK is supposedly enabled, do further checks
-    if is_enabled ksmtuned; then
-        flag=1
-    fi
-    if is_active ksmtuned; then
-        flag=1
-    fi
-    if is_lineinfile "0" "${CITELLUS_ROOT}/sys/kernel/mm/ksm/run"; then
-        flag=1
-    fi
+	# DPDK is supposedly enabled, do further checks
+	if is_enabled ksmtuned; then
+		flag=1
+	fi
+	if is_active ksmtuned; then
+		flag=1
+	fi
+	if is_lineinfile "0" "${CITELLUS_ROOT}/sys/kernel/mm/ksm/run"; then
+		flag=1
+	fi
 fi
 
 if [[ ${flag} == "1" ]]; then
-    echo $"KSM could affect performance when using Hugepages (NFV), please disable it" >&2
-    exit ${RC_FAILED}
+	echo $"KSM could affect performance when using Hugepages (NFV), please disable it" >&2
+	exit ${RC_FAILED}
 else
-    exit ${RC_OKAY}
+	exit ${RC_OKAY}
 fi

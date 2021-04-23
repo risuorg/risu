@@ -26,10 +26,10 @@ FILE="${CITELLUS_ROOT}/etc/login.defs"
 is_mandatory_file ${FILE}
 
 for config in PASS_MAX_DAYS PASS_MIN_DAYS PASS_MIN_LEN PASS_WARN_AGE; do
-    if ! is_lineinfile ^${config}.* ${FILE}; then
-        echo "Missing ${config} in ${FILE}" >&2
-        exit ${RC_FAILED}
-    fi
+	if ! is_lineinfile ^${config}.* ${FILE}; then
+		echo "Missing ${config} in ${FILE}" >&2
+		exit ${RC_FAILED}
+	fi
 done
 
 PASS_MAX_DAYS=$(egrep ^PASS_MAX_DAYS ${FILE} | awk '{print $2}')
@@ -40,27 +40,27 @@ PASS_WARN_AGE=$(egrep ^PASS_WARN_AGE ${FILE} | awk '{print $2}')
 flag=0
 
 if [[ ${PASS_MAX_DAYS} -gt "60" ]]; then
-    echo "Maximum password age must be 60 days" >&2
-    flag=1
+	echo "Maximum password age must be 60 days" >&2
+	flag=1
 fi
 
 if [[ ${PASS_MIN_DAYS} -lt "15" ]]; then
-    echo "Password must be kept for at least 15 days" >&2
-    flag=1
+	echo "Password must be kept for at least 15 days" >&2
+	flag=1
 fi
 
 if [[ ${PASS_MIN_LEN} -lt "8" ]]; then
-    echo "Password lenght must be at least 8 characters" >&2
-    flag=1
+	echo "Password lenght must be at least 8 characters" >&2
+	flag=1
 fi
 
 if [[ ${PASS_WARN_AGE} -lt "15" ]]; then
-    echo "Password expiry notice must be at least 15 days" >&2
-    flag=1
+	echo "Password expiry notice must be at least 15 days" >&2
+	flag=1
 fi
 
 if [[ ${flag} == "1" ]]; then
-    exit ${RC_FAILED}
+	exit ${RC_FAILED}
 fi
 
 exit ${RC_OKAY}

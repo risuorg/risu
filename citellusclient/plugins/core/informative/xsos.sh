@@ -24,8 +24,8 @@
 [[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
 if ! which xsos >/dev/null 2>&1; then
-    echo "xsos support not found, exiting" >&2
-    exit ${RC_SKIPPED}
+	echo "xsos support not found, exiting" >&2
+	exit ${RC_SKIPPED}
 fi
 
 xsos -x -a ${CITELLUS_ROOT} >&2

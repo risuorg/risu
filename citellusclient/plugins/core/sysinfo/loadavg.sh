@@ -23,10 +23,10 @@
 [[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
 if [[ "x$CITELLUS_LIVE" == "x0" ]]; then
-    is_required_file ${CITELLUS_ROOT}/uptime
-    cat ${CITELLUS_ROOT}/uptime >&2
+	is_required_file ${CITELLUS_ROOT}/uptime
+	cat ${CITELLUS_ROOT}/uptime >&2
 else
-    uptime >&2
+	uptime >&2
 fi
 
 exit ${RC_OKAY}

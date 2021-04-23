@@ -27,19 +27,19 @@
 # Code for generating items for faraday-CSV
 
 if [[ ${CITELLUS_LIVE} -eq 0 ]]; then
-    FILE="${CITELLUS_ROOT}/sos_commands/multipath/multipath_-l"
+	FILE="${CITELLUS_ROOT}/sos_commands/multipath/multipath_-l"
 elif [[ ${CITELLUS_LIVE} -eq 1 ]]; then
-    FILE=$(mktemp)
-    trap "rm ${FILE}" EXIT
-    multipath -l >${FILE} 2>&1
+	FILE=$(mktemp)
+	trap "rm ${FILE}" EXIT
+	multipath -l >${FILE} 2>&1
 fi
 
 is_required_file ${FILE}
 
 (
-    for lun in $(grep ^36 ${FILE} | awk '{print $1}' | sort); do
-        NUMLUNS=$(sed -n '/'^${lun}'.*/,/^360/p' ${FILE} | grep ":" | wc -l)
-        echo ${lun}:${NUMLUNS}
-    done
+	for lun in $(grep ^36 ${FILE} | awk '{print $1}' | sort); do
+		NUMLUNS=$(sed -n '/'^${lun}'.*/,/^360/p' ${FILE} | grep ":" | wc -l)
+		echo ${lun}:${NUMLUNS}
+	done
 ) | tr "\n" ";" >&2
 exit ${RC_OKAY}

@@ -27,11 +27,11 @@
 # Code for generating items for faraday-CSV
 
 if [[ ${CITELLUS_LIVE} -eq 0 ]]; then
-    FILE="${CITELLUS_ROOT}/sos_commands/networking/ip_address"
+	FILE="${CITELLUS_ROOT}/sos_commands/networking/ip_address"
 elif [[ ${CITELLUS_LIVE} -eq 1 ]]; then
-    FILE=$(mktemp)
-    trap "rm ${FILE}" EXIT
-    ip address >${FILE} 2>&1
+	FILE=$(mktemp)
+	trap "rm ${FILE}" EXIT
+	ip address >${FILE} 2>&1
 fi
 
 is_required_file ${FILE}

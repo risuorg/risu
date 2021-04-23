@@ -17,36 +17,36 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 is_rpm() {
-    if [ "x$CITELLUS_LIVE" = "x1" ]; then
-        rpm -qa *$1* | egrep ^"$1"-[0-9]
-    elif [ "x$CITELLUS_LIVE" = "x0" ]; then
-        is_required_file "${CITELLUS_ROOT}/installed-rpms"
-        awk '{print $1}' "${CITELLUS_ROOT}/installed-rpms" | egrep ^"$1"-[0-9]
-    fi
+	if [ "x$CITELLUS_LIVE" = "x1" ]; then
+		rpm -qa *$1* | egrep ^"$1"-[0-9]
+	elif [ "x$CITELLUS_LIVE" = "x0" ]; then
+		is_required_file "${CITELLUS_ROOT}/installed-rpms"
+		awk '{print $1}' "${CITELLUS_ROOT}/installed-rpms" | egrep ^"$1"-[0-9]
+	fi
 }
 
 is_required_rpm() {
-    if [ "x$(discover_os)" != "xfedora" ]; then
-        echo "Not running on RHEL family" >&2
-        exit ${RC_FAILED}
-    fi
-    is_required_pkg $1
+	if [ "x$(discover_os)" != "xfedora" ]; then
+		echo "Not running on RHEL family" >&2
+		exit ${RC_FAILED}
+	fi
+	is_required_pkg $1
 }
 
 is_rpm_over() {
-    if [ "x$(discover_os)" != "xfedora" ]; then
-        echo "Not running on RHEL family" >&2
-        exit ${RC_FAILED}
-    fi
+	if [ "x$(discover_os)" != "xfedora" ]; then
+		echo "Not running on RHEL family" >&2
+		exit ${RC_FAILED}
+	fi
 
-    is_pkg_over $*
+	is_pkg_over $*
 }
 
 is_required_rpm_over() {
-    if [ "x$(discover_os)" != "xfedora" ]; then
-        echo "Not running on RHEL family" >&2
-        exit ${RC_FAILED}
-    fi
+	if [ "x$(discover_os)" != "xfedora" ]; then
+		echo "Not running on RHEL family" >&2
+		exit ${RC_FAILED}
+	fi
 
-    is_required_pkg_over $*
+	is_required_pkg_over $*
 }

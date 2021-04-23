@@ -20,29 +20,29 @@
 export LANG=en_US
 
 TEST_OKAY=$(
-    tput setaf 2
-    echo "okay"
-    tput sgr0
+	tput setaf 2
+	echo "okay"
+	tput sgr0
 )
 TEST_SKIPPED=$(
-    tput setaf 3
-    echo "skipped"
-    tput sgr0
+	tput setaf 3
+	echo "skipped"
+	tput sgr0
 )
 TEST_FAILED=$(
-    tput setaf 1
-    echo "failed"
-    tput sgr0
+	tput setaf 1
+	echo "failed"
+	tput sgr0
 )
 TEST_INFO=$(
-    tput setaf 5
-    echo "info"
-    tput sgr0
+	tput setaf 5
+	echo "info"
+	tput sgr0
 )
 TEST_WTF=$(
-    tput setaf 1
-    echo "unexpected result"
-    tput sgr0
+	tput setaf 1
+	echo "unexpected result"
+	tput sgr0
 )
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
@@ -58,30 +58,30 @@ export TEXTDOMAIN='citellus'
 export TEXTDOMAINDIR=${CITELLUS_BASE}/locale
 
 scriptname() {
-    echo "${0##*/}: $1" >&2
+	echo "${0##*/}: $1" >&2
 }
 
 discover_tests() {
-    find ${spec} -type d -execdir test -f {}/.citellus_tests \; -exec find {} -type f -perm /u+x -print \;
+	find ${spec} -type d -execdir test -f {}/.citellus_tests \; -exec find {} -type f -perm /u+x -print \;
 }
 
 show_stderr() {
-    [ -s ${tmpdir}/stderr ] || continue
-    sed 's/^/    /' ${tmpdir}/stderr && echo ""
+	[ -s ${tmpdir}/stderr ] || continue
+	sed 's/^/    /' ${tmpdir}/stderr && echo ""
 }
 
 show_logo() {
-    echo "_________ .__  __         .__  .__                "
-    echo "\_   ___ \|__|/  |_  ____ |  | |  |  __ __  ______"
-    echo "/    \  \/|  \   __\/ __ \|  | |  | |  |  \/  ___/"
-    echo "\     \___|  ||  | \  ___/|  |_|  |_|  |  /\___ \ "
-    echo " \______  /__||__|  \___  >____/____/____//____  >"
-    echo "        \/              \/                     \/ "
-    echo $"                                                  "
+	echo "_________ .__  __         .__  .__                "
+	echo "\_   ___ \|__|/  |_  ____ |  | |  |  __ __  ______"
+	echo "/    \  \/|  \   __\/ __ \|  | |  | |  |  \/  ___/"
+	echo "\     \___|  ||  | \  ___/|  |_|  |_|  |  /\___ \ "
+	echo " \______  /__||__|  \___  >____/____/____//____  >"
+	echo "        \/              \/                     \/ "
+	echo $"                                                  "
 }
 
 show_help() {
-    echo "Usage: ${0##*/} [-h] [--live] [DIRECTORY] [script folder] ... "
+	echo "Usage: ${0##*/} [-h] [--live] [DIRECTORY] [script folder] ... "
 }
 
 export CITELLUS_LIVE="0"
@@ -89,27 +89,27 @@ export CITELLUS_ROOT
 export CITELLUS_TMP=$(mktemp -d)
 
 while :; do
-    case "$1" in
-    --live)
-        CITELLUS_LIVE="1"
-        shift
-        ;;
-    -h | -\? | --help)
-        show_help
-        exit
-        ;;
-    --)
-        shift
-        break
-        ;;
-    -?*)
-        echo "unknown option: ${1}" >&2
-        exit ${RC_FAILED}
-        ;;
-    *)
-        break
-        ;;
-    esac
+	case "$1" in
+	--live)
+		CITELLUS_LIVE="1"
+		shift
+		;;
+	-h | -\? | --help)
+		show_help
+		exit
+		;;
+	--)
+		shift
+		break
+		;;
+	-?*)
+		echo "unknown option: ${1}" >&2
+		exit ${RC_FAILED}
+		;;
+	*)
+		break
+		;;
+	esac
 done
 
 tmpdir=$(mktemp -d testsXXXXXX)
@@ -117,23 +117,23 @@ tmpdir=$(readlink -f ${tmpdir})
 trap "rm -rf ${tmpdir}" EXIT
 
 if [ "x${CITELLUS_LIVE}" = "x0" ]; then
-    CITELLUS_ROOT=$(cd $(dirname "$1") && pwd -P)/$(basename "$1")
-    if [ ! -d "${CITELLUS_ROOT}" ]; then
-        show_help
-        exit ${RC_FAILED}
-    fi
-    shift
+	CITELLUS_ROOT=$(cd $(dirname "$1") && pwd -P)/$(basename "$1")
+	if [ ! -d "${CITELLUS_ROOT}" ]; then
+		show_help
+		exit ${RC_FAILED}
+	fi
+	shift
 fi
 
 if [ -n "$*" ]; then
-    specs=("$@")
+	specs=("$@")
 else
-    specs=($(find "${DIR}" -type d -execdir test -f {}/.citellus_tests \; -print))
+	specs=($(find "${DIR}" -type d -execdir test -f {}/.citellus_tests \; -print))
 fi
 
 for spec in "${specs[@]}"; do
-    [ -d "$spec" ] || continue
-    discover_tests "$spec" >>${tmpdir}/tests-unsorted
+	[ -d "$spec" ] || continue
+	discover_tests "$spec" >>${tmpdir}/tests-unsorted
 done
 
 [ -e "$tmpdir/tests-unsorted" ] && sort -u ${tmpdir}/tests-unsorted >${tmpdir}/tests || exit ${RC_FAILED}
@@ -144,26 +144,26 @@ scriptname "found $test_count tests"
 [[ ${CITELLUS_LIVE} == 1 ]] && echo "mode: live" || echo "mode: fs snapshot $CITELLUS_ROOT"
 
 while read test; do
-    echo -n "# $test: "
-    (
-        cd $(dirname ${test})
-        ./$(basename ${test}) >${tmpdir}/stdout 2>${tmpdir}/stderr
-    )
-    result=$?
+	echo -n "# $test: "
+	(
+		cd $(dirname ${test})
+		./$(basename ${test}) >${tmpdir}/stdout 2>${tmpdir}/stderr
+	)
+	result=$?
 
-    if [[ ${result} -eq ${RC_OKAY} ]]; then
-        echo ${TEST_OKAY}
-    elif [[ ${result} -eq ${RC_SKIPPED} ]]; then
-        echo ${TEST_SKIPPED}
-    elif [[ ${result} -eq ${RC_FAILED} ]]; then
-        echo ${TEST_FAILED}
-        show_stderr
-    elif [[ ${result} -eq ${RC_INFO} ]]; then
-        echo ${TEST_INFO}
-        show_stderr
-    else
-        echo ${TEST_WTF}
-        show_stderr
-    fi
+	if [[ ${result} -eq ${RC_OKAY} ]]; then
+		echo ${TEST_OKAY}
+	elif [[ ${result} -eq ${RC_SKIPPED} ]]; then
+		echo ${TEST_SKIPPED}
+	elif [[ ${result} -eq ${RC_FAILED} ]]; then
+		echo ${TEST_FAILED}
+		show_stderr
+	elif [[ ${result} -eq ${RC_INFO} ]]; then
+		echo ${TEST_INFO}
+		show_stderr
+	else
+		echo ${TEST_WTF}
+		show_stderr
+	fi
 
 done <${tmpdir}/tests

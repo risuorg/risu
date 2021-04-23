@@ -6,9 +6,9 @@ process='octavia-housekeeping'
 args="${@:-3306}"
 
 if healthcheck_port $process $args; then
-    exit 0
+	exit 0
 else
-    ports=${args// /,}
-    echo "Did not find $process process running and connected to MySQL via ports ($ports) in the container."
-    exit 1
+	ports=${args// /,}
+	echo "Did not find $process process running and connected to MySQL via ports ($ports) in the container."
+	exit 1
 fi

@@ -30,38 +30,38 @@ OSBRAND=$(discover_osbrand)
 
 declare -A fedoraRD
 fedoraRD=(["27"]="2017-11-14"
-    ["28"]="2018-05-01"
-    ["29"]="2018-10-23"
-    ["30"]="2019-04-30"
-    ["31"]="2019-10-31")
+	["28"]="2018-05-01"
+	["29"]="2018-10-23"
+	["30"]="2019-04-30"
+	["31"]="2019-10-31")
 
 if [[ $OSBRAND != "fedora" ]]; then
-    echo "Fedora OS required" >&2
-    exit ${RC_SKIPPED}
+	echo "Fedora OS required" >&2
+	exit ${RC_SKIPPED}
 else
-    FR=$(discover_release)
-    if [[ ${FR} -lt 27 ]]; then
-        echo $"Your Fedora Release is already out of support phase: https://fedoraproject.org/wiki/End_of_life" >&2
-        exit ${RC_FAILED}
-    else
-        # Check dates for release + 2
-        if [[ ${fedoraRD[FR + 2]} == "" ]]; then
-            # Next release is not yet defined, exit as OK
-            exit ${RC_OKAY}
-        else
-            # Fedora is supported until 30 days after release of next two versions
-            if is_date_over_today "${fedoraRD[FR + 2]}"; then
-                if are_dates_diff_over 210 "${fedoraRD[FR + 2]}" "$(LC_ALL=C LANG=C date)"; then
-                    exit ${RC_OKAY}
-                else
-                    echo $"Your system is within the half-year period to become unsupported" >&2
-                    exit ${RC_INFO}
-                fi
-            fi
-            echo $"Your current Fedora release is unsupported" >&2
-            exit ${RC_FAILED}
-        fi
-    fi
+	FR=$(discover_release)
+	if [[ ${FR} -lt 27 ]]; then
+		echo $"Your Fedora Release is already out of support phase: https://fedoraproject.org/wiki/End_of_life" >&2
+		exit ${RC_FAILED}
+	else
+		# Check dates for release + 2
+		if [[ ${fedoraRD[FR + 2]} == "" ]]; then
+			# Next release is not yet defined, exit as OK
+			exit ${RC_OKAY}
+		else
+			# Fedora is supported until 30 days after release of next two versions
+			if is_date_over_today "${fedoraRD[FR + 2]}"; then
+				if are_dates_diff_over 210 "${fedoraRD[FR + 2]}" "$(LC_ALL=C LANG=C date)"; then
+					exit ${RC_OKAY}
+				else
+					echo $"Your system is within the half-year period to become unsupported" >&2
+					exit ${RC_INFO}
+				fi
+			fi
+			echo $"Your current Fedora release is unsupported" >&2
+			exit ${RC_FAILED}
+		fi
+	fi
 
 fi
 exit ${RC_OKAY}

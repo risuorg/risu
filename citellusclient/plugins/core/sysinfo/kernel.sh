@@ -23,10 +23,10 @@
 [[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
 if [[ "x$CITELLUS_LIVE" == "x0" ]]; then
-    is_required_file ${CITELLUS_ROOT}/uname
-    cat ${CITELLUS_ROOT}/uname >&2
+	is_required_file ${CITELLUS_ROOT}/uname
+	cat ${CITELLUS_ROOT}/uname >&2
 else
-    uname -a >&2
+	uname -a >&2
 fi
 
 exit ${RC_OKAY}

@@ -23,9 +23,9 @@
 [[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
 if [[ "x$CITELLUS_LIVE" == "x0" ]]; then
-    MEMORY=$(awk '/Mem/ {print $2}' ${CITELLUS_ROOT}/free)
+	MEMORY=$(awk '/Mem/ {print $2}' ${CITELLUS_ROOT}/free)
 else
-    MEMORY=$(LANG=C free | awk '/Mem/ {print $2}')
+	MEMORY=$(LANG=C free | awk '/Mem/ {print $2}')
 fi
 
 echo "$((MEMORY / 1024))" >&2

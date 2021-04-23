@@ -24,18 +24,18 @@
 
 # We're OCP node
 if is_rpm atomic-openshift-node; then
-    if is_rpm docker; then
-        if is_enabled docker; then
-            if is_active docker; then
-                exit ${RC_OKAY}
-            fi
-        fi
-        echo $"Docker service should be enabled and active" >&2
-        exit ${RC_FAILED}
-    else
-        echo $"Docker service should be installed" >&2
-        exit ${RC_FAILED}
-    fi
+	if is_rpm docker; then
+		if is_enabled docker; then
+			if is_active docker; then
+				exit ${RC_OKAY}
+			fi
+		fi
+		echo $"Docker service should be enabled and active" >&2
+		exit ${RC_FAILED}
+	else
+		echo $"Docker service should be installed" >&2
+		exit ${RC_FAILED}
+	fi
 fi
 echo $"Non Openshift node" >&2
 exit ${RC_SKIPPED}

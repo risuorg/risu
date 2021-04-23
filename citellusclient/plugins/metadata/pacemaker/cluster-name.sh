@@ -22,11 +22,11 @@
 [[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
 if [[ ${CITELLUS_LIVE} -eq 0 ]]; then
-    FILE="${CITELLUS_ROOT}/sos_commands/pacemaker/pcs_status"
+	FILE="${CITELLUS_ROOT}/sos_commands/pacemaker/pcs_status"
 elif [[ ${CITELLUS_LIVE} -eq 1 ]]; then
-    FILE=$(mktemp)
-    trap "rm ${FILE}" EXIT
-    pcs status >${FILE}
+	FILE=$(mktemp)
+	trap "rm ${FILE}" EXIT
+	pcs status >${FILE}
 fi
 
 is_required_file ${FILE}

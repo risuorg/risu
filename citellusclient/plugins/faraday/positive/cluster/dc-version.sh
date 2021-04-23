@@ -26,11 +26,11 @@
 [[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
 if [[ ${CITELLUS_LIVE} -eq "1" ]]; then
-    is_required_command pcs
-    pcs property list --all | grep dc-version >&2
+	is_required_command pcs
+	pcs property list --all | grep dc-version >&2
 else
-    is_required_file "${CITELLUS_ROOT}/sos_commands/pacemaker/pcs_property_list_--all"
-    grep dc-version "${CITELLUS_ROOT}/sos_commands/pacemaker/pcs_property_list_--all" >&2
+	is_required_file "${CITELLUS_ROOT}/sos_commands/pacemaker/pcs_property_list_--all"
+	grep dc-version "${CITELLUS_ROOT}/sos_commands/pacemaker/pcs_property_list_--all" >&2
 fi
 
 exit ${RC_OKAY}

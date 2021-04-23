@@ -25,8 +25,8 @@
 OCPVER=$(discover_ocp_version)
 
 if [[ ${OCPVER} != 0 ]]; then
-    echo "OCP Version: $(discover_ocp_version)" >&2
-    exit ${RC_OKAY}
+	echo "OCP Version: $(discover_ocp_version)" >&2
+	exit ${RC_OKAY}
 fi
 
 echo "Possible not ocp system" >&2

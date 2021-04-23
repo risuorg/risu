@@ -38,14 +38,20 @@ repos:
       - id: flake8
   - repo: local
     hooks:
-      - id: shfmt
-        name: shfmt
-        minimum_pre_commit_version: 2.4.0
-        language: golang
-        additional_dependencies: [mvdan.cc/sh/v3/cmd/shfmt@v3.1.1]
-        entry: shfmt
-        args: [-w, -i, "4"]
-        types: [shell]
+      -   id: shfmt
+          name: shfmt
+          minimum_pre_commit_version: 2.4.0
+          language: golang
+          additional_dependencies:
+          - mvdan.cc/sh/v3/cmd/shfmt@v3.1.1
+          entry: shfmt
+          args:
+          - -w
+          - -i
+          - '0'
+          types:
+          - shell
+
   - repo: https://github.com/asottile/blacken-docs
     rev:  v1.7.0
     hooks:

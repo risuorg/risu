@@ -24,15 +24,15 @@
 [[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
 if ! which lynis >/dev/null 2>&1; then
-    echo "lynis (https://github.com/CISOfy/Lynis) support not found, exiting" >&2
-    exit ${RC_SKIPPED}
+	echo "lynis (https://github.com/CISOfy/Lynis) support not found, exiting" >&2
+	exit ${RC_SKIPPED}
 fi
 
 if [[ "x$CITELLUS_LIVE" == "x0" ]]; then
-    echo $"Lynis is not supported for non-live operations" >&2
-    exit ${RC_SKIPPED}
+	echo $"Lynis is not supported for non-live operations" >&2
+	exit ${RC_SKIPPED}
 elif [[ "x$CITELLUS_LIVE" == "x1" ]]; then
-    lynis audit system >&2
-    exit ${RC_INFO}
+	lynis audit system >&2
+	exit ${RC_INFO}
 fi
 exit ${RC_OKAY}

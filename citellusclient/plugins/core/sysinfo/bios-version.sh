@@ -23,10 +23,10 @@
 [[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
 
 if [[ "x$CITELLUS_LIVE" == "x0" ]]; then
-    is_required_file ${CITELLUS_ROOT}/dmidecode
-    python ${CITELLUS_BASE}/tools/dmidecode.py <${CITELLUS_ROOT}/dmidecode | grep ^BIOS >&2
+	is_required_file ${CITELLUS_ROOT}/dmidecode
+	python ${CITELLUS_BASE}/tools/dmidecode.py <${CITELLUS_ROOT}/dmidecode | grep ^BIOS >&2
 else
-    dmidecode | python ${CITELLUS_BASE}/tools/dmidecode.py | grep ^BIOS >&2
+	dmidecode | python ${CITELLUS_BASE}/tools/dmidecode.py | grep ^BIOS >&2
 fi
 
 exit ${RC_OKAY}

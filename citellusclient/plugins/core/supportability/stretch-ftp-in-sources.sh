@@ -26,14 +26,14 @@
 OS=$(discover_os)
 
 if [[ $OS != "debian" ]]; then
-    echo "Non Debian system" >&2
-    exit ${RC_SKIPPED}
+	echo "Non Debian system" >&2
+	exit ${RC_SKIPPED}
 else
-    is_required_file ${CITELLUS_ROOT}/etc/apt/sources.list
-    if is_lineinfile "^deb ftp:.*debian.org" "${CITELLUS_ROOT}/etc/apt/sources.list"; then
-        echo $"Debian Stretch (9) doesn't provide FTP services for packages, update your sources.list" >&2
-        echo $"https://www.debian.org/releases/stretch/amd64/release-notes/ch-information.en.html#deprecation-of-ftp-apt-mirrors" >&2
-        exit ${RC_FAILED}
-    fi
+	is_required_file ${CITELLUS_ROOT}/etc/apt/sources.list
+	if is_lineinfile "^deb ftp:.*debian.org" "${CITELLUS_ROOT}/etc/apt/sources.list"; then
+		echo $"Debian Stretch (9) doesn't provide FTP services for packages, update your sources.list" >&2
+		echo $"https://www.debian.org/releases/stretch/amd64/release-notes/ch-information.en.html#deprecation-of-ftp-apt-mirrors" >&2
+		exit ${RC_FAILED}
+	fi
 fi
 exit ${RC_OKAY}
