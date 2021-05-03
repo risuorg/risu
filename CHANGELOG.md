@@ -1,3 +1,9 @@
+# [1.5.0](https://github.com/citellusorg/citellus/compare/1.4.0...1.5.0) (2021-05-03)
+
+### Features
+
+- **citellus.html:** match window title with report name ([f18aad9](https://github.com/citellusorg/citellus/commit/f18aad9f0e6582f6deb1190dda1bc98152a6028b))
+
 # [1.4.0](https://github.com/citellusorg/citellus/compare/1.3.3...1.4.0) (2021-05-03)
 
 ### Features
