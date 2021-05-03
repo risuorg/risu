@@ -1071,7 +1071,7 @@ def parse_args(default=False, parse=False):
         "--no-config",
         default=False,
         help=_(
-            "Do not read configuration from file %s or ~/.citellus.conf"
+            "Do not read configuration from file %s or ~/.citellus.conf or .citellus.conf"
             % os.path.join(citellusdir, "citellus.conf")
         ),
         action="store_true",
@@ -1079,8 +1079,10 @@ def parse_args(default=False, parse=False):
 
     s.add_argument(
         "--config-path",
-        default="",
-        help=_("Define path for .citellus.conf configuration if not the default of ~/"),
+        default="./",
+        help=_(
+            "Define path for .citellus.conf configuration if not the default of ~/ or ./"
+        ),
     )
     s.add_argument(
         "--call-home",
@@ -1373,6 +1375,9 @@ def write_results(
     if path:
         data["metadata"]["path"] = path
 
+    # Build target file based on json name but with html ending instead
+    mytargetfilename = os.path.splitext(os.path.basename(filename))[0] + ".html"
+
     if os.access(os.path.join(os.path.dirname(filename), "citellus.html"), os.W_OK):
         LOG.debug("We can copy html again as we've W_OK")
         web = True
@@ -1384,7 +1389,7 @@ def write_results(
             basefolder = "./"
         src = os.path.join(citellusdir, "citellus.html")
         if os.path.isfile(src):
-            shutil.copyfile(src, os.path.join(basefolder, os.path.basename(src)))
+            shutil.copyfile(src, os.path.join(basefolder, mytargetfilename))
 
     if anon:
         LOG.debug("Anonymizing results as request..")
