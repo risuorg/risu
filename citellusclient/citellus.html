@@ -807,6 +807,7 @@
                             // Set title according to metadata
                             if (i == "title") {
                                 document.getElementById("reporttitle").innerText = item
+                                window.document.title = item
                             } else if (i == "path") {
                                 document.title = "Report for " + item.split("/").pop()
                             }
