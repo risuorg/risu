@@ -2,6 +2,7 @@
 
 ### Features
 
+- Update contributors to each file ([0b01270](https://github.com/risuorg/risu/commit/0b01270134eea642ea3139cc86c5db5e57c0a4ba))
 - **shell.py:** Use new logo ([1e804d5](https://github.com/risuorg/risu/commit/1e804d55591cdf01c5cb6034dbaf33f7590ccf61))
 - remove dmidecode test in UT ([a60907e](https://github.com/risuorg/risu/commit/a60907eeb67a134d2a99032ea3a4ca94dde15aae))
 - Rename files ([b7c4a9f](https://github.com/risuorg/risu/commit/b7c4a9f73b8472544764ac04c054ce734c458063))
