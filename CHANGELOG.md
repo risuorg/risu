@@ -1,3 +1,9 @@
+## [1.6.3](https://github.com/risuorg/risu/compare/1.6.2...1.6.3) (2021-05-15)
+
+### Bug Fixes
+
+- **shell.py:** sets compatibility mode env vars ([0c8ff38](https://github.com/risuorg/risu/commit/0c8ff384ed1fbbdfb5df5e4696981ed2c7e9905c))
+
 ## [1.6.2](https://github.com/risuorg/risu/compare/1.6.1...1.6.2) (2021-05-15)
 
 ### Bug Fixes
