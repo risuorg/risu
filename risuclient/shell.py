@@ -654,6 +654,12 @@ def dorisu(
     os.environ["TEXTDOMAIN"] = "risu"
     os.environ["TEXTDOMAINDIR"] = "%s/locale" % risudir
 
+    # Compatibility
+    os.environ["CITELLUS_ROOT"] = "%s" % path
+    os.environ["CITELLUS_LIVE"] = "%s" % RISU_LIVE
+    os.environ["CITELLUS_BASE"] = "%s" % risudir
+    os.environ["CITELLUS_TMP"] = "%s" % tempfile.mkdtemp()
+
     # Set pool for same processes as CPU cores
     p = Pool(cpu_count())
 
