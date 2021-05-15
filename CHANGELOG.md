@@ -1,3 +1,9 @@
+## [1.6.2](https://github.com/risuorg/risu/compare/1.6.1...1.6.2) (2021-05-15)
+
+### Bug Fixes
+
+- **shell.py:** fix loading of legacy path overriding new ones ([88b30ce](https://github.com/risuorg/risu/commit/88b30ceee407e373a4655b279b90788552bff8f7))
+
 # [1.6.0](https://github.com/risuorg/risu/compare/1.5.0...1.6.0) (2021-05-15)
 
 ### Features
