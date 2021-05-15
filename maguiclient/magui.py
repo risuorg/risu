@@ -290,12 +290,17 @@ def findtarget(data):
     minitems = len(subitemcount)
 
     for item in subitemcount:
-        if subitemcount[item]["count"] < minitems:
+        if subitemcount[item]["count"] <= minitems:
             target = subitemcount[item]["where"][0]
             minitems = subitemcount[item]["count"]
             if minitems == 1:
                 todel = item
                 break
+
+    if not target:
+        target = subitemcount[item]["where"][0]
+        subitemcount[item]["where"][0]
+        todel = item
 
     return target, data, todel
 
@@ -781,44 +786,45 @@ def main():
 
     while len(groups) != 0:
         target, newgroups, todel = findtarget(groups)
-        group = target
-        filename = basefilename[0] + "-" + group + basefilename[1]
-        print(_("\nRunning for group: %s" % filename))
-        runautogroup = True
+        if target and target != "":
+            group = target
+            filename = basefilename[0] + "-" + group + basefilename[1]
+            print(_("\nRunning for group: %s" % filename))
+            runautogroup = True
 
-        for progroup in processedgroups:
-            if groups[target] == processedgroups[progroup]:
-                runautogroup = False
-                runautofile = progroup
+            for progroup in processedgroups:
+                if groups[target] == processedgroups[progroup]:
+                    runautogroup = False
+                    runautofile = progroup
 
-        if runautogroup:
-            # Analysis was missing for this group, run it
-            # pass grouped as 'dict' to avoid mutable
-            newgrouped = copy.deepcopy(grouped)
-            runmaguiandplugs(
-                sosreports=groups[target],
-                risuplugins=risuplugins,
-                filename=filename,
-                extranames=filenames,
-                anon=options.anon,
-                grouped=newgrouped,
-            )
-        else:
-            # Copy file instead of run as it was already existing
-            LOG.debug("Copying old file from %s to %s" % (runautofile, filename))
-            shutil.copyfile(runautofile, filename)
+            if runautogroup:
+                # Analysis was missing for this group, run it
+                # pass grouped as 'dict' to avoid mutable
+                newgrouped = copy.deepcopy(grouped)
+                runmaguiandplugs(
+                    sosreports=groups[target],
+                    risuplugins=risuplugins,
+                    filename=filename,
+                    extranames=filenames,
+                    anon=options.anon,
+                    grouped=newgrouped,
+                )
+            else:
+                # Copy file instead of run as it was already existing
+                LOG.debug("Copying old file from %s to %s" % (runautofile, filename))
+                shutil.copyfile(runautofile, filename)
 
-        processedgroups[filename] = groups[target]
+            processedgroups[filename] = groups[target]
 
-        if todel:
-            # We can remove a sosreport from the dataset
-            for plugin in grouped:
-                if todel in grouped[plugin]["sosreport"]:
-                    del grouped[plugin]["sosreport"][todel]
+            if todel:
+                # We can remove a sosreport from the dataset
+                for plugin in grouped:
+                    if todel in grouped[plugin]["sosreport"]:
+                        del grouped[plugin]["sosreport"][todel]
 
-        del newgroups[target]
-        # Put remaining groups to work
-        groups = dict(newgroups)
+            del newgroups[target]
+            # Put remaining groups to work
+            groups = dict(newgroups)
 
     del groups
     del processedgroups
