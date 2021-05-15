@@ -1,3 +1,9 @@
+## [1.6.4](https://github.com/risuorg/risu/compare/1.6.3...1.6.4) (2021-05-15)
+
+### Bug Fixes
+
+- **risu.sh:** add compat variables to shell wrapper ([858d011](https://github.com/risuorg/risu/commit/858d011ee8fbd64238fa0c76e4e936cbe5d62098))
+
 ## [1.6.3](https://github.com/risuorg/risu/compare/1.6.2...1.6.3) (2021-05-15)
 
 ### Bug Fixes
