@@ -1,3 +1,9 @@
+## [1.6.5](https://github.com/risuorg/risu/compare/1.6.4...1.6.5) (2021-05-15)
+
+### Bug Fixes
+
+- **magui.py:** fix group processing ([5a35a72](https://github.com/risuorg/risu/commit/5a35a720681c9dbb9dd364909998075f5a093cbc))
+
 ## [1.6.4](https://github.com/risuorg/risu/compare/1.6.3...1.6.4) (2021-05-15)
 
 ### Bug Fixes
