@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# Copyright (C) 2020, 2021 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 # Copyright (C) 2020 Volkan Yalcin <vlyalcin@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify

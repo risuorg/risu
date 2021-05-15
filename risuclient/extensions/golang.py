@@ -3,7 +3,7 @@
 #
 # Description: Extension for processing GOlang Risu plugins
 # Author: Pablo Iranzo Gomez (Pablo.Iranzo@gmail.com)
-# Copyright (C) 2020 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2020, 2021 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 from __future__ import print_function
 

@@ -3,7 +3,8 @@
 #
 # Description: This UT check that no test has echo $RC_
 #
-# Copyright (C) 2018, 2019, 2020 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2018, 2019, 2020, 2021 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2020 stickler-ci <support@stickler-ci.com>
 
 #
 # This program is free software: you can redistribute it and/or modify
