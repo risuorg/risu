@@ -49,6 +49,7 @@ DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # Add the extra vars we added on risu.py to keep some
 # level of compatibility for this script to keep working as fallback
 
+export CITELLUS_BASE=${DIR}
 export RISU_BASE=${DIR}
 export RC_OKAY=10
 export RC_FAILED=20
@@ -87,6 +88,9 @@ show_help() {
 export RISU_LIVE="0"
 export RISU_ROOT
 export RISU_TMP=$(mktemp -d)
+export CITELLUS_LIVE=${RISU_LIVE}
+export CITELLUS_ROOT=${RISU_ROOT}
+export CITELLUS_TMP=${RISU_TMP}
 
 while :; do
 	case "$1" in
