@@ -1205,6 +1205,9 @@ def read_config(options=False):
     else:
         custompath = os.path.expanduser("~/.risu.conf")
 
+    possiblepaths.append(custompath)
+
+    # Legacy configuration files
     if options and options.config_path:
         custompath = os.path.join(options.config_path, ".citellus.conf")
     else:
