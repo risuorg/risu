@@ -26,6 +26,6 @@ Then the listplugins and runplugin functions do take that 'fake' plugin to be pr
   - long_name: Long name of the file
   - priority: how likely is this to be a big problem in the environment
   - description: Description of the file to monitor
-  - path: Path to the file to check, if it contains CITELLUS_ROOT it's for snapshot mode.
+  - path: Path to the file to check, if it contains RISU_ROOT it's for snapshot mode.
     - if path contains ',' it will accept CSV paths for different files and the plugin name will get appended the path of tile, same as description this allows to define 'bundles' of files.
-  - If text CITELLUS_HYBRID is found, the file path is valid for both live and not live (use CITELLUS_ROOT and it will be "" for live execution)
+  - If text RISU_HYBRID is found, the file path is valid for both live and not live (use RISU_ROOT and it will be "" for live execution)

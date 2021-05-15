@@ -7,12 +7,12 @@
 from __future__ import print_function
 
 try:
-    import citellusclient.shell as citellus
+    import risuclient.shell as risu
 except:
-    import shell as citellus
+    import shell as risu
 
-# Load i18n settings from citellus
-_ = citellus._
+# Load i18n settings from risu
+_ = risu._
 
 extension = "pipeline-yaml"
 
@@ -22,7 +22,7 @@ def init():
     Initializes module
     :return: List of triggers for Plugin
     """
-    ids = citellus.getids(include=["/core/openstack/mysql/seqno.sh"])
+    ids = risu.getids(include=["/core/openstack/mysql/seqno.sh"])
     return ids
 
 
@@ -34,7 +34,7 @@ def run(data, quiet=False):  # do not edit this line
     :return: returncode, out, err
     """
 
-    returncode = citellus.RC_OKAY
+    returncode = risu.RC_OKAY
 
     message = ""
     for ourdata in data:
@@ -61,21 +61,21 @@ def run(data, quiet=False):  # do not edit this line
 
         host = False
         for sosreport in data[ourdata]["sosreport"]:
-            if data[ourdata]["sosreport"][sosreport]["rc"] == citellus.RC_OKAY:
+            if data[ourdata]["sosreport"][sosreport]["rc"] == risu.RC_OKAY:
                 if data[ourdata]["sosreport"][sosreport]["err"].find("%s" % seqno):
                     host = sosreport
             else:
                 message = _(
                     "Some of the sosreports failed to grab required data, skipping"
                 )
-                returncode = citellus.RC_SKIPPED
+                returncode = risu.RC_SKIPPED
 
         if host:
             message = _(
                 "Host %s contains highest sequence in Galera consider that one for bootstraping if needed."
                 % host
             )
-            returncode = citellus.RC_FAILED
+            returncode = risu.RC_FAILED
 
         # find max in sosreport to report host
     out = ""

@@ -1,6 +1,6 @@
 ## Writing extensions
 
-Citellus extensions should conform to the following standards:
+Risu extensions should conform to the following standards:
 
 - Written in python and stored in the `extensions` folder.
 - Implement some base functions keeping arguments and data returned as in others:

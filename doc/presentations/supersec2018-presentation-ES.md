@@ -1,5 +1,5 @@
 ---
-title: Citellus - Herramienta para validar sistemas/ficheros de configuración, logs etc mediante scripts en bash, python, ruby, etc
+title: Risu - Herramienta para validar sistemas/ficheros de configuración, logs etc mediante scripts en bash, python, ruby, etc
 author: Pablo Iranzo Gómez
 
 theme: "solarized"
@@ -10,13 +10,13 @@ revealOptions:
   slideNumber: true
 ---
 
-## [Citellus](https://citellusorg.github.io):
+## [Risu](https://risuorg.github.io):
 
-### Citellus - Verifica tus sistemas!!
+### Risu - Verifica tus sistemas!!
 
-<img src="../citellus.png" width="202" height="202" border=0>
+<img src="../risu.png" width="202" height="202" border=0>
 
-<https://citellusorg.github.io>
+<https://risuorg.github.io>
 
 SuperSec 2018 Almería 12-13 Mayo
 
@@ -42,9 +42,9 @@ Empecé a 'vivir' del software libre en 2004 y a trabajar en Red Hat en 2006 com
 
 ---
 
-## ¿Qué es Citellus?
+## ¿Qué es Risu?
 
-- Citellus proporciona un framework acompañado de scripts proporcionados por la comunidad, que automatizan la detección de problemas, incluyendo problemas de configuración, conflictos con paquetes de versiones instaladas, problemas de seguridad o configuraciones inseguras y mucho más.
+- Risu proporciona un framework acompañado de scripts proporcionados por la comunidad, que automatizan la detección de problemas, incluyendo problemas de configuración, conflictos con paquetes de versiones instaladas, problemas de seguridad o configuraciones inseguras y mucho más.
 
 ---
 
@@ -62,7 +62,7 @@ Empecé a 'vivir' del software libre en 2004 y a trabajar en Red Hat en 2006 com
 
 ---
 
-## ¿Qué puedo hacer con Citellus?
+## ¿Qué puedo hacer con Risu?
 
 <small>
 
@@ -81,7 +81,7 @@ Empecé a 'vivir' del software libre en 2004 y a trabajar en Red Hat en 2006 com
 
 <small>
 
-- Por ejemplo, con Citellus puedes detectar:
+- Por ejemplo, con Risu puedes detectar:
   - Borrados incorrectos de tokens de keystone
   - Parámetros faltantes para expirar y purgar datos de ceilometer que pueden llevar a llenar el disco duro.
   - NTP no sincronizado
@@ -143,7 +143,7 @@ total : 215
 
 ## Cómo ejecutarlo?
 
-<img src="images/citellusrun.png" width="80%" border=0><!-- .element height="50%"  width="90%" -->
+<img src="images/risurun.png" width="80%" border=0><!-- .element height="50%"  width="90%" -->
 
 ---
 
@@ -165,7 +165,7 @@ total : 215
 
 ## Interfaz HTML
 
-- Creado al usar --web, abriendo fichero `citellus.html` por http se visualiza.
+- Creado al usar --web, abriendo fichero `risu.html` por http se visualiza.
   <img src="images/www.png" width="80%" border=0><!-- .element height="50%"  width="70%" -->
 
 ---
@@ -174,8 +174,8 @@ total : 215
 
 <small>
 
-- Citellus es un proyecto de código abierto. Todos los plugins se envían al repositorio en github para compartirlos (es lo que queremos fomentar, reutilización del conocimiento).
-  - Project on GitHub: <https://github.com/citellusorg/citellus/>
+- Risu es un proyecto de código abierto. Todos los plugins se envían al repositorio en github para compartirlos (es lo que queremos fomentar, reutilización del conocimiento).
+  - Project on GitHub: <https://github.com/risuorg/risu/>
 - Cada uno es experto en su área: queremos que todos contribuyan
 - Utilizamos un acercamiento similar a otros proyectos de código abierto: usamos gerrit para revisar el código y UnitTesting para validar la funcionalidad básica.
 
@@ -187,15 +187,15 @@ total : 215
 
 <small>
 
-Actualmente hay una gran presencia de plugins de OpenStack, ya que es en ese área donde trabajamos diariamente, pero Citellus no está limitado a una tecnología o producto.
+Actualmente hay una gran presencia de plugins de OpenStack, ya que es en ese área donde trabajamos diariamente, pero Risu no está limitado a una tecnología o producto.
 
 Por ejemplo, es fácil realizar comprobaciones acerca de si un sistema está configurado correctamente para recibir actualizaciones, comprobar versiones específicas con fallos (Meltdown/Spectre) y que no hayan sido deshabilitadas las protecciones, consumo excesivo de memoria por algún proceso, fallos de autenticación, etc.
 
-Lea la guía del colaborador en : <https://github.com/citellusorg/citellus/blob/master/CONTRIBUTING.md> para más detalles.</small>
+Lea la guía del colaborador en : <https://github.com/risuorg/risu/blob/master/CONTRIBUTING.md> para más detalles.</small>
 
 ---
 
-## Citellus vs otras herramientas
+## Risu vs otras herramientas
 
 - XSOS: Proporciona información de datos del sistema (ram, red, etc), pero no analiza, a los efectos es un visor 'bonito' de información.
 
@@ -207,10 +207,10 @@ Lea la guía del colaborador en : <https://github.com/citellusorg/citellus/blob/
 
 <small>
 
-- No hay elección entre una u otra, SOS recoge datos del sistema, Citellus los analiza.
+- No hay elección entre una u otra, SOS recoge datos del sistema, Risu los analiza.
 - Sosreport viene en los canales base de RHEL, Debian que hacen que esté ampliamente distribuido, pero también, dificulta el recibir actualizaciones frecuentes.
 - Muchos de los datos para diagnóstico ya están en los sosreports, falta el análisis.
-- Citellus se basa en fallos conocidos y es fácilmente extensible, necesita ciclos de desarrollo más cortos, estando más orientado a equipos de devops o de soporte.
+- Risu se basa en fallos conocidos y es fácilmente extensible, necesita ciclos de desarrollo más cortos, estando más orientado a equipos de devops o de soporte.
 
 </small>
 
@@ -222,11 +222,11 @@ Lea la guía del colaborador en : <https://github.com/citellusorg/citellus/blob/
 
 Filosofía sencilla:
 
-- Citellus es el 'wrapper' que ejecuta.
+- Risu es el 'wrapper' que ejecuta.
 - Permite especificar la carpeta con el sosreport
 - Busca los plugins disponibles en el sistema
 - Lanza los plugins contra cada sosreport y devuelve el estado.
-- El framework de Citellus en python permite manejo de opciones, filtrado, ejecución paralela, etc.
+- El framework de Risu en python permite manejo de opciones, filtrado, ejecución paralela, etc.
 
 </small>
 
@@ -251,7 +251,7 @@ Los plugins son aún más sencillos:
 
 <small>
 
-- Heredan variables del entorno como la carpeta raíz para el sosreport (vacía en modo Live) (`CITELLUS_ROOT`) o si se está ejecutando en modo live (`CITELLUS_LIVE`). No se necesita introducir datos vía el teclado
+- Heredan variables del entorno como la carpeta raíz para el sosreport (vacía en modo Live) (`RISU_ROOT`) o si se está ejecutando en modo live (`RISU_LIVE`). No se necesita introducir datos vía el teclado
 - Por ejemplo los tests en 'vivo' pueden consultar valores en la base de datos y los basados en sosreport, limitarse a los logs existentes.
 
 </small>
@@ -262,25 +262,25 @@ Los plugins son aún más sencillos:
 
 <small>
 
-- Por ejemplo [Uso de disco](https://github.com/citellusorg/citellus/blob/master/citellus/plugins/system/disk_usage.sh):
+- Por ejemplo [Uso de disco](https://github.com/risuorg/risu/blob/master/risu/plugins/system/disk_usage.sh):
 
 ```sh
 #!/bin/bash
 
 # Load common functions
-[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
+[ -f "${RISU_BASE}/common-functions.sh" ] && . "${RISU_BASE}/common-functions.sh"
 
-# description: error if disk usage is greater than $CITELLUS_DISK_MAX_PERCENT
-: ${CITELLUS_DISK_MAX_PERCENT=75}
+# description: error if disk usage is greater than $RISU_DISK_MAX_PERCENT
+: ${RISU_DISK_MAX_PERCENT=75}
 
-if [[ $CITELLUS_LIVE = 0 ]]; then
-    is_required_file "${CITELLUS_ROOT}/df"
-    DISK_USE_CMD="cat ${CITELLUS_ROOT}/df"
+if [[ $RISU_LIVE = 0 ]]; then
+    is_required_file "${RISU_ROOT}/df"
+    DISK_USE_CMD="cat ${RISU_ROOT}/df"
 else
     DISK_USE_CMD="df -P"
 fi
 
-result=$($DISK_USE_CMD |awk -vdisk_max_percent=$CITELLUS_DISK_MAX_PERCENT '/^\/dev/ && substr($5, 0, length($5)-1) > disk_max_percent { print $6,$5 }')
+result=$($DISK_USE_CMD |awk -vdisk_max_percent=$RISU_DISK_MAX_PERCENT '/^\/dev/ && substr($5, 0, length($5)-1) > disk_max_percent { print $6,$5 }')
 
 if [ -n "$result" ]; then
     echo "${result}" >&2
@@ -297,7 +297,7 @@ fi
 ## ¿Listos para profundizar en los plugins?
 
 - Cada plugin debe validar si debe o no ejecutarse y mostrar la salida a 'stderr', código de retorno.
-- Citellus ejecutará e informará de los tests en base a los filtros usados.
+- Risu ejecutará e informará de los tests en base a los filtros usados.
 
 ---
 
@@ -307,8 +307,8 @@ fi
 
 - El código de retorno debe ser `$RC_OKAY` (ok), `$RC_FAILED` (fallo) or `$RC_SKIPPED` (omitido).
 - Los mensajes impresos a stderr se muestran si el plugin falla o se omite (si se usa el modo detallado)
-- Si se ejecuta contra un 'sosreport', la variable `CITELLUS_ROOT` tiene la ruta a la carpeta del sosreport indicada.
-- `CITELLUS_LIVE` contiene `0` ó `1` si es una ejecución en vivo o no.
+- Si se ejecuta contra un 'sosreport', la variable `RISU_ROOT` tiene la ruta a la carpeta del sosreport indicada.
+- `RISU_LIVE` contiene `0` ó `1` si es una ejecución en vivo o no.
 
 </small>
 
@@ -324,8 +324,8 @@ fi
 ## ¿Cómo empezar un nuevo plugin (continuación)?
 
 ```sh
-if [ “$CITELLUS_LIVE” = “0” ]; then
-    grep -q ovirt-hosted-engine-ha $CITELLUS_ROOT/installed-rpms
+if [ “$RISU_LIVE” = “0” ]; then
+    grep -q ovirt-hosted-engine-ha $RISU_ROOT/installed-rpms
     returncode=$?
     if [ “x$returncode” == “x0” ]; then
         exit $RC_OKAY
@@ -345,7 +345,7 @@ fi
 
 ```sh
 # Load common functions
-[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
+[ -f "${RISU_BASE}/common-functions.sh" ] && . "${RISU_BASE}/common-functions.sh"
 
 if is_rpm ovirt-hosted-engine-ha; then
     exit $RC_OKAY
@@ -363,10 +363,10 @@ fi
 
 - Use `tox` para ejecutar algunas pruebas UT (utf8, bashate, python 2.7, python 3)
 
-- Diga a Citellus qué plugin utilizar:
+- Diga a Risu qué plugin utilizar:
 
 ```sh
-[piranzo@host citellus]$ ~/citellus/citellus.py sosreport-20170724-175510/crta02 -i hosted-engine.sh -r
+[piranzo@host risu]$ ~/risu/risu.py sosreport-20170724-175510/crta02 -i hosted-engine.sh -r
 _________ .__  __         .__  .__
 \_   ___ \|__|/  |_  ____ |  | |  |  __ __  ______
 /    \  \/|  \   __\/ __ \|  | |  | |  |  \/  ___/
@@ -386,7 +386,7 @@ mode: fs snapshot sosreport-20170724-175510/crta02
 
 ### Introducción
 
-- Citellus trabaja a nivel de sosreport individual, pero algunos problemas se manifiestan entre conjuntos de equipos (clústeres, virtualización, granjas, etc)
+- Risu trabaja a nivel de sosreport individual, pero algunos problemas se manifiestan entre conjuntos de equipos (clústeres, virtualización, granjas, etc)
 
 <small>Por ejemplo, Galera debe comprobar el seqno entre los diversos miembros para ver cúal es el que contiene los datos más actualizados.</small>
 
@@ -394,7 +394,7 @@ mode: fs snapshot sosreport-20170724-175510/crta02
 
 ### Qué hace M.a.g.u.i. ?
 
-- Ejecuta citellus contra cada sosreport o sistema, obtiene los datos y los agrupa por plugin.
+- Ejecuta risu contra cada sosreport o sistema, obtiene los datos y los agrupa por plugin.
 - Ejecuta sus propios plugins contra los datos obtenidos, destacando problemas que afectan al conjunto.
 - Permite obtener datos de equipos remotos via ansible-playbook.
 
@@ -404,10 +404,10 @@ mode: fs snapshot sosreport-20170724-175510/crta02
 
 <small>
 
-- Viene en el mismo repositorio que Citellus y se ejecuta especificando los diversos sosreports:
+- Viene en el mismo repositorio que Risu y se ejecuta especificando los diversos sosreports:
 
   ```sh
-  [piranzo@collab-shell]$ ~/citellus/magui.py * -i seqno
+  [piranzo@collab-shell]$ ~/risu/magui.py * -i seqno
       _
   _( )_  Magui:
   (_(ø)_)
@@ -443,7 +443,7 @@ mode: fs snapshot sosreport-20170724-175510/crta02
 <small>
 
 - Dispone de algunos plugins en este momento:
-    - Agregan data de citellus ordenada por plugin para comparar rápidamente
+    - Agregan data de risu ordenada por plugin para comparar rápidamente
     - Muestra los datos de 'metadatos' de forma separada para contrastar valores
     - `pipeline-yaml`, `policy.json` y otros (asociados a OpenStack)
     - `seqno` de galera
@@ -472,12 +472,12 @@ Blog posts:
 
 <small>
 
-- Citellus tagged posts: https://iranzo.github.io/blog/tag/citellus/
-- <http://iranzo.github.io/blog/2017/07/26/Citellus-framework-for-detecting-known-issues/>
+- Risu tagged posts: https://iranzo.github.io/blog/tag/risu/
+- <http://iranzo.github.io/blog/2017/07/26/Risu-framework-for-detecting-known-issues/>
 - <https://iranzo.github.io/blog/2017/07/31/Magui-for-analysis-of-issues-across-several-hosts/>
 - <https://iranzo.github.io/blog/2017/08/17/Jenkins-for-running-CI-tests/>
 - <https://iranzo.github.io/blog/2017/10/26/i18n-and-bash8-in-bash/>
-- <https://iranzo.github.io/blog/2018/01/16/recent-changes-in-magui-and-citellus/>
+- <https://iranzo.github.io/blog/2018/01/16/recent-changes-in-magui-and-risu/>
 - DevConf.cz 2018 recording <https://www.youtube.com/watch?v=SDzzqrUdn5A>
 
 </small>
@@ -488,14 +488,14 @@ Blog posts:
 
 Gracias por asistir!!
 
-Ven a #citellus en Freenode o contacta con nosotros:
+Ven a #risu en Freenode o contacta con nosotros:
 
 <small>
 
-- https://citellusorg.github.io
-- citellus _AT_ googlegroups.com
-    - <https://groups.google.com/forum/#!forum/citellus>
-- Issue en github <https://github.com/citellusorg/citellus/issues>
+- https://risuorg.github.io
+- risuorg _AT_ googlegroups.com
+    - <https://groups.google.com/forum/#!forum/risu>
+- Issue en github <https://github.com/risuorg/risu/issues>
 
 </small>
 ```

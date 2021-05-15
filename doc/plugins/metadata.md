@@ -13,9 +13,9 @@ This extension and its plugins do output data in the following approach:
 - stdout gets variable name
 - stderr gets variable value
 
-The data is obtained by executing (citellus-style) plugins under the 'metadata' folder also categorized so they can be included/excluded as desired using standard citellus switches
+The data is obtained by executing (risu-style) plugins under the 'metadata' folder also categorized so they can be included/excluded as desired using standard risu switches
 
-This data is then reported separately from remaining citellus output via Magui, for example:
+This data is then reported separately from remaining risu output via Magui, for example:
 
 ```
  ./magui.py -mf metadata ../sosreport-controller-*
@@ -26,7 +26,7 @@ This data is then reported separately from remaining citellus output via Magui, 
  \|
   |/
 
-[{'description': u'Plugin for reporting back citellus metadata from all sosreports',
+[{'description': u'Plugin for reporting back risu metadata from all sosreports',
   'id': '0cff7ccb03e2cf61b73327953b9ce799',
   'plugin': 'metadata-outputs',
   'results': {'err': [{'backend': 'metadata',
@@ -34,7 +34,7 @@ This data is then reported separately from remaining citellus output via Magui, 
                        'description': 'Sets sosreport date metadata',
                        'id': '077b4d1e1cec64e44afe6e34beb45548',
                        'long_name': 'reports date for sosreport',
-                       'plugin': '${INSTALLDIR}/citellusclient/plugins/metadata/system/sosreport-date.sh',
+                       'plugin': '${INSTALLDIR}/risuclient/plugins/metadata/system/sosreport-date.sh',
                        'sosreport': {'../sosreport-controller-0-20171212110438': {'err': u'Tue Dec 12 11:05:25 UTC 2017\n',
                                                                                   'out': u'sosreport-date\n',
                                                                                   'rc': 10},
@@ -47,7 +47,7 @@ This data is then reported separately from remaining citellus output via Magui, 
                        'description': 'Sets hostname metadata',
                        'id': '03a21df92121284f00367e2ea120e8d6',
                        'long_name': 'prepares hostname metadata',
-                       'plugin': '${INSTALLDIR}/citellusclient/plugins/metadata/system/hostname.sh',
+                       'plugin': '${INSTALLDIR}/risuclient/plugins/metadata/system/hostname.sh',
                        'sosreport': {'../sosreport-controller-0-20171212110438': {'err': u'controller-0\n',
                                                                                   'out': u'hostname\n',
                                                                                   'rc': 10},

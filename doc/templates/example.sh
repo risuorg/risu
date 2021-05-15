@@ -18,10 +18,10 @@
 
 # Example script that checks the redirect rule on director node is present.
 
-# CITELLUS_LIVE=1 means we have specified --live in the CLI and we run
+# RISU_LIVE=1 means we have specified --live in the CLI and we run
 # against live system.
-# CITELLUS_LIVE=0 means we are running against fs snapshot and another check
-# for CITELLUS_ROOT is done.
+# RISU_LIVE=0 means we are running against fs snapshot and another check
+# for RISU_ROOT is done.
 
 # long_name: plug long name for webui
 # description: plug description
@@ -29,9 +29,9 @@
 # priority: 0<>1000 for likelihood to break your environment if this test reports fail
 # kb: url-to-kbase
 
-# CITELLUS_ROOT if set contains the location of the fs snapshot.
+# RISU_ROOT if set contains the location of the fs snapshot.
 
-if [ "x$CITELLUS_LIVE" = "x1" ]; then
+if [ "x$RISU_LIVE" = "x1" ]; then
 
 	# First check to see if we are able to continue, in the live system its
 	# a check that we run against the right host, in this case only director
@@ -55,20 +55,20 @@ if [ "x$CITELLUS_LIVE" = "x1" ]; then
 		exit ${RC_SKIPPED}
 	fi
 
-elif [ "x$CITELLUS_LIVE" = "x0" ]; then
+elif [ "x$RISU_LIVE" = "x0" ]; then
 
 	# Second check is the same as the previous one, but only apply to fs snapshot,
-	# because CITELLUS_LIVE=0 means we are running against fs snapshot.
-	if grep -q "tripleo-heat-templates" "${CITELLUS_ROOT}/installed-rpms" && grep -q \
-		"python-tripleoclient" "${CITELLUS_ROOT}/installed-rpms"; then
+	# because RISU_LIVE=0 means we are running against fs snapshot.
+	if grep -q "tripleo-heat-templates" "${RISU_ROOT}/installed-rpms" && grep -q \
+		"python-tripleoclient" "${RISU_ROOT}/installed-rpms"; then
 		# To make sure the file exists and we can check it, the exit ${RC_SKIPPED} means we will skip the check
 		# if the file is not present.
-		if [ ! -f "${CITELLUS_ROOT}/sos_commands/networking/iptables_-t_nat_-nvL" ]; then
+		if [ ! -f "${RISU_ROOT}/sos_commands/networking/iptables_-t_nat_-nvL" ]; then
 			echo "file /sos_commands/networking/iptables_-t_nat_-nvL not found." >&2
 			exit ${RC_SKIPPED}
 		fi
 		# Here we check the rule in the file, if it exists we exit ${RC_OKAY} and script reports okay.
-		if grep -q "REDIRECT.*169.254.169.254" "${CITELLUS_ROOT}/sos_commands/networking/iptables_-t_nat_-nvL"; then
+		if grep -q "REDIRECT.*169.254.169.254" "${RISU_ROOT}/sos_commands/networking/iptables_-t_nat_-nvL"; then
 			exit ${RC_OKAY}
 		else
 			# Whenever we end with exit ${RC_FAILED}, we are printing out the content from the

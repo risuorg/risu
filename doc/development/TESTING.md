@@ -10,7 +10,7 @@
 
 ## Writing Unit tests for plugins
 
-Citellus uses unittesting for the main python wrappers (citellus.py and magui.py), but tests are mostly written in `bash` so no UT is performed.
+Risu uses unittesting for the main python wrappers (risu.py and magui.py), but tests are mostly written in `bash` so no UT is performed.
 
 As a workaround and to detect issues in your code you can:
 
@@ -69,36 +69,36 @@ from unittest import TestCase
 import tempfile
 import shutil
 
-from citellus import citellus
+from risu import risu
 
 # To create your own test, update NAME with plugin name and copy this file to test_$NAME.py
 NAME = 'httpd_bug_1406417'
 
-testplugins = os.path.join(citellus.citellusdir, 'plugins', 'test')
-plugins = os.path.join(citellus.citellusdir, 'plugins')
+testplugins = os.path.join(risu.risudir, 'plugins', 'test')
+plugins = os.path.join(risu.risudir, 'plugins')
 folder = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'setup')
-uttest = citellus.findplugins(folders=[folder], include=[NAME])[0]
+uttest = risu.findplugins(folders=[folder], include=[NAME])[0]
 us = os.path.basename(uttest)
-citplugs = citellus.findplugins(folders=[plugins], include=[us])
+citplugs = risu.findplugins(folders=[plugins], include=[us])
 
 # Setup commands and expected return codes
-rcs = {"pass": citellus.RC_OKAY,
-       "fail": citellus.RC_FAILED,
-       "skipped": citellus.RC_SKIPPED,
-       "info": citellus.RC_INFO}
+rcs = {"pass": risu.RC_OKAY,
+       "fail": risu.RC_FAILED,
+       "skipped": risu.RC_SKIPPED,
+       "info": risu.RC_INFO}
 
 
 def runtest(testtype='False'):
     # testtype will be 'pass', 'fail', 'skipped'
 
     # We're iterating against the different UT tests defined in UT-tests folder
-    tmpdir = tempfile.mkdtemp(prefix='citellus-tmp')
+    tmpdir = tempfile.mkdtemp(prefix='risu-tmp')
 
     # Setup test for 'testtype'
     subprocess.call([uttest, uttest, testtype, tmpdir])
 
     # Run test against it
-    res = citellus.docitellus(path=tmpdir, plugins=citplugs)
+    res = risu.dorisu(path=tmpdir, plugins=citplugs)
 
     # Get Return code
     rc = res[0]['result']['rc']
@@ -110,7 +110,7 @@ def runtest(testtype='False'):
     return rc
 
 
-class CitellusTest(TestCase):
+class RisuTest(TestCase):
     def test_pass(self):
         # testtype will be 'pass', 'fail', 'skipped'
         testtype = 'pass'
@@ -131,7 +131,7 @@ class CitellusTest(TestCase):
 
 For a new plugin and test you'll then require:
 
-- `citellus/citellusclient/plugins/core/path-to-your-plugin/$NAME.sh`
+- `risu/risuclient/plugins/core/path-to-your-plugin/$NAME.sh`
 - `tests/plugins-unit-tests/setup/bugzilla/$NAME.sh`
 - `tests/plugins-unit-tests/test_$NAME.py`
 

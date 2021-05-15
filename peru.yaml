@@ -1,16 +1,16 @@
 imports:
-  dmidecode: citellusclient/tools/
-  # citellus: ./
-  tripleo-common-healthcheck: citellusclient/plugins/tripleo-common-healthcheck
-  node-problem-detector: citellusclient/plugins/node-problem-detector
+  dmidecode: risuclient/tools/
+  # risu: ./
+  tripleo-common-healthcheck: risuclient/plugins/tripleo-common-healthcheck
+  node-problem-detector: risuclient/plugins/node-problem-detector
 
 git module dmidecode:
   url: git@github.com:iranzo/dmidecode.git
   pick: dmidecode.py
 
-# git module citellus:
-#     url: git@github.com:citellusorg/citellus.git
-#     pick: citellusclient/plugins/
+# git module risu:
+#     url: git@github.com:risuorg/risu.git
+#     pick: risuclient/plugins/
 #     rev: 1ee1c6a36f51e8a7c809d5162004fb57ee99b168
 
 git module tripleo-common-healthcheck:

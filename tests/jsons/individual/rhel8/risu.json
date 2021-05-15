@@ -1,0 +1,238 @@
+{
+  "results": {
+    "6fe6e04ef0eee6695126ebdb05bae779e9d33fae1ecad8635a7dc15a7df46a791b7a6f99ca9d65a6d46007c3e3516eed0c8e27397aff9367f0ba2dd592800d59": {
+      "category": "Profiles: openshift-pssa",
+      "hash": "aa606d6a94268b491b2c387ee2fbf4d0872ad28e3b7c688113425dad01086084be89fbda1e51fd5c23baba195d0c1bc43fd93e1cbf6c46cc6603793234ac26aa",
+      "subcategory": "",
+      "plugin": "/home/iranzo/DEVEL/risu/risu/risuclient/plugins/profiles/rhinternal/openshift-pssa.txt",
+      "description": "Checks for several plugins related with PSSA",
+      "priority": 0,
+      "long_name": "Openshift PSSA profile checks",
+      "bugzilla": "",
+      "result": {
+        "out": "",
+        "err": "[]",
+        "rc": 10
+      },
+      "components": [],
+      "time": 0,
+      "backend": "profile",
+      "id": "6fe6e04ef0eee6695126ebdb05bae779e9d33fae1ecad8635a7dc15a7df46a791b7a6f99ca9d65a6d46007c3e3516eed0c8e27397aff9367f0ba2dd592800d59",
+      "name": "Profiles: openshift-pssa"
+    },
+    "d919fa1e68d9255a1cb5f239e452445d7389482a8e360280db8851b8c49d6de12bf555d9918121fd3706d6ed7d4ee986ac1bceb848d7c92354d4b6cc1b3e91f2": {
+      "category": "Profiles: cluster",
+      "hash": "bfadbef446075a39e76c5f5ed3e5b16569be1f0ec054d3ad3c0c5f35f5a6ad8faec783bcd9bf232ca001c5e25c384df49c0409e630094c7bb94883ae638d1bc8",
+      "subcategory": "",
+      "plugin": "/home/iranzo/DEVEL/risu/risu/risuclient/plugins/profiles/cluster.txt",
+      "description": "Checks for several plugins related with ClusterHA environments",
+      "priority": 0,
+      "long_name": "Cluster profile checks",
+      "bugzilla": "",
+      "result": {
+        "out": "",
+        "err": "[]",
+        "rc": 10
+      },
+      "components": [],
+      "time": 0,
+      "backend": "profile",
+      "id": "d919fa1e68d9255a1cb5f239e452445d7389482a8e360280db8851b8c49d6de12bf555d9918121fd3706d6ed7d4ee986ac1bceb848d7c92354d4b6cc1b3e91f2",
+      "name": "Profiles: cluster"
+    },
+    "69b5aa023a24ee98ff28d5221d9785f2d07a27b567ce36b9cc5f27947863a7e6759e7f36581e5df995c4490f65d77ec328b6943773613ea0a4ddf015e7efea93": {
+      "category": "CCN-STIC-619",
+      "kb": "",
+      "hash": "10f04c5d21ee41436c5605d814414736030c02f6a83b2a800822bfcdb151786ef959a2c673283f793ce8a584876c5c3525b3b5e4ee242d2bbb12d83fe1063a06",
+      "description": "Validate fstab configuration for CCN-STIC-619",
+      "plugin": "/home/iranzo/DEVEL/risu/risu/risuclient/plugins/core/CCN-STIC-619/fstab.sh",
+      "name": "fstab",
+      "priority": 900,
+      "long_name": "Validate fstab configuration",
+      "bugzilla": "https://www.ccn-cert.cni.es/pdf/guias/series-ccn-stic/guias-de-acceso-publico-ccn-stic/3674-ccn-stic-619-implementacion-de-seguridad-sobre-centos7/file.html",
+      "result": {
+        "rc": 20,
+        "err": "Missing option noauto for /boot\nMissing option noexec for /boot\nMissing option nodev for /boot\nMissing option nosuid for /boot\nMissing option ro for /boot",
+        "out": ""
+      },
+      "time": 0.06959819793701172,
+      "path": "",
+      "backend": "core",
+      "id": "69b5aa023a24ee98ff28d5221d9785f2d07a27b567ce36b9cc5f27947863a7e6759e7f36581e5df995c4490f65d77ec328b6943773613ea0a4ddf015e7efea93",
+      "subcategory": ""
+    },
+    "772c7ef49093039f20895be646e3277b71f3fe2d543cbfc99d0a6a0366326f532d0df87c0f6117889542cf73031ca3f758a01a684d2acf1d7964c9fe334f1e09": {
+      "category": "Profiles: sysinfo",
+      "hash": "00a1c0fe2bdcb9fb5011048a443aa95ef19e9c3caf05fbb0b7840204824d5400ac460ac499b4e4e1d098170ee6300c873e95a4bc440458216bf929386632c740",
+      "subcategory": "",
+      "plugin": "/home/iranzo/DEVEL/risu/risu/risuclient/plugins/profiles/sysinfo.txt",
+      "description": "Reports several useful system information",
+      "priority": 1000,
+      "long_name": "System information data",
+      "bugzilla": "",
+      "result": {
+        "out": "",
+        "err": "[]",
+        "rc": 30
+      },
+      "components": [],
+      "time": 0,
+      "backend": "profile",
+      "id": "772c7ef49093039f20895be646e3277b71f3fe2d543cbfc99d0a6a0366326f532d0df87c0f6117889542cf73031ca3f758a01a684d2acf1d7964c9fe334f1e09",
+      "name": "Profiles: sysinfo"
+    },
+    "9da416825c2c170f9eeddeaecb17c08a935e7db71bd8068a906378e4af8bd895a16af22a3cd5443eb4df06d80f7318df932a7695321295569594953d89dfb15c": {
+      "category": "Profiles: oracle",
+      "hash": "e2dd7a736c44686c0e42bce0c47c57efe73f64878add483df3941ab901045e9971ff224b0d7c39ffbeddd9a168e50728e5424491a4e84784a9890b883f6bf41f",
+      "subcategory": "",
+      "plugin": "/home/iranzo/DEVEL/risu/risu/risuclient/plugins/profiles/rhinternal/oracle.txt",
+      "description": "Checks if Oracle minimum tunings are applie",
+      "priority": 0,
+      "long_name": "Oracle DB profile checks",
+      "bugzilla": "",
+      "result": {
+        "out": "",
+        "err": "[]",
+        "rc": 10
+      },
+      "components": [],
+      "time": 0,
+      "backend": "profile",
+      "id": "9da416825c2c170f9eeddeaecb17c08a935e7db71bd8068a906378e4af8bd895a16af22a3cd5443eb4df06d80f7318df932a7695321295569594953d89dfb15c",
+      "name": "Profiles: oracle"
+    },
+    "e0d49de389092ab1fa8b67386eb8e128b845e064c1f5c4085f9b35a17b6a0357c96280069d3c1783f4a5207663b6b4108c3f696afd1b4b87390e59d32ecbbf7d": {
+      "category": "Profiles: sysinfo-openshift",
+      "hash": "e210408fd61ca67fadf91a373152c0e66a9fe3b284af761c5661b1b41d680624bee0af0c30a180f570232a4d521095711043fc75a3ea6fac8604ccd6c709729e",
+      "subcategory": "",
+      "plugin": "/home/iranzo/DEVEL/risu/risu/risuclient/plugins/profiles/sysinfo-openshift.txt",
+      "description": "Reports several useful system information for OpenStack",
+      "priority": 1000,
+      "long_name": "System information data for OpenShift",
+      "bugzilla": "",
+      "result": {
+        "out": "",
+        "err": "[]",
+        "rc": 30
+      },
+      "components": [],
+      "time": 0,
+      "backend": "profile",
+      "id": "e0d49de389092ab1fa8b67386eb8e128b845e064c1f5c4085f9b35a17b6a0357c96280069d3c1783f4a5207663b6b4108c3f696afd1b4b87390e59d32ecbbf7d",
+      "name": "Profiles: sysinfo-openshift"
+    },
+    "1876838184ed634e150b37a3eaa75f82107ce7bd09366f5310ede08dd4630a939236c0fcb03bf323e4f9bd71a3d33f272fdfa9149d7496866909f1b0b579c05e": {
+      "category": "Profiles: satellite6",
+      "hash": "57fe4cd4fcdcaefe5480a4d4e79993b01f61fe49363fb16e615dd64c56d81c57ce09647d4d77abb6ab3f495087b18b5edcb2c8815656a9e3b05b2a087da25928",
+      "subcategory": "",
+      "plugin": "/home/iranzo/DEVEL/risu/risu/risuclient/plugins/profiles/rhinternal/satellite6.txt",
+      "description": "Checks if Satellite6 is OK",
+      "priority": 0,
+      "long_name": "Satellite6 profile checks",
+      "bugzilla": "",
+      "result": {
+        "out": "",
+        "err": "[]",
+        "rc": 10
+      },
+      "components": [],
+      "time": 0,
+      "backend": "profile",
+      "id": "1876838184ed634e150b37a3eaa75f82107ce7bd09366f5310ede08dd4630a939236c0fcb03bf323e4f9bd71a3d33f272fdfa9149d7496866909f1b0b579c05e",
+      "name": "Profiles: satellite6"
+    },
+    "2d6b2fb44ccf3b64b3c442a61d2863b5a3c7f6c40b42330a1a1ab1ba88d2362ff06a6b3bf070143927a683a80664ebd7fa7842e79c4a51bdc3265a69b7d5491b": {
+      "category": "Profiles: sysinfo-lifecycle",
+      "hash": "c0aa748d26825c15585e9e8defacd72fe5fa9a51ca4c4a6cc0c7effc51019f6add8c048253f060ded50995159b1df2ac11a821508cb5cc00b8fcc2e964fe110e",
+      "subcategory": "",
+      "plugin": "/home/iranzo/DEVEL/risu/risu/risuclient/plugins/profiles/sysinfo-lifecycle.txt",
+      "description": "Lifecycle information data for installed products",
+      "priority": 1000,
+      "long_name": "Lifecycle information data for installed products",
+      "bugzilla": "",
+      "result": {
+        "out": "",
+        "err": "[]",
+        "rc": 30
+      },
+      "components": [],
+      "time": 0,
+      "backend": "profile",
+      "id": "2d6b2fb44ccf3b64b3c442a61d2863b5a3c7f6c40b42330a1a1ab1ba88d2362ff06a6b3bf070143927a683a80664ebd7fa7842e79c4a51bdc3265a69b7d5491b",
+      "name": "Profiles: sysinfo-lifecycle"
+    },
+    "389a21ef4b63917775d9aec44fe34d595108c524e2802ed515584c2a379390879c1693ae6d4d7f1f8c066320b79eed970c81d4c55027bc045b44923bc05dc245": {
+      "category": "Profiles: sysinfo-openstack",
+      "hash": "583b184e35f73d1d099783c4977c9e6184832c624073144787a12d377b4ea28e69c4deaa1873031c5b830aeff27258d6f4456de8793e4cb5a7b148222440bc52",
+      "subcategory": "",
+      "plugin": "/home/iranzo/DEVEL/risu/risu/risuclient/plugins/profiles/sysinfo-openstack.txt",
+      "description": "Reports several useful system information for OpenStack",
+      "priority": 1000,
+      "long_name": "System information data for OpenStack",
+      "bugzilla": "",
+      "result": {
+        "out": "",
+        "err": "[]",
+        "rc": 30
+      },
+      "components": [],
+      "time": 0,
+      "backend": "profile",
+      "id": "389a21ef4b63917775d9aec44fe34d595108c524e2802ed515584c2a379390879c1693ae6d4d7f1f8c066320b79eed970c81d4c55027bc045b44923bc05dc245",
+      "name": "Profiles: sysinfo-openstack"
+    },
+    "9bb5246c4be49227fe49a720ba30a1bde09f8d1ab827495d10b6bcbf4308b2902e7be1f7ccc07366c8b704ba1b2ff43b03270368b8080654477232171ee84c78": {
+      "category": "CCN-STIC-619",
+      "kb": "",
+      "hash": "fa4d1bfb5c82466f9a11f63d76f82f20c8e5c1e8a241386941ac42ece8a0fa320b6a1144c90bbf400f0b43de46b4af9da63b176e5ed0f13eb4e35bbb49a348ab",
+      "subcategory": "",
+      "plugin": "/home/iranzo/DEVEL/risu/risu/risuclient/plugins/core/CCN-STIC-619/logindefs.sh",
+      "description": "Ensure login configuration for CCN-STIC-619",
+      "priority": 900,
+      "long_name": "Validate login definitions",
+      "bugzilla": "https://www.ccn-cert.cni.es/pdf/guias/series-ccn-stic/guias-de-acceso-publico-ccn-stic/3674-ccn-stic-619-implementacion-de-seguridad-sobre-centos7/file.html",
+      "result": {
+        "out": "",
+        "err": "Maximum password age must be 60 days\nPassword must be kept for at least 15 days\nPassword lenght must be at least 8 characters\nPassword expiry notice must be at least 15 days",
+        "rc": 20
+      },
+      "time": 0.058322906494140625,
+      "path": "",
+      "backend": "core",
+      "id": "9bb5246c4be49227fe49a720ba30a1bde09f8d1ab827495d10b6bcbf4308b2902e7be1f7ccc07366c8b704ba1b2ff43b03270368b8080654477232171ee84c78",
+      "name": "logindefs"
+    },
+    "ea6ba67da886a70ebb13fa597f9301f33c2d9bb8b6ad1325bf68ec3b27ab6ec38ddb0f7c0690ada80045670cb7340a81e06d84f758d78fe637fb13d93afb3af0": {
+      "category": "Profiles: CCN-STIC-619",
+      "hash": "16c236317f17555e8b66bff6a27eb2a8282449d2ba7dc4388f1f44a4376b6ff375a9703f41b70e1fab4455d43c1de23f7e88326a5f4a9a589f548a4e35fded93",
+      "subcategory": "",
+      "plugin": "/home/iranzo/DEVEL/risu/risu/risuclient/plugins/profiles/CCN-STIC-619.txt",
+      "description": "CCN-STIC-619 compliance-related checks",
+      "priority": 1000,
+      "long_name": "CCN-STIC-619 checks",
+      "bugzilla": "",
+      "result": {
+        "out": "",
+        "err": "[{\"plugin_id\": \"9bb5246c4be49227fe49a720ba30a1bde09f8d1ab827495d10b6bcbf4308b2902e7be1f7ccc07366c8b704ba1b2ff43b03270368b8080654477232171ee84c78\", \"rc\": 20, \"err\": \"Maximum password age must be 60 days\\nPassword must be kept for at least 15 days\\nPassword lenght must be at least 8 characters\\nPassword expiry notice must be at least 15 days\", \"plugin\": \"/core/CCN-STIC-619/logindefs.sh\"}, {\"plugin_id\": \"69b5aa023a24ee98ff28d5221d9785f2d07a27b567ce36b9cc5f27947863a7e6759e7f36581e5df995c4490f65d77ec328b6943773613ea0a4ddf015e7efea93\", \"rc\": 20, \"err\": \"Missing option noauto for /boot\\nMissing option noexec for /boot\\nMissing option nodev for /boot\\nMissing option nosuid for /boot\\nMissing option ro for /boot\", \"plugin\": \"/core/CCN-STIC-619/fstab.sh\"}]",
+        "rc": 20
+      },
+      "components": [
+        "9bb5246c4be49227fe49a720ba30a1bde09f8d1ab827495d10b6bcbf4308b2902e7be1f7ccc07366c8b704ba1b2ff43b03270368b8080654477232171ee84c78",
+        "69b5aa023a24ee98ff28d5221d9785f2d07a27b567ce36b9cc5f27947863a7e6759e7f36581e5df995c4490f65d77ec328b6943773613ea0a4ddf015e7efea93"
+      ],
+      "time": 0,
+      "backend": "profile",
+      "id": "ea6ba67da886a70ebb13fa597f9301f33c2d9bb8b6ad1325bf68ec3b27ab6ec38ddb0f7c0690ada80045670cb7340a81e06d84f758d78fe637fb13d93afb3af0",
+      "name": "Profiles: CCN-STIC-619"
+    }
+  },
+  "metadata": {
+    "branding": "                                                  ",
+    "when": "2019-10-01T21:54:34.413819",
+    "source": "risu",
+    "live": false,
+    "time": 0.9547579288482666,
+    "path": "/home/iranzo/DEVEL/risu/sosreports/sosreport-RHEL8-2019-05-07-izjjckv",
+    "extranames": null
+  }
+}

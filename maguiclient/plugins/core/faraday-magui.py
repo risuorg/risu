@@ -1,19 +1,19 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# Description: Plugin for reporting failed affinity on the faraday citellus plugin
+# Description: Plugin for reporting failed affinity on the faraday risu plugin
 # Copyright (C) 2018, 2019, 2020 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 from __future__ import print_function
 
 import os
 
-import citellusclient.shell as citellus
+import risuclient.shell as risu
 
-# Load i18n settings from citellus
-_ = citellus._
+# Load i18n settings from risu
+_ = risu._
 
 extension = "faraday"
-pluginsdir = os.path.join(citellus.citellusdir, "plugins", extension)
+pluginsdir = os.path.join(risu.risudir, "plugins", extension)
 
 
 def init():
@@ -22,7 +22,7 @@ def init():
     :return: List of triggers for Plugin
     """
 
-    triggers = citellus.getids(include=["faraday/positive", "faraday/negative"])
+    triggers = risu.getids(include=["faraday/positive", "faraday/negative"])
     return triggers
 
 
@@ -35,14 +35,14 @@ def run(data, quiet=False):  # do not edit this line
     """
 
     message = []
-    returncode = citellus.RC_OKAY
+    returncode = risu.RC_OKAY
     for ourdata in data:
         # 'err' in this case should be always equal to the md5sum of the file so that we can report the problem
         err = []
         allskipped = True
         for sosreport in data[ourdata]["sosreport"]:
             err.append(data[ourdata]["sosreport"][sosreport]["err"])
-            if data[ourdata]["sosreport"][sosreport]["rc"] != citellus.RC_SKIPPED:
+            if data[ourdata]["sosreport"][sosreport]["rc"] != risu.RC_SKIPPED:
                 allskipped = False
 
         if data[ourdata]["path"].strip() != "":
@@ -53,9 +53,9 @@ def run(data, quiet=False):  # do not edit this line
                             _(
                                 "%s contents differ across hosts, ensure proper behavior."
                             )
-                            % data[ourdata]["path"].replace("${CITELLUS_ROOT}", "")
+                            % data[ourdata]["path"].replace("${RISU_ROOT}", "")
                         )
-                        returncode = citellus.RC_FAILED
+                        returncode = risu.RC_FAILED
 
                 if "negative" in data[ourdata]["plugin"]:
                     if len(sorted(set(err))) == 1:
@@ -63,9 +63,9 @@ def run(data, quiet=False):  # do not edit this line
                             _(
                                 "%s contents are the same across hosts, ensure proper behavior."
                             )
-                            % data[ourdata]["path"].replace("${CITELLUS_ROOT}", "")
+                            % data[ourdata]["path"].replace("${RISU_ROOT}", "")
                         )
-                        returncode = citellus.RC_FAILED
+                        returncode = risu.RC_FAILED
 
     out = ""
     err = "\n".join(message)

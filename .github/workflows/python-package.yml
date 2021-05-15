@@ -46,7 +46,7 @@ jobs:
 
     - name: Test with pytest
       run: |
-        pytest --cov-report=xml --cov=citellusclient --cov=maguiclient
+        pytest --cov-report=xml --cov=risuclient --cov=maguiclient
 
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v1.5.0

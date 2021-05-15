@@ -24,16 +24,16 @@ import random
 import sys
 from unittest import TestCase
 
-import citellusclient.shell as citellus
+import risuclient.shell as risu
 
 sys.path.append(os.path.abspath(os.path.dirname(__file__) + "/" + "../"))
 
 
-testplugins = os.path.join(citellus.citellusdir, "plugins", "test")
-plugins = os.path.join(citellus.citellusdir, "plugins", "core")
+testplugins = os.path.join(risu.risudir, "plugins", "test")
+plugins = os.path.join(risu.risudir, "plugins", "core")
 folder = os.path.join(os.path.abspath(os.path.dirname(__file__)), "setup")
-uttest = citellus.findplugins(folders=[folder])
-citplugs = citellus.findplugins(folders=[plugins])
+uttest = risu.findplugins(folders=[folder])
+citplugs = risu.findplugins(folders=[plugins])
 
 okay = random.randint(10, 29)
 failed = random.randint(30, 49)
@@ -44,10 +44,10 @@ info = random.randint(70, 89)
 rcs = {"pass": okay, "fail": failed, "skipped": skipped, "info": info}
 
 
-class CitellusTest(TestCase):
+class RisuTest(TestCase):
     def test_plugins_no_echo_RC(self):
         for plugin in citplugs:
-            result = citellus.regexpfile(
+            result = risu.regexpfile(
                 filename=plugin["plugin"], regexp=r".*echo \$RC_.*"
             )
             if result == "":

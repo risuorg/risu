@@ -2,14 +2,14 @@
 # Copyright (C) 2018 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # Requires: Ansible 2.2 (due to check_mode and timezone)
-# Uploads citellus folder to /tmp on target host and runs from there and stores it back on local host for magui analysis
+# Uploads risu folder to /tmp on target host and runs from there and stores it back on local host for magui analysis
 
 - hosts: 127.0.0.1
   connection: local
   tasks:
-    - name: Delete local citellus folder
+    - name: Delete local risu folder
       file:
-        path=/tmp/citellus/hostrun/
+        path=/tmp/risu/hostrun/
         state=absent
 
 - hosts: all
@@ -17,40 +17,40 @@
   become: true
   become_user: root
   vars:
-    # citellus_base: "{{ lookup('env','CITELLUS_BASE') }}"
-    citellus_base: '{{ playbook_dir | dirname + "/citellusclient"}}'
+    # risu_base: "{{ lookup('env','RISU_BASE') }}"
+    risu_base: '{{ playbook_dir | dirname + "/risuclient"}}'
   tasks:
-    - name: Do citellus
+    - name: Do risu
       block:
         - name: Mkdir target path
           file:
             state: directory
-            path: "/root/citellus/citellusclient/"
+            path: "/root/risu/risuclient/"
             recurse: yes
             mode: 0775
 
-        - name: Upload citellus
+        - name: Upload risu
           synchronize:
-            src: "{{ citellus_base }}/"
-            dest: "/root/citellus/citellusclient/"
+            src: "{{ risu_base }}/"
+            dest: "/root/risu/risuclient/"
             rsync_path: "sudo rsync"
             rsync_opts:
               - "--exclude=.git"
               - "--exclude=.tox"
-        - name: Run citellus on target
-          command: python /root/citellus/citellusclient/shell.py -l -o /tmp/citellus.json
+        - name: Run risu on target
+          command: python /root/risu/risuclient/shell.py -l -o /tmp/risu.json
           args:
-            chdir: /root/citellus/
-            creates: /tmp/citellus.json
+            chdir: /root/risu/
+            creates: /tmp/risu.json
           environment:
             ANSIBLE_KEEP_REMOTE_FILES: "{{ lookup('env', 'ANSIBLE_KEEP_REMOTE_FILES') }}"
         - name: Get remote execution results locally
           fetch:
-            src: /tmp/citellus.json
-            dest: /tmp/citellus/hostrun/{{ inventory_hostname }}/citellus.json
+            src: /tmp/risu.json
+            dest: /tmp/risu/hostrun/{{ inventory_hostname }}/risu.json
             flat: yes
-      when: citellus_base | trim != ''
+      when: risu_base | trim != ''
     - name: Complain on empty ENVironment variable
       debug:
-        msg: "CITELLUS_BASE undefined"
-      when: citellus_base | trim == ''
+        msg: "RISU_BASE undefined"
+      when: risu_base | trim == ''

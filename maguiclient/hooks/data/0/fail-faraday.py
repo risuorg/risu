@@ -11,15 +11,15 @@ from __future__ import print_function
 import os
 
 try:
-    import citellusclient.shell as citellus
+    import risuclient.shell as risu
 except:
-    import shell as citellus
+    import shell as risu
 
-# Load i18n settings from citellus
-_ = citellus._
+# Load i18n settings from risu
+_ = risu._
 
 extension = "__file__"
-pluginsdir = os.path.join(citellus.citellusdir, "plugins", extension)
+pluginsdir = os.path.join(risu.risudir, "plugins", extension)
 
 
 def init():
@@ -62,7 +62,7 @@ def run(data, quiet=False):  # do not edit this line
                 if makeitfail:
                     for sosreport in data[plugin]["sosreport"]:
                         data[plugin]["sosreport"][sosreport].update(
-                            {"rc": citellus.RC_FAILED}
+                            {"rc": risu.RC_FAILED}
                         )
 
     return data

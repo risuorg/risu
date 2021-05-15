@@ -25,29 +25,28 @@ import sys
 from unittest import TestCase
 
 sys.path.append(os.path.abspath(os.path.dirname(__file__) + "/" + "../"))
-import citellusclient.shell as citellus
+import risuclient.shell as risu
 
-testplugins = os.path.join(citellus.citellusdir, "plugins", "test")
-pluginsdir = os.path.join(citellus.citellusdir, "plugins", "core")
-plugins = citellus.findplugins(folders=[pluginsdir])
+testplugins = os.path.join(risu.risudir, "plugins", "test")
+pluginsdir = os.path.join(risu.risudir, "plugins", "core")
+plugins = risu.findplugins(folders=[pluginsdir])
 
 
-class CitellusTest(TestCase):
+class RisuTest(TestCase):
     def test_ut_sourced_if_used(self):
 
         # Check list of plugins for regexp sourcing common functions and skip them
         nonsourcing = []
         for plugin in plugins:
-            if not citellus.regexpfile(
+            if not risu.regexpfile(
                 filename=plugin["plugin"], regexp=".*common-functions"
             ):
                 nonsourcing.append(plugin["plugin"])
 
         commonfunctions = []
 
-        for script in citellus.findplugins(
-            folders=[os.path.join(citellus.citellusdir, "common.d")],
-            fileextension=".sh",
+        for script in risu.findplugins(
+            folders=[os.path.join(risu.risudir, "common.d")], fileextension=".sh",
         ):
             filename = script["plugin"]
             with open(filename, "r") as f:
@@ -59,7 +58,7 @@ class CitellusTest(TestCase):
         usingcf = []
         for plugin in nonsourcing:
             for func in commonfunctions:
-                if citellus.regexpfile(filename=plugin, regexp=".*%s" % func):
+                if risu.regexpfile(filename=plugin, regexp=".*%s" % func):
                     usingcf.append(plugin)
 
         assert sorted(set(usingcf)) == []

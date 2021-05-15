@@ -22,7 +22,7 @@
 # priority: 0<>1000 for likelihood to break your environment if this test reports fail
 # kb: url-to-kbase
 
-if [ "x$CITELLUS_LIVE" = "x1" ]; then
+if [ "x$RISU_LIVE" = "x1" ]; then
 	if true; then
 		if true; then
 			exit ${RC_OKAY}
@@ -32,7 +32,7 @@ if [ "x$CITELLUS_LIVE" = "x1" ]; then
 	else
 		exit ${RC_SKIPPED}
 	fi
-elif [ "x$CITELLUS_LIVE" = "x0" ]; then
+elif [ "x$RISU_LIVE" = "x0" ]; then
 	if true; then
 		if true; then
 			exit ${RC_OKAY}

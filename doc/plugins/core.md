@@ -10,9 +10,9 @@
 
 ## Writing checks
 
-Citellus tests should conform to the following standards:
+Risu tests should conform to the following standards:
 
-- The test script must be executable. Citellus will ignore tests for
+- The test script must be executable. Risu will ignore tests for
   which it does not have execute permission (and report CI errors if there's a file which has not +x set in the plugins folder)
 
 - Test should include a line starting with `# description:`, `# long_name`, `# priority` and optional `# bugzilla` followed with a one line comment which describes plugin information, for example:
@@ -49,22 +49,22 @@ Citellus tests should conform to the following standards:
 
 A test may make use of the following standard environment variables:
 
-- `$CITELLUS_ROOT` -- tests that parse files should locate them
+- `$RISU_ROOT` -- tests that parse files should locate them
   relative to this directory. For example, if your script needs to
   examine `/etc/sysctl.conf`, it might have something like:
 
 ```sh
-if grep -q '^net.ipv4.ip_forward = 1' "${CITELLUS_ROOT}/etc/sysctl.conf"; then
+if grep -q '^net.ipv4.ip_forward = 1' "${RISU_ROOT}/etc/sysctl.conf"; then
   ...
 fi
 ```
 
-- `$CITELLUS_LIVE` -- if `0`, tests are running against a filesystem
+- `$RISU_LIVE` -- if `0`, tests are running against a filesystem
   snapshot of some sort. Tests should not attempt to use commands
   that interrogate the system on which it is running. If this
   variable is `1`, the tests are running on a live system.
 
-- `$CITELLUS_BASE` -- this is location of the citellus folder.
+- `$RISU_BASE` -- this is location of the risu folder.
 
 - `$PLUGIN_BASEDIR` -- this contains the folder of the plugin that is being executed.
   The `$PLUGIN_BASEDIR` can be used to source files within the plugin folder.
@@ -76,7 +76,7 @@ location of various files. To use this script you can source it at the top:
 
 ```sh
 # Load common functions
-[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
+[ -f "${RISU_BASE}/common-functions.sh" ] && . "${RISU_BASE}/common-functions.sh"
 ```
 
 ### List of implemented functions
@@ -109,7 +109,7 @@ location of various files. To use this script you can source it at the top:
 
   - Example:
     ```sh
-    is_required_file "${CITELLUS_ROOT}/var/log/messages"
+    is_required_file "${RISU_ROOT}/var/log/messages"
     ```
 
 - `discover_osp_version $openstack-nova-common-version_package` -- echos osp version based on `openstack-nova-common version`

@@ -1,0 +1,7 @@
+# Copyright (C) 2018 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# bugzilla:
+# long_name: Check same cluster.conf across hosts
+# priority: 500
+# description: Checks /etc/cluster/cluster.conf across hosts
+# path: ${RISU_ROOT}/etc/cluster/cluster.conf
+# RISU_HYBRID

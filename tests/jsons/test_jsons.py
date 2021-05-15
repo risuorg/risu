@@ -11,36 +11,34 @@ import sys
 from unittest import TestCase
 
 sys.path.append(os.path.abspath(os.path.dirname(__file__) + "/" + "../"))
-import citellusclient.shell as citellus
+import risuclient.shell as risu
 from maguiclient import magui
 
-testplugins = os.path.join(citellus.citellusdir, "plugins", "test")
-citellusdir = citellus.citellusdir
+testplugins = os.path.join(risu.risudir, "plugins", "test")
+risudir = risu.risudir
 
 
-class CitellusTest(TestCase):
+class RisuTest(TestCase):
     def test_jsons_for_missbehaviours(self):
         mypath = os.path.dirname(__file__)
         print(mypath)
 
-        jsons = citellus.findplugins(
+        jsons = risu.findplugins(
             folders=[mypath], executables=False, fileextension=".json"
         )
 
         flag = 0
-        for citellusjson in jsons:
+        for risujson in jsons:
             try:
-                results = json.load(open(citellusjson["plugin"], "r"))["results"]
+                results = json.load(open(risujson["plugin"], "r"))["results"]
             except:
-                print(
-                    "Skipping json: %s as cannot be loaded by citellus" % citellusjson
-                )
+                print("Skipping json: %s as cannot be loaded by risu" % risujson)
                 results = []
 
             for result in results:
                 data = results[result]["result"]["out"]
                 if data != "":
-                    print("JSON: %s" % citellusjson["plugin"])
+                    print("JSON: %s" % risujson["plugin"])
                     print("PLUGIN: %s" % results[result]["plugin"])
                     print("STDOUT: %s" % data)
                     flag = 1
@@ -54,7 +52,7 @@ class CitellusTest(TestCase):
         print("Running magui against set of jsons, might take a while...")
         # Find all jsons
         mypath = os.path.dirname(__file__)
-        alljsons = citellus.findplugins(
+        alljsons = risu.findplugins(
             folders=[mypath], executables=False, fileextension=".json"
         )
         jsons = []
@@ -63,26 +61,26 @@ class CitellusTest(TestCase):
             jsons.append(jsonfile["plugin"])
 
         # Call with no arguments
-        res = magui.domagui(sosreports=jsons, citellusplugins=[])
+        res = magui.domagui(sosreports=jsons, risuplugins=[])
         assert res != {}
 
     def test_jsons_for_printresults(self):
         mypath = os.path.dirname(__file__)
         print(mypath)
 
-        jsons = citellus.findplugins(
+        jsons = risu.findplugins(
             folders=[mypath], executables=False, fileextension=".json"
         )
 
-        citellusjson = jsons[0]
+        risujson = jsons[0]
 
         try:
-            results = json.load(open(citellusjson["plugin"], "r"))["results"]
+            results = json.load(open(risujson["plugin"], "r"))["results"]
         except:
-            print("Skipping json: %s as cannot be loaded by citellus" % citellusjson)
+            print("Skipping json: %s as cannot be loaded by risu" % risujson)
             results = []
 
-        options = citellus.parse_args(default=True)
-        citellus.printresults(results, options)
+        options = risu.parse_args(default=True)
+        risu.printresults(results, options)
 
         assert True

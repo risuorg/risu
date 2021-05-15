@@ -5,7 +5,7 @@
 # Copyright (C) 2018, 2019, 2020 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # Find files that misses the header:
-# for file in $(find . -type f|grep -v .git|grep -v pyc|grep -v .citellus_tests|egrep '(.py|.txt|.yml|.sh)$'); do grep -q "^# Modifications" $file|| echo $file;done
+# for file in $(find . -type f|grep -v .git|grep -v pyc|grep -v .risu_tests|egrep '(.py|.txt|.yml|.sh)$'); do grep -q "^# Modifications" $file|| echo $file;done
 
 # How to use:
 # python setup.py sdist # To create AUTHORS
@@ -18,15 +18,15 @@ import re
 import shutil
 import subprocess
 
-import citellusclient.shell as citellus
+import risuclient.shell as risu
 
 regexpyear = "[0-9][0-9][0-9][0-9]-"
 regexpemail = "\\<(.*@.*)\\>"
 
 # Find all plugins
 print("Finding all possible files to modify...")
-# plugins = citellus.findallplugins()
-plugins = citellus.findplugins(
+# plugins = risu.findallplugins()
+plugins = risu.findplugins(
     folders=[os.path.abspath(os.path.dirname(__file__))],
     executables=False,
     exclude=[".git", ".tox", ".pyc", ".history", "doc/templates"],
@@ -38,7 +38,7 @@ os.environ["LANG"] = "en_US.UTF-8"
 # Iterate over found plugins
 for plugin in plugins:
 
-    if "citellus/plugins" not in plugin["plugin"]:
+    if "risu/plugins" not in plugin["plugin"]:
 
         name = ""
         date = ""

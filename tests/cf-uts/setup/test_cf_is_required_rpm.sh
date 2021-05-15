@@ -41,7 +41,7 @@ skipped)
 
 *)
 	# Load common functions
-	[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
+	[ -f "${RISU_BASE}/common-functions.sh" ] && . "${RISU_BASE}/common-functions.sh"
 
 	# When no pass or fail is passed we're running the test for common function
 	is_required_rpm test-my-rpm && exit ${RC_OKAY} || exit ${RC_FAILED}

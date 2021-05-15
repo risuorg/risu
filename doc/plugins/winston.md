@@ -20,5 +20,5 @@ This extension allows to define files that must be outputed to stderr as metadat
   - long_name: Long name of the file
   - priority: how likely is this to be a big problem in the environment
   - description: Description of the file to monitor
-  - path: Path to the file to check, if it contains CITELLUS_ROOT it's for snapshot mode.
-  - If text CITELLUS_HYBRID is found, the file path is valid for both live and not live (use CITELLUS_ROOT and it will be "" for live execution)
+  - path: Path to the file to check, if it contains RISU_ROOT it's for snapshot mode.
+  - If text RISU_HYBRID is found, the file path is valid for both live and not live (use RISU_ROOT and it will be "" for live execution)

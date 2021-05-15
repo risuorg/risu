@@ -35,10 +35,10 @@ skipped)
 
 *)
 	# Load common functions
-	[ -f "${CITELLUS_BASE}/common-functions.sh" ] && . "${CITELLUS_BASE}/common-functions.sh"
+	[ -f "${RISU_BASE}/common-functions.sh" ] && . "${RISU_BASE}/common-functions.sh"
 
 	# When no pass or fail is passed we're running the test for common function
-	is_required_file "${CITELLUS_ROOT}/installed-rpms" && exit ${RC_OKAY} || exit ${RC_SKIPPED}
+	is_required_file "${RISU_ROOT}/installed-rpms" && exit ${RC_OKAY} || exit ${RC_SKIPPED}
 	;;
 esac
 

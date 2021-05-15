@@ -3,7 +3,7 @@
 #
 # Description: Multiple Analysis Generic Unifier and Interpreter aka Magui
 #              This program processes several snapshoot/sosreport files
-#              and processes citellus output for combined issues via plugins
+#              and processes risu output for combined issues via plugins
 #              that search for specific plugin and data
 #
 # Copyright (C) 2017, 2018 Robin Černín <cerninr@gmail.com>
@@ -38,13 +38,13 @@ import time
 
 sys.path.append(os.path.abspath(os.path.dirname(__file__) + "/" + "../"))
 
-from citellusclient import shell as citellus
+from risuclient import shell as risu
 
 LOG = logging.getLogger("magui")
 
 # Where are we?
 maguidir = os.path.abspath(os.path.dirname(__file__))
-localedir = os.path.join(citellus.citellusdir, "locale")
+localedir = os.path.join(risu.risudir, "locale")
 
 global PluginsFolder
 PluginsFolder = os.path.join(maguidir, "plugins")
@@ -59,7 +59,7 @@ plugtriggers = {}
 global maguihooks
 maguihooks = []
 
-trad = gettext.translation("citellus", localedir, fallback=True)
+trad = gettext.translation("risu", localedir, fallback=True)
 
 try:
     _ = trad.ugettext
@@ -132,7 +132,7 @@ def parse_args():
         "--run",
         "-r",
         action="store_true",
-        help=_("Force run of citellus instead of reading existing 'citellus.json'"),
+        help=_("Force run of risu instead of reading existing 'risu.json'"),
     )
     p.add_argument(
         "--hosts",
@@ -196,7 +196,7 @@ def parse_args():
     g.add_argument(
         "--call-home",
         default=False,
-        help=_("Server URI to HTTP-post upload generated citellus.json for metrics"),
+        help=_("Server URI to HTTP-post upload generated risu.json for metrics"),
         metavar="serveruri",
     )
 
@@ -224,19 +224,19 @@ def commonpath(folders):
     return code
 
 
-def callcitellus(path=False, plugins=False, forcerun=False, include=None, exclude=None):
+def callrisu(path=False, plugins=False, forcerun=False, include=None, exclude=None):
     """
-    Do actual execution of citellus against data
+    Do actual execution of risu against data
     :param exclude: keywords to exclude
     :param include: keywords to include
-    :param forcerun: Forces execution of citellus analysis (ignoring saved data in citellus.json)
+    :param forcerun: Forces execution of risu analysis (ignoring saved data in risu.json)
     :param path: sosreport path
-    :param plugins: plugins enabled as provided to citellus
+    :param plugins: plugins enabled as provided to risu
     :return: dict with results
     """
 
-    # Call citellus normally, if existing prior results those will be loaded or executed + saved
-    results = citellus.docitellus(
+    # Call risu normally, if existing prior results those will be loaded or executed + saved
+    results = risu.dorisu(
         path=os.path.abspath(path),
         plugins=plugins,
         forcerun=forcerun,
@@ -300,7 +300,7 @@ def findtarget(data):
     return target, data, todel
 
 
-def domagui(sosreports, citellusplugins, options=False, grouped={}, runhooks=True):
+def domagui(sosreports, risuplugins, options=False, grouped={}, runhooks=True):
     """
     Do actual execution against sosreports
     :return: dict of result
@@ -335,13 +335,13 @@ def domagui(sosreports, citellusplugins, options=False, grouped={}, runhooks=Tru
             citexclude = None
             hosts = False
 
-        # Grab data from citellus for the sosreports provided
+        # Grab data from risu for the sosreports provided
         result = {}
 
         for sosreport in sosreports:
-            result[sosreport] = callcitellus(
+            result[sosreport] = callrisu(
                 path=os.path.abspath(sosreport),
-                plugins=citellusplugins,
+                plugins=risuplugins,
                 forcerun=forcerun,
                 include=citinclude,
                 exclude=citexclude,
@@ -384,13 +384,13 @@ def domagui(sosreports, citellusplugins, options=False, grouped={}, runhooks=Tru
                 # Forcing rerun but not if we've specified ansible hosts
                 if rerun and not hosts:
                     LOG.debug(
-                        "Forcing rerun of citellus for %s because of missing %s"
+                        "Forcing rerun of risu for %s because of missing %s"
                         % (sosreport, plugin)
                     )
                     # Sosreport contains non uniform data, rerun
-                    result[sosreport] = callcitellus(
+                    result[sosreport] = callrisu(
                         path=os.path.abspath(sosreport),
-                        plugins=citellusplugins,
+                        plugins=risuplugins,
                         forcerun=True,
                     )
 
@@ -417,10 +417,8 @@ def domagui(sosreports, citellusplugins, options=False, grouped={}, runhooks=Tru
 
     if runhooks:
         # Run the hook processing hooks on the results
-        for maguihook in citellus.initPymodules(
-            extensions=citellus.getPymodules(
-                options=options, folders=[MaguiHooksFolder]
-            )
+        for maguihook in risu.initPymodules(
+            extensions=risu.getPymodules(options=options, folders=[MaguiHooksFolder])
         )[0]:
             LOG.debug("Running hook: %s" % maguihook.__name__.split(".")[-1])
             newresults = maguihook.run(data=copy.deepcopy(grouped))
@@ -467,7 +465,7 @@ def autogroups(autodata):
 
         name = item["name"]
         for host in item["sosreport"]:
-            if item["sosreport"][host]["rc"] == citellus.RC_OKAY:
+            if item["sosreport"][host]["rc"] == risu.RC_OKAY:
                 value = item["sosreport"][host]["err"]
             else:
                 value = ""
@@ -523,7 +521,7 @@ def main():
 
     # Reinstall language in case it has changed
     trad = gettext.translation(
-        "citellus", localedir, fallback=True, languages=[options.lang]
+        "risu", localedir, fallback=True, languages=[options.lang]
     )
 
     try:
@@ -539,8 +537,8 @@ def main():
 
     # Each argument in sosreport is a sosreport
 
-    magplugs, magtriggers = citellus.initPymodules(
-        extensions=citellus.getPymodules(options=options, folders=[PluginsFolder])
+    magplugs, magtriggers = risu.initPymodules(
+        extensions=risu.getPymodules(options=options, folders=[PluginsFolder])
     )
 
     if options.list_plugins:
@@ -549,21 +547,21 @@ def main():
             if options.description:
                 desc = plugin.help()
                 if desc:
-                    print(citellus.indent(text=desc, amount=4))
+                    print(risu.indent(text=desc, amount=4))
         return
 
-    # Prefill enabled citellus plugins from args
-    if not citellus.extensions:
-        extensions = citellus.initPymodules()[0]
+    # Prefill enabled risu plugins from args
+    if not risu.extensions:
+        extensions = risu.initPymodules()[0]
     else:
-        extensions = citellus.extensions
+        extensions = risu.extensions
 
     # Grab the data
     sosreports = options.sosreports
 
     # If we've provided a hosts file, use ansible to grab the data from them
     if options.hosts:
-        ansible = citellus.which("ansible-playbook")
+        ansible = risu.which("ansible-playbook")
         if not ansible:
             LOG.err(_("No ansible-playbook support found, skipping"))
         else:
@@ -584,11 +582,11 @@ def main():
             )
 
             LOG.debug("Running: %s with 600 seconds timeout" % command)
-            citellus.execonshell(filename=command, timeout=600)
+            risu.execonshell(filename=command, timeout=600)
 
             # Now check the hosts we got logs from:
-            hosts = citellus.findplugins(
-                folders=glob.glob("/tmp/citellus/hostrun/*"),
+            hosts = risu.findplugins(
+                folders=glob.glob("/tmp/risu/hostrun/*"),
                 executables=False,
                 fileextension=".json",
             )
@@ -605,24 +603,24 @@ def main():
         print("Maximum number of sosreports provided, exiting")
         sys.exit(0)
 
-    citellusplugins = []
+    risuplugins = []
     # Prefill with all available plugins and the ones we want to filter for
     for extension in extensions:
-        citellusplugins.extend(extension.listplugins())
+        risuplugins.extend(extension.listplugins())
 
     global allplugins
-    allplugins = citellusplugins
+    allplugins = risuplugins
 
     # By default, flatten plugin list for all extensions
     newplugins = []
-    for each in citellusplugins:
+    for each in risuplugins:
         newplugins.extend(each)
 
-    citellusplugins = newplugins
+    risuplugins = newplugins
 
     def runmaguiandplugs(
         sosreports,
-        citellusplugins,
+        risuplugins,
         filename=dooutput,
         extranames=None,
         serveruri=False,
@@ -637,7 +635,7 @@ def main():
         :param anon: anonymize results on execution
         :param serveruri: Server uri to POST the analysis
         :param sosreports: sosreports to process
-        :param citellusplugins: citellusplugins to run
+        :param risuplugins: risuplugins to run
         :param filename: filename to save to
         :param extranames: additional filenames used
         :param onlysave: Bool: Defines if we just want to save results
@@ -649,7 +647,7 @@ def main():
         if not onlysave and not result:
             # Run with all plugins so that we get all data back
             grouped = domagui(
-                sosreports=sosreports, citellusplugins=citellusplugins, grouped=grouped
+                sosreports=sosreports, risuplugins=risuplugins, grouped=grouped
             )
 
             # Run Magui plugins
@@ -694,7 +692,7 @@ def main():
                 result.append(mydata)
         if filename:
             branding = _("                                                  ")
-            citellus.write_results(
+            risu.write_results(
                 results=result,
                 filename=filename,
                 source="magui",
@@ -712,14 +710,14 @@ def main():
     print(_("\nStarting check updates and comparison"))
 
     metadataplugins = []
-    for plugin in citellusplugins:
+    for plugin in risuplugins:
         if plugin["backend"] == "metadata":
             metadataplugins.append(plugin)
 
     # Prepare metadata execution to find groups
     results, grouped = runmaguiandplugs(
         sosreports=sosreports,
-        citellusplugins=metadataplugins,
+        risuplugins=metadataplugins,
         filename=options.output,
         serveruri=options.call_home,
     )
@@ -737,7 +735,7 @@ def main():
     processedgroups = {}
 
     # TODO(iranzo): Review this
-    # This code was used to provide a field in json for citellus.html to get
+    # This code was used to provide a field in json for risu.html to get
     # other groups in dropdown, but is not in use so commenting meanwhile
 
     filenames = []
@@ -760,7 +758,7 @@ def main():
     # Run full (not only metadata plugins) so that we've the data stored and save filenames in magui.json
     results, grouped = runmaguiandplugs(
         sosreports=sosreports,
-        citellusplugins=citellusplugins,
+        risuplugins=risuplugins,
         extranames=filenames,
         filename=options.output,
         serveruri=options.call_home,
@@ -799,7 +797,7 @@ def main():
             newgrouped = copy.deepcopy(grouped)
             runmaguiandplugs(
                 sosreports=groups[target],
-                citellusplugins=citellusplugins,
+                risuplugins=risuplugins,
                 filename=filename,
                 extranames=filenames,
                 anon=options.anon,

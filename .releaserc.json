@@ -1,6 +1,6 @@
 {
   "branch": "master",
-  "repositoryUrl": "git@github.com:citellusorg/citellus.git",
+  "repositoryUrl": "git@github.com:risuorg/risu.git",
   "tagFormat": "${version}",
   "plugins": [
     "@semantic-release/commit-analyzer",

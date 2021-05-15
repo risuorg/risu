@@ -25,7 +25,7 @@
 
 # Note a more pythonic way of running 'main' could be implemented by:
 # Running tests as new functions like:
-# def check_nova_debug(root=CITELLUS_ROOT) and calling it inside the live or not live checks (or both)
+# def check_nova_debug(root=RISU_ROOT) and calling it inside the live or not live checks (or both)
 
 
 from __future__ import print_function
@@ -33,7 +33,7 @@ from __future__ import print_function
 import os
 import sys
 
-import citellus
+import risu
 
 
 def errorprint(*args, **kwargs):
@@ -49,15 +49,15 @@ def runninglive():
     Checks if we're running against a live environment
     :return: Bool
     """
-    if os.environ["CITELLUS_LIVE"] == 1:
+    if os.environ["RISU_LIVE"] == 1:
         return True
-    elif os.environ["CITELLUS_LIVE"] == 0:
+    elif os.environ["RISU_LIVE"] == 0:
         return False
 
 
-def exitcitellus(code=False, msg=False):
+def exitrisu(code=False, msg=False):
     """
-    Exits back to citellus with errorcode and message
+    Exits back to risu with errorcode and message
     :param msg: Message to report on stderr
     :param code: return code
     """
@@ -72,51 +72,47 @@ def main():
     """
 
     # Base path to find files
-    # CITELLUS_ROOT = os.environ["CITELLUS_ROOT"]
+    # RISU_ROOT = os.environ["RISU_ROOT"]
 
     if runninglive():
         # Running on LIVE environment
 
         # For example, next condition might be an existing file like:
-        # os.path.exists(os.join.path(CITELLUS_ROOT,'/etc/nova/nova.conf'))
+        # os.path.exists(os.join.path(RISU_ROOT,'/etc/nova/nova.conf'))
         if True:
 
             # Example: File does exist, check file contents or other checks
             if True:
                 # Plugin tests passed
-                exitcitellus(code=citellus.RC_OKAY)
+                exitrisu(code=risu.RC_OKAY)
 
             else:
                 # Error with plugin tests
 
                 # Provide messages on STDERR
-                exitcitellus(
-                    code=citellus.RC_FAILED, msg="There was an error because of 'xxx'"
-                )
+                exitrisu(code=risu.RC_FAILED, msg="There was an error because of 'xxx'")
         else:
             # Plugin script skipped per conditions
 
             # Provide reason for skipping:
-            exitcitellus(code=citellus.RC_SKIPPED, msg="Required file 'xxx' not found")
+            exitrisu(code=risu.RC_SKIPPED, msg="Required file 'xxx' not found")
 
     elif not runninglive():
         # Running on snapshot/sosreport environment
         if True:
             if True:
                 # Plugin tests passed
-                exitcitellus(code=citellus.RC_OKAY)
+                exitrisu(code=risu.RC_OKAY)
             else:
                 # Error with plugin tests
 
                 # Provide messages on STDERR
-                exitcitellus(
-                    code=citellus.RC_FAILED, msg="There was an error because of 'xxx'"
-                )
+                exitrisu(code=risu.RC_FAILED, msg="There was an error because of 'xxx'")
         else:
             # Plugin script skipped per conditions
 
             # Provide reason for skipping:
-            exitcitellus(code=citellus.RC_SKIPPED, msg="Required file 'xxx' not found")
+            exitrisu(code=risu.RC_SKIPPED, msg="Required file 'xxx' not found")
 
 
 if __name__ == "__main__":

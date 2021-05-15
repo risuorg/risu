@@ -1,0 +1,7 @@
+# Copyright (C) 2018 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# bugzilla:
+# long_name: iSCSI initiator name
+# priority: 500
+# description: Checks iSCSI initiator name file
+# path: ${RISU_ROOT}/etc/iscsi/initiatorname.iscsi
+# RISU_HYBRID

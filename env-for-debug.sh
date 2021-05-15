@@ -2,12 +2,12 @@
 # Copyright (C) 2018, 2020 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # description: Setup environment for manual debug of plugin
-# This script tries to mimic what citellus.py does so it has some hardcoded defaults that must be kept in sync with Citellus
+# This script tries to mimic what risu.py does so it has some hardcoded defaults that must be kept in sync with Risu
 #
 
-# Folder for citellus
+# Folder for risu
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-export CITELLUS_BASE=${DIR}/citellusclient/
+export RISU_BASE=${DIR}/risuclient/
 
 # Error code definition
 export RC_OKAY=10
@@ -17,16 +17,16 @@ export RC_INFO=40
 
 # i18n for bash support
 export LANG='en_US'
-export TEXTDOMAIN='citellus'
-export TEXTDOMAINDIR=${CITELLUS_BASE}/locale
+export TEXTDOMAIN='risu'
+export TEXTDOMAINDIR=${RISU_BASE}/locale
 
 # Root directory for sosreport
-export CITELLUS_ROOT=.
+export RISU_ROOT=.
 
 # Force to run non-live
-export CITELLUS_LIVE=0
+export RISU_LIVE=0
 
 # Load common functions
-. ${CITELLUS_BASE}/common-functions.sh
+. ${RISU_BASE}/common-functions.sh
 
-echo -e "Citellus environment loaded, now you can run from current directory for sosreport root the plugin to debug via sh -x script\n\n"
+echo -e "Risu environment loaded, now you can run from current directory for sosreport root the plugin to debug via sh -x script\n\n"

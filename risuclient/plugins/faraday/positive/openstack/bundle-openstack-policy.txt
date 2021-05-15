@@ -1,0 +1,7 @@
+# Copyright (C) 2018 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# bugzilla:
+# long_name: Checks Service policy.json file
+# priority: 500
+# description: Checks Service policy.json file
+# path: ${RISU_ROOT}/etc/aodh/policy.json,${RISU_ROOT}/etc/ceilometer/policy.json,${RISU_ROOT}/etc/cinder/policy.json,${RISU_ROOT}/etc/containers/policy.json,${RISU_ROOT}/etc/glance/policy.json,${RISU_ROOT}/etc/gnocchi/policy.json,${RISU_ROOT}/etc/heat/policy.json,${RISU_ROOT}/etc/ironic/policy.json,${RISU_ROOT}/etc/keystone/policy.json,${RISU_ROOT}/etc/manila/policy.json,${RISU_ROOT}/etc/mistral/policy.json,${RISU_ROOT}/etc/neutron/policy.json,${RISU_ROOT}/etc/nova/policy.json,${RISU_ROOT}/etc/panko/policy.json,${RISU_ROOT}/etc/sahara/policy.json,${RISU_ROOT}/etc/zaqar/policy.json
+# RISU_HYBRID

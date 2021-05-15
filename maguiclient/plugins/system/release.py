@@ -8,12 +8,12 @@
 from __future__ import print_function
 
 try:
-    import citellusclient.shell as citellus
+    import risuclient.shell as risu
 except:
-    import shell as citellus
+    import shell as risu
 
-# Load i18n settings from citellus
-_ = citellus._
+# Load i18n settings from risu
+_ = risu._
 
 extension = "release"
 
@@ -23,7 +23,7 @@ def init():
     Initializes module
     :return: List of triggers for Plugin
     """
-    ids = citellus.getids(include=["/metadata/system/release.sh"])
+    ids = risu.getids(include=["/metadata/system/release.sh"])
     return ids
 
 
@@ -35,7 +35,7 @@ def run(data, quiet=False):  # do not edit this line
     :return: returncode, out, err
     """
 
-    returncode = citellus.RC_OKAY
+    returncode = risu.RC_OKAY
 
     message = ""
     for ourdata in data:
@@ -49,7 +49,7 @@ def run(data, quiet=False):  # do not edit this line
             message = _(
                 "Hosts contains different releases of operating system and can cause issues."
             )
-            returncode = citellus.RC_FAILED
+            returncode = risu.RC_FAILED
 
     out = ""
     err = message

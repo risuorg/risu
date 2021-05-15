@@ -1,7 +1,0 @@
-# Copyright (C) 2018 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
-# bugzilla:
-# long_name: Machine Identifier
-# priority: 500
-# description: Checks Machine Identifier
-# path: ${CITELLUS_ROOT}/etc/machine-id
-# CITELLUS_HYBRID

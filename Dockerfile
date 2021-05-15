@@ -1,16 +1,16 @@
 # Based on https://github.com/RHsyseng/container-rhel-examples/blob/master/starter-rhel-atomic/Dockerfile
 FROM registry.centos.org/centos/centos7-atomic:latest
-MAINTAINER Citellus developers <citellus _AT_ googlegroups.com>
+MAINTAINER Risu developers <risuorg _AT_ googlegroups.com>
 
-LABEL name="citellus/citellus" \
-      maintainer="citellus _AT_ googlegroups.com.com" \
-      vendor="Citellus" \
+LABEL name="risu/risu" \
+      maintainer="risuorg _AT_ googlegroups.com.com" \
+      vendor="Risu" \
       version="1.0.0" \
       release="1" \
       summary="System configuration validation program" \
-      description="Citellus is a program that should help with system configuration validation on either live system or any sort of snapshot of the filesystem."
+      description="Risu is a program that should help with system configuration validation on either live system or any sort of snapshot of the filesystem."
 
-ENV USER_NAME=citellus \
+ENV USER_NAME=risu \
     USER_UID=10001
 
 # Required for useradd command and pip
@@ -31,7 +31,7 @@ RUN PRERREQ_PKGS="shadow-utils \
 
 RUN pip install --upgrade pip --no-cache-dir && \
     pip install --upgrade pbr --no-cache-dir && \
-    pip install --upgrade citellus --no-cache-dir && \
+    pip install --upgrade risu --no-cache-dir && \
     mkdir -p /data && \
     chmod -R u+x /data && \
     chown -R ${USER_UID}:0 /data && \
@@ -39,5 +39,5 @@ RUN pip install --upgrade pip --no-cache-dir && \
 
 USER 10001
 VOLUME /data
-ENTRYPOINT ["/usr/bin/citellus.py"]
+ENTRYPOINT ["/usr/bin/risu.py"]
 CMD ["-h"]

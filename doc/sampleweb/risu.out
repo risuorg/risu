@@ -1,0 +1,273 @@
+_________ .__  __         .__  .__
+\_   ___ \|__|/  |_  ____ |  | |  |  __ __  ______
+/    \  \/|  \   __\/ __ \|  | |  | |  |  \/  ___/
+\     \___|  ||  | \  ___/|  |_|  |_|  |  /\___ \
+ \______  /__||__|  \___  >____/____/____//____  >
+        \/              \/                     \/
+
+found #6 extensions with #168 plugins
+mode: fs snapshot /cases/02016541/sosreport-controller-0.02016541-20180225232251
+# /risu/risuclient/plugins/core/security/spectre/vdsm.sh: skipped
+# /risu/risuclient/plugins/core/launchpad/openstack/keystone/1649616.sh: okay
+# /risu/risuclient/plugins/faraday/positive/openstack/bundle-openstack-policy.txt: skipped
+# /risu/risuclient/plugins/core/system/reboot.py: skipped
+# /risu/risuclient/plugins/core/pacemaker/nodes_number.sh: okay
+# /risu/risuclient/plugins/core/ceph/status.sh: skipped
+# /risu/risuclient/plugins/core/system/segfault.sh: failed
+    SEGV detected
+    Feb 25 03:47:03 controller-0 kernel: httpd[69773]: segfault at 8 ip 00007fe6a7661a90 sp 00007fe6a6740d70 error 4 in libpython2.7.so.1.0[7fe6a7562000+17d000]
+    Feb 25 03:47:03 controller-0 kernel: httpd[69769]: segfault at 8 ip 00007fe6a7661a90 sp 00007fe6a6740d70 error 4 in libpython2.7.so.1.0[7fe6a7562000+17d000]
+# /risu/risuclient/plugins/core/openstack/crontab/cinder-data-purge.sh: okay
+# /risu/risuclient/plugins/core/openstack/cinder/nas_secure.sh: failed
+    Detected nas_secure options as true
+    nas_secure_file_* options may cause permissions problems with snapshots, live migration and other operations
+# /risu/risuclient/plugins/core/openstack/mysql/dberror.sh: okay
+# /risu/risuclient/plugins/core/pacemaker/failed_actions.sh: okay
+# /risu/risuclient/plugins/core/security/meltdown-disabled.sh: okay
+# /risu/risuclient/plugins/core/openstack/ceph/missing-repos-on-compute.sh: skipped
+# /risu/risuclient/plugins/faraday/positive/openstack/ceilometer/pipeline-yaml.txt: okay
+# /risu/risuclient/plugins/core/system/kernel_panic.sh: okay
+# /risu/risuclient/plugins/core/openstack/rabbitmq/queues_with_no_consumer_but_msgs.sh: okay
+# /risu/risuclient/plugins/faraday/positive/system/redhat-release.txt: okay
+# /risu/risuclient/plugins/core/openstack/mysql/maxconn.sh: skipped
+# /risu/risuclient/plugins/core/bugzilla/openstack/ceilometer/1483456.sh: skipped
+# /risu/risuclient/plugins/core/bugzilla/openstack/nova/1527345.sh: skipped
+# /risu/risuclient/plugins/core/pacemaker/fence_device.sh: failed
+    NO stonith devices configured
+# /risu/risuclient/plugins/core/openstack/nova/libvirt-error.sh: skipped
+# /risu/risuclient/plugins/core/openstack/cinder/timeout-with-EMC-VNX.sh: skipped
+# /risu/risuclient/plugins/ansible/openstack/rabbitmq/ha-policies.yml: skipped
+# /risu/risuclient/plugins/core/openstack/containers/debug.sh: skipped
+# /risu/risuclient/plugins/core/system/abrtd-config.sh: failed
+    abrt package missing
+# /risu/risuclient/plugins/core/openstack/nova/incompatible-aggregate-capabilities-filters.sh: okay
+# /risu/risuclient/plugins/core/system/sysstat.sh: failed
+    systat package missing
+# /risu/risuclient/plugins/core/security/spectre/rhev-hypervisor7.sh: skipped
+# /risu/risuclient/plugins/core/docker/excessive-memory-usage.sh: okay
+# /risu/risuclient/plugins/core/bugzilla/openstack/neutron/1474092.sh: okay
+# /risu/risuclient/plugins/core/bugzilla/openstack/neutron/1450223.sh: skipped
+# /risu/risuclient/plugins/faraday/positive/openstack/bundle-openstack-policy.txt: okay
+# /risu/risuclient/plugins/faraday/positive/openstack/bundle-openstack-policy.txt: okay
+# /risu/risuclient/plugins/core/openstack/cinder/lvm.sh: okay
+# /risu/risuclient/plugins/core/openstack/neutron/neutron-openvswitch-firewall-driver.sh: skipped
+# /risu/risuclient/plugins/core/openstack/glance/image_size_cap.sh: okay
+# /risu/risuclient/plugins/core/system/megaraid.sh: okay
+# /risu/risuclient/plugins/core/bugzilla/openstack/httpd/1478042.sh: skipped
+# /risu/risuclient/plugins/core/bugzilla/openstack/ceph/1358697.sh: skipped
+# /risu/risuclient/plugins/core/system/logrotate.sh: okay
+# /risu/risuclient/plugins/core/system/selinux_config.sh: failed
+    persistent selinux mode is not enforcing (found permissive)
+# /risu/risuclient/plugins/faraday/positive/openstack/bundle-openstack-policy.txt: okay
+# /risu/risuclient/plugins/core/openstack/redis/redis-tooz-lock.sh: skipped
+# /risu/risuclient/plugins/core/openstack/containers/rabbitmq/cluster_status.sh: skipped
+# /risu/risuclient/plugins/core/openstack/debug.sh: failed
+    disabled in /etc/ceilometer/ceilometer.conf
+    disabled in /etc/ceilometer/rootwrap.conf
+    enabled in /etc/cinder/cinder.conf
+    disabled in /etc/cinder/rootwrap.conf
+    disabled in /etc/glance/glance-api.conf
+    disabled in /etc/glance/glance-cache.conf
+    disabled in /etc/glance/glance-registry.conf
+    disabled in /etc/glance/glance-scrubber.conf
+    disabled in /etc/glance/glance-swift.conf
+    disabled in /etc/glance/rootwrap.conf
+    disabled in /etc/gnocchi/gnocchi.conf
+    disabled in /etc/heat/heat.conf
+    disabled in /etc/ironic/ironic.conf
+    disabled in /etc/ironic/rootwrap.conf
+    disabled in /etc/keystone/keystone.conf
+    disabled in /etc/keystone/logging.conf
+    disabled in /etc/manila/manila.conf
+    disabled in /etc/manila/rootwrap.conf
+    disabled in /etc/neutron/networking_bgpvpn.conf
+    enabled in /etc/neutron/neutron.conf
+    disabled in /etc/neutron/neutron_lbaas.conf
+    disabled in /etc/neutron/rootwrap.conf
+    disabled in /etc/neutron/services_lbaas.conf
+    disabled in /etc/nova/nova.conf
+    disabled in /etc/nova/rootwrap.conf
+    disabled in /etc/puppet/auth.conf
+    disabled in /etc/puppet/puppet.conf
+    disabled in /etc/sahara/rootwrap.conf
+    disabled in /etc/sahara/sahara.conf
+    disabled in /etc/selinux/semanage.conf
+    disabled in /etc/swift/account-server.conf
+    disabled in /etc/swift/container-reconciler.conf
+    disabled in /etc/swift/container-server.conf
+    disabled in /etc/swift/object-expirer.conf
+    disabled in /etc/swift/object-server.conf
+    disabled in /etc/swift/proxy-server.conf
+    disabled in /etc/swift/swift.conf
+    disabled in /etc/openstack-dashboard/local_settings
+# /risu/risuclient/plugins/core/system/updates.sh: skipped
+# /risu/risuclient/plugins/core/system/conntrack_full.sh: okay
+# /risu/risuclient/plugins/core/bugzilla/systemd/1172387.sh: okay
+# /risu/risuclient/plugins/core/system/current-kernel-vs-installed.sh: okay
+# /risu/risuclient/plugins/core/security/spectre/qemu-kvm-rhev.sh: okay
+# /risu/risuclient/plugins/core/openstack/nova/nova-compute-running.sh: skipped
+# /risu/risuclient/plugins/core/openstack/packstack.sh: okay
+# /risu/risuclient/plugins/metadata/system/system-uuid.sh: okay
+# /risu/risuclient/plugins/faraday/positive/openstack/bundle-openstack-policy.txt: skipped
+# /risu/risuclient/plugins/core/bugzilla/openstack/neutron/1094867.sh: failed
+    soft lockup with _raw_spin_lock in ovs_flow_stats_update
+# /risu/risuclient/plugins/core/pacemaker/stonith_enabled.sh: failed
+    stonith is not enabled
+# /risu/risuclient/plugins/core/system/memory_usage.sh: okay
+# /risu/risuclient/plugins/faraday/positive/openstack/bundle-openstack-policy.txt: okay
+# /risu/risuclient/plugins/metadata/openstack/system-role.sh: okay
+# /risu/risuclient/plugins/metadata/openstack/osp-release.sh: okay
+# /risu/risuclient/plugins/core/openstack/network/dpdk-memory-pages.sh: okay
+# /risu/risuclient/plugins/core/security/spectre/kernel.sh: failed
+    Please do check https://access.redhat.com/security/vulnerabilities/speculativeexecution for guidance
+    package kernel version kernel-3.10.0-693.5.2.el7.x86_64 is lower than required (kernel-3.10.0-693.11.6).
+# /risu/risuclient/plugins/core/pacemaker/maintenance.sh: failed
+    maintenance is enabled
+# /risu/risuclient/plugins/core/openstack/mysql/clustercheck-mysql_host.sh: skipped
+# /risu/risuclient/plugins/core/system/baremetal.sh: failed
+    KVM
+# /risu/risuclient/plugins/faraday/positive/openstack/bundle-openstack-policy.txt: skipped
+# /risu/risuclient/plugins/core/openstack/hardware/memory.sh: skipped
+# /risu/risuclient/plugins/ansible/system/clock-ntpstat.yml: skipped
+# /risu/risuclient/plugins/core/openstack/nova/migrate-with-cinder-volume.sh: okay
+# /risu/risuclient/plugins/faraday/positive/openstack/iptables.sh: okay
+# /risu/risuclient/plugins/core/openstack/nova/resume-guests-state-on-host-boot.sh: skipped
+# /risu/risuclient/plugins/core/openstack/system/clock-chronyd-disabled.sh: okay
+# /risu/risuclient/plugins/core/openstack/nova/virt-type-kvm.sh: okay
+# /risu/risuclient/plugins/core/bugzilla/openstack/keystone/1473713.sh: okay
+# /risu/risuclient/plugins/core/openstack/pacemaker/instance-ha.sh: okay
+# /risu/risuclient/plugins/metadata/system/sosreport-date.sh: okay
+# /risu/risuclient/plugins/core/openstack/containers/containerized_deployment.sh: skipped
+# /risu/risuclient/plugins/faraday/positive/openstack/bundle-openstack-policy.txt: okay
+# /risu/risuclient/plugins/core/openstack/mysql/db-reference-error.sh: okay
+# /risu/risuclient/plugins/faraday/positive/openstack/bundle-openstack-policy.txt: skipped
+# /risu/risuclient/plugins/faraday/positive/openstack/bundle-openstack-policy.txt: okay
+# /risu/risuclient/plugins/core/openstack/network/sriov.sh: failed
+    neutron-sriov-nic-agent not running
+    missing isolated_cores in /etc/tuned/cpu-partitioning-variables.conf
+    virtual function is disabled
+    vfio_iommu module is not loaded
+    unsafe interrupts not enabled
+    missing hugepagesz on kernel cmdline
+    missing hugepages= on kernel cmdline
+    missing isolcpus= on kernel cmdline
+    missing sriovnicswitch in ml2_conf.ini
+    missing PciPassthroughFilter in nova.conf
+    missing vcpu_pin_set in nova.conf
+    missing pci_passthrough_whitelist in /etc/nova/nova.conf
+# /risu/risuclient/plugins/core/openstack/mysql/mysql_db_size.sh: skipped
+# /risu/risuclient/plugins/faraday/positive/openstack/bundle-openstack-policy.txt: okay
+# /risu/risuclient/plugins/core/openstack/rabbitmq/file_descriptors.sh: failed
+    couldn't get file descriptors from rabbitmqctl report
+# /risu/risuclient/plugins/core/openstack/crontab/heat_stack-purge.sh: skipped
+# /risu/risuclient/plugins/core/bugzilla/httpd/1406417.sh: okay
+# /risu/risuclient/plugins/core/openstack/swift/ring-status.sh: skipped
+# /risu/risuclient/plugins/core/pacemaker/stopped_resources.sh: okay
+# /risu/risuclient/plugins/faraday/negative/system/machine-id.txt: skipped
+# /risu/risuclient/plugins/core/system/clock-0-ntp-services.sh: okay
+# /risu/risuclient/plugins/core/openstack/containers/sosreport.sh: failed
+    package sos version sos-3.4-6.el7.noarch is lower than required (sos-3.4-9).
+# /risu/risuclient/plugins/core/security/spectre/libvirt.sh: failed
+    Please do check https://access.redhat.com/security/vulnerabilities/speculativeexecution for guidance
+    package libvirt version libvirt-3.2.0-14.el7_4.3.x86_64 is lower than required (libvirt-3.2.0-14.el7_4.7).
+# /risu/risuclient/plugins/core/virtualization/libvirt-qemu-kernel-compatibility.sh: skipped
+# /risu/risuclient/plugins/core/openstack/mysql/keystone_tokendb.sh: skipped
+# /risu/risuclient/plugins/core/openstack/crontab/keystone_cleanup.sh: skipped
+# /risu/risuclient/plugins/core/network/external_connectivity.sh: skipped
+# /risu/risuclient/plugins/winston/system/iscsi/initiatorname.txt: okay
+# /risu/risuclient/plugins/core/system/selinux_runtime.sh: okay
+# /risu/risuclient/plugins/faraday/positive/openstack/bundle-openstack-policy.txt: skipped
+# /risu/risuclient/plugins/core/openstack/containers/docker/health-check.sh: skipped
+# /risu/risuclient/plugins/core/security/spectre/dracut.sh: skipped
+# /risu/risuclient/plugins/core/openstack/containers/docker/restarting.sh: skipped
+# /risu/risuclient/plugins/core/system/kernel-tainted.sh: failed
+    Kernel is tainted 536870912
+# /risu/risuclient/plugins/faraday/positive/openstack/bundle-openstack-policy.txt: okay
+# /risu/risuclient/plugins/core/openshift/etcd/certificates.py: skipped
+# /risu/risuclient/plugins/core/openstack/keystone/supported-backends.sh: okay
+# /risu/risuclient/plugins/core/bugzilla/openstack/neutron/1340001.sh: skipped
+# /risu/risuclient/plugins/core/openstack/iptables/metadata_redirect.sh: skipped
+# /risu/risuclient/plugins/core/bugzilla/openstack/tripleo/1437016.sh: skipped
+# /risu/risuclient/plugins/core/security/meltdown/kernel-rt.sh: skipped
+# /risu/risuclient/plugins/core/system/current-kernel-RT-vs-installed.sh: skipped
+# /risu/risuclient/plugins/core/openstack/keystone/cleanup_runs.sh: skipped
+# /risu/risuclient/plugins/core/bugzilla/openstack/swift/1500607.sh: okay
+# /risu/risuclient/plugins/core/security/spectre/kernel-rt.sh: skipped
+# /risu/risuclient/plugins/core/openstack/traceback.sh: okay
+# /risu/risuclient/plugins/core/openstack/network/dpdk.sh: failed
+    missing NUMATopologyFilter in nova.conf
+    KERNEL used CPU's:
+    CPU's isolated from kernel scheduler
+    CPU's pinned in nova
+    Nova used CPU's (from isolated pool):
+    -- available CPU's after this step from isolated pool:
+    dc: stack empty
+    DPDK PMD used CPU's:
+    -- available CPU's after this step from isolated pool:
+    dc: stack empty
+    DPDK CORE used CPU's:
+    There are CPU's unallocated:  0 1 2 3
+# /risu/risuclient/plugins/core/system/netifnames.sh: skipped
+# /risu/risuclient/plugins/core/openstack/nova/osp10plus-versioned-notifications.sh: skipped
+# /risu/risuclient/plugins/core/system/sosreport.sh: failed
+    package sos version sos-3.4-6.el7.noarch is lower than required (sos-3.4-13.el7_4.noarch).
+# /risu/risuclient/plugins/core/openstack/ceilometer/out-of-sync-host.sh: skipped
+# /risu/risuclient/plugins/core/system/clock-1-chrony.sh: skipped
+# /risu/risuclient/plugins/core/security/spectre-disabled.sh: okay
+# /risu/risuclient/plugins/winston/system/redhat-release.txt: okay
+# /risu/risuclient/plugins/core/bugzilla/openstack/neutron/1489066.sh: okay
+# /risu/risuclient/plugins/core/openstack/containers/traceback.sh: skipped
+# /risu/risuclient/plugins/core/system/rh-release.sh: okay
+# /risu/risuclient/plugins/core/pacemaker/disabled_resources.sh: okay
+# /risu/risuclient/plugins/core/ceph/pg-num.sh: skipped
+# /risu/risuclient/plugins/metadata/system/hostname.sh: okay
+# /risu/risuclient/plugins/faraday/negative/system/iscsi/initiatorname.txt: okay
+# /risu/risuclient/plugins/core/security/meltdown/kernel.sh: failed
+    Please do check https://access.redhat.com/security/vulnerabilities/speculativeexecution for guidance
+    package kernel version kernel-3.10.0-693.5.2.el7.x86_64 is lower than required (kernel-3.10.0-693.11.6).
+# /risu/risuclient/plugins/metadata/system/release.sh: okay
+# /risu/risuclient/plugins/core/system/clock-ntpd-time-reset.sh: okay
+# /risu/risuclient/plugins/core/bugzilla/openstack/keystone/templates/1519057.sh: skipped
+# /risu/risuclient/plugins/core/system/yum_history_rollback-undo.sh: okay
+# /risu/risuclient/plugins/core/openstack/nova/vnc-console-localhost.sh: failed
+    nova's vnc console listening on 127.0.0.1
+# /risu/risuclient/plugins/core/system/disk_usage.sh: okay
+# /risu/risuclient/plugins/core/system/clock-1-ntpd.sh: okay
+# /risu/risuclient/plugins/core/openstack/rabbitmq/rpc_issues.sh: okay
+# /risu/risuclient/plugins/core/system/disk_inode_usage.sh: okay
+# /risu/risuclient/plugins/profiles/cluster.txt: okay
+# /risu/risuclient/plugins/core/security/spectre/qemu-kvm.sh: skipped
+# /risu/risuclient/plugins/core/bugzilla/openstack/nova/1474092.sh: okay
+# /risu/risuclient/plugins/core/system/kdump-checker.sh: okay
+# /risu/risuclient/plugins/core/system/memcached-udp-ip-binding.sh: failed
+    Memcached doesn't have UDP disabled
+# /risu/risuclient/plugins/core/ceph/min-size.sh: skipped
+# /risu/risuclient/plugins/core/system/hardware_virtualization.sh: okay
+# /risu/risuclient/plugins/core/system/clock-2-ntpd-quantity.sh: failed
+    ntpd configured with one server, if that one goes down, you are toast:
+    server clock.redhat.com iburst
+# /risu/risuclient/plugins/faraday/positive/openstack/bundle-openstack-policy.txt: okay
+# /risu/risuclient/plugins/winston/system/machine-id.txt: skipped
+# /risu/risuclient/plugins/core/openstack/keystone/cleanup_last-run.sh: skipped
+# /risu/risuclient/plugins/faraday/positive/openstack/bundle-openstack-policy.txt: okay
+# /risu/risuclient/plugins/core/openstack/mysql/innodb-file-per-table.sh: failed
+    innodb_file_per_table not set in /etc/my.cnf.d/galera.cnf or /etc/my.cnf
+# /risu/risuclient/plugins/core/openstack/systemd/services.sh: okay
+# /risu/risuclient/plugins/core/openstack/nova/consolelog-permissions-on-enforcing-selinux.sh: okay
+# /risu/risuclient/plugins/core/openstack/rabbitmq/ipv6_disabled.sh: okay
+# /risu/risuclient/plugins/core/openstack/swift/pipeline-or-ignore-filling-gnocchi.sh: okay
+# /risu/risuclient/plugins/core/system/corrupted_journal.sh: okay
+# /risu/risuclient/plugins/core/openstack/swift/replicate-error.sh: okay
+# /risu/risuclient/plugins/core/openstack/mysql/seqno.sh: skipped
+# /risu/risuclient/plugins/core/pacemaker/packages.sh: okay
+# /risu/risuclient/plugins/core/openstack/ceilometer/expiration.sh: failed
+    alarm_history_time_to_live missing on file
+    event_time_to_live missing on file
+    metering_time_to_live missing on file
+# /risu/risuclient/plugins/core/system/process-high-cpu-usage.sh: okay
+# /risu/risuclient/plugins/core/openstack/network/common-dpdk-sriov.sh: failed
+    missing intel_iommu=on or iommu=pt on kernel cmdline
+    missing Isolated metadata in neutron/dhcp_agent.ini
+# /risu/risuclient/plugins/faraday/positive/openstack/bundle-openstack-policy.txt: okay
+# /risu/risuclient/plugins/core/openstack/openvswitch/ovs-dead-agent.sh: okay
+# /risu/risuclient/plugins/core/system/pip.sh: okay

@@ -5,8 +5,8 @@ repo:
 documentation:
   - doc/**/*
 
-citellus:
-  - citellusclient/**/*
+risu:
+  - risuclient/**/*
 
 magui:
   - maguiclient/**/*

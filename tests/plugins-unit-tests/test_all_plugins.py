@@ -28,17 +28,17 @@ import sys
 import tempfile
 from unittest import TestCase
 
-import citellusclient.shell as citellus
+import risuclient.shell as risu
 import maguiclient.magui as magui
 
 sys.path.append(os.path.abspath(os.path.dirname(__file__) + "/" + "../"))
 
 
-testplugins = os.path.join(citellus.citellusdir, "plugins", "test")
-plugins = os.path.join(citellus.citellusdir, "plugins", "core")
+testplugins = os.path.join(risu.risudir, "plugins", "test")
+plugins = os.path.join(risu.risudir, "plugins", "core")
 folder = os.path.join(os.path.abspath(os.path.dirname(__file__)), "setup")
-uttest = citellus.findplugins(folders=[folder])
-citplugs = citellus.findplugins(folders=[plugins])
+uttest = risu.findplugins(folders=[folder])
+citplugs = risu.findplugins(folders=[plugins])
 
 okay = random.randint(10, 29)
 failed = random.randint(30, 49)
@@ -49,10 +49,10 @@ info = random.randint(70, 89)
 rcs = {"pass": okay, "fail": failed, "skipped": skipped, "info": info}
 
 
-class CitellusTest(TestCase):
+class RisuTest(TestCase):
     def test_all_plugins_snapshot(self):
-        tmpdir = tempfile.mkdtemp(prefix="citellus-tmp")
-        tmpdir2 = tempfile.mkdtemp(prefix="citellus-tmp")
+        tmpdir = tempfile.mkdtemp(prefix="risu-tmp")
+        tmpdir2 = tempfile.mkdtemp(prefix="risu-tmp")
 
         # Setup folder for all tests
         testtype = "pass"
@@ -60,8 +60,8 @@ class CitellusTest(TestCase):
             subprocess.call([test["plugin"], test["plugin"], testtype, tmpdir])
             subprocess.call([test["plugin"], test["plugin"], testtype, tmpdir2])
 
-        # Run citellus once against them
-        results = citellus.docitellus(
+        # Run risu once against them
+        results = risu.dorisu(
             path=tmpdir,
             plugins=citplugs,
             okay=okay,
@@ -70,13 +70,11 @@ class CitellusTest(TestCase):
             info=info,
             web=True,
         )
-        maguiresults = magui.domagui(
-            sosreports=[tmpdir, tmpdir2], citellusplugins=citplugs
-        )
+        maguiresults = magui.domagui(sosreports=[tmpdir, tmpdir2], risuplugins=citplugs)
 
-        # Check that citellus.html has been copied
-        assert os.access(os.path.join(tmpdir, "citellus.json"), os.R_OK)
-        assert os.access(os.path.join(tmpdir, "citellus.html"), os.R_OK)
+        # Check that risu.html has been copied
+        assert os.access(os.path.join(tmpdir, "risu.json"), os.R_OK)
+        assert os.access(os.path.join(tmpdir, "risu.html"), os.R_OK)
         assert maguiresults
 
         # Remove tmp folder
@@ -104,8 +102,8 @@ class CitellusTest(TestCase):
             assert each in sorted({okay, failed, skipped, info})
 
     def test_all_plugins_live(self):
-        # Run citellus once against them
-        results = citellus.docitellus(
+        # Run risu once against them
+        results = risu.dorisu(
             live=True,
             plugins=citplugs,
             okay=okay,

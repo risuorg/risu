@@ -12,7 +12,7 @@
 ## How to file a bug report
 
 If you have any suggestions for improvements please do not hesitate to
-open an [issue](https://github.com/citellusorg/citellus/issues/new).
+open an [issue](https://github.com/risuorg/risu/issues/new).
 
 ## How to contribute code
 
@@ -20,8 +20,8 @@ We encourage you to contribute new plugins. Use Pull Requests to provide your co
 
 [gerrithub]: https://gerrithub.io/
 
-1.  Clone the citellus repository:
-    `git clone https://github.com/citellusorg/citellus`
+1.  Clone the risu repository:
+    `git clone https://github.com/risuorg/risu`
 2.  Install pre-commit (from pipsi for example) and prepare the hook:
     `pre-commit install`
 3.  Check out a branch in which to make your changes:
@@ -35,7 +35,7 @@ We encourage you to contribute new plugins. Use Pull Requests to provide your co
     tox -e py27  # We're skipping tox -e py35 which is also invoked by default when tox is executed without arguments.
     ```
 
-    In this way, errors that might be relevant to the test environment can be skipped. For example this one reported at issue tracker as [104](https://github.com/citellusorg/citellus/issues/104))
+    In this way, errors that might be relevant to the test environment can be skipped. For example this one reported at issue tracker as [104](https://github.com/risuorg/risu/issues/104))
 
 5.  Update your local repository:
     `git add $modified_files git commit`
@@ -73,7 +73,7 @@ to request changes; when this happens:
 ## How to write tests
 
 Please refer to the
-[templates](https://github.com/citellusorg/citellus/tree/master/doc/templates)
+[templates](https://github.com/risuorg/risu/tree/master/doc/templates)
 folder for examples.
 
 Specially remember about the headers:
@@ -86,7 +86,7 @@ Specially remember about the headers:
 # kb: url-to-kbase
 ```
 
-That are used by Citellus to fill json metadata.
+That are used by Risu to fill json metadata.
 
 If you want to contribute also Unittests for your plugins, check [TESTING.md](TESTING.md)
 
@@ -94,9 +94,9 @@ For contributing translations check [i18n.md](i18n.md)
 
 ## How to debug your test
 
-We've included a file named `env-for.debug.sh` in the root folder of Citellus repo that allows to be sourced and later execute your script.
+We've included a file named `env-for.debug.sh` in the root folder of Risu repo that allows to be sourced and later execute your script.
 
-This environment file will define the standard variables Citellus does use like:
+This environment file will define the standard variables Risu does use like:
 
 - RC_OKAY
 - RC_FAILED
@@ -104,16 +104,16 @@ This environment file will define the standard variables Citellus does use like:
 - RC_INFO
 - TEXTDOMAIN
 - TEXTOMAINDIR
-- CITELLUS_BASE
-- CITELLUS_LIVE
-- CITELLUS_ROOT
+- RISU_BASE
+- RISU_LIVE
+- RISU_ROOT
 
 And will preload the common-functions
 
 The way to use it is:
 
 ```sh
-. ~/citellus/env-for-debug.sh
+. ~/risu/env-for-debug.sh
 ```
 
 Then you can debug your script with:

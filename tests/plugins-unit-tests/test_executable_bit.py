@@ -9,25 +9,25 @@ import sys
 from unittest import TestCase
 
 sys.path.append(os.path.abspath(os.path.dirname(__file__) + "/" + "../"))
-import citellusclient.shell as citellus
+import risuclient.shell as risu
 
-testplugins = os.path.join(citellus.citellusdir, "plugins", "test")
-citellusdir = citellus.citellusdir
+testplugins = os.path.join(risu.risudir, "plugins", "test")
+risudir = risu.risudir
 
 
-class CitellusTest(TestCase):
+class RisuTest(TestCase):
     def test_plugins_have_executable_bit(self):
-        pluginpath = [os.path.join(citellus.citellusdir, "plugins", "core")]
+        pluginpath = [os.path.join(risu.risudir, "plugins", "core")]
         plugins = []
         for folder in pluginpath:
             for root, dirnames, filenames in os.walk(folder, followlinks=True):
                 for filename in filenames:
                     filepath = os.path.join(root, filename)
-                    if ".citellus_tests" not in filepath:
+                    if ".risu_tests" not in filepath:
                         plugins.append(filepath)
         plugins = sorted(set(plugins))
         pluginscit = []
-        for plugin in citellus.findplugins(folders=pluginpath):
+        for plugin in risu.findplugins(folders=pluginpath):
             pluginscit.append(plugin["plugin"])
 
         pluginscit = sorted(set(pluginscit))

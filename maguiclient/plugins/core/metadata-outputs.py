@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# Description: Plugin for reporting back citellus metadata from all sosreports
+# Description: Plugin for reporting back risu metadata from all sosreports
 
 # Copyright (C) 2018, 2019, 2020 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
@@ -9,14 +9,14 @@ from __future__ import print_function
 
 import os
 
-import citellusclient.shell as citellus
+import risuclient.shell as risu
 import maguiclient.magui as magui
 
-# Load i18n settings from citellus
-_ = citellus._
+# Load i18n settings from risu
+_ = risu._
 
 extension = "metadata-outputs"
-pluginsdir = os.path.join(citellus.citellusdir, "plugins", extension)
+pluginsdir = os.path.join(risu.risudir, "plugins", extension)
 
 
 def init():
@@ -36,7 +36,7 @@ def run(data, quiet=False):  # do not edit this line
     :return: returncode, out, err
     """
 
-    # Return all metadata passed from citellus
+    # Return all metadata passed from risu
 
     # For now, let's only print plugins that have rc ! $RC_OKAY in quiet
     if quiet:
@@ -53,9 +53,9 @@ def run(data, quiet=False):  # do not edit this line
 
     # Do return different code if we've data
     if len(err) > 0:
-        returncode = citellus.RC_FAILED
+        returncode = risu.RC_FAILED
     else:
-        returncode = citellus.RC_OKAY
+        returncode = risu.RC_OKAY
 
     out = ""
     return returncode, out, err
@@ -67,5 +67,5 @@ def help():  # do not edit this line
     :return: help text
     """
 
-    commandtext = _("Plugin for reporting back citellus metadata from all sosreports")
+    commandtext = _("Plugin for reporting back risu metadata from all sosreports")
     return commandtext

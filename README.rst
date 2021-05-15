@@ -1,15 +1,15 @@
-.. image:: https://img.shields.io/github/license/citellusorg/citellus.svg :alt: LICENSE
-.. image:: https://github.com/citellusorg/citellus/workflows/Python%20Unit%20Testing/badge.svg :alt: Actions status
-.. image:: https://travis-ci.org/citellusorg/citellus.svg?branch=master :alt:  Build Status
-.. image:: https://codecov.io/gh/citellusorg/citellus/branch/master/graph/badge.svg :alt:  Coverage Status
-.. image:: https://img.shields.io/github/release/citellusorg/citellus.svg :alt:  Releases
-.. image:: https://badge.fury.io/py/citellus.svg :alt:  Pypi version
-.. image:: https://images.microbadger.com/badges/image/citellus/citellus.svg :alt:  Microbadger
+.. image:: https://img.shields.io/github/license/risuorg/risu.svg :alt: LICENSE
+.. image:: https://github.com/risuorg/risu/workflows/Python%20Unit%20Testing/badge.svg :alt: Actions status
+.. image:: https://travis-ci.org/risuorg/risu.svg?branch=master :alt:  Build Status
+.. image:: https://codecov.io/gh/risuorg/risu/branch/master/graph/badge.svg :alt:  Coverage Status
+.. image:: https://img.shields.io/github/release/risuorg/risu.svg :alt:  Releases
+.. image:: https://badge.fury.io/py/risu.svg :alt:  Pypi version
+.. image:: https://images.microbadger.com/badges/image/risu/risu.svg :alt:  Microbadger
 
 Introduction
 ============
 
-Citellus is a framework to help with system configuration validation on
+Risu is a framework to help with system configuration validation on
 either live system or any sort of snapshot of the filesystem.
 
 Via execution of 'plugins' it reports status on each one execution
@@ -27,18 +27,18 @@ Highlights
 -  Allows to dump output to json file to be processed by other tools.
 
    -  Allow to visualize html from json output.
-   -  Check our sample at: `Citellus-www`_
+   -  Check our sample at: `Risu-www`_
 
 -  Ansible playbook support.
 -  Save / restore default settings
 
 Check latest changes on `Changelog.md`_
 
-Check for plugins listing on `citellusclient/plugins/`_
+Check for plugins listing on `risuclient/plugins/`_
 
 Framework contains additional readmes for the tools included:
 
--  `Citellus README`_
+-  `Risu README`_
 -  `Magui README`_
 
 Installation
@@ -46,10 +46,10 @@ Installation
 
 Check ``README`` above for detailed instructions outside os simple ones:
 - Just clone the git repository and execute it from there 'or' - use
-'pipsi' or create a python virtual env to install package 'citellus'
+'pipsi' or create a python virtual env to install package 'risu'
 
 -  Give it a try running as 'root' on your system with:
-   ``./citellus.py -l`` so it will show ``live execution`` and only
+   ``./risu.py -l`` so it will show ``live execution`` and only
    ``Failed`` tests.
 
 How does it looks like?
@@ -61,14 +61,14 @@ Check how does it look in an execution at: `asciicast`_
 Additional resources
 --------------------
 
-Check https://citellusorg.github.io for more details and information
+Check https://risuorg.github.io for more details and information
 
 
 
-.. _Citellus-www: https://citellusorg.github.io/citellus.html
+.. _Risu-www: https://risuorg.github.io/risu.html
 .. _Changelog.md: Changelog.md
-.. _citellusclient/plugins/: citellusclient/plugins/
-.. _Citellus README: README.citellus.md
+.. _risuclient/plugins/: risuclient/plugins/
+.. _Risu README: README.risu.md
 .. _Magui README: README.magui.md
 .. _asciicast: https://asciinema.org/a/169814
-.. _devconf.cz 2018!!: https://devconfcz2018.sched.com/event/DJXG/detect-pitfalls-of-osp-deployments-with-citellus
+.. _devconf.cz 2018!!: https://devconfcz2018.sched.com/event/DJXG/detect-pitfalls-of-osp-deployments-with-risu

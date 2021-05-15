@@ -22,7 +22,7 @@
 # priority: 0<>1000 for likelihood to break your environment if this test reports fail
 # kb: url-to-kbase
 
-[[ "x$CITELLUS_LIVE" == "x1" ]] || exit ${RC_SKIPPED}
+[[ "x$RISU_LIVE" == "x1" ]] || exit ${RC_SKIPPED}
 
 if true; then
 	if true; then

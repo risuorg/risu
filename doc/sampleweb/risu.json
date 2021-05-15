@@ -1,0 +1,3245 @@
+{
+  "results": {
+    "a937d945ac70eaa8da2861b25b5b4d34": {
+      "category": "security",
+      "hash": "190b1b45792a11855b10106cd7966d6c",
+      "description": "Checks if package is affected of Spectre/Meltdown",
+      "plugin": "/risu/risuclient/plugins/core/security/spectre/vdsm.sh",
+      "name": "vdsm",
+      "priority": 400,
+      "long_name": "Checks for fixed vdsm package",
+      "bugzilla": "",
+      "result": {
+        "rc": 30,
+        "err": "Please do check https://access.redhat.com/security/vulnerabilities/speculativeexecution for guidance\nrequired package vdsm not found.",
+        "out": ""
+      },
+      "time": 0.022782087326049805,
+      "backend": "core",
+      "id": "a937d945ac70eaa8da2861b25b5b4d34",
+      "subcategory": "security/spectre"
+    },
+    "34a87d8f1cdfecbb89936d76b628e66d": {
+      "category": "launchpad",
+      "hash": "c2736688d638362bd11eb3d604d5775b",
+      "description": "Checks for transaction size exceeded on keystone token purge",
+      "plugin": "/risu/risuclient/plugins/core/launchpad/openstack/keystone/1649616.sh",
+      "name": "1649616",
+      "priority": 600,
+      "long_name": "Keystone token flush job failure",
+      "bugzilla": "https://bugs.launchpad.net/keystone/+bug/1649616",
+      "result": {
+        "rc": 10,
+        "err": "",
+        "out": ""
+      },
+      "time": 0.01367807388305664,
+      "backend": "core",
+      "id": "34a87d8f1cdfecbb89936d76b628e66d",
+      "subcategory": "launchpad/openstack/keystone"
+    },
+    "9d1737f8fd842b76f5dc35d3d9a8131f-8d3e2ff1256a3d8e80d8d70350476bda": {
+      "category": "positive",
+      "hash": "31ade0c256bc3dd6b97b31bd85a4fd34",
+      "description": "Checks Service policy.json file: /etc/mistral/policy.json",
+      "plugin": "/risu/risuclient/plugins/faraday/positive/openstack/bundle-openstack-policy.txt",
+      "subcategory": "positive/openstack",
+      "priority": 500,
+      "long_name": "Checks Service policy.json file",
+      "bugzilla": "",
+      "result": {
+        "rc": 30,
+        "err": "File /cases/02016541/sosreport-controller-0.02016541-20180225232251/etc/mistral/policy.json is not accessible in read mode",
+        "out": ""
+      },
+      "time": 5.1975250244140625e-5,
+      "path": "${RISU_ROOT}/etc/mistral/policy.json",
+      "backend": "faraday",
+      "id": "9d1737f8fd842b76f5dc35d3d9a8131f-8d3e2ff1256a3d8e80d8d70350476bda",
+      "name": "Check /etc/mistral/policy.json"
+    },
+    "5e8c11fd26d184bfcaec2a70ab081c9e": {
+      "category": "system",
+      "hash": "6c151f5cb572ff315bbdc794df6f28e6",
+      "description": "We try to guess if the latest reboot(s) were clean or not",
+      "plugin": "/risu/risuclient/plugins/core/system/reboot.py",
+      "name": "reboot",
+      "priority": 400,
+      "long_name": "Reboot Validation",
+      "bugzilla": "",
+      "result": {
+        "rc": 30,
+        "err": "No reboot found",
+        "out": ""
+      },
+      "time": 0.20177698135375977,
+      "backend": "core",
+      "id": "5e8c11fd26d184bfcaec2a70ab081c9e",
+      "subcategory": ""
+    },
+    "3919f0b69e98e6053ea2dc1ec43318c4": {
+      "category": "pacemaker",
+      "hash": "35229c4782c7fdfd5a73882283d8dd6d",
+      "description": "Checks number of pacemaker nodes",
+      "plugin": "/risu/risuclient/plugins/core/pacemaker/nodes_number.sh",
+      "name": "nodes_number",
+      "priority": 800,
+      "long_name": "Number of pacemaker nodes",
+      "bugzilla": "",
+      "result": {
+        "rc": 10,
+        "err": "",
+        "out": ""
+      },
+      "time": 0.024814128875732422,
+      "backend": "core",
+      "id": "3919f0b69e98e6053ea2dc1ec43318c4",
+      "subcategory": ""
+    },
+    "80d703ddf596dab9b94bd250d5984726": {
+      "category": "ceph",
+      "hash": "8e7217b6c5011ffdd42692b2ea5d3865",
+      "description": "Checks Ceph status on node",
+      "plugin": "/risu/risuclient/plugins/core/ceph/status.sh",
+      "name": "status",
+      "priority": 800,
+      "long_name": "Ceph status",
+      "bugzilla": "",
+      "result": {
+        "rc": 30,
+        "err": "required file /etc/ceph/ceph.conf not found.",
+        "out": ""
+      },
+      "time": 0.012595176696777344,
+      "backend": "core",
+      "id": "80d703ddf596dab9b94bd250d5984726",
+      "subcategory": ""
+    },
+    "01524b3b783e7a0d33b4866ce55c47cd": {
+      "category": "system",
+      "hash": "4010b703af3073a34db4ebb16216d3eb",
+      "description": "Looks for SEGV",
+      "plugin": "/risu/risuclient/plugins/core/system/segfault.sh",
+      "name": "segfault",
+      "priority": 700,
+      "long_name": "SEGV detector",
+      "bugzilla": "",
+      "result": {
+        "rc": 20,
+        "err": "SEGV detected\nFeb 25 03:47:03 controller-0 kernel: httpd[69773]: segfault at 8 ip 00007fe6a7661a90 sp 00007fe6a6740d70 error 4 in libpython2.7.so.1.0[7fe6a7562000+17d000]\nFeb 25 03:47:03 controller-0 kernel: httpd[69769]: segfault at 8 ip 00007fe6a7661a90 sp 00007fe6a6740d70 error 4 in libpython2.7.so.1.0[7fe6a7562000+17d000]",
+        "out": ""
+      },
+      "time": 0.13987398147583008,
+      "backend": "core",
+      "id": "01524b3b783e7a0d33b4866ce55c47cd",
+      "subcategory": ""
+    },
+    "1af7415c0034585f8c5b25b57bc14dd4": {
+      "category": "openstack",
+      "hash": "3e7642e17dff87dda10738704635ada0",
+      "description": "Checks if crontab for cinder data purge is in place",
+      "plugin": "/risu/risuclient/plugins/core/openstack/crontab/cinder-data-purge.sh",
+      "name": "cinder-data-purge",
+      "priority": 700,
+      "long_name": "Cinder database purge",
+      "bugzilla": "",
+      "result": {
+        "rc": 10,
+        "err": "",
+        "out": ""
+      },
+      "time": 0.02054905891418457,
+      "backend": "core",
+      "id": "1af7415c0034585f8c5b25b57bc14dd4",
+      "subcategory": "openstack/crontab"
+    },
+    "c01e8621361d7f1c9c17ea47c114242a": {
+      "category": "openstack",
+      "hash": "07d53a1e54f019ed22aa2f5b93094edf",
+      "description": "Checks if non recommended nas_secure_file_operation and nas_secure_file_permissions are enabled for NFS and NetApp drivers",
+      "plugin": "/risu/risuclient/plugins/core/openstack/cinder/nas_secure.sh",
+      "name": "nas_secure",
+      "priority": 600,
+      "long_name": "Checks if nas_secure_file_{operations,permissions} is enabled",
+      "bugzilla": "",
+      "result": {
+        "rc": 20,
+        "err": "Detected nas_secure options as true\nnas_secure_file_* options may cause permissions problems with snapshots, live migration and other operations",
+        "out": ""
+      },
+      "time": 0.03414487838745117,
+      "backend": "core",
+      "id": "c01e8621361d7f1c9c17ea47c114242a",
+      "subcategory": "openstack/cinder"
+    },
+    "0c3e9d8bf491c54de8c408b35c2cfef4": {
+      "category": "openstack",
+      "hash": "ad7ed0ffb40f51ccf356dac0f460fb24",
+      "description": "Report any DBErrors in OpenStack services",
+      "plugin": "/risu/risuclient/plugins/core/openstack/mysql/dberror.sh",
+      "name": "dberror",
+      "priority": 800,
+      "long_name": "DBErrors in OpenStack services",
+      "bugzilla": "",
+      "result": {
+        "rc": 10,
+        "err": "",
+        "out": ""
+      },
+      "time": 0.19811606407165527,
+      "backend": "core",
+      "id": "0c3e9d8bf491c54de8c408b35c2cfef4",
+      "subcategory": "openstack/mysql"
+    },
+    "f14232011067f7c626499a29efbd3999": {
+      "category": "pacemaker",
+      "hash": "a690e484563190c2b760e0fa84860284",
+      "description": "Check if there are pacemaker failed actions",
+      "plugin": "/risu/risuclient/plugins/core/pacemaker/failed_actions.sh",
+      "name": "failed_actions",
+      "priority": 800,
+      "long_name": "Failed actions",
+      "bugzilla": "",
+      "result": {
+        "rc": 10,
+        "err": "no failed actions detected",
+        "out": ""
+      },
+      "time": 0.022001028060913086,
+      "backend": "core",
+      "id": "f14232011067f7c626499a29efbd3999",
+      "subcategory": ""
+    },
+    "47e143b36255507ede0bc6f013250495": {
+      "category": "security",
+      "hash": "051a46dd4b67892607f822fac56e89c6",
+      "description": "Checks if user disabled fix for Meltdown",
+      "plugin": "/risu/risuclient/plugins/core/security/meltdown-disabled.sh",
+      "name": "meltdown-disabled",
+      "priority": 400,
+      "long_name": "Checks for disabled kernel protection features against Meltdown",
+      "bugzilla": "",
+      "result": {
+        "rc": 10,
+        "err": "",
+        "out": ""
+      },
+      "time": 0.014451980590820312,
+      "backend": "core",
+      "id": "47e143b36255507ede0bc6f013250495",
+      "subcategory": ""
+    },
+    "f50101382f22d70895ba93b6ea3571a8": {
+      "category": "openstack",
+      "hash": "7ebf9b433b5738881b0bbdbf3081cae0",
+      "description": "Checks if Ceph repos are not enabled on computes",
+      "plugin": "/risu/risuclient/plugins/core/openstack/ceph/missing-repos-on-compute.sh",
+      "name": "missing-repos-on-compute",
+      "priority": 200,
+      "long_name": "Ceph rhceph repository",
+      "bugzilla": "",
+      "result": {
+        "rc": 30,
+        "err": "works only on compute node",
+        "out": ""
+      },
+      "time": 0.011654853820800781,
+      "backend": "core",
+      "id": "f50101382f22d70895ba93b6ea3571a8",
+      "subcategory": "openstack/ceph"
+    },
+    "c1d0f4dc45b312ba06fa34d4d766f9ea": {
+      "category": "positive",
+      "hash": "2bc91d1cb943f1d3302b2fe06267ea0d",
+      "description": "Checks Ceilometer pipeline-yaml file",
+      "plugin": "/risu/risuclient/plugins/faraday/positive/openstack/ceilometer/pipeline-yaml.txt",
+      "name": "pipeline-yaml",
+      "priority": 500,
+      "long_name": "Ceilometer pipeline-yaml",
+      "bugzilla": "",
+      "result": {
+        "rc": 10,
+        "err": "94a656f7b8eb6e6a4071789a15174427",
+        "out": ""
+      },
+      "time": 0.00012612342834472656,
+      "path": "${RISU_ROOT}/etc/ceilometer/pipeline.yaml",
+      "backend": "faraday",
+      "id": "c1d0f4dc45b312ba06fa34d4d766f9ea",
+      "subcategory": "positive/openstack/ceilometer"
+    },
+    "4d604f0392fd029b3390266e40d1f5d4": {
+      "category": "system",
+      "hash": "eba4766700519fddb2eabdc850203b87",
+      "description": "Looks for the Kernel Out of Memory, panics and soft locks",
+      "plugin": "/risu/risuclient/plugins/core/system/kernel_panic.sh",
+      "name": "kernel_panic",
+      "priority": 700,
+      "long_name": "Kernel OOM-killer, panic or soft lockup",
+      "bugzilla": "",
+      "result": {
+        "rc": 10,
+        "err": "",
+        "out": ""
+      },
+      "time": 0.30206298828125,
+      "backend": "core",
+      "id": "4d604f0392fd029b3390266e40d1f5d4",
+      "subcategory": ""
+    },
+    "1e92ef559321cb21698a33ff08e6aa22": {
+      "category": "openstack",
+      "hash": "0e62b66ba521f0db5df586768aeb146d",
+      "description": "Check rabbitmq queues with no consumers but messages",
+      "plugin": "/risu/risuclient/plugins/core/openstack/rabbitmq/queues_with_no_consumer_but_msgs.sh",
+      "name": "queues_with_no_consumer_but_msgs",
+      "priority": 0,
+      "long_name": "RabbitMQ queues with no consumer",
+      "bugzilla": "",
+      "result": {
+        "rc": 10,
+        "err": "",
+        "out": ""
+      },
+      "time": 0.018095970153808594,
+      "backend": "core",
+      "id": "1e92ef559321cb21698a33ff08e6aa22",
+      "subcategory": "openstack/rabbitmq"
+    },
+    "ab8f8f0065fea5dad5ebb6f02639311a": {
+      "category": "positive",
+      "hash": "fa3fca5cc95b58424b6921dd8faa63e1",
+      "description": "Checks /etc/redhat-release across hosts",
+      "plugin": "/risu/risuclient/plugins/faraday/positive/system/redhat-release.txt",
+      "name": "redhat-release",
+      "priority": 500,
+      "long_name": "Check same RHEL release across hosts",
+      "bugzilla": "",
+      "result": {
+        "rc": 10,
+        "err": "f28ac7fbc6abd6465d5bfb23e7e387d6",
+        "out": ""
+      },
+      "time": 8.20159912109375e-5,
+      "path": "${RISU_ROOT}/etc/redhat-release",
+      "backend": "faraday",
+      "id": "ab8f8f0065fea5dad5ebb6f02639311a",
+      "subcategory": "positive/system"
+    },
+    "df7e5b06785e078463c35dcbe019b2a0": {
+      "category": "openstack",
+      "hash": "dab1a807f2cec70df466de4480824562",
+      "description": "Checks HAProxy max connections",
+      "plugin": "/risu/risuclient/plugins/core/openstack/mysql/maxconn.sh",
+      "name": "maxconn",
+      "priority": 500,
+      "long_name": "HAProxy maximum connections",
+      "bugzilla": "",
+      "result": {
+        "rc": 30,
+        "err": "works on live-system only",
+        "out": ""
+      },
+      "time": 0.003834962844848633,
+      "backend": "core",
+      "id": "df7e5b06785e078463c35dcbe019b2a0",
+      "subcategory": "openstack/mysql"
+    },
+    "147b6495b919b10bcdb876693bb005f2": {
+      "category": "bugzilla",
+      "hash": "461b96ce653ebe23233df802b21d38ee",
+      "description": "Checks missconfigured host in nova vs hostname",
+      "plugin": "/risu/risuclient/plugins/core/bugzilla/openstack/ceilometer/1483456.sh",
+      "name": "1483456",
+      "priority": 700,
+      "long_name": "Mismatch between nova host and hostname",
+      "bugzilla": "https://bugzilla.redhat.com/show_bug.cgi?id=1483456",
+      "result": {
+        "rc": 30,
+        "err": "works only on controller node",
+        "out": ""
+      },
+      "time": 0.013423919677734375,
+      "backend": "core",
+      "id": "147b6495b919b10bcdb876693bb005f2",
+      "subcategory": "bugzilla/openstack/ceilometer"
+    },
+    "c4efb4016115e3dcf25775f304a0d862": {
+      "category": "bugzilla",
+      "hash": "3173e02151bd540a61b6d6c6625dfb4a",
+      "description": "Checks for missing format_dom in nova",
+      "plugin": "/risu/risuclient/plugins/core/bugzilla/openstack/nova/1527345.sh",
+      "name": "1527345",
+      "priority": 800,
+      "long_name": "Missing format_dom in nova",
+      "bugzilla": "https://bugzilla.redhat.com/show_bug.cgi?id=1527345",
+      "result": {
+        "rc": 30,
+        "err": "required file /var/log/nova/nova-compute.log not found.",
+        "out": ""
+      },
+      "time": 0.01178598403930664,
+      "backend": "core",
+      "id": "c4efb4016115e3dcf25775f304a0d862",
+      "subcategory": "bugzilla/openstack/nova"
+    },
+    "1c8ecb3d34af7fc68210cfa42217a209": {
+      "category": "pacemaker",
+      "hash": "bd6a39e68223dc19f52e3e8a95b00395",
+      "description": "Checks pacemaker stonith devices are configured",
+      "plugin": "/risu/risuclient/plugins/core/pacemaker/fence_device.sh",
+      "name": "fence_device",
+      "priority": 300,
+      "long_name": "Stonith device configuration",
+      "bugzilla": "",
+      "result": {
+        "rc": 20,
+        "err": "NO stonith devices configured",
+        "out": ""
+      },
+      "time": 0.018049001693725586,
+      "backend": "core",
+      "id": "1c8ecb3d34af7fc68210cfa42217a209",
+      "subcategory": ""
+    },
+    "a7bb007f251362e149e42249c41e7ea1": {
+      "category": "openstack",
+      "hash": "b18d459598eb16499a22eb4dff03066d",
+      "description": "Report libvirtErrors in Nova OpenStack service",
+      "plugin": "/risu/risuclient/plugins/core/openstack/nova/libvirt-error.sh",
+      "name": "libvirt-error",
+      "priority": 800,
+      "long_name": "Libvirt errors in nova service",
+      "bugzilla": "",
+      "result": {
+        "rc": 30,
+        "err": "works only on compute node",
+        "out": ""
+      },
+      "time": 0.022130966186523438,
+      "backend": "core",
+      "id": "a7bb007f251362e149e42249c41e7ea1",
+      "subcategory": "openstack/nova"
+    },
+    "dba8f4129b3ffa43f7ccf5083bed405b": {
+      "category": "openstack",
+      "hash": "09a76bdcde266d229f7271646f09b839",
+      "description": "Checks timeouts in navicli usage that might require tuning",
+      "plugin": "/risu/risuclient/plugins/core/openstack/cinder/timeout-with-EMC-VNX.sh",
+      "name": "timeout-with-EMC-VNX",
+      "priority": 600,
+      "long_name": "Checks for timeouts using 'navicli'",
+      "bugzilla": "",
+      "result": {
+        "rc": 30,
+        "err": "required file /var/log/cinder/volume.log not found.",
+        "out": ""
+      },
+      "time": 0.011900186538696289,
+      "backend": "core",
+      "id": "dba8f4129b3ffa43f7ccf5083bed405b",
+      "subcategory": "openstack/cinder"
+    },
+    "66d295784165d33a3720e00f4660ead2": {
+      "category": "openstack",
+      "hash": "a5de1918aeecb48174d96c95bc98182e",
+      "description": "Make sure the RabbitMQ cluster has HA for all queues except the built-in amq.* ones\n",
+      "plugin": "/risu/risuclient/plugins/ansible/openstack/rabbitmq/ha-policies.yml",
+      "name": "ha-policies",
+      "priority": 500,
+      "long_name": "RabbitMQ HA policies",
+      "bugzilla": "",
+      "result": {
+        "rc": 30,
+        "err": "Plugin does not satisfy conditions for running",
+        "out": ""
+      },
+      "time": 0.0005679130554199219,
+      "backend": "ansible",
+      "id": "66d295784165d33a3720e00f4660ead2",
+      "subcategory": "openstack/rabbitmq"
+    },
+    "e3a9b1842f91b66cad2e02bc7f62de71": {
+      "category": "openstack",
+      "hash": "dfd03481e19c79ec4a1d54fadb8e13b4",
+      "description": "Check OpenStack services debug configuration in containers",
+      "plugin": "/risu/risuclient/plugins/core/openstack/containers/debug.sh",
+      "name": "debug",
+      "priority": 200,
+      "long_name": "Services debug configuration",
+      "bugzilla": "",
+      "result": {
+        "rc": 30,
+        "err": "the OSP12 deployment seems to not be containerized",
+        "out": ""
+      },
+      "time": 0.024667978286743164,
+      "backend": "core",
+      "id": "e3a9b1842f91b66cad2e02bc7f62de71",
+      "subcategory": "openstack/containers"
+    },
+    "cd47ce107d244ebbf070ab4e3fe5b293": {
+      "category": "system",
+      "hash": "80f6b80b6ff1dc3301a4db676c4f5024",
+      "description": "This plugin check abrtd configuration",
+      "plugin": "/risu/risuclient/plugins/core/system/abrtd-config.sh",
+      "name": "abrtd-config",
+      "priority": 100,
+      "long_name": "ABRTd configuration",
+      "bugzilla": "",
+      "result": {
+        "rc": 20,
+        "err": "abrt package missing",
+        "out": ""
+      },
+      "time": 0.017513036727905273,
+      "backend": "core",
+      "id": "cd47ce107d244ebbf070ab4e3fe5b293",
+      "subcategory": ""
+    },
+    "d3f50667938265bee10527baebb28a96": {
+      "category": "openstack",
+      "hash": "6ce911bad1a2ecaef3282bd746efe544",
+      "description": "Checks incompatible AggregateInstanceExtraSpecsFilter and ComputeCapabilitiesFilter in nova",
+      "plugin": "/risu/risuclient/plugins/core/openstack/nova/incompatible-aggregate-capabilities-filters.sh",
+      "name": "incompatible-aggregate-capabilities-filters",
+      "priority": 600,
+      "long_name": "Incompatible AggregateInstanceExtraSpecsFilter and ComputeCapabilitiesFilter",
+      "bugzilla": "https://bugs.launchpad.net/nova/+bug/1279719",
+      "result": {
+        "rc": 10,
+        "err": "",
+        "out": ""
+      },
+      "time": 0.01613593101501465,
+      "backend": "core",
+      "id": "d3f50667938265bee10527baebb28a96",
+      "subcategory": "openstack/nova"
+    },
+    "a30b2c0443c1ce03ddf62f028af244c4": {
+      "category": "system",
+      "hash": "e2cba36ddd78bfe2adfdca8489a45333",
+      "description": "This plugin reports missing systat that might be later needed for perf issues diagnostics",
+      "plugin": "/risu/risuclient/plugins/core/system/sysstat.sh",
+      "name": "sysstat",
+      "priority": 100,
+      "long_name": "Package sysstat installed",
+      "bugzilla": "",
+      "result": {
+        "rc": 20,
+        "err": "systat package missing",
+        "out": ""
+      },
+      "time": 0.008809089660644531,
+      "backend": "core",
+      "id": "a30b2c0443c1ce03ddf62f028af244c4",
+      "subcategory": ""
+    },
+    "4af62867734e65704bf1df9e6ea6fca4": {
+      "category": "security",
+      "hash": "e9939cc9d7c2bbf555bcc193692ac3ee",
+      "description": "Checks if package is affected of Spectre/Meltdown",
+      "plugin": "/risu/risuclient/plugins/core/security/spectre/rhev-hypervisor7.sh",
+      "name": "rhev-hypervisor7",
+      "priority": 400,
+      "long_name": "Checks for fixed rhev-hypervisor7 package",
+      "bugzilla": "",
+      "result": {
+        "rc": 30,
+        "err": "Please do check https://access.redhat.com/security/vulnerabilities/speculativeexecution for guidance\nrequired package rhev-hypervisor7 not found.",
+        "out": ""
+      },
+      "time": 0.02041482925415039,
+      "backend": "core",
+      "id": "4af62867734e65704bf1df9e6ea6fca4",
+      "subcategory": "security/spectre"
+    },
+    "1417abf032d18718b89edd646fa08b87": {
+      "category": "docker",
+      "hash": "3df91f899265be74aa960e128195eeaf",
+      "description": "Some docker versions have excessive memory usage",
+      "plugin": "/risu/risuclient/plugins/core/docker/excessive-memory-usage.sh",
+      "name": "excessive-memory-usage",
+      "priority": 700,
+      "long_name": "Checks for high mem usage docker version",
+      "bugzilla": "",
+      "result": {
+        "rc": 10,
+        "err": "",
+        "out": ""
+      },
+      "time": 0.056575775146484375,
+      "backend": "core",
+      "id": "1417abf032d18718b89edd646fa08b87",
+      "subcategory": ""
+    },
+    "bfc48141c52f4ca3ebab410c7b1d4b4e": {
+      "category": "bugzilla",
+      "hash": "802a34a7ace7904779990c145aa953eb",
+      "description": "Checks for wrong host definition on neutron.conf",
+      "plugin": "/risu/risuclient/plugins/core/bugzilla/openstack/neutron/1474092.sh",
+      "name": "1474092",
+      "priority": 700,
+      "long_name": "Mismatch between neutron host and hostname",
+      "bugzilla": "https://bugzilla.redhat.com/show_bug.cgi?id=1474092",
+      "result": {
+        "rc": 10,
+        "err": "",
+        "out": ""
+      },
+      "time": 0.0163729190826416,
+      "backend": "core",
+      "id": "bfc48141c52f4ca3ebab410c7b1d4b4e",
+      "subcategory": "bugzilla/openstack/neutron"
+    },
+    "e36ed597c999ba7d7512c0d48498e25d": {
+      "category": "bugzilla",
+      "hash": "a96f0e72b7df61cd8c919fa9208a02f3",
+      "description": "Checks python-ryu tracebacks",
+      "plugin": "/risu/risuclient/plugins/core/bugzilla/openstack/neutron/1450223.sh",
+      "name": "1450223",
+      "priority": 300,
+      "long_name": "Traceback from python-ryu package",
+      "bugzilla": "https://bugzilla.redhat.com/show_bug.cgi?id=1450223",
+      "result": {
+        "rc": 30,
+        "err": "",
+        "out": ""
+      },
+      "time": 0.01568007469177246,
+      "backend": "core",
+      "id": "e36ed597c999ba7d7512c0d48498e25d",
+      "subcategory": "bugzilla/openstack/neutron"
+    },
+    "9d1737f8fd842b76f5dc35d3d9a8131f-bfbc735395c8ec9e2109ca70254934fc": {
+      "category": "positive",
+      "hash": "31ade0c256bc3dd6b97b31bd85a4fd34",
+      "description": "Checks Service policy.json file: /etc/keystone/policy.json",
+      "plugin": "/risu/risuclient/plugins/faraday/positive/openstack/bundle-openstack-policy.txt",
+      "subcategory": "positive/openstack",
+      "priority": 500,
+      "long_name": "Checks Service policy.json file",
+      "bugzilla": "",
+      "result": {
+        "rc": 10,
+        "err": "8a80554c91d9fca8acb82f023de02f11",
+        "out": ""
+      },
+      "time": 0.0001537799835205078,
+      "path": "${RISU_ROOT}/etc/keystone/policy.json",
+      "backend": "faraday",
+      "id": "9d1737f8fd842b76f5dc35d3d9a8131f-bfbc735395c8ec9e2109ca70254934fc",
+      "name": "Check /etc/keystone/policy.json"
+    },
+    "9d1737f8fd842b76f5dc35d3d9a8131f-05b75a27d3bda0444a368761b185ebf2": {
+      "category": "positive",
+      "hash": "31ade0c256bc3dd6b97b31bd85a4fd34",
+      "description": "Checks Service policy.json file: /etc/ironic/policy.json",
+      "plugin": "/risu/risuclient/plugins/faraday/positive/openstack/bundle-openstack-policy.txt",
+      "subcategory": "positive/openstack",
+      "priority": 500,
+      "long_name": "Checks Service policy.json file",
+      "bugzilla": "",
+      "result": {
+        "rc": 10,
+        "err": "80ff0c10121ba1a6cb98dfd9a2985148",
+        "out": ""
+      },
+      "time": 4.792213439941406e-5,
+      "path": "${RISU_ROOT}/etc/ironic/policy.json",
+      "backend": "faraday",
+      "id": "9d1737f8fd842b76f5dc35d3d9a8131f-05b75a27d3bda0444a368761b185ebf2",
+      "name": "Check /etc/ironic/policy.json"
+    },
+    "488045ac842fd9f09ee801ba882cdd2b": {
+      "category": "openstack",
+      "hash": "392e60436b9fd2bfa427da18b8196cb4",
+      "description": "Checks if LVM is used as backing storage",
+      "plugin": "/risu/risuclient/plugins/core/openstack/cinder/lvm.sh",
+      "name": "lvm",
+      "priority": 600,
+      "long_name": "Cinder LVM Backend",
+      "bugzilla": "",
+      "result": {
+        "rc": 10,
+        "err": "",
+        "out": ""
+      },
+      "time": 0.04192709922790527,
+      "backend": "core",
+      "id": "488045ac842fd9f09ee801ba882cdd2b",
+      "subcategory": "openstack/cinder"
+    },
+    "ef704b3e83ce4247595b6d83bf37aed7": {
+      "category": "openstack",
+      "hash": "e6fe857fb47d04d3dc53c8899e48ddfe",
+      "description": "Checks for invalid OSP10 firewall configuration in neutron",
+      "plugin": "/risu/risuclient/plugins/core/openstack/neutron/neutron-openvswitch-firewall-driver.sh",
+      "name": "neutron-openvswitch-firewall-driver",
+      "priority": 200,
+      "long_name": "Check OSP10 and firewall configuration not supported",
+      "bugzilla": "",
+      "result": {
+        "rc": 30,
+        "err": "This affects only OSP10",
+        "out": ""
+      },
+      "time": 0.017262935638427734,
+      "backend": "core",
+      "id": "ef704b3e83ce4247595b6d83bf37aed7",
+      "subcategory": "openstack/neutron"
+    },
+    "46edbea722bdb6a9ec7bec36373ff68c": {
+      "category": "openstack",
+      "hash": "57ddb535f31f793dbdda5a035e0a60d6",
+      "description": "Report on low glance image_size_cap that might affect big image uploads",
+      "plugin": "/risu/risuclient/plugins/core/openstack/glance/image_size_cap.sh",
+      "name": "image_size_cap",
+      "priority": 300,
+      "long_name": "Image upload size limit",
+      "bugzilla": "",
+      "result": {
+        "rc": 10,
+        "err": "image_size_cap set to 1 TiB",
+        "out": ""
+      },
+      "time": 0.015494823455810547,
+      "backend": "core",
+      "id": "46edbea722bdb6a9ec7bec36373ff68c",
+      "subcategory": "openstack/glance"
+    },
+    "32c81184e676141195ace4a86e7eae89": {
+      "category": "system",
+      "hash": "c55114b9c43a6eefc4f6d7221bf24c06",
+      "description": "Detects if PERC RAID Controller or Linux Megaraid Driver resets resulting in intermittent loss of access to all drivers on system",
+      "plugin": "/risu/risuclient/plugins/core/system/megaraid.sh",
+      "name": "megaraid",
+      "priority": 500,
+      "long_name": "Detects PERC RAID / Megaraid resets",
+      "bugzilla": "",
+      "result": {
+        "rc": 10,
+        "err": "",
+        "out": ""
+      },
+      "time": 0.026066064834594727,
+      "backend": "core",
+      "id": "32c81184e676141195ace4a86e7eae89",
+      "subcategory": ""
+    },
+    "5ddd40f323ffaaab1f2c5f702abc5311": {
+      "category": "bugzilla",
+      "hash": "bb688b88458cc95e11807bad9e47e63d",
+      "description": "Checks httpd WSGIApplication defined to avoid wrong redirection",
+      "plugin": "/risu/risuclient/plugins/core/bugzilla/openstack/httpd/1478042.sh",
+      "name": "1478042",
+      "priority": 600,
+      "long_name": "WSGIApplicationGroup definition in mod_wsgi",
+      "bugzilla": "https://bugzilla.redhat.com/show_bug.cgi?id=1478042",
+      "result": {
+        "rc": 30,
+        "err": "required file /etc/httpd/conf.d/*-horizon_vhost.conf not found.",
+        "out": ""
+      },
+      "time": 0.0209348201751709,
+      "backend": "core",
+      "id": "5ddd40f323ffaaab1f2c5f702abc5311",
+      "subcategory": "bugzilla/openstack/httpd"
+    },
+    "e38cc92844176aedf6c480a55f8bad7e": {
+      "category": "bugzilla",
+      "hash": "0843ab2949abedf4ba4336caeb079090",
+      "description": "Checks for outdated ceph packages",
+      "plugin": "/risu/risuclient/plugins/core/bugzilla/openstack/ceph/1358697.sh",
+      "name": "1358697",
+      "priority": 400,
+      "long_name": "Old Ceph packages",
+      "bugzilla": "https://bugzilla.redhat.com/show_bug.cgi?id=1358697",
+      "result": {
+        "rc": 30,
+        "err": "required packages not found",
+        "out": ""
+      },
+      "time": 0.017805099487304688,
+      "backend": "core",
+      "id": "e38cc92844176aedf6c480a55f8bad7e",
+      "subcategory": "bugzilla/openstack/ceph"
+    },
+    "c66311fca211551c458e46b889928180": {
+      "category": "system",
+      "hash": "0b41bdd73a134f7ffc99d8c5151459df",
+      "description": "Checks logortate is installed and operating on the system",
+      "plugin": "/risu/risuclient/plugins/core/system/logrotate.sh",
+      "name": "logrotate",
+      "priority": 300,
+      "long_name": "Checks if logrotate is installed and running",
+      "bugzilla": "",
+      "result": {
+        "rc": 10,
+        "err": "",
+        "out": ""
+      },
+      "time": 0.010293960571289062,
+      "backend": "core",
+      "id": "c66311fca211551c458e46b889928180",
+      "subcategory": ""
+    },
+    "0df55f566112f436328c562750ce77bb": {
+      "category": "system",
+      "hash": "132facf83a10f1f96260446eea49d950",
+      "description": "Determines SELinux status on configuration",
+      "plugin": "/risu/risuclient/plugins/core/system/selinux_config.sh",
+      "name": "selinux_config",
+      "priority": 100,
+      "long_name": "SELinux persistent status",
+      "bugzilla": "",
+      "result": {
+        "rc": 20,
+        "err": "persistent selinux mode is not enforcing (found permissive)",
+        "out": ""
+      },
+      "time": 0.012369871139526367,
+      "backend": "core",
+      "id": "0df55f566112f436328c562750ce77bb",
+      "subcategory": ""
+    },
+    "9d1737f8fd842b76f5dc35d3d9a8131f-2574a413974df7c035284120a768f76c": {
+      "category": "positive",
+      "hash": "31ade0c256bc3dd6b97b31bd85a4fd34",
+      "description": "Checks Service policy.json file: /etc/ceilometer/policy.json",
+      "plugin": "/risu/risuclient/plugins/faraday/positive/openstack/bundle-openstack-policy.txt",
+      "subcategory": "positive/openstack",
+      "priority": 500,
+      "long_name": "Checks Service policy.json file",
+      "bugzilla": "",
+      "result": {
+        "rc": 10,
+        "err": "73fdaddc09b57943cd831de703942c04",
+        "out": ""
+      },
+      "time": 5.1975250244140625e-5,
+      "path": "${RISU_ROOT}/etc/ceilometer/policy.json",
+      "backend": "faraday",
+      "id": "9d1737f8fd842b76f5dc35d3d9a8131f-2574a413974df7c035284120a768f76c",
+      "name": "Check /etc/ceilometer/policy.json"
+    },
+    "205bb6e408bb90c9d7b875ce8b07c572": {
+      "category": "openstack",
+      "hash": "6f9f47da6b48b685c4b5215f928926cf",
+      "description": "Checks for Tooz lock error in gnocchi metrics",
+      "plugin": "/risu/risuclient/plugins/core/openstack/redis/redis-tooz-lock.sh",
+      "name": "redis-tooz-lock",
+      "priority": 600,
+      "long_name": "Tooz lock errors",
+      "bugzilla": "",
+      "result": {
+        "rc": 30,
+        "err": "required file /var/log/gnocchi/metricd.log not found.",
+        "out": ""
+      },
+      "time": 0.011300086975097656,
+      "backend": "core",
+      "id": "205bb6e408bb90c9d7b875ce8b07c572",
+      "subcategory": "openstack/redis"
+    },
+    "7bc8d1c945275678f5635953c7892fdf": {
+      "category": "openstack",
+      "hash": "24c23a48c5946a9ce3bc57c9e0e42c5f",
+      "description": "Check RabbitMQ node health in container",
+      "plugin": "/risu/risuclient/plugins/core/openstack/containers/rabbitmq/cluster_status.sh",
+      "name": "cluster_status",
+      "priority": 800,
+      "long_name": "RabbitMQ node health",
+      "bugzilla": "",
+      "result": {
+        "rc": 30,
+        "err": "the OSP12 deployment seems to not be containerized",
+        "out": ""
+      },
+      "time": 0.021214962005615234,
+      "backend": "core",
+      "id": "7bc8d1c945275678f5635953c7892fdf",
+      "subcategory": "openstack/containers/rabbitmq"
+    },
+    "974b8f16283ad5f67f6ecf26c9256e88": {
+      "category": "openstack",
+      "hash": "f4d65136a12a9f9518695a87a0070521",
+      "description": "Check if services are configured for logging in DEBUG level",
+      "plugin": "/risu/risuclient/plugins/core/openstack/debug.sh",
+      "name": "debug",
+      "priority": 100,
+      "long_name": "Services debug configuration",
+      "bugzilla": "",
+      "result": {
+        "rc": 20,
+        "err": "disabled in /etc/ceilometer/ceilometer.conf\ndisabled in /etc/ceilometer/rootwrap.conf\nenabled in /etc/cinder/cinder.conf\ndisabled in /etc/cinder/rootwrap.conf\ndisabled in /etc/glance/glance-api.conf\ndisabled in /etc/glance/glance-cache.conf\ndisabled in /etc/glance/glance-registry.conf\ndisabled in /etc/glance/glance-scrubber.conf\ndisabled in /etc/glance/glance-swift.conf\ndisabled in /etc/glance/rootwrap.conf\ndisabled in /etc/gnocchi/gnocchi.conf\ndisabled in /etc/heat/heat.conf\ndisabled in /etc/ironic/ironic.conf\ndisabled in /etc/ironic/rootwrap.conf\ndisabled in /etc/keystone/keystone.conf\ndisabled in /etc/keystone/logging.conf\ndisabled in /etc/manila/manila.conf\ndisabled in /etc/manila/rootwrap.conf\ndisabled in /etc/neutron/networking_bgpvpn.conf\nenabled in /etc/neutron/neutron.conf\ndisabled in /etc/neutron/neutron_lbaas.conf\ndisabled in /etc/neutron/rootwrap.conf\ndisabled in /etc/neutron/services_lbaas.conf\ndisabled in /etc/nova/nova.conf\ndisabled in /etc/nova/rootwrap.conf\ndisabled in /etc/puppet/auth.conf\ndisabled in /etc/puppet/puppet.conf\ndisabled in /etc/sahara/rootwrap.conf\ndisabled in /etc/sahara/sahara.conf\ndisabled in /etc/selinux/semanage.conf\ndisabled in /etc/swift/account-server.conf\ndisabled in /etc/swift/container-reconciler.conf\ndisabled in /etc/swift/container-server.conf\ndisabled in /etc/swift/object-expirer.conf\ndisabled in /etc/swift/object-server.conf\ndisabled in /etc/swift/proxy-server.conf\ndisabled in /etc/swift/swift.conf\ndisabled in /etc/openstack-dashboard/local_settings",
+        "out": ""
+      },
+      "time": 0.3542928695678711,
+      "backend": "core",
+      "id": "974b8f16283ad5f67f6ecf26c9256e88",
+      "subcategory": ""
+    },
+    "d30b451a71666e49457c96b19b136d64": {
+      "category": "system",
+      "hash": "60422170e96670597853cf6b9ee43aa2",
+      "description": "This plugin checks for unapplied updates to the system",
+      "plugin": "/risu/risuclient/plugins/core/system/updates.sh",
+      "name": "updates",
+      "priority": 100,
+      "long_name": "Available updates",
+      "bugzilla": "",
+      "result": {
+        "rc": 30,
+        "err": "works on live-system only",
+        "out": ""
+      },
+      "time": 0.0027151107788085938,
+      "backend": "core",
+      "id": "d30b451a71666e49457c96b19b136d64",
+      "subcategory": ""
+    },
+    "1bd46ac3f68d902fab354ff00c49b6ef": {
+      "category": "system",
+      "hash": "a82f75750c619bb07b321059ec4c0f0f",
+      "description": "Detects packet drops when using ip_conntrack or nf_conntrack, logs say 'ip_conntrack: table full, dropping packet.' or 'nf_conntrack: table full, dropping packet'",
+      "plugin": "/risu/risuclient/plugins/core/system/conntrack_full.sh",
+      "name": "conntrack_full",
+      "priority": 500,
+      "long_name": "Detects packet drops when ip_conntrack or nf_conntrack tables are full",
+      "bugzilla": "",
+      "result": {
+        "rc": 10,
+        "err": "",
+        "out": ""
+      },
+      "time": 0.018883943557739258,
+      "backend": "core",
+      "id": "1bd46ac3f68d902fab354ff00c49b6ef",
+      "subcategory": ""
+    },
+    "d47c373afd51bfff29cd29fb707a58b0": {
+      "category": "bugzilla",
+      "hash": "902f735f064675ef66ca1e8ac2d5f514",
+      "description": "This plugin checks libvirt affected of multiple instance start error",
+      "plugin": "/risu/risuclient/plugins/core/bugzilla/systemd/1172387.sh",
+      "name": "1172387",
+      "priority": 800,
+      "long_name": "Libvirt instance start error",
+      "bugzilla": "https://bugzilla.redhat.com/show_bug.cgi?id=1172387",
+      "result": {
+        "rc": 10,
+        "err": "",
+        "out": ""
+      },
+      "time": 0.0538020133972168,
+      "backend": "core",
+      "id": "d47c373afd51bfff29cd29fb707a58b0",
+      "subcategory": "bugzilla/systemd"
+    },
+    "132b2ab9aeade55bb9820c4fbb0d806e": {
+      "category": "system",
+      "hash": "0a3882d3b13fe725855ea2dbbe11bc39",
+      "description": "Checks if running kernel is the one last installed",
+      "plugin": "/risu/risuclient/plugins/core/system/current-kernel-vs-installed.sh",
+      "name": "current-kernel-vs-installed",
+      "priority": 300,
+      "long_name": "Current kernel vs last installed",
+      "bugzilla": "",
+      "result": {
+        "rc": 10,
+        "err": "no kernel install or update found",
+        "out": ""
+      },
+      "time": 0.026334047317504883,
+      "backend": "core",
+      "id": "132b2ab9aeade55bb9820c4fbb0d806e",
+      "subcategory": ""
+    },
+    "b65f224ae6c8a29e9e64871362c5d0bc": {
+      "category": "security",
+      "hash": "fa7d5e37d35b88d6e20e76fd52fa646f",
+      "description": "Checks if package is affected of Spectre/Meltdown",
+      "plugin": "/risu/risuclient/plugins/core/security/spectre/qemu-kvm-rhev.sh",
+      "name": "qemu-kvm-rhev",
+      "priority": 400,
+      "long_name": "Checks for fixed qemu-kvm-rhev package",
+      "bugzilla": "",
+      "result": {
+        "rc": 10,
+        "err": "Please do check https://access.redhat.com/security/vulnerabilities/speculativeexecution for guidance",
+        "out": ""
+      },
+      "time": 0.056227922439575195,
+      "backend": "core",
+      "id": "b65f224ae6c8a29e9e64871362c5d0bc",
+      "subcategory": "security/spectre"
+    },
+    "7bf7d88c90348a755df2729b278b4ae0": {
+      "category": "openstack",
+      "hash": "4cb72c472e81f021976d025b4667bf42",
+      "description": "Reports if nova-compute is not running on compute node",
+      "plugin": "/risu/risuclient/plugins/core/openstack/nova/nova-compute-running.sh",
+      "name": "nova-compute-running",
+      "priority": 900,
+      "long_name": "Check for running nova-compute",
+      "bugzilla": "",
+      "result": {
+        "rc": 30,
+        "err": "required file /var/log/nova/nova-compute.log not found.",
+        "out": ""
+      },
+      "time": 0.016955137252807617,
+      "backend": "core",
+      "id": "7bf7d88c90348a755df2729b278b4ae0",
+      "subcategory": "openstack/nova"
+    },
+    "6e6956664c4374e9469b5acecd685026": {
+      "category": "openstack",
+      "hash": "2d519ee6efc40a4af25af979a5c942f5",
+      "description": "Report OSP version",
+      "plugin": "/risu/risuclient/plugins/core/openstack/packstack.sh",
+      "name": "packstack",
+      "priority": 900,
+      "long_name": "Packstack installation",
+      "bugzilla": "",
+      "result": {
+        "rc": 10,
+        "err": "",
+        "out": ""
+      },
+      "time": 0.015568971633911133,
+      "backend": "core",
+      "id": "6e6956664c4374e9469b5acecd685026",
+      "subcategory": ""
+    },
+    "0aa1c0c3f6f08970e28b9a3d37e3e468": {
+      "category": "system",
+      "hash": "e6b60010b4fbc62fa63f0980687a04ca",
+      "description": "Sets system UUID",
+      "plugin": "/risu/risuclient/plugins/metadata/system/system-uuid.sh",
+      "name": "system-uuid",
+      "priority": 0,
+      "long_name": "stores system UUID for correlation in webapp",
+      "result": {
+        "rc": 10,
+        "err": "3A740237-9E05-4F15-BF6C-04A9BC6BB305",
+        "out": ""
+      },
+      "time": 0.014977216720581055,
+      "backend": "metadata",
+      "id": "0aa1c0c3f6f08970e28b9a3d37e3e468",
+      "subcategory": ""
+    },
+    "9d1737f8fd842b76f5dc35d3d9a8131f-c920e9985393e10435b0e7d960157e6b": {
+      "category": "positive",
+      "hash": "31ade0c256bc3dd6b97b31bd85a4fd34",
+      "description": "Checks Service policy.json file: /etc/aodh/policy.json",
+      "plugin": "/risu/risuclient/plugins/faraday/positive/openstack/bundle-openstack-policy.txt",
+      "subcategory": "positive/openstack",
+      "priority": 500,
+      "long_name": "Checks Service policy.json file",
+      "bugzilla": "",
+      "result": {
+        "rc": 30,
+        "err": "File /cases/02016541/sosreport-controller-0.02016541-20180225232251/etc/aodh/policy.json is not accessible in read mode",
+        "out": ""
+      },
+      "time": 3.218650817871094e-5,
+      "path": "${RISU_ROOT}/etc/aodh/policy.json",
+      "backend": "faraday",
+      "id": "9d1737f8fd842b76f5dc35d3d9a8131f-c920e9985393e10435b0e7d960157e6b",
+      "name": "Check /etc/aodh/policy.json"
+    },
+    "c04387da9b1518cb997b8a7d84bb20a9": {
+      "category": "pacemaker",
+      "hash": "6b81eb2f029edf864b9bee62d1c678e4",
+      "description": "Checks for stonith enabled in cluster",
+      "plugin": "/risu/risuclient/plugins/core/pacemaker/stonith_enabled.sh",
+      "name": "stonith_enabled",
+      "priority": 300,
+      "long_name": "Stonith configuration",
+      "bugzilla": "",
+      "result": {
+        "rc": 20,
+        "err": "stonith is not enabled",
+        "out": ""
+      },
+      "time": 0.015166044235229492,
+      "backend": "core",
+      "id": "c04387da9b1518cb997b8a7d84bb20a9",
+      "subcategory": ""
+    },
+    "d763bc3c3dfaf11e589e37f2a94693dd": {
+      "category": "system",
+      "hash": "acf1c7916c3f14d615f995381e9ad314",
+      "description": "error if memory usage is higher than $RISU_MEMORY_MAX_PERCENT=90",
+      "plugin": "/risu/risuclient/plugins/core/system/memory_usage.sh",
+      "name": "memory_usage",
+      "priority": 400,
+      "long_name": "Memory usage",
+      "bugzilla": "",
+      "result": {
+        "rc": 10,
+        "err": "",
+        "out": ""
+      },
+      "time": 0.020107030868530273,
+      "backend": "core",
+      "id": "d763bc3c3dfaf11e589e37f2a94693dd",
+      "subcategory": ""
+    },
+    "9d1737f8fd842b76f5dc35d3d9a8131f-3b803fc283620240f2b13add9f73cbbc": {
+      "category": "positive",
+      "hash": "31ade0c256bc3dd6b97b31bd85a4fd34",
+      "description": "Checks Service policy.json file: /etc/neutron/policy.json",
+      "plugin": "/risu/risuclient/plugins/faraday/positive/openstack/bundle-openstack-policy.txt",
+      "subcategory": "positive/openstack",
+      "priority": 500,
+      "long_name": "Checks Service policy.json file",
+      "bugzilla": "",
+      "result": {
+        "rc": 10,
+        "err": "4e42e2903a517217a6c97869ae240171",
+        "out": ""
+      },
+      "time": 0.00010204315185546875,
+      "path": "${RISU_ROOT}/etc/neutron/policy.json",
+      "backend": "faraday",
+      "id": "9d1737f8fd842b76f5dc35d3d9a8131f-3b803fc283620240f2b13add9f73cbbc",
+      "name": "Check /etc/neutron/policy.json"
+    },
+    "b3fbf0f454384b3ce0a108f11c595e63": {
+      "category": "openstack",
+      "hash": "973fe5cf2b4aa5fceeabfdb599fa8203",
+      "description": "This plugin is used in various functions. It's just a metadata plugin.",
+      "plugin": "/risu/risuclient/plugins/metadata/openstack/system-role.sh",
+      "name": "system-role",
+      "priority": 0,
+      "long_name": "returns the role of the system (controller, compute, etc)",
+      "result": {
+        "rc": 10,
+        "err": "controller",
+        "out": ""
+      },
+      "time": 0.03314518928527832,
+      "backend": "metadata",
+      "id": "b3fbf0f454384b3ce0a108f11c595e63",
+      "subcategory": ""
+    },
+    "2bb6036feb4c100914cf9646235492d3": {
+      "category": "openstack",
+      "hash": "a09f48c257c045211619168238e3c3b4",
+      "description": "Sets openstack version metadata",
+      "plugin": "/risu/risuclient/plugins/metadata/openstack/osp-release.sh",
+      "name": "osp-release",
+      "priority": 0,
+      "long_name": "prepares openstack version metadata",
+      "result": {
+        "rc": 10,
+        "err": "pike",
+        "out": ""
+      },
+      "time": 0.027918100357055664,
+      "backend": "metadata",
+      "id": "2bb6036feb4c100914cf9646235492d3",
+      "subcategory": ""
+    },
+    "09f1911d54da533bfdbecef0b32a399b": {
+      "category": "openstack",
+      "hash": "4c74b40a1b7e40d0df56eab6a6fce994",
+      "description": "Checks for configured dpdk pages in nova",
+      "plugin": "/risu/risuclient/plugins/core/openstack/network/dpdk-memory-pages.sh",
+      "name": "dpdk-memory-pages",
+      "priority": 300,
+      "long_name": "Checks for DPDK memory pages",
+      "bugzilla": "",
+      "result": {
+        "rc": 10,
+        "err": "",
+        "out": ""
+      },
+      "time": 0.04241800308227539,
+      "backend": "core",
+      "id": "09f1911d54da533bfdbecef0b32a399b",
+      "subcategory": "openstack/network"
+    },
+    "965eeff81e59aa180da9836516ae52c1": {
+      "category": "security",
+      "hash": "aaa3eb17aa2346aaa91de8ecb3fcc324",
+      "description": "Checks if package is affected of Spectre/Meltdown",
+      "plugin": "/risu/risuclient/plugins/core/security/spectre/kernel.sh",
+      "name": "kernel",
+      "priority": 400,
+      "long_name": "Checks for fixed kernel package",
+      "bugzilla": "",
+      "result": {
+        "rc": 20,
+        "err": "Please do check https://access.redhat.com/security/vulnerabilities/speculativeexecution for guidance\npackage kernel version kernel-3.10.0-693.5.2.el7.x86_64 is lower than required (kernel-3.10.0-693.11.6).",
+        "out": ""
+      },
+      "time": 0.06686997413635254,
+      "backend": "core",
+      "id": "965eeff81e59aa180da9836516ae52c1",
+      "subcategory": "security/spectre"
+    },
+    "5f8dc2f98fddb5bf94d57c994de39533": {
+      "category": "pacemaker",
+      "hash": "49dc22535d06ed7f06ed79d5081f73c0",
+      "description": "Checks for maintenance enabled in cluster",
+      "plugin": "/risu/risuclient/plugins/core/pacemaker/maintenance.sh",
+      "name": "maintenance",
+      "priority": 800,
+      "long_name": "Pacemaker in maintenance mode",
+      "bugzilla": "",
+      "result": {
+        "rc": 20,
+        "err": "maintenance is enabled",
+        "out": ""
+      },
+      "time": 0.014788150787353516,
+      "backend": "core",
+      "id": "5f8dc2f98fddb5bf94d57c994de39533",
+      "subcategory": ""
+    },
+    "83daa8c4e8b5af197e1b273b3fefca1e": {
+      "category": "openstack",
+      "hash": "d801b11d4ae0335499171976792dccfd",
+      "description": "Checks clustercheck and it's variable $MYSQL_HOST is set to localhost",
+      "plugin": "/risu/risuclient/plugins/core/openstack/mysql/clustercheck-mysql_host.sh",
+      "name": "clustercheck-mysql_host",
+      "priority": 100,
+      "long_name": "Clustercheck configuration",
+      "bugzilla": "",
+      "result": {
+        "rc": 30,
+        "err": "required file /etc/sysconfig/clustercheck not found.",
+        "out": ""
+      },
+      "time": 0.017004013061523438,
+      "backend": "core",
+      "id": "83daa8c4e8b5af197e1b273b3fefca1e",
+      "subcategory": "openstack/mysql"
+    },
+    "3c7411cafdd4e648c33ababa64e42c96": {
+      "category": "system",
+      "hash": "3f953852ade960410705287f457c561e",
+      "description": "Reports hypervisor technology in use",
+      "plugin": "/risu/risuclient/plugins/core/system/baremetal.sh",
+      "name": "baremetal",
+      "priority": 100,
+      "long_name": "Physical machine",
+      "bugzilla": "",
+      "result": {
+        "rc": 20,
+        "err": "KVM",
+        "out": ""
+      },
+      "time": 0.02116107940673828,
+      "backend": "core",
+      "id": "3c7411cafdd4e648c33ababa64e42c96",
+      "subcategory": ""
+    },
+    "9d1737f8fd842b76f5dc35d3d9a8131f-9105dd1ec8e2dca94759aae17bdec589": {
+      "category": "positive",
+      "hash": "31ade0c256bc3dd6b97b31bd85a4fd34",
+      "description": "Checks Service policy.json file: /etc/containers/policy.json",
+      "plugin": "/risu/risuclient/plugins/faraday/positive/openstack/bundle-openstack-policy.txt",
+      "subcategory": "positive/openstack",
+      "priority": 500,
+      "long_name": "Checks Service policy.json file",
+      "bugzilla": "",
+      "result": {
+        "rc": 30,
+        "err": "File /cases/02016541/sosreport-controller-0.02016541-20180225232251/etc/containers/policy.json is not accessible in read mode",
+        "out": ""
+      },
+      "time": 3.0994415283203125e-5,
+      "path": "${RISU_ROOT}/etc/containers/policy.json",
+      "backend": "faraday",
+      "id": "9d1737f8fd842b76f5dc35d3d9a8131f-9105dd1ec8e2dca94759aae17bdec589",
+      "name": "Check /etc/containers/policy.json"
+    },
+    "28913160deb3a1a69db7b0c2242845aa": {
+      "category": "openstack",
+      "hash": "afa7bff980598563fb53cb7a069d64c0",
+      "description": "Checks for hypervisor memory vs the recommended values",
+      "plugin": "/risu/risuclient/plugins/core/openstack/hardware/memory.sh",
+      "name": "memory",
+      "priority": 200,
+      "long_name": "Memory recommendations",
+      "bugzilla": "",
+      "result": {
+        "rc": 30,
+        "err": "required file /proc/cpuinfo/cases/02016541/sosreport-controller-0.02016541-20180225232251/proc/meminfo not found.",
+        "out": ""
+      },
+      "time": 0.012140989303588867,
+      "backend": "core",
+      "id": "28913160deb3a1a69db7b0c2242845aa",
+      "subcategory": "openstack/hardware"
+    },
+    "87cea5b7131aab36e1a74c0e11b6a256": {
+      "category": "system",
+      "hash": "3aff7ed23dc43f1400df280588a61bed",
+      "description": "Each overcloud node should have their clocks synchronised. The deployment should configure and run ntpd. This validation verifies that it is indeed running and connected to an NPT server on all nodes.\n",
+      "plugin": "/risu/risuclient/plugins/ansible/system/clock-ntpstat.yml",
+      "name": "clock-ntpstat",
+      "priority": 500,
+      "long_name": "NTPd time synchronization",
+      "bugzilla": "",
+      "result": {
+        "rc": 30,
+        "err": "Plugin does not satisfy conditions for running",
+        "out": ""
+      },
+      "time": 0.0001289844512939453,
+      "backend": "ansible",
+      "id": "87cea5b7131aab36e1a74c0e11b6a256",
+      "subcategory": ""
+    },
+    "d531fb0130c01c88944ed6d97fed2794": {
+      "category": "openstack",
+      "hash": "4040337ec35df11d5472acbd7ba96d20",
+      "description": "Checks errors on nova migration with attached volumes",
+      "plugin": "/risu/risuclient/plugins/core/openstack/nova/migrate-with-cinder-volume.sh",
+      "name": "migrate-with-cinder-volume",
+      "priority": 700,
+      "long_name": "Detects attempts to live migrate cinder volumes without being supported",
+      "bugzilla": "https://bugzilla.redhat.com/show_bug.cgi?id=1498831",
+      "result": {
+        "rc": 10,
+        "err": "",
+        "out": ""
+      },
+      "time": 0.020618915557861328,
+      "backend": "core",
+      "id": "d531fb0130c01c88944ed6d97fed2794",
+      "subcategory": "openstack/nova"
+    },
+    "ad10ce52da1d892a2ef2e49ff87f12d0": {
+      "category": "home",
+      "hash": "3591d8c461b1a2f07aa8eaf296aeaa9f",
+      "description": "Checks for iptables consitency",
+      "plugin": "/risu/risuclient/plugins/faraday/positive/openstack/iptables.sh",
+      "name": "iptables",
+      "priority": 800,
+      "long_name": "Network iptables consistency",
+      "bugzilla": "",
+      "result": {
+        "rc": 10,
+        "err": "18fa4a898670b4b511d9e3c7ac973b4e",
+        "out": ""
+      },
+      "time": 0.0208890438079834,
+      "path": "/etc/sysconfig/iptables",
+      "backend": "faraday",
+      "id": "ad10ce52da1d892a2ef2e49ff87f12d0",
+      "subcategory": "/risu/risuclient/plugins/faraday/positive/openstack"
+    },
+    "cf82b26686b3d27c557c8df5487ac756": {
+      "category": "openstack",
+      "hash": "d7c601c9d40f44aa2972738a7f79326a",
+      "description": "Check if compute is configured to restore guests running after reboot",
+      "plugin": "/risu/risuclient/plugins/core/openstack/nova/resume-guests-state-on-host-boot.sh",
+      "name": "resume-guests-state-on-host-boot",
+      "priority": 100,
+      "long_name": "Resume guests on host restart",
+      "bugzilla": "",
+      "result": {
+        "rc": 30,
+        "err": "works only on compute node",
+        "out": ""
+      },
+      "time": 0.017768144607543945,
+      "backend": "core",
+      "id": "cf82b26686b3d27c557c8df5487ac756",
+      "subcategory": "openstack/nova"
+    },
+    "68dec19328b629d463f7fef054d41ed5": {
+      "category": "openstack",
+      "hash": "940284124b4e4933d9c4533263d7611e",
+      "description": "Reports if chrony is used on an OpenStack node",
+      "plugin": "/risu/risuclient/plugins/core/openstack/system/clock-chronyd-disabled.sh",
+      "name": "clock-chronyd-disabled",
+      "priority": 400,
+      "long_name": "Chronyd configuration in OSP",
+      "bugzilla": "",
+      "result": {
+        "rc": 10,
+        "err": "",
+        "out": ""
+      },
+      "time": 0.03510904312133789,
+      "backend": "core",
+      "id": "68dec19328b629d463f7fef054d41ed5",
+      "subcategory": "openstack/system"
+    },
+    "aa474f2046d3fb0abb3b739285b3f69b": {
+      "category": "openstack",
+      "hash": "68d2738b8c1080a7150200b2c7fdacff",
+      "description": "virt_type different to KVM could present performance issues vs kvm",
+      "plugin": "/risu/risuclient/plugins/core/openstack/nova/virt-type-kvm.sh",
+      "name": "virt-type-kvm",
+      "priority": 800,
+      "long_name": "Report if virt_type is not set to kvm",
+      "bugzilla": "",
+      "result": {
+        "rc": 10,
+        "err": "",
+        "out": ""
+      },
+      "time": 0.03187203407287598,
+      "backend": "core",
+      "id": "aa474f2046d3fb0abb3b739285b3f69b",
+      "subcategory": "openstack/nova"
+    },
+    "629e5b6ee29010276f3a670e9c909686": {
+      "category": "bugzilla",
+      "hash": "b38e40090967ff21034dd4daece6e605",
+      "description": "Checks for keystone transaction errors on cleanup",
+      "plugin": "/risu/risuclient/plugins/core/bugzilla/openstack/keystone/1473713.sh",
+      "name": "1473713",
+      "priority": 600,
+      "long_name": "Removal of expired tokens",
+      "bugzilla": "https://bugzilla.redhat.com/show_bug.cgi?id=1473713",
+      "result": {
+        "rc": 10,
+        "err": "",
+        "out": ""
+      },
+      "time": 0.0178220272064209,
+      "backend": "core",
+      "id": "629e5b6ee29010276f3a670e9c909686",
+      "subcategory": "bugzilla/openstack/keystone"
+    },
+    "ccfb830ae6b77864db5a353411b7e465": {
+      "category": "openstack",
+      "hash": "360f34aa228939ff625d8e9b365a4acc",
+      "description": "Reports if instanceHA is configured.",
+      "plugin": "/risu/risuclient/plugins/core/openstack/pacemaker/instance-ha.sh",
+      "name": "instance-ha",
+      "priority": 900,
+      "long_name": "Checks for instance HA configured",
+      "bugzilla": "",
+      "result": {
+        "rc": 10,
+        "err": "",
+        "out": ""
+      },
+      "time": 0.03399300575256348,
+      "backend": "core",
+      "id": "ccfb830ae6b77864db5a353411b7e465",
+      "subcategory": "openstack/pacemaker"
+    },
+    "077b4d1e1cec64e44afe6e34beb45548": {
+      "category": "system",
+      "hash": "7142badc0b657ecfac677ad2b3ab3000",
+      "description": "Sets sosreport date metadata",
+      "plugin": "/risu/risuclient/plugins/metadata/system/sosreport-date.sh",
+      "name": "sosreport-date",
+      "priority": 0,
+      "long_name": "reports date for sosreport",
+      "result": {
+        "rc": 10,
+        "err": "Sun Feb 25 23:29:27 UTC 2018",
+        "out": "sosreport-date"
+      },
+      "time": 0.012441158294677734,
+      "backend": "metadata",
+      "id": "077b4d1e1cec64e44afe6e34beb45548",
+      "subcategory": ""
+    },
+    "02cf956287059b334af65c4870fabd12": {
+      "category": "openstack",
+      "hash": "56e482b459c8f17276f1d001af6c87e5",
+      "description": "Checks if deployment is using containers",
+      "plugin": "/risu/risuclient/plugins/core/openstack/containers/containerized_deployment.sh",
+      "name": "containerized_deployment",
+      "priority": 100,
+      "long_name": "Containerized deployment",
+      "bugzilla": "",
+      "result": {
+        "rc": 30,
+        "err": "the OSP12 deployment seems to not be containerized",
+        "out": ""
+      },
+      "time": 0.029938936233520508,
+      "backend": "core",
+      "id": "02cf956287059b334af65c4870fabd12",
+      "subcategory": "openstack/containers"
+    },
+    "9d1737f8fd842b76f5dc35d3d9a8131f-77d168828b8622207aba85c68ba786e0": {
+      "category": "positive",
+      "hash": "31ade0c256bc3dd6b97b31bd85a4fd34",
+      "description": "Checks Service policy.json file: /etc/gnocchi/policy.json",
+      "plugin": "/risu/risuclient/plugins/faraday/positive/openstack/bundle-openstack-policy.txt",
+      "subcategory": "positive/openstack",
+      "priority": 500,
+      "long_name": "Checks Service policy.json file",
+      "bugzilla": "",
+      "result": {
+        "rc": 10,
+        "err": "6fc8a0142916fb3eec21a37383049d71",
+        "out": ""
+      },
+      "time": 0.00020194053649902344,
+      "path": "${RISU_ROOT}/etc/gnocchi/policy.json",
+      "backend": "faraday",
+      "id": "9d1737f8fd842b76f5dc35d3d9a8131f-77d168828b8622207aba85c68ba786e0",
+      "name": "Check /etc/gnocchi/policy.json"
+    },
+    "78ad9d1dfa75031eb0347e01fcf4f6c3": {
+      "category": "openstack",
+      "hash": "817a2775df0dfd0fa8b3b3a44b973cb5",
+      "description": "Report DBReferenceError in OpenStack services logs",
+      "plugin": "/risu/risuclient/plugins/core/openstack/mysql/db-reference-error.sh",
+      "name": "db-reference-error",
+      "priority": 900,
+      "long_name": "DBReferenceError in services logs",
+      "bugzilla": "",
+      "result": {
+        "rc": 10,
+        "err": "",
+        "out": ""
+      },
+      "time": 0.17160296440124512,
+      "backend": "core",
+      "id": "78ad9d1dfa75031eb0347e01fcf4f6c3",
+      "subcategory": "openstack/mysql"
+    },
+    "9d1737f8fd842b76f5dc35d3d9a8131f-85c725366322555aa5f30a6a5d154a98": {
+      "category": "positive",
+      "hash": "31ade0c256bc3dd6b97b31bd85a4fd34",
+      "description": "Checks Service policy.json file: /etc/panko/policy.json",
+      "plugin": "/risu/risuclient/plugins/faraday/positive/openstack/bundle-openstack-policy.txt",
+      "subcategory": "positive/openstack",
+      "priority": 500,
+      "long_name": "Checks Service policy.json file",
+      "bugzilla": "",
+      "result": {
+        "rc": 30,
+        "err": "File /cases/02016541/sosreport-controller-0.02016541-20180225232251/etc/panko/policy.json is not accessible in read mode",
+        "out": ""
+      },
+      "time": 3.814697265625e-5,
+      "path": "${RISU_ROOT}/etc/panko/policy.json",
+      "backend": "faraday",
+      "id": "9d1737f8fd842b76f5dc35d3d9a8131f-85c725366322555aa5f30a6a5d154a98",
+      "name": "Check /etc/panko/policy.json"
+    },
+    "9d1737f8fd842b76f5dc35d3d9a8131f-0c2a33aae4365e9a7c67c875e6970481": {
+      "category": "positive",
+      "hash": "31ade0c256bc3dd6b97b31bd85a4fd34",
+      "description": "Checks Service policy.json file: /etc/glance/policy.json",
+      "plugin": "/risu/risuclient/plugins/faraday/positive/openstack/bundle-openstack-policy.txt",
+      "subcategory": "positive/openstack",
+      "priority": 500,
+      "long_name": "Checks Service policy.json file",
+      "bugzilla": "",
+      "result": {
+        "rc": 10,
+        "err": "a4f29d0f75bbc04f1d83a1abdf0fda6f",
+        "out": ""
+      },
+      "time": 4.887580871582031e-5,
+      "path": "${RISU_ROOT}/etc/glance/policy.json",
+      "backend": "faraday",
+      "id": "9d1737f8fd842b76f5dc35d3d9a8131f-0c2a33aae4365e9a7c67c875e6970481",
+      "name": "Check /etc/glance/policy.json"
+    },
+    "0a57334c37b9ea632c9447b9c4b3c66e": {
+      "category": "openstack",
+      "hash": "8e1dbf22fd31fcc5c6da91acf8fcb5b7",
+      "description": "Checks for various SRIOV configuration parameters",
+      "plugin": "/risu/risuclient/plugins/core/openstack/network/sriov.sh",
+      "name": "sriov",
+      "priority": 300,
+      "long_name": "SR-IOV Configuration",
+      "bugzilla": "",
+      "result": {
+        "rc": 20,
+        "err": "neutron-sriov-nic-agent not running\nmissing isolated_cores in /etc/tuned/cpu-partitioning-variables.conf\nvirtual function is disabled\nvfio_iommu module is not loaded\nunsafe interrupts not enabled\nmissing hugepagesz on kernel cmdline\nmissing hugepages= on kernel cmdline\nmissing isolcpus= on kernel cmdline\nmissing sriovnicswitch in ml2_conf.ini\nmissing PciPassthroughFilter in nova.conf\nmissing vcpu_pin_set in nova.conf\nmissing pci_passthrough_whitelist in /etc/nova/nova.conf",
+        "out": ""
+      },
+      "time": 0.09185910224914551,
+      "backend": "core",
+      "id": "0a57334c37b9ea632c9447b9c4b3c66e",
+      "subcategory": "openstack/network"
+    },
+    "17f6b3c5ba8ca6deac36b572ecbe1b95": {
+      "category": "openstack",
+      "hash": "57c084d702756c96b08128725bec005d",
+      "description": "Checks for mysql database sizes",
+      "plugin": "/risu/risuclient/plugins/core/openstack/mysql/mysql_db_size.sh",
+      "name": "mysql_db_size",
+      "priority": 500,
+      "long_name": "Database size",
+      "bugzilla": "",
+      "result": {
+        "rc": 30,
+        "err": "works on live-system only",
+        "out": ""
+      },
+      "time": 0.00468897819519043,
+      "backend": "core",
+      "id": "17f6b3c5ba8ca6deac36b572ecbe1b95",
+      "subcategory": "openstack/mysql"
+    },
+    "9d1737f8fd842b76f5dc35d3d9a8131f-24f8a140e787f5989d09b5737e4d3219": {
+      "category": "positive",
+      "hash": "31ade0c256bc3dd6b97b31bd85a4fd34",
+      "description": "Checks Service policy.json file: /etc/cinder/policy.json",
+      "plugin": "/risu/risuclient/plugins/faraday/positive/openstack/bundle-openstack-policy.txt",
+      "subcategory": "positive/openstack",
+      "priority": 500,
+      "long_name": "Checks Service policy.json file",
+      "bugzilla": "",
+      "result": {
+        "rc": 10,
+        "err": "e59e8659d249f90d6e1d90ca43c57bf1",
+        "out": ""
+      },
+      "time": 7.009506225585938e-5,
+      "path": "${RISU_ROOT}/etc/cinder/policy.json",
+      "backend": "faraday",
+      "id": "9d1737f8fd842b76f5dc35d3d9a8131f-24f8a140e787f5989d09b5737e4d3219",
+      "name": "Check /etc/cinder/policy.json"
+    },
+    "064c08284317d4f4182e3df2a3671f99": {
+      "category": "openstack",
+      "hash": "2a6b3623eba876649e9fab28150ee5e5",
+      "description": "Check File Descriptors in RabbitMQ",
+      "plugin": "/risu/risuclient/plugins/core/openstack/rabbitmq/file_descriptors.sh",
+      "name": "file_descriptors",
+      "priority": 0,
+      "long_name": "RabbitMQ File descriptors",
+      "bugzilla": "",
+      "result": {
+        "rc": 20,
+        "err": "couldn't get file descriptors from rabbitmqctl report",
+        "out": ""
+      },
+      "time": 0.04423093795776367,
+      "backend": "core",
+      "id": "064c08284317d4f4182e3df2a3671f99",
+      "subcategory": "openstack/rabbitmq"
+    },
+    "dca137462ebac35cb1e963868f12a70b": {
+      "category": "openstack",
+      "hash": "5e829c288d84c3363eae565768b64c1d",
+      "description": "Checks if crontab for heat stack purge is in place",
+      "plugin": "/risu/risuclient/plugins/core/openstack/crontab/heat_stack-purge.sh",
+      "name": "heat_stack-purge",
+      "priority": 700,
+      "long_name": "Heat database purge",
+      "bugzilla": "",
+      "result": {
+        "rc": 30,
+        "err": "required file /var/spool/cron/heat not found.",
+        "out": ""
+      },
+      "time": 0.008620023727416992,
+      "backend": "core",
+      "id": "dca137462ebac35cb1e963868f12a70b",
+      "subcategory": "openstack/crontab"
+    },
+    "8acfa43c0bb2a5a5b10c29bd1380d19c": {
+      "category": "bugzilla",
+      "hash": "1c0fb71bcb897f5f233095e3b6cc7365",
+      "description": "This plugin checks if Apache reaches its MaxRequestWorkers",
+      "plugin": "/risu/risuclient/plugins/core/bugzilla/httpd/1406417.sh",
+      "name": "1406417",
+      "priority": 800,
+      "long_name": "MaxRequestWorkers limits",
+      "bugzilla": "https://bugzilla.redhat.com/show_bug.cgi?id=1406417",
+      "result": {
+        "rc": 10,
+        "err": "",
+        "out": ""
+      },
+      "time": 0.018559932708740234,
+      "backend": "core",
+      "id": "8acfa43c0bb2a5a5b10c29bd1380d19c",
+      "subcategory": "bugzilla/httpd"
+    },
+    "cabb7bac1df1dbb57d5161705d6267e4": {
+      "category": "openstack",
+      "hash": "533c68192cb6b39346492bdbfd3fb64d",
+      "description": "Checks Swift ring status",
+      "plugin": "/risu/risuclient/plugins/core/openstack/swift/ring-status.sh",
+      "name": "ring-status",
+      "priority": 900,
+      "long_name": "Ring status",
+      "bugzilla": "",
+      "result": {
+        "rc": 30,
+        "err": "works on live-system only",
+        "out": ""
+      },
+      "time": 0.004818916320800781,
+      "backend": "core",
+      "id": "cabb7bac1df1dbb57d5161705d6267e4",
+      "subcategory": "openstack/swift"
+    },
+    "3d444e10951e62746323e98eede282c4": {
+      "category": "pacemaker",
+      "hash": "02df70db358db58aade218da4ec72271",
+      "description": "Check if there are pacemaker resources stopped",
+      "plugin": "/risu/risuclient/plugins/core/pacemaker/stopped_resources.sh",
+      "name": "stopped_resources",
+      "priority": 700,
+      "long_name": "Stopped resources",
+      "bugzilla": "",
+      "result": {
+        "rc": 10,
+        "err": "",
+        "out": ""
+      },
+      "time": 0.01810312271118164,
+      "backend": "core",
+      "id": "3d444e10951e62746323e98eede282c4",
+      "subcategory": ""
+    },
+    "06ff981b3b275ca06445b311c1948dba": {
+      "category": "negative",
+      "hash": "a64d81add483cd0ab8f404bd30c459cc",
+      "description": "Checks Machine Identifier",
+      "plugin": "/risu/risuclient/plugins/faraday/negative/system/machine-id.txt",
+      "name": "machine-id",
+      "priority": 500,
+      "long_name": "Machine Identifier",
+      "bugzilla": "",
+      "result": {
+        "rc": 30,
+        "err": "File /cases/02016541/sosreport-controller-0.02016541-20180225232251/etc/machine-id is not accessible in read mode",
+        "out": ""
+      },
+      "time": 4.410743713378906e-5,
+      "path": "${RISU_ROOT}/etc/machine-id",
+      "backend": "faraday",
+      "id": "06ff981b3b275ca06445b311c1948dba",
+      "subcategory": "negative/system"
+    },
+    "b387b8c5d6d5e2a221404d7f3e157510": {
+      "category": "system",
+      "hash": "a74105fa8d633af0f6f2a5ac790b849f",
+      "description": "Checks for proper network time sync status",
+      "plugin": "/risu/risuclient/plugins/core/system/clock-0-ntp-services.sh",
+      "name": "clock-0-ntp-services",
+      "priority": 500,
+      "long_name": "NTPd services status",
+      "bugzilla": "",
+      "result": {
+        "rc": 10,
+        "err": "",
+        "out": ""
+      },
+      "time": 0.016360044479370117,
+      "backend": "core",
+      "id": "b387b8c5d6d5e2a221404d7f3e157510",
+      "subcategory": ""
+    },
+    "8b262099c9935b24007da7243afb7a30": {
+      "category": "openstack",
+      "hash": "1ef4766857bb626c14a5a59190f4138e",
+      "description": "Checks if OSP12 deployment is using containers and valid sosreport version",
+      "plugin": "/risu/risuclient/plugins/core/openstack/containers/sosreport.sh",
+      "name": "sosreport",
+      "priority": 200,
+      "long_name": "Updated sos package",
+      "bugzilla": "",
+      "result": {
+        "rc": 20,
+        "err": "package sos version sos-3.4-6.el7.noarch is lower than required (sos-3.4-9).",
+        "out": ""
+      },
+      "time": 0.059986114501953125,
+      "backend": "core",
+      "id": "8b262099c9935b24007da7243afb7a30",
+      "subcategory": "openstack/containers"
+    },
+    "54bd6742da536d54a122c98c15dca174": {
+      "category": "security",
+      "hash": "1c3aaed3d80a3f4101db790870edc189",
+      "description": "Checks if package is affected of Spectre/Meltdown",
+      "plugin": "/risu/risuclient/plugins/core/security/spectre/libvirt.sh",
+      "name": "libvirt",
+      "priority": 400,
+      "long_name": "Checks for fixed dracut package",
+      "bugzilla": "",
+      "result": {
+        "rc": 20,
+        "err": "Please do check https://access.redhat.com/security/vulnerabilities/speculativeexecution for guidance\npackage libvirt version libvirt-3.2.0-14.el7_4.3.x86_64 is lower than required (libvirt-3.2.0-14.el7_4.7).",
+        "out": ""
+      },
+      "time": 0.05145382881164551,
+      "backend": "core",
+      "id": "54bd6742da536d54a122c98c15dca174",
+      "subcategory": "security/spectre"
+    },
+    "eca3e2b6747c8858863d45fa1fec8f60": {
+      "category": "virtualization",
+      "hash": "3c93f89dfad7cc528ba79711c187dad0",
+      "description": "Checks compatibility between libvirt, qemu and kernel packages",
+      "plugin": "/risu/risuclient/plugins/core/virtualization/libvirt-qemu-kernel-compatibility.sh",
+      "name": "libvirt-qemu-kernel-compatibility",
+      "priority": 700,
+      "long_name": "Kernel, QEMU and Libvirt compatibility",
+      "bugzilla": "",
+      "result": {
+        "rc": 30,
+        "err": "works only on compute node",
+        "out": ""
+      },
+      "time": 0.016240835189819336,
+      "backend": "core",
+      "id": "eca3e2b6747c8858863d45fa1fec8f60",
+      "subcategory": ""
+    },
+    "d17a8aacfb88cc3c82244ab96ca37fd9": {
+      "category": "openstack",
+      "hash": "23d42d852eb7cab72601a29b42c1948c",
+      "description": "Checks for expired tokens in keystone database",
+      "plugin": "/risu/risuclient/plugins/core/openstack/mysql/keystone_tokendb.sh",
+      "name": "keystone_tokendb",
+      "priority": 900,
+      "long_name": "Number of expired tokens in database",
+      "bugzilla": "",
+      "result": {
+        "rc": 30,
+        "err": "works on live-system only",
+        "out": ""
+      },
+      "time": 0.005517005920410156,
+      "backend": "core",
+      "id": "d17a8aacfb88cc3c82244ab96ca37fd9",
+      "subcategory": "openstack/mysql"
+    },
+    "1996cfca0f9f296b909d55f1962cb5fc": {
+      "category": "openstack",
+      "hash": "82e5c9434548a0322e1879c24e2437ce",
+      "description": "Keystone cleanups might not be frequent enough on busy systems, check frequency",
+      "plugin": "/risu/risuclient/plugins/core/openstack/crontab/keystone_cleanup.sh",
+      "name": "keystone_cleanup",
+      "priority": 700,
+      "long_name": "Keystone clean-up frequency",
+      "bugzilla": "",
+      "result": {
+        "rc": 30,
+        "err": "required file /var/spool/cron/keystone not found.",
+        "out": ""
+      },
+      "time": 0.01998305320739746,
+      "backend": "core",
+      "id": "1996cfca0f9f296b909d55f1962cb5fc",
+      "subcategory": "openstack/crontab"
+    },
+    "f910c616410ecb63c6e74372a06eb884": {
+      "category": "network",
+      "hash": "987e9bc47e3b107f84b8a8b949aef2a8",
+      "description": "Checks for external connectivity of the system",
+      "plugin": "/risu/risuclient/plugins/core/network/external_connectivity.sh",
+      "name": "external_connectivity",
+      "priority": 100,
+      "long_name": "External connectivity test",
+      "bugzilla": "",
+      "result": {
+        "rc": 30,
+        "err": "works on live-system only",
+        "out": ""
+      },
+      "time": 0.00964808464050293,
+      "backend": "core",
+      "id": "f910c616410ecb63c6e74372a06eb884",
+      "subcategory": ""
+    },
+    "b2f13bfbe56a28bd618287235c022fa2": {
+      "category": "system",
+      "hash": "ea198336bdda9e14bcea1b806ba92de7",
+      "description": "Checks iSCSI initiator name file",
+      "plugin": "/risu/risuclient/plugins/winston/system/iscsi/initiatorname.txt",
+      "name": "initiatorname",
+      "priority": 500,
+      "long_name": "iSCSI initiator name",
+      "bugzilla": "",
+      "result": {
+        "rc": 10,
+        "err": "InitiatorName=iqn.1994-05.com.redhat:62b6c0a95eae\n",
+        "out": ""
+      },
+      "time": 0.0001461505889892578,
+      "path": "${RISU_ROOT}/etc/iscsi/initiatorname.iscsi",
+      "backend": "winston",
+      "id": "b2f13bfbe56a28bd618287235c022fa2",
+      "subcategory": "system/iscsi"
+    },
+    "1eb82e33f7e718653d88c7a09fd6d40c": {
+      "category": "system",
+      "hash": "ca5bdb15c04e9ff709a068fba34ff5f7",
+      "description": "Determines runtime SELinux status",
+      "plugin": "/risu/risuclient/plugins/core/system/selinux_runtime.sh",
+      "name": "selinux_runtime",
+      "priority": 100,
+      "long_name": "SELinux runtime status",
+      "bugzilla": "",
+      "result": {
+        "rc": 10,
+        "err": "",
+        "out": ""
+      },
+      "time": 0.010123014450073242,
+      "backend": "core",
+      "id": "1eb82e33f7e718653d88c7a09fd6d40c",
+      "subcategory": ""
+    },
+    "9d1737f8fd842b76f5dc35d3d9a8131f-1b3ac0bbb1929dc41ece16f836a78781": {
+      "category": "positive",
+      "hash": "31ade0c256bc3dd6b97b31bd85a4fd34",
+      "description": "Checks Service policy.json file: /etc/zaqar/policy.json",
+      "plugin": "/risu/risuclient/plugins/faraday/positive/openstack/bundle-openstack-policy.txt",
+      "subcategory": "positive/openstack",
+      "priority": 500,
+      "long_name": "Checks Service policy.json file",
+      "bugzilla": "",
+      "result": {
+        "rc": 30,
+        "err": "File /cases/02016541/sosreport-controller-0.02016541-20180225232251/etc/zaqar/policy.json is not accessible in read mode",
+        "out": ""
+      },
+      "time": 2.9087066650390625e-5,
+      "path": "${RISU_ROOT}/etc/zaqar/policy.json",
+      "backend": "faraday",
+      "id": "9d1737f8fd842b76f5dc35d3d9a8131f-1b3ac0bbb1929dc41ece16f836a78781",
+      "name": "Check /etc/zaqar/policy.json"
+    },
+    "9edc692c0b21d4dfada979e69dc63d78": {
+      "category": "openstack",
+      "hash": "1f157bfb19713db9e02fe133019782a4",
+      "description": "Check docker container health-check states",
+      "plugin": "/risu/risuclient/plugins/core/openstack/containers/docker/health-check.sh",
+      "name": "health-check",
+      "priority": 900,
+      "long_name": "Containers in unhealthy status",
+      "bugzilla": "",
+      "result": {
+        "rc": 30,
+        "err": "the OSP12 deployment seems to not be containerized",
+        "out": ""
+      },
+      "time": 0.01888298988342285,
+      "backend": "core",
+      "id": "9edc692c0b21d4dfada979e69dc63d78",
+      "subcategory": "openstack/containers/docker"
+    },
+    "7ef228abcead69829baeb24a9712e488": {
+      "category": "security",
+      "hash": "fa42e014ec78e8a9c8bd90521cf5bfce",
+      "description": "Checks if package is affected of Spectre/Meltdown",
+      "plugin": "/risu/risuclient/plugins/core/security/spectre/dracut.sh",
+      "name": "dracut",
+      "priority": 400,
+      "long_name": "Checks for fixed dracut package",
+      "bugzilla": "",
+      "result": {
+        "rc": 30,
+        "err": "Please do check https://access.redhat.com/security/vulnerabilities/speculativeexecution for guidance\nrequired package dracut-033-502.el7_4.1 not found.",
+        "out": ""
+      },
+      "time": 0.021553993225097656,
+      "backend": "core",
+      "id": "7ef228abcead69829baeb24a9712e488",
+      "subcategory": "security/spectre"
+    },
+    "64e47d0ff54292fede198427055ccff0": {
+      "category": "openstack",
+      "hash": "dfde3d9db8cb0e2c4b0eb54dd9ed15f4",
+      "description": "Check docker container restarting states",
+      "plugin": "/risu/risuclient/plugins/core/openstack/containers/docker/restarting.sh",
+      "name": "restarting",
+      "priority": 700,
+      "long_name": "Containers in restarting state",
+      "bugzilla": "",
+      "result": {
+        "rc": 30,
+        "err": "the OSP12 deployment seems to not be containerized",
+        "out": ""
+      },
+      "time": 0.02046799659729004,
+      "backend": "core",
+      "id": "64e47d0ff54292fede198427055ccff0",
+      "subcategory": "openstack/containers/docker"
+    },
+    "cf9f3b4bc1f5813fd4829b12c3cad666": {
+      "category": "system",
+      "hash": "326a7000ca112c4dba83492e61382c23",
+      "description": "Checks kernel taint value",
+      "plugin": "/risu/risuclient/plugins/core/system/kernel-tainted.sh",
+      "name": "kernel-tainted",
+      "priority": 100,
+      "long_name": "Checks if kernel has been tainted and reports value",
+      "bugzilla": "",
+      "result": {
+        "rc": 20,
+        "err": "Kernel is tainted 536870912",
+        "out": ""
+      },
+      "time": 0.011954069137573242,
+      "backend": "core",
+      "id": "cf9f3b4bc1f5813fd4829b12c3cad666",
+      "subcategory": ""
+    },
+    "9d1737f8fd842b76f5dc35d3d9a8131f-8e17ae60d89b06cd860f3b0a18d04df3": {
+      "category": "positive",
+      "hash": "31ade0c256bc3dd6b97b31bd85a4fd34",
+      "description": "Checks Service policy.json file: /etc/heat/policy.json",
+      "plugin": "/risu/risuclient/plugins/faraday/positive/openstack/bundle-openstack-policy.txt",
+      "subcategory": "positive/openstack",
+      "priority": 500,
+      "long_name": "Checks Service policy.json file",
+      "bugzilla": "",
+      "result": {
+        "rc": 10,
+        "err": "f574a3245f396688a01ce69b67013786",
+        "out": ""
+      },
+      "time": 6.604194641113281e-5,
+      "path": "${RISU_ROOT}/etc/heat/policy.json",
+      "backend": "faraday",
+      "id": "9d1737f8fd842b76f5dc35d3d9a8131f-8e17ae60d89b06cd860f3b0a18d04df3",
+      "name": "Check /etc/heat/policy.json"
+    },
+    "c016967830aea2d63f61b8a61a0cf9e5": {
+      "category": "openshift",
+      "hash": "2786a1d73eb55fabf7b24afc903a0658",
+      "description": "Verify etcd certificates are valid for this host",
+      "plugin": "/risu/risuclient/plugins/core/openshift/etcd/certificates.py",
+      "name": "certificates",
+      "priority": 1000,
+      "long_name": "Validate etcd certificates",
+      "bugzilla": "",
+      "result": {
+        "rc": 30,
+        "err": "Missing access to required file /cases/02016541/sosreport-controller-0.02016541-20180225232251//etc/etcd/ca.crt",
+        "out": ""
+      },
+      "time": 0.16495609283447266,
+      "backend": "core",
+      "id": "c016967830aea2d63f61b8a61a0cf9e5",
+      "subcategory": "openshift/etcd"
+    },
+    "0ab8f098e2cd99901ae6f0141818360b": {
+      "category": "openstack",
+      "hash": "ed530c74e6234b0452b037f908dde4ac",
+      "description": "Only two backends are supported sql and ldap",
+      "plugin": "/risu/risuclient/plugins/core/openstack/keystone/supported-backends.sh",
+      "name": "supported-backends",
+      "priority": 200,
+      "long_name": "Checks that keystone uses supported backends",
+      "bugzilla": "",
+      "result": {
+        "rc": 10,
+        "err": "",
+        "out": ""
+      },
+      "time": 0.018431901931762695,
+      "backend": "core",
+      "id": "0ab8f098e2cd99901ae6f0141818360b",
+      "subcategory": "openstack/keystone"
+    },
+    "549baeb74f3445bd4e17a48b3b5dee2a": {
+      "category": "bugzilla",
+      "hash": "26fc97df81af8d19357921a703cd2b78",
+      "description": "Checks for wrong auth_url configuration in metadata_agent.ini",
+      "plugin": "/risu/risuclient/plugins/core/bugzilla/openstack/neutron/1340001.sh",
+      "name": "1340001",
+      "priority": 600,
+      "long_name": "Keystone metadata_agent.ini misconfiguration",
+      "bugzilla": "https://bugzilla.redhat.com/show_bug.cgi?id=1340001",
+      "result": {
+        "rc": 30,
+        "err": "works only on OSP8 and earlier",
+        "out": ""
+      },
+      "time": 0.02470707893371582,
+      "backend": "core",
+      "id": "549baeb74f3445bd4e17a48b3b5dee2a",
+      "subcategory": "bugzilla/openstack/neutron"
+    },
+    "b01b409851fbb95a4d790da0d517f500": {
+      "category": "openstack",
+      "hash": "ee5aeca8fe9696d9a15c75ef11b5b927",
+      "description": "Checks for iptables rules to allow instances to reach metadata server",
+      "plugin": "/risu/risuclient/plugins/core/openstack/iptables/metadata_redirect.sh",
+      "name": "metadata_redirect",
+      "priority": 800,
+      "long_name": "Undercloud metadata server redirection",
+      "bugzilla": "",
+      "result": {
+        "rc": 30,
+        "err": "works on director node only",
+        "out": ""
+      },
+      "time": 0.023855924606323242,
+      "backend": "core",
+      "id": "b01b409851fbb95a4d790da0d517f500",
+      "subcategory": "openstack/iptables"
+    },
+    "980fd87756d7289b6d45efef98775839": {
+      "category": "bugzilla",
+      "hash": "c656bb7acdfc4c7a47a83c42899cbe45",
+      "description": "'openstack overcloud update' loops on 'IN_PROGRESS' and times out",
+      "plugin": "/risu/risuclient/plugins/core/bugzilla/openstack/tripleo/1437016.sh",
+      "name": "1437016",
+      "priority": 600,
+      "long_name": "Overcloud update stuck in progress",
+      "bugzilla": "https://bugzilla.redhat.com/show_bug.cgi?id=1437016",
+      "result": {
+        "rc": 30,
+        "err": "only applies to OSP8, OSP9 and OSP10",
+        "out": ""
+      },
+      "time": 0.01998615264892578,
+      "backend": "core",
+      "id": "980fd87756d7289b6d45efef98775839",
+      "subcategory": "bugzilla/openstack/tripleo"
+    },
+    "acd2b190b1a325a2481f8665c4d2b6d9": {
+      "category": "security",
+      "hash": "7baff7232ba0744cf3e858d9064c744b",
+      "description": "Checks if package is affected of Spectre/Meltdown",
+      "plugin": "/risu/risuclient/plugins/core/security/meltdown/kernel-rt.sh",
+      "name": "kernel-rt",
+      "priority": 400,
+      "long_name": "Checks for fixed kernel-rt package",
+      "bugzilla": "",
+      "result": {
+        "rc": 30,
+        "err": "Please do check https://access.redhat.com/security/vulnerabilities/speculativeexecution for guidance\nrequired package kernel-rt not found.",
+        "out": ""
+      },
+      "time": 0.028527021408081055,
+      "backend": "core",
+      "id": "acd2b190b1a325a2481f8665c4d2b6d9",
+      "subcategory": "security/meltdown"
+    },
+    "3c552975e3985fc78b113ea04ed9fed0": {
+      "category": "system",
+      "hash": "aac7fe20a0f8c18ce089488381902d42",
+      "description": "Checks if running kernel is the one last installed",
+      "plugin": "/risu/risuclient/plugins/core/system/current-kernel-RT-vs-installed.sh",
+      "name": "current-kernel-RT-vs-installed",
+      "priority": 200,
+      "long_name": "Current kernel vs last installed",
+      "bugzilla": "",
+      "result": {
+        "rc": 30,
+        "err": "required package kernel-rt not found.",
+        "out": ""
+      },
+      "time": 0.016136884689331055,
+      "backend": "core",
+      "id": "3c552975e3985fc78b113ea04ed9fed0",
+      "subcategory": ""
+    },
+    "0192b2acc52428bd20779a3cc0ef7110": {
+      "category": "openstack",
+      "hash": "5f2c9a8bd3d059944535b3123268205d",
+      "description": "Checks for token cleanup expired tokens removal",
+      "plugin": "/risu/risuclient/plugins/core/openstack/keystone/cleanup_runs.sh",
+      "name": "cleanup_runs",
+      "priority": 600,
+      "long_name": "Keystone token clean-up runs",
+      "bugzilla": "",
+      "result": {
+        "rc": 30,
+        "err": "required file /var/spool/cron/keystone not found.",
+        "out": ""
+      },
+      "time": 0.00878596305847168,
+      "backend": "core",
+      "id": "0192b2acc52428bd20779a3cc0ef7110",
+      "subcategory": "openstack/keystone"
+    },
+    "76d4ec5b2b6153a9cbd6d5636e1051e5": {
+      "category": "bugzilla",
+      "hash": "6ee0f6a746ccfc8bed01338220b23902",
+      "description": "Checks for object-expirer missconfigured in swift",
+      "plugin": "/risu/risuclient/plugins/core/bugzilla/openstack/swift/1500607.sh",
+      "name": "1500607",
+      "priority": 400,
+      "long_name": "Memcache servers misconfiguration",
+      "bugzilla": "https://bugzilla.redhat.com/show_bug.cgi?id=1500607",
+      "result": {
+        "rc": 10,
+        "err": "",
+        "out": ""
+      },
+      "time": 0.01335000991821289,
+      "backend": "core",
+      "id": "76d4ec5b2b6153a9cbd6d5636e1051e5",
+      "subcategory": "bugzilla/openstack/swift"
+    },
+    "0507bc82d95c47b1c7fb500e53ee38b9": {
+      "category": "security",
+      "hash": "7baff7232ba0744cf3e858d9064c744b",
+      "description": "Checks if package is affected of Spectre/Meltdown",
+      "plugin": "/risu/risuclient/plugins/core/security/spectre/kernel-rt.sh",
+      "name": "kernel-rt",
+      "priority": 400,
+      "long_name": "Checks for fixed kernel-rt package",
+      "bugzilla": "",
+      "result": {
+        "rc": 30,
+        "err": "Please do check https://access.redhat.com/security/vulnerabilities/speculativeexecution for guidance\nrequired package kernel-rt not found.",
+        "out": ""
+      },
+      "time": 0.023243188858032227,
+      "backend": "core",
+      "id": "0507bc82d95c47b1c7fb500e53ee38b9",
+      "subcategory": "security/spectre"
+    },
+    "b53ee89e1c5084da2b11ede3428d486e": {
+      "category": "openstack",
+      "hash": "cb6ebb4b688500de3589751522b191f3",
+      "description": "Report tracebacks in OpenStack services logs",
+      "plugin": "/risu/risuclient/plugins/core/openstack/traceback.sh",
+      "name": "traceback",
+      "priority": 800,
+      "long_name": "Tracebacks in services logs",
+      "bugzilla": "",
+      "result": {
+        "rc": 10,
+        "err": "",
+        "out": ""
+      },
+      "time": 0.20492100715637207,
+      "backend": "core",
+      "id": "b53ee89e1c5084da2b11ede3428d486e",
+      "subcategory": ""
+    },
+    "71b05b959a4759b6d42c97e424b3cb16": {
+      "category": "openstack",
+      "hash": "6693a14a4611d4e2425b727d1f55e3c7",
+      "description": "Checks for various DPDK configuration parameters",
+      "plugin": "/risu/risuclient/plugins/core/openstack/network/dpdk.sh",
+      "name": "dpdk",
+      "priority": 300,
+      "long_name": "DPDK Configuration",
+      "bugzilla": "",
+      "result": {
+        "rc": 20,
+        "err": "missing NUMATopologyFilter in nova.conf\nKERNEL used CPU's: \nCPU's isolated from kernel scheduler \nCPU's pinned in nova \nNova used CPU's (from isolated pool): \n-- available CPU's after this step from isolated pool: \ndc: stack empty\nDPDK PMD used CPU's: \n-- available CPU's after this step from isolated pool: \ndc: stack empty\nDPDK CORE used CPU's: \nThere are CPU's unallocated:  0 1 2 3",
+        "out": ""
+      },
+      "time": 0.15361309051513672,
+      "backend": "core",
+      "id": "71b05b959a4759b6d42c97e424b3cb16",
+      "subcategory": "openstack/network"
+    },
+    "198946464f3161a03cd81442ebed4b4d": {
+      "category": "system",
+      "hash": "7b659f56e35b10e62fbaabebc689cb9a",
+      "description": "Detects if net.ifnames=0 has been setup for the system. net.ifnames for RHEL7 is only supported for KVM systems.",
+      "plugin": "/risu/risuclient/plugins/core/system/netifnames.sh",
+      "name": "netifnames",
+      "priority": 500,
+      "long_name": "Detects if netifnames is actived on non-KVM systems",
+      "bugzilla": "",
+      "result": {
+        "rc": 30,
+        "err": "required file /sos_commands/networking/ip_link not found.",
+        "out": ""
+      },
+      "time": 0.007369041442871094,
+      "backend": "core",
+      "id": "198946464f3161a03cd81442ebed4b4d",
+      "subcategory": ""
+    },
+    "a226d4095d45accef1fe1489c66bbbc9": {
+      "category": "openstack",
+      "hash": "577e67aad0646457b855c4231844e5d8",
+      "description": "Checks if nova on OSP11 is using only unversioned notifications",
+      "plugin": "/risu/risuclient/plugins/core/openstack/nova/osp10plus-versioned-notifications.sh",
+      "name": "osp10plus-versioned-notifications",
+      "priority": 600,
+      "long_name": "Nova unversioned notifications",
+      "bugzilla": "",
+      "result": {
+        "rc": 30,
+        "err": "works only on OSP 10+",
+        "out": ""
+      },
+      "time": 0.02257394790649414,
+      "backend": "core",
+      "id": "a226d4095d45accef1fe1489c66bbbc9",
+      "subcategory": "openstack/nova"
+    },
+    "418148220d3c5b3d38e72606817ea940": {
+      "category": "system",
+      "hash": "113922cd8ea5b8b9b4f2e23bed392107",
+      "description": "this plugin checks for outdated sosreport package",
+      "plugin": "/risu/risuclient/plugins/core/system/sosreport.sh",
+      "name": "sosreport",
+      "priority": 100,
+      "long_name": "Outdated sos package",
+      "bugzilla": "",
+      "result": {
+        "rc": 20,
+        "err": "package sos version sos-3.4-6.el7.noarch is lower than required (sos-3.4-13.el7_4.noarch).",
+        "out": ""
+      },
+      "time": 0.02970600128173828,
+      "backend": "core",
+      "id": "418148220d3c5b3d38e72606817ea940",
+      "subcategory": ""
+    },
+    "25f23f5c71fcec9df358550f44748a6e": {
+      "category": "openstack",
+      "hash": "eadc667cdc70f41cb13d3dbed569e2a7",
+      "description": "Checks missconfigured host in nova vs ceilometer",
+      "plugin": "/risu/risuclient/plugins/core/openstack/ceilometer/out-of-sync-host.sh",
+      "name": "out-of-sync-host",
+      "priority": 500,
+      "long_name": "Mismatch between nova host and ceilometer host",
+      "bugzilla": "",
+      "result": {
+        "rc": 30,
+        "err": "works only on compute node",
+        "out": ""
+      },
+      "time": 0.014277935028076172,
+      "backend": "core",
+      "id": "25f23f5c71fcec9df358550f44748a6e",
+      "subcategory": "openstack/ceilometer"
+    },
+    "6063b8b9212d6cc38287422219b6821a": {
+      "category": "system",
+      "hash": "be98fd5818dbdd46da1beecee7a8c114",
+      "description": "Checks for proper chronyd status",
+      "plugin": "/risu/risuclient/plugins/core/system/clock-1-chrony.sh",
+      "datahook": {
+        "prior": {
+          "out": "",
+          "err": "chronyd is not active",
+          "rc": 20
+        }
+      },
+      "name": "clock-1-chrony",
+      "priority": 500,
+      "long_name": "Chronyd time synchronization",
+      "bugzilla": "",
+      "result": {
+        "out": "",
+        "err": "Marked as skipped by data hook unfail-chronyd-with-ntpd.pyc",
+        "rc": 30
+      },
+      "time": 0.013424158096313477,
+      "backend": "core",
+      "id": "6063b8b9212d6cc38287422219b6821a",
+      "subcategory": ""
+    },
+    "1de686b1990928d26b1c962988f5ec88": {
+      "category": "security",
+      "hash": "73abd17478f49860afab86dd9f34881a",
+      "description": "Checks if user disabled fix for Spectre",
+      "plugin": "/risu/risuclient/plugins/core/security/spectre-disabled.sh",
+      "name": "spectre-disabled",
+      "priority": 400,
+      "long_name": "Checks for disabled kernel protection features against Spectre",
+      "bugzilla": "",
+      "result": {
+        "rc": 10,
+        "err": "",
+        "out": ""
+      },
+      "time": 0.021175146102905273,
+      "backend": "core",
+      "id": "1de686b1990928d26b1c962988f5ec88",
+      "subcategory": ""
+    },
+    "449a2b8c00582f6b7bf9381af5cb0491": {
+      "category": "system",
+      "hash": "fa3fca5cc95b58424b6921dd8faa63e1",
+      "description": "Checks /etc/redhat-release across hosts",
+      "plugin": "/risu/risuclient/plugins/winston/system/redhat-release.txt",
+      "name": "redhat-release",
+      "priority": 500,
+      "long_name": "Check same RHEL release across hosts",
+      "bugzilla": "",
+      "result": {
+        "rc": 10,
+        "err": "Red Hat Enterprise Linux Server release 7.4 (Maipo)\n",
+        "out": ""
+      },
+      "time": 6.103515625e-5,
+      "path": "${RISU_ROOT}/etc/redhat-release",
+      "backend": "winston",
+      "id": "449a2b8c00582f6b7bf9381af5cb0491",
+      "subcategory": ""
+    },
+    "a20f66e7faeab04c79a3baf19996dd69": {
+      "category": "bugzilla",
+      "hash": "6b23f29a178b9740727a46670268a44e",
+      "description": "Checks for iptables xlock errors",
+      "plugin": "/risu/risuclient/plugins/core/bugzilla/openstack/neutron/1489066.sh",
+      "name": "1489066",
+      "priority": 800,
+      "long_name": "Concurrent use of iptables",
+      "bugzilla": "https://bugzilla.redhat.com/show_bug.cgi?id=1489066",
+      "result": {
+        "rc": 10,
+        "err": "",
+        "out": ""
+      },
+      "time": 0.03349590301513672,
+      "backend": "core",
+      "id": "a20f66e7faeab04c79a3baf19996dd69",
+      "subcategory": "bugzilla/openstack/neutron"
+    },
+    "c74e0e10055b1b6b85736faa56da1dc4": {
+      "category": "openstack",
+      "hash": "2a6afdc2c8166ac043b2612dc7df617a",
+      "description": "Report tracebacks in Containerized OpenStack services logs",
+      "plugin": "/risu/risuclient/plugins/core/openstack/containers/traceback.sh",
+      "name": "traceback",
+      "priority": 800,
+      "long_name": "Tracebacks in services logs",
+      "bugzilla": "",
+      "result": {
+        "rc": 30,
+        "err": "the OSP12 deployment seems to not be containerized",
+        "out": ""
+      },
+      "time": 0.02195000648498535,
+      "backend": "core",
+      "id": "c74e0e10055b1b6b85736faa56da1dc4",
+      "subcategory": "openstack/containers"
+    },
+    "247d87b926157bc64b325b90f379e526": {
+      "category": "system",
+      "hash": "87eb8b32720a4d23e812612a7f93672f",
+      "description": "Detects RHEL release",
+      "plugin": "/risu/risuclient/plugins/core/system/rh-release.sh",
+      "name": "rh-release",
+      "priority": 200,
+      "long_name": "RHEL release",
+      "bugzilla": "",
+      "result": {
+        "rc": 10,
+        "err": "Red Hat Enterprise Linux Server release 7.4 (Maipo)",
+        "out": ""
+      },
+      "time": 0.0035991668701171875,
+      "backend": "core",
+      "id": "247d87b926157bc64b325b90f379e526",
+      "subcategory": ""
+    },
+    "281f935961f295c3ef0f058c39fd079e": {
+      "category": "pacemaker",
+      "hash": "99bc52047e33e0e95df3bda6b14c3bea",
+      "description": "Check if there are pacemaker resources disabled",
+      "plugin": "/risu/risuclient/plugins/core/pacemaker/disabled_resources.sh",
+      "name": "disabled_resources",
+      "priority": 600,
+      "long_name": "Disabled resources",
+      "bugzilla": "",
+      "result": {
+        "rc": 10,
+        "err": "",
+        "out": ""
+      },
+      "time": 0.018513917922973633,
+      "backend": "core",
+      "id": "281f935961f295c3ef0f058c39fd079e",
+      "subcategory": ""
+    },
+    "929222cb06eb9552ba29e8ab94e19656": {
+      "category": "ceph",
+      "hash": "1a8c252154561de586d154de89783a28",
+      "description": "Checks Ceph pg_num",
+      "plugin": "/risu/risuclient/plugins/core/ceph/pg-num.sh",
+      "name": "pg-num",
+      "priority": 600,
+      "long_name": "Number of Placement Groups",
+      "bugzilla": "",
+      "result": {
+        "rc": 30,
+        "err": "required file /etc/ceph/ceph.conf not found.",
+        "out": ""
+      },
+      "time": 0.015480995178222656,
+      "backend": "core",
+      "id": "929222cb06eb9552ba29e8ab94e19656",
+      "subcategory": ""
+    },
+    "03a21df92121284f00367e2ea120e8d6": {
+      "category": "system",
+      "hash": "6e841840783a4b4f1e1d515d6887d626",
+      "description": "Sets hostname metadata",
+      "plugin": "/risu/risuclient/plugins/metadata/system/hostname.sh",
+      "name": "hostname",
+      "priority": 0,
+      "long_name": "prepares hostname metadata",
+      "result": {
+        "rc": 10,
+        "err": "controller-0",
+        "out": "hostname"
+      },
+      "time": 0.017227888107299805,
+      "backend": "metadata",
+      "id": "03a21df92121284f00367e2ea120e8d6",
+      "subcategory": ""
+    },
+    "2e46057fa778de4caf4ae472620fa100": {
+      "category": "negative",
+      "hash": "ea198336bdda9e14bcea1b806ba92de7",
+      "description": "Checks iSCSI initiator name file",
+      "plugin": "/risu/risuclient/plugins/faraday/negative/system/iscsi/initiatorname.txt",
+      "name": "initiatorname",
+      "priority": 500,
+      "long_name": "iSCSI initiator name",
+      "bugzilla": "",
+      "result": {
+        "rc": 10,
+        "err": "5fdf332295e35287267c1c884c01dc53",
+        "out": ""
+      },
+      "time": 0.00017690658569335938,
+      "path": "${RISU_ROOT}/etc/iscsi/initiatorname.iscsi",
+      "backend": "faraday",
+      "id": "2e46057fa778de4caf4ae472620fa100",
+      "subcategory": "negative/system/iscsi"
+    },
+    "fdc3eb66aa05604c2e8073f2f5626089": {
+      "category": "security",
+      "hash": "aaa3eb17aa2346aaa91de8ecb3fcc324",
+      "description": "Checks if package is affected of Spectre/Meltdown",
+      "plugin": "/risu/risuclient/plugins/core/security/meltdown/kernel.sh",
+      "name": "kernel",
+      "priority": 400,
+      "long_name": "Checks for fixed kernel package",
+      "bugzilla": "",
+      "result": {
+        "rc": 20,
+        "err": "Please do check https://access.redhat.com/security/vulnerabilities/speculativeexecution for guidance\npackage kernel version kernel-3.10.0-693.5.2.el7.x86_64 is lower than required (kernel-3.10.0-693.11.6).",
+        "out": ""
+      },
+      "time": 0.0726480484008789,
+      "backend": "core",
+      "id": "fdc3eb66aa05604c2e8073f2f5626089",
+      "subcategory": "security/meltdown"
+    },
+    "1586bab95f7d891153bcbb6da148e361": {
+      "category": "system",
+      "hash": "e0ad352c332829583aa5717724939885",
+      "description": "Retrieves release data from host",
+      "plugin": "/risu/risuclient/plugins/metadata/system/release.sh",
+      "name": "release",
+      "priority": 0,
+      "long_name": "Outputs release for host",
+      "result": {
+        "rc": 10,
+        "err": "Red Hat Enterprise Linux Server release 7.4 (Maipo)",
+        "out": "release"
+      },
+      "time": 0.015269041061401367,
+      "backend": "metadata",
+      "id": "1586bab95f7d891153bcbb6da148e361",
+      "subcategory": ""
+    },
+    "cb47c3a0b27622c93f14b590f31fb0f6": {
+      "category": "system",
+      "hash": "fa6ee0633d08d799abc4b751ca89187e",
+      "description": "Checks for ntpd time resets",
+      "plugin": "/risu/risuclient/plugins/core/system/clock-ntpd-time-reset.sh",
+      "name": "clock-ntpd-time-reset",
+      "priority": 500,
+      "long_name": "NTPd time resets because of time syncs",
+      "bugzilla": "",
+      "result": {
+        "rc": 10,
+        "err": "",
+        "out": ""
+      },
+      "time": 0.033271074295043945,
+      "backend": "core",
+      "id": "cb47c3a0b27622c93f14b590f31fb0f6",
+      "subcategory": ""
+    },
+    "e0422ea5470449e602ee3caa7fa71e7c": {
+      "category": "bugzilla",
+      "hash": "5845b2de88a4b928f0a6b5b845858d1e",
+      "description": "Checks for keystone LDAP domain template problem",
+      "plugin": "/risu/risuclient/plugins/core/bugzilla/openstack/keystone/templates/1519057.sh",
+      "name": "1519057",
+      "priority": 400,
+      "long_name": "Keystone LDAP Domain integration",
+      "bugzilla": "https://bugzilla.redhat.com/show_bug.cgi?id=1519057",
+      "result": {
+        "rc": 30,
+        "err": "works on live-system only",
+        "out": ""
+      },
+      "time": 0.011777877807617188,
+      "backend": "core",
+      "id": "e0422ea5470449e602ee3caa7fa71e7c",
+      "subcategory": "bugzilla/openstack/keystone/templates"
+    },
+    "96514f08ad8e8e9ff7d7095a017ed88a": {
+      "category": "system",
+      "hash": "20664e6a1a7040c4d588d64c542dda4f",
+      "description": "this plugin checks in yum history for undo/rollback/redo",
+      "plugin": "/risu/risuclient/plugins/core/system/yum_history_rollback-undo.sh",
+      "name": "yum_history_rollback-undo",
+      "priority": 300,
+      "long_name": "Package rollback, undo or redo",
+      "bugzilla": "",
+      "result": {
+        "rc": 10,
+        "err": "",
+        "out": ""
+      },
+      "time": 0.01524496078491211,
+      "backend": "core",
+      "id": "96514f08ad8e8e9ff7d7095a017ed88a",
+      "subcategory": ""
+    },
+    "29fd9b6c6cbca0a83af57eff01cf6077": {
+      "category": "openstack",
+      "hash": "a579236508c21b6e98f846159fd18da6",
+      "description": "Checks nova's vnc console ip address is set to localhost",
+      "plugin": "/risu/risuclient/plugins/core/openstack/nova/vnc-console-localhost.sh",
+      "name": "vnc-console-localhost",
+      "priority": 300,
+      "long_name": "VNC Server console address",
+      "bugzilla": "https://bugzilla.redhat.com/show_bug.cgi?id=1468101",
+      "result": {
+        "rc": 20,
+        "err": "nova's vnc console listening on 127.0.0.1",
+        "out": ""
+      },
+      "time": 0.034646034240722656,
+      "backend": "core",
+      "id": "29fd9b6c6cbca0a83af57eff01cf6077",
+      "subcategory": "openstack/nova"
+    },
+    "678898bff7e5b85c5fdc955a40201b66": {
+      "category": "system",
+      "hash": "a4007720d13906006d8ce58c9a3ec886",
+      "description": "error if disk usage is greater than $RISU_DISK_MAX_PERCENT=75",
+      "plugin": "/risu/risuclient/plugins/core/system/disk_usage.sh",
+      "name": "disk_usage",
+      "priority": 200,
+      "long_name": "Disk space usage",
+      "bugzilla": "",
+      "result": {
+        "rc": 10,
+        "err": "",
+        "out": ""
+      },
+      "time": 0.01683807373046875,
+      "backend": "core",
+      "id": "678898bff7e5b85c5fdc955a40201b66",
+      "subcategory": ""
+    },
+    "59a5169c7b25d72bad932df66ca49f6e": {
+      "category": "system",
+      "hash": "58baa88ac1d4b3ca767f783f29a31e06",
+      "description": "Checks for proper ntpd status",
+      "plugin": "/risu/risuclient/plugins/core/system/clock-1-ntpd.sh",
+      "name": "clock-1-ntpd",
+      "priority": 500,
+      "long_name": "NTPd time synchronization",
+      "bugzilla": "",
+      "result": {
+        "rc": 10,
+        "err": "server clock.redhat.com iburst\nclock offset is -0.032 ms",
+        "out": ""
+      },
+      "time": 0.026750802993774414,
+      "backend": "core",
+      "id": "59a5169c7b25d72bad932df66ca49f6e",
+      "subcategory": ""
+    },
+    "b914a415eefac9f0b8838c3fb52141fd": {
+      "category": "openstack",
+      "hash": "45bfe5fe5b0311901fb272951015e2e7",
+      "description": "Check for RPC issues in OpenStack services",
+      "plugin": "/risu/risuclient/plugins/core/openstack/rabbitmq/rpc_issues.sh",
+      "name": "rpc_issues",
+      "priority": 900,
+      "long_name": "RabbitMQ RPC issues",
+      "bugzilla": "",
+      "result": {
+        "rc": 10,
+        "err": "",
+        "out": ""
+      },
+      "time": 0.20848608016967773,
+      "backend": "core",
+      "id": "b914a415eefac9f0b8838c3fb52141fd",
+      "subcategory": "openstack/rabbitmq"
+    },
+    "97d22fd2e7f006da7ee623cfbd40a487": {
+      "category": "system",
+      "hash": "eb13c64172c0c3aa3536a21c708cce90",
+      "description": "error if disk inode usage is greater than $RISU_INODE_MAX_PERCENT=90",
+      "plugin": "/risu/risuclient/plugins/core/system/disk_inode_usage.sh",
+      "name": "disk_inode_usage",
+      "priority": 300,
+      "long_name": "Disk inode usage",
+      "bugzilla": "",
+      "result": {
+        "rc": 10,
+        "err": "",
+        "out": ""
+      },
+      "time": 0.015391111373901367,
+      "backend": "core",
+      "id": "97d22fd2e7f006da7ee623cfbd40a487",
+      "subcategory": ""
+    },
+    "558e48c8d123bf6cc13036daec5a1ba4": {
+      "category": "Profiles: cluster",
+      "hash": "f3dac86efae6a7edae79205067e6797f",
+      "subcategory": "",
+      "plugin": "/risu/risuclient/plugins/profiles/cluster.txt",
+      "description": "Checks for several plugins related with ClusterHA environments",
+      "priority": 0,
+      "long_name": "Cluster profile checks",
+      "bugzilla": "",
+      "result": {
+        "out": "",
+        "err": "\n{'rc': 10, 'err': u'', 'plugin': '/core/pacemaker/nodes_number.sh'}\n{'rc': 10, 'err': u'no failed actions detected', 'plugin': '/core/pacemaker/failed_actions.sh'}\n{'rc': 20, 'err': u'NO stonith devices configured', 'plugin': '/core/pacemaker/fence_device.sh'}\n{'rc': 10, 'err': u'server clock.redhat.com iburst\\nclock offset is -0.032 ms', 'plugin': '/core/system/clock-1-ntpd.sh'}\n{'rc': 20, 'err': u'stonith is not enabled', 'plugin': '/core/pacemaker/stonith_enabled.sh'}\n{'rc': 20, 'err': u'maintenance is enabled', 'plugin': '/core/pacemaker/maintenance.sh'}\n{'rc': 30, 'err': u'Plugin does not satisfy conditions for running', 'plugin': '/ansible/system/clock-ntpstat.yml'}\n{'rc': 10, 'err': u'', 'plugin': '/core/pacemaker/stopped_resources.sh'}\n{'rc': 10, 'err': u'', 'plugin': '/core/system/clock-0-ntp-services.sh'}\n{'rc': 30, 'err': 'Marked as skipped by data hook unfail-chronyd-with-ntpd.pyc', 'plugin': '/core/system/clock-1-chrony.sh'}\n{'rc': 10, 'err': u'', 'plugin': '/core/pacemaker/disabled_resources.sh'}\n{'rc': 10, 'err': u'', 'plugin': '/core/system/clock-ntpd-time-reset.sh'}\n{'rc': 20, 'err': u'ntpd configured with one server, if that one goes down, you are toast:\\nserver clock.redhat.com iburst', 'plugin': '/core/system/clock-2-ntpd-quantity.sh'}\n{'rc': 10, 'err': u'', 'plugin': '/core/pacemaker/packages.sh'}",
+        "rc": 10
+      },
+      "components": [
+        "3919f0b69e98e6053ea2dc1ec43318c4",
+        "f14232011067f7c626499a29efbd3999",
+        "1c8ecb3d34af7fc68210cfa42217a209",
+        "59a5169c7b25d72bad932df66ca49f6e",
+        "c04387da9b1518cb997b8a7d84bb20a9",
+        "5f8dc2f98fddb5bf94d57c994de39533",
+        "87cea5b7131aab36e1a74c0e11b6a256",
+        "3d444e10951e62746323e98eede282c4",
+        "b387b8c5d6d5e2a221404d7f3e157510",
+        "6063b8b9212d6cc38287422219b6821a",
+        "281f935961f295c3ef0f058c39fd079e",
+        "cb47c3a0b27622c93f14b590f31fb0f6",
+        "94918024ae73e57cc0dfd300c64c408c",
+        "ce901113d4459f28305309bf578bddcb"
+      ],
+      "time": 0,
+      "backend": "profile",
+      "id": "558e48c8d123bf6cc13036daec5a1ba4",
+      "name": "Profiles: cluster"
+    },
+    "4c17cf5da856c5a539722e0d9b512f8d": {
+      "category": "security",
+      "hash": "c1687d6e3e8061bc445729f34f54dcc0",
+      "description": "Checks if package is affected of Spectre/Meltdown",
+      "plugin": "/risu/risuclient/plugins/core/security/spectre/qemu-kvm.sh",
+      "name": "qemu-kvm",
+      "priority": 400,
+      "long_name": "Checks for fixed qemu-kvm package",
+      "bugzilla": "",
+      "result": {
+        "rc": 30,
+        "err": "Please do check https://access.redhat.com/security/vulnerabilities/speculativeexecution for guidance\nrequired package qemu-img-1.5.3-141.el7_4.6 not found.",
+        "out": ""
+      },
+      "time": 0.023015975952148438,
+      "backend": "core",
+      "id": "4c17cf5da856c5a539722e0d9b512f8d",
+      "subcategory": "security/spectre"
+    },
+    "741a448bd411caf38a83d42f2a2f980c": {
+      "category": "bugzilla",
+      "hash": "6a73f0e1a1c56e6c3becf80063b961de",
+      "description": "Checks for wrong host definition on nova.conf",
+      "plugin": "/risu/risuclient/plugins/core/bugzilla/openstack/nova/1474092.sh",
+      "name": "1474092",
+      "priority": 700,
+      "long_name": "Mismatch between nova host and hostname",
+      "bugzilla": "https://bugzilla.redhat.com/show_bug.cgi?id=1474092",
+      "result": {
+        "rc": 10,
+        "err": "",
+        "out": ""
+      },
+      "time": 0.03587603569030762,
+      "backend": "core",
+      "id": "741a448bd411caf38a83d42f2a2f980c",
+      "subcategory": "bugzilla/openstack/nova"
+    },
+    "586eb3353e6d5748442da84798f0cdf6": {
+      "category": "system",
+      "hash": "4af8fe7f9704aee0ea9b71105ee0d2b0",
+      "description": "This plugin check kdump configuration",
+      "plugin": "/risu/risuclient/plugins/core/system/kdump-checker.sh",
+      "name": "kdump-checker",
+      "priority": 100,
+      "long_name": "KDump configuration",
+      "bugzilla": "",
+      "result": {
+        "rc": 10,
+        "err": "",
+        "out": ""
+      },
+      "time": 0.03446197509765625,
+      "backend": "core",
+      "id": "586eb3353e6d5748442da84798f0cdf6",
+      "subcategory": ""
+    },
+    "67f07a3cf11549a7257ef5f0dbdca82b": {
+      "category": "system",
+      "hash": "f1f2921f22caf7cf50c5c0bd4c9f3ce4",
+      "description": "check memcached options, if UDP is disabled and if is binded to an IP",
+      "plugin": "/risu/risuclient/plugins/core/system/memcached-udp-ip-binding.sh",
+      "name": "memcached-udp-ip-binding",
+      "priority": 100,
+      "long_name": "check memcached options, UDP and IP binding",
+      "bugzilla": "",
+      "result": {
+        "rc": 20,
+        "err": "Memcached doesn't have UDP disabled",
+        "out": ""
+      },
+      "time": 0.018301963806152344,
+      "backend": "core",
+      "id": "67f07a3cf11549a7257ef5f0dbdca82b",
+      "subcategory": ""
+    },
+    "3de0b8a50adea4422cfb7842050b1546": {
+      "category": "ceph",
+      "hash": "a55f593ea8b68bba0c5947edcfb006dc",
+      "description": "Checks Ceph min_size",
+      "plugin": "/risu/risuclient/plugins/core/ceph/min-size.sh",
+      "name": "min-size",
+      "priority": 600,
+      "long_name": "Ceph pool number of replicas",
+      "bugzilla": "",
+      "result": {
+        "rc": 30,
+        "err": "required file /etc/ceph/ceph.conf not found.",
+        "out": ""
+      },
+      "time": 0.017306089401245117,
+      "backend": "core",
+      "id": "3de0b8a50adea4422cfb7842050b1546",
+      "subcategory": ""
+    },
+    "df75f6ed5f33e0bf6e546b6e9d9f0a86": {
+      "category": "system",
+      "hash": "35d37f6c1472a3e7ef7d64d6eca4d274",
+      "description": "Checks for HW virtualization support",
+      "plugin": "/risu/risuclient/plugins/core/system/hardware_virtualization.sh",
+      "name": "hardware_virtualization",
+      "priority": 200,
+      "long_name": "Hardware Virtualization support",
+      "bugzilla": "",
+      "result": {
+        "rc": 10,
+        "err": "",
+        "out": ""
+      },
+      "time": 0.013236045837402344,
+      "backend": "core",
+      "id": "df75f6ed5f33e0bf6e546b6e9d9f0a86",
+      "subcategory": ""
+    },
+    "94918024ae73e57cc0dfd300c64c408c": {
+      "category": "system",
+      "hash": "e58d3419a9232635d46099fa938480c1",
+      "description": "Checks for ntpd server quantity",
+      "plugin": "/risu/risuclient/plugins/core/system/clock-2-ntpd-quantity.sh",
+      "name": "clock-2-ntpd-quantity",
+      "priority": 500,
+      "long_name": "NTPd server quantity",
+      "bugzilla": "",
+      "result": {
+        "rc": 20,
+        "err": "ntpd configured with one server, if that one goes down, you are toast:\nserver clock.redhat.com iburst",
+        "out": ""
+      },
+      "time": 0.021432161331176758,
+      "backend": "core",
+      "id": "94918024ae73e57cc0dfd300c64c408c",
+      "subcategory": ""
+    },
+    "9d1737f8fd842b76f5dc35d3d9a8131f-74e66d6516e1b3a6158b7c87bcc52753": {
+      "category": "positive",
+      "hash": "31ade0c256bc3dd6b97b31bd85a4fd34",
+      "description": "Checks Service policy.json file: /etc/manila/policy.json",
+      "plugin": "/risu/risuclient/plugins/faraday/positive/openstack/bundle-openstack-policy.txt",
+      "subcategory": "positive/openstack",
+      "priority": 500,
+      "long_name": "Checks Service policy.json file",
+      "bugzilla": "",
+      "result": {
+        "rc": 10,
+        "err": "1d266fedba06b8cad858ca4ab5a96ed3",
+        "out": ""
+      },
+      "time": 0.00013113021850585938,
+      "path": "${RISU_ROOT}/etc/manila/policy.json",
+      "backend": "faraday",
+      "id": "9d1737f8fd842b76f5dc35d3d9a8131f-74e66d6516e1b3a6158b7c87bcc52753",
+      "name": "Check /etc/manila/policy.json"
+    },
+    "7af9cbe44d83d74a7b571c9970e05a28": {
+      "category": "system",
+      "hash": "a64d81add483cd0ab8f404bd30c459cc",
+      "description": "Checks Machine Identifier",
+      "plugin": "/risu/risuclient/plugins/winston/system/machine-id.txt",
+      "name": "machine-id",
+      "priority": 500,
+      "long_name": "Machine Identifier",
+      "bugzilla": "",
+      "result": {
+        "rc": 30,
+        "err": "File /cases/02016541/sosreport-controller-0.02016541-20180225232251/etc/machine-id is not accessible in read mode",
+        "out": ""
+      },
+      "time": 6.198883056640625e-5,
+      "path": "${RISU_ROOT}/etc/machine-id",
+      "backend": "winston",
+      "id": "7af9cbe44d83d74a7b571c9970e05a28",
+      "subcategory": ""
+    },
+    "71f902861f84d54176c6369987643364": {
+      "category": "openstack",
+      "hash": "4017cfbf71640882558adf4c6dba8cd2",
+      "description": "Checks for token cleanup last execution",
+      "plugin": "/risu/risuclient/plugins/core/openstack/keystone/cleanup_last-run.sh",
+      "name": "cleanup_last-run",
+      "priority": 900,
+      "long_name": "Keystone token clean-up last execution date",
+      "bugzilla": "",
+      "result": {
+        "rc": 30,
+        "err": "required file /var/spool/cron/keystone not found.",
+        "out": ""
+      },
+      "time": 0.012418031692504883,
+      "backend": "core",
+      "id": "71f902861f84d54176c6369987643364",
+      "subcategory": "openstack/keystone"
+    },
+    "9d1737f8fd842b76f5dc35d3d9a8131f-71d3ade2427a04f355f510b557fb8593": {
+      "category": "positive",
+      "hash": "31ade0c256bc3dd6b97b31bd85a4fd34",
+      "description": "Checks Service policy.json file: /etc/sahara/policy.json",
+      "plugin": "/risu/risuclient/plugins/faraday/positive/openstack/bundle-openstack-policy.txt",
+      "subcategory": "positive/openstack",
+      "priority": 500,
+      "long_name": "Checks Service policy.json file",
+      "bugzilla": "",
+      "result": {
+        "rc": 10,
+        "err": "07c85d1e31e4ba8eb3e98d2ece314570",
+        "out": ""
+      },
+      "time": 6.508827209472656e-5,
+      "path": "${RISU_ROOT}/etc/sahara/policy.json",
+      "backend": "faraday",
+      "id": "9d1737f8fd842b76f5dc35d3d9a8131f-71d3ade2427a04f355f510b557fb8593",
+      "name": "Check /etc/sahara/policy.json"
+    },
+    "90ddc5cd29e01cb679579fc0f4562785": {
+      "category": "openstack",
+      "hash": "39475aff7df0b729ee3f2220d1100318",
+      "description": "Checks if mysql is configured to use one file per table for innodb",
+      "plugin": "/risu/risuclient/plugins/core/openstack/mysql/innodb-file-per-table.sh",
+      "name": "innodb-file-per-table",
+      "priority": 300,
+      "long_name": "InnoDB file per table",
+      "bugzilla": "",
+      "result": {
+        "rc": 20,
+        "err": "innodb_file_per_table not set in /etc/my.cnf.d/galera.cnf or /etc/my.cnf",
+        "out": ""
+      },
+      "time": 0.027453899383544922,
+      "backend": "core",
+      "id": "90ddc5cd29e01cb679579fc0f4562785",
+      "subcategory": "openstack/mysql"
+    },
+    "8e07adc86171daef004418b1dbc9df7e": {
+      "category": "openstack",
+      "hash": "ada067f20490c930b0b2f6f6e4bb7162",
+      "description": "Checks for failed OSP services",
+      "plugin": "/risu/risuclient/plugins/core/openstack/systemd/services.sh",
+      "name": "services",
+      "priority": 1000,
+      "long_name": "OpenStack failed services",
+      "bugzilla": "",
+      "result": {
+        "rc": 10,
+        "err": "",
+        "out": ""
+      },
+      "time": 0.02053093910217285,
+      "backend": "core",
+      "id": "8e07adc86171daef004418b1dbc9df7e",
+      "subcategory": "openstack/systemd"
+    },
+    "f518ae3bbc647b968e94e316dddedba3": {
+      "category": "openstack",
+      "hash": "0ba514896fb6f2c3e130c5a9a123aaf7",
+      "description": "Checks for SELinux errors on console.log access on computes",
+      "plugin": "/risu/risuclient/plugins/core/openstack/nova/consolelog-permissions-on-enforcing-selinux.sh",
+      "name": "consolelog-permissions-on-enforcing-selinux",
+      "priority": 400,
+      "long_name": "SELinux console.log permission",
+      "bugzilla": "",
+      "result": {
+        "rc": 10,
+        "err": "",
+        "out": ""
+      },
+      "time": 0.13582515716552734,
+      "backend": "core",
+      "id": "f518ae3bbc647b968e94e316dddedba3",
+      "subcategory": "openstack/nova"
+    },
+    "4b6a73c6d36cadba110bedab679a9239": {
+      "category": "openstack",
+      "hash": "83e91ee9d089f312b777f64330bb43ad",
+      "description": "Reports if ipv6 has been disabled via sysctl",
+      "plugin": "/risu/risuclient/plugins/core/openstack/rabbitmq/ipv6_disabled.sh",
+      "name": "ipv6_disabled",
+      "priority": 900,
+      "long_name": "Checks whether ipv6 has been disabled via sysctl",
+      "bugzilla": "",
+      "result": {
+        "rc": 10,
+        "err": "",
+        "out": ""
+      },
+      "time": 0.03684711456298828,
+      "backend": "core",
+      "id": "4b6a73c6d36cadba110bedab679a9239",
+      "subcategory": "openstack/rabbitmq"
+    },
+    "485ace1b7679bc954368136affbab435": {
+      "category": "openstack",
+      "hash": "a983599eec46630808fb833186159028",
+      "description": "Checks Swift configuration that could fill gnocchi",
+      "plugin": "/risu/risuclient/plugins/core/openstack/swift/pipeline-or-ignore-filling-gnocchi.sh",
+      "name": "pipeline-or-ignore-filling-gnocchi",
+      "priority": 800,
+      "long_name": "Ceilometer event collection",
+      "bugzilla": "https://bugzilla.redhat.com/show_bug.cgi?id=1449986",
+      "result": {
+        "rc": 10,
+        "err": "",
+        "out": ""
+      },
+      "time": 0.017482995986938477,
+      "backend": "core",
+      "id": "485ace1b7679bc954368136affbab435",
+      "subcategory": "openstack/swift"
+    },
+    "039241a72fc525a754525ddb46bf8c50": {
+      "category": "system",
+      "hash": "27cd10087d3985a0d6268ef4fcaa4729",
+      "description": "Detects corrupted journal file on disk",
+      "plugin": "/risu/risuclient/plugins/core/system/corrupted_journal.sh",
+      "name": "corrupted_journal",
+      "priority": 700,
+      "long_name": "Detects journal corrupted journal",
+      "bugzilla": "",
+      "result": {
+        "rc": 10,
+        "err": "",
+        "out": ""
+      },
+      "time": 0.013717174530029297,
+      "backend": "core",
+      "id": "039241a72fc525a754525ddb46bf8c50",
+      "subcategory": ""
+    },
+    "8472c0d9850dcbc641f436f78df872bb": {
+      "category": "openstack",
+      "hash": "8f985936cfbe1e0962e96de1a6d0ec40",
+      "description": "Checks Swift log for REPLICATE errors",
+      "plugin": "/risu/risuclient/plugins/core/openstack/swift/replicate-error.sh",
+      "name": "replicate-error",
+      "priority": 800,
+      "long_name": "Swift error with REPLICATE",
+      "bugzilla": "",
+      "result": {
+        "rc": 10,
+        "err": "",
+        "out": ""
+      },
+      "time": 0.03524303436279297,
+      "backend": "core",
+      "id": "8472c0d9850dcbc641f436f78df872bb",
+      "subcategory": "openstack/swift"
+    },
+    "8a3daf75bbbe401a22aa6368bae1fa42": {
+      "category": "openstack",
+      "hash": "69e4a15ab1f71b66b4de5a459816f254",
+      "description": "Checks latest seqno in MySQL/Galera",
+      "plugin": "/risu/risuclient/plugins/core/openstack/mysql/seqno.sh",
+      "name": "seqno",
+      "priority": 200,
+      "long_name": "Database sequence number",
+      "bugzilla": "",
+      "result": {
+        "rc": 30,
+        "err": "required file /var/log/mysqld.log not found.",
+        "out": ""
+      },
+      "time": 0.01155710220336914,
+      "backend": "core",
+      "id": "8a3daf75bbbe401a22aa6368bae1fa42",
+      "subcategory": "openstack/mysql"
+    },
+    "ce901113d4459f28305309bf578bddcb": {
+      "category": "pacemaker",
+      "hash": "4c603321f6b60743ba593c34e5779272",
+      "description": "Checks for outdated pacemaker packages",
+      "plugin": "/risu/risuclient/plugins/core/pacemaker/packages.sh",
+      "name": "packages",
+      "priority": 500,
+      "long_name": "Outdated pacemaker packages",
+      "bugzilla": "",
+      "result": {
+        "rc": 10,
+        "err": "",
+        "out": ""
+      },
+      "time": 0.02329397201538086,
+      "backend": "core",
+      "id": "ce901113d4459f28305309bf578bddcb",
+      "subcategory": ""
+    },
+    "91a2c7d2e34dffe9735cabd30077352d": {
+      "category": "openstack",
+      "hash": "d89b22028e39a55e17d28c80ff4e9815",
+      "description": "Check for ceilometer expiration values",
+      "plugin": "/risu/risuclient/plugins/core/openstack/ceilometer/expiration.sh",
+      "name": "expiration",
+      "priority": 600,
+      "long_name": "Ceilometer expiration configuration",
+      "bugzilla": "",
+      "result": {
+        "rc": 20,
+        "err": "alarm_history_time_to_live missing on file\nevent_time_to_live missing on file\nmetering_time_to_live missing on file",
+        "out": ""
+      },
+      "time": 0.029536962509155273,
+      "backend": "core",
+      "id": "91a2c7d2e34dffe9735cabd30077352d",
+      "subcategory": "openstack/ceilometer"
+    },
+    "dd91e8939702e7398ceffef587a06511": {
+      "category": "system",
+      "hash": "832d698653342a3978d00384a7392b35",
+      "description": "error if process cpu usage is greater than $RISU_PROCESS_CPU_USAGE=100",
+      "plugin": "/risu/risuclient/plugins/core/system/process-high-cpu-usage.sh",
+      "name": "process-high-cpu-usage",
+      "priority": 800,
+      "long_name": "Process High CPU usage",
+      "bugzilla": "",
+      "result": {
+        "rc": 10,
+        "err": "",
+        "out": ""
+      },
+      "time": 0.022991180419921875,
+      "backend": "core",
+      "id": "dd91e8939702e7398ceffef587a06511",
+      "subcategory": ""
+    },
+    "aa09077cd177af1878b2010db94e4f5e": {
+      "category": "openstack",
+      "hash": "b23337fcc934ed6ccc3dc0c3709ae6c3",
+      "description": "Checks for various SRIOV and DPDK configuration parameters",
+      "plugin": "/risu/risuclient/plugins/core/openstack/network/common-dpdk-sriov.sh",
+      "name": "common-dpdk-sriov",
+      "priority": 300,
+      "long_name": "SR-IOV and DPDK Configuration",
+      "bugzilla": "",
+      "result": {
+        "rc": 20,
+        "err": "missing intel_iommu=on or iommu=pt on kernel cmdline\nmissing Isolated metadata in neutron/dhcp_agent.ini",
+        "out": ""
+      },
+      "time": 0.04179501533508301,
+      "backend": "core",
+      "id": "aa09077cd177af1878b2010db94e4f5e",
+      "subcategory": "openstack/network"
+    },
+    "9d1737f8fd842b76f5dc35d3d9a8131f-d8a54fdeb87d57bd550c678391c32eab": {
+      "category": "positive",
+      "hash": "31ade0c256bc3dd6b97b31bd85a4fd34",
+      "description": "Checks Service policy.json file: /etc/nova/policy.json",
+      "plugin": "/risu/risuclient/plugins/faraday/positive/openstack/bundle-openstack-policy.txt",
+      "subcategory": "positive/openstack",
+      "priority": 500,
+      "long_name": "Checks Service policy.json file",
+      "bugzilla": "",
+      "result": {
+        "rc": 10,
+        "err": "5b76b0eef9af8a2300673e0553f609f9",
+        "out": ""
+      },
+      "time": 6.890296936035156e-5,
+      "path": "${RISU_ROOT}/etc/nova/policy.json",
+      "backend": "faraday",
+      "id": "9d1737f8fd842b76f5dc35d3d9a8131f-d8a54fdeb87d57bd550c678391c32eab",
+      "name": "Check /etc/nova/policy.json"
+    },
+    "a295e711a9af05d0cc07a3ee206fc9b5": {
+      "category": "openstack",
+      "hash": "f264676a3fffd36931ef0881ff9f1998",
+      "description": "Checks for dead agent blocking the port and failing to start",
+      "plugin": "/risu/risuclient/plugins/core/openstack/openvswitch/ovs-dead-agent.sh",
+      "name": "ovs-dead-agent",
+      "priority": 800,
+      "long_name": "Check for ovs dead agent (ryu)",
+      "bugzilla": "",
+      "result": {
+        "rc": 10,
+        "err": "",
+        "out": ""
+      },
+      "time": 0.023478031158447266,
+      "backend": "core",
+      "id": "a295e711a9af05d0cc07a3ee206fc9b5",
+      "subcategory": "openstack/openvswitch"
+    },
+    "1a7d4fcf48afa49497f632358581482c": {
+      "category": "system",
+      "hash": "fc47650548c62edbe3d08ef0806a6278",
+      "description": "pip can create conflicts and have a hard impact on openstack services",
+      "plugin": "/risu/risuclient/plugins/core/system/pip.sh",
+      "name": "pip",
+      "priority": 800,
+      "long_name": "Check if pip is installed",
+      "bugzilla": "",
+      "result": {
+        "rc": 10,
+        "err": "no python pip package detected",
+        "out": ""
+      },
+      "time": 0.02166604995727539,
+      "backend": "core",
+      "id": "1a7d4fcf48afa49497f632358581482c",
+      "subcategory": ""
+    }
+  },
+  "metadata": {
+    "branding": "                                                  ",
+    "when": "2018-03-06T01:27:09.935315",
+    "source": "risu",
+    "live": false,
+    "time": 1.6247451305389404,
+    "path": "/cases/02016541/sosreport-controller-0.02016541-20180225232251"
+  }
+}

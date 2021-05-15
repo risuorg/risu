@@ -1,0 +1,7 @@
+# Copyright (C) 2018 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# bugzilla:
+# long_name: Ceilometer pipeline-yaml
+# priority: 500
+# description: Checks Ceilometer pipeline-yaml file
+# path: ${RISU_ROOT}/etc/ceilometer/pipeline.yaml
+# RISU_HYBRID

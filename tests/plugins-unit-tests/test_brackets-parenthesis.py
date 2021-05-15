@@ -9,31 +9,31 @@ import sys
 from unittest import TestCase
 
 sys.path.append(os.path.abspath(os.path.dirname(__file__) + "/" + "../"))
-import citellusclient.shell as citellus
+import risuclient.shell as risu
 
-testplugins = os.path.join(citellus.citellusdir, "plugins", "test")
-citellusdir = citellus.citellusdir
+testplugins = os.path.join(risu.risudir, "plugins", "test")
+risudir = risu.risudir
 
 
-class CitellusTest(TestCase):
+class RisuTest(TestCase):
     def test_plugins_have_dual_brackets_for_if(self):
-        pluginpath = [os.path.join(citellus.citellusdir, "plugins", "core")]
+        pluginpath = [os.path.join(risu.risudir, "plugins", "core")]
         pluginscit = []
-        for plugin in citellus.findplugins(folders=pluginpath):
+        for plugin in risu.findplugins(folders=pluginpath):
             filename = plugin["plugin"]
             regexp = r"if \[ "
-            if citellus.regexpfile(filename=filename, regexp=regexp):
+            if risu.regexpfile(filename=filename, regexp=regexp):
                 pluginscit.append(filename)
 
         assert len(pluginscit) == 0
 
     def test_plugins_have_dual_parenthesis_for_if(self):
-        pluginpath = [os.path.join(citellus.citellusdir, "plugins", "core")]
+        pluginpath = [os.path.join(risu.risudir, "plugins", "core")]
         pluginscit = []
-        for plugin in citellus.findplugins(folders=pluginpath):
+        for plugin in risu.findplugins(folders=pluginpath):
             filename = plugin["plugin"]
             regexp = r"if \( "
-            if citellus.regexpfile(filename=filename, regexp=regexp):
+            if risu.regexpfile(filename=filename, regexp=regexp):
                 pluginscit.append(filename)
 
         assert len(pluginscit) == 0

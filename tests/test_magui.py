@@ -9,10 +9,10 @@ import sys
 from unittest import TestCase
 
 sys.path.append(os.path.abspath(os.path.dirname(__file__) + "/" + "../"))
-import citellusclient.shell as citellus
+import risuclient.shell as risu
 from maguiclient import magui
 
-testplugins = os.path.join(citellus.citellusdir, "plugins", "test")
+testplugins = os.path.join(risu.risudir, "plugins", "test")
 
 
 class MaguiTest(TestCase):
@@ -22,7 +22,7 @@ class MaguiTest(TestCase):
 
     def test_domagui(self):
         # Call with no arguments
-        res = magui.domagui(sosreports=[], citellusplugins=[])
+        res = magui.domagui(sosreports=[], risuplugins=[])
         assert res == {}
 
     def test_parseargs(self):

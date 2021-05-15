@@ -19,4 +19,4 @@
 # This program extracts language strings from python and bash files and
 # combines them into one POT file to be used by translation tools
 
-python setup.py extract_messages -F babel.cfg -k _L && find -L citellusclient -name "*.sh" -exec bash --dump-po-strings "{}" \; | msguniq >citellusclient/locale/citellus-plugins.pot && cat citellusclient/locale/citellus.pot citellusclient/locale/citellus-plugins.pot | msguniq >citellusclient/locale/citellus-new.pot && cat citellusclient/locale/citellus-new.pot >citellusclient/locale/citellus.pot && rm -f citellusclient/locale/citellus-new.pot citellusclient/locale/citellus-plugins.pot
+python setup.py extract_messages -F babel.cfg -k _L && find -L risuclient -name "*.sh" -exec bash --dump-po-strings "{}" \; | msguniq >risuclient/locale/risu-plugins.pot && cat risuclient/locale/risu.pot risuclient/locale/risu-plugins.pot | msguniq >risuclient/locale/risu-new.pot && cat risuclient/locale/risu-new.pot >risuclient/locale/risu.pot && rm -f risuclient/locale/risu-new.pot risuclient/locale/risu-plugins.pot
