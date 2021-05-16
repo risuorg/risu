@@ -330,6 +330,7 @@ def findplugins(
     prio=0,
     dictupdate=None,
     options=None,
+    followlinks=True,
 ):
     """
     Finds plugins in path and returns array of them
@@ -341,6 +342,7 @@ def findplugins(
     :param include: include string in filter path
     :param folders: Folders to use as source for plugin search
     :param dictupdate: Update dict to apply to each plugin found
+    :param followlinks: Follow symlinks or not
     :return: list of plugins found
     """
 
@@ -357,7 +359,7 @@ def findplugins(
     plugins = []
     # Walk the folders and subfolders for files based on our criteria
     for folder in folders:
-        for items in os.walk(folder, followlinks=True):
+        for items in os.walk(folder, followlinks=followlinks):
             root = items[0]
             filenames = items[2]
             for filename in filenames:
@@ -1724,6 +1726,7 @@ def main():
             include=["risu.json"],
             fileextension=".json",
             options=options,
+            followlinks=False,
         )
         paths = []
         for jsonfile in jsons:
