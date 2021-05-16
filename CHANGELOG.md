@@ -1,3 +1,9 @@
+## [1.7.1](https://github.com/risuorg/risu/compare/1.7.0...1.7.1) (2021-05-16)
+
+### Bug Fixes
+
+- **reboots.py:** properly handle releases ([3029a49](https://github.com/risuorg/risu/commit/3029a49145f838a487dfedca145b7654666fcbfe))
+
 # [1.7.0](https://github.com/risuorg/risu/compare/1.6.5...1.7.0) (2021-05-16)
 
 ### Features
