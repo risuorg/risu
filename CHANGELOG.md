@@ -1,3 +1,9 @@
+## [1.7.2](https://github.com/risuorg/risu/compare/1.7.1...1.7.2) (2021-05-16)
+
+### Bug Fixes
+
+- **shell.py:** do not follow links when processing --find to avoid issues in sosreports ([103334d](https://github.com/risuorg/risu/commit/103334d148b23278f39a01dc0f08105c49256782))
+
 ## [1.7.1](https://github.com/risuorg/risu/compare/1.7.0...1.7.1) (2021-05-16)
 
 ### Bug Fixes
