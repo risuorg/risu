@@ -221,9 +221,13 @@ def main():
 
     if not os.path.isfile(os.path.join(root_path, "etc/redhat-release")):
         exitrisu(code=RC_SKIPPED, msg="Non Red Hat system, skipping")
+
+    release = open(os.path.join(root_path, "etc/redhat-release"), "r").read()
     if (
-        "Red Hat Enterprise Linux Server release 7"
-        not in open(os.path.join(root_path, "etc/redhat-release"), "r").read()
+        ("Red Hat Enterprise Linux Server release 7" not in release)
+        and ("Red Hat Enterprise Linux Server release 8" not in release)
+        and ("Fedora release" not in release)
+        and ("CentOS release" not in release)
     ):
         exitrisu(
             code=RC_SKIPPED,
