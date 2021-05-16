@@ -1,3 +1,9 @@
+# [1.7.0](https://github.com/risuorg/risu/compare/1.6.5...1.7.0) (2021-05-16)
+
+### Features
+
+- **reboots.py:** support newer rhel, centos and fedora releases ([c6a1f3d](https://github.com/risuorg/risu/commit/c6a1f3da862d0c9ca60dd28ea7c99e0dcd746117))
+
 ## [1.6.5](https://github.com/risuorg/risu/compare/1.6.4...1.6.5) (2021-05-15)
 
 ### Bug Fixes
