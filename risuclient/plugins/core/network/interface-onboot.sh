@@ -51,7 +51,7 @@ RC_STATUS=${RC_OKAY}
 
 # Sometimes NIC might have a fancy name instead of ifcfg-$IFNAME, use MACs for matching
 MACS_IN_SYSTEM=$(grep -i -a2 "state UP" ${IP_ADDRESS_FILE} | grep ether | awk '{print $2}' | sort -u)
-IFACES_IN_SYSTEM=$(grep -i "state UP" ${IP_ADDRESS_FILE} | cut -f2 -d ":")
+IFACES_IN_SYSTEM=$(grep -i "state UP" ${IP_ADDRESS_FILE} | cut -f2 -d ":" | tr -d " ")
 declare -A IFACES_MACS
 
 for iface in ${IFACES_IN_SYSTEM}; do
@@ -74,8 +74,9 @@ for iface in ${IFACES_IN_SYSTEM}; do
 	for ifacefile in ${RISU_ROOT}/etc/sysconfig/network-scripts/ifcfg-*; do
 		if is_lineinfile ${iface} ${ifacefile}; then
 			NETWORK_INTERFACE_FILE=${ifacefile}
-			if ! is_lineinfile 'onboot=yes' ${NETWORK_INTERFACE_FILE}; then
-				echo "Interface '$interface_name' up but not 'onboot=YES' in the ${NETWORK_INTERFACE_FILE} file!" >&2
+			status=$(cat ${NETWORK_INTERFACE_FILE} | grep -i onboot | grep -v ^# | cut -d "=" -f 2- | xargs echo | tr "[:upper:]" "[:lower:]")
+			if [ ${status} != "yes" ]; then
+				echo "Interface '${iface}' up but not 'onboot=YES' in the ${NETWORK_INTERFACE_FILE} file!" >&2
 				RC_STATUS=${RC_FAILED}
 			fi
 		fi

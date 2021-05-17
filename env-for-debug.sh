@@ -8,6 +8,7 @@
 # Folder for risu
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 export RISU_BASE=${DIR}/risuclient/
+export CITELLUS_BASE=${RISU_BASE}
 
 # Error code definition
 export RC_OKAY=10
@@ -22,9 +23,11 @@ export TEXTDOMAINDIR=${RISU_BASE}/locale
 
 # Root directory for sosreport
 export RISU_ROOT=.
+export CITELLUS_ROOT=${RISU_ROOT}
 
 # Force to run non-live
 export RISU_LIVE=0
+export CITELLUS_LIVE=${RISU_LIVE}
 
 # Load common functions
 . ${RISU_BASE}/common-functions.sh
