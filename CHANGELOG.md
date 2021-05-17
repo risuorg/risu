@@ -1,3 +1,9 @@
+## [1.7.3](https://github.com/risuorg/risu/compare/1.7.2...1.7.3) (2021-05-17)
+
+### Bug Fixes
+
+- **interface-onboot.sh:** fix processing of ifcfg options with quotes or different case ([f0e16b1](https://github.com/risuorg/risu/commit/f0e16b143c1b14ba0ab0f9da86f422c2fa9b70b3))
+
 ## [1.7.2](https://github.com/risuorg/risu/compare/1.7.1...1.7.2) (2021-05-16)
 
 ### Bug Fixes
