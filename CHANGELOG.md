@@ -1,3 +1,9 @@
+## [1.7.6](https://github.com/risuorg/risu/compare/1.7.5...1.7.6) (2021-05-19)
+
+### Bug Fixes
+
+- **Dockerfile:** set utf8 locale for avoiding issues ([8cd221e](https://github.com/risuorg/risu/commit/8cd221eb34c9a041a1b8bace2bba7fec6a2fcb9e))
+
 ## [1.7.5](https://github.com/risuorg/risu/compare/1.7.4...1.7.5) (2021-05-19)
 
 ### Bug Fixes
