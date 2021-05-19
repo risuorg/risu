@@ -1,10 +1,8 @@
 .. image:: https://img.shields.io/github/license/risuorg/risu.svg :alt: LICENSE
 .. image:: https://github.com/risuorg/risu/workflows/Python%20Unit%20Testing/badge.svg :alt: Actions status
-.. image:: https://travis-ci.org/risuorg/risu.svg?branch=master :alt:  Build Status
-.. image:: https://codecov.io/gh/risuorg/risu/branch/master/graph/badge.svg :alt:  Coverage Status
+.. image:: https://codecov.io/gh/risuorg/risu/branch/master/graph/badge.svg :target: https://codecov.io/gh/risuorg/risu
 .. image:: https://img.shields.io/github/release/risuorg/risu.svg :alt:  Releases
 .. image:: https://badge.fury.io/py/risu.svg :alt:  Pypi version
-.. image:: https://images.microbadger.com/badges/image/risu/risu.svg :alt:  Microbadger
 
 Introduction
 ============

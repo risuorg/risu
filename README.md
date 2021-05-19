@@ -1,13 +1,10 @@
 [![License](https://img.shields.io/github/license/risuorg/risu.svg)](LICENSE)
 ![Python Unit Testing](https://github.com/risuorg/risu/workflows/Python%20Unit%20Testing/badge.svg)
-[![Build Status](https://travis-ci.org/risuorg/risu.svg?branch=master)](https://travis-ci.org/risuorg/risu)
 [![](https://readthedocs.org/projects/risu/badge/?version=latest)](https://readthedocs.org/projects/risu/builds/ "Read The docs build")
-[![Docker Pulls](https://img.shields.io/docker/pulls/risu/risu.svg)](https://img.shields.io/docker/pulls/risu/risu.svg)
+[![Docker Pulls](https://img.shields.io/docker/pulls/risuorg/risu.svg)](https://img.shields.io/docker/pulls/risuorg/risu.svg)
 [![codecov](https://codecov.io/gh/risuorg/risu/branch/master/graph/badge.svg)](https://codecov.io/gh/risuorg/risu)
 [![Release status](https://img.shields.io/github/release/risuorg/risu.svg)](https://github.com/risuorg/risu/releases)
 [![PyPI version](https://badge.fury.io/py/risu.svg)](https://badge.fury.io/py/risu)
-[![](https://images.microbadger.com/badges/image/risu/risu.svg)](https://microbadger.com/images/risu/risu "Get your own image badge on microbadger.com")
-<a href="https://t.me/risuUG"><img src="https://img.shields.io/badge/Risu%20User%20Group-190cde.svg?logo=telegram" alt="Risu User Group on Telegram"/></a>
 
 <img src="doc/risu.png" width="202" height="202" border=0 align="right">
 

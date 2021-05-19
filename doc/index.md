@@ -1,10 +1,8 @@
 [![License](https://img.shields.io/github/license/risuorg/risu.svg)](LICENSE)
-[![Build Status](https://travis-ci.org/risuorg/risu.svg?branch=master)](https://travis-ci.org/risuorg/risu)
 [![](https://readthedocs.org/projects/risu/badge/?version=latest)](https://readthedocs.org/projects/risu/builds/ "Read The docs build")
-[![Coverage Status](https://coveralls.io/repos/github/risuorg/risu/badge.svg?branch=master)](https://coveralls.io/github/risuorg/risu?branch=master)
+[![codecov](https://codecov.io/gh/risuorg/risu/branch/master/graph/badge.svg)](https://codecov.io/gh/risuorg/risu)
 [![Release status](https://img.shields.io/github/release/risuorg/risu.svg)](https://github.com/risuorg/risu/releases)
 [![PyPI version](https://badge.fury.io/py/risu.svg)](https://badge.fury.io/py/risu)
-[![](https://images.microbadger.com/badges/image/risu/risu.svg)](https://microbadger.com/images/risu/risu "Get your own image badge on microbadger.com")
 
 <img src="risu.png" width="202" height="202" border=0 align="right">
 
