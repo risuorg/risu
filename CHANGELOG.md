@@ -1,3 +1,9 @@
+## [1.7.5](https://github.com/risuorg/risu/compare/1.7.4...1.7.5) (2021-05-19)
+
+### Bug Fixes
+
+- **Dockerfile:** fix entrypoint ([b8edb9e](https://github.com/risuorg/risu/commit/b8edb9e47e739aed4b53270cbe9a8e6fdcd6a99f))
+
 ## [1.7.4](https://github.com/risuorg/risu/compare/1.7.3...1.7.4) (2021-05-19)
 
 ### Bug Fixes
