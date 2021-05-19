@@ -1,3 +1,9 @@
+## [1.7.4](https://github.com/risuorg/risu/compare/1.7.3...1.7.4) (2021-05-19)
+
+### Bug Fixes
+
+- **Dockerfile:** use python3 for installation ([336ff0d](https://github.com/risuorg/risu/commit/336ff0d6524ae8808a82edb8603bb4263be8d232))
+
 ## [1.7.3](https://github.com/risuorg/risu/compare/1.7.2...1.7.3) (2021-05-17)
 
 ### Bug Fixes
