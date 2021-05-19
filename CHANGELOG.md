@@ -1,3 +1,9 @@
+## [1.7.7](https://github.com/risuorg/risu/compare/1.7.6...1.7.7) (2021-05-19)
+
+### Bug Fixes
+
+- **shell.py:** catch exceptions in category and subcategory generation ([e3c8424](https://github.com/risuorg/risu/commit/e3c8424a2346a14c6a59d37346eb120da3de0723))
+
 ## [1.7.6](https://github.com/risuorg/risu/compare/1.7.5...1.7.6) (2021-05-19)
 
 ### Bug Fixes
