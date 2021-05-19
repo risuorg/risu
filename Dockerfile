@@ -11,7 +11,8 @@ LABEL name="risu/risu" \
   description="Risu is a program that should help with system configuration validation on either live system or any sort of snapshot of the filesystem."
 
 ENV USER_NAME=risu \
-  USER_UID=10001
+  USER_UID=10001 \
+  LC_ALL=en_US.utf8
 
 # Required for useradd command and pip
 RUN PRERREQ_PKGS="shadow-utils \
