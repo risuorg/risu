@@ -21,7 +21,7 @@ RUN PRERREQ_PKGS="shadow-utils \
       libcap-ng \
       epel-release" && \
     REQ_PKGS="bc \
-      python-pip" && \
+  python3-pip" && \
     microdnf install --nodocs ${PRERREQ_PKGS} && \
     microdnf install --nodocs ${REQ_PKGS} && \
     useradd -l -u ${USER_UID} -r -g 0 -s /sbin/nologin \
@@ -29,9 +29,9 @@ RUN PRERREQ_PKGS="shadow-utils \
     microdnf remove ${PRERREQ_PKGS} && \
     microdnf clean all
 
-RUN pip install --upgrade pip --no-cache-dir && \
-    pip install --upgrade pbr --no-cache-dir && \
-    pip install --upgrade risu --no-cache-dir && \
+RUN pip3 install --upgrade pip --no-cache-dir && \
+  pip3 install --upgrade pbr --no-cache-dir && \
+  pip3 install --upgrade risu --no-cache-dir && \
     mkdir -p /data && \
     chmod -R u+x /data && \
     chown -R ${USER_UID}:0 /data && \
