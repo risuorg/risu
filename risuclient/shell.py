@@ -410,7 +410,11 @@ def findplugins(
                 os.path.join(options.extraplugintree, extension), ""
             )
 
-        category = os.path.normpath(subcategory).split(os.sep)[1] or ""
+        try:
+            category = os.path.normpath(subcategory).split(os.sep)[1]
+        except:
+            category = "root"
+            subcategory = " "
 
         # Remove leading "/" (os.sep for safety)
         if subcategory[0] == os.sep:
