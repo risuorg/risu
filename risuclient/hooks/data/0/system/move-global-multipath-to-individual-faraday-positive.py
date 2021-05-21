@@ -63,7 +63,10 @@ def run(data, quiet=False, options=None):  # do not edit this line
                 for pair in err.split(";"):
                     if pair != "":
                         # For each device:size pair, split on ":" for LUN/size and fake plugin entry
-                        newid = "%s-%s" % (id, risu.calcid(string=pair.split(":")[0]),)
+                        newid = "%s-%s" % (
+                            id,
+                            risu.calcid(string=pair.split(":")[0]),
+                        )
                         update = {
                             "id": newid,
                             "description": "%s: %s" % (desc, pair.split(":")[0]),

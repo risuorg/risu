@@ -46,7 +46,8 @@ class RisuTest(TestCase):
         commonfunctions = []
 
         for script in risu.findplugins(
-            folders=[os.path.join(risu.risudir, "common.d")], fileextension=".sh",
+            folders=[os.path.join(risu.risudir, "common.d")],
+            fileextension=".sh",
         ):
             filename = script["plugin"]
             with open(filename, "r") as f:

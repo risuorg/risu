@@ -65,7 +65,7 @@ Several changes introduced recently:
 - UT's
   - Some other UT tweaks to ensure plugins report no data to stdout, and ability to drop bunch of jsons to run that UT over them.
   - We moved data to be a dictionary (instead of array of dictionaries), to better and faster filter on included plugins and others that are dependant on data generated (like Magui ones).
-  - UT to check for tests that were doing 'echo $RC_' instead of 'exit $RC\_'
+  - UT to check for tests that were doing 'echo $RC\_' instead of 'exit $RC\_'
 - Risu www
   - Now uses the generated 'name' for plugins so we can tune it from the framework side.
   - Also, auto switches to `magui.json` when no `risu.json` exists, or shows a dropdown to select which one to show.
