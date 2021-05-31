@@ -488,7 +488,7 @@ Blog posts:
 
 Gracias por asistir!!
 
-Ven a #risu en Freenode o contacta con nosotros:
+Ven a #risu en [Libera](https://libera.chat/) o contacta con nosotros:
 
 <small>
 

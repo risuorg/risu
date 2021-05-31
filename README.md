@@ -62,7 +62,7 @@ Documentation is available at [Read the docs](https://risu.readthedocs.org)
 
 You can reach to us via:
 
-- irc at #risu in Freenode
+- irc at #risu in [Libera](https://libera.chat/)
 - Telegram at <https://t.me/risuUG>
 - our mailing list:
   - <mailto:risuorg _AT_ googlegroups.com>

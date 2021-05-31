@@ -402,7 +402,7 @@ Blog posts:
 
 THANK YOU FOR ATTENDING!!
 
-For additional questions, come to #risu on Freenode or email us:
+For additional questions, come to #risu on [Libera](https://libera.chat/) or email us:
 
 - https://risuorg.github.io
 - risuorg _AT_ googlegroups.com

@@ -368,7 +368,7 @@ THANK YOU FOR ATTENDING!!
 
 ### Questions?
 
-For additional questions, come to #risu on Freenode or email us:
+For additional questions, come to #risu on [Libera](https://libera.chat/) or email us:
 
 - <mailto:risuorg _AT_ googlegroups.com.com>
 - <https://groups.google.com/forum/#!forum/risu>

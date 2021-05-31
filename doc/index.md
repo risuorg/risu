@@ -95,7 +95,7 @@ Documentation is available at [Read the docs](https://risu.readthedocs.io)
 
 You can reach to us via:
 
-- irc at #risu in Freenode
+- irc at #risu in [Libera](https://libera.chat/)
 - our mailing list:
   - <mailto:risuorg _AT_ googlegroups.com>
   - <https://groups.google.com/forum/#!forum/risu>
