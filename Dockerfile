@@ -3,7 +3,7 @@ FROM registry.centos.org/centos/centos7-atomic:latest
 MAINTAINER Risu developers <risuorg _AT_ googlegroups.com>
 
 LABEL name="risu/risu" \
-  maintainer="risuorg _AT_ googlegroups.com.com" \
+  maintainer="risuorg _AT_ googlegroups.com" \
   vendor="Risu" \
   version="1.0.0" \
   release="1" \
