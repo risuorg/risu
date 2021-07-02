@@ -9,7 +9,6 @@ from __future__ import print_function
 
 import os
 
-
 try:
     import risuclient.shell as risu
 except:

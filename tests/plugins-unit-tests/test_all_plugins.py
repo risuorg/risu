@@ -28,8 +28,8 @@ import sys
 import tempfile
 from unittest import TestCase
 
-import risuclient.shell as risu
 import maguiclient.magui as magui
+import risuclient.shell as risu
 
 sys.path.append(os.path.abspath(os.path.dirname(__file__) + "/" + "../"))
 

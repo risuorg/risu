@@ -43,11 +43,11 @@ except:
 import shutil
 import subprocess
 import sys
-from threading import Timer
 import time
 import traceback
 from itertools import groupby
 from multiprocessing import Pool, cpu_count
+from threading import Timer
 
 sys.path.append(os.path.abspath(os.path.dirname(__file__) + "/" + "../"))
 

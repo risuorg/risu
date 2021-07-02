@@ -9,11 +9,13 @@ from unittest import TestCase
 
 sys.path.append(os.path.abspath(os.path.dirname(__file__) + "/" + "../"))
 
-from risuclient.tools.dmidecode import _get_output
-from risuclient.tools.dmidecode import _parse_handle_section
-from risuclient.tools.dmidecode import _show
-from risuclient.tools.dmidecode import parse_dmi
-from risuclient.tools.dmidecode import profile
+from risuclient.tools.dmidecode import (
+    _get_output,
+    _parse_handle_section,
+    _show,
+    parse_dmi,
+    profile,
+)
 
 
 class CitellusTest(TestCase):

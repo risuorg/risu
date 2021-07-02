@@ -9,8 +9,8 @@ from __future__ import print_function
 
 import os
 
-import risuclient.shell as risu
 import maguiclient.magui as magui
+import risuclient.shell as risu
 
 # Load i18n settings from risu
 _ = risu._

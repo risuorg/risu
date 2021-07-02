@@ -26,8 +26,7 @@ from __future__ import print_function
 import os
 import re
 import sys
-from datetime import datetime
-from datetime import timedelta
+from datetime import datetime, timedelta
 
 # Getting environment
 global root_path
