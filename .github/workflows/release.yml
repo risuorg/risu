@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@v2.4.0
 
       - uses: actions/setup-python@v2.3.0
-      - uses: actions/cache@v2.1.6
+      - uses: actions/cache@v2.1.7
         with:
           path: |
             ~/.cache/pre-commit
@@ -25,7 +25,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-precommit-
 
-      - uses: actions/cache@v2.1.6
+      - uses: actions/cache@v2.1.7
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-pip-${{ hashFiles('**/*requirements.txt') }}
