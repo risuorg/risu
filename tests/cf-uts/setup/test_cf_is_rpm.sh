@@ -23,24 +23,24 @@ FOLDER=$3
 
 case $2 in
 pass)
-	mkdir -p ${FOLDER}
-	echo test-my-rpm-1.2.23.noarch >${FOLDER}/installed-rpms
-	exit 0
-	;;
+    mkdir -p ${FOLDER}
+    echo test-my-rpm-1.2.23.noarch >${FOLDER}/installed-rpms
+    exit 0
+    ;;
 
 fail)
-	mkdir -p ${FOLDER}
-	echo >${FOLDER}/installed-rpms
-	exit 0
-	;;
+    mkdir -p ${FOLDER}
+    echo >${FOLDER}/installed-rpms
+    exit 0
+    ;;
 
 *)
-	# Load common functions
-	[ -f "${RISU_BASE}/common-functions.sh" ] && . "${RISU_BASE}/common-functions.sh"
+    # Load common functions
+    [ -f "${RISU_BASE}/common-functions.sh" ] && . "${RISU_BASE}/common-functions.sh"
 
-	# When no pass or fail is passed we're running the test for common function
-	is_rpm test-my-rpm && exit ${RC_OKAY} || exit ${RC_FAILED}
-	;;
+    # When no pass or fail is passed we're running the test for common function
+    is_rpm test-my-rpm && exit ${RC_OKAY} || exit ${RC_FAILED}
+    ;;
 esac
 
 exit ${RC_SKIPPED}

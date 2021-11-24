@@ -25,8 +25,8 @@
 ROLE="$(get_ocp_node_type)"
 
 if [[ ${ROLE} == "unknown" ]]; then
-	echo "Couldn't determine OCP role" >&2
-	exit ${RC_SKIPPED}
+    echo "Couldn't determine OCP role" >&2
+    exit ${RC_SKIPPED}
 fi
 
 echo "ocp-role"

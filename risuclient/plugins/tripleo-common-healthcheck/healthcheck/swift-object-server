@@ -6,13 +6,13 @@ conf=/etc/swift/object-server.conf
 cache=/var/cache/swift/object.recon
 
 if ps -e | grep --quiet swift-object-server; then
-	if ! crudini --get $conf pipeline:main pipeline | grep -q healthcheck; then
-		echo "healthcheck is not available" >&2
-		exit 0
-	fi
+    if ! crudini --get $conf pipeline:main pipeline | grep -q healthcheck; then
+        echo "healthcheck is not available" >&2
+        exit 0
+    fi
 
-	# swift-object-server is still eventlet
-	bind_host=$(wrap_ipv6 $(get_config_val $conf DEFAULT bind_ip 127.0.0.1))
-	bind_port=$(get_config_val $conf DEFAULT bind_port 6000)
-	healthcheck_curl http://${bind_host}:${bind_port}/healthcheck
+    # swift-object-server is still eventlet
+    bind_host=$(wrap_ipv6 $(get_config_val $conf DEFAULT bind_ip 127.0.0.1))
+    bind_port=$(get_config_val $conf DEFAULT bind_port 6000)
+    healthcheck_curl http://${bind_host}:${bind_port}/healthcheck
 fi

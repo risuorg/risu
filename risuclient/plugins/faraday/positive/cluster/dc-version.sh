@@ -26,11 +26,11 @@
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
 if [[ ${RISU_LIVE} -eq "1" ]]; then
-	is_required_command pcs
-	pcs property list --all | grep dc-version >&2
+    is_required_command pcs
+    pcs property list --all | grep dc-version >&2
 else
-	is_required_file "${RISU_ROOT}/sos_commands/pacemaker/pcs_property_list_--all"
-	grep dc-version "${RISU_ROOT}/sos_commands/pacemaker/pcs_property_list_--all" >&2
+    is_required_file "${RISU_ROOT}/sos_commands/pacemaker/pcs_property_list_--all"
+    grep dc-version "${RISU_ROOT}/sos_commands/pacemaker/pcs_property_list_--all" >&2
 fi
 
 exit ${RC_OKAY}

@@ -23,10 +23,10 @@
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
 if [[ "x$RISU_LIVE" == "x0" ]]; then
-	is_required_file ${RISU_ROOT}/uptime
-	cat ${RISU_ROOT}/uptime >&2
+    is_required_file ${RISU_ROOT}/uptime
+    cat ${RISU_ROOT}/uptime >&2
 else
-	uptime >&2
+    uptime >&2
 fi
 
 exit ${RC_OKAY}

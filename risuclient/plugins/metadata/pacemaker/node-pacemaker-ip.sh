@@ -22,11 +22,11 @@
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
 if [[ ${RISU_LIVE} -eq 0 ]]; then
-	FILE="${RISU_ROOT}/hostname"
+    FILE="${RISU_ROOT}/hostname"
 elif [[ ${RISU_LIVE} -eq 1 ]]; then
-	FILE=$(mktemp)
-	trap "rm ${FILE}" EXIT
-	hostname >${FILE}
+    FILE=$(mktemp)
+    trap "rm ${FILE}" EXIT
+    hostname >${FILE}
 fi
 
 is_required_file ${FILE}

@@ -17,38 +17,38 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 is_dpkg() {
-	PACKAGE=$1
-	if [ "x$RISU_LIVE" = "x1" ]; then
-		dpkg -l *$1* 2>&1 | grep -v 'no packages found matching' | egrep ^ii | awk -v PACKAGE=${PACKAGE} '$2==PACKAGE {print $3}' | egrep "."
-	elif [ "x$RISU_LIVE" = "x0" ]; then
-		is_required_file "${RISU_ROOT}/installed-debs"
-		awk -v PACKAGE=${PACKAGE} '$2==PACKAGE {print $3}' "${RISU_ROOT}/installed-debs" | egrep "."
-	fi
+    PACKAGE=$1
+    if [ "x$RISU_LIVE" = "x1" ]; then
+        dpkg -l *$1* 2>&1 | grep -v 'no packages found matching' | egrep ^ii | awk -v PACKAGE=${PACKAGE} '$2==PACKAGE {print $3}' | egrep "."
+    elif [ "x$RISU_LIVE" = "x0" ]; then
+        is_required_file "${RISU_ROOT}/installed-debs"
+        awk -v PACKAGE=${PACKAGE} '$2==PACKAGE {print $3}' "${RISU_ROOT}/installed-debs" | egrep "."
+    fi
 }
 
 is_required_dpkg() {
-	if [ "x$(discover_os)" != "xdebian" ]; then
-		echo "Not running on Debian family" >&2
-		exit ${RC_FAILED}
-	fi
+    if [ "x$(discover_os)" != "xdebian" ]; then
+        echo "Not running on Debian family" >&2
+        exit ${RC_FAILED}
+    fi
 
-	is_required_pkg $1
+    is_required_pkg $1
 }
 
 is_dpkg_over() {
-	if [ "x$(discover_os)" != "xdebian" ]; then
-		echo "Not running on Debian family" >&2
-		exit ${RC_FAILED}
-	fi
+    if [ "x$(discover_os)" != "xdebian" ]; then
+        echo "Not running on Debian family" >&2
+        exit ${RC_FAILED}
+    fi
 
-	is_pkg_over $*
+    is_pkg_over $*
 }
 
 is_required_dpkg_over() {
-	if [ "x$(discover_os)" != "xdebian" ]; then
-		echo "Not running on Debian family" >&2
-		exit ${RC_FAILED}
-	fi
+    if [ "x$(discover_os)" != "xdebian" ]; then
+        echo "Not running on Debian family" >&2
+        exit ${RC_FAILED}
+    fi
 
-	is_required_pkg_over $*
+    is_required_pkg_over $*
 }

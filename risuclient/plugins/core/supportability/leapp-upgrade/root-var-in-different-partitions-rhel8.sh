@@ -26,22 +26,22 @@
 OS=$(discover_os)
 
 if [[ ${OSBRAND} != "rhel" ]]; then
-	echo "RHEL OS required" >&2
-	exit ${RC_SKIPPED}
+    echo "RHEL OS required" >&2
+    exit ${RC_SKIPPED}
 else
-	DR=$(discover_release)
-	if [[ ${DR} == "7" ]]; then
-		if [[ "x$RISU_LIVE" == "x0" ]]; then
-			is_required_file "${RISU_ROOT}/df"
-			lines=$(cat "${RISU_ROOT}/df" | awk '{print $6}' | awk '/\/$/ || /\/var$/' | sort -u | wc -l)
-		elif [[ "x$RISU_LIVE" == "x1" ]]; then
-			lines=$(df / /var | awk '{print $6}' | awk '/\/$/ || /\/var$/' | sort -u | wc -l)
-		fi
-		if [[ ${lines} -gt 2 ]]; then
-			echo "Seems that / and /var are in different devices which affects Leapp upgrade from RHEL7 to RHEL8" >&2
-			echo ${RC_INFO}
-		fi
-	fi
+    DR=$(discover_release)
+    if [[ ${DR} == "7" ]]; then
+        if [[ "x$RISU_LIVE" == "x0" ]]; then
+            is_required_file "${RISU_ROOT}/df"
+            lines=$(cat "${RISU_ROOT}/df" | awk '{print $6}' | awk '/\/$/ || /\/var$/' | sort -u | wc -l)
+        elif [[ "x$RISU_LIVE" == "x1" ]]; then
+            lines=$(df / /var | awk '{print $6}' | awk '/\/$/ || /\/var$/' | sort -u | wc -l)
+        fi
+        if [[ ${lines} -gt 2 ]]; then
+            echo "Seems that / and /var are in different devices which affects Leapp upgrade from RHEL7 to RHEL8" >&2
+            echo ${RC_INFO}
+        fi
+    fi
 fi
 
 exit {$RC_OKAY}

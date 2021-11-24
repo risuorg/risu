@@ -23,23 +23,23 @@
 # kb: url-to-kbase
 
 if [ "x$RISU_LIVE" = "x1" ]; then
-	if true; then
-		if true; then
-			exit ${RC_OKAY}
-		else
-			exit ${RC_FAILED}
-		fi
-	else
-		exit ${RC_SKIPPED}
-	fi
+    if true; then
+        if true; then
+            exit ${RC_OKAY}
+        else
+            exit ${RC_FAILED}
+        fi
+    else
+        exit ${RC_SKIPPED}
+    fi
 elif [ "x$RISU_LIVE" = "x0" ]; then
-	if true; then
-		if true; then
-			exit ${RC_OKAY}
-		else
-			exit ${RC_FAILED}
-		fi
-	else
-		exit ${RC_SKIPPED}
-	fi
+    if true; then
+        if true; then
+            exit ${RC_OKAY}
+        else
+            exit ${RC_FAILED}
+        fi
+    else
+        exit ${RC_SKIPPED}
+    fi
 fi

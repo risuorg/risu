@@ -26,36 +26,36 @@
 # priority: 200
 
 validate_firewall() {
-	# Check linux firewall to validate if it's running and active
-	if is_active $1; then
-		# True when service is up
-		_SERVICE=0
-	else
-		# False when service is down
-		_SERVICE=1
-	fi
+    # Check linux firewall to validate if it's running and active
+    if is_active $1; then
+        # True when service is up
+        _SERVICE=0
+    else
+        # False when service is down
+        _SERVICE=1
+    fi
 
-	echo ${_SERVICE}
+    echo ${_SERVICE}
 }
 
 OS=$(discover_os)
 
 if [[ $OS == "debian" ]] || [[ $OS == "fedora" ]]; then
-	_FW='firewalld'
+    _FW='firewalld'
 else
-	RH_RELEASE=$(discover_rhrelease)
-	case ${RH_RELEASE} in
-	6) _FW='iptables' ;;
-	7) _FW='firewalld' ;;
-	0) _FW='undef' ;;
-	esac
+    RH_RELEASE=$(discover_rhrelease)
+    case ${RH_RELEASE} in
+    6) _FW='iptables' ;;
+    7) _FW='firewalld' ;;
+    0) _FW='undef' ;;
+    esac
 fi
 
 _STATUS=$(validate_firewall "${_FW}")
 
 if [[ ${_STATUS} -eq 0 ]]; then
-	exit ${RC_OKAY}
+    exit ${RC_OKAY}
 else
-	echo "Service ${_FW} not active: ${_STATUS}" >&2
-	exit ${RC_FAILED}
+    echo "Service ${_FW} not active: ${_STATUS}" >&2
+    exit ${RC_FAILED}
 fi

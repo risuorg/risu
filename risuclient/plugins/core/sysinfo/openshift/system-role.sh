@@ -23,15 +23,15 @@
 [ -f "${RISU_BASE}/common-functions.sh" ] && . "${RISU_BASE}/common-functions.sh"
 
 if is_rpm atomic-openshift-master; then
-	ROLE='master'
+    ROLE='master'
 elif [[ -f ${RISU_ROOT}/etc/origin/master/master-config.yaml ]]; then
-	ROLE='master'
+    ROLE='master'
 elif is_rpm atomic-openshift-node; then
-	ROLE='node'
+    ROLE='node'
 else
-	echo "Couldn't determine OCP role" >&2
-	ROLE='unknown'
-	exit ${RC_SKIPPED}
+    echo "Couldn't determine OCP role" >&2
+    ROLE='unknown'
+    exit ${RC_SKIPPED}
 fi
 
 echo ${ROLE} >&2

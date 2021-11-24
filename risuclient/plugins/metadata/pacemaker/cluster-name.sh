@@ -22,11 +22,11 @@
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
 if [[ ${RISU_LIVE} -eq 0 ]]; then
-	FILE="${RISU_ROOT}/sos_commands/pacemaker/pcs_status"
+    FILE="${RISU_ROOT}/sos_commands/pacemaker/pcs_status"
 elif [[ ${RISU_LIVE} -eq 1 ]]; then
-	FILE=$(mktemp)
-	trap "rm ${FILE}" EXIT
-	pcs status >${FILE}
+    FILE=$(mktemp)
+    trap "rm ${FILE}" EXIT
+    pcs status >${FILE}
 fi
 
 is_required_file ${FILE}

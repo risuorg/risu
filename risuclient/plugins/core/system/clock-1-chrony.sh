@@ -30,35 +30,35 @@
 : ${RISU_MAX_CLOCK_OFFSET:=1}
 
 if ! is_active chronyd; then
-	echo "chronyd is not active" >&2
-	exit ${RC_FAILED}
+    echo "chronyd is not active" >&2
+    exit ${RC_FAILED}
 fi
 
 if [[ ${RISU_LIVE} == 0 ]]; then
-	is_required_file ${RISU_ROOT}/sos_commands/chrony/chronyc_tracking
+    is_required_file ${RISU_ROOT}/sos_commands/chrony/chronyc_tracking
 
-	if grep -q "Not synchronised\|Cannot talk to daemon" "${RISU_ROOT}/sos_commands/chrony/chronyc_tracking"; then
-		echo "clock is not synchronized" >&2
-		exit ${RC_FAILED}
-	fi
+    if grep -q "Not synchronised\|Cannot talk to daemon" "${RISU_ROOT}/sos_commands/chrony/chronyc_tracking"; then
+        echo "clock is not synchronized" >&2
+        exit ${RC_FAILED}
+    fi
 
-	offset=$(awk '/RMS offset/ {print $4}' "${RISU_ROOT}/sos_commands/chrony/chronyc_tracking")
-	echo "clock offset is $offset seconds" >&2
+    offset=$(awk '/RMS offset/ {print $4}' "${RISU_ROOT}/sos_commands/chrony/chronyc_tracking")
+    echo "clock offset is $offset seconds" >&2
 
-	RC=$(echo "$offset<${RISU_MAX_CLOCK_OFFSET:-1} && $offset>-${RISU_MAX_CLOCK_OFFSET:-1}" | bc -l)
+    RC=$(echo "$offset<${RISU_MAX_CLOCK_OFFSET:-1} && $offset>-${RISU_MAX_CLOCK_OFFSET:-1}" | bc -l)
 
 else
-	is_required_file /usr/bin/bc
+    is_required_file /usr/bin/bc
 
-	if ! out=$(chronyc tracking); then
-		echo "clock is not synchronized" >&2
-		return 1
-	fi
+    if ! out=$(chronyc tracking); then
+        echo "clock is not synchronized" >&2
+        return 1
+    fi
 
-	offset=$(awk '/RMS offset/ {print $4}' <<<"$out")
-	echo "clock offset is $offset seconds" >&2
+    offset=$(awk '/RMS offset/ {print $4}' <<<"$out")
+    echo "clock offset is $offset seconds" >&2
 
-	RC=$(echo "$offset<${RISU_MAX_CLOCK_OFFSET:-1} && $offset>-${RISU_MAX_CLOCK_OFFSET:-1}" | bc -l)
+    RC=$(echo "$offset<${RISU_MAX_CLOCK_OFFSET:-1} && $offset>-${RISU_MAX_CLOCK_OFFSET:-1}" | bc -l)
 fi
 
 # Check the return code from the offset calculation

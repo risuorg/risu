@@ -27,11 +27,11 @@
 # Code for generating items for faraday-CSV
 
 if [[ ${RISU_LIVE} -eq 0 ]]; then
-	FILE="${RISU_ROOT}/sos_commands/multipath/multipath_-l"
+    FILE="${RISU_ROOT}/sos_commands/multipath/multipath_-l"
 elif [[ ${RISU_LIVE} -eq 1 ]]; then
-	FILE=$(mktemp)
-	trap "rm ${FILE}" EXIT
-	multipath -l >${FILE} 2>&1
+    FILE=$(mktemp)
+    trap "rm ${FILE}" EXIT
+    multipath -l >${FILE} 2>&1
 fi
 
 is_required_file ${FILE}
@@ -39,14 +39,14 @@ is_required_file ${FILE}
 STATUS=${RC_OKAY}
 
 (
-	for lun in $(grep ^36 ${FILE} | awk '{print $1}' | sort); do
-		NUMLUNS=$(sed -n '/'^${lun}'.*/,/^360/p' ${FILE} | grep ":" | wc -l)
-		if [ $((number % 2)) -neq 0 ]; then
-			echo ${lun}:${NUMLUNS} >&2
-			STATUS=${RC_FAILED}
-		fi
+    for lun in $(grep ^36 ${FILE} | awk '{print $1}' | sort); do
+        NUMLUNS=$(sed -n '/'^${lun}'.*/,/^360/p' ${FILE} | grep ":" | wc -l)
+        if [ $((number % 2)) -neq 0 ]; then
+            echo ${lun}:${NUMLUNS} >&2
+            STATUS=${RC_FAILED}
+        fi
 
-	done
+    done
 )
 
 exit ${STATUS}

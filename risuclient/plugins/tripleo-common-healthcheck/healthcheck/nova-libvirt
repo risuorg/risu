@@ -5,8 +5,8 @@
 process=$1
 socket='/run/libvirt/virtlogd-sock'
 if [[ $process == "virtlogd" ]]; then
-	healthcheck_socket $process $socket
-	exit $?
+    healthcheck_socket $process $socket
+    exit $?
 else
-	virsh version --daemon
+    virsh version --daemon
 fi

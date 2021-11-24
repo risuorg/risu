@@ -26,18 +26,18 @@
 OS=$(discover_os)
 
 if [[ $OS != "debian" ]]; then
-	echo "Debian required" >&2
-	exit ${RC_SKIPPED}
+    echo "Debian required" >&2
+    exit ${RC_SKIPPED}
 else
-	echo $"The following installed packages have been deprecated as per release notes at https://www.debian.org/releases/stretch/amd64/release-notes/ch-information.en.html#noteworthy-obsolete-packages :" >&2
-	flag=0
-	for package in fpm2 kedpm nagios3 net-tools iscsitarget; do
-		if is_pkg ${package} >&2; then
-			flag=1
-		fi
-	done
-	if [[ ${flag} == "1" ]]; then
-		exit ${RC_FAILED}
-	fi
+    echo $"The following installed packages have been deprecated as per release notes at https://www.debian.org/releases/stretch/amd64/release-notes/ch-information.en.html#noteworthy-obsolete-packages :" >&2
+    flag=0
+    for package in fpm2 kedpm nagios3 net-tools iscsitarget; do
+        if is_pkg ${package} >&2; then
+            flag=1
+        fi
+    done
+    if [[ ${flag} == "1" ]]; then
+        exit ${RC_FAILED}
+    fi
 fi
 exit ${RC_OKAY}

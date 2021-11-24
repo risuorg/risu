@@ -23,10 +23,10 @@
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
 if [[ "x$RISU_LIVE" == "x0" ]]; then
-	is_required_file ${RISU_ROOT}/uname
-	cat ${RISU_ROOT}/uname >&2
+    is_required_file ${RISU_ROOT}/uname
+    cat ${RISU_ROOT}/uname >&2
 else
-	uname -a >&2
+    uname -a >&2
 fi
 
 exit ${RC_OKAY}

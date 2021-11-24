@@ -24,19 +24,19 @@
 
 ROLE="unknown"
 if is_lineinfile "^vmid" ${RISU_ROOT}/etc/ovirt-hosted-engine/hosted-engine.conf; then
-	ROLE="hosted-engine-host"
+    ROLE="hosted-engine-host"
 elif is_rpm ovirt-engine >/dev/null 2>&1; then
-	ROLE="rhevm"
+    ROLE="rhevm"
 elif is_rpm qemu-kvm-rhev >/dev/null 2>&1; then
-	if [[ "$(discover_ocp_version)" == "0" ]]; then
-		ROLE="ovirt-host"
-	else
-		echo "unknown ovirt role" >&2
-		exit ${RC_SKIPPED}
-	fi
+    if [[ "$(discover_ocp_version)" == "0" ]]; then
+        ROLE="ovirt-host"
+    else
+        echo "unknown ovirt role" >&2
+        exit ${RC_SKIPPED}
+    fi
 else
-	echo "unknown ovirt role" >&2
-	exit ${RC_SKIPPED}
+    echo "unknown ovirt role" >&2
+    exit ${RC_SKIPPED}
 fi
 
 echo ${ROLE} >&2

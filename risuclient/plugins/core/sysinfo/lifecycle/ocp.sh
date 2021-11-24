@@ -27,40 +27,40 @@ OSBRAND=$(discover_osbrand)
 
 declare -A OCPEOL
 OCPEOL=(["3.0"]="2018-11-30"
-	["3.1"]="2018-11-30"
-	["3.2"]="2019-01-31"
-	["3.3"]="2019-01-31"
-	["3.4"]="2019-04-30"
-	["3.5"]="2019-04-30"
-	["3.6"]="2019-07-31"
-	["3.7"]="2019-07-31"
-	["3.9"]="2019-10-31"
-	["3.10"]="2019-10-31")
+    ["3.1"]="2018-11-30"
+    ["3.2"]="2019-01-31"
+    ["3.3"]="2019-01-31"
+    ["3.4"]="2019-04-30"
+    ["3.5"]="2019-04-30"
+    ["3.6"]="2019-07-31"
+    ["3.7"]="2019-07-31"
+    ["3.9"]="2019-10-31"
+    ["3.10"]="2019-10-31")
 
 if [[ $OSBRAND != "rhel" ]]; then
-	echo "RHEL OS required" >&2
-	exit ${RC_SKIPPED}
+    echo "RHEL OS required" >&2
+    exit ${RC_SKIPPED}
 else
-	DR=$(discover_ocp_version)
-	if [[ ${DR} == "0" ]]; then
-		echo "Non OCP host" >&2
-		exit ${RC_SKIPPED}
-	fi
-	if [[ ${OCPEOL[${DR}]} != "" ]]; then
-		if is_date_over_today "${OCPEOL[${DR}]}"; then
-			if are_dates_diff_over 180 "${OCPEOL[${DR}]}" "$(LC_ALL=C LANG=C date)"; then
-				exit ${RC_OKAY}
-			else
-				echo $"Your OCP version is within the half-year period to become unsupported" >&2
-				exit ${RC_INFO}
-			fi
-		else
-			echo $"Your OCP version is unsupported" >&2
-			exit ${RC_FAILED}
-		fi
-	else
-		echo $"Your OCP version has not defined EOL on file" >&2
-		exit ${RC_INFO}
-	fi
+    DR=$(discover_ocp_version)
+    if [[ ${DR} == "0" ]]; then
+        echo "Non OCP host" >&2
+        exit ${RC_SKIPPED}
+    fi
+    if [[ ${OCPEOL[${DR}]} != "" ]]; then
+        if is_date_over_today "${OCPEOL[${DR}]}"; then
+            if are_dates_diff_over 180 "${OCPEOL[${DR}]}" "$(LC_ALL=C LANG=C date)"; then
+                exit ${RC_OKAY}
+            else
+                echo $"Your OCP version is within the half-year period to become unsupported" >&2
+                exit ${RC_INFO}
+            fi
+        else
+            echo $"Your OCP version is unsupported" >&2
+            exit ${RC_FAILED}
+        fi
+    else
+        echo $"Your OCP version has not defined EOL on file" >&2
+        exit ${RC_INFO}
+    fi
 fi
 exit ${RC_OKAY}

@@ -22,29 +22,29 @@
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
 if [[ ${RISU_LIVE} -eq 0 ]]; then
-	FILE="${RISU_ROOT}/sos_commands/tuned/tuned-adm_list"
+    FILE="${RISU_ROOT}/sos_commands/tuned/tuned-adm_list"
 elif [[ ${RISU_LIVE} -eq 1 ]]; then
-	FILE=$(mktemp)
-	trap "rm ${FILE}" EXIT
-	LANG=C tuned-adm list >${FILE} 2>&1
+    FILE=$(mktemp)
+    trap "rm ${FILE}" EXIT
+    LANG=C tuned-adm list >${FILE} 2>&1
 fi
 
 is_required_file ${FILE}
 
 if is_virtual; then
-	# Virtual machine, check if profile is virtual-guest
-	SYSPROFILE=$(cat ${FILE} | grep ^"Current" | cut -d ":" -f 2- | awk '{print $1}')
-	if [[ ${SYSPROFILE} == "" ]]; then
-		echo "Couldn't determine system profile in tuned" >&2
-		exit ${RC_SKIPPED}
-	fi
+    # Virtual machine, check if profile is virtual-guest
+    SYSPROFILE=$(cat ${FILE} | grep ^"Current" | cut -d ":" -f 2- | awk '{print $1}')
+    if [[ ${SYSPROFILE} == "" ]]; then
+        echo "Couldn't determine system profile in tuned" >&2
+        exit ${RC_SKIPPED}
+    fi
 
-	if [[ ${SYSPROFILE} == "virtual-guest" ]]; then
-		exit ${RC_OKAY}
-	else
-		echo "This system is virtual but profile is not set as virtual-guest, check that it's optimized for usage" >&2
-		exit ${RC_INFO}
-	fi
+    if [[ ${SYSPROFILE} == "virtual-guest" ]]; then
+        exit ${RC_OKAY}
+    else
+        echo "This system is virtual but profile is not set as virtual-guest, check that it's optimized for usage" >&2
+        exit ${RC_INFO}
+    fi
 fi
 
 exit ${RC_OKAY}

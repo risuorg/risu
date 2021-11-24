@@ -24,13 +24,13 @@
 
 # We're OCP master
 if is_rpm atomic-openshift-master; then
-	if is_enabled openshift-master-api; then
-		if is_active openshift-master-api; then
-			exit ${RC_OKAY}
-		fi
-	fi
-	echo $"openshift-master-api service should be enabled and active" >&2
-	exit ${RC_FAILED}
+    if is_enabled openshift-master-api; then
+        if is_active openshift-master-api; then
+            exit ${RC_OKAY}
+        fi
+    fi
+    echo $"openshift-master-api service should be enabled and active" >&2
+    exit ${RC_FAILED}
 fi
 
 echo $"Non Openshift master" >&2

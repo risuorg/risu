@@ -23,11 +23,11 @@
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
 if [[ ${RISU_LIVE} -eq 0 ]]; then
-	DMIDECODE="${RISU_ROOT}/dmidecode"
-	is_required_file ${DMIDECODE}
-	UUID=$(grep -oP "UUID: \K(.*)" ${DMIDECODE})
+    DMIDECODE="${RISU_ROOT}/dmidecode"
+    is_required_file ${DMIDECODE}
+    UUID=$(grep -oP "UUID: \K(.*)" ${DMIDECODE})
 elif [[ ${RISU_LIVE} -eq 1 ]]; then
-	UUID=$(dmidecode -s system-uuid)
+    UUID=$(dmidecode -s system-uuid)
 fi
 
 echo ${UUID} >&2

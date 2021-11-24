@@ -27,11 +27,11 @@
 # Code for generating items for faraday-CSV
 
 if [[ ${RISU_LIVE} -eq 0 ]]; then
-	FILE="${RISU_ROOT}/sos_commands/networking/ip_address"
+    FILE="${RISU_ROOT}/sos_commands/networking/ip_address"
 elif [[ ${RISU_LIVE} -eq 1 ]]; then
-	FILE=$(mktemp)
-	trap "rm ${FILE}" EXIT
-	ip address >${FILE} 2>&1
+    FILE=$(mktemp)
+    trap "rm ${FILE}" EXIT
+    ip address >${FILE} 2>&1
 fi
 
 is_required_file ${FILE}

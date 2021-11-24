@@ -27,33 +27,33 @@ OSBRAND=$(discover_osbrand)
 
 declare -A CentOSEOL
 CentOSEOL=(["6"]="2020-11-30"
-	["7"]="2024-06-30")
+    ["7"]="2024-06-30")
 
 if [[ $OSBRAND != "centos" ]]; then
-	echo "CentOS OS required" >&2
-	exit ${RC_SKIPPED}
+    echo "CentOS OS required" >&2
+    exit ${RC_SKIPPED}
 else
-	DR=$(discover_release)
-	if [[ ${DR} -lt 6 ]]; then
-		echo $"Your CentOS Release is already out of support phase: https://wiki.centos.org/FAQ/General#head-fe8a0be91ee3e7dea812e8694491e1dde5b75e6d" >&2
-		exit ${RC_FAILED}
-	else
-		if [[ ${CentOSEOL[${DR}]} != "" ]]; then
-			if is_date_over_today "${CentOSEOL[${DR}]}"; then
-				if are_dates_diff_over 360 "${CentOSEOL[${DR}]}" "$(LC_ALL=C LANG=C date)"; then
-					exit ${RC_OKAY}
-				else
-					echo $"Your system is within the year period to become unsupported" >&2
-					exit ${RC_INFO}
-				fi
-			else
-				echo $"Your current CentOS release is unsupported" >&2
-				exit ${RC_FAILED}
-			fi
-		else
-			echo $"Your CentOS version has not defined EOL on file" >&2
-			exit ${RC_INFO}
-		fi
-	fi
+    DR=$(discover_release)
+    if [[ ${DR} -lt 6 ]]; then
+        echo $"Your CentOS Release is already out of support phase: https://wiki.centos.org/FAQ/General#head-fe8a0be91ee3e7dea812e8694491e1dde5b75e6d" >&2
+        exit ${RC_FAILED}
+    else
+        if [[ ${CentOSEOL[${DR}]} != "" ]]; then
+            if is_date_over_today "${CentOSEOL[${DR}]}"; then
+                if are_dates_diff_over 360 "${CentOSEOL[${DR}]}" "$(LC_ALL=C LANG=C date)"; then
+                    exit ${RC_OKAY}
+                else
+                    echo $"Your system is within the year period to become unsupported" >&2
+                    exit ${RC_INFO}
+                fi
+            else
+                echo $"Your current CentOS release is unsupported" >&2
+                exit ${RC_FAILED}
+            fi
+        else
+            echo $"Your CentOS version has not defined EOL on file" >&2
+            exit ${RC_INFO}
+        fi
+    fi
 fi
 exit ${RC_OKAY}

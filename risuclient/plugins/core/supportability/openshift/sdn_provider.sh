@@ -27,19 +27,19 @@ RHPLUGIN="redhat/openshift"
 OCPVERSION=$(discover_ocp_version)
 
 if [[ ${OCPVERSION} == "0" ]]; then
-	echo "Not running on OCP node" >&2
-	exit ${RC_SKIPPED}
+    echo "Not running on OCP node" >&2
+    exit ${RC_SKIPPED}
 else
-	is_required_file ${RISU_ROOT}/etc/origin/master/master-config.yaml
-	NETWORKPLUGIN=$(grep 'networkPluginName' ${RISU_ROOT}/etc/origin/master/master-config.yaml)
+    is_required_file ${RISU_ROOT}/etc/origin/master/master-config.yaml
+    NETWORKPLUGIN=$(grep 'networkPluginName' ${RISU_ROOT}/etc/origin/master/master-config.yaml)
 
-	if [[ -z ${NETWORKPLUGIN} ]]; then
-		echo "configured OpenShift network-plugin: ${NETWORKPLUGIN}" >&2
+    if [[ -z ${NETWORKPLUGIN} ]]; then
+        echo "configured OpenShift network-plugin: ${NETWORKPLUGIN}" >&2
 
-		if [[ ! ${NETWORKPLUGIN} =~ ${RHPLUGIN} ]]; then
-			echo "Plugin ${NETWORKPLUGIN} is not a supported plugin by Red Hat!" >&2
-			exit ${RC_INFO}
-		fi
-	fi
+        if [[ ! ${NETWORKPLUGIN} =~ ${RHPLUGIN} ]]; then
+            echo "Plugin ${NETWORKPLUGIN} is not a supported plugin by Red Hat!" >&2
+            exit ${RC_INFO}
+        fi
+    fi
 fi
 exit ${RC_OKAY}

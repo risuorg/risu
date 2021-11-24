@@ -23,8 +23,8 @@
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
 if ! which xsos >/dev/null 2>&1; then
-	echo "xsos support not found, exiting" >&2
-	exit ${RC_SKIPPED}
+    echo "xsos support not found, exiting" >&2
+    exit ${RC_SKIPPED}
 fi
 
 xsos -x -a ${RISU_ROOT} >&2

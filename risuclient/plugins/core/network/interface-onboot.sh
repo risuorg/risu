@@ -31,14 +31,14 @@
 
 NETWORK_SCRIPTS_PATH="/etc/sysconfig/network-scripts/ifcfg"
 
-if [[ "${RISU_LIVE}" -eq "0" ]]; then
-	NETWORK_SCRIPTS_PATH="${RISU_ROOT}${NETWORK_SCRIPTS_PATH}"
-	IP_ADDRESS_FILE=$(first_file_available "${RISU_ROOT}/sos_commands/networking/ip_-d_address" "${RISU_ROOT}/sos_commands/networking/ip_address")
-	is_required_file "${IP_ADDRESS_FILE}"
-elif [[ "${RISU_LIVE}" -eq "1" ]]; then
-	IP_ADDRESS_FILE=$(mktemp)
-	trap 'rm ${IP_ADDRESS_FILE}' EXIT
-	ip address >"${IP_ADDRESS_FILE}" 2>&1
+if [[ ${RISU_LIVE} -eq "0" ]]; then
+    NETWORK_SCRIPTS_PATH="${RISU_ROOT}${NETWORK_SCRIPTS_PATH}"
+    IP_ADDRESS_FILE=$(first_file_available "${RISU_ROOT}/sos_commands/networking/ip_-d_address" "${RISU_ROOT}/sos_commands/networking/ip_address")
+    is_required_file "${IP_ADDRESS_FILE}"
+elif [[ ${RISU_LIVE} -eq "1" ]]; then
+    IP_ADDRESS_FILE=$(mktemp)
+    trap 'rm ${IP_ADDRESS_FILE}' EXIT
+    ip address >"${IP_ADDRESS_FILE}" 2>&1
 fi
 
 RC_STATUS=${RC_OKAY}
@@ -55,32 +55,32 @@ IFACES_IN_SYSTEM=$(grep -i "state UP" ${IP_ADDRESS_FILE} | cut -f2 -d ":" | tr -
 declare -A IFACES_MACS
 
 for iface in ${IFACES_IN_SYSTEM}; do
-	# Fill array of IFACES-MACS
-	IFACES_MACS[${iface}]=$(cat ${IP_ADDRESS_FILE} | grep ${iface} -A2 | grep ether | awk '{print $2}')
+    # Fill array of IFACES-MACS
+    IFACES_MACS[${iface}]=$(cat ${IP_ADDRESS_FILE} | grep ${iface} -A2 | grep ether | awk '{print $2}')
 done
 
 # Check all interfaces
 for iface in ${IFACES_IN_SYSTEM}; do
-	mac=${IFACES_MACS[$iface]}
-	if ! is_lineinfile ${mac} ${RISU_ROOT}/etc/sysconfig/network-scripts/ifcfg-*; then
-		# mac is not there, so check iface based on name
-		if ! is_lineinfile ${iface} ${RISU_ROOT}/etc/sysconfig/network-scripts/ifcfg-*; then
-			echo "Interface ${iface} with MAC ${mac} is in state UP but not defined in ifcfg-* files" >&2
-			RC_STATUS=${RC_FAILED}
-		fi
-	fi
+    mac=${IFACES_MACS[$iface]}
+    if ! is_lineinfile ${mac} ${RISU_ROOT}/etc/sysconfig/network-scripts/ifcfg-*; then
+        # mac is not there, so check iface based on name
+        if ! is_lineinfile ${iface} ${RISU_ROOT}/etc/sysconfig/network-scripts/ifcfg-*; then
+            echo "Interface ${iface} with MAC ${mac} is in state UP but not defined in ifcfg-* files" >&2
+            RC_STATUS=${RC_FAILED}
+        fi
+    fi
 
-	# For each iface, check that onboot=yes is there
-	for ifacefile in ${RISU_ROOT}/etc/sysconfig/network-scripts/ifcfg-*; do
-		if is_lineinfile ${iface} ${ifacefile}; then
-			NETWORK_INTERFACE_FILE=${ifacefile}
-			status=$(cat ${NETWORK_INTERFACE_FILE} | grep -i onboot | grep -v ^# | cut -d "=" -f 2- | xargs echo | tr "[:upper:]" "[:lower:]")
-			if [ ${status} != "yes" ]; then
-				echo "Interface '${iface}' up but not 'onboot=YES' in the ${NETWORK_INTERFACE_FILE} file!" >&2
-				RC_STATUS=${RC_FAILED}
-			fi
-		fi
-	done
+    # For each iface, check that onboot=yes is there
+    for ifacefile in ${RISU_ROOT}/etc/sysconfig/network-scripts/ifcfg-*; do
+        if is_lineinfile ${iface} ${ifacefile}; then
+            NETWORK_INTERFACE_FILE=${ifacefile}
+            status=$(cat ${NETWORK_INTERFACE_FILE} | grep -i onboot | grep -v ^# | cut -d "=" -f 2- | xargs echo | tr "[:upper:]" "[:lower:]")
+            if [ ${status} != "yes" ]; then
+                echo "Interface '${iface}' up but not 'onboot=YES' in the ${NETWORK_INTERFACE_FILE} file!" >&2
+                RC_STATUS=${RC_FAILED}
+            fi
+        fi
+    done
 done
 
 exit ${RC_STATUS}

@@ -23,9 +23,9 @@
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
 if [[ "x$RISU_LIVE" == "x0" ]]; then
-	MEMORY=$(awk '/Mem/ {print $2}' ${RISU_ROOT}/free)
+    MEMORY=$(awk '/Mem/ {print $2}' ${RISU_ROOT}/free)
 else
-	MEMORY=$(LANG=C free | awk '/Mem/ {print $2}')
+    MEMORY=$(LANG=C free | awk '/Mem/ {print $2}')
 fi
 
 echo "$((MEMORY / 1024))" >&2

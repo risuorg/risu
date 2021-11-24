@@ -22,9 +22,9 @@
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
 if [[ ${RISU_LIVE} -eq 0 ]]; then
-	sosdate=$(LC_ALL=C LANG=C date -d "$(cat ${RISU_ROOT}/date)" +%Y-%m-%d)
+    sosdate=$(LC_ALL=C LANG=C date -d "$(cat ${RISU_ROOT}/date)" +%Y-%m-%d)
 else
-	sosdate=$(LC_ALL=C LANG=C TZ='UTC' date +%Y-%m-%d)
+    sosdate=$(LC_ALL=C LANG=C TZ='UTC' date +%Y-%m-%d)
 fi
 
 # Fill metadata 'sosreport-date' to value

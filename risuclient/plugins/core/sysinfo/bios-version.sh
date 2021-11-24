@@ -23,10 +23,10 @@
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
 if [[ "x$RISU_LIVE" == "x0" ]]; then
-	is_required_file ${RISU_ROOT}/dmidecode
-	python ${RISU_BASE}/tools/dmidecode.py <${RISU_ROOT}/dmidecode | grep ^BIOS >&2
+    is_required_file ${RISU_ROOT}/dmidecode
+    python ${RISU_BASE}/tools/dmidecode.py <${RISU_ROOT}/dmidecode | grep ^BIOS >&2
 else
-	dmidecode | python ${RISU_BASE}/tools/dmidecode.py | grep ^BIOS >&2
+    dmidecode | python ${RISU_BASE}/tools/dmidecode.py | grep ^BIOS >&2
 fi
 
 exit ${RC_OKAY}
