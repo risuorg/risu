@@ -1,3 +1,7 @@
+---
+modified: "2022-01-26T13:04:03.311Z"
+---
+
 [![License](https://img.shields.io/github/license/risuorg/risu.svg)](LICENSE)
 ![Python Unit Testing](https://github.com/risuorg/risu/workflows/Python%20Unit%20Testing/badge.svg)
 [![](https://readthedocs.org/projects/risu/badge/?version=latest)](https://readthedocs.org/projects/risu/builds/ "Read The docs build")
@@ -40,8 +44,8 @@ Please if you have any idea on any improvements please do not hesitate to open a
 
 Framework contains additional readmes for the tools included:
 
-- [Risu](risu.md)
-- [Magui](magui.md)
+- [Risu](doc/risu.md)
+- [Magui](doc/magui.md)
 
 ## How does it looks like?
 
