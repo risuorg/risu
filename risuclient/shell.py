@@ -302,7 +302,7 @@ def findallplugins(options=None, filter=False):
     return newplugins
 
 
-def generate_file_hash(filename, blocksize=2 ** 20):
+def generate_file_hash(filename, blocksize=2**20):
     """
     Obtains a file hash for provided filename
     :param filename: file to open and hash
