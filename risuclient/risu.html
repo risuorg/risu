@@ -808,7 +808,7 @@
                             if (i == "title") {
                                 document.getElementById("reporttitle").innerText = item
                                 window.document.title = item
-                            } else if (i == "path") {
+                            } else if (i == "path" &&  i.indexOf("/")>=0 ) {
                                 document.title = "Report for " + item.split("/").pop()
                             }
                         });
