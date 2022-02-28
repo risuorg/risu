@@ -16,7 +16,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2.4.0
 
-      - uses: actions/setup-python@v2.3.2
+      - uses: actions/setup-python@v3
       - uses: actions/cache@v2.1.7
         with:
           path: |
