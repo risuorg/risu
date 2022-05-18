@@ -1,5 +1,12 @@
 fail_fast: true
 repos:
+  - hooks:
+      - id: commitizen
+        stages:
+          - commit-msg
+    repo: https://github.com/commitizen-tools/commitizen
+    rev: v2.27.0
+
   - repo: meta
     hooks:
       - id: check-useless-excludes
@@ -9,7 +16,7 @@ repos:
   #     - id: pyupgrade
   #       args: [--py36-plus]
   - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: v2.6.1
+    rev: v2.6.2
     hooks:
       - id: prettier
         files: \.(css|js|md|markdown|json)
@@ -26,9 +33,8 @@ repos:
     hooks:
       - id: black
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.1.0
+    rev: v4.2.0
     hooks:
-
       - id: check-added-large-files
       - id: check-ast
       - id: check-case-conflict
