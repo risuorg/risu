@@ -1,4 +1,5 @@
 name: Update Semver
+
 on:
   push:
     tags:
@@ -6,6 +7,11 @@ on:
   release:
      types:
        - published
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 
 jobs:
   update-semver:
