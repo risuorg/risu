@@ -18,6 +18,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Broken Link Check
-        uses: technote-space/broken-link-checker-action@v2.3.0
+        uses: technote-space/broken-link-checker-action@v2.3.1
         with:
           EXCLUDED_KEYWORDS: "*.md, camo.githubusercontent.com"
