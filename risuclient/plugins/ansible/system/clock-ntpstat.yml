@@ -1,19 +1,15 @@
-# Copyright (C) 2017 Robin Černín <cerninr@gmail.com>
-# Copyright (C) 2017, 2018, 2020 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
-# long_name: NTPd time synchronization
-# priority: 500
 ---
-- hosts: all
-  vars:
-    metadata:
-      name: Verify all deployed nodes have their clock synchronised.
-      description: >
-        Each overcloud node should have their clocks synchronised.
-        The deployment should configure and run ntpd. This validation verifies
-        that it is indeed running and connected to an NPT server on all nodes.
-      groups:
-        - post-deployment
-  tasks:
-    - name: Run ntpstat
+  - hosts: all
+    vars:
+      metadata:
+        name: Verify all deployed nodes have their clock synchronised.
+        description: >
+          Each overcloud node should have their clocks synchronised.
+          The deployment should configure and run ntpd. This validation verifies
+          that it is indeed running and connected to an NPT server on all nodes.
+        groups:
+          - post-deployment
+    tasks:
+      - name: Run ntpstat
       # ntpstat returns 0 if synchronised and non-zero otherwise
-      command: ntpstat
+        command: ntpstat

@@ -1,36 +1,32 @@
-# Copyright (C) 2017 Robin Černín <cerninr@gmail.com>
-# Copyright (C) 2018, 2020 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
-# long_name: RabbitMQ HA policies
-# priority: 500
 ---
-- name: Validate RabbitMQ HA policies
-  hosts: all
-  vars:
-    metadata:
-      name: rabbitmq-ha-policies
-      description: >
-        Make sure the RabbitMQ cluster has HA for all queues except the built-in amq.* ones
-      groups:
-        - post-deployment
-  become: true
+  - name: Validate RabbitMQ HA policies
+    hosts: all
+    vars:
+      metadata:
+        name: rabbitmq-ha-policies
+        description: >
+          Make sure the RabbitMQ cluster has HA for all queues except the built-in amq.* ones
+        groups:
+          - post-deployment
+    become: true
 
-  tasks:
-    - name: Check if we are in HA cluster environment
-      register: pcs_cluster_status
-      command: pcs cluster status
-      failed_when: false
-      changed_when: false
+    tasks:
+      - name: Check if we are in HA cluster environment
+        register: pcs_cluster_status
+        command: pcs cluster status
+        failed_when: false
+        changed_when: false
 
-    - name: Get RabbitMQ policies
-      when: "pcs_cluster_status.rc == 0"
-      register: actual_rabbitmq_policies
-      command: "rabbitmqctl list_policies"
-      changed_when: false
+      - name: Get RabbitMQ policies
+        when: "pcs_cluster_status.rc == 0"
+        register: actual_rabbitmq_policies
+        command: "rabbitmqctl list_policies"
+        changed_when: false
 
-    - name: Verify the RabbitMQ HA policies exists
-      fail:
-        msg: "RabbitMQ policies are missing HA policies"
-      when: >
-        pcs_cluster_status.rc == 0
-        and
-        '^(?!amq\\\\.).*\t{"ha-mode":"all"}' not in actual_rabbitmq_policies.stdout
+      - name: Verify the RabbitMQ HA policies exists
+        fail:
+          msg: "RabbitMQ policies are missing HA policies"
+        when: >
+          pcs_cluster_status.rc == 0
+          and
+          '^(?!amq\\\\.).*\t{"ha-mode":"all"}' not in actual_rabbitmq_policies.stdout

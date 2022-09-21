@@ -1,3 +1,4 @@
+---
 name: Update Semver
 
 on:
@@ -5,8 +6,8 @@ on:
     tags:
       - '*.*.*'
   release:
-     types:
-       - published
+    types:
+      - published
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}

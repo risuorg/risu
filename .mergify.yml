@@ -1,26 +1,27 @@
+---
 pull_request_rules:
-    - name: Automatic merge on approval
-      conditions:
-        - "#approved-reviews-by>=1"
-      actions:
-        merge:
-          method: merge
+  - name: Automatic merge on approval
+    conditions:
+      - "#approved-reviews-by>=1"
+    actions:
+      merge:
+        method: merge
 
-    - name: add label on conflict
-      conditions:
-         - conflict
-         - -closed
-      actions:
-        label:
-          add:
-            - conflict
-        comment:
-          message: Could you please fix the conflicts @{{author}}?
-    - name: remove label on conflict
-      conditions:
-         - -conflict
-         - -closed
-      actions:
-        label:
-          remove:
-            - conflict
+  - name: add label on conflict
+    conditions:
+      - conflict
+      - -closed
+    actions:
+      label:
+        add:
+          - conflict
+      comment:
+        message: Could you please fix the conflicts @{{author}}?
+  - name: remove label on conflict
+    conditions:
+      - -conflict
+      - -closed
+    actions:
+      label:
+        remove:
+          - conflict

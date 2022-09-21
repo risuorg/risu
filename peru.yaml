@@ -1,3 +1,4 @@
+---
 imports:
   dmidecode: risuclient/tools/
   # risu: ./

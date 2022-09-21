@@ -1,3 +1,4 @@
+---
 # This workflows will upload a Python Package using Twine when a release is created
 # For more information see: https://help.github.com/en/actions/language-and-framework-guides/using-python-with-github-actions#publishing-to-package-registries
 
@@ -18,31 +19,31 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.x'
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install setuptools wheel twine
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install setuptools wheel twine
 
-    - name: Branch name
-      id: branch_name
-      run: |
-        echo ::set-output name=SOURCE_NAME::${GITHUB_REF#refs/*/}
-        echo ::set-output name=SOURCE_BRANCH::${GITHUB_REF#refs/heads/}
-        echo ::set-output name=SOURCE_TAG::${GITHUB_REF#refs/tags/}
+      - name: Branch name
+        id: branch_name
+        run: |
+          echo ::set-output name=SOURCE_NAME::${GITHUB_REF#refs/*/}
+          echo ::set-output name=SOURCE_BRANCH::${GITHUB_REF#refs/heads/}
+          echo ::set-output name=SOURCE_TAG::${GITHUB_REF#refs/tags/}
 
-    - name: Build package
-      run: |
-        python setup.py sdist bdist_wheel
-      env:
-        RELEASE_VERSION: ${{ steps.branch_name.outputs.SOURCE_TAG }}
+      - name: Build package
+        run: |
+          python setup.py sdist bdist_wheel
+        env:
+          RELEASE_VERSION: ${{ steps.branch_name.outputs.SOURCE_TAG }}
 
-    - name: Publish distribution to PyPI
-      uses: pypa/gh-action-pypi-publish@v1.5.1
-      with:
-        user: __token__
-        password: ${{ secrets.PYPI_PASSWORD }}
+      - name: Publish distribution to PyPI
+        uses: pypa/gh-action-pypi-publish@v1.5.1
+        with:
+          user: __token__
+          password: ${{ secrets.PYPI_PASSWORD }}
