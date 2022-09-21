@@ -1,3 +1,4 @@
+---
 fail_fast: true
 repos:
   - hooks:
@@ -79,3 +80,23 @@ repos:
       - id: blacken-docs
     repo: https://github.com/asottile/blacken-docs
     rev: v1.12.1
+
+  # - repo: https://github.com/asottile/pyupgrade
+  #   rev: v2.38.0
+  #   hooks:
+  #     - id: pyupgrade
+  #       args: [--py39-plus]
+
+  - repo: https://github.com/jumanjihouse/pre-commit-hook-yamlfmt
+    rev: 0.2.2 # or other specific tag
+    hooks:
+      - id: yamlfmt
+        args: [--mapping, '2', --sequence, '4', --offset, '2', '--preserve-quotes']
+
+
+  - repo: https://github.com/hcodes/yaspeller.git
+    rev: v8.0.1
+    hooks:
+      - id: yaspeller
+        types:
+          - markdown
