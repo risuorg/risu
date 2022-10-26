@@ -1,6 +1,6 @@
 **Table of contents**
 
-<!-- TOC depthFrom:1 insertAnchor:false orderedList:false -->
+<!-- TOC depthfrom:1 insertanchor:false orderedlist:false -->
 
 - [Writing Unit tests for plugins](#writing-unit-tests-for-plugins)
 - [Creating the tests](#creating-the-tests)
@@ -10,12 +10,12 @@
 
 ## Writing Unit tests for plugins
 
-Risu uses unittesting for the main python wrappers (risu.py and magui.py), but tests are mostly written in `bash` so no UT is performed.
+Risu uses unit testing for the main python wrappers (`risu.py` and `magui.py`), but tests are mostly written in `bash` so no UT is performed.
 
 As a workaround and to detect issues in your code you can:
 
 - Test the code as part of functional testing (like we do for each test we develop)
-- Consider creating unittests for it
+- Consider creating unit tests for it
 
 ## Creating the tests
 
@@ -24,7 +24,7 @@ Tests require two things:
 - Script that setups a fake folder with relevant contents to either `pass`, `skipped` or `fail` a test
 - The actual `unittest` that `tox` executes via `py.test`
 
-For example, for bugzilla_httpd_bug_1406417 we create:
+For example, for `bugzilla_httpd_bug_1406417` we create:
 
 - `tests/plugins-unit-tests/setup/bugzilla/httpd_bug_1406417.sh`
 - `tests/plugins-unit-tests/test_bugzilla_httpd_bug_1406417.py`
@@ -60,7 +60,7 @@ esac
 
 You'll need to adapt above code or use it as template for creating your own `setup` script.
 
-Once done, the actual `unittest` should be checked, for example (note that test is named test\_\$PLUGINNAME):
+Once done, the actual `unittest` should be checked, for example (note that test is named `test\_\$PLUGINNAME`):
 
 ```py
 import os
@@ -135,7 +135,7 @@ For a new plugin and test you'll then require:
 - `tests/plugins-unit-tests/setup/bugzilla/$NAME.sh`
 - `tests/plugins-unit-tests/test_$NAME.py`
 
-You'll still have to code your plugin and the setup, and for the test, copy one of the provided test\_.py like `test_pacemaker_stonith_enabled.py`
+You'll still have to code your plugin and the setup, and for the test, copy one of the provided `test\_.py` like `test_pacemaker_stonith_enabled.py`
 and edit the 'NAME' variable inside the python file to match your plugin.
 
 `tox` should now pick it up and report status.

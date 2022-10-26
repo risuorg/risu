@@ -1,11 +1,11 @@
 **Table of contents**
 
-<!-- TOC depthFrom:1 insertAnchor:false orderedList:false -->
+<!-- TOC depthfrom:1 insertanchor:false orderedlist:false -->
 
-- [How to file a bug report](#how-to-file-a-bug-report)
-- [How to contribute code](#how-to-contribute-code)
-- [How to write tests](#how-to-write-tests)
-- [How to debug your test](#how-to-debug-your-test)
+    - [How to file a bug report](#how-to-file-a-bug-report)
+    - [How to contribute code](#how-to-contribute-code)
+    - [How to write tests](#how-to-write-tests)
+    - [How to debug your test](#how-to-debug-your-test)
 
 <!-- /TOC -->
 
@@ -50,23 +50,23 @@ We encourage you to contribute new plugins. Use Pull Requests to provide your co
 
 7.  Then, use repository Pull-Request method to request the change to be incorporated/reviewed
 
-        git-review
+        `git-review`
 
 Then wait for your changes to be reviewed. It is common for reviewers
 to request changes; when this happens:
 
 1.  Edit your files and revalidate with tox:
 
-        tox # this will check the new changes for some errors
+        `tox # this will check the new changes for some errors`
 
 2.  Update your existing commit. Do not create a new commit! We want to get each new PR into one commit.
 
-        git add $modified_files
-        git commit --amend
+        `git add $modified_files`
+        `git commit --amend`
 
 3.  Resubmit the change:
 
-        git push --force
+        `git push --force`
 
 4) Once the new plugin has been submitted you'll see some GitHub actions feedback (similars to the ones that you run with `tox`)
 
@@ -78,7 +78,7 @@ folder for examples.
 
 Specially remember about the headers:
 
-```
+```sh
 # long_name: plug long name for webui
 # description: plug description
 # bugzilla: bz url
@@ -88,7 +88,7 @@ Specially remember about the headers:
 
 That are used by Risu to fill json metadata.
 
-If you want to contribute also Unittests for your plugins, check [TESTING.md](TESTING.md)
+If you want to contribute also Unit tests for your plugins, check [TESTING.md](TESTING.md)
 
 For contributing translations check [i18n.md](i18n.md)
 
@@ -98,15 +98,15 @@ We've included a file named `env-for.debug.sh` in the root folder of Risu repo t
 
 This environment file will define the standard variables Risu does use like:
 
-- RC_OKAY
-- RC_FAILED
-- RC_SKIPPED
-- RC_INFO
-- TEXTDOMAIN
-- TEXTOMAINDIR
-- RISU_BASE
-- RISU_LIVE
-- RISU_ROOT
+- `RC_OKAY`
+- `RC_FAILED`
+- `RC_SKIPPED`
+- `RC_INFO`
+- `TEXTDOMAIN`
+- `TEXTOMAINDIR`
+- `RISU_BASE`
+- `RISU_LIVE`
+- `RISU_ROOT`
 
 And will preload the common-functions
 
@@ -118,13 +118,13 @@ The way to use it is:
 
 Then you can debug your script with:
 
-```
+```sh
 sh -x /path/to/your/plugin.sh
 ```
 
 Or test individual functions output like:
 
-```
+```sh
 is_rpm qemu-kvm-rhev
 ```
 
