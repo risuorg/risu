@@ -1389,6 +1389,7 @@ def write_results(
 
     metadata = {
         "when": datetime.datetime.utcnow().isoformat(),
+        "whenlocal": datetime.datetime.now().isoformat(),
         "live": bool(live),
         "source": source,
         "time": time,
