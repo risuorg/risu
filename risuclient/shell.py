@@ -667,7 +667,10 @@ def dorisu(
     os.environ["CITELLUS_TMP"] = "%s" % tempfile.mkdtemp()
 
     # Set pool for same processes as CPU cores
-    p = Pool(options.numproc)
+    if options is not None:
+        p = Pool(options.numproc)
+    else:
+        p = Pool(cpu_count())
 
     # We've save path, use it
     if savepath:
