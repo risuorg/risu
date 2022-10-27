@@ -14,7 +14,7 @@ modified: "2022-01-26T13:04:03.311Z"
 
 **Table of contents**
 
-<!-- TOC depthFrom:1 insertAnchor:false orderedList:false -->
+<!-- TOC depthfrom:1 insertanchor:false orderedlist:false -->
 
 - [Introduction](#introduction)
 - [Highlights](#highlights)
@@ -42,7 +42,7 @@ Please if you have any idea on any improvements please do not hesitate to open a
 - Ansible playbook support.
 - Save / restore default settings
 
-Framework contains additional readmes for the tools included:
+Framework contains additional README for the tools included:
 
 - [Risu](doc/risu.md)
 - [Magui](doc/magui.md)
@@ -56,7 +56,7 @@ Check how does it look in an execution at:
 
 - Open issues/feature requests, etc at <https://github.com/risuorg/risu/issues>
 - Read the [Contributing](https://risu.readthedocs.org/en/latest/development/CONTRIBUTING/) document on how to submit patches
-- Provide sosreports to check against via <https://www.dropbox.com/request/8LGneF9i9nc9RB6aqXge>, specially if running Debian based distributions and or Fedora/CentOS based ones so that we can improve support for it
+- Provide the sosreports to check against via <https://www.dropbox.com/request/8LGneF9i9nc9RB6aqXge>, specially if running Debian based distributions and or Fedora/CentOS based ones so that we can improve support for it
 
 ## Documentation
 
@@ -67,7 +67,6 @@ Documentation is available at [Read the docs](https://risu.readthedocs.org)
 You can reach to us via:
 
 - irc at #risu in [Libera](https://libera.chat/)
-- Telegram at <https://t.me/risuUG>
 - our mailing list:
   - <mailto:risuorg _AT_ googlegroups.com>
   - <https://groups.google.com/forum/#!forum/risu>
