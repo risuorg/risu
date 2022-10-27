@@ -667,7 +667,7 @@ def dorisu(
     os.environ["CITELLUS_TMP"] = "%s" % tempfile.mkdtemp()
 
     # Set pool for same processes as CPU cores
-    p = Pool(cpu_count())
+    p = Pool(options.numproc)
 
     # We've save path, use it
     if savepath:
@@ -967,6 +967,18 @@ def parse_args(default=False, parse=False):
         help=_(
             "Use provided path at starting point for finding risu.json and print them based on filters defined"
         ),
+    )
+
+    p.add_argument(
+        "--numproc",
+        help=_(
+            "Adjust number of maximum processes, defaults to %s in this system"
+            % cpu_count()
+        ),
+        default=cpu_count(),
+        metavar="[1-1000]",
+        type=int,
+        choices=range(1, 1001),
     )
 
     g = p.add_argument_group("Output and logging options")
