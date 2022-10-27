@@ -1,3 +1,9 @@
+# [1.8.0](https://github.com/risuorg/risu/compare/1.7.7...1.8.0) (2022-10-27)
+
+### Features
+
+- Allow to limit the number of parallel processes ([99c02e8](https://github.com/risuorg/risu/commit/99c02e884e2c25dda654266ed8d5f6dc61871d4e))
+
 ## [1.7.7](https://github.com/risuorg/risu/compare/1.7.6...1.7.7) (2021-05-19)
 
 ### Bug Fixes
