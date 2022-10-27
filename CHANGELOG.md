@@ -1,3 +1,9 @@
+## [1.8.1](https://github.com/risuorg/risu/compare/1.8.0...1.8.1) (2022-10-27)
+
+### Bug Fixes
+
+- handle when options are not passed ([ec847a1](https://github.com/risuorg/risu/commit/ec847a1aabc9162ab9dad76c60fee2a336877b74))
+
 # [1.8.0](https://github.com/risuorg/risu/compare/1.7.7...1.8.0) (2022-10-27)
 
 ### Features
