@@ -21,4 +21,8 @@ jobs:
       - name: Broken Link Check
         uses: technote-space/broken-link-checker-action@v2.3.1
         with:
-          EXCLUDED_KEYWORDS: "*.md, camo.githubusercontent.com"
+          EXCLUDED_KEYWORDS: |
+            *.md
+            docs.github.com
+            camo.githubusercontent.com
+            github.com/apps/dependabot
