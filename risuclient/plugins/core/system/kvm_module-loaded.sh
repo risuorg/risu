@@ -21,14 +21,14 @@
 # priority: 900
 
 # Load common functions
-[[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
+[[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
 # check baremetal node
-is_required_file "${CITELLUS_ROOT}/proc/modules"
-is_required_file "${CITELLUS_ROOT}/var/log/messages"
+is_required_file "${RISU_ROOT}/proc/modules"
+is_required_file "${RISU_ROOT}/var/log/messages"
 
-if is_lineinfile "libvirtd.*error.*virCapabilitiesDomainDataLookupInternal:746 : invalid argument: could not find capabilities for arch=x86_64 domaintype=kvm" "${CITELLUS_ROOT}/var/log/messages"; then
-    if ! is_lineinfile "kvm_" "${CITELLUS_ROOT}/proc/modules"; then
+if is_lineinfile "libvirtd.*error.*virCapabilitiesDomainDataLookupInternal:746 : invalid argument: could not find capabilities for arch=x86_64 domaintype=kvm" "${RISU_ROOT}/var/log/messages"; then
+    if ! is_lineinfile "kvm_" "${RISU_ROOT}/proc/modules"; then
         echo $"no KVM module loaded in /proc/modules" >&2
         exit ${RC_FAILED}
     fi

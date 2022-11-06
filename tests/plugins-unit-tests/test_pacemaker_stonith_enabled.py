@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # encoding: utf-8
 #
-# Description: This UT run scripts to validate the rules/tests created for citellus for $NAME_OF_TEST
+# Description: This UT run scripts to validate the rules/tests created for risu for $NAME_OF_TEST
 #
 # Copyright (C) 2018 Renaud Métrich <rmetrich@redhat.com>
 # Copyright (C) 2017 Robin Černín <cerninr@gmail.com>
@@ -28,25 +28,23 @@ import subprocess
 import tempfile
 from unittest import TestCase
 
-import citellusclient.shell as citellus
+import risuclient.shell as risu
 
 # To create your own test, update NAME with plugin name and copy this file to test_$NAME.py
-NAME = 'stonith_enabled'
+NAME = "stonith_enabled"
 
-testplugins = os.path.join(citellus.citellusdir, 'plugins', 'test')
-plugins = os.path.join(citellus.citellusdir, 'plugins', 'core')
-folder = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'setup')
-uttest = citellus.findplugins(folders=[folder], include=[NAME])[0]['plugin']
+testplugins = os.path.join(risu.risudir, "plugins", "test")
+plugins = os.path.join(risu.risudir, "plugins", "core")
+folder = os.path.join(os.path.abspath(os.path.dirname(__file__)), "setup")
+uttest = risu.findplugins(folders=[folder], include=[NAME])[0]["plugin"]
 us = os.path.basename(uttest)
-citplugs = citellus.findplugins(folders=[plugins], include=[us])
+citplugs = risu.findplugins(folders=[plugins], include=[us])
 
 # Setup commands and expected return codes
-rcs = {"pass": citellus.RC_OKAY,
-       "fail": citellus.RC_FAILED,
-       "skipped": citellus.RC_SKIPPED}
+rcs = {"pass": risu.RC_OKAY, "fail": risu.RC_FAILED, "skipped": risu.RC_SKIPPED}
 
 
-def runtest(testtype='False'):
+def runtest(testtype="False"):
     """
     Actually run the test for UT
     :param testtype: argument to pass to setup script
@@ -56,17 +54,19 @@ def runtest(testtype='False'):
     # testtype will be 'pass', 'fail', 'skipped'
 
     # We're iterating against the different UT tests defined in UT-tests folder
-    tmpdir = tempfile.mkdtemp(prefix='citellus-tmp')
+    tmpdir = tempfile.mkdtemp(prefix="risu-tmp")
 
     # Setup test for 'testtype'
-    subprocess.check_output([uttest, uttest, testtype, tmpdir], stderr=subprocess.STDOUT)
+    subprocess.check_output(
+        [uttest, uttest, testtype, tmpdir], stderr=subprocess.STDOUT
+    )
 
     # Run test against it
-    res = citellus.docitellus(path=tmpdir, plugins=citplugs)
+    res = risu.dorisu(path=tmpdir, plugins=citplugs)
 
-    plugid = citellus.getids(plugins=citplugs)[0]
+    plugid = risu.getids(plugins=citplugs)[0]
     # Get Return code
-    rc = res[plugid]['result']['rc']
+    rc = res[plugid]["result"]["rc"]
 
     # Remove tmp folder
     shutil.rmtree(tmpdir)
@@ -78,16 +78,15 @@ def runtest(testtype='False'):
 class CitellusTest(TestCase):
     def test_pass(self):
         # testtype will be 'pass', 'fail', 'skipped'
-        testtype = 'pass'
+        testtype = "pass"
         assert runtest(testtype=testtype) == rcs[testtype]
 
     def test_fail(self):
         # testtype will be 'pass', 'fail', 'skipped'
-        testtype = 'fail'
+        testtype = "fail"
         assert runtest(testtype=testtype) == rcs[testtype]
 
     def test_skip(self):
         # testtype will be 'pass', 'fail', 'skipped'
-        testtype = 'skipped'
+        testtype = "skipped"
         assert runtest(testtype=testtype) == rcs[testtype]
-

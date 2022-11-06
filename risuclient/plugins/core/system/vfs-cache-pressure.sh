@@ -23,12 +23,12 @@
 # kb: https://access.redhat.com/solutions/16995
 
 # Load common functions
-[[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
+[[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
 
-if [[ "x$CITELLUS_LIVE" = "x0" ]];  then
-    FILE="${CITELLUS_ROOT}/sos_commands/kernel/sysctl_-a"
-elif [[ "x$CITELLUS_LIVE" = "x1" ]]; then
+if [[ "x$RISU_LIVE" = "x0" ]];  then
+    FILE="${RISU_ROOT}/sos_commands/kernel/sysctl_-a"
+elif [[ "x$RISU_LIVE" = "x1" ]]; then
     FILE=$(mktemp)
     sysctla -a > ${FILE}
     trap "rm ${FILE}" EXIT

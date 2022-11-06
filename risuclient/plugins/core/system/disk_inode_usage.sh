@@ -21,23 +21,23 @@
 
 
 # Load common functions
-[[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
+[[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
 # long_name: Disk inode usage
-# description: error if disk inode usage is greater than $CITELLUS_INODE_MAX_PERCENT=90
+# description: error if disk inode usage is greater than $RISU_INODE_MAX_PERCENT=90
 # priority: 300
 
-: ${CITELLUS_INODE_MAX_PERCENT=90}
+: ${RISU_INODE_MAX_PERCENT=90}
 
-if [[ ${CITELLUS_LIVE} = 0 ]]; then
-    is_required_file "${CITELLUS_ROOT}/sos_commands/filesys/df_-ali"
-    DISK_USE_CMD="cat ${CITELLUS_ROOT}/sos_commands/filesys/df_-ali"
+if [[ ${RISU_LIVE} = 0 ]]; then
+    is_required_file "${RISU_ROOT}/sos_commands/filesys/df_-ali"
+    DISK_USE_CMD="cat ${RISU_ROOT}/sos_commands/filesys/df_-ali"
 else
     DISK_USE_CMD="df -ali"
 fi
 
 #https://unix.stackexchange.com/a/15083
-result=$(${DISK_USE_CMD} |awk -vinode_max_percent=${CITELLUS_INODE_MAX_PERCENT} '/^\/dev/ && 0+$5 > inode_max_percent { print $6,$5 }')
+result=$(${DISK_USE_CMD} |awk -vinode_max_percent=${RISU_INODE_MAX_PERCENT} '/^\/dev/ && 0+$5 > inode_max_percent { print $6,$5 }')
 
 if [[ -n "$result" ]]; then
     echo "${result}" >&2

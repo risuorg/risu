@@ -23,7 +23,7 @@
 # kb: https://access.redhat.com/solutions/3372291
 
 # Load common functions
-[[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
+[[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
 REGEXP="systemd\[[0-9]+\]: Cannot add dependency job for unit ([^,]+), ignoring: Unit not found."
 
@@ -32,7 +32,7 @@ if is_lineinfile "$REGEXP" "${journalctl_file}"; then
     for unit in $(perl -n -e "m#$REGEXP# && print \"\$1\\n\"" "${journalctl_file}"); do
         found=0
         for path in "/usr/lib/systemd/system/$unit" "/etc/systemd/system/$unit"; do
-            [[ -L "${CITELLUS_ROOT}/$path" ]] || continue
+            [[ -L "${RISU_ROOT}/$path" ]] || continue
             found=1
             break
         done

@@ -23,14 +23,14 @@
 # description: This plugin reports files that have been removed but not freed
 
 # Load common functions
-[[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
+[[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
 lsoffile="$(mktemp)"
 trap "/bin/rm ${lsoffile}" EXIT
 
-if [[ "x$CITELLUS_LIVE" = "x0" ]]; then
+if [[ "x$RISU_LIVE" = "x0" ]]; then
     for FILE in "sos_commands/filesys/lsof_-b_M_-n_-l" "lsof"; do
-        [ -f "${CITELLUS_ROOT}/${FILE}" ] && cat "${CITELLUS_ROOT}/${FILE}" |grep '(deleted)' > ${lsoffile}
+        [ -f "${RISU_ROOT}/${FILE}" ] && cat "${RISU_ROOT}/${FILE}" |grep '(deleted)' > ${lsoffile}
     done
 else
     LANG=C lsof 2>&1|grep '(deleted)' > ${lsoffile}

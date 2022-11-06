@@ -25,7 +25,7 @@
 # priority: 100
 
 # Load common functions
-[[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
+[[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
 is_required_rpm abrt
 
@@ -34,8 +34,8 @@ if ! is_active abrtd; then
     exit ${RC_FAILED}
 fi
 
-is_required_file "${CITELLUS_ROOT}/proc/sys/kernel/core_pattern"
-core_pattern=$(cat "${CITELLUS_ROOT}/proc/sys/kernel/core_pattern")
+is_required_file "${RISU_ROOT}/proc/sys/kernel/core_pattern"
+core_pattern=$(cat "${RISU_ROOT}/proc/sys/kernel/core_pattern")
 
 if [[ "$core_pattern" == "core" ]]; then
     echo $"core_pattern: core" >&2

@@ -22,15 +22,15 @@
 # priority: 500
 
 # Load common functions
-[[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
+[[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
 if ! is_active chronyd; then
     echo "chronyd is not running on this node" >&2
     exit ${RC_SKIPPED}
 fi
 
-is_required_file "${CITELLUS_ROOT}/etc/chrony.conf"
-ncount=$(grep -c -E '^(peer|server)' "${CITELLUS_ROOT}/etc/chrony.conf")
+is_required_file "${RISU_ROOT}/etc/chrony.conf"
+ncount=$(grep -c -E '^(peer|server)' "${RISU_ROOT}/etc/chrony.conf")
 
 if [[ "$ncount" -ge "4" ]]; then
     echo $"chronyd have a sufficient number of sources to choose from:" >&2
@@ -48,6 +48,6 @@ else
     echo $"chronyd not configured" >&2
     exit ${RC_FAILED}
 fi
-grep -E '^(peer|server)' "${CITELLUS_ROOT}/etc/chrony.conf" >&2
+grep -E '^(peer|server)' "${RISU_ROOT}/etc/chrony.conf" >&2
 [[ "x$flag" = "x0" ]] && exit ${RC_OKAY} || exit ${RC_FAILED}
 

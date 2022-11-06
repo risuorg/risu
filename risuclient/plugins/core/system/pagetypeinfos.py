@@ -24,14 +24,15 @@
 
 # Loading some modules
 from __future__ import print_function
+
+import os
 import re
 import sys
-import os
 
 # Getting environment
-root_path = os.getenv('CITELLUS_ROOT', '')
-RC_OKAY = int(os.environ['RC_OKAY'])
-RC_SKIPPED = int(os.environ['RC_SKIPPED'])
+root_path = os.getenv("RISU_ROOT", "")
+RC_OKAY = int(os.environ["RC_OKAY"])
+RC_SKIPPED = int(os.environ["RC_SKIPPED"])
 
 
 # PageTypeInfo path
@@ -54,9 +55,14 @@ if os.access(pagetypeinfo, os.R_OK) is False:
 # Parsing the file
 with open(pagetypeinfo, "r") as f:
     for l in f:
-        m = re.match("Node[\s]+([0-9]+), zone[\s]+([^,]+), type[\s]+([^\s]+) ([0-9\s]+)", l)
+        m = re.match(
+            "Node[\s]+([0-9]+), zone[\s]+([^,]+), type[\s]+([^\s]+) ([0-9\s]+)", l
+        )
         if m:
-            errorprint("Node %-2s Zone %6s Type %-11s " % (m.group(1), m.group(2), m.group(3)), end='')
+            errorprint(
+                "Node %-2s Zone %6s Type %-11s " % (m.group(1), m.group(2), m.group(3)),
+                end="",
+            )
             p = re.findall("([0-9]+)", m.group(4))
             # By default, PAGE_SIZE is 4Kb. If we want to change this, we need a custom kernel
             factor = 4
@@ -66,7 +72,7 @@ with open(pagetypeinfo, "r") as f:
             for i in p:
                 size = int(i) * factor / 1024.0
                 total_size += size
-                errorprint("%8.2f Mb " % size, end='')
+                errorprint("%8.2f Mb " % size, end="")
                 factor *= 2
 
             errorprint("= %8.2f Mb" % total_size)

@@ -19,20 +19,20 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 # Load common functions
-[[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
+[[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
 # long_name: Memory usage
-# description: error if memory usage is higher than $CITELLUS_MEMORY_MAX_PERCENT=90
+# description: error if memory usage is higher than $RISU_MEMORY_MAX_PERCENT=90
 # priority: 400
 
-: ${CITELLUS_MEMORY_MAX_PERCENT=90}
+: ${RISU_MEMORY_MAX_PERCENT=90}
 
 is_required_file "/usr/bin/bc"
 
-if [[ "x$CITELLUS_LIVE" = "x0" ]];  then
-    is_required_file "${CITELLUS_ROOT}/free"
-    MEMORY_USE_CMD=$(grep Mem ${CITELLUS_ROOT}/free | sed 's/[ \t]\+/ /g')
-elif [[ "x$CITELLUS_LIVE" = "x1" ]];  then
+if [[ "x$RISU_LIVE" = "x0" ]];  then
+    is_required_file "${RISU_ROOT}/free"
+    MEMORY_USE_CMD=$(grep Mem ${RISU_ROOT}/free | sed 's/[ \t]\+/ /g')
+elif [[ "x$RISU_LIVE" = "x1" ]];  then
     MEMORY_USE_CMD=$(free | grep Mem | sed 's/[ \t]\+/ /g')
 fi
 
@@ -40,7 +40,7 @@ MEMORY_TOTAL=$(echo ${MEMORY_USE_CMD} | cut -d" " -f2)
 MEMORY_USED=$(echo ${MEMORY_USE_CMD} | cut -d" " -f3)
 MEMORY_USED_PERCENT=$(echo "(($MEMORY_USED / $MEMORY_TOTAL) * 100)" | bc -l)
 
-RC=$(echo "$MEMORY_USED_PERCENT>${CITELLUS_MEMORY_MAX_PERCENT:-90}" | bc -l)
+RC=$(echo "$MEMORY_USED_PERCENT>${RISU_MEMORY_MAX_PERCENT:-90}" | bc -l)
 
 
 if [[ "x$RC" = "x1" ]]; then

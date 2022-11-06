@@ -22,15 +22,15 @@
 # priority: 500
 
 # Load common functions
-[[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
+[[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
 ERRORMSG=$"Over-current detected over the USB internal hub"
 ERRORMATCH="over-current condition"
 ERRORMATCH2="usb"
 
-is_required_file "${CITELLUS_ROOT}/var/log/messages"
+is_required_file "${RISU_ROOT}/var/log/messages"
 
-errcount=$(zgrep "$ERRORMATCH" ${CITELLUS_ROOT}/var/log/messages* |grep "$ERRORMATCH2" |wc -l)
+errcount=$(zgrep "$ERRORMATCH" ${RISU_ROOT}/var/log/messages* |grep "$ERRORMATCH2" |wc -l)
 if [[ "x$errcount" != "x0" ]] ; then
     echo ${ERRORMSG} >&2
     exit ${RC_FAILED}

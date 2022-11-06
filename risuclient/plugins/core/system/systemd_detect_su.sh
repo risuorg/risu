@@ -23,10 +23,10 @@
 # kb: https://access.redhat.com/solutions/3184471
 
 # Load common functions
-[[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
+[[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
 # RHEL 7 and later (systemd)
-is_required_directory "${CITELLUS_ROOT}/usr/lib/systemd/system"
+is_required_directory "${RISU_ROOT}/usr/lib/systemd/system"
 
 # Function checking if a file is a 'real' initscript, by searching for various hints
 is_initscript() {
@@ -64,7 +64,7 @@ is_initscript() {
 files_having_runuser_l=()
 files_having_su=()
 
-for file in $(/bin/ls ${CITELLUS_ROOT}/etc/rc.d/init.d/*); do
+for file in $(/bin/ls ${RISU_ROOT}/etc/rc.d/init.d/*); do
     [[ -f "$file" ]] || continue
 
     content="$(strip_and_trim ${file})"
@@ -99,13 +99,13 @@ EXIT_STATUS=${RC_OKAY}
 
 if [[ -n "$files_having_runuser_l" ]]; then
     echo $">>> 'runuser -l ...' or 'runuser - ...' was detected in some initscripts" >&2
-    printf '%s\n' "${files_having_runuser_l[@]}" | sed "s#^${CITELLUS_ROOT}##g" >&2
+    printf '%s\n' "${files_having_runuser_l[@]}" | sed "s#^${RISU_ROOT}##g" >&2
     EXIT_STATUS=${RC_FAILED}
 fi
 
 if [[ -n "$files_having_su" ]]; then
     echo $">>> 'su' was detected in some initscripts" >&2
-    printf '%s\n' "${files_having_su[@]}" | sed "s#^${CITELLUS_ROOT}##g" >&2
+    printf '%s\n' "${files_having_su[@]}" | sed "s#^${RISU_ROOT}##g" >&2
     EXIT_STATUS=${RC_FAILED}
 fi
 

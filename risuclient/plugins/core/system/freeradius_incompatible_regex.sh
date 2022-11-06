@@ -23,12 +23,12 @@
 # kb: https://access.redhat.com/solutions/3241961
 
 # Load common functions
-[[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
+[[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
 is_required_pkg_over freeradius freeradius-3.0.5-0
-is_required_file ${CITELLUS_ROOT}/etc/raddb/radiusd.conf
+is_required_file ${RISU_ROOT}/etc/raddb/radiusd.conf
 
-RADDB="${CITELLUS_ROOT}/etc/raddb"
+RADDB="${RISU_ROOT}/etc/raddb"
 
 OLD_REGEXP='\\\\\.'                             # \\.   e.g. "if (&User-Name =~ /\\.\\./ ) {"
 NEW_REGEXP='[^\\]\\\.'                          # \.    e.g. "if (&User-Name =~ /\.\./ ) {"
@@ -91,11 +91,11 @@ done
 
 if [[ -n "$files_using_old_regex" ]] && [[ ${new_regexmode} -eq 1 ]]; then
     echo $">>> new regex mode is used, but old regex style was found in some files" >&2
-    printf '%s\n' "${files_using_old_regex[@]}" | sed "s#^${CITELLUS_ROOT}##g" >&2
+    printf '%s\n' "${files_using_old_regex[@]}" | sed "s#^${RISU_ROOT}##g" >&2
     exit ${RC_FAILED}
 elif [[ -n "$files_using_new_regex" ]] && [[ ${new_regexmode} -eq 0 ]]; then
     echo $">>> old regex mode is used, but new regex style was found in some files" >&2
-    printf '%s\n' "${files_using_new_regex[@]}" | sed "s#^${CITELLUS_ROOT}##g" >&2
+    printf '%s\n' "${files_using_new_regex[@]}" | sed "s#^${RISU_ROOT}##g" >&2
     exit ${RC_FAILED}
 fi
 

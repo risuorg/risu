@@ -24,7 +24,7 @@
 # priority: 500
 
 # Load common functions
-[[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
+[[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
 # adapted from https://github.com/larsks/platypus/blob/master/bats/system/test_clock.bats
 

@@ -21,13 +21,13 @@
 # priority: 800
 
 # Load common functions
-[[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
+[[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
 # check baremetal node
 
-is_required_file "${CITELLUS_ROOT}/etc/sudoers"
+is_required_file "${RISU_ROOT}/etc/sudoers"
 
-if ! is_lineinfile "^#includedir /etc/sudoers.d" "${CITELLUS_ROOT}/etc/sudoers"; then
+if ! is_lineinfile "^#includedir /etc/sudoers.d" "${RISU_ROOT}/etc/sudoers"; then
     echo $"sudoers does miss entry for including sudoers.d folder" >&2
     exit ${RC_FAILED}
 else

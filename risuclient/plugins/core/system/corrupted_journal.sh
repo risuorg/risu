@@ -22,15 +22,15 @@
 # priority: 700
 
 # Load common functions
-[[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
+[[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
-if [[ "x$CITELLUS_LIVE" = "x0" ]];  then
-    is_required_file "${CITELLUS_ROOT}/sos_commands/kernel/dmesg"
-    if is_lineinfile "/var/log/journal/.*/system.journal corrupted or uncleanly shut down" "${CITELLUS_ROOT}/sos_commands/kernel/dmesg"; then
+if [[ "x$RISU_LIVE" = "x0" ]];  then
+    is_required_file "${RISU_ROOT}/sos_commands/kernel/dmesg"
+    if is_lineinfile "/var/log/journal/.*/system.journal corrupted or uncleanly shut down" "${RISU_ROOT}/sos_commands/kernel/dmesg"; then
         echo "corrupted journal detected" >&2
         exit ${RC_FAILED}
     fi
-elif [[ "x$CITELLUS_LIVE" = "x1" ]]; then
+elif [[ "x$RISU_LIVE" = "x1" ]]; then
     if dmesg| grep -eq "/var/log/journal/.*/system.journal corrupted or uncleanly shut down"; then
         echo "corrupted journal detected" >&2
         exit ${RC_FAILED}

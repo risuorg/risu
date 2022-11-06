@@ -22,7 +22,7 @@
 # priority: 800
 
 # Load common functions
-[[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
+[[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
 if is_rpm python*-pip*  > /dev/null 2>&1; then
     echo $"python pip is detected" >&2

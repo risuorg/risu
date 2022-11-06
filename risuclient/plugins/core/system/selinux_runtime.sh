@@ -21,16 +21,16 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 # Load common functions
-[[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
+[[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
 # long_name: SELinux runtime status
 # description: Determines runtime SELinux status
 # priority: 100
 # selinux enforcing
 
-if [[ ${CITELLUS_LIVE} = 0 ]];  then
-    is_required_file "${CITELLUS_ROOT}/sos_commands/selinux/sestatus_-b"
-    sestatus="${CITELLUS_ROOT}/sos_commands/selinux/sestatus_-b"
+if [[ ${RISU_LIVE} = 0 ]];  then
+    is_required_file "${RISU_ROOT}/sos_commands/selinux/sestatus_-b"
+    sestatus="${RISU_ROOT}/sos_commands/selinux/sestatus_-b"
 else
     is_required_command "sestatus"
     sestatus=$(mktemp)

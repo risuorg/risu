@@ -28,20 +28,19 @@ from __future__ import print_function
 import os
 import re
 import sys
-from datetime import datetime
-from datetime import timedelta
+from datetime import datetime, timedelta
 
 # Getting environment
 global root_path
-root_path = os.environ['CITELLUS_ROOT']
+root_path = os.environ["RISU_ROOT"]
 
 # Defining some globals
 now = datetime.now()
 events = []
 lastcontext = None
-RC_OKAY = int(os.environ['RC_OKAY'])
-RC_FAILED = int(os.environ['RC_FAILED'])
-RC_SKIPPED = int(os.environ['RC_SKIPPED'])
+RC_OKAY = int(os.environ["RC_OKAY"])
+RC_FAILED = int(os.environ["RC_FAILED"])
+RC_SKIPPED = int(os.environ["RC_SKIPPED"])
 exitCode = RC_OKAY
 errorMsg = ""
 rebootList = ""
@@ -55,9 +54,9 @@ def errorprint(*args, **kwargs):
     print(*args, file=sys.stderr, **kwargs)
 
 
-def exitcitellus(code=False, msg=None):
+def exitrisu(code=False, msg=None):
     """
-    Exits back to citellus with errorcode and message
+    Exits back to risu with errorcode and message
     :param msg: Message to report on stderr
     :param code: return code
     """
@@ -73,7 +72,17 @@ def gettime(line):
     """
     mg = re.match("([a-zA-Z]{3})[\s]+([0-9]+)[\s]+([0-9]+):([0-9]+):([0-9]+)", line)
     if mg is not None:
-        ts = mg.group(1) + " " + mg.group(2) + " " + mg.group(3) + ":" + mg.group(4) + ":" + mg.group(5)
+        ts = (
+            mg.group(1)
+            + " "
+            + mg.group(2)
+            + " "
+            + mg.group(3)
+            + ":"
+            + mg.group(4)
+            + ":"
+            + mg.group(5)
+        )
         thisyear = now.year
         # With UTC, we can consider that now in 12h later
         nnow = now + timedelta(hours=12)
@@ -88,9 +97,25 @@ def gettime(line):
             thisyear -= 1
 
     else:
-        mg = re.match("([0-9]{4})-([0-9]{1,2})-([0-9]{1,2})[\s|T]+([0-9]+):([0-9]+):([0-9]+)", line)
+        mg = re.match(
+            "([0-9]{4})-([0-9]{1,2})-([0-9]{1,2})[\s|T]+([0-9]+):([0-9]+):([0-9]+)",
+            line,
+        )
         if mg is not None:
-            return datetime.strptime(mg.group(1) + "-" + mg.group(2) + "-" + mg.group(3) + " " + mg.group(4) + ":" + mg.group(5) + ":" + mg.group(6), "%Y-%m-%d %H:%M:%S")
+            return datetime.strptime(
+                mg.group(1)
+                + "-"
+                + mg.group(2)
+                + "-"
+                + mg.group(3)
+                + " "
+                + mg.group(4)
+                + ":"
+                + mg.group(5)
+                + ":"
+                + mg.group(6),
+                "%Y-%m-%d %H:%M:%S",
+            )
 
 
 def setcontext(context):
@@ -125,7 +150,18 @@ class Event(object):
     """
     Defines event object
     """
-    def __init__(self, desc, time, context=None, status=None, index=None, duration_down=0, duration_bootloader=0, duration_os=0):
+
+    def __init__(
+        self,
+        desc,
+        time,
+        context=None,
+        status=None,
+        index=None,
+        duration_down=0,
+        duration_bootloader=0,
+        duration_os=0,
+    ):
         """
         Events are journald stop/start events in syslog. This is how we determine the timestamps
         :param desc: Description: Either stop or start; all events
@@ -151,6 +187,7 @@ class Event(object):
         Easier to develop with this, it prints nicely the objects
         """
         from pprint import pformat
+
         return pformat(vars(self), indent=4, width=1000)
 
     def __iter__(self):
@@ -173,14 +210,25 @@ def main():
     global RC_FAILED
     global RC_SKIPPED
 
-    for filename in [os.path.join(root_path, "etc/redhat-release"), os.path.join(root_path, "var/log/messages")]:
+    for filename in [
+        os.path.join(root_path, "etc/redhat-release"),
+        os.path.join(root_path, "var/log/messages"),
+    ]:
         if not os.access(filename, os.R_OK):
-            exitcitellus(code=RC_SKIPPED, msg='Missing access to required file %s' % filename)
+            exitrisu(
+                code=RC_SKIPPED, msg="Missing access to required file %s" % filename
+            )
 
     if not os.path.isfile(os.path.join(root_path, "etc/redhat-release")):
-        exitcitellus(code=RC_SKIPPED, msg="Non Red Hat system, skipping")
-    if "Red Hat Enterprise Linux Server release 7" not in open(os.path.join(root_path, "etc/redhat-release"), 'r').read():
-        exitcitellus(code=RC_SKIPPED, msg="Only works on Red Hat Enterprise Linux 7 or greater, skipping")
+        exitrisu(code=RC_SKIPPED, msg="Non Red Hat system, skipping")
+    if (
+        "Red Hat Enterprise Linux Server release 7"
+        not in open(os.path.join(root_path, "etc/redhat-release"), "r").read()
+    ):
+        exitrisu(
+            code=RC_SKIPPED,
+            msg="Only works on Red Hat Enterprise Linux 7 or greater, skipping",
+        )
 
     # Syslog parsing starts here
     try:
@@ -188,7 +236,7 @@ def main():
     except:
         # Not needed but allows syntax checkers not to complain that f might not be defined
         f = []
-        exitcitellus(code=RC_SKIPPED, msg='Missing /var/log/messages')
+        exitrisu(code=RC_SKIPPED, msg="Missing /var/log/messages")
 
     for line in f:
         # chomp
@@ -216,7 +264,7 @@ def main():
 
     f.close()
     if len(events) == 0:
-        exitcitellus(code=RC_SKIPPED, msg="No reboot found")
+        exitrisu(code=RC_SKIPPED, msg="No reboot found")
 
     """
     File parsing is completed,
@@ -262,7 +310,12 @@ def main():
             if mpe is not None and mpe.desc == "start":
                 e.duration_os = (e.time - mpe.time).total_seconds()
         # calculate the duration of the bootloader sequence
-        elif e.context == "bootloader" and e.desc == "stop" and pe.context == "bootloader" and pe.desc == "start":
+        elif (
+            e.context == "bootloader"
+            and e.desc == "stop"
+            and pe.context == "bootloader"
+            and pe.desc == "start"
+        ):
             e.duration_bootloader = (e.time - pe.time).total_seconds()
         # calculates the duration of the downtime
         elif e.context == "os" and e.desc == "start":
@@ -271,7 +324,9 @@ def main():
                 e.duration_down = (e.time - mpe.time).total_seconds()
             # When we are unable to find the stop event OR
             # the first stop event dates from more than 300s, we have possibly a hard reboot
-            if mpe is None or (mpe is not None and (e.time - mpe.time).total_seconds() > 300):
+            if mpe is None or (
+                mpe is not None and (e.time - mpe.time).total_seconds() > 300
+            ):
                 e.status = "hard"
 
         # Now we save the events
@@ -285,8 +340,10 @@ def main():
         if mne is not None:
             events[mne.index] = mne
 
-    format_rebootlist_ev = '{:%Y-%m-%d %H:%M:%S} {:10.10} {:15.15} {:6.6} {:4.0f} {:3.0f} {:5.0f}\n'
-    format_rebootlist_hd = '{:19.19} {:10.10} {:15.15} {:6.6} {:>4.4} {:>3.3} {:>5.5}\n'
+    format_rebootlist_ev = (
+        "{:%Y-%m-%d %H:%M:%S} {:10.10} {:15.15} {:6.6} {:4.0f} {:3.0f} {:5.0f}\n"
+    )
+    format_rebootlist_hd = "{:19.19} {:10.10} {:15.15} {:6.6} {:>4.4} {:>3.3} {:>5.5}\n"
     numErrors = 0
     # Here we print the results
     for i, e in enumerate(events):
@@ -302,9 +359,26 @@ def main():
             exitCode = RC_FAILED
             errorMsg += "- System was down for more than 10m\n"
             numErrors += 1
-        rebootList += format_rebootlist_ev.format(e.time, e.context, e.desc, str(e.status), e.duration_bootloader, e.duration_os, e.duration_down)
-    out = str(numErrors) + " problem(s) found\n" + errorMsg + "\nEvents:\n" + format_rebootlist_hd.format('Time', 'Context', 'Description', 'Status', 'Boot', 'OS', 'Down') + rebootList
-    exitcitellus(code=exitCode, msg=out)
+        rebootList += format_rebootlist_ev.format(
+            e.time,
+            e.context,
+            e.desc,
+            str(e.status),
+            e.duration_bootloader,
+            e.duration_os,
+            e.duration_down,
+        )
+    out = (
+        str(numErrors)
+        + " problem(s) found\n"
+        + errorMsg
+        + "\nEvents:\n"
+        + format_rebootlist_hd.format(
+            "Time", "Context", "Description", "Status", "Boot", "OS", "Down"
+        )
+        + rebootList
+    )
+    exitrisu(code=exitCode, msg=out)
 
 
 if __name__ == "__main__":

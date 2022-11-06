@@ -23,7 +23,7 @@
 # priority: 100
 
 # Load common functions
-[[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
+[[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
 # we can run this against fs snapshot or live system
 
@@ -86,11 +86,11 @@ if [[ "x$TAINT_FIRMWARE_WORKAROUND" = "x1" ]];then
 fi
 if [[ "x$TAINT_OOT_MODULE" = "x1" ]];then
     echo $"Out-of-tree kernel module has been loaded. " >&2
-    if [[ "x$CITELLUS_LIVE" = "x0" ]];  then
-        if [[ -f "${CITELLUS_ROOT}/sos_commands/kernel/dmesg" ]];then
-            grep "loading out-of-tree module taints kernel" "${CITELLUS_ROOT}/sos_commands/kernel/dmesg" >&2 ; echo >&2
+    if [[ "x$RISU_LIVE" = "x0" ]];  then
+        if [[ -f "${RISU_ROOT}/sos_commands/kernel/dmesg" ]];then
+            grep "loading out-of-tree module taints kernel" "${RISU_ROOT}/sos_commands/kernel/dmesg" >&2 ; echo >&2
         fi
-    elif [[ "x$CITELLUS_LIVE" = "x1" ]]; then
+    elif [[ "x$RISU_LIVE" = "x1" ]]; then
         dmesg| grep  "loading out-of-tree module taints kernel"  >&2  ; echo >&2
     fi
 fi
@@ -105,18 +105,18 @@ if [[ "x$TAINT_HARDWARE_UNSUPPORTED" = "x1" ]];then
 fi
 if [[ "x$TAINT_TECH_PREVIEW" = "x1" ]]; then
     echo $"Tech preview kernel module has been loaded."  >&2
-    if [[ "x$CITELLUS_LIVE" = "x0" ]];  then
-        if [[ -f  "${CITELLUS_ROOT}/sos_commands/kernel/dmesg" ]];then
-            grep "TECH PREVIEW" "${CITELLUS_ROOT}/sos_commands/kernel/dmesg"  >&2 ; echo >&2
+    if [[ "x$RISU_LIVE" = "x0" ]];  then
+        if [[ -f  "${RISU_ROOT}/sos_commands/kernel/dmesg" ]];then
+            grep "TECH PREVIEW" "${RISU_ROOT}/sos_commands/kernel/dmesg"  >&2 ; echo >&2
         fi
-    elif [[ "x$CITELLUS_LIVE" = "x1" ]]; then
+    elif [[ "x$RISU_LIVE" = "x1" ]]; then
         dmesg| grep  "TECH PREVIEW"   >&2 ; echo >&2
     fi
 fi
 }
 
-is_required_file ${CITELLUS_ROOT}/proc/sys/kernel/tainted
-TAINT=$(cat ${CITELLUS_ROOT}/proc/sys/kernel/tainted)
+is_required_file ${RISU_ROOT}/proc/sys/kernel/tainted
+TAINT=$(cat ${RISU_ROOT}/proc/sys/kernel/tainted)
 
 if [[ "x$TAINT" = "x0" ]]; then
     exit ${RC_OKAY}

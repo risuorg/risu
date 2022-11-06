@@ -22,27 +22,27 @@
 # priority: 500
 
 # Load common functions
-[[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
+[[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
 ERRORMSG=$"netifnames=0 detected on non-KVM system"
 ERRORMATCH="net.ifnames=0"
 
-if [[ "x$CITELLUS_LIVE" = "x0" ]];  then
-    is_required_file "${CITELLUS_ROOT}/sos_commands/kernel/dmesg"
-    is_required_file "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_show_--all"
-    if [[ -f "${CITELLUS_ROOT}/sos_commands/networking/ip_-s_-d_link" ]]; then
-        is_required_file "${CITELLUS_ROOT}/sos_commands/networking/ip_-s_-d_link"
-        ip_file="${CITELLUS_ROOT}/sos_commands/networking/ip_-s_-d_link"
+if [[ "x$RISU_LIVE" = "x0" ]];  then
+    is_required_file "${RISU_ROOT}/sos_commands/kernel/dmesg"
+    is_required_file "${RISU_ROOT}/sos_commands/systemd/systemctl_show_--all"
+    if [[ -f "${RISU_ROOT}/sos_commands/networking/ip_-s_-d_link" ]]; then
+        is_required_file "${RISU_ROOT}/sos_commands/networking/ip_-s_-d_link"
+        ip_file="${RISU_ROOT}/sos_commands/networking/ip_-s_-d_link"
     else
-        is_required_file "${CITELLUS_ROOT}/sos_commands/networking/ip_link"
-        ip_file="${CITELLUS_ROOT}/sos_commands/networking/ip_link"
+        is_required_file "${RISU_ROOT}/sos_commands/networking/ip_link"
+        ip_file="${RISU_ROOT}/sos_commands/networking/ip_link"
     fi
 
-    dmesgfile="${CITELLUS_ROOT}/sos_commands/kernel/dmesg"
-    virt_type=$(grep "Virtualization=" "${CITELLUS_ROOT}/sos_commands/systemd/systemctl_show_--all" |cut -d "=" -f2)
+    dmesgfile="${RISU_ROOT}/sos_commands/kernel/dmesg"
+    virt_type=$(grep "Virtualization=" "${RISU_ROOT}/sos_commands/systemd/systemctl_show_--all" |cut -d "=" -f2)
     niccount=$(grep -c "eth[0-9]" "$ip_file")
 
-elif [[ "x$CITELLUS_LIVE" = "x1" ]]; then
+elif [[ "x$RISU_LIVE" = "x1" ]]; then
     dmesgfile=$(mktemp)
     dmesg > ${dmesgfile}
     virt_type=$(systemd-detect-virt)

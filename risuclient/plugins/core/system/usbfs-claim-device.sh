@@ -22,17 +22,17 @@
 # priority: 500
 
 # Load common functions
-[[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
+[[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
 ERRORMSG=$"App did not close properly the usbfs access to the device"
 ERRORMATCH="did not claim interface"
 ERRORMATCH2="usbfs"
 
-is_required_file "${CITELLUS_ROOT}/var/log/messages"
+is_required_file "${RISU_ROOT}/var/log/messages"
 
-errcount=$(zgrep "$ERRORMATCH" ${CITELLUS_ROOT}/var/log/messages* |grep "$ERRORMATCH2" |wc -l)
+errcount=$(zgrep "$ERRORMATCH" ${RISU_ROOT}/var/log/messages* |grep "$ERRORMATCH2" |wc -l)
 if [[ "x$errcount" != "x0" ]] ; then
-    zgrep "$ERRORMATCH" ${CITELLUS_ROOT}/var/log/messages* |grep "$ERRORMATCH2"
+    zgrep "$ERRORMATCH" ${RISU_ROOT}/var/log/messages* |grep "$ERRORMATCH2"
     echo ${ERRORMSG} >&2
     exit ${RC_FAILED}
 fi

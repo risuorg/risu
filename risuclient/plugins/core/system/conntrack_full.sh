@@ -23,17 +23,17 @@
 # kb: https://access.redhat.com/solutions/8721
 
 # Load common functions
-[[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
+[[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
 ERRORMSG=$"packet drop because ip/nf_conntrack tables are full detected"
 
-if [[ "x$CITELLUS_LIVE" = "x0" ]];  then
-    is_required_file "${CITELLUS_ROOT}/sos_commands/kernel/dmesg"
-    if is_lineinfile "table full, dropping packet" "${CITELLUS_ROOT}/sos_commands/kernel/dmesg"; then
+if [[ "x$RISU_LIVE" = "x0" ]];  then
+    is_required_file "${RISU_ROOT}/sos_commands/kernel/dmesg"
+    if is_lineinfile "table full, dropping packet" "${RISU_ROOT}/sos_commands/kernel/dmesg"; then
         echo ${ERRORMSG} >&2
         exit ${RC_FAILED}
     fi
-elif [[ "x$CITELLUS_LIVE" = "x1" ]]; then
+elif [[ "x$RISU_LIVE" = "x1" ]]; then
     if dmesg| grep -eq "table full, dropping packet"; then
         echo ${ERRORMSG} >&2
         exit ${RC_FAILED}

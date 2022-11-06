@@ -22,15 +22,15 @@
 # priority: 100
 
 # Load common functions
-[[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
+[[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
 ERRORMSG1=$"Memcached with default options"
 ERRORMSG2=$"Memcached doesn't have UDP disabled"
 ERRORMSG3=$"Memcached doesn't have any IP binding"
 
 if is_rpm memcached > /dev/null 2>&1; then
-    is_required_file "${CITELLUS_ROOT}/etc/sysconfig/memcached"
-    OPTIONS=$(grep "^OPTIONS" "${CITELLUS_ROOT}/etc/sysconfig/memcached")
+    is_required_file "${RISU_ROOT}/etc/sysconfig/memcached"
+    OPTIONS=$(grep "^OPTIONS" "${RISU_ROOT}/etc/sysconfig/memcached")
     if [[ -z "${OPTIONS}" ]] || [[ $(echo ${OPTIONS} |cut -d "=" -f2) == "\"\"" ]]; then
         echo ${ERRORMSG1} >&2
         exit ${RC_FAILED}

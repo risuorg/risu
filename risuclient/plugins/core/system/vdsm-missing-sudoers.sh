@@ -21,13 +21,13 @@
 # priority: 800
 
 # Load common functions
-[[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
+[[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
 # check baremetal node
 
 journal="$journalctl_file"
 
-if is_lineinfile "Verify sudoer rules configuration" "${journal}" "${CITELLUS_ROOT}/var/log/messages"; then
+if is_lineinfile "Verify sudoer rules configuration" "${journal}" "${RISU_ROOT}/var/log/messages"; then
     echo $"sudoers does miss entry for including sudoers.d folder and causes vdsm fail to start" >&2
     exit ${RC_FAILED}
 else

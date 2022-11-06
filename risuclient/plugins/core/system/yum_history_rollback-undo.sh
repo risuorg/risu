@@ -25,10 +25,10 @@
 # priority: 300
 
 # Load common functions
-[[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
+[[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
-if [[ ${CITELLUS_LIVE} = 0 ]]; then
-    FILE="${CITELLUS_ROOT}/sos_commands/yum/yum_history"
+if [[ ${RISU_LIVE} = 0 ]]; then
+    FILE="${RISU_ROOT}/sos_commands/yum/yum_history"
 else
     FILE=$(mktemp)
     trap "rm ${FILE}" EXIT

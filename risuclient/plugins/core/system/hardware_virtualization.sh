@@ -24,17 +24,17 @@
 # priority: 200
 
 # Load common functions
-[[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
+[[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
 # check baremetal node
 
-is_required_file "${CITELLUS_ROOT}/proc/cpuinfo"
+is_required_file "${RISU_ROOT}/proc/cpuinfo"
 if ! is_enabled libvirtd ; then
     echo $"skipping check for HW virtualization support as libvirtd is not enabled" >&2
     exit ${RC_SKIPPED}
 fi
 
-if ! is_lineinfile "svm|vmx" "${CITELLUS_ROOT}/proc/cpuinfo"; then
+if ! is_lineinfile "svm|vmx" "${RISU_ROOT}/proc/cpuinfo"; then
     echo $"no hardware virt support found in /proc/cpuinfo" >&2
     exit ${RC_FAILED}
 else

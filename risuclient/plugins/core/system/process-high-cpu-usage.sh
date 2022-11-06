@@ -18,17 +18,17 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 # Load common functions
-[[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
+[[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
 # long_name: Process High CPU usage
-# description: error if process cpu usage is greater than $CITELLUS_PROCESS_CPU_USAGE=100
+# description: error if process cpu usage is greater than $RISU_PROCESS_CPU_USAGE=100
 # priority: 800
 
-: ${CITELLUS_PROCESS_CPU_USAGE=100}
+: ${RISU_PROCESS_CPU_USAGE=100}
 
-if [[ ${CITELLUS_LIVE} = 0 ]]; then
-    is_required_file "${CITELLUS_ROOT}/ps"
-    FILE="${CITELLUS_ROOT}/ps"
+if [[ ${RISU_LIVE} = 0 ]]; then
+    is_required_file "${RISU_ROOT}/ps"
+    FILE="${RISU_ROOT}/ps"
 else
     FILE=$(mktemp)
     trap "rm ${FILE}" EXIT
@@ -36,7 +36,7 @@ else
 fi
 
 header=$(head -1 ${FILE})
-result=$(awk -vcpu_high_usage=${CITELLUS_PROCESS_CPU_USAGE} '$3>cpu_high_usage { print $0 }' ${FILE})
+result=$(awk -vcpu_high_usage=${RISU_PROCESS_CPU_USAGE} '$3>cpu_high_usage { print $0 }' ${FILE})
 
 if [[ -n "$result" ]]; then
     echo "${header}" >&2

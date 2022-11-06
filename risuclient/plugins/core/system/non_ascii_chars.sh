@@ -22,14 +22,14 @@
 # priority: 400
 
 # Load common functions
-[[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
+[[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
 REGEXP="systemd\[[0-9]+\]: Cannot add dependency job for unit ([^,]+), ignoring: Unit not found."
 
-#if [[ "x$CITELLUS_LIVE" = "x0" ]]; then
-is_required_file "${CITELLUS_ROOT}/etc/security/limits.conf"
+#if [[ "x$RISU_LIVE" = "x0" ]]; then
+is_required_file "${RISU_ROOT}/etc/security/limits.conf"
 
-bad_files=`grep -s -l -P -n "[\x80-\xFF]" ${CITELLUS_ROOT}/etc/security/limits.conf ${CITELLUS_ROOT}/etc/security/limits.d/*.conf`
+bad_files=`grep -s -l -P -n "[\x80-\xFF]" ${RISU_ROOT}/etc/security/limits.conf ${RISU_ROOT}/etc/security/limits.d/*.conf`
 if [[ -n "$bad_files" ]]; then
     for f in ${bad_files}; do
         echo "file $f contains non ASCII characters." >&2

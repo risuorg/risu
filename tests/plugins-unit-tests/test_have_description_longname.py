@@ -9,50 +9,63 @@ from unittest import TestCase
 
 import pytest
 
-import citellusclient.shell as citellus
+import risuclient.shell as risu
 
-testplugins = os.path.join(citellus.citellusdir, 'plugins', 'test')
-citellusdir = citellus.citellusdir
+testplugins = os.path.join(risu.risudir, "plugins", "test")
+risudir = risu.risudir
 
 
 class CitellusTest(TestCase):
     @pytest.mark.last
     def test_plugins_have_description(self):
         global extensions
-        extensions, exttriggers = citellus.initPymodules()
+        extensions, exttriggers = risu.initPymodules()
         # get all plugins
         plugins = []
 
         # code
-        for plugin in citellus.findplugins(folders=[os.path.join(citellus.citellusdir, 'plugins', 'core')]):
+        for plugin in risu.findplugins(
+            folders=[os.path.join(risu.risudir, "plugins", "core")]
+        ):
             plugins.append(plugin)
 
         # ansible
-        for plugin in citellus.findplugins(executables=False, fileextension=".yml", extension='ansible', folders=[os.path.join(citellus.citellusdir, 'plugins', 'ansible')]):
+        for plugin in risu.findplugins(
+            executables=False,
+            fileextension=".yml",
+            extension="ansible",
+            folders=[os.path.join(risu.risudir, "plugins", "ansible")],
+        ):
             plugins.append(plugin)
 
         for plugin in plugins:
-            if plugin['description'] == '':
+            if plugin["description"] == "":
                 print(plugin)
-            assert plugin['description'] != ''
+            assert plugin["description"] != ""
 
     @pytest.mark.last
     def test_plugins_have_long_name(self):
         global extensions
-        extensions, exttriggers = citellus.initPymodules()
+        extensions, exttriggers = risu.initPymodules()
         # get all plugins
         plugins = []
 
         # code
-        for plugin in citellus.findplugins(folders=[os.path.join(citellus.citellusdir, 'plugins', 'core')]):
+        for plugin in risu.findplugins(
+            folders=[os.path.join(risu.risudir, "plugins", "core")]
+        ):
             plugins.append(plugin)
 
         # ansible
-        for plugin in citellus.findplugins(executables=False, fileextension=".yml", extension='ansible', folders=[os.path.join(citellus.citellusdir, 'plugins', 'ansible')]):
+        for plugin in risu.findplugins(
+            executables=False,
+            fileextension=".yml",
+            extension="ansible",
+            folders=[os.path.join(risu.risudir, "plugins", "ansible")],
+        ):
             plugins.append(plugin)
 
         for plugin in plugins:
-            if plugin['long_name'] == '':
+            if plugin["long_name"] == "":
                 print(plugin)
-            assert plugin['long_name'] != ''
-
+            assert plugin["long_name"] != ""

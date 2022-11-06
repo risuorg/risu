@@ -8,6 +8,8 @@
           Make sure the RabbitMQ cluster has HA for all queues except the built-in amq.* ones
         groups:
           - post-deployment
+        long_name: > 
+          Make sure the RabbitMQ cluster has HA for all queues except the built-in amq.* ones
     become: true
 
     tasks:

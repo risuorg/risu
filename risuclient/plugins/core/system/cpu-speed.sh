@@ -23,18 +23,18 @@
 # priority: 200
 
 # Load common functions
-[[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
+[[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
 # check baremetal node
 
-is_required_file "${CITELLUS_ROOT}/sys/module/intel_idle/parameters/max_cstate" \
-                 "${CITELLUS_ROOT}/proc/cpuinfo"
+is_required_file "${RISU_ROOT}/sys/module/intel_idle/parameters/max_cstate" \
+                 "${RISU_ROOT}/proc/cpuinfo"
 
-cstate=$(cat "${CITELLUS_ROOT}/sys/module/intel_idle/parameters/max_cstate")
+cstate=$(cat "${RISU_ROOT}/sys/module/intel_idle/parameters/max_cstate")
 
 if [[ "${cstate}" -ne "0" ]]; then
     echo $"CPU is not running at full speed. Please refer https://access.redhat.com/solutions/202743 " >&2
-    egrep "processor|cpu MHz" "${CITELLUS_ROOT}/proc/cpuinfo" | tr '\n' ' '|sed 's/processor/\nprocessor/g' >&2
+    egrep "processor|cpu MHz" "${RISU_ROOT}/proc/cpuinfo" | tr '\n' ' '|sed 's/processor/\nprocessor/g' >&2
     exit ${RC_FAILED}
 else
     exit ${RC_OKAY}

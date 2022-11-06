@@ -9,6 +9,8 @@
           that it is indeed running and connected to an NPT server on all nodes.
         groups:
           - post-deployment
+        long_name: > 
+          Check ntpstat sync status          
     tasks:
       - name: Run ntpstat
       # ntpstat returns 0 if synchronised and non-zero otherwise

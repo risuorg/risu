@@ -24,11 +24,11 @@
 # description: Detects RHEL release
 # priority: 200
 
-if [[ ! -f "${CITELLUS_ROOT}/etc/redhat-release" ]]; then
+if [[ ! -f "${RISU_ROOT}/etc/redhat-release" ]]; then
     echo "this is not RHEL distribution" >&2
     exit ${RC_FAILED}
 else
-    cat "${CITELLUS_ROOT}/etc/redhat-release" >&2
+    cat "${RISU_ROOT}/etc/redhat-release" >&2
     exit ${RC_OKAY}
 fi
 

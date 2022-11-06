@@ -23,15 +23,15 @@
 # kb: https://access.redhat.com/solutions/3032831
 
 # Load common functions
-[[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
+[[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
 REGEXP="Breaking ordering cycle by deleting job ([^/]+)/stop"
 
-is_required_file "${CITELLUS_ROOT}/var/log/messages"
+is_required_file "${RISU_ROOT}/var/log/messages"
 
-if is_lineinfile "$REGEXP" "${CITELLUS_ROOT}/var/log/messages"; then
+if is_lineinfile "$REGEXP" "${RISU_ROOT}/var/log/messages"; then
     echo $">>> systemd deleted some 'stop' jobs" >&2
-    egrep "$REGEXP" "${CITELLUS_ROOT}/var/log/messages" >&2
+    egrep "$REGEXP" "${RISU_ROOT}/var/log/messages" >&2
     exit ${RC_FAILED}
 fi
 

@@ -24,16 +24,17 @@
 
 # Loading some modules
 from __future__ import print_function
-import re
-import sys
-import os
-import subprocess
 
 # Import the _() function
 import gettext
-localedir = os.environ['TEXTDOMAINDIR']
+import os
+import re
+import subprocess
+import sys
+
+localedir = os.environ["TEXTDOMAINDIR"]
 # This will use system defined LANGUAGE
-trad = gettext.translation('citellus', localedir, fallback=True)
+trad = gettext.translation("risu", localedir, fallback=True)
 
 try:
     _ = trad.ugettext
@@ -41,10 +42,10 @@ except AttributeError:
     _ = trad.gettext
 
 # Getting environment
-root_path = os.getenv('CITELLUS_ROOT', '')
-RC_OKAY = int(os.environ['RC_OKAY'])
-RC_SKIPPED = int(os.environ['RC_SKIPPED'])
-RC_FAILED = int(os.environ['RC_FAILED'])
+root_path = os.getenv("RISU_ROOT", "")
+RC_OKAY = int(os.environ["RC_OKAY"])
+RC_SKIPPED = int(os.environ["RC_SKIPPED"])
+RC_FAILED = int(os.environ["RC_FAILED"])
 
 
 def errorprint(*args, **kwargs):
@@ -60,7 +61,7 @@ ldconfig = os.path.join(root_path, "sos_commands/libraries/ldconfig_-p_-N_-X")
 
 # We validate if the file exists and is readable
 if os.access(ldconfig, os.R_OK) is False:
-    if root_path is not '':
+    if root_path is not "":
         errorprint("File %s is not readable" % ldconfig)
         sys.exit(RC_SKIPPED)
     else:
@@ -98,7 +99,7 @@ for line in content.splitlines():
     if a is None:
         # e.g. "ld-linux.so.2 (ELF) => /lib/ld-linux.so.2"
         continue
-    arch = a.group(1) or 'native'
+    arch = a.group(1) or "native"
     path = m.group(3)
 
     if lib not in libs:
@@ -117,7 +118,7 @@ for line in content.splitlines():
             continue
 
         # Check also that this is a real system lib (and not a symlink to 'self')
-        if root_path == '':
+        if root_path == "":
             if os.path.realpath(path) == libs[lib][arch]:
                 # e.g. /lib64/libdchtvm.so.8 -> /opt/dell/srvadmin/lib64/libdchtvm.so.8
                 continue
@@ -136,7 +137,9 @@ if not overloaded_libs:
 errorprint(_(">>> Some system libraries are overloaded"))
 for lib, entry in iter(overloaded_libs.items()):
     for arch, aentry in iter(entry.items()):
-        errorprint("Library %s (%s), system path: %s, used path: %s"
-                   % (lib, arch, aentry["system"], aentry["used"]))
+        errorprint(
+            "Library %s (%s), system path: %s, used path: %s"
+            % (lib, arch, aentry["system"], aentry["used"])
+        )
 
 sys.exit(RC_FAILED)

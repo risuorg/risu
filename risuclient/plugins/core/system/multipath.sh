@@ -24,14 +24,14 @@
 # priority: 800
 
 # Load common functions
-[[ -f "${CITELLUS_BASE}/common-functions.sh" ]] && . "${CITELLUS_BASE}/common-functions.sh"
+[[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
 is_required_rpm device-mapper-multipath
-is_required_file "${CITELLUS_ROOT}/etc/multipath.conf"
+is_required_file "${RISU_ROOT}/etc/multipath.conf"
 if is_enabled multipathd && ! is_active multipath ; then
     echo $"multipathd is enabled but not running, path failover will not work!" >&2
     flag=1
-    if [[ "x$CITELLUS_LIVE" = "x1" ]];  then
+    if [[ "x$RISU_LIVE" = "x1" ]];  then
         echo $"multipathd status:"  >&2
         systemctl status multipathd  >&2
     else
@@ -40,10 +40,10 @@ if is_enabled multipathd && ! is_active multipath ; then
 fi
 
 
-if [[ "x$CITELLUS_LIVE" = "x0" ]];  then
-    is_required_file "${CITELLUS_ROOT}/sos_commands/multipath/multipath_-v4_-ll"
-    mpath_stat=$(egrep "failed|faulty|offline" ${CITELLUS_ROOT}/sos_commands/multipath/multipath_-v4_-ll )
-elif [[ "x$CITELLUS_LIVE" = "x1" ]];  then
+if [[ "x$RISU_LIVE" = "x0" ]];  then
+    is_required_file "${RISU_ROOT}/sos_commands/multipath/multipath_-v4_-ll"
+    mpath_stat=$(egrep "failed|faulty|offline" ${RISU_ROOT}/sos_commands/multipath/multipath_-v4_-ll )
+elif [[ "x$RISU_LIVE" = "x1" ]];  then
     mpath_stat=$(multipath -v4 -ll| egrep "failed|faulty|offline")
 fi
 
