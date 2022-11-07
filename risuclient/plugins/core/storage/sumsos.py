@@ -2048,7 +2048,7 @@ def cleanup(cleanup_code):
     if not sw_r and (messages_line_count > 0 and messages_start_line_ref > 100):
         blurb = " This can cause invalid device correlation failure messages. Use the -r option if needed."
         # if messages_start_line_ref <= 100: blurb = '' # un comment if check above changes
-        errorprint("Note: {0} messages were evaluated which occured prior to most recent reboot.{1}".
+        errorprint("Note: {0} messages were evaluated which occurred prior to most recent reboot.{1}".
                    format(messages_start_line_ref, blurb))
 
     errorprint("{0}".format(syslog_nodename_status))
@@ -3136,7 +3136,7 @@ def handle_anomaly_with_points(anomaly_type, line, anomaly_reference_type, anoma
     # if anomaly_type == "SSSS": debug_print(# ,'not dup 1')
     words = anomaly_types.split()
 
-    if total_anomaly_count == 0:  # only done the first time thru to init the lead elements
+    if total_anomaly_count == 0:  # only done the first time through to init the lead elements
         for i in range(0, len(words)):
             anomaly_list[i][0] = ""
     i = 0
@@ -3187,7 +3187,7 @@ def handle_anomaly_with_points(anomaly_type, line, anomaly_reference_type, anoma
 def track_anomaly_timeline(anomaly_type):
     global curr_anom_timestamp  # ''
     global prev_anom_timestamp  # '' # prev timestamp added to variable all_timetamps
-    global all_anom_timestamps  # '' # seperated with '~' characters (due to timestamps having spaces)
+    global all_anom_timestamps  # '' # separated with '~' characters (due to timestamps having spaces)
     global timestamp_anomalies  # Key_data()  # key: timestamp data: list of anomalies occurring for this timestamp
 
     if curr_anom_timestamp == '':
@@ -3350,7 +3350,7 @@ def regex_string_cleanup(string):
 # ---------------------------------------------#
 def display_anomaly_timeline():
     global sw_timeline
-    global all_anom_timestamps  # '' # seperated with '~' characters (due to timestamps having spaces)
+    global all_anom_timestamps  # '' # separated with '~' characters (due to timestamps having spaces)
     global timestamp_anomalies  # Key_data()  # key: timestamp data: list of anomalies occurring for this timestamp
 
     if not sw_timeline:
@@ -4561,7 +4561,7 @@ def crunch_proc_devices():
 # 3 block     IDE disk/CD-ROM
 # 4 char      tty
 # 4 block     aliases for dynamically allocated major devcies to be used when it's not possible
-# to create the real device nodes becuase the root filesystem is mounted read-only.
+# to create the real device nodes because the root filesystem is mounted read-only.
 # 5 char      alt tty devices
 # 5 block     parallel printer devices
 # 6 block
@@ -4642,7 +4642,7 @@ def crunch_proc_devices():
 # 110 char
 # 110 block   Compaq Next Generation Drive Array, seventh controller
 # 111 char
-# 111 block   Compaq Next Generation Drive Array, eigth controller
+# 111 block   Compaq Next Generation Drive Array, eighth controller
 #
 # 112 char
 # 112 block   IBM iSeries vritual disk
@@ -4732,7 +4732,7 @@ def crunch_proc_devices():
 #
 # 256 char    RESERVED
 # 256 block   RESERVED
-# -thru-
+# -through-
 # 259 char    ?
 # 255 block   nvme devices
 # 260 char
@@ -6953,7 +6953,7 @@ def st_sd_rsrv_3(apps, sd_st):
 
     tmp_list = ''
     for tmpapp in tmpapps:
-        if config_service[tmpapp] != "":  # <<<---- loop thru installed services
+        if config_service[tmpapp] != "":  # <<<---- loop through installed services
             tmp_list = unique_list(tmp_list, tmpapp)
 
     tmp = tmp_list.split()
@@ -6965,7 +6965,7 @@ def st_sd_rsrv_3(apps, sd_st):
 
     tmp_list = ''
     for tmpapp in tmpapps:
-        if service_procs[tmpapp] > 0:  # <<<---- loop thru running procs
+        if service_procs[tmpapp] > 0:  # <<<---- loop through running procs
             tmp_list = unique_list(tmp_list, tmpapp)
 
     tmp = tmp_list.split()
@@ -7062,7 +7062,7 @@ def sd_rsrv_2():
 
 # ---------------------------------------------#
 # function: check_offlined_msg():
-# call for each occurence of:
+# call for each occurrence of:
 # kernel: (sd|st|ch) 0:0:0:0: Device offlined - not ready after error recovery
 # kernel: (sd|st|ch) 0:0:0:0: scsi: Device offlined - not ready after error recovery
 # ---------------------------------------------#
@@ -7097,7 +7097,7 @@ def check_offlined_msg(line, source):
 
 # ---------------------------------------------#
 # function: check_not_added_msg():
-# call for each occurence of:
+# call for each occurrence of:
 # kernel: scsi: 0:0:0:0: scsi scan: peripheral qualifier of n, device not added
 # ---------------------------------------------#
 
@@ -7117,7 +7117,7 @@ def check_not_added_msg(line, source):
 
 # ---------------------------------------------#
 # function: check_write_protected_msg():
-# call for each occurence of:
+# call for each occurrence of:
 # kernel: sd 0:0:0:0: [sdcc] Write Protect is on
 # kernel: sd 0:0:0:0: [sdcc] Write Protect is off
 # ---------------------------------------------#
@@ -10229,9 +10229,9 @@ def display_scsi_errors():
     scsi_err_desc["0x00000018"] = "Reservation conflict"
     scsi_err_desc["0x00010000"] = "IO could not be issued as there is no connection to the device."
     scsi_err_desc["0x00020000"] = "A bus busy condition is being returned back from the hardware which prevents the command from being processed."
-    scsi_err_desc["0x00020008"] = "Device is truely busy; not a transport issue."
+    scsi_err_desc["0x00020008"] = "Device is truly busy; not a transport issue."
     scsi_err_desc["0x00040000"] = "Target device is not usable."
-    scsi_err_desc["0x00070000"] = "The driver detected an anomolous condition within the returned completion information from storage."
+    scsi_err_desc["0x00070000"] = "The driver detected an anomalous condition within the returned completion information from storage."
     scsi_err_desc["0x00070028"] = "The key issue is the queue full condition.  The DID_ERROR is likely secondary to the queue full."
     scsi_err_desc["0x000D0000"] = "Known issue. See BZ {0}".format(bz_url("627836"))
     scsi_err_desc["0x000F0000"] = "The FAILFAST option is enabled so if/when a error is encountered, the io is immediately returned up the io stack rather then being retried (as it normally would be)."
@@ -10733,7 +10733,7 @@ def report_on_sar_device_data():
             dev_id = conv_mm_2_bd(mm)
             top_ten_dev_id = dev_id
             if top_ten_dev_id == "":
-                top_ten_dev_id = mm  # should be a rare occurence
+                top_ten_dev_id = mm  # should be a rare occurrence
 
             dev_blurb = ''
             alias_blurb = ''
@@ -13163,7 +13163,7 @@ def crunch_pv_file(pv_file):
             continue
 
         pv_path = words[0]
-        # if not pv_path.startswith("/dev/"): continue # most likely preceeding line split by async corruption
+        # if not pv_path.startswith("/dev/"): continue # most likely preceding line split by async corruption
 
         if word_in_list(pv_path, all_dup_devs):
             continue
@@ -13962,7 +13962,7 @@ def pvs_equivalent(pv1, pv2):
     # if scsi_id_cnt == 2: error_print("l","{0} {1} ?both scsi ids?".format(pv1,pv2))
     if scsi_id_cnt == 2:
         return(False)
-    # if scsi_id_cnt == 0: fall thru and do dm / ufn test
+    # if scsi_id_cnt == 0: fall through and do dm / ufn test
 
     debug_print(3, "{0} {1}".format(scsi_id, dev_id))
     debug_print(3, "{0}".format(scsi_id_2_devs[scsi_id]))
@@ -16298,7 +16298,7 @@ def set_device_size(dev, size, source):
     # dev_2_size_origin[dev] = source
 
     # take the larger size, most likely the raw dev size as opposed to calculated size
-    # such as size = cylinder_count * blocks_cyclinder * block_size
+    # such as size = cylinder_count * blocks_cylinder * block_size
     if new_size > current_size:
         old_size = current_size
         old_origin = dev_2_size_origin[dev]
@@ -16962,7 +16962,7 @@ def crunch_dumpe2fs_file(path_fn, fn):
                     if fs_2_mountpoint[tmp_fs] == "/export/home":
                         continue
                     if mountpoint != fs_2_mountpoint[tmp_fs]:
-                        # this is a relatively rare occurence but it does happen often enough to make it "debug"
+                        # this is a relatively rare occurrence but it does happen often enough to make it "debug"
                         # error_print('d',"{0} not = {1} or tmp_fs_mountpoint[{2}]  fs={3} tmp_fs={4} ({5})".\
                         debug_print(4, "{0} not = {1} or tmp_fs_mountpoint[{2}]  fs={3} tmp_fs={4} ({5})".
                                     format(mountpoint, mountpoint_from_fn, fs_2_mountpoint[tmp_fs], fs, tmp_fs, fn))
@@ -20594,7 +20594,7 @@ def crunch_lsscsi():
 #
 # this routine has little value if the sgn device can be correlated to a lun.
 # the only way to do this (so far) is via var/log/dmesg or var/log/messages message data
-# which can be unreliable if rescanning has occured or if the discovery messages are not present.
+# which can be unreliable if rescanning has occurred or if the discovery messages are not present.
 # Depending on where crunch_sgmap is called, the var/log/dmesg/messages crunch routines may not have been called yet.
 # ---------------------------------------------#
 
@@ -24986,7 +24986,7 @@ def hostnames_differ(hostname, syslogname):
                 return(False)  # names don't differ, syslogname contains domain name
 
     if (lh - ls) >= 3:
-        if hostname.startswith(syslogname):          # names are teh same at the shorter length
+        if hostname.startswith(syslogname):          # names are the same at the shorter length
             domain = hostname[len(syslogname):]       # remainder of hostname - syslogname (e.g. foo.bar.com -> .bar.com)
             if domain.startswith("."):
                 return(False)  # names don't differ, hostname contains domain name
@@ -26190,7 +26190,7 @@ def check_log_msg(hl, pass_no, line, i, source):
                 messages_skipped += 1
                 messages_skipped_skip_prefix += 1
             # debug_print(z,"match skip prefix: '{0}' -> line: '{1}'".format(skip_prefix,line)) # COMMENT
-            return(False)  # not matched, skipped due to msg starting witn an instance of the skip_prefix array
+            return(False)  # not matched, skipped due to msg starting with an instance of the skip_prefix array
 
         fc = line[0:1].lower()  # first char, lower case
         if fc.isalpha():
@@ -26213,7 +26213,7 @@ def check_log_msg(hl, pass_no, line, i, source):
                     messages_skipped += 1
                     messages_skipped_skip_prefix += 1
                 # debug_print(z,"match skip prefix: '{0}' -> line: '{1}'".format(skip_prefix,line)) # COMMENT
-                return(False)  # not matched, skipped due to msg starting witn an instance of the skip_prefix array
+                return(False)  # not matched, skipped due to msg starting with an instance of the skip_prefix array
         # end: for skip_prefix in syslog_skip_words:
     # end: else:
 
@@ -26224,7 +26224,7 @@ def check_log_msg(hl, pass_no, line, i, source):
     #
 
     # <||Developer Note||>
-    # check 4 line cache of recent messages which we know failed to match in order to skip iterating thru
+    # check 4 line cache of recent messages which we know failed to match in order to skip iterating through
     # the current scan_block array
     if line == last_non_match_line_0 or \
        line == last_non_match_line_1 or \
@@ -27616,15 +27616,15 @@ def summarize_session_recovery_timeout():
         timeout_length = "{0}".format(i)
         if not word_in_list(timeout_length, all_iscsi_session_timeouts):
             continue
-        timeout_occurences = iscsi_session_timeout_count[timeout_length]
+        timeout_occurrences = iscsi_session_timeout_count[timeout_length]
         if i < 30:
             blurb = "(Should not cause cascading issues.)"
         else:
             blurb = "Consider reducing 'node.session.timeo.replacement_timeout = {0}' in iscsid.conf to avoid cascading issues in multipath, see {1}".\
                     format(iscsidConf_data["node.session.timeo.replacement_timeout"], sfdc_url("01512222"))
 
-        anomaly_line = "iscsi session recovery timeout at {0} seconds occured {1} time{2}. {3}".\
-                       format(timeout_length, timeout_occurences, plural(timeout_occurences), blurb)
+        anomaly_line = "iscsi session recovery timeout at {0} seconds occurred {1} time{2}. {3}".\
+                       format(timeout_length, timeout_occurrences, plural(timeout_occurrences), blurb)
         handle_anomaly("ISCSI", anomaly_line)
 
     # end: for i in range(1:600+1):
@@ -29942,7 +29942,7 @@ def crunch_dmi_data():
             if line == "Type: Central Processor":
                 proc_count += 1
 
-    # normally cpu_count is set to higest cpu number (0 based) so sub 1 here as it is added back in display
+    # normally cpu_count is set to highest cpu number (0 based) so sub 1 here as it is added back in display
     if proc_count:
         set_cpu_count((proc_count - 1), dmi_file)
 
@@ -31026,7 +31026,7 @@ def check_kern_min_versions(source):
     global rh_major
     global all_lsmods  # ''
     global lsmod_version  # Key_data()   # key: module name          data: mod version   e.g. 3.10.0-514.6.1.el7
-    global kmod_pkg_min  # Key_data()           # key: rhel_maj_+"_"+kmod fn    data: min recomended version
+    global kmod_pkg_min  # Key_data()           # key: rhel_maj_+"_"+kmod fn    data: min recommended version
     global kmod_pkg_min_kcs  # Key_data()       # key: rhel_maj_+"_"+kmod fn    data: kcs/sfdc reference
 
     words = all_lsmods.split()
@@ -34766,7 +34766,7 @@ timeline_increment = ''  # Day, Hour, Minute, Second 'Nov 25 hh:mm:ss'
 timeline_hdr_reduction = big_num  # big_number means 1st time, if timeline_increment != '' then its value will be something like 0, 3, ...
 curr_anom_timestamp = ''
 prev_anom_timestamp = ''  # prev timestamp added to variable all_timetamps
-all_anom_timestamps = ''  # seperated with '~' characters (due to timestamps having spaces)
+all_anom_timestamps = ''  # separated with '~' characters (due to timestamps having spaces)
 timestamp_anomalies = Key_data()  # key: timestamp data: list of anomalies occurring for this timestamp
 
 lvm_device_to_test = ''
@@ -34805,7 +34805,7 @@ pci_address = Key_data()             # key: pci address         data: pci line
 pci_address_2_hosts = Key_data()     # key: pci address         data: scsi host number(s) from unique_list(l,e)
 # pci_address_2_host_origin = Key_data() # key: pci address       data: file origin name (aka source)
 pci_errors = Counter()               # key: pci address         data: number of errors assoc w/this pci address
-pci_devices = Key_data()             # key: pci address         data: device(s) accessable via this pci
+pci_devices = Key_data()             # key: pci address         data: device(s) accessible via this pci
 
 all_dev_mfgs = ""  # EMC, NETAPP, etc. <<-- N.B. These values can be seen in upper/lower/mixed case. Because of this and
 # the fact that these values are used as indices for mfg model info, we conv to UC.
@@ -35137,10 +35137,10 @@ syslog_check_words = syslog_check_list.split("~")
 
 last_msg_rptd = "last message repeated"
 rsyslogd_mark = "rsyslogd: -- MARK --"
-ratelimit_msg = "__ratelimit: "  # kernel: __ratelimit: nnnn callbacks supressed
+ratelimit_msg = "__ratelimit: "  # kernel: __ratelimit: nnnn callbacks suppressed
 
 # The following tokens and token fragments are matched against the first token in syslog messages
-# and if there is a match then the syslog line is not run thru further matching logic.
+# and if there is a match then the syslog line is not run through further matching logic.
 # The list is order by frequency (roughly). See ~/bin/syslog_prefix_check
 #
 # On Jan 9, 2018, syslog_skip_list was broken into multiple lists starting w/first character of each token
@@ -35410,7 +35410,7 @@ debug_print(1, "word count of syslog_skip_misc_words = {0}".format(wc - 1))
 
 
 # fast track prefix check (4 slot push-down stack), value of last 4 syslog skip words that matched
-last_matched_skip_prefix_0 = 'snmpd['         # (initially seeded with higest frequency values)
+last_matched_skip_prefix_0 = 'snmpd['         # (initially seeded with highest frequency values)
 last_matched_skip_prefix_1 = 'audisp-remote:'  # ...
 last_matched_skip_prefix_2 = 'xinetd['        # ...
 last_matched_skip_prefix_3 = 'journal:'       # ...
@@ -35732,8 +35732,8 @@ uuid_2_pdev_origin = Key_data()     # key: partition uuid,      data: file origi
 max_uuid = 0  # maximum uuid length
 
 
-max_major = 0                       # higest major number
-max_minor = 0                       # higest minor number
+max_major = 0                       # highest major number
+max_minor = 0                       # highest minor number
 major_size = -1                     # max display size needed for a major number
 minor_size = -1                     # max display size needed for a minor number
 
@@ -35810,7 +35810,7 @@ mm_multipath_err_getting_dev_mm_lookup_failed = ''  # unique list mm numbers fro
 
 
 cmdline = Key_data()                # key: cmdline key          data: assoc. value      e.g. KEYBOARDTYPE pc
-cmdline_origin = Key_data()         # key: cmdline key          data: fn of source of data (1st occurence when seen in more than one source)
+cmdline_origin = Key_data()         # key: cmdline key          data: fn of source of data (1st occurrence when seen in more than one source)
 all_cmdline_keys = ""
 
 scsi_host_io_errs = Counter()       # key: host,                data: error count       e.g. 0,       0-? all busses, tgts, luns
@@ -35968,7 +35968,7 @@ unassoc_uuids_found = 0
 # scsi error tracking variables
 all_scsi_err_codes = ""             # all unique scsi "0x12345678" error codes
 scsi_err_desc = Key_data()          # key: "0x12345678"         data: "desctiption of error"
-scsi_err_count = Counter()          # key: "0x12345678"         data: count of this error accross all devices
+scsi_err_count = Counter()          # key: "0x12345678"         data: count of this error across all devices
 scsi_err_dev_ids = Key_data()       # key: "0x12345678"         data: "sda, sdc, ..." all device ids encountering this error
 scsi_err_scsi_adrs = Key_data()     # key: "0x12345678"         data: "0:1:0:3, 0:1:0:5, ..." all scsi id addresses encountering this error
 
@@ -36129,7 +36129,7 @@ rpm_pkg_min_kcs['7_device-mapper-multipath'] = '2857731'
 # rpm_pkg_min_kcs['6_lvm2'] = ''
 
 
-kmod_pkg_min = Key_data()                      # key: rhel_maj_+"_"+kmod fn    data: min recomended version
+kmod_pkg_min = Key_data()                      # key: rhel_maj_+"_"+kmod fn    data: min recommended version
 kmod_pkg_min_kcs = Key_data()                  # key: rhel_maj_+"_"+kmod fn    data: kcs/sfdc reference
 
 kmod_pkg_min['7_hpdsa'] = '3.10.0-514.16.1'
@@ -36584,7 +36584,7 @@ scan_origin = Key_data()    # key: scan_block   data: file origin for scan_patte
 # SFDC:sfcd number     - used to reference an existing salesforce case that may help in this case.
 # URL:url              - used to reference a general url  that may help in this case, (eg emc, symantec, etc).
 #
-# conditional urls:    - any of the above keywords [INFO_KCS: thru URL:], can be conditionalized by adding the
+# conditional urls:    - any of the above keywords [INFO_KCS: through URL:], can be conditionalized by adding the
 # a second colon followed by a text string to be evaluated as True or False
 # e.g.: "KCS:12345:(Virtual_guest)~"
 #
@@ -36641,7 +36641,7 @@ scan_origin = Key_data()    # key: scan_block   data: file origin for scan_patte
 # 6. Check foo for the pattern you added that did not match. There are several reasons for not matching:
 # a. If you don't see your newly added pattern, then it might be in the wrong group.
 # For instance you might have added the pattern in the kernel_misc_u_scan_table when you meant to add it to the kernel_misc_t_scan_table
-# b. If it is in the right group, it may be matching an ealier and possibly more generic, pattern. If this is the case, either put the new
+# b. If it is in the right group, it may be matching an earlier and possibly more generic, pattern. If this is the case, either put the new
 # pattern ahead of the pattern that is matching, or add "MATCH:CONTINUE~"\ to the earlier pattern.
 # c. If you see your new pattern and it is not matching such as the following:
 #
@@ -36668,7 +36668,7 @@ scan_origin = Key_data()    # key: scan_block   data: file origin for scan_patte
 # 2. Add an entry to daemon_specific_scan_tables or kernel_specific_scan_tables
 # (add to the end unless the id is known to occur extensively).
 #
-# Example; the fictious smoot daemon has a number of messages which need to be tracked.
+# Example; the fictitious smoot daemon has a number of messages which need to be tracked.
 # Create the scan table:
 #
 # daemon_smootd_scan_blocks = ''
@@ -36711,7 +36711,7 @@ daemon_specific_scan_tables = ""\
     "rgmanager|rgmanager~"\
     "mmfs|mmfs:~"\
     ""
-# The above list should be kept in frequency order to minimize the number of time thru the for loop which does the matching.
+# The above list should be kept in frequency order to minimize the number of time through the for loop which does the matching.
 # Although this can vary from case to case, the utility, syslog_prefix_check, can be used to periodically gather counts
 # on large groups of cases in order to confirm message distributions.
 #
@@ -37711,7 +37711,7 @@ daemon_misc_a_scan_table = \
     "# here to short circuit search~"\
     "PROC_SUMM:SKIP~"\
     "\n"\
-    "avrd" + pid_br_re + ": ioctl error on .* \(device .*, /dev/.*\) thru sg driver, Success~"\
+    "avrd" + pid_br_re + ": ioctl error on .* \(device .*, /dev/.*\) through sg driver, Success~"\
     "ANOM:ST~"\
     "\n"\
     "avrd" + pid_br_re + ": Fatal open error on .* \(device .*, /dev/.*\), errno = " + n2_re + " \(.*\)~"\
@@ -39219,7 +39219,7 @@ kernel_be2net_scan_table = \
     "ANOM:BE2NET~"\
     "\n"\
     "kernel: be2net " + pci_long_re + ": .*~"\
-    "# if we make it thru with no match, then take the event count back down one and the anomaly_points down 1~"\
+    "# if we make it through with no match, then take the event count back down one and the anomaly_points down 1~"\
     "EXEC_SCAN:event_count['be2net']-=1~"\
     "EXEC_SCAN:anomaly_points['be2net']-=1~"\
     "EXEC_SCAN:track_pci_errors(line,'--',source)~"\
@@ -39433,7 +39433,7 @@ kernel_lpfc_scan_table = \
     "ANOM:LPFC~"\
     "\n"\
     "kernel: lpfc " + pci_long_re + ": .*:" + n4_re + " .*~"\
-    "# if we make it thru with no match, then take the event count back down one and the anomaly_points down 1~"\
+    "# if we make it through with no match, then take the event count back down one and the anomaly_points down 1~"\
     "EXEC_SCAN:event_count['lpfc']-=1~"\
     "EXEC_SCAN:anomaly_points['lpfc']-=1~"\
     "EXEC_SCAN:track_pci_errors(line,'--',source)~"\
@@ -40213,7 +40213,7 @@ kernel_xfs_scan_table = \
 # kernel_misc_scan_table into individual kernel_misc_<letter>_scan_tables.
 #
 # Originally kernel_misc_scan_table had all the entries found belosw in the kernel_misc_<letter>_scan_tables
-# however, when a large var/log/messages file was scanned with numberous 'kernel:' messages, processing all
+# however, when a large var/log/messages file was scanned with numerous 'kernel:' messages, processing all
 # miscellaneous message became expensive so they were broken out into smaller lists.
 #
 # There is also a wildcard list (wc) which is used to catch messages which have:
