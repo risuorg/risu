@@ -61,7 +61,7 @@ ldconfig = os.path.join(root_path, "sos_commands/libraries/ldconfig_-p_-N_-X")
 
 # We validate if the file exists and is readable
 if os.access(ldconfig, os.R_OK) is False:
-    if root_path is not "":
+    if root_path != "":
         errorprint("File %s is not readable" % ldconfig)
         sys.exit(RC_SKIPPED)
     else:

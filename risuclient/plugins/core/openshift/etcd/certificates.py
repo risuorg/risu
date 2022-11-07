@@ -44,10 +44,10 @@ def get_etcd_addr_from_netstat(nsout):
     :return: local ip address we listen on
     """
     nsout = re.sub("[ \t]+", " ", nsout)
-    for l in nsout.splitlines():
-        if "tcp" in l and "etcd" in l and "LISTEN" in l and "2379" in l:
+    for line in nsout.splitlines():
+        if "tcp" in line and "etcd" in line and "LISTEN" in line and "2379" in line:
             # Column 3 = Local Address
-            return l.split(" ")[3].split(":")[0]
+            return line.split(" ")[3].split(":")[0]
 
     errorprint("Risu expects etcd to be running and listening on tcp/2379")
 

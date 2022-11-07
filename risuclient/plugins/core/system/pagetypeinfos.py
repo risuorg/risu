@@ -53,17 +53,17 @@ if os.access(pagetypeinfo, os.R_OK) is False:
     sys.exit(RC_SKIPPED)
 
 # Parsing the file
-with open(pagetypeinfo, "r") as f:
-    for l in f:
-        m = re.match(
-            "Node[\s]+([0-9]+), zone[\s]+([^,]+), type[\s]+([^\s]+) ([0-9\s]+)", l
+with open(pagetypeinfo, "r") as file:
+    for line in file:
+        match = re.match(
+            r"Node[\s]+([0-9]+), zone[\s]+([^,]+), type[\s]+([^\s]+) ([0-9\s]+)", line
         )
-        if m:
+        if match:
             errorprint(
-                "Node %-2s Zone %6s Type %-11s " % (m.group(1), m.group(2), m.group(3)),
+                "Node %-2s Zone %6s Type %-11s " % (match.group(1), match.group(2), match.group(3)),
                 end="",
             )
-            p = re.findall("([0-9]+)", m.group(4))
+            p = re.findall("([0-9]+)", match.group(4))
             # By default, PAGE_SIZE is 4Kb. If we want to change this, we need a custom kernel
             factor = 4
 

@@ -70,7 +70,7 @@ def gettime(line):
     Extracts the timestamps off a regular syslog line
     :param line: syslog line
     """
-    mg = re.match("([a-zA-Z]{3})[\s]+([0-9]+)[\s]+([0-9]+):([0-9]+):([0-9]+)", line)
+    mg = re.match(r"([a-zA-Z]{3})[\s]+([0-9]+)[\s]+([0-9]+):([0-9]+):([0-9]+)", line)
     if mg is not None:
         ts = (
             mg.group(1)
@@ -98,7 +98,7 @@ def gettime(line):
 
     else:
         mg = re.match(
-            "([0-9]{4})-([0-9]{1,2})-([0-9]{1,2})[\s|T]+([0-9]+):([0-9]+):([0-9]+)",
+            r"([0-9]{4})-([0-9]{1,2})-([0-9]{1,2})[\s|T]+([0-9]+):([0-9]+):([0-9]+)",
             line,
         )
         if mg is not None:
