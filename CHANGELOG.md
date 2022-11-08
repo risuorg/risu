@@ -1,3 +1,13 @@
+# [1.9.0](https://github.com/risuorg/risu/compare/1.8.0...1.9.0) (2022-11-08)
+
+### Bug Fixes
+
+- handle when options are not passed ([ec847a1](https://github.com/risuorg/risu/commit/ec847a1aabc9162ab9dad76c60fee2a336877b74))
+
+### Features
+
+- add two checks from STIC-610A22 ([491af49](https://github.com/risuorg/risu/commit/491af4934babd2db67681038b40f17ba51b64a3c))
+
 ## [1.8.1](https://github.com/risuorg/risu/compare/1.8.0...1.8.1) (2022-11-04)
 
 ### Bug Fixes
