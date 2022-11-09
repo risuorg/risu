@@ -1,3 +1,9 @@
+# [1.10.0](https://github.com/risuorg/risu/compare/1.9.0...1.10.0) (2022-11-09)
+
+### Features
+
+- report NIC firmware version ([45523e4](https://github.com/risuorg/risu/commit/45523e41fd7fe1ea4bea9df8898cbcb737cd6f7f))
+
 # [1.9.0](https://github.com/risuorg/risu/compare/1.8.0...1.9.0) (2022-11-08)
 
 ### Bug Fixes
