@@ -34,12 +34,12 @@ is_required_file ${FILE}
 
 LEVEL=$(cat ${FILE} | xargs echo)
 
-if [ "${LEVEL}" == "LEGACY" ]; then
+if [[ ${LEVEL} == "LEGACY" ]]; then
     echo "Security level for crypto policies is below recommended setting" >&2
     exit ${RC_FAILED}
 fi
 
-if [ "${LEVEL}" == "FUTURE" ]; then
+if [[ ${LEVEL} == "FUTURE" ]]; then
     echo "Security level for crypto policies is above recommended setting" >&2
     exit ${RC_INFO}
 fi

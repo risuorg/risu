@@ -29,13 +29,13 @@ flag=0
 for user in $(cat ${FILE} | cut -d ":" -f 1,2); do
     USU=$(echo ${user} | cut -d ":" -f 1)
     PASS=$(echo ${user} | cut -d ":" -f 2)
-    if [ "x${PASS}" == "x" ]; then
+    if [[ "x${PASS}" == "x" ]]; then
         flag=1
         echo "User ${USU} has empty password" >&2
     fi
 done
 
-if [ "${flag}" == "1" ]; then
+if [[ ${flag} == "1" ]]; then
     exit ${RC_FAILED}
 else
     exit ${RC_OKAY}
