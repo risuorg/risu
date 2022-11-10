@@ -22,21 +22,51 @@
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
-FILE="${RISU_ROOT}/etc/login.defs"
-is_mandatory_file ${FILE}
+FILEDEFS="${RISU_ROOT}/etc/login.defs"
+is_mandatory_file ${FILEDEFS}
 
-for config in PASS_MAX_DAYS PASS_MIN_DAYS PASS_MIN_LEN PASS_WARN_AGE; do
-    if ! is_lineinfile ^${config}.* ${FILE}; then
-        echo "Missing ${config} in ${FILE}" >&2
+OS=$(discover_os)
+
+if [[ $OS == "debian" ]] || [[ $OS == "fedora" ]]; then
+    RH_RELEASE=8
+else
+    RH_RELEASE=$(discover_rhrelease)
+fi
+
+# EL9 includes a new pwquality.config where some of the old options have been moved
+if [[ ${RH_RELEASE} -gt 8 ]]; then
+    FILEQUAL="${RISU_ROOT}/etc/security/pwquality.conf"
+    is_mandatory_file ${FILEQUAL}
+    CONFIG_DEFS="PASS_MAX_DAYS PASS_MIN_DAYS PASS_WARN_AGE"
+    CONFIG_QUAL="minlen"
+else
+    CONFIG_DEFS="PASS_MAX_DAYS PASS_MIN_DAYS PASS_MIN_LEN PASS_WARN_AGE"
+    CONFIG_QUAL=""
+fi
+
+for config in ${CONFIG_DEFS}; do
+    if ! is_lineinfile ^${config}.* ${FILEDEFS}; then
+        echo "Missing ${config} in ${FILEDEFS}" >&2
         exit ${RC_FAILED}
     fi
 done
+if [[ ${RH_RELEASE} -gt 8 ]]; then
+    for config in ${CONFIG_QUAL}; do
+        if ! is_lineinfile ^${config}.* ${FILEQUAL}; then
+            echo "Missing ${config} in ${FILEQUAL}" >&2
+            exit ${RC_FAILED}
+        fi
+    done
+fi
+PASS_MAX_DAYS=$(egrep ^PASS_MAX_DAYS ${FILEDEFS} | awk '{print $2}')
+PASS_MIN_DAYS=$(egrep ^PASS_MIN_DAYS ${FILEDEFS} | awk '{print $2}')
+PASS_WARN_AGE=$(egrep ^PASS_WARN_AGE ${FILEDEFS} | awk '{print $2}')
 
-PASS_MAX_DAYS=$(egrep ^PASS_MAX_DAYS ${FILE} | awk '{print $2}')
-PASS_MIN_DAYS=$(egrep ^PASS_MIN_DAYS ${FILE} | awk '{print $2}')
-PASS_MIN_LEN=$(egrep ^PASS_MIN_LEN ${FILE} | awk '{print $2}')
-PASS_WARN_AGE=$(egrep ^PASS_WARN_AGE ${FILE} | awk '{print $2}')
-
+if [[ ${RH_RELEASE} -gt 8 ]]; then
+    PASS_MIN_LEN=$(egrep ^minlen ${FILEQUAL} | awk '{print $2}')
+else
+    PASS_MIN_LEN=$(egrep ^PASS_MIN_LEN ${FILEDEFS} | awk '{print $2}')
+fi
 flag=0
 
 if [[ ${PASS_MAX_DAYS} -gt "60" ]]; then
