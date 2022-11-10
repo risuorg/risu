@@ -196,6 +196,7 @@ discover_rhrelease() {
     else
         VERSION=$(egrep -o "\(.*\)" ${FILE} | tr -d "()")
         case ${VERSION} in
+        Plow) echo 9 ;;
         Ootpa) echo 8 ;;
         Maipo) echo 7 ;;
         Santiago) echo 6 ;;
