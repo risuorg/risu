@@ -27,7 +27,7 @@ is_mandatory_file ${FILEDEFS}
 
 OS=$(discover_os)
 
-if [[ $OS == "debian" ]] || [[ $OS == "fedora" ]]; then
+if [[ $OS == "debian" ]]; then
     RH_RELEASE=8
 else
     RH_RELEASE=$(discover_rhrelease)
@@ -63,7 +63,7 @@ PASS_MIN_DAYS=$(egrep ^PASS_MIN_DAYS ${FILEDEFS} | awk '{print $2}')
 PASS_WARN_AGE=$(egrep ^PASS_WARN_AGE ${FILEDEFS} | awk '{print $2}')
 
 if [[ ${RH_RELEASE} -gt 8 ]]; then
-    PASS_MIN_LEN=$(egrep ^minlen ${FILEQUAL} | awk '{print $2}')
+    PASS_MIN_LEN=$(egrep ^minlen ${FILEQUAL} |cut -d "=" -f 2- | xargs echo)
 else
     PASS_MIN_LEN=$(egrep ^PASS_MIN_LEN ${FILEDEFS} | awk '{print $2}')
 fi
