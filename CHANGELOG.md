@@ -1,3 +1,9 @@
+# [1.11.0](https://github.com/risuorg/risu/compare/1.10.0...1.11.0) (2022-11-10)
+
+### Features
+
+- enable env-for-debug.sh to be easily accessible when installing as package ([5368957](https://github.com/risuorg/risu/commit/5368957ca0224676e97365c31355c3877a3c5d65))
+
 # [1.10.0](https://github.com/risuorg/risu/compare/1.9.0...1.10.0) (2022-11-09)
 
 ### Features
