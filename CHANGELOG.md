@@ -1,3 +1,10 @@
+# [1.12.0](https://github.com/risuorg/risu/compare/1.11.0...1.12.0) (2022-11-10)
+
+### Features
+
+- discover EL9 release ([8820562](https://github.com/risuorg/risu/commit/8820562c26c81437e5ca35ef9957d1d9cc5410f0))
+- Enhance STIC619 login defs for EL9 ([7eb5a75](https://github.com/risuorg/risu/commit/7eb5a75a42d7b4d7b9ca0850420758972929e027))
+
 # [1.11.0](https://github.com/risuorg/risu/compare/1.10.0...1.11.0) (2022-11-10)
 
 ### Features
