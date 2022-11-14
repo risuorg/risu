@@ -1,3 +1,9 @@
+## [1.12.2](https://github.com/risuorg/risu/compare/1.12.1...1.12.2) (2022-11-14)
+
+### Bug Fixes
+
+- ifcfg files are no longer mandatory in EL9 ([5431fdc](https://github.com/risuorg/risu/commit/5431fdc590582a297d24f4da7d0cb803209db8a0))
+
 ## [1.12.1](https://github.com/risuorg/risu/compare/1.12.0...1.12.1) (2022-11-14)
 
 ### Bug Fixes
