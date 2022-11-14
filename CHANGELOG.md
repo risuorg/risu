@@ -1,3 +1,9 @@
+## [1.12.1](https://github.com/risuorg/risu/compare/1.12.0...1.12.1) (2022-11-14)
+
+### Bug Fixes
+
+- **STIC-619:** properly handle EL9 password minlen option ([1986369](https://github.com/risuorg/risu/commit/198636977dac3ab6a5cf78f69d1aec0f01000eda))
+
 # [1.12.0](https://github.com/risuorg/risu/compare/1.11.0...1.12.0) (2022-11-10)
 
 ### Features
