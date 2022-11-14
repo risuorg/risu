@@ -29,6 +29,13 @@
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
+RH_RELEASE=$(discover_rhrelease)
+
+if [[ ${RH_RELEASE} -ge 9 ]]; then
+    echo "EL9 no longer uses ifcfg files for configuration" >&2
+    exit ${RC_SKIPPED}
+fi
+
 NETWORK_SCRIPTS_PATH="/etc/sysconfig/network-scripts/ifcfg"
 
 if [[ ${RISU_LIVE} -eq "0" ]]; then
