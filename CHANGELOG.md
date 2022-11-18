@@ -1,3 +1,9 @@
+# [1.13.0](https://github.com/risuorg/risu/compare/1.12.2...1.13.0) (2022-11-18)
+
+### Features
+
+- fill long_name with description if empty ([c34ece4](https://github.com/risuorg/risu/commit/c34ece4036dfbdb20872d055e7564576116c39d1))
+
 ## [1.12.2](https://github.com/risuorg/risu/compare/1.12.1...1.12.2) (2022-11-14)
 
 ### Bug Fixes
