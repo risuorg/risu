@@ -1,3 +1,9 @@
+# [1.14.0](https://github.com/risuorg/risu/compare/1.13.0...1.14.0) (2022-11-18)
+
+### Features
+
+- **risu.html:** show <pre> in profile's output ([bfb98dd](https://github.com/risuorg/risu/commit/bfb98dd50e7a126f1507de554577d42175dee7f8))
+
 # [1.13.0](https://github.com/risuorg/risu/compare/1.12.2...1.13.0) (2022-11-18)
 
 ### Features
