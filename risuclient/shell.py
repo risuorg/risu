@@ -1306,26 +1306,37 @@ def generic_get_metadata(plugin, comment="#"):
     ].strip()
     path = path.replace("${RISU_ROOT}", "")
 
+    description = regexpfile(
+        filename=plugin["plugin"], regexp=r"\A%s description:" % comment
+    )[14 + offset :].strip()
+    long_name = regexpfile(
+        filename=plugin["plugin"], regexp=r"\A%s long_name:" % comment
+    )[12 + offset :].strip()
+    bugzilla = regexpfile(
+        filename=plugin["plugin"], regexp=r"\A%s bugzilla:" % comment
+    )[11 + offset :].strip()
+
+    priority = int(
+        regexpfile(filename=plugin["plugin"], regexp=r"\A%s priority:" % comment)[
+            11 + offset :
+        ].strip()
+        or 0
+    )
+
+    kb = regexpfile(filename=plugin["plugin"], regexp=r"\A%s kb:" % comment)[
+        5 + offset :
+    ].strip()
+
+    if long_name == "":
+        long_name = description
+
     metadata = {
-        "description": regexpfile(
-            filename=plugin["plugin"], regexp=r"\A%s description:" % comment
-        )[14 + offset :].strip(),
-        "long_name": regexpfile(
-            filename=plugin["plugin"], regexp=r"\A%s long_name:" % comment
-        )[12 + offset :].strip(),
-        "bugzilla": regexpfile(
-            filename=plugin["plugin"], regexp=r"\A%s bugzilla:" % comment
-        )[11 + offset :].strip(),
-        "priority": int(
-            regexpfile(filename=plugin["plugin"], regexp=r"\A%s priority:" % comment)[
-                11 + offset :
-            ].strip()
-            or 0
-        ),
+        "description": description,
+        "long_name": long_name,
+        "bugzilla": bugzilla,
+        "priority": priority,
         "path": path,
-        "kb": regexpfile(filename=plugin["plugin"], regexp=r"\A%s kb:" % comment)[
-            5 + offset :
-        ].strip(),
+        "kb": kb,
     }
     return metadata
 
