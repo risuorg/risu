@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright (C) 2020, 2021 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2020-2022 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 # Copyright (C) 2020 Volkan Yalcin <vlyalcin@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
@@ -28,6 +28,13 @@
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
+
+RH_RELEASE=$(discover_rhrelease)
+
+if [[ ${RH_RELEASE} -ge 9 ]]; then
+    echo "EL9 no longer uses ifcfg files for configuration" >&2
+    exit ${RC_SKIPPED}
+fi
 
 NETWORK_SCRIPTS_PATH="/etc/sysconfig/network-scripts/ifcfg"
 

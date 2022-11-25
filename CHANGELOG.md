@@ -1,3 +1,34 @@
+# [1.14.0](https://github.com/risuorg/risu/compare/1.13.0...1.14.0) (2022-11-18)
+
+### Features
+
+- **risu.html:** show <pre> in profile's output ([bfb98dd](https://github.com/risuorg/risu/commit/bfb98dd50e7a126f1507de554577d42175dee7f8))
+
+# [1.13.0](https://github.com/risuorg/risu/compare/1.12.2...1.13.0) (2022-11-18)
+
+### Features
+
+- fill long_name with description if empty ([c34ece4](https://github.com/risuorg/risu/commit/c34ece4036dfbdb20872d055e7564576116c39d1))
+
+## [1.12.2](https://github.com/risuorg/risu/compare/1.12.1...1.12.2) (2022-11-14)
+
+### Bug Fixes
+
+- ifcfg files are no longer mandatory in EL9 ([5431fdc](https://github.com/risuorg/risu/commit/5431fdc590582a297d24f4da7d0cb803209db8a0))
+
+## [1.12.1](https://github.com/risuorg/risu/compare/1.12.0...1.12.1) (2022-11-14)
+
+### Bug Fixes
+
+- **STIC-619:** properly handle EL9 password minlen option ([1986369](https://github.com/risuorg/risu/commit/198636977dac3ab6a5cf78f69d1aec0f01000eda))
+
+# [1.12.0](https://github.com/risuorg/risu/compare/1.11.0...1.12.0) (2022-11-10)
+
+### Features
+
+- discover EL9 release ([8820562](https://github.com/risuorg/risu/commit/8820562c26c81437e5ca35ef9957d1d9cc5410f0))
+- Enhance STIC619 login defs for EL9 ([7eb5a75](https://github.com/risuorg/risu/commit/7eb5a75a42d7b4d7b9ca0850420758972929e027))
+
 # [1.11.0](https://github.com/risuorg/risu/compare/1.10.0...1.11.0) (2022-11-10)
 
 ### Features

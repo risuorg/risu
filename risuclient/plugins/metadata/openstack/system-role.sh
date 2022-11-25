@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Copyright (C) 2018 David Valle Delisle <dvd@redhat.com>
-# Copyright (C) 2018, 2020, 2021 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2018, 2020-2022 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# long_name: returns the role of the system (controller, compute, etc)
+# long_name: returns the role of the system (controller, compute, etc) for OpenStack
 # description: This plugin is used in various functions. It's just a metadata plugin.
 # priority: 0
 

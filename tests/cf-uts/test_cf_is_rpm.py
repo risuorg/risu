@@ -3,7 +3,7 @@
 #
 # Description: This UT run scripts to validate CF
 #
-# Copyright (C) 2017, 2018, 2019, 2020, 2021 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2017-2022 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 # Copyright (C) 2020 stickler-ci <support@stickler-ci.com>
 
 #

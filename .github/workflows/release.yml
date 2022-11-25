@@ -50,7 +50,7 @@ jobs:
           if [ -f test-requirements.txt ]; then pip install -r test-requirements.txt; fi
 
       - name: Semantic Release
-        uses: cycjimmy/semantic-release-action@v2
+        uses: cycjimmy/semantic-release-action@v3
         id: semantic
         with:
           extra_plugins: |

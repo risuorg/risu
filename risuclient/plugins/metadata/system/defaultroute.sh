@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright (C) 2018, 2020, 2021 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2018, 2020-2022 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@ fi
 
 is_required_file ${FILE}
 
-# Fill metadata 'gateway' to value
+# Fill metadata 'gateway' to value obtained
 echo "gateway"
 grep ^default ${FILE} | grep -v "::" | cut -d " " -f 3 >&2
 exit ${RC_OKAY}

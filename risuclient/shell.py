@@ -5,7 +5,7 @@
 #              detect common pitfalls in configuration/status
 #
 # Copyright (C) 2017, 2018 Robin Černín <cerninr@gmail.com>
-# Copyright (C) 2017, 2018, 2019, 2020, 2021 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2017-2022 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -1306,26 +1306,37 @@ def generic_get_metadata(plugin, comment="#"):
     ].strip()
     path = path.replace("${RISU_ROOT}", "")
 
+    description = regexpfile(
+        filename=plugin["plugin"], regexp=r"\A%s description:" % comment
+    )[14 + offset :].strip()
+    long_name = regexpfile(
+        filename=plugin["plugin"], regexp=r"\A%s long_name:" % comment
+    )[12 + offset :].strip()
+    bugzilla = regexpfile(
+        filename=plugin["plugin"], regexp=r"\A%s bugzilla:" % comment
+    )[11 + offset :].strip()
+
+    priority = int(
+        regexpfile(filename=plugin["plugin"], regexp=r"\A%s priority:" % comment)[
+            11 + offset :
+        ].strip()
+        or 0
+    )
+
+    kb = regexpfile(filename=plugin["plugin"], regexp=r"\A%s kb:" % comment)[
+        5 + offset :
+    ].strip()
+
+    if long_name == "":
+        long_name = description
+
     metadata = {
-        "description": regexpfile(
-            filename=plugin["plugin"], regexp=r"\A%s description:" % comment
-        )[14 + offset :].strip(),
-        "long_name": regexpfile(
-            filename=plugin["plugin"], regexp=r"\A%s long_name:" % comment
-        )[12 + offset :].strip(),
-        "bugzilla": regexpfile(
-            filename=plugin["plugin"], regexp=r"\A%s bugzilla:" % comment
-        )[11 + offset :].strip(),
-        "priority": int(
-            regexpfile(filename=plugin["plugin"], regexp=r"\A%s priority:" % comment)[
-                11 + offset :
-            ].strip()
-            or 0
-        ),
+        "description": description,
+        "long_name": long_name,
+        "bugzilla": bugzilla,
+        "priority": priority,
         "path": path,
-        "kb": regexpfile(filename=plugin["plugin"], regexp=r"\A%s kb:" % comment)[
-            5 + offset :
-        ].strip(),
+        "kb": kb,
     }
     return metadata
 
