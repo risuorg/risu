@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# long_name: returns the role of the system (controller, compute, etc)
+# long_name: returns the role of the system (controller, compute, etc) for OpenStack
 # description: This plugin is used in various functions. It's just a metadata plugin.
 # priority: 0
 

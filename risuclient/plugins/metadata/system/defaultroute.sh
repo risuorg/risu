@@ -31,7 +31,7 @@ fi
 
 is_required_file ${FILE}
 
-# Fill metadata 'gateway' to value
+# Fill metadata 'gateway' to value obtained
 echo "gateway"
 grep ^default ${FILE} | grep -v "::" | cut -d " " -f 3 >&2
 exit ${RC_OKAY}

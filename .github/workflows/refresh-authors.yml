@@ -39,7 +39,7 @@ jobs:
           echo "List all the files that have changed: ${{ steps.changed-files-specific.outputs.all_changed_files }}"
 
           # Update authors from mailmap to avoid errors
-          python setup.py sdist
+          python setup.py sdist >/dev/null 2>&1
 
           # Run the script that updates all the headers with the new ones
           python refresh-contributors.py
@@ -71,3 +71,4 @@ jobs:
           # - https://git-scm.com/docs/git-add#Documentation/git-add.txt-ltpathspecgt82308203
           # - https://git-scm.com/docs/gitglossary#Documentation/gitglossary.txt-aiddefpathspecapathspec
           file_pattern: '**/*.py **/*.yml **/*.sh **/*.txt'
+          disable_globbing: true
