@@ -53,19 +53,20 @@ def getranges(data):
                 result.append(first)
             else:
                 if first + 1 == prev:
+                    # Only one item in difference, append items individually
                     result.append(first)
                     result.append(prev)
                 else:
                     result.append("%s-%s" % (first, prev))
             first = prev = following
-    # There was either exactly 1 element and the loop never ran,
-    # or the loop just normally ended and we need to account
-    # for the last remaining range.
-    if first == prev:
 
+    # Catchall for regular execution or last remaining range
+
+    if first == prev:
         result.append(first)
     else:
         if first + 1 == prev:
+            # Only one item in difference, append items individually
             result.append(first)
             result.append(prev)
         else:
