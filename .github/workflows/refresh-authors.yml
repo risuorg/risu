@@ -1,0 +1,73 @@
+---
+name: Authors (C) updater
+
+on:
+  # Compare the preceeding commit of master -> to the current commit of the master branch.
+  # (Note: To compare changes between the last pushed commit to the remote master branch set `since_last_remote_commit: true`)
+  push:
+    branches:
+      - master
+  # Compare the last commit of master -> to the current commit of a PR branch.
+  # (Note: To compare changes between the last pushed commit to the remote PR branch set `since_last_remote_commit: true`)
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest # windows-latest | macos-latest
+    name: Test changed-files
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # OR "2" -> To retrieve the preceding commit.
+
+      - name: Get changed files in the checks folder
+        id: changed-files-specific
+        uses: tj-actions/changed-files@v34
+        with:
+          files: |
+            **/*.py
+            **/*.yml
+            **/*.sh
+            **/*.txt
+
+      - name: Run step if any file(s) in the watched folder change
+        if: steps.changed-files-specific.outputs.any_changed == 'true'
+        run: |
+          echo "One or more files in the scripts folder has changed, updating the files"
+          echo "List all the files that have changed: ${{ steps.changed-files-specific.outputs.all_changed_files }}"
+
+          # Update authors from mailmap to avoid errors
+          python setup.py sdist
+
+          # Run the script that updates all the headers with the new ones
+          python refresh-contributors.py
+
+      - name: Commit back the updated files to the repository
+        if: steps.changed-files-specific.outputs.any_changed == 'true'
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          # Optional. Commit message for the created commit.
+          # Defaults to "Apply automatic changes"
+          commit_message: "[skip ci] Autoupdate (C) on script change"
+
+          # Optional. Local and remote branch name where commit is going to be pushed
+          #  to. Defaults to the current branch.
+          #  You might need to set `create_branch: true` if the branch does not exist.
+          branch: master
+
+          # Optional. Options used by `git-commit`.
+          # See https://git-scm.com/docs/git-commit#_options
+          commit_options: '--no-verify --signoff'
+
+          # Optional. Local file path to the repository.
+          # Defaults to the root of the repository.
+          repository: .
+
+          # Optional glob pattern of files which should be added to the commit
+          # Defaults to all (.)
+          # See the `pathspec`-documentation for git
+          # - https://git-scm.com/docs/git-add#Documentation/git-add.txt-ltpathspecgt82308203
+          # - https://git-scm.com/docs/gitglossary#Documentation/gitglossary.txt-aiddefpathspecapathspec
+          file_pattern: '**/*.py **/*.yml **/*.sh **/*.txt'
