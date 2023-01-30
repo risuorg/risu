@@ -1,3 +1,9 @@
+## [1.14.1](https://github.com/risuorg/risu/compare/1.14.0...1.14.1) (2023-01-30)
+
+### Bug Fixes
+
+- **STIC:** fix STIC 619 profile and add two new ones for the general STIC and for 610A22 ([96f53b2](https://github.com/risuorg/risu/commit/96f53b2616959fd9c334ebc966e347accba9ac93))
+
 # [1.14.0](https://github.com/risuorg/risu/compare/1.13.0...1.14.0) (2022-11-18)
 
 ### Features
