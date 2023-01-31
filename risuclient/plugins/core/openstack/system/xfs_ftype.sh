@@ -26,7 +26,7 @@
 #is_required_file ${RISU_BASE}/etc/redhat-release
 RELEASE=$(discover_rhrelease)
 
-[[ "${RELEASE}" -eq '0' ]] && echo "RH release undefined" >&2 && exit ${RC_SKIPPED}
+[[ ${RELEASE} -eq '0' ]] && echo "RH release undefined" >&2 && exit ${RC_SKIPPED}
 
 if [[ ${RISU_LIVE} -eq 0 ]]; then
     if [[ -f "${RISU_ROOT}/sos_commands/xfs/xfs_info_.var.lib" ]]; then
@@ -38,10 +38,10 @@ if [[ ${RISU_LIVE} -eq 0 ]]; then
     else
         exit ${RC_SKIPPED}
     fi
-elif [[ ${RISU_LIVE} -eq 1 ]];then
+elif [[ ${RISU_LIVE} -eq 1 ]]; then
     FILE=$(mktemp)
     trap "rm ${FILE}" EXIT
-    xfs_info /var/lib > ${FILE}
+    xfs_info /var/lib >${FILE}
 fi
 
 if is_lineinfile "ftype=0" "${FILE}"; then
@@ -50,5 +50,3 @@ if is_lineinfile "ftype=0" "${FILE}"; then
 fi
 
 exit ${RC_OKAY}
-
-

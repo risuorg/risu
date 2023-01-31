@@ -21,14 +21,14 @@
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
-exitoudated(){
+exitoudated() {
     echo "Please do check https://access.redhat.com/security/vulnerabilities/ssbd for guidance" >&2
 }
 
 RELEASE=$(discover_rhrelease)
-[[ "${RELEASE}" -eq '0' ]] && echo "RH release undefined" >&2 && exit ${RC_SKIPPED}
+[[ ${RELEASE} -eq '0' ]] && echo "RH release undefined" >&2 && exit ${RC_SKIPPED}
 
-if [[ "${RELEASE}" -eq "7" ]]; then
+if [[ ${RELEASE} -eq "7" ]]; then
     exitoudated
     is_required_rpm_over qemu-kvm-rhev qemu-kvm-rhev-2.10.0-21.el7_5.3
     is_required_rpm_over qemu-img-rhev qemu-img-rhev-2.10.0-21.el7_5.3
@@ -36,4 +36,3 @@ if [[ "${RELEASE}" -eq "7" ]]; then
     is_required_rpm_over qemu-kvm-tools-rhev qemu-kvm-tools-rhev-2.10.0-21.el7_5.3
 fi
 exit ${RC_OKAY}
-

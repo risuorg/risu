@@ -5,7 +5,6 @@
 # Copyright (C) 2017, 2018 Robin Černín <cerninr@gmail.com>
 # Copyright (C) 2017, 2018 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
-
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -28,14 +27,13 @@
 
 # adapted from https://github.com/larsks/platypus/blob/master/bats/system/test_clock.bats
 
-
 is_active ntpd && ntpd=1 || ntpd=0
 is_active chronyd && chronyd=1 || chronyd=0
 
-if [[ ntpd -eq 1 && chronyd -eq 1 ]] ; then
+if [[ ntpd -eq 1 && chronyd -eq 1 ]]; then
     echo $"both ntpd and chrony are active" >&2
     exit ${RC_FAILED}
-elif [[ ntpd -eq 1 || chronyd -eq 1 ]] ; then
+elif [[ ntpd -eq 1 || chronyd -eq 1 ]]; then
     exit ${RC_OKAY}
 else
     echo $"both chrony or ntpd are not active" >&2
@@ -43,4 +41,3 @@ else
 fi
 
 exit ${RC_SKIPPED}
-

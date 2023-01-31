@@ -25,7 +25,6 @@
 REGEXP="multipathd: A dynamic linking error occurred: \(/lib64/multipath/libprio.so: cannot open shared object file: No such file or directory\)"
 KCS=2462551
 
-
 # priority: 500
 
 # Load common functions
@@ -33,7 +32,7 @@ KCS=2462551
 
 journal="$journalctl_file"
 
-if is_lineinfile "${REGEXP}" ${journal} ${RISU_ROOT}/var/log/messages ; then
+if is_lineinfile "${REGEXP}" ${journal} ${RISU_ROOT}/var/log/messages; then
     echo $"Check Kbase: https://access.redhat.com/solutions/$KCS for more details about error: $REGEXP found in logs" >&2
     exit ${RC_FAILED}
 else

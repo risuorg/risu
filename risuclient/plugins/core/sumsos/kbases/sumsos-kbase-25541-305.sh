@@ -25,7 +25,6 @@
 REGEXP="kernel: qla2xxx .*: SNS scan failed -- assuming zero-entry result"
 KCS=25541
 
-
 # priority: 500
 
 # Load common functions
@@ -33,7 +32,7 @@ KCS=25541
 
 journal="$journalctl_file"
 
-if is_lineinfile "${REGEXP}" ${journal} ${RISU_ROOT}/var/log/messages ; then
+if is_lineinfile "${REGEXP}" ${journal} ${RISU_ROOT}/var/log/messages; then
     echo $"Check Kbase: https://access.redhat.com/solutions/$KCS for more details about error: $REGEXP found in logs" >&2
     exit ${RC_FAILED}
 else

@@ -3,7 +3,6 @@
 # Copyright (C) 2018 Robin Černín <cerninr@gmail.com>
 # Copyright (C) 2018 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
-
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -24,14 +23,14 @@
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
-if [[ "x$RISU_LIVE" = "x0" ]];  then
+if [[ "x$RISU_LIVE" == "x0" ]]; then
     is_required_file "${RISU_ROOT}/sos_commands/kernel/dmesg"
     if is_lineinfile "/var/log/journal/.*/system.journal corrupted or uncleanly shut down" "${RISU_ROOT}/sos_commands/kernel/dmesg"; then
         echo "corrupted journal detected" >&2
         exit ${RC_FAILED}
     fi
-elif [[ "x$RISU_LIVE" = "x1" ]]; then
-    if dmesg| grep -eq "/var/log/journal/.*/system.journal corrupted or uncleanly shut down"; then
+elif [[ "x$RISU_LIVE" == "x1" ]]; then
+    if dmesg | grep -eq "/var/log/journal/.*/system.journal corrupted or uncleanly shut down"; then
         echo "corrupted journal detected" >&2
         exit ${RC_FAILED}
     fi
@@ -39,4 +38,3 @@ fi
 
 # exit as OK if haven't failed earlier
 exit ${RC_OKAY}
-

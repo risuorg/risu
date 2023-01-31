@@ -25,7 +25,6 @@
 REGEXP="kernel: lpfc .*: .*:9030 FCP cmd x.* failed <.*/.*> status: .* result: .* Data: .*"
 KCS=126383
 
-
 # priority: 500
 
 # Load common functions
@@ -33,7 +32,7 @@ KCS=126383
 
 journal="$journalctl_file"
 
-if is_lineinfile "${REGEXP}" ${journal} ${RISU_ROOT}/var/log/messages ; then
+if is_lineinfile "${REGEXP}" ${journal} ${RISU_ROOT}/var/log/messages; then
     echo $"Check Kbase: https://access.redhat.com/solutions/$KCS for more details about error: $REGEXP found in logs" >&2
     exit ${RC_FAILED}
 else

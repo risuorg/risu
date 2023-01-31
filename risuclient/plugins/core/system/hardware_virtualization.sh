@@ -5,7 +5,6 @@
 # Copyright (C) 2017, 2018 Robin Černín <cerninr@gmail.com>
 # Copyright (C) 2017, 2018 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
-
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -29,7 +28,7 @@
 # check baremetal node
 
 is_required_file "${RISU_ROOT}/proc/cpuinfo"
-if ! is_enabled libvirtd ; then
+if ! is_enabled libvirtd; then
     echo $"skipping check for HW virtualization support as libvirtd is not enabled" >&2
     exit ${RC_SKIPPED}
 fi
@@ -40,4 +39,3 @@ if ! is_lineinfile "svm|vmx" "${RISU_ROOT}/proc/cpuinfo"; then
 else
     exit ${RC_OKAY}
 fi
-

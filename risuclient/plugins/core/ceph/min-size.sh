@@ -34,23 +34,22 @@ check_settings() {
     for pool in $(sed -n -r -e 's/^pool.*\x27(.*)\x27.*$/\1/p' $1); do
         MIN_SIZE=$(sed -n -r -e "s/^pool.*'$pool'.*min_size[ \t]([0-9]).*$/\1/p" $1)
         SIZE=$(sed -n -r -e "s/^pool.*'$pool'.*\ssize[ \t]([0-9]).*$/\1/p" $1)
-        if [[ -z "$SIZE" ]] || [[ -z "$MIN_SIZE" ]]; then
+        if [[ -z $SIZE ]] || [[ -z $MIN_SIZE ]]; then
             echo "error could not parse size or min_size." >&2
             exit ${RC_FAILED}
         fi
-        _MIN_SIZE="$(( (SIZE/2) + 1 ))"
+        _MIN_SIZE="$(((SIZE / 2) + 1))"
 
-        if [[ "${MIN_SIZE}" -lt  "${_MIN_SIZE}" ]]; then
+        if [[ ${MIN_SIZE} -lt ${_MIN_SIZE} ]]; then
             echo "pool '$pool' min_size ${MIN_SIZE}" >&2
             flag=1
         fi
     done
-    [[ "x$flag" = "x" ]] && exit ${RC_OKAY} || exit ${RC_FAILED}
+    [[ "x$flag" == "x" ]] && exit ${RC_OKAY} || exit ${RC_FAILED}
 }
 
-if [[ "x$RISU_LIVE" = "x0" ]];  then
-    if is_active ceph-mon;
-    then
+if [[ "x$RISU_LIVE" == "x0" ]]; then
+    if is_active ceph-mon; then
         is_required_file "${RISU_ROOT}/sos_commands/ceph/ceph_osd_dump"
         is_required_file "${RISU_ROOT}/etc/ceph/ceph.conf"
         check_settings "${RISU_ROOT}/sos_commands/ceph/ceph_osd_dump"
@@ -58,14 +57,13 @@ if [[ "x$RISU_LIVE" = "x0" ]];  then
         echo "no ceph integrated" >&2
         exit ${RC_SKIPPED}
     fi
-elif [[ "x$RISU_LIVE" = "x1" ]]; then
+elif [[ "x$RISU_LIVE" == "x1" ]]; then
     if hiera -c /etc/puppet/hiera.yaml enabled_services | egrep -sq ceph_mon; then
         mktempfile
-        ceph osd dump > ${tmpfile}
+        ceph osd dump >${tmpfile}
         check_settings ${tmpfile}
     else
         echo "no ceph integrated" >&2
         exit ${RC_SKIPPED}
     fi
 fi
-

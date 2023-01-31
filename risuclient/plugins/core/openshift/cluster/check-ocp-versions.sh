@@ -22,16 +22,15 @@
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
-
-if [[ ! "x$RISU_LIVE" = "x1" ]]; then
+if [[ "x$RISU_LIVE" != "x1" ]]; then
     FILE="${RISU_ROOT}/sos_commands/kubernetes/kubectl_get_-o_json_nodes"
     is_required_file "${FILE}"
 
-    LINES="$(grep kubeletVersion ${FILE} | sed -n "s/\",//gp" | sed -n "s/.*\(v[0-9]\+\?.[0-9]\+\?.[0-9]\+\?\+[a-zA-Z0-9].\+\)/\1/gp" | sort -u | wc -l)"
+    LINES="$(grep kubeletVersion ${FILE} | sed -n 's/",//gp' | sed -n "s/.*\(v[0-9]\+\?.[0-9]\+\?.[0-9]\+\?\+[a-zA-Z0-9].\+\)/\1/gp" | sort -u | wc -l)"
 
-    if [[ "${LINES}" -gt 1 ]]; then
+    if [[ ${LINES} -gt 1 ]]; then
         echo "Multiple OpenShift versions found" >&2
-        grep kubeletVersion ${FILE} | sed -n "s/\",//gp" | sed -n "s/.*\(v[0-9]\+\?.[0-9]\+\?.[0-9]\+\?\+[a-zA-Z0-9].\+\)/\1/gp" | sort -u >&2
+        grep kubeletVersion ${FILE} | sed -n 's/",//gp' | sed -n "s/.*\(v[0-9]\+\?.[0-9]\+\?.[0-9]\+\?\+[a-zA-Z0-9].\+\)/\1/gp" | sort -u >&2
         exit ${RC_FAILED}
     else
         exit ${RC_OKAY}
@@ -46,10 +45,10 @@ else
     # localhost    Ready      <none>    7h        v1.9.1+a0ce1bc657
     # localhost2   Ready      <none>    7h        v1.9.1+a0ce1bc657
 
-    which oc > /dev/null 2>&1
+    which oc >/dev/null 2>&1
     RC=$?
 
-    if [[ "x$RC" = "x0" ]]; then
+    if [[ "x$RC" == "x0" ]]; then
         # Test connection to ocp
         _test=$(oc whoami 2>&1)
         RC=$?
@@ -64,10 +63,10 @@ else
     # sudo oc get nodes --template='{{range .items}}{{ .status.nodeInfo.kubeletVersion}}{{"|"}}{{end}}' | sed "s/|/\n/g" | sed "/^$/d"
     OC_VERSIONS=$(oc get nodes --template='{{range .items}}{{ .status.nodeInfo.kubeletVersion}}{{"|"}}{{end}}')
     RC=$?
-    if [[ "x$RC" = "x0" ]]; then
+    if [[ "x$RC" == "x0" ]]; then
         OC_UNIQUE_VERSIONS_COUNT="$(echo $OC_VERSIONS | sed "s/|/\n/g" | sed "/^$/d" | sort -u | wc -l)"
         OC_UNIQUE_VERSIONS="$(echo $OC_VERSIONS | sort -u)"
-        if [[ $OC_UNIQUE_VERSIONS_COUNT = 1 ]]; then
+        if [[ $OC_UNIQUE_VERSIONS_COUNT == 1 ]]; then
             echo "All nodes are running the same OpenShift version: ${OC_UNIQUE_VERSIONS}" >&2
             exit ${RC_OKAY}
         else
@@ -82,4 +81,3 @@ fi
 
 echo "Test should have skipped before reaching this point" >&2
 exit ${RC_FAILED}
-

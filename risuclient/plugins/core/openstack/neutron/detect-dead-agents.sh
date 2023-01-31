@@ -27,9 +27,8 @@
 is_required_file "${RISU_ROOT}/var/log/neutron/server.log"
 
 if is_lineinfile "Agent healthcheck: found.*dead agents out of" "${RISU_ROOT}/var/log/neutron/server.log"; then
-        grep -i 'Agent healthcheck: found.*dead agents out of' "${RISU_ROOT}/var/log/neutron/server.log" | grep -oP "^([0-9\-]+)" | uniq -c | tail >&2
-        exit ${RC_FAILED}
+    grep -i 'Agent healthcheck: found.*dead agents out of' "${RISU_ROOT}/var/log/neutron/server.log" | grep -oP "^([0-9\-]+)" | uniq -c | tail >&2
+    exit ${RC_FAILED}
 fi
 
 exit ${RC_OKAY}
-

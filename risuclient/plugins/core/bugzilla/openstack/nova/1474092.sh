@@ -34,4 +34,3 @@ if [[ "$(iniparser "${RISU_ROOT}/etc/nova/nova.conf" DEFAULT host)" == "localhos
 else
     exit ${RC_OKAY}
 fi
-

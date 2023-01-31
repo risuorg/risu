@@ -33,4 +33,3 @@ is_required_pkg openstack-gnocchi-common
 is_lineinfile "MaxRequestWorkers" "${RISU_ROOT}/var/log/httpd/error_log" && echo $"https://bugzilla.redhat.com/show_bug.cgi?id=1406417" >&2 && exit ${RC_FAILED}
 
 exit ${RC_OKAY}
-

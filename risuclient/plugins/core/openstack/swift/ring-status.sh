@@ -20,7 +20,7 @@
 # description: Checks Swift ring status
 # priority: 900
 
-if [[ ! "x$RISU_LIVE" = "x1" ]]; then
+if [[ "x$RISU_LIVE" != "x1" ]]; then
     echo "works on live-system only" >&2
     exit ${RC_SKIPPED}
 fi
@@ -37,4 +37,3 @@ if swift-recon --md5 | grep -q "[^0] error"; then
 else
     exit ${RC_OKAY}
 fi
-

@@ -25,7 +25,6 @@
 # kb: https://access.redhat.com/solutions/3139721
 # bugzilla: https://bugzilla.redhat.com/show_bug.cgi?id=1478274
 
-
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
@@ -47,4 +46,3 @@ else
     echo $"Check: https://bugzilla.redhat.com/show_bug.cgi?id=1478274" >&2
     exit ${RC_FAILED}
 fi
-

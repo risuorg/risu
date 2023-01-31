@@ -30,7 +30,7 @@
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
-is_required_rpm python-ryu || echo "no python-ryu package installed" >&2 &&  exit ${RC_SKIPPED}
+is_required_rpm python-ryu || echo "no python-ryu package installed" >&2 && exit ${RC_SKIPPED}
 
 # Extracting python-ryu's version
 RISU_PYTHON_RYU_VERSION=$(is_rpm python-ryu | grep -Po "python-ryu-\K[0-9\.]+")
@@ -47,4 +47,3 @@ is_required_file "${RISU_ROOT}/var/log/neutron/openvswitch-agent.log"
 grep -Pzo "(?s)ERROR[\s]+ryu.lib.hub\N*Traceback\N*(\n\N*){2,10}KeyError: 'ofctl_service'" "${RISU_ROOT}/var/log/neutron/openvswitch-agent.log" && echo $"possible python-ryu bug in ovs-agent https://bugzilla.redhat.com/show_bug.cgi?id=1450223" >&2 && exit ${RC_FAILED}
 
 exit ${RC_OKAY}
-

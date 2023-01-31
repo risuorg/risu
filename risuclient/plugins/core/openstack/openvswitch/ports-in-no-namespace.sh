@@ -31,31 +31,31 @@ if [[ ${RISU_LIVE} -eq 0 ]]; then
     NICS=$(mktemp)
     trap "rm ${NICS}" EXIT
 
-    ls ${RISU_ROOT}/sos_commands/networking/ > ${NICS}
+    ls ${RISU_ROOT}/sos_commands/networking/ >${NICS}
 
-elif [[ ${RISU_LIVE} -eq 1 ]];then
+elif [[ ${RISU_LIVE} -eq 1 ]]; then
     FILE=$(mktemp)
     trap "rm ${FILE}" EXIT
-    ovsdb-client -f list dump > ${FILE}
+    ovsdb-client -f list dump >${FILE}
 
     NICS=$(mktemp)
     trap "rm ${NICS}" EXIT
-    ls /proc/sys/net/ipv*/conf |grep -v "sys/net"|sort|uniq > ${NICS}
+    ls /proc/sys/net/ipv*/conf | grep -v "sys/net" | sort | uniq >${NICS}
 fi
 
 is_required_file "${FILE}"
 
-PREPORTS="$(cat ${FILE}|egrep '(ha-|qr-|gq-)'|cut -d\" -f2)"
-PREPORTS="${PREPORTS} $(cat ${FILE}|grep name|grep tap|cut -d\" -f2)"
+PREPORTS="$(cat ${FILE} | egrep '(ha-|qr-|gq-)' | cut -d\" -f2)"
+PREPORTS="${PREPORTS} $(cat ${FILE} | grep name | grep tap | cut -d\" -f2)"
 
-PORTS=`echo ${PREPORTS}|tr " " "\n"|sort|uniq`
+PORTS=$(echo ${PREPORTS} | tr " " "\n" | sort | uniq)
 
 echo "ports not in any router or namespace" >&2
 flag=0
 
 for port in ${PORTS}; do
-    grep ${port} ${NICS} &> /dev/null
-    if [[ "$?" != "0" ]]; then
+    grep ${port} ${NICS} &>/dev/null
+    if [[ $? != "0" ]]; then
         echo ${port} >&2
         flag=1
     fi
@@ -66,4 +66,3 @@ if [[ ${flag} -eq '1' ]]; then
 fi
 
 exit ${RC_OKAY}
-

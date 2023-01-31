@@ -20,7 +20,6 @@
 # description: virt_type different to KVM could present performance issues vs kvm
 # priority: 800
 
-
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
@@ -31,22 +30,21 @@ VTYPE=$(iniparser ${FILE} libvirt virt_type)
 
 supported=1
 case ${VTYPE} in
-    "kvm")
-        # do nothing
-        ;;
-    "")
-        # do nothing
-        ;;
-    *)
-        echo -n $"nova.conf virt_type is not default or kvm performance might be affected: " >&2
-        echo "$VTYPE" >&2
-        supported=0
-        ;;
+"kvm")
+    # do nothing
+    ;;
+"")
+    # do nothing
+    ;;
+*)
+    echo -n $"nova.conf virt_type is not default or kvm performance might be affected: " >&2
+    echo "$VTYPE" >&2
+    supported=0
+    ;;
 esac
 
-if [[ "$supported" -ne "1" ]]; then
+if [[ $supported -ne "1" ]]; then
     exit ${RC_FAILED}
 fi
 
 exit ${RC_OKAY}
-

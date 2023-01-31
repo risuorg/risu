@@ -30,7 +30,7 @@ is_required_containerized
 for log_file in $(ls ${RISU_ROOT}/var/log/containers/*/*.log); do
     [ -f "$log_file" ] || continue
     events=$(grep -i 'traceback' ${log_file} | egrep -o '^([a-Z]+\ [0-9]+)|^([0-9\-]+)' | uniq -c | tail)
-    if [[ -n "${events}" ]]; then
+    if [[ -n ${events} ]]; then
         # to remove the ${RISU_ROOT} from the stderr.
         log_file=${log_file#${RISU_ROOT}}
         echo -e "$log_file:\n${events}\n" >&2
@@ -38,5 +38,4 @@ for log_file in $(ls ${RISU_ROOT}/var/log/containers/*/*.log); do
     fi
 done
 
-[[ "x$flag" = "x" ]] && exit ${RC_OKAY} || exit ${RC_FAILED}
-
+[[ "x$flag" == "x" ]] && exit ${RC_OKAY} || exit ${RC_FAILED}

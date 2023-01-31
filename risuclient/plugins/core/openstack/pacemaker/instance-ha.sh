@@ -30,10 +30,10 @@ is_required_rpm pacemaker
 
 if [[ ${RISU_LIVE} -eq 0 ]]; then
     FILE="${RISU_ROOT}/sos_commands/pacemaker/crm_mon_-1_-A_-n_-r_-t"
-elif [[ ${RISU_LIVE} -eq 1 ]];then
+elif [[ ${RISU_LIVE} -eq 1 ]]; then
     FILE=$(mktemp)
     trap "rm ${FILE}" EXIT
-    crm_mon -1 -A -n -r -t  > ${FILE} 2>&1
+    crm_mon -1 -A -n -r -t >${FILE} 2>&1
 fi
 
 if is_lineinfile "openstack-nova-compute" "${FILE}"; then
@@ -42,4 +42,3 @@ if is_lineinfile "openstack-nova-compute" "${FILE}"; then
 fi
 
 exit ${RC_OKAY}
-

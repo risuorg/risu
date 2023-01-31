@@ -28,12 +28,12 @@
 
 is_required_file "${RISU_ROOT}/etc/corosync/corosync.conf"
 
-if [[ "x$RISU_LIVE" = "x1" ]];  then
+if [[ "x$RISU_LIVE" == "x1" ]]; then
     pacemaker_status=$(systemctl is-active pacemaker || :)
-    if [[ "$pacemaker_status" = "active" ]]; then
+    if [[ $pacemaker_status == "active" ]]; then
         if pcs config | grep -q -i "target-role=Stopped"; then
-            pcs config | egrep -i "^(\sBundle|\sClone|\sMaster|\sResource)|target-role=Stopped" \
-            | grep -i "target-role=Stopped" -B1 | awk -F" " '/Bundle/||/Clone/||/Master/||/Resource/{print $2}' >&2
+            pcs config | egrep -i "^(\sBundle|\sClone|\sMaster|\sResource)|target-role=Stopped" |
+                grep -i "target-role=Stopped" -B1 | awk -F" " '/Bundle/||/Clone/||/Master/||/Resource/{print $2}' >&2
             exit ${RC_FAILED}
         else
             exit ${RC_OKAY}
@@ -42,7 +42,7 @@ if [[ "x$RISU_LIVE" = "x1" ]];  then
         echo "pacemaker is not running on this node" >&2
         exit ${RC_SKIPPED}
     fi
-elif [[ "x$RISU_LIVE" = "x0" ]];  then
+elif [[ "x$RISU_LIVE" == "x0" ]]; then
     if is_active "pacemaker"; then
         for CLUSTER_DIRECTORY in "pacemaker" "cluster"; do
             if [[ -d "${RISU_ROOT}/sos_commands/${CLUSTER_DIRECTORY}" ]]; then
@@ -51,8 +51,8 @@ elif [[ "x$RISU_LIVE" = "x0" ]];  then
         done
         is_required_file "${PCS_DIRECTORY}/pcs_config"
         if is_lineinfile "target-role=" "${PCS_DIRECTORY}/pcs_config"; then
-            egrep -i "^(\sBundle|\sClone|\sMaster|\sResource)|target-role=Stopped" "${PCS_DIRECTORY}/pcs_config" \
-            | grep -i "target-role=Stopped" -B1 | awk -F" " '/Bundle/||/Clone/||/Master/||/Resource/{print $2}' >&2
+            egrep -i "^(\sBundle|\sClone|\sMaster|\sResource)|target-role=Stopped" "${PCS_DIRECTORY}/pcs_config" |
+                grep -i "target-role=Stopped" -B1 | awk -F" " '/Bundle/||/Clone/||/Master/||/Resource/{print $2}' >&2
             exit ${RC_FAILED}
         else
             exit ${RC_OKAY}
@@ -62,4 +62,3 @@ elif [[ "x$RISU_LIVE" = "x0" ]];  then
         exit ${RC_SKIPPED}
     fi
 fi
-

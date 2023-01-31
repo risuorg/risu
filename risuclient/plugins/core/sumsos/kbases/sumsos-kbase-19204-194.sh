@@ -25,7 +25,6 @@
 REGEXP="kernel: .*: drive_cmd: status=0x51 { DriveReady SeekComplete Error }"
 KCS=19204
 
-
 # priority: 500
 
 # Load common functions
@@ -33,7 +32,7 @@ KCS=19204
 
 journal="$journalctl_file"
 
-if is_lineinfile "${REGEXP}" ${journal} ${RISU_ROOT}/var/log/messages ; then
+if is_lineinfile "${REGEXP}" ${journal} ${RISU_ROOT}/var/log/messages; then
     echo $"Check Kbase: https://access.redhat.com/solutions/$KCS for more details about error: $REGEXP found in logs" >&2
     exit ${RC_FAILED}
 else

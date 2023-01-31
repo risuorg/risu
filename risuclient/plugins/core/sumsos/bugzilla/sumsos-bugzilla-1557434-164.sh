@@ -26,7 +26,6 @@
 REGEXP="kernel: bio too big device .* \(.* > .*\)"
 BZ=1557434
 
-
 # priority: 500
 
 # Load common functions
@@ -34,10 +33,9 @@ BZ=1557434
 
 journal="$journalctl_file"
 
-if is_lineinfile "${REGEXP}" ${journal} ${RISU_ROOT}/var/log/messages ; then
+if is_lineinfile "${REGEXP}" ${journal} ${RISU_ROOT}/var/log/messages; then
     echo $"Check bugzilla: https://bugzilla.redhat.com/show_bug.cgi?id=$BZ for more details about error: $REGEXP found in logs" >&2
     exit ${RC_FAILED}
 else
     exit ${RC_OKAY}
 fi
-

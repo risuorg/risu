@@ -28,18 +28,18 @@
 
 is_required_file "${RISU_ROOT}/etc/lvm/lvm.conf"
 is_required_pkg lvm2
-show_warn () {
-    echo $"lvm created inside cinder volume, might get exposed to the host system causing migration, guest boot or cinder actions to fail"  >&2
+show_warn() {
+    echo $"lvm created inside cinder volume, might get exposed to the host system causing migration, guest boot or cinder actions to fail" >&2
     echo $"https://bugzilla.redhat.com/show_bug.cgi?id=1261083" >&2
     exit ${RC_FAILED}
 }
-lvmetad=$(cat "${RISU_ROOT}/etc/lvm/lvm.conf" |grep -i use_lvmetad|grep -iv "#"|cut -f2 -d "=" | tr -d '[:space:]' )
-filter=$(cat "${RISU_ROOT}/etc/lvm/lvm.conf" |grep -i filter|grep -iv global|grep -iv "#"|cut -f2 -d "="| tr -d '[:space:]')
-global_filter=$(cat "${RISU_ROOT}/etc/lvm/lvm.conf" |grep -i global_filter|grep -iv "#"|cut -f2 -d "="| tr -d '[:space:]')
-filter_eval=$(echo $filter |egrep -i '\["r[/,|].\*[/,|][|]*"\]')
-global_filter_eval=$(echo $global_filter |egrep -i '\["r[/,|].\*[/,|][|]*"\]')
+lvmetad=$(cat "${RISU_ROOT}/etc/lvm/lvm.conf" | grep -i use_lvmetad | grep -iv "#" | cut -f2 -d "=" | tr -d '[:space:]')
+filter=$(cat "${RISU_ROOT}/etc/lvm/lvm.conf" | grep -i filter | grep -iv global | grep -iv "#" | cut -f2 -d "=" | tr -d '[:space:]')
+global_filter=$(cat "${RISU_ROOT}/etc/lvm/lvm.conf" | grep -i global_filter | grep -iv "#" | cut -f2 -d "=" | tr -d '[:space:]')
+filter_eval=$(echo $filter | egrep -i '\["r[/,|].\*[/,|][|]*"\]')
+global_filter_eval=$(echo $global_filter | egrep -i '\["r[/,|].\*[/,|][|]*"\]')
 
-if [[ "x${lvmetad}" = "x0" ]] ;then
+if [[ "x${lvmetad}" == "x0" ]]; then
     filter_in_use="filter"
     set_filter=$filter
 else
@@ -51,32 +51,31 @@ if ! is_process nova-compute; then
     echo "This check is specific to openstack compute node" >&2
     exit ${RC_SKIPPED}
 fi
-if [[ "${filter_in_use}" = "global_filter" ]];then
-    if [[ -z  "$global_filter" ]] ; then
+if [[ ${filter_in_use} == "global_filter" ]]; then
+    if [[ -z $global_filter ]]; then
         flag=2
-    elif [[  -z "$global_filter_eval" ]] ; then
-            flag=1
+    elif [[ -z $global_filter_eval ]]; then
+        flag=1
     else
-            flag=0
+        flag=0
     fi
-elif [[ "${filter_in_use}" = "filter" ]] ; then
-    if [[ -z  "$filter" ]] ; then
+elif [[ ${filter_in_use} == "filter" ]]; then
+    if [[ -z $filter ]]; then
         flag=2
-    elif [[  -z "$filter_eval" ]] ; then
+    elif [[ -z $filter_eval ]]; then
         flag=1
     else
         flag=0
     fi
 fi
 
-if [[ "$flag" == "2" ]]; then
-        echo $"lvm $filter_in_use is not set in compute node"  >&2
-        show_warn
-elif  [[ "$flag" == "1" ]]; then
-        echo $"lvm $filter_in_use is set, however it might not restrict all devices"  >&2
-        echo "$filter_in_use is set to: $set_filter"  >&2
-        show_warn
+if [[ $flag == "2" ]]; then
+    echo $"lvm $filter_in_use is not set in compute node" >&2
+    show_warn
+elif [[ $flag == "1" ]]; then
+    echo $"lvm $filter_in_use is set, however it might not restrict all devices" >&2
+    echo "$filter_in_use is set to: $set_filter" >&2
+    show_warn
 else
-        exit ${RC_OKAY}
+    exit ${RC_OKAY}
 fi
-

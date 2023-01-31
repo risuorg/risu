@@ -31,11 +31,11 @@ if [[ ${RISU_LIVE} -eq 0 ]]; then
     done
 
     FILE="${PCS_DIRECTORY}/pcs_status"
-elif [[ ${RISU_LIVE} -eq 1 ]];then
+elif [[ ${RISU_LIVE} -eq 1 ]]; then
     is_required_command "pcs"
     FILE=$(mktemp)
     trap "rm ${FILE}" EXIT
-    pcs status > ${FILE}
+    pcs status >${FILE}
 fi
 
 is_required_file ${FILE}
@@ -45,4 +45,3 @@ if is_lineinfile "Node.*: standby" ${FILE}; then
     exit ${RC_FAILED}
 fi
 exit ${RC_OKAY}
-

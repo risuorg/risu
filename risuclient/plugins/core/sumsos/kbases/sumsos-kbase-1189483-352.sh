@@ -25,7 +25,6 @@
 REGEXP="kernel: sd .*: SCSI error: return code = 0x000f0000"
 KCS=1189483
 
-
 # priority: 500
 
 # Load common functions
@@ -33,7 +32,7 @@ KCS=1189483
 
 journal="$journalctl_file"
 
-if is_lineinfile "${REGEXP}" ${journal} ${RISU_ROOT}/var/log/messages ; then
+if is_lineinfile "${REGEXP}" ${journal} ${RISU_ROOT}/var/log/messages; then
     echo $"Check Kbase: https://access.redhat.com/solutions/$KCS for more details about error: $REGEXP found in logs" >&2
     exit ${RC_FAILED}
 else

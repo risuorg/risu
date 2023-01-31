@@ -27,9 +27,9 @@
 
 is_required_file "${RISU_ROOT}/etc/corosync/corosync.conf"
 
-if [[ "x$RISU_LIVE" = "x1" ]]; then
+if [[ "x$RISU_LIVE" == "x1" ]]; then
     pacemaker_status=$(systemctl is-active pacemaker || :)
-    if [[ "$pacemaker_status" = "active" ]]; then
+    if [[ $pacemaker_status == "active" ]]; then
         if pcs status | grep -q "Failed Actions"; then
             pcs status | awk -F" " '/^\*/ {print $2}' >&2
             exit ${RC_FAILED}
@@ -41,7 +41,7 @@ if [[ "x$RISU_LIVE" = "x1" ]]; then
         echo "pacemaker is not running on this node" >&2
         exit ${RC_SKIPPED}
     fi
-elif [[ "x$RISU_LIVE" = "x0" ]]; then
+elif [[ "x$RISU_LIVE" == "x0" ]]; then
     if is_active "pacemaker"; then
         for CLUSTER_DIRECTORY in "pacemaker" "cluster"; do
             if [[ -d "${RISU_ROOT}/sos_commands/${CLUSTER_DIRECTORY}" ]]; then
@@ -50,7 +50,7 @@ elif [[ "x$RISU_LIVE" = "x0" ]]; then
         done
         is_required_file "${PCS_DIRECTORY}/pcs_status"
         if is_lineinfile "Failed Actions" "${PCS_DIRECTORY}/pcs_status"; then
-            awk -F" " '/^\*/ {print $2}'  "${PCS_DIRECTORY}/pcs_status" >&2
+            awk -F" " '/^\*/ {print $2}' "${PCS_DIRECTORY}/pcs_status" >&2
             exit ${RC_FAILED}
         else
             echo "no failed actions detected" >&2
@@ -61,4 +61,3 @@ elif [[ "x$RISU_LIVE" = "x0" ]]; then
         exit ${RC_SKIPPED}
     fi
 fi
-

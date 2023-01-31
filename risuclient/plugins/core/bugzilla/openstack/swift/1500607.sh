@@ -34,4 +34,3 @@ if [[ "$(iniparser "${RISU_ROOT}/etc/swift/object-expirer.conf" filter:cache mem
 else
     exit ${RC_OKAY}
 fi
-

@@ -4,7 +4,6 @@
 # Copyright (C) 2017, 2018 Robin Černín <cerninr@gmail.com>
 # Copyright (C) 2017, 2018 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
-
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -27,12 +26,12 @@
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
-if [[ ${RISU_LIVE} = 0 ]]; then
+if [[ ${RISU_LIVE} == 0 ]]; then
     FILE="${RISU_ROOT}/sos_commands/yum/yum_history"
 else
     FILE=$(mktemp)
     trap "rm ${FILE}" EXIT
-    yum history > ${FILE}
+    yum history >${FILE}
 fi
 
 is_required_file ${FILE}
@@ -56,4 +55,3 @@ if [[ ${flag} -eq '1' ]]; then
 else
     exit ${RC_OKAY}
 fi
-

@@ -27,10 +27,10 @@
 
 OUTDATED=$"Outdated pacemaker packages"
 
-PCS_VERSION=$(is_rpm pacemaker| sed -n -r -e 's/^pacemaker.*-1.1.([0-9]+)-.*$/\1/p')
-if is_active pacemaker;then
+PCS_VERSION=$(is_rpm pacemaker | sed -n -r -e 's/^pacemaker.*-1.1.([0-9]+)-.*$/\1/p')
+if is_active pacemaker; then
     for package in ${PCS_VERSION}; do
-        if [[ "${package}" -lt "15" ]]; then
+        if [[ ${package} -lt "15" ]]; then
             echo "$OUTDATED" >&2
             exit ${RC_FAILED}
         fi
@@ -40,4 +40,3 @@ else
     echo "pacemaker is not running on this node" >&2
     exit ${RC_SKIPPED}
 fi
-

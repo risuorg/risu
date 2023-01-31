@@ -28,4 +28,3 @@
 is_required_file "${RISU_ROOT}/var/log/mysqld.log"
 grep 'WSREP: Found saved state' ${RISU_ROOT}/var/log/mysqld.log | awk '/WSREP: Found saved state/ {seqno=$8}; END {print seqno}' >&2
 exit ${RC_OKAY}
-

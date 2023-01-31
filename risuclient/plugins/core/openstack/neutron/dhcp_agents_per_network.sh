@@ -29,13 +29,13 @@ is_required_file "${RISU_ROOT}/etc/corosync/corosync.conf"
 # Find release
 RELEASE=$(discover_osp_version)
 
-if [[ "$RELEASE" -le "10" ]]; then
+if [[ $RELEASE -le "10" ]]; then
     echo "This affects only OSP11 onwards" >&2
     exit ${RC_SKIPPED}
 fi
 
 for package in tripleo-heat-templates openstack-tripleo-heat-templates python-tripleoclient; do
-    if is_pkg ${package} > /dev/null 2>&1 ; then
+    if is_pkg ${package} >/dev/null 2>&1; then
         echo "Doesn't work on director" >&2
         exit ${RC_SKIPPED}
     fi
@@ -43,16 +43,15 @@ done
 
 VALUE=$(iniparser ${RISU_ROOT}/etc/neutron/neutron.conf DEFAULT dhcp_agents_per_network)
 
-
 # Code from nodes_number.sh by Robin Černín (rcernin@redhat.com)
 if ! is_active pacemaker; then
     echo "pacemaker is not running on this node" >&2
     exit ${RC_SKIPPED}
 fi
 
-if [[ "x$RISU_LIVE" = "x1" ]];  then
-    NUM_NODES=$(pcs config |  awk '/Pacemaker Nodes/ {getline; print $0}' | wc -w)
-elif [[ "x$RISU_LIVE" = "x0" ]];  then
+if [[ "x$RISU_LIVE" == "x1" ]]; then
+    NUM_NODES=$(pcs config | awk '/Pacemaker Nodes/ {getline; print $0}' | wc -w)
+elif [[ "x$RISU_LIVE" == "x0" ]]; then
     if is_active "pacemaker"; then
         for CLUSTER_DIRECTORY in "pacemaker" "cluster"; do
             if [[ -d "${RISU_ROOT}/sos_commands/${CLUSTER_DIRECTORY}" ]]; then
@@ -69,10 +68,9 @@ if [[ "x${VALUE}" == 'x' ]]; then
     VALUE=${NUM_NODES}
 fi
 
-if [[ "${VALUE}" != "${NUM_NODES}" ]]; then
+if [[ ${VALUE} != "${NUM_NODES}" ]]; then
     echo $"Mismatch on dhcp_agents_per_network https://bugs.launchpad.net/tripleo/+bug/1752826" >&2
     exit ${RC_FAILED}
 fi
 
 exit ${RC_OKAY}
-

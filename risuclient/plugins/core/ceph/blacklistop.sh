@@ -28,4 +28,3 @@ if is_lineinfile "osd blacklist.*blacklistop.*access denied" "${RISU_ROOT}/var/l
     exit ${RC_FAILED}
 fi
 exit ${RC_OKAY}
-

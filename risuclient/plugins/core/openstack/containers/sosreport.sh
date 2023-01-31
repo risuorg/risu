@@ -25,7 +25,7 @@
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
 RELEASE=$(discover_osp_version)
-if [[ "${RELEASE}" -ge "12" ]]; then
+if [[ ${RELEASE} -ge "12" ]]; then
     # Sosreport with container support is 3.4-9 or later
     is_required_rpm_over sos sos-3.4-9
     exit ${RC_OKAY}
@@ -33,4 +33,3 @@ else
     echo "works only on OSP12 and later" >&2
     exit ${RC_SKIPPED}
 fi
-

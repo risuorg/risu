@@ -29,4 +29,3 @@ is_required_file "${RISU_ROOT}/var/log/httpd/error_log"
 is_lineinfile "MaxRequestWorkers" "${RISU_ROOT}/var/log/httpd/error_log" && echo $"httpd MaxRequestWorkers reached" >&2 && exit ${RC_FAILED}
 
 exit ${RC_OKAY}
-

@@ -30,10 +30,9 @@ flag=0
 
 is_lineinfile "error with REPLICATE" "${RISU_ROOT}/var/log/swift/swift.log" && flag=1
 
-if [[ "${flag}" -eq "1" ]]; then
+if [[ ${flag} -eq "1" ]]; then
     echo $"error with REPLICATE detected" >&2
     exit ${RC_FAILED}
 fi
 
 exit ${RC_OKAY}
-

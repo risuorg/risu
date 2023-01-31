@@ -3,7 +3,6 @@
 # Copyright (C) 2018 George Angelopoulos <george@usermod.net>
 # Copyright (C) 2018 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
-
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -25,18 +24,17 @@
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
-
-if [[ "x$RISU_LIVE" = "x0" ]];  then
+if [[ "x$RISU_LIVE" == "x0" ]]; then
     FILE="${RISU_ROOT}/sos_commands/kernel/sysctl_-a"
-elif [[ "x$RISU_LIVE" = "x1" ]]; then
+elif [[ "x$RISU_LIVE" == "x1" ]]; then
     FILE=$(mktemp)
-    sysctla -a > ${FILE}
+    sysctla -a >${FILE}
     trap "rm ${FILE}" EXIT
 fi
 
 is_required_file "${FILE}"
 
-VALUE=$(grep vm.vfs_cache_pressure ${FILE}|cut -d "=" -f 2)
+VALUE=$(grep vm.vfs_cache_pressure ${FILE} | cut -d "=" -f 2)
 
 if [[ ${VALUE} -ge 1000 ]]; then
     echo $"High vfs_cache_pressure" >&2
@@ -44,4 +42,3 @@ if [[ ${VALUE} -ge 1000 ]]; then
 else
     exit ${RC_OKAY}
 fi
-

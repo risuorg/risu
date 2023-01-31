@@ -30,7 +30,7 @@ is_required_file "${RISU_ROOT}/etc/libvirt/qemu.conf"
 max_files=$(iniparser "${RISU_ROOT}/etc/libvirt/qemu.conf" max_files)
 max_processes=$(iniparser "${RISU_ROOT}/etc/libvirt/qemu.conf" max_processes)
 
-if [[ "${max_files}" -ge "32768" ]] || [[ "${max_processes}" -ge "131072" ]]; then
+if [[ ${max_files} -ge "32768" ]] || [[ ${max_processes} -ge "131072" ]]; then
     echo $"max_files is set to ${max_files}" >&2
     echo $"max_processes is set to ${max_processes}" >&2
     echo $"https://bugzilla.redhat.com/show_bug.cgi?id=1372589" >&2
@@ -38,4 +38,3 @@ if [[ "${max_files}" -ge "32768" ]] || [[ "${max_processes}" -ge "131072" ]]; th
 else
     exit ${RC_OKAY}
 fi
-

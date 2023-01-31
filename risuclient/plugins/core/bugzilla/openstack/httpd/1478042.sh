@@ -41,4 +41,3 @@ if [[ -f "${RISU_ROOT}/var/log/httpd/horizon_error.log" ]]; then
 fi
 
 exit ${RC_OKAY}
-

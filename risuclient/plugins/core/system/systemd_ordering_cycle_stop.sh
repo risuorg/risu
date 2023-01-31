@@ -3,7 +3,6 @@
 # Copyright (C) 2018 Renaud Métrich <rmetrich@redhat.com>
 # Copyright (C) 2018 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
-
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -37,4 +36,3 @@ fi
 
 # If the above conditions did not trigger RC_FAILED we are good.
 exit ${RC_OKAY}
-

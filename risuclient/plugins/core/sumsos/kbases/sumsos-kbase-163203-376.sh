@@ -25,7 +25,6 @@
 REGEXP="kernel: sd .*: .*FAILED Result: hostbyte=DID_NO_CONNECT driverbyte=DRIVER_OK"
 KCS=163203
 
-
 # priority: 500
 
 # Load common functions
@@ -33,7 +32,7 @@ KCS=163203
 
 journal="$journalctl_file"
 
-if is_lineinfile "${REGEXP}" ${journal} ${RISU_ROOT}/var/log/messages ; then
+if is_lineinfile "${REGEXP}" ${journal} ${RISU_ROOT}/var/log/messages; then
     echo $"Check Kbase: https://access.redhat.com/solutions/$KCS for more details about error: $REGEXP found in logs" >&2
     exit ${RC_FAILED}
 else

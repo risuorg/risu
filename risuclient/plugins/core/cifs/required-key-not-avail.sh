@@ -30,7 +30,7 @@ REGEXP="Send error in SessSetup = -126"
 
 journal="$journalctl_file"
 
-if is_lineinfile "${REGEXP}" ${journal} ${RISU_ROOT}/var/log/messages ; then
+if is_lineinfile "${REGEXP}" ${journal} ${RISU_ROOT}/var/log/messages; then
     echo $"CIFS: mount error(126): Required key	not available." >&2
     echo $"$REGEXP found in logs" >&2
     exit ${RC_FAILED}

@@ -28,7 +28,7 @@
 # echo 0 > /sys/kernel/debug/x86/ibrs_enabled
 # noibrs noibpb nopti
 
-secdisabled(){
+secdisabled() {
     echo "This system has Spectre security features disabled, please do check https://access.redhat.com/security/vulnerabilities/speculativeexecution for guidance" >&2
     exit ${RC_FAILED}
 }
@@ -42,4 +42,3 @@ if is_lineinfile noibrs ${RISU_ROOT}/proc/cmdline; then
 fi
 
 exit ${RC_OKAY}
-

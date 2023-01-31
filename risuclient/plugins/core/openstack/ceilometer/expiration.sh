@@ -34,7 +34,7 @@ RC=${RC_OKAY}
 MORETHANONCE=$"is listed more than once on file"
 
 # Check that ceilo polling central is listed (controllers only)
-if is_process "polling-namespaces central" ; then
+if is_process "polling-namespaces central"; then
     if [[ ${RELEASE} -gt 7 ]]; then
         strings="alarm_history_time_to_live event_time_to_live metering_time_to_live"
     else
@@ -42,7 +42,7 @@ if is_process "polling-namespaces central" ; then
     fi
     for string in ${strings}; do
         # check for string
-        if ! is_lineinfile ^${string} ${FILE};then
+        if ! is_lineinfile ^${string} ${FILE}; then
             echo "$string missing on file" >&2
             RC=${RC_FAILED}
         elif [[ $(grep -c -e ^${string} ${FILE}) -gt 1 ]]; then
@@ -50,7 +50,7 @@ if is_process "polling-namespaces central" ; then
             echo " $MORETHANONCE" >&2
             RC=${RC_FAILED}
         else
-            if [[ $(grep -e ^${string} ${FILE}|cut -d "=" -f2) -le 0 ]]; then
+            if [[ $(grep -e ^${string} ${FILE} | cut -d "=" -f2) -le 0 ]]; then
                 echo $"ceilometer.conf setting must be updated:" >&2
                 RC=${RC_FAILED}
                 grep -e ^${string} ${FILE} >&2

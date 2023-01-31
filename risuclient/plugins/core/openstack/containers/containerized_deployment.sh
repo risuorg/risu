@@ -31,4 +31,3 @@ RELEASE=$(discover_osp_version)
 if is_required_containerized; then
     exit ${RC_OKAY}
 fi
-

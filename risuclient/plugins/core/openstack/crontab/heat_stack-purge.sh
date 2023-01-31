@@ -26,10 +26,9 @@
 # this can run against live and also any sort of snapshot of the filesystem
 
 is_required_file "${RISU_ROOT}/var/spool/cron/heat"
-if ! awk '/heat-manage purge_deleted/ && /^[^#]/ { print $0 }' "${RISU_ROOT}/var/spool/cron/heat" > /dev/null 2>&1; then
+if ! awk '/heat-manage purge_deleted/ && /^[^#]/ { print $0 }' "${RISU_ROOT}/var/spool/cron/heat" >/dev/null 2>&1; then
     echo $"crontab heat stack purge is not set" >&2
     exit ${RC_FAILED}
-elif awk '/heat-manage purge_deleted/ && /^[^#]/ { print $0 }' "${RISU_ROOT}/var/spool/cron/heat" > /dev/null 2>&1; then
+elif awk '/heat-manage purge_deleted/ && /^[^#]/ { print $0 }' "${RISU_ROOT}/var/spool/cron/heat" >/dev/null 2>&1; then
     exit ${RC_OKAY}
 fi
-

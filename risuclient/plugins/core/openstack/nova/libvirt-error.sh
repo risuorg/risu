@@ -25,7 +25,6 @@
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
-
 if ! is_process nova-compute; then
     echo "works only on compute node" >&2
     exit ${RC_SKIPPED}
@@ -41,5 +40,4 @@ if [[ ${wc} -gt 0 ]]; then
     echo "$log_file (${wc} times)" >&2
     flag=1
 fi
-[[ "x$flag" = "x" ]] && exit ${RC_OKAY} || exit ${RC_FAILED}
-
+[[ "x$flag" == "x" ]] && exit ${RC_OKAY} || exit ${RC_FAILED}

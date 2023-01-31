@@ -25,11 +25,11 @@
 
 # we can run this against fs snapshot or live system
 
-count_nodes(){
-    if [[ ! "$(echo $(( (NUM_NODES-1) % 2 )))" -eq  "0" ]]; then
+count_nodes() {
+    if [[ ! "$(echo $(((NUM_NODES - 1) % 2)))" -eq "0" ]]; then
         echo "${NUM_NODES}" >&2
         exit ${RC_FAILED}
-    elif [[ "x$NUM_NODES" = "x1" ]]; then
+    elif [[ "x$NUM_NODES" == "x1" ]]; then
         echo "${NUM_NODES}" >&2
         exit ${RC_FAILED}
     else
@@ -44,10 +44,10 @@ if ! is_active pacemaker; then
     exit ${RC_SKIPPED}
 fi
 
-if [[ "x$RISU_LIVE" = "x1" ]];  then
-    NUM_NODES=$(pcs config |  awk '/Pacemaker Nodes/ {getline; print $0}' | wc -w)
+if [[ "x$RISU_LIVE" == "x1" ]]; then
+    NUM_NODES=$(pcs config | awk '/Pacemaker Nodes/ {getline; print $0}' | wc -w)
     count_nodes
-elif [[ "x$RISU_LIVE" = "x0" ]];  then
+elif [[ "x$RISU_LIVE" == "x0" ]]; then
     if is_active "pacemaker"; then
         for CLUSTER_DIRECTORY in "pacemaker" "cluster"; do
             if [[ -d "${RISU_ROOT}/sos_commands/${CLUSTER_DIRECTORY}" ]]; then
@@ -59,4 +59,3 @@ elif [[ "x$RISU_LIVE" = "x0" ]];  then
         count_nodes
     fi
 fi
-

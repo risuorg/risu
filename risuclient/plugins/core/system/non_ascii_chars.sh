@@ -3,7 +3,6 @@
 # Copyright (C) 2018 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 # Copyright (C) 2018 Benoit Welterlen <bwelterl@redhat.com>
 
-
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -29,8 +28,8 @@ REGEXP="systemd\[[0-9]+\]: Cannot add dependency job for unit ([^,]+), ignoring:
 #if [[ "x$RISU_LIVE" = "x0" ]]; then
 is_required_file "${RISU_ROOT}/etc/security/limits.conf"
 
-bad_files=`grep -s -l -P -n "[\x80-\xFF]" ${RISU_ROOT}/etc/security/limits.conf ${RISU_ROOT}/etc/security/limits.d/*.conf`
-if [[ -n "$bad_files" ]]; then
+bad_files=$(grep -s -l -P -n "[\x80-\xFF]" ${RISU_ROOT}/etc/security/limits.conf ${RISU_ROOT}/etc/security/limits.d/*.conf)
+if [[ -n $bad_files ]]; then
     for f in ${bad_files}; do
         echo "file $f contains non ASCII characters." >&2
     done
@@ -40,4 +39,3 @@ fi
 
 # If the above conditions did not trigger RC_FAILED we are good.
 exit ${RC_OKAY}
-

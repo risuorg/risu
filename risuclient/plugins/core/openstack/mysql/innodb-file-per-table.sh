@@ -42,4 +42,3 @@ else
     echo $"Check: https://bugzilla.redhat.com/show_bug.cgi?id=1277598" >&2
     exit ${RC_FAILED}
 fi
-

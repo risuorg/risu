@@ -25,7 +25,6 @@
 REGEXP="kernel: qla2xxx .*: RISC paused -- HCCR=.*, Dumping firmware!"
 KCS=28144
 
-
 # priority: 500
 
 # Load common functions
@@ -33,7 +32,7 @@ KCS=28144
 
 journal="$journalctl_file"
 
-if is_lineinfile "${REGEXP}" ${journal} ${RISU_ROOT}/var/log/messages ; then
+if is_lineinfile "${REGEXP}" ${journal} ${RISU_ROOT}/var/log/messages; then
     echo $"Check Kbase: https://access.redhat.com/solutions/$KCS for more details about error: $REGEXP found in logs" >&2
     exit ${RC_FAILED}
 else

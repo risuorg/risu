@@ -19,32 +19,30 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-
 # The way we're executed, $1 is the script name, $2 is the mode and $3 is the folder
 FOLDER=$3
 
 case $2 in
-    pass)
-        mkdir -p ${FOLDER}
-        # Touch the systemctl command we check
-        mkdir -p "$FOLDER/var/log/keystone/"
-        echo "" > "$FOLDER/var/log/keystone/keystone.log"
-        ;;
+pass)
+    mkdir -p ${FOLDER}
+    # Touch the systemctl command we check
+    mkdir -p "$FOLDER/var/log/keystone/"
+    echo "" >"$FOLDER/var/log/keystone/keystone.log"
+    ;;
 
-    fail)
-        mkdir -p ${FOLDER}
-        # Touch the systemctl command we check
-        mkdir -p "$FOLDER/var/log/keystone/"
-        echo "2017-08-29 14:01:53.159 352327 ERROR keystone DBDeadlock: (pymysql.err.InternalError) (1205, u'Lock wait timeout exceeded; try restarting transaction') [SQL: u'DELETE FROM token WHERE token.expires <= %(expires_1)s'] [parameters: {u'expires_1': datetime.datetime(2017, 8, 17, 21, 14, 41)}]" > "$FOLDER/var/log/keystone/keystone.log"
-        ;;
+fail)
+    mkdir -p ${FOLDER}
+    # Touch the systemctl command we check
+    mkdir -p "$FOLDER/var/log/keystone/"
+    echo "2017-08-29 14:01:53.159 352327 ERROR keystone DBDeadlock: (pymysql.err.InternalError) (1205, u'Lock wait timeout exceeded; try restarting transaction') [SQL: u'DELETE FROM token WHERE token.expires <= %(expires_1)s'] [parameters: {u'expires_1': datetime.datetime(2017, 8, 17, 21, 14, 41)}]" >"$FOLDER/var/log/keystone/keystone.log"
+    ;;
 
-    skipped)
-        # Do nothing, the folder will be empty and test should be skipped
-        ;;
+skipped)
+    # Do nothing, the folder will be empty and test should be skipped
+    ;;
 
-    *)
-        echo "Unexpected mode '$2'!"
-        exit 2
-        ;;
+*)
+    echo "Unexpected mode '$2'!"
+    exit 2
+    ;;
 esac
-

@@ -34,4 +34,3 @@ if [[ "$(iniparser "${RISU_ROOT}/etc/neutron/neutron.conf" DEFAULT host)" == "lo
 else
     exit ${RC_OKAY}
 fi
-

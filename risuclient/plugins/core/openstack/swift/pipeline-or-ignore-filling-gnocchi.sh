@@ -34,10 +34,9 @@ flag=0
 is_lineinfile "^pipeline.*ceilometer" "${RISU_ROOT}/etc/swift/proxy-server.conf" && flag=1
 is_lineinfile "^ignore_projects" "${RISU_ROOT}/etc/swift/proxy-server.conf" && flag=0
 
-if [[ "${flag}" -eq "1" ]]; then
+if [[ ${flag} -eq "1" ]]; then
     echo $"https://bugzilla.redhat.com/show_bug.cgi?id=1449986" >&2
     exit ${RC_FAILED}
 fi
 
 exit ${RC_OKAY}
-

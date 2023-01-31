@@ -3,7 +3,6 @@
 # Copyright (C) 2018 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 # Copyright (C) 2018 Mikel Olasagasti Uranga <mikel@olasagasti.info>
 
-
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -27,7 +26,7 @@
 ERRORMSG=$"netifnames=0 detected on non-KVM system"
 ERRORMATCH="net.ifnames=0"
 
-if [[ "x$RISU_LIVE" = "x0" ]];  then
+if [[ "x$RISU_LIVE" == "x0" ]]; then
     is_required_file "${RISU_ROOT}/sos_commands/kernel/dmesg"
     is_required_file "${RISU_ROOT}/sos_commands/systemd/systemctl_show_--all"
     if [[ -f "${RISU_ROOT}/sos_commands/networking/ip_-s_-d_link" ]]; then
@@ -39,14 +38,14 @@ if [[ "x$RISU_LIVE" = "x0" ]];  then
     fi
 
     dmesgfile="${RISU_ROOT}/sos_commands/kernel/dmesg"
-    virt_type=$(grep "Virtualization=" "${RISU_ROOT}/sos_commands/systemd/systemctl_show_--all" |cut -d "=" -f2)
+    virt_type=$(grep "Virtualization=" "${RISU_ROOT}/sos_commands/systemd/systemctl_show_--all" | cut -d "=" -f2)
     niccount=$(grep -c "eth[0-9]" "$ip_file")
 
-elif [[ "x$RISU_LIVE" = "x1" ]]; then
+elif [[ "x$RISU_LIVE" == "x1" ]]; then
     dmesgfile=$(mktemp)
-    dmesg > ${dmesgfile}
+    dmesg >${dmesgfile}
     virt_type=$(systemd-detect-virt)
-    niccount=$(ip l |grep -c "eth[0-9]")
+    niccount=$(ip l | grep -c "eth[0-9]")
 
     trap "rm ${dmesgfile}" EXIT
 fi
@@ -62,4 +61,3 @@ fi
 
 # exit as OK if haven't failed earlier
 exit ${RC_OKAY}
-

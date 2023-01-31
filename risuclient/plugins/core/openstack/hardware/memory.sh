@@ -29,8 +29,8 @@ is_required_file "${RISU_ROOT}/proc/cpuinfo""${RISU_ROOT}/proc/meminfo"
 
 TOTALCPU=$(cat "${RISU_ROOT}"/proc/cpuinfo | grep "processor" | sort -u | wc -l)
 MEMTOTAL=$(cat "${RISU_ROOT}"/proc/meminfo | sed -n -r -e 's/MemTotal:[ \t]+([0-9]+).*/\1/p')
-MEMRECOMMEND=$(( TOTALCPU * 3000000 ))
-MEMMINIMUM=$(( TOTALCPU * 1500000 ))
+MEMRECOMMEND=$((TOTALCPU * 3000000))
+MEMMINIMUM=$((TOTALCPU * 1500000))
 if [[ ${MEMTOTAL} -ge 16000000 ]]; then
     echo "memory is greater than 16gb ram"
 else
@@ -50,4 +50,3 @@ else
     echo $"memory is lower than (3gb per core)" >&2
     exit ${RC_FAILED}
 fi
-

@@ -23,7 +23,6 @@
 # bugzilla: https://bugzilla.redhat.com/show_bug.cgi?id=1468101
 # priority: 300
 
-
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
@@ -32,7 +31,7 @@ is_required_file "${RISU_ROOT}/etc/nova/nova.conf"
 # Find release
 RELEASE=$(discover_osp_version)
 
-if [[ "${RELEASE}" -ge "8" ]]; then
+if [[ ${RELEASE} -ge "8" ]]; then
     if [[ "$(iniparser "${RISU_ROOT}/etc/nova/nova.conf" vnc vncserver_listen)" == "127.0.0.1" ]]; then
         flag=1
     fi
@@ -49,8 +48,7 @@ else
     exit ${RC_OKAY}
 fi
 
-if [[ "x$flag" = "x1" ]]; then
+if [[ "x$flag" == "x1" ]]; then
     echo $"nova's vnc console listening on 127.0.0.1" >&2
     exit ${RC_FAILED}
 fi
-

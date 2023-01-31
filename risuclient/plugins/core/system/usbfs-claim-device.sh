@@ -3,7 +3,6 @@
 # Copyright (C) 2018 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 # Copyright (C) 2018 Mikel Olasagasti Uranga <mikel@olasagasti.info>
 
-
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -30,13 +29,12 @@ ERRORMATCH2="usbfs"
 
 is_required_file "${RISU_ROOT}/var/log/messages"
 
-errcount=$(zgrep "$ERRORMATCH" ${RISU_ROOT}/var/log/messages* |grep "$ERRORMATCH2" |wc -l)
-if [[ "x$errcount" != "x0" ]] ; then
-    zgrep "$ERRORMATCH" ${RISU_ROOT}/var/log/messages* |grep "$ERRORMATCH2"
+errcount=$(zgrep "$ERRORMATCH" ${RISU_ROOT}/var/log/messages* | grep "$ERRORMATCH2" | wc -l)
+if [[ "x$errcount" != "x0" ]]; then
+    zgrep "$ERRORMATCH" ${RISU_ROOT}/var/log/messages* | grep "$ERRORMATCH2"
     echo ${ERRORMSG} >&2
     exit ${RC_FAILED}
 fi
 
 # exit as OK if haven't failed earlier
 exit ${RC_OKAY}
-

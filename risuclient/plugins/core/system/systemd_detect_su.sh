@@ -3,7 +3,6 @@
 # Copyright (C) 2018 Renaud Métrich <rmetrich@redhat.com>
 # Copyright (C) 2018 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
-
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -65,7 +64,7 @@ files_having_runuser_l=()
 files_having_su=()
 
 for file in $(/bin/ls ${RISU_ROOT}/etc/rc.d/init.d/*); do
-    [[ -f "$file" ]] || continue
+    [[ -f $file ]] || continue
 
     content="$(strip_and_trim ${file})"
     is_initscript "$file" "$content" || continue
@@ -78,36 +77,35 @@ for file in $(/bin/ls ${RISU_ROOT}/etc/rc.d/init.d/*); do
     echo "$content" | egrep -qw "su" && let su_found+=1
 
     # Check for 'runuser'
-    IFS=$'\n' read -rd '' -a lines <<< "$(echo "$content" | egrep "runuser")"
+    IFS=$'\n' read -rd '' -a lines <<<"$(echo "$content" | egrep "runuser")"
     for line in "${lines[@]}"; do
         let runuser_found+=1
         # Check for '-' or '-l', asssuming it will be at the runuser level
-        egrep -qw -- "(-|-l)" <<< "$line" && let runuser_l_found+=1
+        egrep -qw -- "(-|-l)" <<<"$line" && let runuser_l_found+=1
     done
 
     # Finding 'runuser -l' needs a review
-    [[ ${runuser_l_found} -ne 0 ]] && files_having_runuser_l=( "${files_having_runuser_l[@]}" "$file" )
+    [[ ${runuser_l_found} -ne 0 ]] && files_having_runuser_l=("${files_having_runuser_l[@]}" "$file")
     if [[ ${su_found} -ne 0 ]]; then
         # Finding both 'runuser' and 'su' indicates administrator likely 'fixed' the initscript
         [[ ${runuser_found} -ne 0 ]] && continue
         # Finding only 'su' needs a review
-        files_having_su=( "${files_having_su[@]}" "$file" )
+        files_having_su=("${files_having_su[@]}" "$file")
     fi
 done
 
 EXIT_STATUS=${RC_OKAY}
 
-if [[ -n "$files_having_runuser_l" ]]; then
+if [[ -n $files_having_runuser_l ]]; then
     echo $">>> 'runuser -l ...' or 'runuser - ...' was detected in some initscripts" >&2
     printf '%s\n' "${files_having_runuser_l[@]}" | sed "s#^${RISU_ROOT}##g" >&2
     EXIT_STATUS=${RC_FAILED}
 fi
 
-if [[ -n "$files_having_su" ]]; then
+if [[ -n $files_having_su ]]; then
     echo $">>> 'su' was detected in some initscripts" >&2
     printf '%s\n' "${files_having_su[@]}" | sed "s#^${RISU_ROOT}##g" >&2
     EXIT_STATUS=${RC_FAILED}
 fi
 
 exit ${EXIT_STATUS}
-

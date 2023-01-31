@@ -19,44 +19,42 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-
 # The way we're executed, $1 is the script name, $2 is the mode and $3 is the folder
 FOLDER=$3
 
 case $2 in
-    pass)
-        mkdir -p ${FOLDER}
-        # Touch the systemctl command we check
-        mkdir -p "$FOLDER/sos_commands/systemd/"
-        echo "pacemaker active" > "$FOLDER/sos_commands/systemd/systemctl_list-units_--all"
+pass)
+    mkdir -p ${FOLDER}
+    # Touch the systemctl command we check
+    mkdir -p "$FOLDER/sos_commands/systemd/"
+    echo "pacemaker active" >"$FOLDER/sos_commands/systemd/systemctl_list-units_--all"
 
-        mkdir -p "$FOLDER/etc/corosync"
-        echo "XXXX" > "$FOLDER/etc/corosync/corosync.conf"
+    mkdir -p "$FOLDER/etc/corosync"
+    echo "XXXX" >"$FOLDER/etc/corosync/corosync.conf"
 
-        mkdir -p "$FOLDER/sos_commands/pacemaker"
-        echo  "stonith-enabled: True" > "$FOLDER/sos_commands/pacemaker/pcs_config"
-        ;;
+    mkdir -p "$FOLDER/sos_commands/pacemaker"
+    echo "stonith-enabled: True" >"$FOLDER/sos_commands/pacemaker/pcs_config"
+    ;;
 
-    fail)
-        mkdir -p ${FOLDER}
-        # Touch the systemctl command we check
-        mkdir -p "$FOLDER/sos_commands/systemd/"
-        echo "pacemaker active" > "$FOLDER/sos_commands/systemd/systemctl_list-units_--all"
+fail)
+    mkdir -p ${FOLDER}
+    # Touch the systemctl command we check
+    mkdir -p "$FOLDER/sos_commands/systemd/"
+    echo "pacemaker active" >"$FOLDER/sos_commands/systemd/systemctl_list-units_--all"
 
-        mkdir -p "$FOLDER/etc/corosync"
-        echo "XXXX" > "$FOLDER/etc/corosync/corosync.conf"
+    mkdir -p "$FOLDER/etc/corosync"
+    echo "XXXX" >"$FOLDER/etc/corosync/corosync.conf"
 
-        mkdir -p "$FOLDER/sos_commands/pacemaker"
-        echo  "stonith-enabled: false" > "$FOLDER/sos_commands/pacemaker/pcs_config"
-        ;;
+    mkdir -p "$FOLDER/sos_commands/pacemaker"
+    echo "stonith-enabled: false" >"$FOLDER/sos_commands/pacemaker/pcs_config"
+    ;;
 
-    skipped)
-        # Do nothing, the folder will be empty and test should be skipped
-        ;;
+skipped)
+    # Do nothing, the folder will be empty and test should be skipped
+    ;;
 
-    *)
-        echo "Unexpected mode '$2'!"
-        exit 2
-        ;;
+*)
+    echo "Unexpected mode '$2'!"
+    exit 2
+    ;;
 esac
-

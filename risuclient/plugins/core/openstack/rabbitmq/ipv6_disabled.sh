@@ -37,4 +37,3 @@ if is_lineinfile "disable_ipv6=1" ${files}; then
 fi
 
 exit ${RC_OKAY}
-

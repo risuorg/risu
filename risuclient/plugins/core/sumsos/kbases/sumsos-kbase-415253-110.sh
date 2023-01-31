@@ -25,7 +25,6 @@
 REGEXP="kernel: device-mapper: multipath: Using scsi_dh module scsi_dh_alua for failover/failback and device management."
 KCS=415253
 
-
 # priority: 500
 
 # Load common functions
@@ -33,7 +32,7 @@ KCS=415253
 
 journal="$journalctl_file"
 
-if is_lineinfile "${REGEXP}" ${journal} ${RISU_ROOT}/var/log/messages ; then
+if is_lineinfile "${REGEXP}" ${journal} ${RISU_ROOT}/var/log/messages; then
     echo $"Check Kbase: https://access.redhat.com/solutions/$KCS for more details about error: $REGEXP found in logs" >&2
     exit ${RC_FAILED}
 else

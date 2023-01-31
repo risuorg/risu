@@ -21,7 +21,6 @@
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
-
 REGEXP="IpAddressGenerationFailure No more IP addresses available on network"
 FILE="${RISU_ROOT}/var/log/neutron/dhcp-agent.log"
 
@@ -29,10 +28,9 @@ is_required_file ${FILE}
 
 if is_lineinfile "${REGEXP}" ${FILE}; then
     echo $"Networks that run out of IP's:" >&2
-    LANG=C grep "${REGEXP}" ${FILE} |cut -d " " -f 17|sort|uniq >&2
+    LANG=C grep "${REGEXP}" ${FILE} | cut -d " " -f 17 | sort | uniq >&2
     exit ${RC_FAILED}
 fi
 
 # If the above conditions did not trigger RC_FAILED we are good.
 exit ${RC_OKAY}
-

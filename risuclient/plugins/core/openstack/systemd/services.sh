@@ -25,17 +25,17 @@
 # description: Checks for failed OSP services
 # priority: 1000
 
-if [[ "x$RISU_LIVE" = "x1" ]];  then
+if [[ "x$RISU_LIVE" == "x1" ]]; then
 
-    SERVICES=$(systemctl list-units --all | grep "neutron.*failed\|openstack.*failed\|openvswitch.*failed" | sed 's/*//' |awk '{print $1}')
+    SERVICES=$(systemctl list-units --all | grep "neutron.*failed\|openstack.*failed\|openvswitch.*failed" | sed 's/*//' | awk '{print $1}')
     if systemctl list-units --all | grep -q "neutron.*failed\|openstack.*failed\|openvswitch.*failed"; then
         echo ${SERVICES} | tr ' ' '\n' >&2
         exit ${RC_FAILED}
     else
         exit ${RC_OKAY}
     fi
-elif [[ "x$RISU_LIVE" = "x0" ]];  then
-    if [[ -z "${systemctl_list_units_file}" ]]; then
+elif [[ "x$RISU_LIVE" == "x0" ]]; then
+    if [[ -z ${systemctl_list_units_file} ]]; then
         echo "file /sos_commands/systemd/systemctl_list-units not found." >&2
         echo "file /sos_commands/systemd/systemctl_list-units_--all not found." >&2
         exit ${RC_SKIPPED}
@@ -48,4 +48,3 @@ elif [[ "x$RISU_LIVE" = "x0" ]];  then
         exit ${RC_OKAY}
     fi
 fi
-

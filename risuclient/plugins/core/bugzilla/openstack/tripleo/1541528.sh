@@ -27,11 +27,10 @@
 
 is_required_file "${RISU_ROOT}/etc/sysconfig/iptables"
 
-if is_lineinfile "NIPv4" "${RISU_ROOT}/etc/sysconfig/iptables" ; then
+if is_lineinfile "NIPv4" "${RISU_ROOT}/etc/sysconfig/iptables"; then
     echo $"NIPv4 statement found in /etc/sysconfig/iptables" >&2
     echo $"https://bugzilla.redhat.com/show_bug.cgi?id=1541528" >&2
     exit ${RC_FAILED}
 else
     exit ${RC_OKAY}
 fi
-

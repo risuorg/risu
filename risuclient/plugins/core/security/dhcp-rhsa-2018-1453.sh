@@ -21,19 +21,18 @@
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
-exitoudated(){
+exitoudated() {
     echo "Please do check https://access.redhat.com/security/vulnerabilities/3442151 for guidance" >&2
 }
 
 RELEASE=$(discover_rhrelease)
-[[ "${RELEASE}" -eq '0' ]] && echo "RH release undefined" >&2 && exit ${RC_SKIPPED}
+[[ ${RELEASE} -eq '0' ]] && echo "RH release undefined" >&2 && exit ${RC_SKIPPED}
 
-if [[ "${RELEASE}" -eq "7" ]]; then
+if [[ ${RELEASE} -eq "7" ]]; then
     exitoudated
     is_required_rpm_over dhclient dhclient-4.2.5-68.el7_5.1
-elif [[ "${RELEASE}" -eq "6" ]]; then
+elif [[ ${RELEASE} -eq "6" ]]; then
     exitoudated
     is_required_rpm_over dhclient dhclient-4.1.1-53.P1.el6_9.4
 fi
 exit ${RC_OKAY}
-

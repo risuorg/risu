@@ -30,15 +30,15 @@ is_required_containerized
 if [[ ${RISU_LIVE} -eq 0 ]]; then
     is_required_file "${RISU_ROOT}/sos_commands/docker/docker_ps"
     FILE="${RISU_ROOT}/sos_commands/docker/docker_ps"
-elif [[ ${RISU_LIVE} -eq 1 ]];then
+elif [[ ${RISU_LIVE} -eq 1 ]]; then
     FILE=$(mktemp)
     trap "rm ${FILE}" EXIT
-    docker ps > ${FILE}
+    docker ps >${FILE}
 fi
 
 ncontainers=$(grep -v NAMES "${FILE}" | wc -l)
 unhealthy_containers=$(grep -i -c unhealthy "${FILE}")
-if [[ "${unhealthy_containers}" -ge "1" ]]; then
+if [[ ${unhealthy_containers} -ge "1" ]]; then
     echo $"unhealthy containers detected (${unhealthy_containers}/${ncontainers}):" >&2
     grep -i "unhealthy" "${FILE}" | awk '{print $NF}' >&2
     exit ${RC_FAILED}
@@ -46,4 +46,3 @@ else
     echo $"no unhealthy containers detected" >&2
     exit ${RC_OKAY}
 fi
-

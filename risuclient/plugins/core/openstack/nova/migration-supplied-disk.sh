@@ -32,4 +32,3 @@ if is_lineinfile "DestinationDiskExists: The supplied disk path .* already exist
 fi
 
 exit ${RC_OKAY}
-

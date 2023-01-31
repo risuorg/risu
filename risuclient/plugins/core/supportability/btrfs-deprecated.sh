@@ -3,7 +3,6 @@
 # Copyright (C) 2018 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 # Copyright (C) 2018 Mikel Olasagasti Uranga <mikel@olasagasti.info>
 
-
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -28,7 +27,7 @@
 #is_required_file ${RISU_BASE}/etc/redhat-release
 RELEASE=$(discover_rhrelease)
 
-[[ "${RELEASE}" -eq '0' ]] && echo "RH release undefined" >&2 && exit ${RC_SKIPPED}
+[[ ${RELEASE} -eq '0' ]] && echo "RH release undefined" >&2 && exit ${RC_SKIPPED}
 
 if [[ ${RELEASE} -gt 7 ]]; then
     echo "test not applicable to EL8 releases or higher" >&2
@@ -37,10 +36,10 @@ fi
 
 if [[ ${RISU_LIVE} -eq 0 ]]; then
     FILE="${RISU_ROOT}/proc/mounts"
-elif [[ ${RISU_LIVE} -eq 1 ]];then
+elif [[ ${RISU_LIVE} -eq 1 ]]; then
     FILE=$(mktemp)
     trap "rm ${FILE}" EXIT
-    cat /proc/mounts > ${FILE}
+    cat /proc/mounts >${FILE}
 fi
 
 if is_lineinfile "btrfs" "${FILE}"; then
@@ -49,4 +48,3 @@ if is_lineinfile "btrfs" "${FILE}"; then
 fi
 
 exit ${RC_OKAY}
-

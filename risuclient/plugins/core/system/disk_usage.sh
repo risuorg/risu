@@ -6,7 +6,6 @@
 # Copyright (C) 2017, 2018 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 # Copyright (C) 2018 Mikel Olasagasti Uranga <mikel@olasagasti.info>
 
-
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -29,7 +28,7 @@
 
 : ${RISU_DISK_MAX_PERCENT=75}
 
-if [[ ${RISU_LIVE} = 0 ]]; then
+if [[ ${RISU_LIVE} == 0 ]]; then
     is_required_file "${RISU_ROOT}/df"
     DISK_USE_CMD="cat ${RISU_ROOT}/df"
 else
@@ -37,12 +36,11 @@ else
 fi
 
 #https://unix.stackexchange.com/a/15083
-result=$(${DISK_USE_CMD} |awk -vdisk_max_percent=${RISU_DISK_MAX_PERCENT} '/^\/dev/ && 0+$5 > disk_max_percent { print $6,$5 }')
+result=$(${DISK_USE_CMD} | awk -vdisk_max_percent=${RISU_DISK_MAX_PERCENT} '/^\/dev/ && 0+$5 > disk_max_percent { print $6,$5 }')
 
-if [[ -n "$result" ]]; then
+if [[ -n $result ]]; then
     echo "${result}" >&2
     exit ${RC_FAILED}
 else
     exit ${RC_OKAY}
 fi
-

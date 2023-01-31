@@ -4,7 +4,6 @@
 # Copyright (C) 2018 Robin Černín <cerninr@gmail.com>
 # Copyright (C) 2018 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
-
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -29,35 +28,33 @@
 
 is_required_rpm kernel-rt
 
-if [[ "x$RISU_LIVE" = "x0" ]]; then
+if [[ "x$RISU_LIVE" == "x0" ]]; then
     FILE="${RISU_ROOT}/uname"
     RPMFILE="${RISU_ROOT}/installed-rpms"
-elif [[ "x$RISU_LIVE" = "x1" ]];then
+elif [[ "x$RISU_LIVE" == "x1" ]]; then
     FILE=$(mktemp)
     RPMFILE=$(mktemp)
     trap "rm ${FILE} ${RPMFILE}" EXIT
-    uname -a > ${FILE}
-    rpm -qa kernel-rt-* > ${RPMFILE}
+    uname -a >${FILE}
+    rpm -qa kernel-rt-* >${RPMFILE}
 fi
 
 is_required_file "$FILE"
 running_kernel=$(cut -d" " -f3 "$FILE" | sed -r 's/(^([0-9]+\.){2}[0-9]+-[0-9]+).*$/\1/')
 
 nkernel=$(grep "\skernel-rt-[0-9]" "${RPMFILE}")
-if [[ -z "$nkernel" ]]; then
+if [[ -z $nkernel ]]; then
     echo $"no kernel-rt install or update found" >&2
     exit ${RC_OKAY}
 fi
 
-installed_kernel=$(grep "\skernel-[0-9]-rt" "${RPMFILE}" | sort -V| tail -1 \
-    | awk '{print $NF}'|  sed -r 's/[a-z]*-(([0-9]+\.){2}[0-9]+-[0-9]+).*$/\1/')
+installed_kernel=$(grep "\skernel-[0-9]-rt" "${RPMFILE}" | sort -V | tail -1 |
+    awk '{print $NF}' | sed -r 's/[a-z]*-(([0-9]+\.){2}[0-9]+-[0-9]+).*$/\1/')
 
-
-if [[ "$running_kernel" == "$installed_kernel" ]]; then
+if [[ $running_kernel == "$installed_kernel" ]]; then
     echo $"running kernel-rt same as latest installed kernel" >&2
     exit ${RC_OKAY}
 else
     echo $"detected running kernel-rt: $running_kernel latest installed $installed_kernel" >&2
     exit ${RC_FAILED}
 fi
-

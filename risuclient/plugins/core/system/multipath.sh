@@ -3,7 +3,6 @@
 # Copyright (C) 2018 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 # Copyright (C) 2018 Shatadru Bandyopadhyay <shatadru1@gmail.com>
 
-
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -28,33 +27,31 @@
 
 is_required_rpm device-mapper-multipath
 is_required_file "${RISU_ROOT}/etc/multipath.conf"
-if is_enabled multipathd && ! is_active multipath ; then
+if is_enabled multipathd && ! is_active multipath; then
     echo $"multipathd is enabled but not running, path failover will not work!" >&2
     flag=1
-    if [[ "x$RISU_LIVE" = "x1" ]];  then
-        echo $"multipathd status:"  >&2
-        systemctl status multipathd  >&2
+    if [[ "x$RISU_LIVE" == "x1" ]]; then
+        echo $"multipathd status:" >&2
+        systemctl status multipathd >&2
     else
-        echo $"Check #systemctl status multipathd *or* journalctl -xe"  >&2
+        echo $"Check #systemctl status multipathd *or* journalctl -xe" >&2
     fi
 fi
 
-
-if [[ "x$RISU_LIVE" = "x0" ]];  then
+if [[ "x$RISU_LIVE" == "x0" ]]; then
     is_required_file "${RISU_ROOT}/sos_commands/multipath/multipath_-v4_-ll"
-    mpath_stat=$(egrep "failed|faulty|offline" ${RISU_ROOT}/sos_commands/multipath/multipath_-v4_-ll )
-elif [[ "x$RISU_LIVE" = "x1" ]];  then
-    mpath_stat=$(multipath -v4 -ll| egrep "failed|faulty|offline")
+    mpath_stat=$(egrep "failed|faulty|offline" ${RISU_ROOT}/sos_commands/multipath/multipath_-v4_-ll)
+elif [[ "x$RISU_LIVE" == "x1" ]]; then
+    mpath_stat=$(multipath -v4 -ll | egrep "failed|faulty|offline")
 fi
 
-if [[ ! -z "$mpath_stat" ]]; then
+if [[ -n $mpath_stat ]]; then
     flag=1
     echo $"faulty/failed/offline paths:" >&2
-    echo "$mpath_stat"  >&2
+    echo "$mpath_stat" >&2
 fi
 if [[ ${flag} -eq '1' ]]; then
     exit ${RC_FAILED}
 else
     exit ${RC_OKAY}
 fi
-

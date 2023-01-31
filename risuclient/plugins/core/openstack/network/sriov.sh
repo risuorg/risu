@@ -34,30 +34,30 @@ RELEASE=$(discover_osp_version)
 
 flag=0
 
-if [[ "$RELEASE" -gt 7 ]]; then
-    if ! is_rpm openstack-neutron-sriov-nic-agent > /dev/null 2>&1;then
+if [[ $RELEASE -gt 7 ]]; then
+    if ! is_rpm openstack-neutron-sriov-nic-agent >/dev/null 2>&1; then
         echo $"missing rpm openstack-neutron-sriov-nic-agent" >&2
         flag=1
     fi
-    if ! is_process neutron-sriov-nic-agent;then
+    if ! is_process neutron-sriov-nic-agent; then
         echo $"neutron-sriov-nic-agent not running" >&2
         flag=1
     fi
 fi
 
-if [[ "x$RISU_LIVE" = "x1" ]];  then
-    if [[ "$(lspci|grep "Virtual Function"|wc -l)" -eq "0" ]]; then
+if [[ "x$RISU_LIVE" == "x1" ]]; then
+    if [[ "$(lspci | grep "Virtual Function" | wc -l)" -eq "0" ]]; then
         vfflag=1
         flag=1
     fi
-elif [[ "x$RISU_LIVE" = "x0" ]]; then
-    if ! is_lineinfile "Virtual Function" "${RISU_ROOT}/lspci";then
+elif [[ "x$RISU_LIVE" == "x0" ]]; then
+    if ! is_lineinfile "Virtual Function" "${RISU_ROOT}/lspci"; then
         vfflag=1
         flag=1
     fi
 fi
 
-if [[ "x$vfflag" = "x1" ]]; then
+if [[ "x$vfflag" == "x1" ]]; then
     echo $"virtual function is disabled" >&2
 fi
 
@@ -66,51 +66,50 @@ if ! is_lineinfile "vfio_iommu_type1" "${RISU_ROOT}/proc/modules"; then
     flag=1
 fi
 
-if ! is_lineinfile 'Y' "${RISU_ROOT}/sys/module/vfio_iommu_type1/parameters/allow_unsafe_interrupts";then
+if ! is_lineinfile 'Y' "${RISU_ROOT}/sys/module/vfio_iommu_type1/parameters/allow_unsafe_interrupts"; then
     echo $"unsafe interrupts not enabled" >&2
     flag=1
 fi
 
-if ! is_lineinfile "hugepagesz=" "${RISU_ROOT}/proc/cmdline";then
+if ! is_lineinfile "hugepagesz=" "${RISU_ROOT}/proc/cmdline"; then
     echo $"missing hugepagesz on kernel cmdline" >&2
     flag=1
 fi
 
-if ! is_lineinfile "hugepages=" "${RISU_ROOT}/proc/cmdline";then
+if ! is_lineinfile "hugepages=" "${RISU_ROOT}/proc/cmdline"; then
     echo $"missing hugepages= on kernel cmdline" >&2
     flag=1
 fi
 
-if ! is_lineinfile "mechanism_drivers.*sriovnicswitch" "${RISU_ROOT}/etc/neutron/plugins/ml2/ml2_conf.ini";then
+if ! is_lineinfile "mechanism_drivers.*sriovnicswitch" "${RISU_ROOT}/etc/neutron/plugins/ml2/ml2_conf.ini"; then
     echo $"missing sriovnicswitch in ml2_conf.ini" >&2
     flag=1
 fi
 
-
 if [[ "$(discover_osp_version)" -lt "11" ]]; then
-    if ! is_lineinfile "^scheduler_defaults.*PciPassthroughFilter" "${RISU_ROOT}/etc/nova/nova.conf";then
+    if ! is_lineinfile "^scheduler_defaults.*PciPassthroughFilter" "${RISU_ROOT}/etc/nova/nova.conf"; then
         missingpcipasstru=1
         flag=1
     fi
 else
     # Ocata and higher
-    if ! is_lineinfile "^enabled_filters.*PciPassthroughFilter" "${RISU_ROOT}/etc/nova/nova.conf";then
+    if ! is_lineinfile "^enabled_filters.*PciPassthroughFilter" "${RISU_ROOT}/etc/nova/nova.conf"; then
         missingpcipasstru=1
         flag=1
     fi
 fi
 
-if [[ "$missingpcipasstru" -eq "1" ]]; then
+if [[ $missingpcipasstru -eq "1" ]]; then
     echo $"missing PciPassthroughFilter in nova.conf" >&2
 fi
 
-if ! is_lineinfile "^pci_passthrough_whitelist" "${RISU_ROOT}/etc/nova/nova.conf";then
+if ! is_lineinfile "^pci_passthrough_whitelist" "${RISU_ROOT}/etc/nova/nova.conf"; then
     echo $"missing pci_passthrough_whitelist in /etc/nova/nova.conf" >&2
     flag=1
 fi
 
 if is_process nova-compute; then
-    if ! is_lineinfile "^physical_device_mappings.*" "${RISU_ROOT}/etc/neutron/plugins/ml2/sriov_agent.ini";then
+    if ! is_lineinfile "^physical_device_mappings.*" "${RISU_ROOT}/etc/neutron/plugins/ml2/sriov_agent.ini"; then
         echo $"missing physical_device_mappings in /etc/neutron/plugins/ml2/sriov_agent.ini" >&2
         flag=1
     fi
@@ -122,4 +121,3 @@ if [[ ${flag} -eq '1' ]]; then
 else
     exit ${RC_OKAY}
 fi
-

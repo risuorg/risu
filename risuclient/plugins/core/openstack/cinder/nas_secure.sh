@@ -38,8 +38,8 @@ DRIVER=$(egrep "$DRIVERMATCH" "${RISU_ROOT}/etc/cinder/cinder.conf" -c)
 
 if [[ "x$DRIVER" != "x0" ]]; then
 
-    OPERATIONS=$(grep ^nas_secure_file_operations "${RISU_ROOT}/etc/cinder/cinder.conf" |cut -d "=" -f2 |sed 's/^[ \t]*//' |tail -n1 |tr '[:upper:]' '[:lower:]')
-    PERMISSIONS=$(grep ^nas_secure_file_permissions "${RISU_ROOT}/etc/cinder/cinder.conf" |cut -d "=" -f2 |sed 's/^[ \t]*//' |tail -n1 |tr '[:upper:]' '[:lower:]')
+    OPERATIONS=$(grep ^nas_secure_file_operations "${RISU_ROOT}/etc/cinder/cinder.conf" | cut -d "=" -f2 | sed 's/^[ \t]*//' | tail -n1 | tr '[:upper:]' '[:lower:]')
+    PERMISSIONS=$(grep ^nas_secure_file_permissions "${RISU_ROOT}/etc/cinder/cinder.conf" | cut -d "=" -f2 | sed 's/^[ \t]*//' | tail -n1 | tr '[:upper:]' '[:lower:]')
 
     if [[ "x$OPERATIONS" == "xtrue" ]] || [[ "x$PERMISSIONS" == "xtrue" ]]; then
         echo ${ERRORMSGTRUE} >&2
@@ -59,4 +59,3 @@ if [[ "x$DRIVER" != "x0" ]]; then
 else
     exit ${RC_OKAY}
 fi
-

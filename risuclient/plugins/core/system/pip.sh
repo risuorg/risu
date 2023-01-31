@@ -3,7 +3,6 @@
 # Copyright (C) 2018 David Valle Delisle <dvd@redhat.com>
 # Copyright (C) 2018 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
-
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -24,11 +23,10 @@
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
-if is_rpm python*-pip*  > /dev/null 2>&1; then
+if is_rpm python*-pip* >/dev/null 2>&1; then
     echo $"python pip is detected" >&2
     exit ${RC_FAILED}
 else
     echo "no python pip package detected" >&2
     exit ${RC_OKAY}
 fi
-

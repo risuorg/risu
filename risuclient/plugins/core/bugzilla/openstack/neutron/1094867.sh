@@ -30,15 +30,14 @@ ERRORMATCH3="ovs_flow_stats_update"
 
 is_required_file "${RISU_ROOT}/var/log/messages"
 
-errcount=$(zgrep "$ERRORMATCH1" ${RISU_ROOT}/var/log/messages* |wc -l)
-if [[ "x$errcount" != "x0" ]] ; then
-    errcount2=$(zgrep "$ERRORMATCH2" ${RISU_ROOT}/var/log/messages* |wc -l)
-    errcount3=$(zgrep "$ERRORMATCH3" ${RISU_ROOT}/var/log/messages* |wc -l)
-    if [[ "x$errcount2" != "x0" ]] || [[ "x$errcount3" != "x0" ]] ; then
+errcount=$(zgrep "$ERRORMATCH1" ${RISU_ROOT}/var/log/messages* | wc -l)
+if [[ "x$errcount" != "x0" ]]; then
+    errcount2=$(zgrep "$ERRORMATCH2" ${RISU_ROOT}/var/log/messages* | wc -l)
+    errcount3=$(zgrep "$ERRORMATCH3" ${RISU_ROOT}/var/log/messages* | wc -l)
+    if [[ "x$errcount2" != "x0" ]] || [[ "x$errcount3" != "x0" ]]; then
         echo ${ERRORMSG} >&2
         exit ${RC_FAILED}
     fi
 fi
 
 exit ${RC_OKAY}
-

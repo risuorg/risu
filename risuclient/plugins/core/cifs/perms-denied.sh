@@ -30,11 +30,10 @@ REGEXP="kernel.*cifs_mount failed w/return code = -13"
 
 journal="$journalctl_file"
 
-if is_lineinfile "${REGEXP}" ${journal} ${RISU_ROOT}/var/log/messages ; then
+if is_lineinfile "${REGEXP}" ${journal} ${RISU_ROOT}/var/log/messages; then
     echo $"CIFS: mount error(13): Permission denied." >&2
     echo $"$REGEXP found in logs" >&2
     exit ${RC_FAILED}
 else
     exit ${RC_OKAY}
 fi
-

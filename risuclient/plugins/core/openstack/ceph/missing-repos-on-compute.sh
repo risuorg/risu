@@ -32,14 +32,14 @@ if ! is_process nova-compute; then
 fi
 OUTDATED=$"librbd1 might be outdated if rhceph repo is not enabled on compute"
 
-if [[ "x$RISU_LIVE" = "x1" ]]; then
+if [[ "x$RISU_LIVE" == "x1" ]]; then
     if [[ "$(yum -C repolist 2>&1 | grep "rhceph.*tools" | wc -l)" -eq "0" ]]; then
         echo "$OUTDATED" >&2
         exit ${RC_FAILED}
     else
         exit ${RC_OKAY}
     fi
-elif [[ "x$RISU_LIVE" = "x0" ]]; then
+elif [[ "x$RISU_LIVE" == "x0" ]]; then
     if [[ "$(cat ${RISU_ROOT}/sos_commands/yum/yum_-C_repolist | grep "rhceph.*tools" | wc -l)" -eq "0" ]]; then
         echo "$OUTDATED" >&2
         exit ${RC_FAILED}
@@ -47,4 +47,3 @@ elif [[ "x$RISU_LIVE" = "x0" ]]; then
         exit ${RC_OKAY}
     fi
 fi
-

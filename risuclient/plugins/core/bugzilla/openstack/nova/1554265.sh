@@ -48,9 +48,9 @@ fi
 
 allocation="$(iniparser "${RISU_ROOT}/etc/nova/nova.conf" DEFAULT preallocate_images)"
 
-if [[ "${allocation}" == 'space' ]]; then
-    if [[ "${imagetype}" == "default" ]]; then
-        if [[ "${cowimages}" == "true" ]]; then
+if [[ ${allocation} == 'space' ]]; then
+    if [[ ${imagetype} == "default" ]]; then
+        if [[ ${cowimages} == "true" ]]; then
             echo $"https://bugzilla.redhat.com/show_bug.cgi?id=1554265" >&2
             exit ${RC_FAILED}
         else
@@ -62,5 +62,3 @@ if [[ "${allocation}" == 'space' ]]; then
 else
     exit ${RC_OKAY}
 fi
-
-

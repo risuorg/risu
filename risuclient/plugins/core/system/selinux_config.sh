@@ -6,7 +6,6 @@
 # Copyright (C) 2017, 2018 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 # Copyright (C) 2018 Mikel Olasagasti Uranga <mikel@olasagasti.info>
 
-
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -28,14 +27,14 @@
 # priority: 100
 # selinux enforcing
 
-if [[ ${RISU_LIVE} = 0 ]];  then
+if [[ ${RISU_LIVE} == 0 ]]; then
     is_required_file "${RISU_ROOT}/sos_commands/selinux/sestatus_-b"
     sestatus="${RISU_ROOT}/sos_commands/selinux/sestatus_-b"
 else
     is_required_command "sestatus"
     sestatus=$(mktemp)
     trap "rm ${sestatus}" EXIT
-    sestatus -b > ${sestatus}
+    sestatus -b >${sestatus}
 fi
 
 status=$(awk '/^SELinux status:/ {print $3}' ${sestatus})
@@ -55,4 +54,3 @@ else
     echo "failed to determined persistent selinux mode" >&2
     exit ${RC_FAILED}
 fi
-

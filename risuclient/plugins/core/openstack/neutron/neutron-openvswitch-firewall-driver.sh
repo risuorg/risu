@@ -40,4 +40,3 @@ if [[ "$(iniparser ${RISU_ROOT}/etc/neutron/plugins/ml2/openvswitch_agent.ini se
 fi
 
 exit ${RC_OKAY}
-

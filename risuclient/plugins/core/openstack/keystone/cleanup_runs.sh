@@ -36,13 +36,12 @@ fi
 
 RUNS=$(grep 'Total expired tokens removed' "${RISU_ROOT}/var/log/keystone/keystone.log" | wc -l)
 
-[[ "x${RUNS}" = "x" ]] && echo "Non recorded cleanup runs" >&2 && exit ${RC_FAILED}
+[[ "x${RUNS}" == "x" ]] && echo "Non recorded cleanup runs" >&2 && exit ${RC_FAILED}
 
-if [[ "${RUNS}" -eq 0 ]]; then
+if [[ ${RUNS} -eq 0 ]]; then
     echo "Non recorded cleanup runs" >&2
     exit ${RC_FAILED}
-elif [[ "${RUNS}" -ge 1 ]]; then
+elif [[ ${RUNS} -ge 1 ]]; then
     echo "${RUNS}" >&2
     exit ${RC_OKAY}
 fi
-

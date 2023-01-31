@@ -19,32 +19,30 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-
 # The way we're executed, $1 is the script name, $2 is the mode and $3 is the folder
 FOLDER=$3
 
 case $2 in
-    pass)
-        mkdir -p ${FOLDER}
-        # Touch the systemctl command we check
-        mkdir -p "$FOLDER/var/log/httpd/"
-        echo "" > "$FOLDER/var/log/httpd/error_log"
-        ;;
+pass)
+    mkdir -p ${FOLDER}
+    # Touch the systemctl command we check
+    mkdir -p "$FOLDER/var/log/httpd/"
+    echo "" >"$FOLDER/var/log/httpd/error_log"
+    ;;
 
-    fail)
-        mkdir -p ${FOLDER}
-        # Touch the systemctl command we check
-        mkdir -p "$FOLDER/var/log/httpd/"
-        echo "MaxRequestWorkers" > "$FOLDER/var/log/httpd/error_log"
-        ;;
+fail)
+    mkdir -p ${FOLDER}
+    # Touch the systemctl command we check
+    mkdir -p "$FOLDER/var/log/httpd/"
+    echo "MaxRequestWorkers" >"$FOLDER/var/log/httpd/error_log"
+    ;;
 
-    skipped)
-        # Do nothing, the folder will be empty and test should be skipped
-        ;;
+skipped)
+    # Do nothing, the folder will be empty and test should be skipped
+    ;;
 
-    *)
-        echo "Unexpected mode '$2'!"
-        exit 2
-        ;;
+*)
+    echo "Unexpected mode '$2'!"
+    exit 2
+    ;;
 esac
-

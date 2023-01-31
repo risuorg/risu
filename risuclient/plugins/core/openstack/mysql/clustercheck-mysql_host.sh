@@ -25,7 +25,7 @@
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
-if is_process nova-compute;then
+if is_process nova-compute; then
     echo "works only on controller node" >&2
     exit ${RC_SKIPPED}
 fi
@@ -38,4 +38,3 @@ else
     grep "^MYSQL_HOST" "${RISU_ROOT}/etc/sysconfig/clustercheck" >&2
     exit ${RC_FAILED}
 fi
-

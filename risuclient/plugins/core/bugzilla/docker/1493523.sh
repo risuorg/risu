@@ -27,11 +27,9 @@
 
 is_required_file ${RISU_ROOT}/var/log/messages
 
-
 if is_lineinfile ".*dockerd-current:.*containerd:.*has become an orphan, killing it.*" ${RISU_ROOT}/var/log/messages; then
     echo $"https://bugzilla.redhat.com/show_bug.cgi?id=1493523" >&2
     exit ${RC_FAILED}
 fi
 
 exit ${RC_OKAY}
-

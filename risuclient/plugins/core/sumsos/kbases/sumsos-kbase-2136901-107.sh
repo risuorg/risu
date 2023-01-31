@@ -25,7 +25,6 @@
 REGEXP="kernel: device-mapper: thin: .*: reached low water mark for metadata device: sending event."
 KCS=2136901
 
-
 # priority: 500
 
 # Load common functions
@@ -33,7 +32,7 @@ KCS=2136901
 
 journal="$journalctl_file"
 
-if is_lineinfile "${REGEXP}" ${journal} ${RISU_ROOT}/var/log/messages ; then
+if is_lineinfile "${REGEXP}" ${journal} ${RISU_ROOT}/var/log/messages; then
     echo $"Check Kbase: https://access.redhat.com/solutions/$KCS for more details about error: $REGEXP found in logs" >&2
     exit ${RC_FAILED}
 else

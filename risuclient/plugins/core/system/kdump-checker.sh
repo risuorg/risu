@@ -5,7 +5,6 @@
 # Copyright (C) 2018 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 # Copyright (C) 2018 George Angelopoulos <george@usermod.net>
 
-
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -37,11 +36,11 @@ fi
 
 is_required_file "${RISU_ROOT}/etc/kdump.conf"
 
-grubs=( "${RISU_ROOT}"/boot/grub2/grub.cfg \
-        "${RISU_ROOT}"/boot/grub/grub.conf \
-        "${RISU_ROOT}"/etc/grub2.cfg       \
-        "${RISU_ROOT}"/etc/grub.conf       \
-        "${RISU_ROOT}"/boot/efi/EFI/redhat/grub.cfg )
+grubs=("${RISU_ROOT}"/boot/grub2/grub.cfg
+    "${RISU_ROOT}"/boot/grub/grub.conf
+    "${RISU_ROOT}"/etc/grub2.cfg
+    "${RISU_ROOT}"/etc/grub.conf
+    "${RISU_ROOT}"/boot/efi/EFI/redhat/grub.cfg)
 
 for f in "${grubs[@]}"; do
     [ -f "$f" ] && grub_conf="$f" && break
@@ -68,4 +67,3 @@ if [[ ${flag} -eq '1' ]]; then
 else
     exit ${RC_OKAY}
 fi
-

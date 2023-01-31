@@ -28,8 +28,7 @@ is_required_file "${RISU_ROOT}/var/log/messages"
 
 # Now check if we've the error message in logs:
 if is_lineinfile "haproxy.*is DOWN" "${RISU_ROOT}/var/log/messages"; then
-    grep "haproxy.*is DOWN" "${RISU_ROOT}/var/log/messages"| tail >&2
+    grep "haproxy.*is DOWN" "${RISU_ROOT}/var/log/messages" | tail >&2
     exit ${RC_FAILED}
 fi
 exit ${RC_OKAY}
-

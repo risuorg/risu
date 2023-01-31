@@ -21,19 +21,18 @@
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
-exitoudated(){
+exitoudated() {
     echo "Please do check https://access.redhat.com/security/vulnerabilities/ssbd for guidance" >&2
 }
 
 RELEASE=$(discover_rhrelease)
-[[ "${RELEASE}" -eq '0' ]] && echo "RH release undefined" >&2 && exit ${RC_SKIPPED}
+[[ ${RELEASE} -eq '0' ]] && echo "RH release undefined" >&2 && exit ${RC_SKIPPED}
 
-if [[ "${RELEASE}" -eq "7" ]]; then
+if [[ ${RELEASE} -eq "7" ]]; then
     exitoudated
     is_required_rpm_over kernel kernel-3.10.0-862.3.2
-elif [[ "${RELEASE}" -eq "6" ]]; then
+elif [[ ${RELEASE} -eq "6" ]]; then
     exitoudated
     is_required_rpm_over kernel kernel-2.6.32-696.30.1
 fi
 exit ${RC_OKAY}
-

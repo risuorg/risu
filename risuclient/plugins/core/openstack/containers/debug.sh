@@ -29,14 +29,14 @@ is_required_containerized
 
 CONFIG_FOLDER="${RISU_ROOT}/var/lib/config-data/puppet-generated"
 
-if [[ "x$RISU_LIVE" = "x1" ]]; then
+if [[ "x$RISU_LIVE" == "x1" ]]; then
     echo $"works only against fs snapshot"
     exit ${RC_SKIPPED}
-elif [[ "x$RISU_LIVE" = "x0" ]]; then
+elif [[ "x$RISU_LIVE" == "x0" ]]; then
     containers=$(
         for directory in ${CONFIG_FOLDER}/*; do
-            if [[ -d "${directory}" ]]; then
-                echo ${directory} | sed -n -r -e 's_^.*puppet-generated/([a-z].*).*$_\1_p'| sort |uniq
+            if [[ -d ${directory} ]]; then
+                echo ${directory} | sed -n -r -e 's_^.*puppet-generated/([a-z].*).*$_\1_p' | sort | uniq
             fi
         done
     )
@@ -59,5 +59,4 @@ for config_file in ${config_files}; do
         echo "disabled in $config_file" >&2
     fi
 done
-[[ "x$flag" = "x1" ]] && exit ${RC_FAILED} || exit ${RC_OKAY}
-
+[[ "x$flag" == "x1" ]] && exit ${RC_FAILED} || exit ${RC_OKAY}

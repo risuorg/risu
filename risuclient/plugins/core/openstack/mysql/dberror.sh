@@ -25,31 +25,29 @@
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
-
-if [[ "x$RISU_LIVE" = "x1" ]];  then
+if [[ "x$RISU_LIVE" == "x1" ]]; then
     log_files=$(
-    for i in $(rpm -qa | sed -n -r -e 's/^openstack-([a-z]*)-.*$/\1/p' | sort | uniq); do
-        ls /var/log/${i}/*.log 2>/dev/null | grep '/var/log/[^/]*/[^/]*\.log';
-    done
+        for i in $(rpm -qa | sed -n -r -e 's/^openstack-([a-z]*)-.*$/\1/p' | sort | uniq); do
+            ls /var/log/${i}/*.log 2>/dev/null | grep '/var/log/[^/]*/[^/]*\.log'
+        done
     )
-elif [[ "x$RISU_LIVE" = "x0" ]]; then
+elif [[ "x$RISU_LIVE" == "x0" ]]; then
     is_required_file "${RISU_ROOT}/installed-rpms"
     log_files=$(
-    for i in $(sed -n -r -e 's/^openstack-([a-z]*)-.*$/\1/p' ${RISU_ROOT}/installed-rpms | sort | uniq); do
-        ls ${RISU_ROOT}/var/log/${i}/*.log 2>/dev/null | grep '/var/log/[^/]*/[^/]*\.log';
-    done
+        for i in $(sed -n -r -e 's/^openstack-([a-z]*)-.*$/\1/p' ${RISU_ROOT}/installed-rpms | sort | uniq); do
+            ls ${RISU_ROOT}/var/log/${i}/*.log 2>/dev/null | grep '/var/log/[^/]*/[^/]*\.log'
+        done
     )
 fi
 
 for log_file in ${log_files}; do
     [ -f "$log_file" ] || continue
     events=$(grep -i 'DBError' ${log_file} | egrep -o '^([a-Z]+\ [0-9]+)|^([0-9\-]+)' | uniq -c | tail)
-    if [[ -n "${events}" ]]; then
+    if [[ -n ${events} ]]; then
         # to remove the ${RISU_ROOT} from the stderr.
         log_file=${log_file#${RISU_ROOT}}
         echo -e "$log_file:\n${events}\n" >&2
         flag=1
     fi
 done
-[[ "x$flag" = "x" ]] && exit ${RC_OKAY} || exit ${RC_FAILED}
-
+[[ "x$flag" == "x" ]] && exit ${RC_OKAY} || exit ${RC_FAILED}

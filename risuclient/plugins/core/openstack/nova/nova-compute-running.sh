@@ -35,4 +35,3 @@ if [[ -f "${RISU_ROOT}/var/log/nova/nova-compute.log" ]]; then
 fi
 
 exit ${RC_OKAY}
-

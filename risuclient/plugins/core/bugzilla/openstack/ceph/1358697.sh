@@ -27,31 +27,30 @@
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
-if [[ "x$RISU_LIVE" = "x1" ]];  then
+if [[ "x$RISU_LIVE" == "x1" ]]; then
     VERSIONS=$(rpm -qa ceph-common* python-rbd* librados2* python-rados* | sed -n -r -e 's/.*-0.([0-9]+).([0-9]+)-([0-9]+).*$/\1-\2-\3/p')
-elif [[ "x$RISU_LIVE" = "x0" ]];  then
+elif [[ "x$RISU_LIVE" == "x0" ]]; then
     is_required_file "${RISU_ROOT}/installed-rpms"
-    VERSIONS=$(egrep 'ceph-common|python-rbd|librados2|python-rados' "${RISU_ROOT}/installed-rpms"|awk '{print $1}'|sed -n -r -e 's/.*-0.([0-9]+).([0-9]+)-([0-9]+).*$/\1-\2-\3/p')
+    VERSIONS=$(egrep 'ceph-common|python-rbd|librados2|python-rados' "${RISU_ROOT}/installed-rpms" | awk '{print $1}' | sed -n -r -e 's/.*-0.([0-9]+).([0-9]+)-([0-9]+).*$/\1-\2-\3/p')
 fi
 
-exitoudated(){
+exitoudated() {
     echo $"outdated ceph packages: https://bugzilla.redhat.com/show_bug.cgi?id=1358697" >&2
     exit ${RC_FAILED}
 }
 
-
-if [[ "x$VERSIONS" = "x" ]]; then
+if [[ "x$VERSIONS" == "x" ]]; then
     echo "required packages not found" >&2
     exit ${RC_SKIPPED}
 else
     # Affected versions are lower than ceph-0.94.5-15
     for package in ${VERSIONS}; do
-        MAJOR=$(echo ${package}|cut -d "-" -f1)
-        MID=$(echo ${package}|cut -d "-" -f2)
-        MINOR=$(echo ${package}|cut -d "-" -f3)
-        if [[ "${MAJOR}" -ge "94" ]]; then
-            if [[ "${MID}" -ge "5" ]]; then
-                if [[ "${MINOR}" -lt "15" ]]; then
+        MAJOR=$(echo ${package} | cut -d "-" -f1)
+        MID=$(echo ${package} | cut -d "-" -f2)
+        MINOR=$(echo ${package} | cut -d "-" -f3)
+        if [[ ${MAJOR} -ge "94" ]]; then
+            if [[ ${MID} -ge "5" ]]; then
+                if [[ ${MINOR} -lt "15" ]]; then
                     exitoudated
                 fi
             else
@@ -63,4 +62,3 @@ else
     done
     exit ${RC_OKAY}
 fi
-

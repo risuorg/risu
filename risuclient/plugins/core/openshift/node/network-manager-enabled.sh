@@ -24,7 +24,7 @@
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
-if is_enabled atomic-openshift-node ; then
+if is_enabled atomic-openshift-node; then
     if is_enabled ^NetworkManager.service; then
         echo 'OpenShift and NetworkManager are both enabled' >&2
         exit ${RC_OKAY}
@@ -36,5 +36,3 @@ else
     echo 'atomic-openshift-node is not enabled' >&2
     exit ${RC_SKIPPED}
 fi
-
-

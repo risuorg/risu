@@ -26,22 +26,21 @@ OSPRELEASE=$(discover_osp_version)
 
 if [[ ${RISU_LIVE} -eq 0 ]]; then
     FILE="${RISU_ROOT}/sos_commands/yum/yum_-C_repolist "
-elif [[ ${RISU_LIVE} -eq 1 ]];then
+elif [[ ${RISU_LIVE} -eq 1 ]]; then
     FILE=$(mktemp)
     trap "rm ${FILE}" EXIT
-    yum -C repolist > ${FILE} 2>&1
+    yum -C repolist >${FILE} 2>&1
 fi
 
 is_required_file ${FILE}
 
 # Check if we do have repos for openstack that are not for our current release
-REPOS=$(cat ${FILE}|grep openstack|awk '{print $1}'|grep -v ${OSPRELEASE})
+REPOS=$(cat ${FILE} | grep openstack | awk '{print $1}' | grep -v ${OSPRELEASE})
 
-if [[ ! -z ${REPOS} ]]; then
+if [[ -n ${REPOS} ]]; then
     echo "Non current OSP repos detected:" >&2
     echo ${REPOS} >&2
     exit ${RC_FAILED}
 else
     exit ${RC_OKAY}
 fi
-

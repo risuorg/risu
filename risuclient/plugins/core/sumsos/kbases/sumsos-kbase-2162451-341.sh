@@ -28,7 +28,6 @@ KCS=2162451
 
 BZ=1341298
 
-
 # priority: 500
 
 # Load common functions
@@ -36,7 +35,7 @@ BZ=1341298
 
 journal="$journalctl_file"
 
-if is_lineinfile "${REGEXP}" ${journal} ${RISU_ROOT}/var/log/messages ; then
+if is_lineinfile "${REGEXP}" ${journal} ${RISU_ROOT}/var/log/messages; then
     echo $"Check Kbase: https://access.redhat.com/solutions/$KCS for more details about error: $REGEXP found in logs" >&2
     exit ${RC_FAILED}
 else

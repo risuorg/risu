@@ -25,7 +25,6 @@
 REGEXP="kernel: scsi: On host .* channel .* id .* only .* \(max_scsi_report_luns\) of .* luns reported, try increasing max_scsi_report_luns"
 KCS=749503
 
-
 # priority: 500
 
 # Load common functions
@@ -33,7 +32,7 @@ KCS=749503
 
 journal="$journalctl_file"
 
-if is_lineinfile "${REGEXP}" ${journal} ${RISU_ROOT}/var/log/messages ; then
+if is_lineinfile "${REGEXP}" ${journal} ${RISU_ROOT}/var/log/messages; then
     echo $"Check Kbase: https://access.redhat.com/solutions/$KCS for more details about error: $REGEXP found in logs" >&2
     exit ${RC_FAILED}
 else

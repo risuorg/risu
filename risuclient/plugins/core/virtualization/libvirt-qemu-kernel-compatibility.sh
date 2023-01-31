@@ -4,7 +4,6 @@
 # Copyright (C) 2017, 2018 Robin Černín <cerninr@gmail.com>
 # Copyright (C) 2017, 2018 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
-
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -37,20 +36,20 @@ fi
 # we know the exact kernel versions for RHEL7 from https://access.redhat.com/articles/3078
 
 declare -A kernel_libvirt_qemu
-kernel_libvirt_qemu=( ["3.10.0-123"]="1.1.1 1.5.3 7.0" \
-                      ["3.10.0-229"]="1.2.8 2.1.2 7.1"\
-                      ["3.10.0-327"]="1.2.17 2.3.0 7.2" \
-                      ["3.10.0-514"]="2.0.0 2.6.0 7.3" \
-                      ["3.10.0-693"]="3.2.0 2.9.0 7.4" )
+kernel_libvirt_qemu=(["3.10.0-123"]="1.1.1 1.5.3 7.0"
+    ["3.10.0-229"]="1.2.8 2.1.2 7.1"
+    ["3.10.0-327"]="1.2.17 2.3.0 7.2"
+    ["3.10.0-514"]="2.0.0 2.6.0 7.3"
+    ["3.10.0-693"]="3.2.0 2.9.0 7.4")
 
 redhat_release_version=$(egrep -o '[0-9]+.[0-9]+' "${RISU_ROOT}/etc/redhat-release")
 
-if [[ "x$RISU_LIVE" = "x0" ]]; then
+if [[ "x$RISU_LIVE" == "x0" ]]; then
     FILE="${RISU_ROOT}/uname"
-elif [[ "x$RISU_LIVE" = "x1" ]];then
+elif [[ "x$RISU_LIVE" == "x1" ]]; then
     FILE=$(mktemp)
     trap "rm ${FILE}" EXIT
-    uname -a > ${FILE}
+    uname -a >${FILE}
 fi
 
 is_required_file "$FILE"
@@ -64,8 +63,8 @@ libvirt=$(echo "$version" | cut -d" " -f1)
 qemu=$(echo "$version" | cut -d" " -f2)
 redhat_release=$(echo "$version" | cut -d" " -f3)
 
-if [[ "$libvirt" == "$libvirt_version" && "$qemu" == "$qemu_version" \
-    && "$redhat_release" == "$redhat_release_version" ]]; then
+if [[ $libvirt == "$libvirt_version" && $qemu == "$qemu_version" && \
+    $redhat_release == "$redhat_release_version" ]]; then
     echo $"compatibility between libvirt, qemu and kernel" >&2
     exit ${RC_OKAY}
 else
@@ -75,4 +74,3 @@ else
     echo $"redhat-release: $redhat_release_version expected $redhat_release" >&2
     exit ${RC_FAILED}
 fi
-

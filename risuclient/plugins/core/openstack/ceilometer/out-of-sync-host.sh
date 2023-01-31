@@ -36,10 +36,9 @@ is_required_file "${RISU_ROOT}/etc/ceilometer/ceilometer.conf"
 NOVAHOST=$(awk -F "=" '/^host/ {gsub (" ", "", $0); print $2}' ${RISU_ROOT}/etc/nova/nova.conf)
 CEILOMETERHOST=$(awk -F "=" '/^host/ {gsub (" ", "", $0); print $2}' ${RISU_ROOT}/etc/ceilometer/ceilometer.conf)
 
-if [[ "$CEILOMETERHOST" != "$NOVAHOST" ]]; then
+if [[ $CEILOMETERHOST != "$NOVAHOST" ]]; then
     echo $"ceilometer and nova compute host are out of sync." >&2
     exit ${RC_FAILED}
 else
     exit ${RC_OKAY}
 fi
-

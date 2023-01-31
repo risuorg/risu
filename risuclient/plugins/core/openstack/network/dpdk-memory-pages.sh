@@ -27,17 +27,15 @@
 is_required_file "${RISU_ROOT}/var/log/messages"
 is_required_file "${RISU_ROOT}/etc/nova/nova.conf"
 
-
 # Now check if we've the error message in logs:
 if is_lineinfile "Insufficient free host memory pages available to allocate guest RAM" "${RISU_ROOT}/var/log/messages"; then
     if ! is_lineinfile "reserved_huge_pages.*None" "${RISU_ROOT}/var/log/nova/nova-compute.log"; then
         exit ${RC_OKAY}
     fi
     RELEASE=$(discover_osp_version)
-    if [[ "$RELEASE" -ge 10 ]]; then
+    if [[ $RELEASE -ge 10 ]]; then
         echo $"your system might have to set reserved_huge_pages for DPDK environments to be able to correctly calculate available Hugepages" >&2
         exit ${RC_FAILED}
     fi
 fi
 exit ${RC_OKAY}
-

@@ -25,20 +25,20 @@
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
-exitoutdated(){
+exitoutdated() {
     echo $"outdated openstack-tripleo-common causes IN_PROGRESS loops: https://bugzilla.redhat.com/show_bug.cgi?id=1437016" >&2
 }
 
 RELEASE=$(discover_osp_version)
-if [[ "${RELEASE}" -eq "8" ]]; then
+if [[ ${RELEASE} -eq "8" ]]; then
     exitoutdated
     # openstack-tripleo-common needs to be 0.3.1-5 or later
     is_required_rpm_over openstack-tripleo-common openstack-tripleo-common-0.3.1-5.el7ost
-elif [[ "${RELEASE}" -eq "9" ]]; then
+elif [[ ${RELEASE} -eq "9" ]]; then
     exitoutdated
     # openstack-tripleo-common needs to be 2.0.0-11 or later
     is_required_rpm_over openstack-tripleo-common openstack-tripleo-common-2.0.0-11.el7ost
-elif [[ "${RELEASE}" -eq "10" ]]; then
+elif [[ ${RELEASE} -eq "10" ]]; then
     exitoutdated
     # openstack-tripleo-common needs to be 5.4.1-6 or later
     is_required_rpm_over openstack-tripleo-common openstack-tripleo-common-5.4.1-6.el7ost
@@ -48,4 +48,3 @@ else
 fi
 
 exit ${RC_OKAY}
-

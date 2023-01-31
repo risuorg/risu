@@ -36,4 +36,3 @@ if is_lineinfile "ERROR keystone DBDeadlock: .*pymysql.err.Internal.* try restar
     exit ${RC_FAILED}
 fi
 exit ${RC_OKAY}
-

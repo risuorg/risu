@@ -3,7 +3,6 @@
 # Copyright (C) 2018 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 # Copyright (C) 2018 Masaki Furuta <masaki.furuta@gmail.com>
 
-
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -24,7 +23,6 @@
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
-
 if is_lineinfile "segfault at" "${journalctl_file}"; then
     echo "SEGV detected" >&2
     grep "segfault at" "${journalctl_file}" >&2
@@ -33,5 +31,3 @@ fi
 
 # If the above conditions did not trigger RC_FAILED we are good.
 exit ${RC_OKAY}
-
-

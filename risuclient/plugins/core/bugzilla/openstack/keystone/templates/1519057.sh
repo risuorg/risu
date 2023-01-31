@@ -29,7 +29,7 @@
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
-if [[ ! "x$RISU_LIVE" = "x1" ]]; then
+if [[ "x$RISU_LIVE" != "x1" ]]; then
     echo "works on live-system only" >&2
     exit ${RC_SKIPPED}
 fi
@@ -37,7 +37,7 @@ fi
 # Find release
 RELEASE=$(discover_osp_version)
 
-if [[ "${RELEASE}" -ge "12" ]]; then
+if [[ ${RELEASE} -ge "12" ]]; then
 
     if [[ -z $(is_rpm tripleo-heat-templates) && -z $(is_rpm python-tripleoclient) ]]; then
         echo "works on director node only" >&2
@@ -60,4 +60,3 @@ else
     echo "works only on OSP12 and later" >&2
     exit ${RC_SKIPPED}
 fi
-

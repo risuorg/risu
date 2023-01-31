@@ -30,21 +30,21 @@
 if is_process nova-compute; then
     is_required_file "${RISU_ROOT}/etc/nova/nova.conf"
 
-    if [[ "x$RISU_LIVE" = "x1" ]];  then
+    if [[ "x$RISU_LIVE" == "x1" ]]; then
         HOST=$(hostname)
-    elif [[ "x$RISU_LIVE" = "x0" ]];  then
+    elif [[ "x$RISU_LIVE" == "x0" ]]; then
         is_required_file "${RISU_ROOT}/hostname"
         HOST=$(cat "${RISU_ROOT}/hostname")
     fi
 
-    NOVAHOST=$(grep ^host.* "${RISU_ROOT}/etc/nova/nova.conf"|cut -d "=" -f2|tail -1)
+    NOVAHOST=$(grep ^host.* "${RISU_ROOT}/etc/nova/nova.conf" | cut -d "=" -f2 | tail -1)
 
-    if [[ -z "$NOVAHOST" ]]; then
+    if [[ -z $NOVAHOST ]]; then
         echo "nova.conf host= undefined" >&2
         exit ${RC_SKIPPED}
     fi
 
-    if [[ "$HOST" != "$NOVAHOST" ]]; then
+    if [[ $HOST != "$NOVAHOST" ]]; then
         echo $"https://bugzilla.redhat.com/show_bug.cgi?id=1483456" >&2
         exit ${RC_FAILED}
     else
@@ -54,4 +54,3 @@ else
     echo "works only on compute node" >&2
     exit ${RC_SKIPPED}
 fi
-

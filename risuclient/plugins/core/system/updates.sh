@@ -5,7 +5,6 @@
 # Copyright (C) 2017 Robin Černín <cerninr@gmail.com>
 # Copyright (C) 2017, 2018 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
-
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -23,7 +22,7 @@
 # description: This plugin checks for unapplied updates to the system
 # priority: 100
 
-if [[ ${RISU_LIVE} = 0 ]]; then
+if [[ ${RISU_LIVE} == 0 ]]; then
     echo "works on live-system only" >&2
     exit ${RC_SKIPPED}
 fi
@@ -40,4 +39,3 @@ elif [[ ${update_check} -ne 0 ]]; then
 else
     exit ${RC_OKAY}
 fi
-

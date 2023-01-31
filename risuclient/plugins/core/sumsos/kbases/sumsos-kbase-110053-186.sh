@@ -25,7 +25,6 @@
 REGEXP="kernel: do_IRQ: .*..* No irq handler for vector \(irq -1\)"
 KCS=110053
 
-
 # priority: 500
 
 # Load common functions
@@ -33,7 +32,7 @@ KCS=110053
 
 journal="$journalctl_file"
 
-if is_lineinfile "${REGEXP}" ${journal} ${RISU_ROOT}/var/log/messages ; then
+if is_lineinfile "${REGEXP}" ${journal} ${RISU_ROOT}/var/log/messages; then
     echo $"Check Kbase: https://access.redhat.com/solutions/$KCS for more details about error: $REGEXP found in logs" >&2
     exit ${RC_FAILED}
 else

@@ -22,7 +22,6 @@
 # priority: 900
 # kb: https://access.redhat.com/solutions/3408891
 
-
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
@@ -37,4 +36,3 @@ if [[ "x$(iniparser "${RISU_ROOT}/etc/nova/nova.conf" libvirt enabled_perf_event
 fi
 
 exit ${RC_OKAY}
-

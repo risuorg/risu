@@ -4,7 +4,6 @@
 # Copyright (C) 2017, 2018 Robin Černín <cerninr@gmail.com>
 # Copyright (C) 2018 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
-
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -37,11 +36,10 @@ fi
 is_required_file "${RISU_ROOT}/proc/sys/kernel/core_pattern"
 core_pattern=$(cat "${RISU_ROOT}/proc/sys/kernel/core_pattern")
 
-if [[ "$core_pattern" == "core" ]]; then
+if [[ $core_pattern == "core" ]]; then
     echo $"core_pattern: core" >&2
     exit ${RC_FAILED}
 else
     echo "core_pattern: $core_pattern" >&2
     exit ${RC_OKAY}
 fi
-

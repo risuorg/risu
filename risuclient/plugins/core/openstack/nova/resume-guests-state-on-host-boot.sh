@@ -31,7 +31,7 @@ if ! is_process nova-compute; then
 fi
 
 # this can run against live and also any sort of snapshot of the filesystem
-config_files=( "${RISU_ROOT}/etc/nova/nova.conf" "${RISU_ROOT}/etc/sysconfig/libvirt-guests" )
+config_files=("${RISU_ROOT}/etc/nova/nova.conf" "${RISU_ROOT}/etc/sysconfig/libvirt-guests")
 
 is_required_file ${config_files[@]}
 
@@ -49,11 +49,10 @@ if is_enabled libvirt-guests; then
     LIBVIRTGUESTS="true"
 fi
 
-if [[ "$LIBVIRTBOOT" == "ignore" && "$LIBVIRTOFF" == "shutdown" && "$NOVASTRING" == "true" && "$LIBVIRTGUESTS" == "true" ]]; then
+if [[ $LIBVIRTBOOT == "ignore" && $LIBVIRTOFF == "shutdown" && $NOVASTRING == "true" && $LIBVIRTGUESTS == "true" ]]; then
     echo $"compute node is configured to restore guests state at startup" >&2
     exit ${RC_OKAY}
 else
     echo $"compute node is NOT configured to restore guests state at startup" >&2
     exit ${RC_FAILED}
 fi
-

@@ -28,15 +28,15 @@ is_required_file "${RISU_ROOT}"/proc/cpuinfo
 
 if [[ ${RISU_LIVE} -eq 0 ]]; then
     FILE="${RISU_ROOT}/sos_commands/openvswitch/ovs-vsctl_-t_5_get_Open_vSwitch_._other_config"
-elif [[ ${RISU_LIVE} -eq 1 ]];then
+elif [[ ${RISU_LIVE} -eq 1 ]]; then
     FILE=$(mktemp)
     trap "rm ${FILE}" EXIT
-    ovs-vsctl -t 5 get Open_vSwitch . other_config > ${FILE}
+    ovs-vsctl -t 5 get Open_vSwitch . other_config >${FILE}
 fi
 
 is_required_file "${FILE}"
 
-if is_lineinfile "dpdk-init.*true" "${FILE}";then
+if is_lineinfile "dpdk-init.*true" "${FILE}"; then
     if ! is_lineinfile '^flags\b.*: .*\bht\b' "${RISU_ROOT}"/proc/cpuinfo; then
         # HT is NOT enabled
         echo $"Hyperthreading not enabled in DPDK host" >&2

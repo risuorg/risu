@@ -3,7 +3,6 @@
 # Copyright (C) 2018 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 # Copyright (C) 2018 Mikel Olasagasti Uranga <mikel@olasagasti.info>
 
-
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -27,14 +26,14 @@
 
 ERRORMSG=$"packet drop because ip/nf_conntrack tables are full detected"
 
-if [[ "x$RISU_LIVE" = "x0" ]];  then
+if [[ "x$RISU_LIVE" == "x0" ]]; then
     is_required_file "${RISU_ROOT}/sos_commands/kernel/dmesg"
     if is_lineinfile "table full, dropping packet" "${RISU_ROOT}/sos_commands/kernel/dmesg"; then
         echo ${ERRORMSG} >&2
         exit ${RC_FAILED}
     fi
-elif [[ "x$RISU_LIVE" = "x1" ]]; then
-    if dmesg| grep -eq "table full, dropping packet"; then
+elif [[ "x$RISU_LIVE" == "x1" ]]; then
+    if dmesg | grep -eq "table full, dropping packet"; then
         echo ${ERRORMSG} >&2
         exit ${RC_FAILED}
     fi
@@ -42,4 +41,3 @@ fi
 
 # exit as OK if haven't failed earlier
 exit ${RC_OKAY}
-

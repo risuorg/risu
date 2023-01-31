@@ -34,4 +34,3 @@ if is_lineinfile 'libvirtError: XML error: Invalid PCI address 0000:00:00, at le
 else
     exit ${RC_OKAY}
 fi
-

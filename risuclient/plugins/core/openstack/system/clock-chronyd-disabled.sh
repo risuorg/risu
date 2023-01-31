@@ -26,14 +26,14 @@
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
 (
-if is_active chronyd; then
-    chronyd=1
-fi
+    if is_active chronyd; then
+        chronyd=1
+    fi
 ) >/dev/null 2>&1
 
-if is_rpm openstack-.*  > /dev/null 2>&1; then
+if is_rpm openstack-.* >/dev/null 2>&1; then
     # Node is OSP system
-    if [[ "x$chronyd" = "x1" ]]; then
+    if [[ "x$chronyd" == "x1" ]]; then
         echo $"chrony service is active, and it should not on OSP node" >&2
         exit ${RC_FAILED}
     else
@@ -43,4 +43,3 @@ else
     echo "works only on osp node" >&2
     exit ${RC_SKIPPED}
 fi
-

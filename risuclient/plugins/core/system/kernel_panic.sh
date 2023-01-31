@@ -5,7 +5,6 @@
 # Copyright (C) 2017, 2018 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 # Copyright (C) 2018 Shatadru Bandyopadhyay <shatadru1@gmail.com>
 
-
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -28,12 +27,11 @@
 
 is_lineinfile "oom-killer" "${journalctl_file}" && echo "oom-killer detected" >&2 && flag=1
 is_lineinfile "soft lockup" "${journalctl_file}" && echo "soft lockup detected" >&2 && flag=1
-is_lineinfile "blocked for more than 120 seconds"  "${journalctl_file}" && echo "hung task detected"  >&2 && flag=1
+is_lineinfile "blocked for more than 120 seconds" "${journalctl_file}" && echo "hung task detected" >&2 && flag=1
 
-if [[ "x$flag" = "x1" ]]; then
+if [[ "x$flag" == "x1" ]]; then
     exit ${RC_FAILED}
 else
-# If the above conditions did not trigger RC_FAILED we are good.
+    # If the above conditions did not trigger RC_FAILED we are good.
     exit ${RC_OKAY}
 fi
-

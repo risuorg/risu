@@ -60,7 +60,8 @@ with open(pagetypeinfo, "r") as file:
         )
         if match:
             errorprint(
-                "Node %-2s Zone %6s Type %-11s " % (match.group(1), match.group(2), match.group(3)),
+                "Node %-2s Zone %6s Type %-11s "
+                % (match.group(1), match.group(2), match.group(3)),
                 end="",
             )
             p = re.findall("([0-9]+)", match.group(4))

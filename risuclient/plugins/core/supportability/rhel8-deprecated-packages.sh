@@ -2,7 +2,6 @@
 
 # Copyright (C) 2018 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
-
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -26,9 +25,9 @@
 
 RELEASE=$(discover_rhrelease)
 
-[[ "${RELEASE}" -eq '0' ]] && echo "RH release undefined" >&2 && exit ${RC_SKIPPED}
+[[ ${RELEASE} -eq '0' ]] && echo "RH release undefined" >&2 && exit ${RC_SKIPPED}
 
-if [[ "${RELEASE}" -gt "7" ]]; then
+if [[ ${RELEASE} -gt "7" ]]; then
     echo "test not applicable to EL8 releases or higher" >&2
     exit ${RC_SKIPPED}
 fi
@@ -41,10 +40,9 @@ for package in authconfig pam_pkcs11 pam_krb5 openldap-servers mod_auth_kerb pyt
     is_rpm ${package} >&2 && flag=1
 done
 
-if [[ "$flag" -eq "1" ]]; then
+if [[ $flag -eq "1" ]]; then
     echo $"Check RHEL7.5 deprecation notice" >&2
     exit ${RC_INFO}
 fi
 
 exit ${RC_OKAY}
-

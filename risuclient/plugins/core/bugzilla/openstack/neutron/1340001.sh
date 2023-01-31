@@ -28,7 +28,7 @@
 
 RELEASE=$(discover_osp_version)
 
-if [[ "${RELEASE}" -le "8" ]]; then
+if [[ ${RELEASE} -le "8" ]]; then
     is_required_file "${RISU_ROOT}/etc/neutron/metadata_agent.ini"
 
     if ! is_lineinfile "auth_url.*/v(2.0|3)" "${RISU_ROOT}/etc/neutron/metadata_agent.ini"; then
@@ -41,4 +41,3 @@ else
     echo "works only on OSP8 and earlier" >&2
     exit ${RC_SKIPPED}
 fi
-

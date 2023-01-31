@@ -24,7 +24,6 @@
 # priority: 700
 # kb: https://access.redhat.com/solutions/2451541
 
-
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
@@ -33,7 +32,7 @@ is_required_file "${RISU_ROOT}/var/log/messages"
 # Find release
 RELEASE=$(discover_osp_version)
 
-if [[ "${RELEASE}" -lt "9" ]]; then
+if [[ ${RELEASE} -lt "9" ]]; then
     if is_lineinfile 'MigrationError_Remote: Migration error: Cannot block migrate instance' "${RISU_ROOT}/var/log/messages"; then
         echo $"Block migration unavailable before Mitaka" >&2
         exit ${RC_FAILED}
@@ -42,4 +41,3 @@ if [[ "${RELEASE}" -lt "9" ]]; then
 else
     exit ${RC_OKAY}
 fi
-

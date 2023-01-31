@@ -25,7 +25,6 @@
 REGEXP="kernel: sd .* Write cache: disabled, read cache: enabled, doesn't support DPO or FUA"
 KCS=1527943
 
-
 # priority: 500
 
 # Load common functions
@@ -33,7 +32,7 @@ KCS=1527943
 
 journal="$journalctl_file"
 
-if is_lineinfile "${REGEXP}" ${journal} ${RISU_ROOT}/var/log/messages ; then
+if is_lineinfile "${REGEXP}" ${journal} ${RISU_ROOT}/var/log/messages; then
     echo $"Check Kbase: https://access.redhat.com/solutions/$KCS for more details about error: $REGEXP found in logs" >&2
     exit ${RC_FAILED}
 else

@@ -31,4 +31,3 @@ if is_lineinfile 'error:.*Errno 98.*Address already in use' "${RISU_ROOT}/var/lo
 fi
 
 exit ${RC_OKAY}
-

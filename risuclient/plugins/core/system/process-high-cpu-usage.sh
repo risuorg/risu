@@ -3,7 +3,6 @@
 # Copyright (C) 2018 Robin Černín <cerninr@gmail.com>
 # Copyright (C) 2018 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
-
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -26,23 +25,22 @@
 
 : ${RISU_PROCESS_CPU_USAGE=100}
 
-if [[ ${RISU_LIVE} = 0 ]]; then
+if [[ ${RISU_LIVE} == 0 ]]; then
     is_required_file "${RISU_ROOT}/ps"
     FILE="${RISU_ROOT}/ps"
 else
     FILE=$(mktemp)
     trap "rm ${FILE}" EXIT
-    ps aux > ${FILE}
+    ps aux >${FILE}
 fi
 
 header=$(head -1 ${FILE})
 result=$(awk -vcpu_high_usage=${RISU_PROCESS_CPU_USAGE} '$3>cpu_high_usage { print $0 }' ${FILE})
 
-if [[ -n "$result" ]]; then
+if [[ -n $result ]]; then
     echo "${header}" >&2
     echo "${result}" >&2
     exit ${RC_FAILED}
 else
     exit ${RC_OKAY}
 fi
-

@@ -39,4 +39,3 @@ if is_lineinfile "ToozError: Cannot extend an unlocked lock" "${RISU_ROOT}/var/l
 fi
 
 exit ${RC_OKAY}
-

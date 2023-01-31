@@ -35,4 +35,3 @@ if is_rpm_over docker docker-1.12.6-16.el7.x86_64; then
     exit ${RC_FAILED}
 fi
 exit ${RC_OKAY}
-

@@ -25,7 +25,6 @@
 REGEXP="cmaeventd.*: Logical drive .* of Array Controller: I/O request fatal error"
 KCS=1496983
 
-
 # priority: 500
 
 # Load common functions
@@ -33,7 +32,7 @@ KCS=1496983
 
 journal="$journalctl_file"
 
-if is_lineinfile "${REGEXP}" ${journal} ${RISU_ROOT}/var/log/messages ; then
+if is_lineinfile "${REGEXP}" ${journal} ${RISU_ROOT}/var/log/messages; then
     echo $"Check Kbase: https://access.redhat.com/solutions/$KCS for more details about error: $REGEXP found in logs" >&2
     exit ${RC_FAILED}
 else

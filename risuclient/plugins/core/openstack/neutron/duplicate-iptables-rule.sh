@@ -27,9 +27,8 @@
 is_required_file "${RISU_ROOT}/var/log/neutron/l3-agent.log"
 
 if is_lineinfile "Duplicate iptables rule detected" "${RISU_ROOT}/var/log/neutron/l3-agent.log"; then
-        grep -i 'Duplicate iptables rule detected' "${RISU_ROOT}/var/log/neutron/l3-agent.log" | grep -oP "^([0-9\-]+)" | uniq -c | tail >&2
-        exit ${RC_FAILED}
+    grep -i 'Duplicate iptables rule detected' "${RISU_ROOT}/var/log/neutron/l3-agent.log" | grep -oP "^([0-9\-]+)" | uniq -c | tail >&2
+    exit ${RC_FAILED}
 fi
 
 exit ${RC_OKAY}
-

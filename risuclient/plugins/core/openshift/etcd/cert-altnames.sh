@@ -24,16 +24,16 @@
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
-if is_enabled etcd || is_enabled etcd_container ; then
+if is_enabled etcd || is_enabled etcd_container; then
     if openssl x509 -noout -text -in "${RISU_ROOT}"/etc/etcd/server.crt |
         grep 'X509v3 Subject Alternative Name' -A1 |
-        grep -q DNS:$(cat "${RISU_ROOT}/etc/hostname" | tr '[:upper:]' '[:lower:]') ; then
+        grep -q DNS:$(cat "${RISU_ROOT}/etc/hostname" | tr '[:upper:]' '[:lower:]'); then
         echo 'OpenShift and NetworkManager are both enabled' >&2
         exit ${RC_OKAY}
     else
         echo 'The etcd certificate is missing the fqdn in the Subject Alternative names' >&2
         openssl x509 -noout -text -in "${RISU_ROOT}"/etc/etcd/server.crt |
-            grep 'X509v3 Subject Alternative Name' -A1  >&2
+            grep 'X509v3 Subject Alternative Name' -A1 >&2
 
         exit ${RC_FAILED}
     fi
@@ -41,5 +41,3 @@ else
     echo 'etcd is not enabled' >&2
     exit ${RC_SKIPPED}
 fi
-
-

@@ -25,7 +25,6 @@
 REGEXP="kernel: qla2xxx .*-009b:.*: Device state is 0x4 = Need Reset."
 KCS=3241281
 
-
 # priority: 500
 
 # Load common functions
@@ -33,7 +32,7 @@ KCS=3241281
 
 journal="$journalctl_file"
 
-if is_lineinfile "${REGEXP}" ${journal} ${RISU_ROOT}/var/log/messages ; then
+if is_lineinfile "${REGEXP}" ${journal} ${RISU_ROOT}/var/log/messages; then
     echo $"Check Kbase: https://access.redhat.com/solutions/$KCS for more details about error: $REGEXP found in logs" >&2
     exit ${RC_FAILED}
 else
