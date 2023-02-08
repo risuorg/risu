@@ -100,7 +100,7 @@ def main():
             date = ""
 
             command = (
-                "cd $(dirname %s) && git blame -e %s | awk '{print $2\" \"$3\" \"$4}'|egrep -o '<.*>.*[0-9][0-9][0-9][0-9]-' | sed 's/  */ /g' | cut -d ' ' -f 1-2 | sort -u|grep -v not.committed.yet"
+                "cd $(dirname %s) && git blame -C -C -C -M -w -e %s | awk '{print $2\" \"$3\" \"$4}'|egrep -o '<.*>.*[0-9][0-9][0-9][0-9]-' | sed 's/  */ /g' | cut -d ' ' -f 1-2 | sort -u|grep -v not.committed.yet"
                 % (plugin["plugin"], plugin["plugin"])
             )
 
