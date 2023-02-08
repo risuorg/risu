@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# Copyright (C) 2021, 2022 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2017 Lars Kellogg-Stedman <lars@redhat.com>
+# Copyright (C) 2017, 2019-2022 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 import os
 import sys

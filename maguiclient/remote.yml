@@ -1,4 +1,5 @@
 ---
+# Copyright (C) 2018 Juan Luis de Sousa-Valadas Castaño <juanlu@redhat.com>
 # Copyright (C) 2018, 2021, 2022 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # Requires: Ansible 2.2 (due to check_mode and timezone)

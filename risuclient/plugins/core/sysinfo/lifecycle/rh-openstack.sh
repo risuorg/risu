@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Copyright (C) 2017 Robin Černín <cerninr@gmail.com>
+# Copyright (C) 2019 Mikel Olasagasti Uranga <mikel@olasagasti.info>
 # Copyright (C) 2018, 2020, 2021 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is Free software: you can redistribute it and/or modify

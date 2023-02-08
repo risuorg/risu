@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# Copyright (C) 2017 Robin Černín <cerninr@gmail.com>
 # Copyright (C) 2020-2022 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 # Copyright (C) 2020 Volkan Yalcin <vlyalcin@gmail.com>
 

@@ -1,4 +1,5 @@
 #!/bin/bash
+# Copyright (C) 2017 Robin Černín <cerninr@gmail.com>
 # Copyright (C) 2020, 2021 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
