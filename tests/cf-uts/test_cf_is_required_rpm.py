@@ -4,7 +4,7 @@
 # Description: This UT run scripts to validate CF
 #
 # Copyright (C) 2017 Robin Černín <cerninr@gmail.com>
-# Copyright (C) 2017-2022 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2017-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 #
 # This program is free software: you can redistribute it and/or modify
