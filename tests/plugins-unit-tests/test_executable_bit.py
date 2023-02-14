@@ -20,7 +20,7 @@ class RisuTest(TestCase):
         pluginpath = [os.path.join(risu.risudir, "plugins", "core")]
         plugins = []
         for folder in pluginpath:
-            for root, dirnames, filenames in os.walk(folder):
+            for root, dirnames, filenames in os.walk(folder, followlinks=True):
                 for filename in filenames:
                     filepath = os.path.join(root, filename)
                     if ".risu_tests" not in filepath:
