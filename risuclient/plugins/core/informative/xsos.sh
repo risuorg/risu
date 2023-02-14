@@ -1,6 +1,8 @@
 #!/bin/bash
 
-# Copyright (C) 2018 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2017 Robin Černín <cerninr@gmail.com>
+# Copyright (C) 2018 David Sastre Medina <d.sastre.medina@gmail.com>
+# Copyright (C) 2018, 2021 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,9 +25,9 @@
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
 if ! which xsos >/dev/null 2>&1; then
-    echo "xsos support not found, exitting" >&2
+    echo "xsos support not found, exiting" >&2
     exit ${RC_SKIPPED}
 fi
 
-xsos -a ${RISU_ROOT} >&2
+xsos -x -a ${RISU_ROOT} >&2
 exit ${RC_INFO}
