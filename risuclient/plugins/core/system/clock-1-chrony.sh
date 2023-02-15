@@ -29,8 +29,15 @@
 
 : ${RISU_MAX_CLOCK_OFFSET:=1}
 
-if ! is_active chronyd; then
-    echo "chronyd is not active" >&2
+OSVERSION=$(discover_os)
+if [ "${OSVERSION}" = "fedora" ]; then
+    SERVICE='chronyd'
+elif [ "${OSVERSION}" = "debian" ]; then
+    SERVICE='chrony'
+fi
+
+if ! is_active ${SERVICE}; then
+    echo "${SERVICE} is not active" >&2
     exit ${RC_FAILED}
 fi
 
