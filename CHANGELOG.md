@@ -1,3 +1,9 @@
+## [1.14.2](https://github.com/risuorg/risu/compare/1.14.1...1.14.2) (2023-02-15)
+
+### Bug Fixes
+
+- **clock-1-chrony:** Service name in Debian/Ubuntu is chrony not chronyd ([2f569c9](https://github.com/risuorg/risu/commit/2f569c939a56d2fae91e2b70e548def14746d1bc))
+
 ## [1.14.1](https://github.com/risuorg/risu/compare/1.14.0...1.14.1) (2023-01-30)
 
 ### Bug Fixes
