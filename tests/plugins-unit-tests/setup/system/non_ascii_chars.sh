@@ -2,8 +2,8 @@
 # Description: This script creates a validation environment for running the
 #              test named like this one against and check correct behavior
 #
-# Copyright (C) 2018 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
-# Copyright (C) 2018 Benoit Welterlen <bwelterl@redhat.com>
+# Copyright (C) 2017 Robin Černín <cerninr@gmail.com>
+# Copyright (C) 2017, 2018, 2022 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 #
 # This program is free software: you can redistribute it and/or modify

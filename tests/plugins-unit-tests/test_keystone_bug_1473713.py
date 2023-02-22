@@ -3,9 +3,8 @@
 #
 # Description: This UT run scripts to validate the rules/tests created for risu for $NAME_OF_TEST
 #
-# Copyright (C) 2018 Renaud Métrich <rmetrich@redhat.com>
 # Copyright (C) 2017 Robin Černín <cerninr@gmail.com>
-# Copyright (C) 2017, 2018 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2017-2019, 2021, 2022 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 #
 # This program is free software: you can redistribute it and/or modify
