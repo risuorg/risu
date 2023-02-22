@@ -78,7 +78,6 @@ def getranges(data):
 
 
 def main():
-
     # Find all plugins
     print("Finding all possible files to modify...")
     # plugins = risu.findallplugins()
@@ -93,9 +92,7 @@ def main():
 
     # Iterate over found plugins
     for plugin in plugins:
-
         if "risu/plugins" not in plugin["plugin"]:
-
             name = ""
             date = ""
 
@@ -138,7 +135,6 @@ def main():
 
             modificatstring = ""
             for name in modifications:
-
                 yearslist = [v for v in modifications[name]]
                 if len(yearslist) > 1:
                     # Get rangs of years for pretty printing them

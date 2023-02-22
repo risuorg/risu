@@ -35,7 +35,6 @@ plugins = risu.findplugins(folders=[pluginsdir])
 
 class RisuTest(TestCase):
     def test_ut_sourced_if_used(self):
-
         # Check list of plugins for regexp sourcing common functions and skip them
         nonsourcing = []
         for plugin in plugins:
