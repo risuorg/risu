@@ -18,4 +18,4 @@ jobs:
         if: github.actor == 'dependabot[bot]' || github.actor == 'dependabot-preview[bot]'
         with:
           target: minor
-          github-token: "${{ secrets.GHA }}"
+          github-token: "${{ secrets.DEPENDABOT }}"

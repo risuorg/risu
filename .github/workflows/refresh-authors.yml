@@ -24,7 +24,7 @@ jobs:
 
       - name: Get changed files in the checks folder
         id: changed-files-specific
-        uses: tj-actions/changed-files@v34
+        uses: tj-actions/changed-files@v35
         with:
           files: |
             **/*.py

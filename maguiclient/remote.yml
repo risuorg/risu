@@ -1,5 +1,6 @@
 ---
-# Copyright (C) 2018, 2021, 2022 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2018 Juan Luis de Sousa-Valadas Castaño <juanlu@redhat.com>
+# Copyright (C) 2018, 2021-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # Requires: Ansible 2.2 (due to check_mode and timezone)
 # Uploads risu folder to /tmp on target host and runs from there and stores it back on local host for magui analysis

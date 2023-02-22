@@ -5,6 +5,7 @@
 #              detect common pitfalls in configuration/status
 #
 # Copyright (C) 2017, 2018 Robin Černín <cerninr@gmail.com>
+# Copyright (C) 2017 Lars Kellogg-Stedman <lars@redhat.com>
 # Copyright (C) 2017-2022 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify

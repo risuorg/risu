@@ -78,7 +78,6 @@ def getranges(data):
 
 
 def main():
-
     # Find all plugins
     print("Finding all possible files to modify...")
     # plugins = risu.findallplugins()
@@ -93,14 +92,12 @@ def main():
 
     # Iterate over found plugins
     for plugin in plugins:
-
         if "risu/plugins" not in plugin["plugin"]:
-
             name = ""
             date = ""
 
             command = (
-                "cd $(dirname %s) && git blame -e %s | awk '{print $2\" \"$3\" \"$4}'|egrep -o '<.*>.*[0-9][0-9][0-9][0-9]-' | sed 's/  */ /g' | cut -d ' ' -f 1-2 | sort -u|grep -v not.committed.yet"
+                "cd $(dirname %s) && git blame -C -C -C -M -w -e %s | awk '{print $2\" \"$3\" \"$4}'|egrep -o '<.*>.*[0-9][0-9][0-9][0-9]-' | sed 's/  */ /g' | cut -d ' ' -f 1-2 | sort -u|grep -v not.committed.yet"
                 % (plugin["plugin"], plugin["plugin"])
             )
 
@@ -138,7 +135,6 @@ def main():
 
             modificatstring = ""
             for name in modifications:
-
                 yearslist = [v for v in modifications[name]]
                 if len(yearslist) > 1:
                     # Get rangs of years for pretty printing them

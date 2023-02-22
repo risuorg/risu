@@ -3,7 +3,7 @@
 # Copyright (C) 2017 Robin Černín <cerninr@gmail.com>
 # Copyright (C) 2018 David Valle Delisle <dvd@redhat.com>
 # Copyright (C) 2017 Lars Kellogg-Stedman <lars@redhat.com>
-# Copyright (C) 2017, 2018, 2020, 2021 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2017-2021, 2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -29,8 +29,15 @@
 
 : ${RISU_MAX_CLOCK_OFFSET:=1}
 
-if ! is_active chronyd; then
-    echo "chronyd is not active" >&2
+OSVERSION=$(discover_os)
+if [ "${OSVERSION}" = "fedora" ]; then
+    SERVICE='chronyd'
+elif [ "${OSVERSION}" = "debian" ]; then
+    SERVICE='chrony'
+fi
+
+if ! is_active ${SERVICE}; then
+    echo "${SERVICE} is not active" >&2
     exit ${RC_FAILED}
 fi
 

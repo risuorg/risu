@@ -3,7 +3,8 @@
 #
 # Description: This UT will check all core scripts to validate that common functions is loaded
 #
-# Copyright (C) 2017-2022 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2017 Robin Černín <cerninr@gmail.com>
+# Copyright (C) 2017-2021, 2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 #
 # This program is free software: you can redistribute it and/or modify
@@ -34,7 +35,6 @@ plugins = risu.findplugins(folders=[pluginsdir])
 
 class RisuTest(TestCase):
     def test_ut_sourced_if_used(self):
-
         # Check list of plugins for regexp sourcing common functions and skip them
         nonsourcing = []
         for plugin in plugins:

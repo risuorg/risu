@@ -80,7 +80,6 @@ def main():
         # For example, next condition might be an existing file like:
         # os.path.exists(os.join.path(RISU_ROOT,'/etc/nova/nova.conf'))
         if True:
-
             # Example: File does exist, check file contents or other checks
             if True:
                 # Plugin tests passed

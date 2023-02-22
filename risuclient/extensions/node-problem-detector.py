@@ -3,7 +3,8 @@
 #
 # Description: Extension for processing node-problem-detector rules
 # Author: Pablo Iranzo Gomez (Pablo.Iranzo@gmail.com)
-# Copyright (C) 2019-2022 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2018 Robin Černín <cerninr@gmail.com>
+# Copyright (C) 2017-2021, 2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 #
 
 from __future__ import print_function
