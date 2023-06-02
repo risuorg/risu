@@ -41,29 +41,26 @@ def run(data, quiet=False):  # do not edit this line
     # data is a matrix of grouped[plugin][sosreport] and then [text] [out] [err] [rc]
 
     for plugin in data:
-        if "plugin" in data[plugin]:
-            if "faraday/" in data[plugin]["plugin"]:
-                results = [
-                    data[plugin]["sosreport"][sosreport]["err"]
-                    for sosreport in data[plugin]["sosreport"]
-                ]
+        if "plugin" in data[plugin] and "faraday/" in data[plugin]["plugin"]:
+            results = [
+                data[plugin]["sosreport"][sosreport]["err"]
+                for sosreport in data[plugin]["sosreport"]
+            ]
 
-                makeitfail = False
-                results = sorted(set(results))
+            makeitfail = False
+            results = sorted(set(results))
 
-                if len(results) > 1 and "positive" in data[plugin]["plugin"]:
-                    makeitfail = True
-                if (
-                    len(results) < len(data[plugin]["sosreport"])
-                    and "negative" in data[plugin]["plugin"]
-                ):
-                    makeitfail = True
+            if len(results) > 1 and "positive" in data[plugin]["plugin"]:
+                makeitfail = True
+            if (
+                len(results) < len(data[plugin]["sosreport"])
+                and "negative" in data[plugin]["plugin"]
+            ):
+                makeitfail = True
 
-                if makeitfail:
-                    for sosreport in data[plugin]["sosreport"]:
-                        data[plugin]["sosreport"][sosreport].update(
-                            {"rc": risu.RC_FAILED}
-                        )
+            if makeitfail:
+                for sosreport in data[plugin]["sosreport"]:
+                    data[plugin]["sosreport"][sosreport].update({"rc": risu.RC_FAILED})
 
     return data
 

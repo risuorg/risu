@@ -1071,7 +1071,7 @@ def parse_args(default=False, parse=False):
         "--prio",
         metavar="[0-1000]",
         type=int,
-        choices=range(0, 1001),
+        choices=range(1001),
         help=_("Only include plugins are equal or above specified prio"),
         default=0,
     )

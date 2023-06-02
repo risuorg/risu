@@ -45,27 +45,20 @@ def run(data, quiet=False):  # do not edit this line
             if data[ourdata]["sosreport"][sosreport]["rc"] != risu.RC_SKIPPED:
                 allskipped = False
 
-        if data[ourdata]["path"].strip() != "":
-            if not allskipped:
-                if "positive" in data[ourdata]["plugin"]:
-                    if len(sorted(set(err))) != 1:
-                        message.append(
-                            _(
-                                "%s contents differ across hosts, ensure proper behavior."
-                            )
-                            % data[ourdata]["path"].replace("${RISU_ROOT}", "")
-                        )
-                        returncode = risu.RC_FAILED
+        if data[ourdata]["path"].strip() != "" and not allskipped:
+            if "positive" in data[ourdata]["plugin"] and len(sorted(set(err))) != 1:
+                message.append(
+                    _("%s contents differ across hosts, ensure proper behavior.")
+                    % data[ourdata]["path"].replace("${RISU_ROOT}", "")
+                )
+                returncode = risu.RC_FAILED
 
-                if "negative" in data[ourdata]["plugin"]:
-                    if len(sorted(set(err))) == 1:
-                        message.append(
-                            _(
-                                "%s contents are the same across hosts, ensure proper behavior."
-                            )
-                            % data[ourdata]["path"].replace("${RISU_ROOT}", "")
-                        )
-                        returncode = risu.RC_FAILED
+            if "negative" in data[ourdata]["plugin"] and len(sorted(set(err))) == 1:
+                message.append(
+                    _("%s contents are the same across hosts, ensure proper behavior.")
+                    % data[ourdata]["path"].replace("${RISU_ROOT}", "")
+                )
+                returncode = risu.RC_FAILED
 
     out = ""
     err = "\n".join(message)

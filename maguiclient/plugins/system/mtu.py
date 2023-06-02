@@ -47,13 +47,12 @@ def run(data, quiet=False):  # do not edit this line
             if data[ourdata]["sosreport"][sosreport]["rc"] != risu.RC_SKIPPED:
                 allskipped = False
 
-        if not allskipped:
-            if len(sorted(set(err))) != 1:
-                message.append(
-                    _("%s mtu values differ across hosts, ensure proper behavior.")
-                    % data[ourdata]["name"].split(":")[1]
-                )
-                returncode = risu.RC_FAILED
+        if not allskipped and len(sorted(set(err))) != 1:
+            message.append(
+                _("%s mtu values differ across hosts, ensure proper behavior.")
+                % data[ourdata]["name"].split(":")[1]
+            )
+            returncode = risu.RC_FAILED
 
     out = ""
     err = "\n".join(message)

@@ -45,9 +45,8 @@ def run(data, quiet=False, options=None):  # do not edit this line
     mangle = False
 
     # Grab source data
-    if sourceid in data:
-        if data[sourceid]["result"]["err"] != "unknown":
-            mangle = True
+    if sourceid in data and data[sourceid]["result"]["err"] != "unknown":
+        mangle = True
 
     if mangle and targetid in data:
         # We now fake result as SKIPPED and copy to datahook dict the new data

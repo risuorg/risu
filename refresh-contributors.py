@@ -129,9 +129,10 @@ def main():
 
                     if name and name != "" and name not in modifications:
                         modifications.update({name: []})
-                    if name in modifications:
-                        if year and year != "" and year not in modifications[name]:
-                            modifications[name].append(year)
+                    if name in modifications and (
+                        year and year != "" and year not in modifications[name]
+                    ):
+                        modifications[name].append(year)
 
             modificatstring = ""
             for name in modifications:

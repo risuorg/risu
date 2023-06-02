@@ -178,7 +178,7 @@ def parse_args():
         "--prio",
         metavar="[0-1000]",
         type=int,
-        choices=range(0, 1001),
+        choices=range(1001),
         help=_("Only include plugins are equal or above specified prio"),
         default=0,
     )
@@ -450,9 +450,8 @@ def filterresults(data, triggers=[]):
     for trigger in triggers:
         for elem in data:
             # We do use this approach in case of 'faked' id's like multi-Faraday bundles
-            if "id" in data[elem]:
-                if trigger in data[elem]["id"]:
-                    ourdata[data[elem]["id"]] = dict(data[elem])
+            if "id" in data[elem] and trigger in data[elem]["id"]:
+                ourdata[data[elem]["id"]] = dict(data[elem])
     return ourdata
 
 

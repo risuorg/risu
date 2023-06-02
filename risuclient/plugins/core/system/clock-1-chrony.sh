@@ -30,9 +30,9 @@
 : ${RISU_MAX_CLOCK_OFFSET:=1}
 
 OSVERSION=$(discover_os)
-if [ "${OSVERSION}" = "fedora" ]; then
+if [[ ${OSVERSION} == "fedora" ]]; then
     SERVICE='chronyd'
-elif [ "${OSVERSION}" = "debian" ]; then
+elif [[ ${OSVERSION} == "debian" ]]; then
     SERVICE='chrony'
 fi
 
