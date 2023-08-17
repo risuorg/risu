@@ -18,11 +18,9 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container:
-      image: python:2.7.18-buster
     strategy:
       matrix:
-        python-version: [3.x, 2.x]
+        python-version: [3.x] # No longer compatible , 2.x]
 
     steps:
       - uses: actions/checkout@v3
