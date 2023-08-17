@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 #
 # Description: Script to update contributors for each plugin
-# Copyright (C) 2018-2022 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2018-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # Find files that misses the header:
 # for file in $(find . -type f|grep -v .git|grep -v pyc|grep -v .risu_tests|egrep '(.py|.txt|.yml|.sh)$'); do grep -q "^# Modifications" $file|| echo $file;done
@@ -97,7 +97,7 @@ def main():
             date = ""
 
             command = (
-                "cd $(dirname %s) && git blame -C -C -C -M -w -e %s | awk '{print $2\" \"$3\" \"$4}'|egrep -o '<.*>.*[0-9][0-9][0-9][0-9]-' | sed 's/  */ /g' | cut -d ' ' -f 1-2 | sort -u|grep -v not.committed.yet"
+                "cd $(dirname %s) && git blame -C -M -w -e %s | awk '{print $2\" \"$3\" \"$4}'|egrep -o '<.*>.*[0-9][0-9][0-9][0-9]-' | sed 's/  */ /g' | cut -d ' ' -f 1-2 | sort -u|grep -v not.committed.yet"
                 % (plugin["plugin"], plugin["plugin"])
             )
 
