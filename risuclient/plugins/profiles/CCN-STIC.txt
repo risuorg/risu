@@ -1,6 +1,6 @@
 # Author: Pablo Iranzo Gómez (Pablo.Iranzo@redhat.com)
 
-# Copyright (C) 2018, 2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2019, 2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 # description: CCN-STIC compliance-related checks
 # long_name: CCN-STIC checks
 # priority: 1000

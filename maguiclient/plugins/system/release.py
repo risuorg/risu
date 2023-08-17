@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 #
 # Description: Plugin for checking RH Release across hosts
-# Copyright (C) 2017-2022 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2018-2022 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 
 from __future__ import print_function

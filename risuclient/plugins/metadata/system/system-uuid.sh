@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright (C) 2017, 2018 Robin Černín <cerninr@gmail.com>
+# Copyright (C) 2018 Robin Černín <cerninr@gmail.com>
 # Copyright (C) 2018 David Valle Delisle <dvd@redhat.com>
 # Copyright (C) 2018, 2021 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 

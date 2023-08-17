@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # Based on reboot.py from David Vallee Delisle
-# Copyright (C) 2017 Robin Černín <cerninr@gmail.com>
-# Copyright (C) 2017, 2019-2021, 2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2019-2021, 2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
