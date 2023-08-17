@@ -72,27 +72,29 @@ import shutil
 from risu import risu
 
 # To create your own test, update NAME with plugin name and copy this file to test_$NAME.py
-NAME = 'httpd_bug_1406417'
+NAME = "httpd_bug_1406417"
 
-testplugins = os.path.join(risu.risudir, 'plugins', 'test')
-plugins = os.path.join(risu.risudir, 'plugins')
-folder = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'setup')
+testplugins = os.path.join(risu.risudir, "plugins", "test")
+plugins = os.path.join(risu.risudir, "plugins")
+folder = os.path.join(os.path.abspath(os.path.dirname(__file__)), "setup")
 uttest = risu.findplugins(folders=[folder], include=[NAME])[0]
 us = os.path.basename(uttest)
 citplugs = risu.findplugins(folders=[plugins], include=[us])
 
 # Setup commands and expected return codes
-rcs = {"pass": risu.RC_OKAY,
-       "fail": risu.RC_FAILED,
-       "skipped": risu.RC_SKIPPED,
-       "info": risu.RC_INFO}
+rcs = {
+    "pass": risu.RC_OKAY,
+    "fail": risu.RC_FAILED,
+    "skipped": risu.RC_SKIPPED,
+    "info": risu.RC_INFO,
+}
 
 
-def runtest(testtype='False'):
+def runtest(testtype="False"):
     # testtype will be 'pass', 'fail', 'skipped'
 
     # We're iterating against the different UT tests defined in UT-tests folder
-    tmpdir = tempfile.mkdtemp(prefix='risu-tmp')
+    tmpdir = tempfile.mkdtemp(prefix="risu-tmp")
 
     # Setup test for 'testtype'
     subprocess.call([uttest, uttest, testtype, tmpdir])
@@ -101,7 +103,7 @@ def runtest(testtype='False'):
     res = risu.dorisu(path=tmpdir, plugins=citplugs)
 
     # Get Return code
-    rc = res[0]['result']['rc']
+    rc = res[0]["result"]["rc"]
 
     # Remove tmp folder
     shutil.rmtree(tmpdir)
@@ -113,17 +115,17 @@ def runtest(testtype='False'):
 class RisuTest(TestCase):
     def test_pass(self):
         # testtype will be 'pass', 'fail', 'skipped'
-        testtype = 'pass'
-        assert runtest(testtype='fail') == rcs[testtype]
+        testtype = "pass"
+        assert runtest(testtype="fail") == rcs[testtype]
 
     def test_fail(self):
         # testtype will be 'pass', 'fail', 'skipped'
-        testtype = 'fail'
+        testtype = "fail"
         assert runtest(testtype=testtype) == rcs[testtype]
 
     def test_skip(self):
         # testtype will be 'pass', 'fail', 'skipped'
-        testtype = 'skipped'
+        testtype = "skipped"
         assert runtest(testtype=testtype) == rcs[testtype]
 ```
 
