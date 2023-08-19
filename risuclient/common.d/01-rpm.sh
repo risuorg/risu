@@ -18,10 +18,10 @@
 
 is_rpm() {
     if [ "x$RISU_LIVE" = "x1" ]; then
-        rpm -qa *$1* | egrep ^"$1"-[0-9]
+        rpm -qa *$1* | grep -E ^"$1"-[0-9]
     elif [ "x$RISU_LIVE" = "x0" ]; then
         is_required_file "${RISU_ROOT}/installed-rpms"
-        awk '{print $1}' "${RISU_ROOT}/installed-rpms" | egrep ^"$1"-[0-9]
+        awk '{print $1}' "${RISU_ROOT}/installed-rpms" | grep -E ^"$1"-[0-9]
     fi
 }
 

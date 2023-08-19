@@ -19,10 +19,10 @@
 is_dpkg() {
     PACKAGE=$1
     if [ "x$RISU_LIVE" = "x1" ]; then
-        dpkg -l *$1* 2>&1 | grep -v 'no packages found matching' | egrep ^ii | awk -v PACKAGE=${PACKAGE} '$2==PACKAGE {print $3}' | egrep "."
+        dpkg -l *$1* 2>&1 | grep -v 'no packages found matching' | grep -E ^ii | awk -v PACKAGE=${PACKAGE} '$2==PACKAGE {print $3}' | grep -E "."
     elif [ "x$RISU_LIVE" = "x0" ]; then
         is_required_file "${RISU_ROOT}/installed-debs"
-        awk -v PACKAGE=${PACKAGE} '$2==PACKAGE {print $3}' "${RISU_ROOT}/installed-debs" | egrep "."
+        awk -v PACKAGE=${PACKAGE} '$2==PACKAGE {print $3}' "${RISU_ROOT}/installed-debs" | grep -E "."
     fi
 }
 

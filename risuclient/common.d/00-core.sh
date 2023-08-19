@@ -187,7 +187,7 @@ is_process() {
 is_lineinfile() {
     # $1: regexp
     # $*: files
-    [ -f "$2" ] && egrep -iq "$1" "${@:2}"
+    [ -f "$2" ] && grep -E -iq "$1" "${@:2}"
 }
 
 discover_rhrelease() {
@@ -195,7 +195,7 @@ discover_rhrelease() {
     if [[ ! -f ${FILE} ]]; then
         echo 0
     else
-        VERSION=$(egrep -o "\(.*\)" ${FILE} | tr -d "()")
+        VERSION=$(grep -E -o "\(.*\)" ${FILE} | tr -d "()")
         case ${VERSION} in
         Plow) echo 9 ;;
         Ootpa) echo 8 ;;
@@ -255,7 +255,7 @@ discover_os() {
 # Function removing comments (pound sign) and trimming leading and ending spaces
 strip_and_trim() {
     local file="$1"
-    egrep -v "^\s*($|#.*)" ${file} | sed -e 's/^[ \t]*//' -e 's/[ \t]*$//'
+    grep -E -v "^\s*($|#.*)" ${file} | sed -e 's/^[ \t]*//' -e 's/[ \t]*$//'
 }
 
 is_filemode() {
@@ -289,8 +289,8 @@ expand_ranges() {
 
 expand_and_remove_excludes() {
     RANGE=$(expand_ranges $*)
-    CPUs=$(echo ${RANGE} | tr " " "\n" | egrep -v "\^.*")
-    EXCLUDES=$(echo ${RANGE} | tr " " "\n" | egrep "\^.*")
+    CPUs=$(echo ${RANGE} | tr " " "\n" | grep -E -v "\^.*")
+    EXCLUDES=$(echo ${RANGE} | tr " " "\n" | grep -E "\^.*")
     (
         for CPU in ${CPUs}; do
             exclude=0
