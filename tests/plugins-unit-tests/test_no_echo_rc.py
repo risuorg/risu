@@ -3,7 +3,7 @@
 #
 # Description: This UT check that no test has echo $RC_
 #
-# Copyright (C) 2018-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2018-2021, 2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 # Copyright (C) 2020 stickler-ci <support@stickler-ci.com>
 
 #
