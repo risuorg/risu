@@ -4,7 +4,7 @@
 # Description: Hook for making as failed faraday plugins
 # Author: Pablo Iranzo Gomez (Pablo.Iranzo@gmail.com)
 
-# Copyright (C) 2017-2022 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2018-2021, 2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 from __future__ import print_function
 
@@ -41,29 +41,26 @@ def run(data, quiet=False):  # do not edit this line
     # data is a matrix of grouped[plugin][sosreport] and then [text] [out] [err] [rc]
 
     for plugin in data:
-        if "plugin" in data[plugin]:
-            if "faraday/" in data[plugin]["plugin"]:
-                results = [
-                    data[plugin]["sosreport"][sosreport]["err"]
-                    for sosreport in data[plugin]["sosreport"]
-                ]
+        if "plugin" in data[plugin] and "faraday/" in data[plugin]["plugin"]:
+            results = [
+                data[plugin]["sosreport"][sosreport]["err"]
+                for sosreport in data[plugin]["sosreport"]
+            ]
 
-                makeitfail = False
-                results = sorted(set(results))
+            makeitfail = False
+            results = sorted(set(results))
 
-                if len(results) > 1 and "positive" in data[plugin]["plugin"]:
-                    makeitfail = True
-                if (
-                    len(results) < len(data[plugin]["sosreport"])
-                    and "negative" in data[plugin]["plugin"]
-                ):
-                    makeitfail = True
+            if len(results) > 1 and "positive" in data[plugin]["plugin"]:
+                makeitfail = True
+            if (
+                len(results) < len(data[plugin]["sosreport"])
+                and "negative" in data[plugin]["plugin"]
+            ):
+                makeitfail = True
 
-                if makeitfail:
-                    for sosreport in data[plugin]["sosreport"]:
-                        data[plugin]["sosreport"][sosreport].update(
-                            {"rc": risu.RC_FAILED}
-                        )
+            if makeitfail:
+                for sosreport in data[plugin]["sosreport"]:
+                    data[plugin]["sosreport"][sosreport].update({"rc": risu.RC_FAILED})
 
     return data
 

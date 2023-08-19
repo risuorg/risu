@@ -32,18 +32,20 @@ Magui plugins should conform to the following standards:
 
     returncode = risu.RC_OKAY
 
-    message = ''
+    message = ""
     for ourdata in data:
         # 'err' in this case should be always equal to the md5sum of the file so that we can report the problem
         err = []
-        for sosreport in ourdata['sosreport']:
-            err.append(ourdata['sosreport'][sosreport]['err'])
+        for sosreport in ourdata["sosreport"]:
+            err.append(ourdata["sosreport"][sosreport]["err"])
 
         if len(sorted(set(err))) != 1:
-            message = _("Pipeline.yaml contents differ across sosreports, please do check that the contents are the same and shared across the environment to ensure proper behavior.")
+            message = _(
+                "Pipeline.yaml contents differ across sosreports, please do check that the contents are the same and shared across the environment to ensure proper behavior."
+            )
             returncode = risu.RC_FAILED
 
-    out = ''
+    out = ""
     err = message
     return returncode, out, err
     ```

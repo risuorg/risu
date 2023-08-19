@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright (C) 2018, 2021, 2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -15,23 +15,23 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# long_name: prepares hostname metadata
-# description: Sets hostname metadata
+# long_name: Reports if system is using dnf or yum's versionlock as it might cause missing upgrades
+# description: Reports if system is using dnf or yum's versionlock as it might cause missing upgrades
+# priority: 100
+# kb:
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
-if [[ ${RISU_LIVE} -eq 0 ]]; then
-    FILE="${RISU_ROOT}/hostname"
-elif [[ ${RISU_LIVE} -eq 1 ]]; then
-    FILE=$(mktemp)
-    trap "rm ${FILE}" EXIT
-    hostname >${FILE}
+is_required_file ${RISU_ROOT}/etc/dnf/plugins/versionlock.list
+
+LINES=$(cat ${RISU_ROOT}/etc/dnf/plugins/versionlock.list | wc -l)
+
+if [[ ${LINES} -eq "0" ]]; then
+    exit ${RC_OKAY}
+else
+
+    echo "System has contents in YUM/DNF versionlock, check for possible missing package updates" >&2
+    exit ${RC_INFO}
+
 fi
-
-is_required_file ${FILE}
-
-# Fill metadata 'hostname' to value
-echo "hostname"
-cat ${FILE} >&2
-exit ${RC_OKAY}

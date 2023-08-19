@@ -3,7 +3,7 @@
 #
 # Description: Hook for removing failed firewall status when node is openstack
 # Author: Pablo Iranzo Gomez (Pablo.Iranzo@gmail.com)
-# Copyright (C) 2017-2022 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2018-2021, 2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 from __future__ import print_function
 
@@ -45,9 +45,8 @@ def run(data, quiet=False, options=None):  # do not edit this line
     mangle = False
 
     # Grab source data
-    if sourceid in data:
-        if data[sourceid]["result"]["err"] != "unknown":
-            mangle = True
+    if sourceid in data and data[sourceid]["result"]["err"] != "unknown":
+        mangle = True
 
     if mangle and targetid in data:
         # We now fake result as SKIPPED and copy to datahook dict the new data

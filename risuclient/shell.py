@@ -6,7 +6,7 @@
 #
 # Copyright (C) 2017, 2018 Robin Černín <cerninr@gmail.com>
 # Copyright (C) 2017 Lars Kellogg-Stedman <lars@redhat.com>
-# Copyright (C) 2017-2022 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2017-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -1071,7 +1071,7 @@ def parse_args(default=False, parse=False):
         "--prio",
         metavar="[0-1000]",
         type=int,
-        choices=range(0, 1001),
+        choices=range(1001),
         help=_("Only include plugins are equal or above specified prio"),
         default=0,
     )

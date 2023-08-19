@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 #
 # Description: Plugin for reporting non equal mtu values
-# Copyright (C) 2017-2022 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2018-2021, 2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 
 from __future__ import print_function
@@ -47,13 +47,12 @@ def run(data, quiet=False):  # do not edit this line
             if data[ourdata]["sosreport"][sosreport]["rc"] != risu.RC_SKIPPED:
                 allskipped = False
 
-        if not allskipped:
-            if len(sorted(set(err))) != 1:
-                message.append(
-                    _("%s mtu values differ across hosts, ensure proper behavior.")
-                    % data[ourdata]["name"].split(":")[1]
-                )
-                returncode = risu.RC_FAILED
+        if not allskipped and len(sorted(set(err))) != 1:
+            message.append(
+                _("%s mtu values differ across hosts, ensure proper behavior.")
+                % data[ourdata]["name"].split(":")[1]
+            )
+            returncode = risu.RC_FAILED
 
     out = ""
     err = "\n".join(message)
