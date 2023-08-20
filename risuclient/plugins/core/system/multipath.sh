@@ -39,9 +39,9 @@ fi
 
 if [[ "x$RISU_LIVE" == "x0" ]]; then
     is_required_file "${RISU_ROOT}/sos_commands/multipath/multipath_-v4_-ll"
-    mpath_stat=$(egrep "failed|faulty|offline" ${RISU_ROOT}/sos_commands/multipath/multipath_-v4_-ll)
+    mpath_stat=$(grep -E "failed|faulty|offline" ${RISU_ROOT}/sos_commands/multipath/multipath_-v4_-ll)
 elif [[ "x$RISU_LIVE" == "x1" ]]; then
-    mpath_stat=$(multipath -v4 -ll | egrep "failed|faulty|offline")
+    mpath_stat=$(multipath -v4 -ll | grep -E "failed|faulty|offline")
 fi
 
 if [[ -n $mpath_stat ]]; then

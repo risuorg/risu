@@ -72,13 +72,13 @@ new_regexmode=0
 
 for file in ${ALL_FILES}; do
     content="$(strip_and_trim ${file})"
-    if echo "$content" | egrep -q "$OLD_REGEXP"; then
+    if echo "$content" | grep -E -q "$OLD_REGEXP"; then
         files_using_old_regex=("${files_using_old_regex[@]}" "$file")
     fi
-    if echo "$content" | egrep -q "$NEW_REGEXP"; then
+    if echo "$content" | grep -E -q "$NEW_REGEXP"; then
         files_using_new_regex=("${files_using_new_regex[@]}" "$file")
     fi
-    if echo "$content" | egrep -q "$REGEXP_MODE"; then
+    if echo "$content" | grep -E -q "$REGEXP_MODE"; then
         new_regexmode=1
     fi
 done

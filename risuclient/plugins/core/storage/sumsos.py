@@ -30339,7 +30339,7 @@ def crunch_systemctl_run_level(systemctl_file):
 
         # TODO: investigate mor                              e
         # saw this in centos file: (case )
-        # egrep 'emergency.target|rescue.target|multi-user.target|graphical.target' sos_commands/systemd/systemctl_list-units_--all
+        # grep -E 'emergency.target|rescue.target|multi-user.target|graphical.target' sos_commands/systemd/systemctl_list-units_--all
         # emergency.target                                             loaded    inactive dead      Emergency Mode
         # graphical.target                                             loaded    inactive dead      Graphical Interface
         # multi-user.target                                            loaded    inactive dead      Multi-User System

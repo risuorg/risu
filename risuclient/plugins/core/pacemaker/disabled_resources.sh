@@ -29,7 +29,7 @@ if [[ "x$RISU_LIVE" == "x1" ]]; then
     pacemaker_status=$(systemctl is-active pacemaker || :)
     if [[ $pacemaker_status == "active" ]]; then
         if pcs config | grep -q -i "target-role=Stopped"; then
-            pcs config | egrep -i "^(\sBundle|\sClone|\sMaster|\sResource)|target-role=Stopped" |
+            pcs config | grep -E -i "^(\sBundle|\sClone|\sMaster|\sResource)|target-role=Stopped" |
                 grep -i "target-role=Stopped" -B1 | awk -F" " '/Bundle/||/Clone/||/Master/||/Resource/{print $2}' >&2
             exit ${RC_FAILED}
         else
@@ -48,7 +48,7 @@ elif [[ "x$RISU_LIVE" == "x0" ]]; then
         done
         is_required_file "${PCS_DIRECTORY}/pcs_config"
         if is_lineinfile "target-role=" "${PCS_DIRECTORY}/pcs_config"; then
-            egrep -i "^(\sBundle|\sClone|\sMaster|\sResource)|target-role=Stopped" "${PCS_DIRECTORY}/pcs_config" |
+            grep -E -i "^(\sBundle|\sClone|\sMaster|\sResource)|target-role=Stopped" "${PCS_DIRECTORY}/pcs_config" |
                 grep -i "target-role=Stopped" -B1 | awk -F" " '/Bundle/||/Clone/||/Master/||/Resource/{print $2}' >&2
             exit ${RC_FAILED}
         else

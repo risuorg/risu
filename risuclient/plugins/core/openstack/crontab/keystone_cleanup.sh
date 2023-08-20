@@ -33,7 +33,7 @@ if ! awk '/keystone-manage token_flush/ && /^[^#]/ { print $0 }' "${RISU_ROOT}/v
     exit ${RC_FAILED}
 elif awk '/keystone-manage token_flush/ && /^[^#]/ { print $0 }' "${RISU_ROOT}/var/spool/cron/keystone" >/dev/null 2>&1; then
     # Skip default crontab of 1 0 * * * as it might miss busy systems and fail to do later cleanups
-    COUNT=$(awk '/keystone-manage token_flush/ && /^[^#]/ { print $0 }' "${RISU_ROOT}/var/spool/cron/keystone" 2>&1 | egrep '^1 0' -c)
+    COUNT=$(awk '/keystone-manage token_flush/ && /^[^#]/ { print $0 }' "${RISU_ROOT}/var/spool/cron/keystone" 2>&1 | grep -E '^1 0' -c)
     if [[ "x$COUNT" == "x1" ]]; then
         echo -n $"token flush not running every hour " >&2
         case ${RELEASE} in

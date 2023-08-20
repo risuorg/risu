@@ -27,7 +27,7 @@ REGEXP="systemd-sysv-generator\[[0-9]+\]: stat\(\) failed on "
 
 if is_lineinfile "$REGEXP" ${journalctl_file}; then
     echo $'>>> systemd-sysv-generator "stat failed" detected' >&2
-    egrep "$REGEXP" ${journalctl_file} >&2
+    grep -E "$REGEXP" ${journalctl_file} >&2
     exit ${RC_FAILED}
 fi
 

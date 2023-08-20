@@ -40,7 +40,7 @@ kernel_libvirt_qemu=(["3.10.0-123"]="1.1.1 1.5.3 7.0"
     ["3.10.0-514"]="2.0.0 2.6.0 7.3"
     ["3.10.0-693"]="3.2.0 2.9.0 7.4")
 
-redhat_release_version=$(egrep -o '[0-9]+.[0-9]+' "${RISU_ROOT}/etc/redhat-release")
+redhat_release_version=$(grep -E -o '[0-9]+.[0-9]+' "${RISU_ROOT}/etc/redhat-release")
 
 if [[ "x$RISU_LIVE" == "x0" ]]; then
     FILE="${RISU_ROOT}/uname"

@@ -76,7 +76,7 @@ if [[ "x$RISU_LIVE" == "x0" ]]; then
         fi
     fi
 elif [[ "x$RISU_LIVE" == "x1" ]]; then
-    if hiera -c /etc/puppet/hiera.yaml enabled_services | egrep -sq ceph_mon; then
+    if hiera -c /etc/puppet/hiera.yaml enabled_services | grep -E -sq ceph_mon; then
         mktempfile
         ceph -s >${tmpfile_status}
         ceph osd dump >${tmpfile_osd_dump}

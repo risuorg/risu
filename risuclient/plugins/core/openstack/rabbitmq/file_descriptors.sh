@@ -55,11 +55,11 @@ fi
 
 FILE_DESCRIPTORS=$(awk -v target="$HN" '$4 ~ target { flag = 1 } \
 flag = 1 && /total_limit/ { print ; exit }' \
-    "${FILE}" | egrep -o '[0-9]+')
+    "${FILE}" | grep -E -o '[0-9]+')
 
 USED_FILE_DESCRIPTORS=$(awk -v target="$HN" '$4 ~ target { flag = 1 } \
 flag = 1 && /total_used/ { print ; exit }' \
-    "${FILE}" | egrep -o '[0-9]+')
+    "${FILE}" | grep -E -o '[0-9]+')
 
 if [[ -z ${FILE_DESCRIPTORS} ]]; then
     echo "couldn't get file descriptors from rabbitmqctl report" >&2

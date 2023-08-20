@@ -48,7 +48,7 @@ is_initscript() {
 
     local token
     for token in 'start' 'stop' 'status'; do
-        if echo "$content" | egrep -qw "$token"; then
+        if echo "$content" | grep -E -qw "$token"; then
             let confidence+=1
         fi
     done
@@ -73,14 +73,14 @@ for file in $(/bin/ls ${RISU_ROOT}/etc/rc.d/init.d/*); do
     runuser_l_found=0
 
     # Check for 'su'
-    echo "$content" | egrep -qw "su" && let su_found+=1
+    echo "$content" | grep -E -qw "su" && let su_found+=1
 
     # Check for 'runuser'
-    IFS=$'\n' read -rd '' -a lines <<<"$(echo "$content" | egrep "runuser")"
+    IFS=$'\n' read -rd '' -a lines <<<"$(echo "$content" | grep -E "runuser")"
     for line in "${lines[@]}"; do
         let runuser_found+=1
         # Check for '-' or '-l', asssuming it will be at the runuser level
-        egrep -qw -- "(-|-l)" <<<"$line" && let runuser_l_found+=1
+        grep -E -qw -- "(-|-l)" <<<"$line" && let runuser_l_found+=1
     done
 
     # Finding 'runuser -l' needs a review

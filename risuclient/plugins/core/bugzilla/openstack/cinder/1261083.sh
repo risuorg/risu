@@ -35,8 +35,8 @@ show_warn() {
 lvmetad=$(cat "${RISU_ROOT}/etc/lvm/lvm.conf" | grep -i use_lvmetad | grep -iv "#" | cut -f2 -d "=" | tr -d '[:space:]')
 filter=$(cat "${RISU_ROOT}/etc/lvm/lvm.conf" | grep -i filter | grep -iv global | grep -iv "#" | cut -f2 -d "=" | tr -d '[:space:]')
 global_filter=$(cat "${RISU_ROOT}/etc/lvm/lvm.conf" | grep -i global_filter | grep -iv "#" | cut -f2 -d "=" | tr -d '[:space:]')
-filter_eval=$(echo $filter | egrep -i '\["r[/,|].\*[/,|][|]*"\]')
-global_filter_eval=$(echo $global_filter | egrep -i '\["r[/,|].\*[/,|][|]*"\]')
+filter_eval=$(echo $filter | grep -E -i '\["r[/,|].\*[/,|][|]*"\]')
+global_filter_eval=$(echo $global_filter | grep -E -i '\["r[/,|].\*[/,|][|]*"\]')
 
 if [[ "x${lvmetad}" == "x0" ]]; then
     filter_in_use="filter"

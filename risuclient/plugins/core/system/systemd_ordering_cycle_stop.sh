@@ -29,7 +29,7 @@ is_required_file "${RISU_ROOT}/var/log/messages"
 
 if is_lineinfile "$REGEXP" "${RISU_ROOT}/var/log/messages"; then
     echo $">>> systemd deleted some 'stop' jobs" >&2
-    egrep "$REGEXP" "${RISU_ROOT}/var/log/messages" >&2
+    grep -E "$REGEXP" "${RISU_ROOT}/var/log/messages" >&2
     exit ${RC_FAILED}
 fi
 

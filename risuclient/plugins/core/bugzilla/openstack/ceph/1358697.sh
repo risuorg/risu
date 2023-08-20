@@ -29,7 +29,7 @@ if [[ "x$RISU_LIVE" == "x1" ]]; then
     VERSIONS=$(rpm -qa ceph-common* python-rbd* librados2* python-rados* | sed -n -r -e 's/.*-0.([0-9]+).([0-9]+)-([0-9]+).*$/\1-\2-\3/p')
 elif [[ "x$RISU_LIVE" == "x0" ]]; then
     is_required_file "${RISU_ROOT}/installed-rpms"
-    VERSIONS=$(egrep 'ceph-common|python-rbd|librados2|python-rados' "${RISU_ROOT}/installed-rpms" | awk '{print $1}' | sed -n -r -e 's/.*-0.([0-9]+).([0-9]+)-([0-9]+).*$/\1-\2-\3/p')
+    VERSIONS=$(grep -E 'ceph-common|python-rbd|librados2|python-rados' "${RISU_ROOT}/installed-rpms" | awk '{print $1}' | sed -n -r -e 's/.*-0.([0-9]+).([0-9]+)-([0-9]+).*$/\1-\2-\3/p')
 fi
 
 exitoudated() {

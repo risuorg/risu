@@ -45,7 +45,7 @@ fi
 
 is_required_file "${FILE}"
 
-PREPORTS="$(cat ${FILE} | egrep '(ha-|qr-|gq-)' | cut -d\" -f2)"
+PREPORTS="$(cat ${FILE} | grep -E '(ha-|qr-|gq-)' | cut -d\" -f2)"
 PREPORTS="${PREPORTS} $(cat ${FILE} | grep name | grep tap | cut -d\" -f2)"
 
 PORTS=$(echo ${PREPORTS} | tr " " "\n" | sort | uniq)

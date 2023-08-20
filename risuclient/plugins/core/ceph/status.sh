@@ -39,7 +39,7 @@ if [[ "x$RISU_LIVE" == "x0" ]]; then
         fi
     fi
 elif [[ "x$RISU_LIVE" == "x1" ]]; then
-    if hiera -c /etc/puppet/hiera.yaml enabled_services | egrep -sq ceph_mon; then
+    if hiera -c /etc/puppet/hiera.yaml enabled_services | grep -E -sq ceph_mon; then
         if ceph -s | grep -q HEALTH_OK; then
             exit ${RC_OKAY}
         else

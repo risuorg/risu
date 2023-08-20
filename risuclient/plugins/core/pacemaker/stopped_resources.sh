@@ -46,7 +46,7 @@ elif [[ "x$RISU_LIVE" == "x0" ]]; then
         done
         is_required_file "${PCS_DIRECTORY}/pcs_status"
         if is_lineinfile "Stopped" "${PCS_DIRECTORY}/pcs_status"; then
-            egrep -i "^(\sClone|\sMaster|\sResource)|Stopped" "${PCS_DIRECTORY}/pcs_status" | grep "Stopped" -B1 |
+            grep -E -i "^(\sClone|\sMaster|\sResource)|Stopped" "${PCS_DIRECTORY}/pcs_status" | grep "Stopped" -B1 |
                 sed '/^--$/d' >&2
             exit ${RC_FAILED}
         else

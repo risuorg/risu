@@ -65,7 +65,7 @@ else
     if [[ -d ${MYSQL_DIR} ]]; then
         #Db disk usage for ibdata and ib_log kinds - gb unit size kinds could be associate with perfomance degradation and a potential need of table truncate operations
         (
-            du -h --threshold=10G ${MYSQL_DIR}/* | sort -nr | egrep -i "ibdata|ib_log"
+            du -h --threshold=10G ${MYSQL_DIR}/* | sort -nr | grep -E -i "ibdata|ib_log"
         ) >&2
         exit ${RC_OKAY}
     else

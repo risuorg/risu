@@ -31,7 +31,7 @@ cstate=$(cat "${RISU_ROOT}/sys/module/intel_idle/parameters/max_cstate")
 
 if [[ ${cstate} -ne "0" ]]; then
     echo $"CPU is not running at full speed. Please refer https://access.redhat.com/solutions/202743 " >&2
-    egrep "processor|cpu MHz" "${RISU_ROOT}/proc/cpuinfo" | tr '\n' ' ' | sed 's/processor/\nprocessor/g' >&2
+    grep -E "processor|cpu MHz" "${RISU_ROOT}/proc/cpuinfo" | tr '\n' ' ' | sed 's/processor/\nprocessor/g' >&2
     exit ${RC_FAILED}
 else
     exit ${RC_OKAY}

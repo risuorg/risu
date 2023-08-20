@@ -69,7 +69,7 @@ else
         if [[ -n ${ISOLCPUS} ]]; then
             misconfigured_cores=''
             for i in ${VCPUPINSET}; do
-                if $(egrep -q " $i |^$i | $i$" ${ISOLCPUS}); then
+                if $(grep -E -q " $i |^$i | $i$" ${ISOLCPUS}); then
                     misconfigured_cores=${misconfigured_cores}" ${i}"
                 fi
             done
@@ -102,7 +102,7 @@ else
             #check if vcpu_pin_set cores are tuned & tuned profile is set
             misconfigured_cores=''
             for i in ${VCPUPINSET}; do
-                if ! $(echo ${TUNED_CORES} | egrep -q " $i |^$i | $i$"); then
+                if ! $(echo ${TUNED_CORES} | grep -E -q " $i |^$i | $i$"); then
                     misconfigured_cores=${misconfigured_cores}" ${i}"
                 fi
             done
@@ -116,7 +116,7 @@ else
         if [[ -n ${ISOLCPUS} ]]; then
             misconfigured_cores=''
             for i in ${VCPUPINSET}; do
-                if ! $(echo ${TUNED_CORES} | egrep -q " $i |^$i | $i$"); then
+                if ! $(echo ${TUNED_CORES} | grep -E -q " $i |^$i | $i$"); then
                     misconfigured_cores=${misconfigured_cores}" ${i}"
                 fi
             done
@@ -148,13 +148,13 @@ else
                 for j in $(seq 0 $(expr ${numa_nodes} - 1)); do
                     for k in $(seq 0 $(expr ${cores_per_socket} - 1)); do
                         if [[ $i == $sibling${j}0[$k] ]]; then
-                            if [[ $(echo ${instance_cpus} | egrep -o " $sibling${j}1[$k] |^$sibling${j}1[$k] | $sibling${j}1[$k]$" | wc -l) != '1' ]]; then
+                            if [[ $(echo ${instance_cpus} | grep -E -o " $sibling${j}1[$k] |^$sibling${j}1[$k] | $sibling${j}1[$k]$" | wc -l) != '1' ]]; then
                                 echo "Sibling core of $i of $(xmllint --xpath "string(//name)" ${libvirt_xml}) : $sibling${j}1[$k] is not being used" >&2
                                 flag=1
                             fi
                         fi
                         if [[ $i == $sibling${j}1[$k] ]]; then
-                            if [[ $(echo ${instance_cpus} | egrep -o " $sibling${j}0[$k] |^$sibling${j}0[$k] | $sibling${j}0[$k]$" | wc -l) != '1' ]]; then
+                            if [[ $(echo ${instance_cpus} | grep -E -o " $sibling${j}0[$k] |^$sibling${j}0[$k] | $sibling${j}0[$k]$" | wc -l) != '1' ]]; then
                                 echo "Sibling core of $i of $(xmllint --xpath "string(//name)" ${libvirt_xml}) : $sibling${j}0[$k] is not being used"
                                 flag=1
                             fi
@@ -170,13 +170,13 @@ else
                 for j in $(seq 0 $(expr ${numa_nodes} - 1)); do
                     for k in $(seq 0 $(expr ${cores_per_socket} - 1)); do
                         if [[ $i == $sibling${j}0[$k] ]]; then
-                            if [[ $(echo ${VCPUPINSET} | egrep -o " $sibling${j}1[$k] |^$sibling${j}1[$k] | $sibling${j}1[$k]$" | wc -l) != '1' ]]; then
+                            if [[ $(echo ${VCPUPINSET} | grep -E -o " $sibling${j}1[$k] |^$sibling${j}1[$k] | $sibling${j}1[$k]$" | wc -l) != '1' ]]; then
                                 echo "Sibling core of $i : $sibling${j}1[$k] is not being used in nova vcpu_pin_set" >&2
                                 flag=1
                             fi
                         fi
                         if [[ $i == $sibling${j}1[$k] ]]; then
-                            if [[ $(echo ${VCPUPINSET} | egrep -o " $sibling${j}0[$k] |^$sibling${j}0[$k] | $sibling${j}0[$k]$" | wc -l) != '1' ]]; then
+                            if [[ $(echo ${VCPUPINSET} | grep -E -o " $sibling${j}0[$k] |^$sibling${j}0[$k] | $sibling${j}0[$k]$" | wc -l) != '1' ]]; then
                                 echo "Sibling core of $i : $sibling${j}0[$k] is not being used in nova vcpu_pin_set"
                                 flag=1
                             fi
@@ -192,13 +192,13 @@ else
                 for j in $(seq 0 $(expr ${numa_nodes} - 1)); do
                     for k in $(seq 0 $(expr ${cores_per_socket} - 1)); do
                         if [[ $i == $sibling${j}0[$k] ]]; then
-                            if [[ $(echo ${TUNED_CORES} | egrep -o " $sibling${j}1[$k] |^$sibling${j}1[$k] | $sibling${j}1[$k]$" | wc -l) != '1' ]]; then
+                            if [[ $(echo ${TUNED_CORES} | grep -E -o " $sibling${j}1[$k] |^$sibling${j}1[$k] | $sibling${j}1[$k]$" | wc -l) != '1' ]]; then
                                 echo "Tuned sibling core of $i : $sibling${j}1[$k] is not isolated in kernel" >&2
                                 flag=1
                             fi
                         fi
                         if [[ $i == $sibling${j}1[$k] ]]; then
-                            if [[ $(echo ${TUNED_CORES} | egrep -o " $sibling${j}0[$k] |^$sibling${j}0[$k] | $sibling${j}0[$k]$" | wc -l) != '1' ]]; then
+                            if [[ $(echo ${TUNED_CORES} | grep -E -o " $sibling${j}0[$k] |^$sibling${j}0[$k] | $sibling${j}0[$k]$" | wc -l) != '1' ]]; then
                                 echo "Tuned sibling core of $i : $sibling${j}0[$k] is not isolated in kernel" >&2
                                 flag=1
                             fi
@@ -214,13 +214,13 @@ else
                 for j in $(seq 0 $(expr ${numa_nodes} - 1)); do
                     for k in $(seq 0 $(expr ${cores_per_socket} - 1)); do
                         if [[ $i == $sibling${j}0[$k] ]]; then
-                            if [[ $(echo ${ISOLCPUS} | egrep -o " $sibling${j}1[$k] |^$sibling${j}1[$k] | $sibling${j}1[$k]$" | wc -l) != '1' ]]; then
+                            if [[ $(echo ${ISOLCPUS} | grep -E -o " $sibling${j}1[$k] |^$sibling${j}1[$k] | $sibling${j}1[$k]$" | wc -l) != '1' ]]; then
                                 echo "Isolated sibling core of $i : $sibling${j}1[$k] is not isolated in kernel" >&2
                                 flag=1
                             fi
                         fi
                         if [[ $i == $sibling${j}1[$k] ]]; then
-                            if [[ $(echo ${instance_cpus} | egrep -o " $sibling${j}0[$k] |^$sibling${j}0[$k] | $sibling${j}0[$k]$" | wc -l) != '1' ]]; then
+                            if [[ $(echo ${instance_cpus} | grep -E -o " $sibling${j}0[$k] |^$sibling${j}0[$k] | $sibling${j}0[$k]$" | wc -l) != '1' ]]; then
                                 echo "Isolated sibling core of $i : $sibling${j}0[$k] is not isolated in kernel" >&2
                                 flag=1
                             fi
@@ -237,7 +237,7 @@ else
             all_pinned_cores="$(echo 'cat //cputune/vcpupin/@cpuset' | xmllint --shell ${libvirt_xml} | awk -F\" 'NR % 2 == 0 { print $2 }') "${all_pinned_cores}
         done
         for i in ${all_pinned_cores}; do
-            if [[ $(echo ${all_pinned_cores} | egrep -o " $i |^$i | $i$" | wc -l) != '1' ]]; then
+            if [[ $(echo ${all_pinned_cores} | grep -E -o " $i |^$i | $i$" | wc -l) != '1' ]]; then
                 misconfigured_cores=${misconfigured_cores}" ${i}"
             fi
         done

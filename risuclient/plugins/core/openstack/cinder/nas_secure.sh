@@ -33,7 +33,7 @@ ERRORMSGNASSECURE=$"nas_secure_file_* options may cause permissions problems wit
 # Check agains the following drivers
 DRIVERMATCH="NfsDriver|NetAppDriver"
 
-DRIVER=$(egrep "$DRIVERMATCH" "${RISU_ROOT}/etc/cinder/cinder.conf" -c)
+DRIVER=$(grep -E "$DRIVERMATCH" "${RISU_ROOT}/etc/cinder/cinder.conf" -c)
 
 if [[ "x$DRIVER" != "x0" ]]; then
 
