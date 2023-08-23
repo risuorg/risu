@@ -66,8 +66,8 @@ repos:
       # Choose one of:
       - id: shfmt # native (requires/installs Go to build)
 
-    types:
-      - shell
+        types:
+          - shell
   - hooks:
       - id: blacken-docs
     repo: https://github.com/asottile/blacken-docs
