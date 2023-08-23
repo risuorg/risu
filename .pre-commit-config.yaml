@@ -65,6 +65,11 @@ repos:
     hooks:
       # Choose one of:
       - id: shfmt # native (requires/installs Go to build)
+        args:
+          - -w
+          - -i
+          - "4"
+          - -s
 
         types:
           - shell
