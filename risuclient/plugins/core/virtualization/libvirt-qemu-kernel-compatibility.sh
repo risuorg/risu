@@ -61,7 +61,7 @@ libvirt=$(echo "$version" | cut -d" " -f1)
 qemu=$(echo "$version" | cut -d" " -f2)
 redhat_release=$(echo "$version" | cut -d" " -f3)
 
-if [[ $libvirt == "$libvirt_version" && $qemu == "$qemu_version" && \
+if [[ $libvirt == "$libvirt_version" && $qemu == "$qemu_version" &&
     $redhat_release == "$redhat_release_version" ]]; then
     echo $"compatibility between libvirt, qemu and kernel" >&2
     exit ${RC_OKAY}

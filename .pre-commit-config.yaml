@@ -1,6 +1,5 @@
 ---
 fail_fast: true
-exclude: "sumsos.py"
 repos:
   - hooks:
       - id: commitizen
