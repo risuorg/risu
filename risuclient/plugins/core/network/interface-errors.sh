@@ -43,7 +43,7 @@ for iface in ${IFACES_IN_SYSTEM}; do
     for file in ${IFACEPATH}; do
         CONTENT=$(cat ${file})
         if [ $CONTENT != "0" ]; then
-            echo "$iface detected errors on $file: $CONTENT" >&2
+            echo "$iface detected errors on ${file//$RISU_ROOT/}: $CONTENT" >&2
             RC_STATUS=${RC_FAILED}
 
         fi
