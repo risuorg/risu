@@ -61,22 +61,19 @@ repos:
       - id: flake8
     repo: https://github.com/pycqa/flake8
     rev: 6.1.0
-  - hooks:
-      - additional_dependencies:
-          - mvdan.cc/sh/v3/cmd/shfmt@v3.1.1
+  - repo: https://github.com/scop/pre-commit-shfmt
+    rev: v3.7.0-1
+    hooks:
+      # Choose one of:
+      - id: shfmt # native (requires/installs Go to build)
         args:
           - -w
           - -i
           - "4"
           - -s
-        entry: shfmt
-        id: shfmt
-        language: golang
-        minimum_pre_commit_version: 2.4.0
-        name: shfmt
+
         types:
           - shell
-    repo: local
   - hooks:
       - id: blacken-docs
     repo: https://github.com/asottile/blacken-docs
