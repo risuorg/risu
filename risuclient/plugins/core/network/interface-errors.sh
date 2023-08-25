@@ -38,7 +38,7 @@ IFACES_IN_SYSTEM=$(grep -i "state UP" ${IP_ADDRESS_FILE} | cut -f2 -d ":" | tr -
 
 # Check all interfaces
 for iface in ${IFACES_IN_SYSTEM}; do
-    IFACEPATH=$(find ${RISU_ROOT}/sys | grep net | grep ${iface} | grep errors)
+    IFACEPATH=$(find ${RISU_ROOT}/sys | grep net | grep ${iface} | grep -E 'errors|dropped|carrier_changes')
 
     for file in ${IFACEPATH}; do
         CONTENT=$(cat ${file})
