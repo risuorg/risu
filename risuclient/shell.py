@@ -28,12 +28,13 @@ import copy
 import datetime
 import gettext
 import hashlib
-import imp
 import json
 import logging
 import os
 import re
 import tempfile
+
+import imp
 
 # Do not require everyone to use requests
 try:
