@@ -46,7 +46,7 @@ jobs:
 
       - name: Commit back the updated files to the repository
         if: steps.changed-files-specific.outputs.any_changed == 'true'
-        uses: stefanzweifel/git-auto-commit-action@v4
+        uses: stefanzweifel/git-auto-commit-action@v5
         with:
           # Optional. Commit message for the created commit.
           # Defaults to "Apply automatic changes"
