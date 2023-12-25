@@ -6,7 +6,7 @@ repos:
         stages:
           - commit-msg
     repo: https://github.com/commitizen-tools/commitizen
-    rev: 3.10.0
+    rev: v3.13.0
   - hooks:
       - id: check-useless-excludes
     repo: meta
@@ -14,7 +14,7 @@ repos:
       - files: \.(css|js|md|markdown|json)
         id: prettier
     repo: https://github.com/pre-commit/mirrors-prettier
-    rev: v3.0.3
+    rev: v4.0.0-alpha.8
   - hooks:
       - id: seed-isort-config
     repo: https://github.com/asottile/seed-isort-config
@@ -26,7 +26,7 @@ repos:
   - hooks:
       - id: black
     repo: https://github.com/python/black
-    rev: 23.9.1
+    rev: 23.12.1
   - hooks:
       - id: check-added-large-files
       - id: check-ast
@@ -55,13 +55,13 @@ repos:
       - id: check-byte-order-marker
       - id: check-docstring-first
     repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.4.0
+    rev: v4.5.0
   - hooks:
       - id: flake8
     repo: https://github.com/pycqa/flake8
     rev: 6.1.0
   - repo: https://github.com/scop/pre-commit-shfmt
-    rev: v3.7.0-1
+    rev: v3.7.0-4
     hooks:
       # Choose one of:
       - id: shfmt # native (requires/installs Go to build)
