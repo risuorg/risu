@@ -59,7 +59,7 @@ repos:
   - hooks:
       - id: flake8
     repo: https://github.com/pycqa/flake8
-    rev: 6.1.0
+    rev: 7.0.0
   - repo: https://github.com/scop/pre-commit-shfmt
     rev: v3.7.0-4
     hooks:
