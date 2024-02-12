@@ -26,7 +26,7 @@ repos:
   - hooks:
       - id: black
     repo: https://github.com/python/black
-    rev: 24.1.1
+    rev: 24.2.0
   - hooks:
       - id: check-added-large-files
       - id: check-ast
@@ -61,7 +61,7 @@ repos:
     repo: https://github.com/pycqa/flake8
     rev: 7.0.0
   - repo: https://github.com/scop/pre-commit-shfmt
-    rev: v3.7.0-4
+    rev: v3.8.0-1
     hooks:
       # Choose one of:
       - id: shfmt # native (requires/installs Go to build)
