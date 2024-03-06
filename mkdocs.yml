@@ -1,8 +1,8 @@
 ---
-site_name: Risu
-docs_dir: doc/
+site_name:                Risu
+docs_dir:                  doc/
 theme: readthedocs
-repo_url: https://github.com/risuorg/risu/
-site_url: https://risuorg.github.io
+repo_url:                    https://github.com/risuorg/risu/
+site_url:              https://risuorg.github.io
 repo_name: GitHub
-use_directory_urls: false
+use_directory_urls:                 false
