@@ -6,7 +6,7 @@ repos:
         stages:
           - commit-msg
     repo: https://github.com/commitizen-tools/commitizen
-    rev: v3.18.4
+    rev: v3.21.3
   - hooks:
       - id: check-useless-excludes
     repo: meta
