@@ -6,6 +6,6 @@ pytest>=3.2.0 # MIT
 pytest-cov>=2.5.1 # MIT
 PyYAML
 requests
-setuptools>=30
+setuptools>=70.0.0
 tox
 urllib3>=2.2.2 # not directly required, pinned by Snyk to avoid a vulnerability
