@@ -1,3 +1,9 @@
+## [1.14.3](https://github.com/risuorg/risu/compare/1.14.2...1.14.3) (2023-09-04)
+
+### Bug Fixes
+
+- move egrep -> grep -E ([fcdab4d](https://github.com/risuorg/risu/commit/fcdab4de5afb2c11e8f37a174ff2e04ac078860f))
+
 ## [1.14.2](https://github.com/risuorg/risu/compare/1.14.1...1.14.2) (2023-02-15)
 
 ### Bug Fixes

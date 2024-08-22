@@ -18,7 +18,7 @@ jobs:
   update-semver:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: haya14busa/action-update-semver@v1.2.1
         with:
           major_version_tag_only: false  # (optional, default is "false")

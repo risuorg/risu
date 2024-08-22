@@ -20,10 +20,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
-
-      - uses: actions/setup-python@v4
-      - uses: actions/cache@v3
+        uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+      - uses: actions/cache@v4
         with:
           path: |
             ~/.cache/pre-commit
@@ -31,14 +30,14 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-precommit-
 
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-pip-${{ hashFiles('**/*requirements.txt') }}
           restore-keys: |
             ${{ runner.os }}-pip-
 
-      - uses: actions/setup-go@v4
+      - uses: actions/setup-go@v5
         with:
           go-version: ">=1.18"
 
@@ -49,11 +48,15 @@ jobs:
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
           if [ -f test-requirements.txt ]; then pip install -r test-requirements.txt; fi
 
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '14'
+
       - name: Semantic Release
-        uses: cycjimmy/semantic-release-action@v3
+        uses: cycjimmy/semantic-release-action@v4
         id: semantic
         with:
-          semantic_version: 19.0.5
+          semantic_version: 18.0.0
           extra_plugins: |
             @semantic-release/git
             @semantic-release/changelog
