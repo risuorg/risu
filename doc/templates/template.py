@@ -2,18 +2,15 @@
 # -*- coding: utf-8 -*-
 #
 # Copyright (C) 2017, 2018 Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
-
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
@@ -22,12 +19,9 @@
 # bugzilla: bz url
 # priority: 0<>1000 for likelihood to break your environment if this test reports fail
 # kb: url-to-kbase
-
 # Note a more pythonic way of running 'main' could be implemented by:
 # Running tests as new functions like:
 # def check_nova_debug(root=RISU_ROOT) and calling it inside the live or not live checks (or both)
-
-
 from __future__ import print_function
 
 import os

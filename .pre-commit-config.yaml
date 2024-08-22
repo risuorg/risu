@@ -89,11 +89,8 @@ repos:
   #     - id: yaspeller
   #       types:
   #         - markdown
-  - hooks:
-      - id: seed-isort-config
-    repo: https://github.com/asottile/seed-isort-config
-    rev: v2.2.0
-  - hooks:
-      - id: isort
-    repo: https://github.com/pre-commit/mirrors-isort
-    rev: v5.10.1
+
+  - repo: https://github.com/asottile/reorder-python-imports
+    rev: v3.13.0
+    hooks:
+      - id: reorder-python-imports

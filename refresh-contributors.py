@@ -3,16 +3,12 @@
 #
 # Description: Script to update contributors for each plugin
 # Copyright (C) 2018-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
-
 # Find files that misses the header:
 # for file in $(find . -type f|grep -v .git|grep -v pyc|grep -v .risu_tests|grep -E '(.py|.txt|.yml|.sh)$'); do grep -q "^# Modifications" $file|| echo $file;done
-
 # How to use:
 # python setup.py sdist # To create AUTHORS
 # ./refresh-contributors.py
 # Check results on your git repo and commit a new PR
-
-
 import os
 import re
 import shutil

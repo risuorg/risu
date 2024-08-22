@@ -4,7 +4,6 @@
 # Description: Extension for processing nagios Risu plugins
 # Author: Pablo Iranzo Gomez (Pablo.Iranzo@gmail.com)
 # Copyright (C) 2021, 2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
-
 from __future__ import print_function
 
 import os

@@ -6,7 +6,6 @@
 #
 # Author: Pablo Iranzo Gomez (Pablo.Iranzo@gmail.com)
 # Copyright (C) 2018-2021, 2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
-
 from __future__ import print_function
 
 import hashlib

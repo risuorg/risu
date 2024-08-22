@@ -3,8 +3,6 @@
 #
 # Description: Plugin for checking RH Release across hosts
 # Copyright (C) 2018-2021, 2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
-
-
 from __future__ import print_function
 
 try:
