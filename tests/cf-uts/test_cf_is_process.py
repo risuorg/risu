@@ -13,6 +13,8 @@
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import os
 import shutil
 import subprocess
@@ -20,13 +22,12 @@ import sys
 import tempfile
 from unittest import TestCase
 
-import risuclient.shell as risu
+sys.path.append(os.path.abspath(os.path.dirname(__file__) + "/" + "../" + "../"))
 
-# You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-sys.path.append(os.path.abspath(os.path.dirname(__file__) + "/" + "../"))
-
+try:
+    import risuclient.shell as risu
+except:
+    import shell as risu
 
 # To create your own test, update NAME with plugin name and copy this file to test_$NAME.py
 NAME = "test_cf_is_process"
