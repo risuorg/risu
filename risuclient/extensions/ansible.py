@@ -82,8 +82,14 @@ def get_metadata(plugin):
     except:
         description = ""
 
+    try:
+        long_name = doc[0]["vars"]["metadata"]["long_name"]
+    except:
+        long_name = ""
+
     metadata = risu.generic_get_metadata(plugin=plugin)
     metadata.update({"description": description})
+    metadata.update({"long_name": long_name})
 
     return metadata
 
