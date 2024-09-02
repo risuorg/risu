@@ -3,7 +3,7 @@
 #
 # Description: This UT run scripts to validate CF
 #
-# Copyright (C) 2017-2021, 2023, 2024 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2017-2021, 2024 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
