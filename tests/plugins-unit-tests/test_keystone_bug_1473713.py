@@ -22,7 +22,6 @@ import sys
 import tempfile
 from unittest import TestCase
 
-
 sys.path.append(os.path.abspath(os.path.dirname(__file__) + "/" + "../" + "../"))
 
 try:

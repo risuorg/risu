@@ -482,9 +482,9 @@ def autogroups(autodata):
     # Precreate groups
     for element in hostsdict:
         for item in iter(hostsdict[element].items()):
-            if not item[0] in groups:
+            if item[0] not in groups:
                 groups["%s" % item[0]] = {}
-            if not item[1] in groups["%s" % item[0]]:
+            if item[1] not in groups["%s" % item[0]]:
                 groups["%s" % item[0]]["%s" % item[1]] = [element]
             else:
                 groups["%s" % item[0]]["%s" % item[1]].append(element)
