@@ -21,7 +21,8 @@ repos:
     rev: 24.10.0
   - hooks:
       - id: check-added-large-files
-        args: [--maxkb=10000]
+        args:
+          - --maxkb=10000
       - id: check-ast
       - id: check-case-conflict
       - id: check-executables-have-shebangs
@@ -53,53 +54,40 @@ repos:
       - id: flake8
     repo: https://github.com/pycqa/flake8
     rev: 7.1.1
-    rev: v4.6.0
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    # Ruff version.
-    rev: v0.6.9
+    rev: v0.8.3
     hooks:
-      # Run the linter.
       - id: ruff
-      # Run the formatter.
+        args:
+          - --fix
       - id: ruff-format
-
   - repo: https://github.com/scop/pre-commit-shfmt
     rev: v3.10.0-2
     hooks:
-      # Choose one of:
-      - id: shfmt # native (requires/installs Go to build)
+      - id: shfmt
         args:
           - -w
           - -i
-          - "4"
+          - '4'
           - -s
         types:
           - shell
-
   - hooks:
       - id: blacken-docs
     repo: https://github.com/asottile/blacken-docs
     rev: 1.19.1
-
-  # - repo: https://github.com/asottile/pyupgrade
-  #   rev: v2.38.0
-  #   hooks:
-  #     - id: pyupgrade
-  #       args: [--py39-plus]
-
   - repo: https://github.com/jumanjihouse/pre-commit-hook-yamlfmt
-    rev: 0.2.3 # or other specific tag
+    rev: 0.2.3
     hooks:
       - id: yamlfmt
-        args: [--mapping, "2", --sequence, "4", --offset, "2", "--preserve-quotes"]
-
-  # - repo: https://github.com/hcodes/yaspeller.git
-  #   rev: v10.0.1
-  #   hooks:
-  #     - id: yaspeller
-  #       types:
-  #         - markdown
-
+        args:
+          - --mapping
+          - '2'
+          - --sequence
+          - '4'
+          - --offset
+          - '2'
+          - --preserve-quotes
   - repo: https://github.com/asottile/reorder-python-imports
     rev: v3.14.0
     hooks:
