@@ -6,7 +6,7 @@ repos:
         stages:
           - commit-msg
     repo: https://github.com/commitizen-tools/commitizen
-    rev: v4.1.0
+    rev: v3.29.0
   - hooks:
       - id: check-useless-excludes
     repo: meta
@@ -18,11 +18,10 @@ repos:
   - hooks:
       - id: black
     repo: https://github.com/python/black
-    rev: 24.10.0
+    rev: 24.8.0
   - hooks:
       - id: check-added-large-files
-        args:
-          - --maxkb=10000
+        args: [--maxkb=10000]
       - id: check-ast
       - id: check-case-conflict
       - id: check-executables-have-shebangs
@@ -49,46 +48,51 @@ repos:
       - id: check-byte-order-marker
       - id: check-docstring-first
     repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v5.0.0
-  - hooks:
-      - id: flake8
-    repo: https://github.com/pycqa/flake8
-    rev: 7.1.1
+    rev: v4.6.0
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.8.3
+    # Ruff version.
+    rev: v0.6.9
     hooks:
+      # Run the linter.
       - id: ruff
         args:
           - --fix
+      # Run the formatter.
       - id: ruff-format
+
   - repo: https://github.com/scop/pre-commit-shfmt
-    rev: v3.10.0-2
+    rev: v3.9.0-1
     hooks:
-      - id: shfmt
+      # Choose one of:
+      - id: shfmt # native (requires/installs Go to build)
         args:
           - -w
           - -i
-          - '4'
+          - "4"
           - -s
         types:
           - shell
+
   - hooks:
       - id: blacken-docs
     repo: https://github.com/asottile/blacken-docs
-    rev: 1.19.1
+    rev: 1.18.0
+
+  # - repo: https://github.com/asottile/pyupgrade
+  #   rev: v2.38.0
+  #   hooks:
+  #     - id: pyupgrade
+  #       args: [--py39-plus]
+
   - repo: https://github.com/jumanjihouse/pre-commit-hook-yamlfmt
-    rev: 0.2.3
+    rev: 0.2.3 # or other specific tag
     hooks:
       - id: yamlfmt
-        args:
-          - --mapping
-          - '2'
-          - --sequence
-          - '4'
-          - --offset
-          - '2'
-          - --preserve-quotes
-  - repo: https://github.com/asottile/reorder-python-imports
-    rev: v3.14.0
-    hooks:
-      - id: reorder-python-imports
+        args: [--mapping, "2", --sequence, "4", --offset, "2", "--preserve-quotes"]
+
+  # - repo: https://github.com/hcodes/yaspeller.git
+  #   rev: v10.0.1
+  #   hooks:
+  #     - id: yaspeller
+  #       types:
+  #         - markdown
