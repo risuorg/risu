@@ -1,3 +1,21 @@
+## [1.14.4](https://github.com/risuorg/risu/compare/1.14.3...1.14.4) (2024-12-16)
+
+### Bug Fixes
+
+- move egrep -> grep -E ([2f5064d](https://github.com/risuorg/risu/commit/2f5064df2c15c160fab8e2597f41b1324daa5a91))
+- requirements.txt to reduce vulnerabilities ([4888be9](https://github.com/risuorg/risu/commit/4888be9b8478c08765aea8b3ad17e95abc2be542))
+- test-requirements.txt to reduce vulnerabilities ([523f794](https://github.com/risuorg/risu/commit/523f79478a8e8438d75f392b63806c8ecea5bc19))
+- test-requirements.txt to reduce vulnerabilities ([6347613](https://github.com/risuorg/risu/commit/6347613ecc8d5297d78d3775ac9a646681e40e9a))
+- test-requirements.txt to reduce vulnerabilities ([6cad764](https://github.com/risuorg/risu/commit/6cad7641be8c83bfa7c31b723624441b6775af43))
+- test-requirements.txt to reduce vulnerabilities ([39de13e](https://github.com/risuorg/risu/commit/39de13e639ff3db302ce2b4767962f125db2b329))
+- test-requirements.txt to reduce vulnerabilities ([a3f8868](https://github.com/risuorg/risu/commit/a3f8868843fb3bce3641cbbe5afc0004e1c6c6a6))
+
+### Reverts
+
+- Revert "Remove datahook no longer in use" ([05c0618](https://github.com/risuorg/risu/commit/05c0618491e10caafe6c2e0b23eeb29c58126cab))
+- Revert "Removal of plugins not used by hooks from public repo" ([5a8ff7c](https://github.com/risuorg/risu/commit/5a8ff7c0767c6f3519ffde8cc3a6833d6d41f89c))
+- Revert "Remove no longer needed UT's" ([e1e0580](https://github.com/risuorg/risu/commit/e1e058045827da9a9841f86adc665bc2dfc04b6a))
+
 ## [1.14.3](https://github.com/risuorg/risu/compare/1.14.2...1.14.3) (2023-09-04)
 
 ### Bug Fixes
