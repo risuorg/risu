@@ -33,8 +33,66 @@ import logging
 import os
 import re
 import tempfile
+import sys
 
-import imp
+
+if sys.version_info >= (3, 4):
+    # Handle  imp deprecation towards importlib
+
+    import importlib.util
+
+    def dynamic_import(name, info):
+        file_path = info[1]
+        spec = importlib.util.spec_from_file_location(name, file_path)
+        if spec is None:
+            raise ImportError(f"Cannot find module spec for {name} at {file_path}")
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        return module
+
+    def find_module(name, program_paths=None):
+        """
+        Locate a module using importlib.util.find_spec and additional program-specific paths.
+        :param name: Name of the module
+        :param program_paths: List of additional paths to search for the module
+        :return: Tuple (file, pathname, description) for compatibility
+        """
+        search_paths = program_paths if program_paths else []
+        for path in search_paths:
+            module_path = os.path.join(path, name + ".py")
+            if os.path.isfile(module_path):
+                return None, module_path, ("", "", importlib.machinery.SOURCE_SUFFIXES)
+
+        # Fallback to standard find_spec
+        spec = importlib.util.find_spec(name)
+        if spec and spec.origin:
+            return None, spec.origin, ("", "", importlib.machinery.SOURCE_SUFFIXES)
+
+        raise ImportError(f"Cannot find module {name}")
+
+else:
+    import imp
+
+    def dynamic_import(name, info):
+        return imp.load_module(name, *info)
+
+    def find_module(name, program_paths=None):
+        """
+        Locate a module using imp.find_module and additional program-specific paths.
+        :param name: Name of the module
+        :param program_paths: List of additional paths to search for the module
+        :return: Tuple (file, pathname, description)
+        """
+        search_paths = program_paths if program_paths else []
+        for path in search_paths:
+            try:
+                return imp.find_module(name, [path])
+            except ImportError:
+                continue
+
+        # Fallback to standard find_module
+        return imp.find_module(name)
+
 
 # Do not require everyone to use requests
 try:
@@ -142,7 +200,7 @@ def getExtensions(folder=ExtensionFolder):
         if i != "__init__.py" and os.path.splitext(i)[1] == ".py":
             i = os.path.splitext(i)[0]
         try:
-            info = imp.find_module(i, [folder])
+            info = find_module(i, program_paths=[folder])
         except:
             info = False
         if i and info:
@@ -157,7 +215,8 @@ def loadPymodules(Extension):
     :param Extension: Extension to load
     :return: loader for Extension
     """
-    return imp.load_module(Extension["name"], *Extension["info"])
+
+    return dynamic_import(Extension["name"], Extension["info"])
 
 
 def initPymodules(extensions=getExtensions()):
@@ -167,11 +226,14 @@ def initPymodules(extensions=getExtensions()):
     """
 
     exts = []
+
     exttriggers = {}
+
     for i in extensions:
         newplug = loadPymodules(i)
         exts.append(newplug)
         triggers = []
+
         for each in newplug.init():
             triggers.append(each)
         exttriggers[i["name"]] = triggers
@@ -208,7 +270,7 @@ def getPymodules(options=None, folders=[HooksFolder]):
         module = os.path.splitext(os.path.basename(i))[0]
         modpath = os.path.dirname(i)
         try:
-            info = imp.find_module(module, [modpath])
+            info = find_module(i, program_paths=[modpath])
         except:
             info = False
         if i and info:
