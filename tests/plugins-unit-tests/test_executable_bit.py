@@ -5,8 +5,13 @@ import os
 import sys
 from unittest import TestCase
 
-sys.path.append(os.path.abspath(os.path.dirname(__file__) + "/" + "../"))
-import risuclient.shell as risu
+sys.path.append(os.path.abspath(os.path.dirname(__file__) + "/" + "../" + "../"))
+
+try:
+    import risuclient.shell as risu
+except:
+    import shell as risu
+
 
 testplugins = os.path.join(risu.risudir, "plugins", "test")
 risudir = risu.risudir

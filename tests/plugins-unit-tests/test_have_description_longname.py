@@ -2,12 +2,17 @@
 # encoding: utf-8
 # Copyright (C) 2019, 2022, 2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 import os
+import sys
 from unittest import TestCase
 
 import pytest
 
-import risuclient.shell as risu
+sys.path.append(os.path.abspath(os.path.dirname(__file__) + "/" + "../" + "../"))
 
+try:
+    import risuclient.shell as risu
+except:
+    import shell as risu
 testplugins = os.path.join(risu.risudir, "plugins", "test")
 risudir = risu.risudir
 
