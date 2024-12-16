@@ -3,7 +3,7 @@
 #
 # Description: This UT run all scripts to validate the rules/tests created
 #
-# Copyright (C) 2017-2021, 2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2017-2021, 2023, 2024 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 # Copyright (C) 2020 stickler-ci <support@stickler-ci.com>
 #
 # This program is free software: you can redistribute it and/or modify
