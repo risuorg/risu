@@ -40,7 +40,7 @@ def run(data, quiet=False):  # do not edit this line
         # being UUID: seqno
         err = [
             data[ourdata]["sosreport"][sosreport]["err"]
-            for sosreport in data[ourdata["sosreport"]]
+            for sosreport in data[ourdata]["sosreport"]
         ]
 
         if len(sorted(set(err))) != 1:

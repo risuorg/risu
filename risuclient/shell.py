@@ -270,7 +270,7 @@ def getPymodules(options=None, folders=[HooksFolder]):
         module = os.path.splitext(os.path.basename(i))[0]
         modpath = os.path.dirname(i)
         try:
-            info = find_module(i, program_paths=[modpath])
+            info = find_module(module, program_paths=[modpath])
         except:
             info = False
         if i and info:

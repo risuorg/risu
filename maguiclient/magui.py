@@ -726,6 +726,8 @@ def main():
     # Now we've Magui saved for the whole execution provided in 'results' var
 
     # Start working on autogroups
+    autodata = ""
+
     for result in results:
         if result["plugin"] == "metadata-outputs":
             autodata = result["result"]["err"]
