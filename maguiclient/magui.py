@@ -735,6 +735,7 @@ def main():
     print(_("\nGenerating autogroups:\n"))
 
     groups = autogroups(autodata)
+    print(groups)
     processedgroups = {}
 
     # TODO(iranzo): Review this
