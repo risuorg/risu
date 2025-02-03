@@ -99,7 +99,7 @@ def _get_output():
 
     try:
         output = subprocess.check_output(
-            "PATH=$PATH:/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin " "sudo dmidecode",
+            "PATH=$PATH:/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin sudo dmidecode",
             shell=True,
         )
     except Exception as e:
