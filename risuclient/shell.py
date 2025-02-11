@@ -1059,7 +1059,7 @@ def parse_args(default=False, parse=False):
     g.add_argument(
         "-v",
         "--verbose",
-        help=_("Increase verbosity of output (may be " "specified more than once)"),
+        help=_("Increase verbosity of output (may be specified more than once)"),
         default=0,
         action="count",
     )
