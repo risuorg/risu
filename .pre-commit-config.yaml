@@ -51,7 +51,7 @@ repos:
     rev: v5.0.0
   - repo: https://github.com/astral-sh/ruff-pre-commit
     # Ruff version.
-    rev: v0.9.9
+    rev: v0.11.2
     hooks:
       # Run the linter.
       - id: ruff
@@ -61,7 +61,7 @@ repos:
       - id: ruff-format
 
   - repo: https://github.com/scop/pre-commit-shfmt
-    rev: v3.10.0-2
+    rev: v3.11.0-1
     hooks:
       # Choose one of:
       - id: shfmt # native (requires/installs Go to build)
