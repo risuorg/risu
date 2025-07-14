@@ -26,7 +26,6 @@ Below are some examples of things we do usually review:
 - Not mangle `RISU\_` variables (usually leftovers when testing without using the provided `env-for-debug.sh` variable)
 - Trailing spaces on lines or empty lines
 - Reuse as maximum code between Live and snapshot mode
-
   - Use TRAP to generate files we might see in Live and use vars for it, for example:
 
   ```sh

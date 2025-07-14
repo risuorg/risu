@@ -12,7 +12,6 @@ Magui plugins should conform to the following standards:
 
 - Written in python and stored in the `maguiclient/plugins` folder following whatever desired hierarchy (for example, try to match Risu plugins structure for simplicity in filtering)
 - Implement some base functions keeping arguments and data returned as in others:
-
   - `init()`
     - Returns list of triggers (array with strings) (contains Risu plugin ID data to act on)
   - `run(data)`
@@ -21,7 +20,6 @@ Magui plugins should conform to the following standards:
     - Returns string with description of plugin
 
 - Plugins for Magui should refer to processing of Risu data for doing it's work
-
   - In order to do so, each Risu plugins has a unique UID calculated via md5sum via relative path and plugin name.
   - Results are then filtered to get the data for that plugin ID, for example:
 

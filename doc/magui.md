@@ -58,6 +58,7 @@ Check latest changes on [changelog](changelog.md)
     Linked script /home/iranzo/.local/bin/magui.py
   Done.
   ```
+
   - Pipsi will take care of installing a virtual environment and link to binary folder so you can call risu.py or magui.py directly
   - Remember that pypi package might not contain all the latests plugins features as the github repo one.
 - Container:

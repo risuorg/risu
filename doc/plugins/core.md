@@ -26,7 +26,6 @@ Risu tests should conform to the following standards:
 
 - The test should return one of the following error codes to indicate
   the test result:
-
   - \$RC_OKAY -- success
   - \$RC_FAILED -- failure
   - \$RC_SKIPPED -- skipped
@@ -90,7 +89,6 @@ location of various files. To use this script you can source it at the top:
   systemctl list units file.
 
 - `iniparser` -- parses ini file and returns value in lowercase
-
   - Example:
     ```sh
     if [[ "$(iniparser $config_file DEFAULT debug)" == "true" ]]; then
@@ -99,21 +97,18 @@ location of various files. To use this script you can source it at the top:
     ```
 
 - `is_active $service` -- reports if service is active either based on live or snapshoot
-
   - Example:
     ```sh
     if is_active ntpd; then echo "NTP Running";fi
     ```
 
 - `is_required_file $file` -- continues if file exists or exits `$RC_SKIPPED` if doesn't
-
   - Example:
     ```sh
     is_required_file "${RISU_ROOT}/var/log/messages"
     ```
 
 - `discover_osp_version $openstack-nova-common-version_package` -- echos osp version based on `openstack-nova-common version`
-
   - Example:
     ```sh
     if [[ "$(discover_osp_version)" -eq "10" ]]; then echo "We're Newton";fi
@@ -126,21 +121,18 @@ location of various files. To use this script you can source it at the top:
     ```
 
 * `is_process $process` -- returns if process exists on the system
-
   - Example:
     ```sh
     if is_process ntpd; then echo "NTP Running!";fi
     ```
 
 * `is_lineinfile $pattern $files` -- returns if pattern match is found in file
-
   - Example:
     ```sh
     if is_lineinfile "^debug[ \t]*=[ \t]*true" "$config_file"; then echo "Debug enabled."; fi
     ```
 
 * `is_required_containerized` -- continues if environment is containerized works only against OSP12 and later
-
   - Example:
     ```sh
     if is_required_containerized; then
@@ -149,7 +141,6 @@ location of various files. To use this script you can source it at the top:
     ```
 
 * `is_containerized` -- returns true or false if environment is containerized works only against OSP12 and later
-
   - Example:
     ```sh
     if is_containerized; then
@@ -160,7 +151,6 @@ location of various files. To use this script you can source it at the top:
     ```
 
 * `docker_runit` -- execute the command inside docker works only with docker
-
   - Example:
     ```sh
     # docker exec -i $(docker ps | grep rabbitmq-bundle | cut -d" " -f1) sh -c "rabbitmqctl report"
@@ -168,7 +158,6 @@ location of various files. To use this script you can source it at the top:
     ```
 
 * `discover_rhrelease` -- find RH Release number based on /etc/redhat-release code name
-
   - Example:
     ```sh
     if [[ $(discover_rhrelease) -eq "7" ]] ; then
@@ -184,7 +173,6 @@ location of various files. To use this script you can source it at the top:
     To early leave the script
 
 * `is_pkg $pkg` -- returns package version if installed on system (RHEL/Centos/Fedora | Debian)
-
   - Example:
     ```sh
     # is_pkg systat
@@ -192,14 +180,12 @@ location of various files. To use this script you can source it at the top:
     ```
 
 * `is_required_pkg $pkg` -- continues if package is installed or exits with `$RC_SKIPPED` if required package is missing
-
   - Example:
     ```sh
     is_required_pkg sysstat
     ```
 
 * `is_pkg_over $pkg` -- Checks if provided package is over specific release
-
   - Example:
     ```sh
     if is_pkg_over dracut dracut-033-502; then  ## Note, version string is DISTRO dependent
@@ -216,7 +202,6 @@ location of various files. To use this script you can source it at the top:
     ```
 
 - `is_rpm $rpm` -- returns rpm name as installed on the system
-
   - Example:
     ```sh
     # is_rpm sos
@@ -224,7 +209,6 @@ location of various files. To use this script you can source it at the top:
     ```
 
 - `is_dpkg $dpkg` -- returns dpkg version as installed on the system
-
   - Example:
     ```sh
     # is_dpkg libc6
@@ -240,7 +224,6 @@ location of various files. To use this script you can source it at the top:
 - `is_required_dpkg_over` -- Fallsback to `is_required_pkg_over $package` after forcing `dpkg` distro check.
 
 - `are_dates_diff_over` -- Checks if two dates are over X days in diff
-
   - Example:
     ```sh
     are_dates_diff_over 5 "2017-12-01 14:40" "2017-12-31 14:45"
