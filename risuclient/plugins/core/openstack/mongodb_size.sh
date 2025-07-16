@@ -16,7 +16,7 @@
 
 # long_name: Database size
 # description: Checks for mongodb database sizes
-# priority: 500
+# priority: 750
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

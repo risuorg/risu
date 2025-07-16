@@ -17,6 +17,7 @@
 
 # long_name: prepares cluster-name metadata
 # description: Sets cluster-name metadata
+# priority: 70
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

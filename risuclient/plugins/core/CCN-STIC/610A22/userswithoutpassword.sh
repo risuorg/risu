@@ -16,7 +16,7 @@
 
 # long_name: Find users without password
 # description: Find users without password
-# priority: 900
+# priority: 130
 # bugzilla: https://www.ccn-cert.cni.es/pdf/guias/series-ccn-stic/guias-de-acceso-publico-ccn-stic/6768-ccn-stic-610a22-perfilado-de-seguridad-red-hat-enterprise-linux-9-0/file.html
 
 # Load common functions

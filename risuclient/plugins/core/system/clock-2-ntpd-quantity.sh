@@ -17,7 +17,7 @@
 
 # long_name: NTPd server quantity
 # description: Checks for ntpd server quantity
-# priority: 500
+# priority: 830
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

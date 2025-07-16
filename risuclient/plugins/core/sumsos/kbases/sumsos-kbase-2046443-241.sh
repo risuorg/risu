@@ -25,7 +25,7 @@
 REGEXP="kernel: Pid: .*\(.*\) over core_pipe_limit"
 KCS=2046443
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

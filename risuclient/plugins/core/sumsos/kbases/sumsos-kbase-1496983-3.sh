@@ -25,7 +25,7 @@
 REGEXP="cmaeventd.*: Logical drive .* of Embedded Array Controller: surface analysis uncorrected read error condition has ended.  Media defects have been overwritten by the host."
 KCS=1496983
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

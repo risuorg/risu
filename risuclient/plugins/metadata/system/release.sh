@@ -17,6 +17,7 @@
 
 # long_name: Outputs release for host
 # description: Retrieves release data from host
+# priority: 70
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

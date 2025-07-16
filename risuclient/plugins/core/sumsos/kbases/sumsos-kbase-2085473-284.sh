@@ -25,7 +25,7 @@
 REGEXP="kernel: Write-error on swap-device \(.*:.*\)"
 KCS=2085473
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

@@ -16,7 +16,7 @@
 
 # long_name: Ceph status
 # description: Checks Ceph status on node
-# priority: 800
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

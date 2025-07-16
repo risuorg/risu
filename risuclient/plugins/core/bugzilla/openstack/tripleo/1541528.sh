@@ -19,7 +19,7 @@
 # long_name: Director saves all rules into iptables file
 # description: Checks for iptables rules were not overwritten on Director run
 # bugzilla: https://bugzilla.redhat.com/show_bug.cgi?id=1541528
-# priority: 800
+# priority: 750
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

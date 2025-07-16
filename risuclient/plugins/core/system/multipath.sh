@@ -19,7 +19,7 @@
 
 # long_name: multipath failed/faulty/offline path detector
 # description: This plugin checks multipath related issues
-# priority: 800
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

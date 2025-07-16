@@ -19,7 +19,7 @@
 
 # long_name: Package rollback, undo or redo
 # description: this plugin checks in yum history for undo/rollback/redo
-# priority: 300
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

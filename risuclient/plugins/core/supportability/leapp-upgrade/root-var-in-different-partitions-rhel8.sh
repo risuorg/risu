@@ -20,7 +20,7 @@
 
 # long_name: Report / and /var in different partions not valid for Leapp upgrade
 # description: Report / and /var in different partions not valid for Leapp upgrade
-# priority: 200
+# priority: 400
 # kb: https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html-single/upgrading_to_rhel_8/index#requirements-upgrading-to-rhel-8
 
 OS=$(discover_os)

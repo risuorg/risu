@@ -25,7 +25,7 @@
 REGEXP="kernel: be2net .*: UE HIGH: .*bit set"
 KCS=1229853
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

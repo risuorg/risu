@@ -19,7 +19,7 @@
 
 # long_name: Checks for an even number of paths
 # description: Reports if a multipath device has not an even number of devices
-# priority: 800
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

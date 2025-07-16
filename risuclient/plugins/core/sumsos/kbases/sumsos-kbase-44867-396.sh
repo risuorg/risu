@@ -25,7 +25,7 @@
 REGEXP="kernel: sd .*: rejecting I/O to offline device"
 KCS=44867
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

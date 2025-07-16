@@ -21,7 +21,7 @@
 # long_name: Keystone LDAP Domain integration
 # description: Checks for keystone LDAP domain template problem
 # bugzilla: https://bugzilla.redhat.com/show_bug.cgi?id=1519057
-# priority: 400
+# priority: 750
 # kb: https://access.redhat.com/solutions/3024461
 
 # Load common functions

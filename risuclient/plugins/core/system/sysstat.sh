@@ -19,7 +19,7 @@
 
 # long_name: Package sysstat installed
 # description: This plugin reports missing systat that might be later needed for perf issues diagnostics
-# priority: 100
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

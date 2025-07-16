@@ -19,7 +19,7 @@
 # long_name: Reports interfaces that its state 'up' and doesn't have ONBOOT='yes' in its network-scripts file.
 # description: Reports interfaces that its state 'up' and doesn't have ONBOOT='yes' in its network-scripts file.
 # bugzilla: https://github.com/risuorg/risu/issues/535
-# priority: 100
+# priority: 900
 # kb:
 
 # Test cases

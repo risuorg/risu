@@ -25,7 +25,7 @@
 REGEXP="kernel: Info:Mpx:Path Bus .* Tgt .* Lun .* is set to Auto standby due to Iopf."
 KCS=532893
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

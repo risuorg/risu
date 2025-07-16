@@ -23,7 +23,7 @@
 
 # long_name: Validate RHEL Firewall
 # description: Validate RHEL firewall and check if is up
-# priority: 200
+# priority: 820
 
 validate_firewall() {
     # Check linux firewall to validate if it's running and active

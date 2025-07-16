@@ -25,7 +25,7 @@
 REGEXP="kernel: ip_conntrack: table full, dropping packet"
 KCS=8721
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

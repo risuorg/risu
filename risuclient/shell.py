@@ -559,6 +559,32 @@ def runplugin(plugin):
     return plugin
 
 
+def doplugin(plugin, path, options=None):
+    """
+    Wrapper function for runplugin that sets up environment and handles path/options
+    :param plugin: plugin to execute
+    :param path: path to set as RISU_ROOT
+    :param options: options dictionary (for compatibility)
+    :return: plugin result dictionary
+    """
+    # Store original RISU_ROOT to restore later
+    original_risu_root = os.environ.get("RISU_ROOT", "")
+
+    # Set the path as RISU_ROOT for the plugin execution
+    os.environ["RISU_ROOT"] = path
+
+    try:
+        # Call the existing runplugin function
+        result = runplugin(plugin)
+        return result
+    finally:
+        # Restore original RISU_ROOT
+        if original_risu_root:
+            os.environ["RISU_ROOT"] = original_risu_root
+        else:
+            os.environ.pop("RISU_ROOT", None)
+
+
 def calcid(string, replace=risudir):
     """
     Returns ID for defined string
@@ -762,7 +788,8 @@ def dorisu(
         if not quiet:
             LOG.info("Reading Existing risu analysis from disk for %s" % path)
         try:
-            results = json.load(open(filename, "r"))["results"]
+            with open(filename, "r") as f:
+                results = json.load(f)["results"]
         except:
             results = {}
 
@@ -771,7 +798,7 @@ def dorisu(
     # We do need to check that we've the results for all the plugins we know, if not, rerun.
 
     # Check all sosreports for data for all plugins
-    allids = getids(options=options)
+    allids = getids(plugins=plugins, options=options)
 
     # Now check in results for id's no longer existing for removal:
     delete = [key for key in iter(results.keys()) if key not in allids]
@@ -1466,7 +1493,7 @@ def write_results(
     """
 
     metadata = {
-        "when": datetime.datetime.utcnow().isoformat(),
+        "when": datetime.datetime.now(datetime.timezone.utc).isoformat(),
         "whenlocal": datetime.datetime.now().isoformat(),
         "live": bool(live),
         "source": source,

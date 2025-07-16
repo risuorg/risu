@@ -18,6 +18,7 @@
 
 # long_name: prepares openstack version metadata
 # description: Sets openstack version metadata
+# priority: 750
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

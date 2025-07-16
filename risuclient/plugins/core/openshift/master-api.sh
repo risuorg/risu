@@ -20,7 +20,7 @@
 
 # long_name: Validate openshift-master-api requirement for openshift
 # description: Validate openshift-master-api requirement for openshift
-# priority: 800
+# priority: 920
 
 # We're OCP master
 if is_rpm atomic-openshift-master; then

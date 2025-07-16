@@ -18,7 +18,7 @@
 
 # long_name: Check for nova error on migration because of existing disk
 # description: Check for nova error on migration because of existing disk
-# priority: 900
+# priority: 750
 # kb: https://access.redhat.com/solutions/1597443
 
 # Load common functions

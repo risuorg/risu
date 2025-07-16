@@ -18,6 +18,7 @@
 
 # long_name: reports date for sosreport
 # description: Sets sosreport date metadata
+# priority: 70
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

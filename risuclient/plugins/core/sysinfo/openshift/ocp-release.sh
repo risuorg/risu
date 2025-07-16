@@ -17,7 +17,7 @@
 
 # long_name: reports running OSP release
 # description: reports running OSP release
-# priority: 100
+# priority: 740
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

@@ -25,7 +25,7 @@
 REGEXP="MR_MONITOR\[.*\]: <MRMON.*> Controller ID:  .*   Unexpected sense:   PD"
 KCS=65490
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

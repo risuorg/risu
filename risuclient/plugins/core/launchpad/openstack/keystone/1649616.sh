@@ -19,7 +19,7 @@
 # long_name: Keystone token flush job failure
 # description: Checks for transaction size exceeded on keystone token purge
 # bugzilla: https://bugs.launchpad.net/keystone/+bug/1649616
-# priority: 600
+# priority: 750
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

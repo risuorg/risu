@@ -19,7 +19,7 @@
 # long_name: Keystone metadata_agent.ini misconfiguration
 # description: Checks for wrong auth_url configuration in metadata_agent.ini
 # bugzilla: https://bugzilla.redhat.com/show_bug.cgi?id=1340001
-# priority: 600
+# priority: 750
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

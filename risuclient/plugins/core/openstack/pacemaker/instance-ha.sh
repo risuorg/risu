@@ -18,7 +18,7 @@
 
 # long_name: Checks for instance HA configured
 # description: Reports if instanceHA is configured.
-# priority: 900
+# priority: 750
 # kb: https://access.redhat.com/articles/1544823
 
 # Load common functions

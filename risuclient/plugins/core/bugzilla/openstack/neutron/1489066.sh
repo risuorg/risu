@@ -19,7 +19,7 @@
 # long_name: Concurrent use of iptables
 # description: Checks for iptables xlock errors
 # bugzilla: https://bugzilla.redhat.com/show_bug.cgi?id=1489066
-# priority: 800
+# priority: 750
 # kb: https://access.redhat.com/solutions/3204701
 
 # Load common functions

@@ -25,7 +25,7 @@
 REGEXP="kernel: qla2xxx .*: SNS scan failed -- assuming zero-entry result"
 KCS=25541
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

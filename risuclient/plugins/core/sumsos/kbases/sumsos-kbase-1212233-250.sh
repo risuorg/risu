@@ -25,7 +25,7 @@
 REGEXP="kernel: Result: hostbyte=DID_NO_CONNECT driverbyte=DRIVER_OK,SUGGEST_OK"
 KCS=1212233
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

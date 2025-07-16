@@ -16,9 +16,9 @@
 
 # we can run this against fs snapshot or live system
 
-# long_name: Check HyperThreading and DPDK
-# description: Checks if HT and DPDK are enabled
-# priority: 300
+# long_name: Check HyperThreading and DPDK Network
+# description: Checks if HT and DPDK network are enabled
+# priority: 870
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

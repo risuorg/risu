@@ -25,7 +25,7 @@
 REGEXP="kernel: sd .* Sense Key : Illegal Request \[current\]"
 KCS=1256863
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

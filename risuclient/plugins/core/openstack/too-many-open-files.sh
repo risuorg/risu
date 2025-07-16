@@ -18,7 +18,7 @@
 
 # long_name: Detects too many open files in OpenStack service logs
 # description: Report too many open files in OpenStack services logs
-# priority: 800
+# priority: 750
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

@@ -25,7 +25,7 @@
 REGEXP="kernel: JBD: Spotted dirty metadata buffer \(dev = .*, blocknr = .*\). There's a risk of filesystem corruption in case of system crash"
 KCS=358963
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

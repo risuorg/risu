@@ -25,7 +25,7 @@
 REGEXP="kernel: qla2xxx .*-.*: Thermal not supported through I2C bus, trying alternate method \(ISP access\)"
 KCS=785263
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

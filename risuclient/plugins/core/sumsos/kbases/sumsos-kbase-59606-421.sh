@@ -25,7 +25,7 @@
 REGEXP="kernel: sd .* Using 0xffffffff as device size"
 KCS=59606
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

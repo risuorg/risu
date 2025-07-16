@@ -17,7 +17,7 @@
 
 # long_name: check memcached options, UDP and IP binding
 # description: check memcached options, if UDP is disabled and if is binded to an IP
-# priority: 100
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

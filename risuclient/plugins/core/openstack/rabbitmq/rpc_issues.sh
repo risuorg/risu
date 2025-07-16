@@ -18,7 +18,7 @@
 
 # long_name: RabbitMQ RPC issues
 # description: Check for RPC issues in OpenStack services
-# priority: 900
+# priority: 750
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

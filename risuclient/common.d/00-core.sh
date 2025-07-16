@@ -29,7 +29,7 @@ first_file_available() {
             if [[ $flag -eq 0 ]]; then
                 if [[ -f ${file} ]]; then
                     flag=1
-                    echo ${file}
+                    echo "${file}"
                 fi
             fi
         done
@@ -46,9 +46,9 @@ if [ "x$RISU_LIVE" = "x0" ]; then
     systemctl_list_units_service_running=("${RISU_ROOT}/sos_commands/systemd/systemctl_list-units" "${RISU_ROOT}/sos_commands/systemd/systemctl_list-units_--all")
 
     # find available one and use it, the ones at back with highest priority
-    systemctl_list_units_active_file=$(first_file_available ${systemctl_list_units_active[@]})
-    systemctl_list_units_enabled_file=$(first_file_available ${systemctl_list_units_enabled[@]})
-    systemctl_list_units_service_running_file=$(first_file_available ${systemctl_list_units_service_running[@]})
+    systemctl_list_units_active_file=$(first_file_available "${systemctl_list_units_active[@]}")
+    systemctl_list_units_enabled_file=$(first_file_available "${systemctl_list_units_enabled[@]}")
+    systemctl_list_units_service_running_file=$(first_file_available "${systemctl_list_units_service_running[@]}")
 
     # List of logs/journalctl files
     journalctl_file=$(first_file_available "${RISU_ROOT}/sos_commands/logs/journalctl_--no-pager_--boot" "${RISU_ROOT}/sos_commands/logs/journalctl_--all_--this-boot_--no-pager")
@@ -322,4 +322,91 @@ is_higher() {
         return 1
     fi
     return 0
+}
+
+# Function to get sysctl parameter value from configuration
+# Works for both LIVE and sosreport/mustgather mode transparently
+get_sysctl_value() {
+    local param="$1"
+    local value=""
+
+    # Check main sysctl.conf first
+    if [[ -f "${RISU_ROOT}/etc/sysctl.conf" ]]; then
+        value=$(grep "^${param}[[:space:]]*=" "${RISU_ROOT}/etc/sysctl.conf" | tail -1 | cut -d'=' -f2 | tr -d ' ')
+    fi
+
+    # Check sysctl.d directory (later files override earlier ones)
+    if [[ -d "${RISU_ROOT}/etc/sysctl.d" ]]; then
+        local override_value
+        override_value=$(find "${RISU_ROOT}/etc/sysctl.d" -name "*.conf" -type f -exec grep "^${param}[[:space:]]*=" {} \; | tail -1 | cut -d'=' -f2 | tr -d ' ')
+        if [[ -n ${override_value} ]]; then
+            value="${override_value}"
+        fi
+    fi
+
+    echo "${value}"
+}
+
+# Note: is_active() function already exists above and provides service status checking
+
+# Function to find configuration files
+# Usage: find_config_files FILENAME [SEARCH_PATHS...]
+# Returns: List of found files
+find_config_files() {
+    local filename="$1"
+    shift
+    local search_paths=("$@")
+
+    # Default search paths if none provided
+    if [[ ${#search_paths[@]} -eq 0 ]]; then
+        search_paths=("/etc" "/opt" "/usr/local/etc")
+    fi
+
+    # Add RISU_ROOT prefix for sosreport/mustgather mode
+    if [[ "x$RISU_LIVE" == "x0" ]]; then
+        local prefixed_paths=()
+        for path in "${search_paths[@]}"; do
+            prefixed_paths+=("${RISU_ROOT}${path}")
+        done
+        search_paths=("${prefixed_paths[@]}")
+    fi
+
+    # Execute find command
+    find "${search_paths[@]}" -name "$filename" -type f 2>/dev/null
+}
+
+# Function to count recent errors in log files
+# Usage: count_recent_log_errors LOGFILE [LINES] [PATTERNS...]
+# Returns: Number of matching error lines
+count_recent_log_errors() {
+    local logfile="$1"
+    local lines="${2:-100}"
+    shift 2
+    local patterns=("$@")
+
+    # Default error patterns if none provided
+    if [[ ${#patterns[@]} -eq 0 ]]; then
+        patterns=("error" "ERROR" "critical" "CRITICAL" "alert" "ALERT" "emergency" "EMERGENCY" "FATAL" "FAILED")
+    fi
+
+    # Join patterns with |
+    local pattern_string=""
+    for i in "${!patterns[@]}"; do
+        if [[ $i -gt 0 ]]; then
+            pattern_string="${pattern_string}|"
+        fi
+        pattern_string="${pattern_string}${patterns[$i]}"
+    done
+
+    # Add RISU_ROOT prefix for sosreport/mustgather mode
+    if [[ "x$RISU_LIVE" == "x0" ]]; then
+        logfile="${RISU_ROOT}${logfile}"
+    fi
+
+    # Check if log file exists and count errors
+    if [[ -f $logfile ]]; then
+        tail -"$lines" "$logfile" | grep -c "$pattern_string" || echo "0"
+    else
+        echo "0"
+    fi
 }

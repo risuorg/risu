@@ -25,7 +25,7 @@
 REGEXP="kernel: sd .*: timing out command, waited .*s"
 KCS=129773
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

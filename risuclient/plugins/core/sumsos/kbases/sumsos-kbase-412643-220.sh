@@ -25,7 +25,7 @@
 REGEXP="kernel: megaraid_sas: resetting fusion adapter .*"
 KCS=412643
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

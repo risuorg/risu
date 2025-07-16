@@ -18,7 +18,7 @@
 
 # long_name: Tracebacks in services logs
 # description: Report tracebacks in Containerized OpenStack services logs
-# priority: 800
+# priority: 750
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

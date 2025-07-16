@@ -17,7 +17,7 @@
 
 # long_name: reports ram available
 # description: reports ram available
-# priority: 100
+# priority: 930
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

@@ -18,7 +18,7 @@
 
 # long_name: Tooz lock errors
 # description: Checks for Tooz lock error in gnocchi metrics
-# priority: 600
+# priority: 750
 # kb: https://access.redhat.com/solutions/3170661
 
 # Load common functions

@@ -25,7 +25,7 @@
 REGEXP="kernel: .*: sending ioctl 2285 to a partition!"
 KCS=1326193
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

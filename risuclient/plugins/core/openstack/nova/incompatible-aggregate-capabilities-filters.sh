@@ -17,7 +17,7 @@
 # long_name: Incompatible AggregateInstanceExtraSpecsFilter and ComputeCapabilitiesFilter
 # description: Checks incompatible AggregateInstanceExtraSpecsFilter and ComputeCapabilitiesFilter in nova
 # bugzilla: https://bugs.launchpad.net/nova/+bug/1279719
-# priority: 600
+# priority: 750
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

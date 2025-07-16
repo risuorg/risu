@@ -19,7 +19,7 @@
 # long_name: VNC Server console address
 # description: Checks nova's vnc console ip address is set to localhost
 # bugzilla: https://bugzilla.redhat.com/show_bug.cgi?id=1468101
-# priority: 300
+# priority: 750
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

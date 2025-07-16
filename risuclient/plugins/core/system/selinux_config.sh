@@ -20,7 +20,7 @@
 
 # long_name: SELinux persistent status
 # description: Determines SELinux status on configuration
-# priority: 100
+# priority: 400
 # selinux enforcing
 
 if [[ ${RISU_LIVE} == 0 ]]; then

@@ -18,7 +18,7 @@
 
 # long_name: RabbitMQ node health
 # description: Check RabbitMQ node health in container
-# priority: 800
+# priority: 750
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

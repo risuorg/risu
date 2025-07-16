@@ -25,7 +25,7 @@
 REGEXP="kernel: lpfc .*: .*:0710 Iodone <.*/.*> cmd .*, error x.* SNS x.* Data: x.*"
 KCS=38906
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

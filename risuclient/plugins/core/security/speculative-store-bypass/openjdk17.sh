@@ -16,7 +16,7 @@
 
 # long_name: Checks for fixed java-1.7.0-openjdk package
 # description: Checks if package is affected of Speculative Store Bypass
-# priority: 400
+# priority: 810
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

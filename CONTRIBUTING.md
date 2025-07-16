@@ -4,6 +4,7 @@
 
 - [How to file a bug report](#how-to-file-a-bug-report)
 - [How to contribute code](#how-to-contribute-code)
+- [Plugin Priority System](#plugin-priority-system)
 - [How to write tests](#how-to-write-tests)
 - [How to debug your test](#how-to-debug-your-test)
 
@@ -70,6 +71,44 @@ to request changes; when this happens:
 
 4) Once the new plugin has been submitted you'll see some GitHub actions feedback (similars to the ones that you run with `tox`)
 
+## Plugin Priority System
+
+Plugin priorities are assigned based on system stability and operational continuity impact. **999 is the maximum criticality** (system can break at any moment) and **1 is the lowest priority** (informational only).
+
+### Priority Categories
+
+| Priority Range | Category               | Impact Level                   | Description                                                 | Examples                                                                |
+| -------------- | ---------------------- | ------------------------------ | ----------------------------------------------------------- | ----------------------------------------------------------------------- |
+| **900-999**    | Maximum Criticality    | System can break at any moment | Critical system components that can cause immediate failure | Filesystem corruption (950), etcd health (980), API server health (970) |
+| **800-899**    | High Criticality       | System services at risk        | Core system services and infrastructure                     | Network issues (870), systemd problems (890), node health (880)         |
+| **600-799**    | Medium Criticality     | Applications & Services        | Platform services and applications                          | OpenStack (750), OpenShift (740), databases (700)                       |
+| **400-599**    | Medium-Low Criticality | Middleware & Support           | Supporting services and middleware                          | Web servers (580), load balancers, caching                              |
+| **200-399**    | Low Criticality        | Monitoring & Logging           | Observability and monitoring systems                        | Monitoring (350), logging (330), performance (280)                      |
+| **100-199**    | Very Low Criticality   | Informational                  | Informational and compliance checks                         | Informative plugins (150), compliance (130)                             |
+| **1-99**       | Lowest Priority        | Metadata & Development         | Metadata collection and development tools                   | Metadata (70), development tools (50)                                   |
+
+### Priority Assignment Guidelines
+
+When creating or updating plugins, assign priorities based on:
+
+1. **System Stability Impact**: How quickly could this issue cause system failure?
+2. **Operational Continuity**: How much would this affect ongoing operations?
+3. **Recovery Difficulty**: How hard would it be to recover from this issue?
+4. **Blast Radius**: How many systems/users would be affected?
+
+### Examples by Priority
+
+- **980**: etcd cluster health - etcd failure breaks the entire cluster
+- **950**: Filesystem corruption - can cause immediate data loss
+- **940**: Disk space full - system can become unresponsive
+- **880**: Node health issues - affects workload scheduling
+- **870**: Network connectivity problems - affects all communications
+- **750**: OpenStack service issues - affects cloud operations
+- **400**: General system configuration issues
+- **350**: Monitoring system problems - affects observability
+- **150**: Informational system inventory
+- **70**: Metadata collection - purely informational
+
 ## How to write tests
 
 Please refer to the
@@ -82,7 +121,7 @@ Specially remember about the headers:
 # long_name: plug long name for webui
 # description: plug description
 # bugzilla: bz url
-# priority: 0<>1000 for likelihood to break your environment if this test reports fail
+# priority: 1-999 (999=max criticality, 1=lowest priority)
 # kb: url-to-kbase
 ```
 

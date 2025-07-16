@@ -16,7 +16,7 @@
 
 # long_name: Pacemaker in maintenance mode
 # description: Checks for maintenance enabled in cluster
-# priority: 800
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

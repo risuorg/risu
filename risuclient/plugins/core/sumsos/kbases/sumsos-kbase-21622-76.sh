@@ -25,7 +25,7 @@
 REGEXP="rgmanager.*: \[lvm\] * initrd image needs to be newer than lvm.conf"
 KCS=21622
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

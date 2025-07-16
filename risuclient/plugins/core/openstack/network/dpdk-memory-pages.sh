@@ -16,9 +16,9 @@
 
 # we can run this against fs snapshot or live system
 
-# long_name: Checks for DPDK memory pages
-# description: Checks for configured dpdk pages in nova
-# priority: 300
+# long_name: Checks for DPDK network memory pages
+# description: Checks for configured dpdk network pages in nova
+# priority: 930
 # kb: https://access.redhat.com/solutions/3250441
 
 # Load common functions

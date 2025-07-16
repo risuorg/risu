@@ -16,7 +16,7 @@
 
 # long_name: Containerized deployment
 # description: Checks if deployment is using containers
-# priority: 100
+# priority: 750
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

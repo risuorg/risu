@@ -25,7 +25,7 @@
 REGEXP="kernel: bfa .*: Target \(WWN = .*\) connectivity lost for initiator \(WWN = .*\)"
 KCS=118393
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

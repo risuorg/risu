@@ -18,7 +18,7 @@
 
 # long_name: Containers in restarting state
 # description: Check docker container restarting states
-# priority: 700
+# priority: 750
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

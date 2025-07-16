@@ -25,7 +25,7 @@
 REGEXP="kernel: sd .* Write cache: disabled, read cache: enabled, doesn't support DPO or FUA"
 KCS=1527943
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

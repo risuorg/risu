@@ -19,7 +19,7 @@
 # long_name: Memcache servers misconfiguration
 # description: Checks for object-expirer missconfigured in swift
 # bugzilla: https://bugzilla.redhat.com/show_bug.cgi?id=1500607
-# priority: 400
+# priority: 750
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

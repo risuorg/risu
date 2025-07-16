@@ -17,7 +17,7 @@
 
 # long_name: Updated sos package
 # description: Checks if OSP12 deployment is using containers and valid sosreport version
-# priority: 200
+# priority: 750
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

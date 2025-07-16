@@ -18,7 +18,7 @@
 
 # long_name: Containers in unhealthy status
 # description: Check docker container health-check states
-# priority: 900
+# priority: 750
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

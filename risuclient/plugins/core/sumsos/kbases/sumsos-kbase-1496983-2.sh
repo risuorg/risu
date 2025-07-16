@@ -25,7 +25,7 @@
 REGEXP="cmaeventd.*: Logical drive .* of Embedded Array Controller: I/O request fatal error"
 KCS=1496983
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

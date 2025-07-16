@@ -18,7 +18,7 @@
 # we can run this against fs snapshot or live system
 
 # long_name: Checks for removed files still used by processes
-# priority: 600
+# priority: 400
 # description: This plugin reports files that have been removed but not freed
 
 # Load common functions

@@ -25,7 +25,7 @@
 REGEXP="iscsid: Connection.*:.* to \[target: .*, portal: .*\] through \[iface: .*\] is shutdown."
 KCS=2040773
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

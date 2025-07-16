@@ -25,7 +25,7 @@
 REGEXP="kernel: XFS \(.*\): Unmount and run xfs_repair"
 KCS=1194613
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

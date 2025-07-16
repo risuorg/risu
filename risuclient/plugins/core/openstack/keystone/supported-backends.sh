@@ -16,7 +16,7 @@
 
 # long_name: Checks that keystone uses supported backends
 # description: Only two backends are supported sql and ldap
-# priority: 200
+# priority: 750
 
 # this can run against live and also fs snapshot
 

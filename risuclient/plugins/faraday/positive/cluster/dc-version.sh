@@ -20,7 +20,7 @@
 # long_name: Checks dc-version in pacemaker
 # description: Reports dc-version in pacemaker cluster
 # path: Pacemaker-dc-version
-# priority: 900
+# priority: 100
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

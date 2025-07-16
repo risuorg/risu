@@ -25,7 +25,7 @@
 REGEXP="kernel: lpfc .*: .*:9030 FCP cmd x.* failed <.*/.*> status: .* result: .* Data: .*"
 KCS=126383
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

@@ -25,7 +25,7 @@
 REGEXP="kernel: scsi host.*: hdr status = FCPIO_DATA_CNT_MISMATCH"
 KCS=1976843
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

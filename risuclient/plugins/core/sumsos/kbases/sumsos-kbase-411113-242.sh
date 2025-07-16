@@ -25,7 +25,7 @@
 REGEXP="kernel: pci .*: BAR .*: can't assign mem pref \(size 0x.*\)"
 KCS=411113
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

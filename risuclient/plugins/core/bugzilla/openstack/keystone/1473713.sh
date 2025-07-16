@@ -21,7 +21,7 @@
 # long_name: Removal of expired tokens
 # description: Checks for keystone transaction errors on cleanup
 # bugzilla: https://bugzilla.redhat.com/show_bug.cgi?id=1473713
-# priority: 600
+# priority: 750
 # bz: https://access.redhat.com/solutions/2263851
 
 # Load common functions

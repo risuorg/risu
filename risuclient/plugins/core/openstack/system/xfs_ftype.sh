@@ -16,7 +16,7 @@
 
 # long_name: Check if XFS FS is compatibly with Docker for +OSP12
 # description: Checks if XFS that contains /var/lib is able to run overlayFS
-# priority: 700
+# priority: 750
 # bugzilla: 1575115
 
 # Load common functions

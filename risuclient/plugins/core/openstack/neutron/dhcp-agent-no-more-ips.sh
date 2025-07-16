@@ -16,7 +16,7 @@
 
 # long_name: IPAddressGenerationFailure in DHCP Agent
 # description: Looks for IP Address Generation Failure
-# priority: 700
+# priority: 750
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

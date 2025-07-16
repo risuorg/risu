@@ -25,7 +25,7 @@
 REGEXP="kernel: connection.*:0: detected conn error \(.*\)"
 KCS=423473
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

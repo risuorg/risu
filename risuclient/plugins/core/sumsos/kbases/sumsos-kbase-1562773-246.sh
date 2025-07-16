@@ -25,7 +25,7 @@
 REGEXP="kernel: pci .*: can't find IRQ for PCI INT .*; probably buggy MP table"
 KCS=1562773
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

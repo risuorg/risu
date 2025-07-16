@@ -19,7 +19,7 @@
 # long_name: Ceilometer event collection
 # description: Checks Swift configuration that could fill gnocchi
 # bugzilla: https://bugzilla.redhat.com/show_bug.cgi?id=1449986
-# priority: 800
+# priority: 750
 # kb: https://access.redhat.com/solutions/3032371
 
 # Load common functions

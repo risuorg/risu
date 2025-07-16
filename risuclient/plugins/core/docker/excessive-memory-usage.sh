@@ -18,7 +18,7 @@
 
 # long_name: Checks for high mem usage docker version
 # description: Some docker versions have excessive memory usage
-# priority: 700
+# priority: 930
 # kb: https://access.redhat.com/solutions/3223811
 
 # Load common functions

@@ -17,7 +17,7 @@
 
 # long_name: Reports packages documented to be deprecated in RHEL 8
 # description: Reports in-use packages that will be deprecated in next major release
-# priority: 1
+# priority: 400
 # kb: https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9-beta/html-single/considerations_in_adopting_rhel_9/index#removed-packages_assembly_changes-to-packages
 
 # Load common functions

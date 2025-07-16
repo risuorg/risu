@@ -28,8 +28,8 @@ is_required_file ${RISU_ROOT}/etc/raddb/radiusd.conf
 
 RADDB="${RISU_ROOT}/etc/raddb"
 
-OLD_REGEXP='\\\\\.'                          # \\.   e.g. "if (&User-Name =~ /\\.\\./ ) {"
-NEW_REGEXP='[^\\]\\\.'                       # \.    e.g. "if (&User-Name =~ /\.\./ ) {"
+OLD_REGEXP='\\\\\\.'                          # \\.   e.g. "if (&User-Name =~ /\\.\\./ ) {"
+NEW_REGEXP='[^\\]\\.'                        # \.    e.g. "if (&User-Name =~ /\.\./ ) {"
 REGEXP_MODE="^correct_escapes\\s*=\\s*true$" # correct_escapes = true
 
 # Function searching for "$INCLUDE <path>" statements and extracting <path> as absolute path
@@ -42,10 +42,10 @@ search_for_INCLUDE() {
             local f
             for f in $(/bin/ls -1 ${RADDB}/${file}); do
                 [ -f "$RADDB/$file/$f" ] || continue
-                echo "$RADDB/$file/$f"
+                echo "$RADDB/$file/$f" >&2
             done
         elif [[ -f "$RADDB/$file" ]]; then
-            echo "$RADDB/$file"
+            echo "$RADDB/$file" >&2
         fi
     done
 }

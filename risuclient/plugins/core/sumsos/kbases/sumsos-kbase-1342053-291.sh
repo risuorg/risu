@@ -25,7 +25,7 @@
 REGEXP="kernel: qla2xxx .*-287d:.*: FCPort state transitioned from LOST to DEAD - portid=.*"
 KCS=1342053
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

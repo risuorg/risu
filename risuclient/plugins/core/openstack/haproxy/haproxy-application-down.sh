@@ -18,7 +18,7 @@
 
 # long_name: Checks for HAProxy service is DOWN
 # description: Checks whether there are any DOWN HAProxy services
-# priority: 800
+# priority: 750
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

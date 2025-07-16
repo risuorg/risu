@@ -25,7 +25,7 @@
 REGEXP="kernel: sr: Add. Sense: Medium format corrupted"
 KCS=906563
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

@@ -20,7 +20,7 @@
 
 # long_name: SELinux runtime status
 # description: Determines runtime SELinux status
-# priority: 100
+# priority: 830
 # selinux enforcing
 
 if [[ ${RISU_LIVE} == 0 ]]; then

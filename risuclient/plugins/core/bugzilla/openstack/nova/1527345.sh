@@ -19,7 +19,7 @@
 # long_name: Missing format_dom in nova
 # description: Checks for missing format_dom in nova
 # bugzilla: https://bugzilla.redhat.com/show_bug.cgi?id=1527345
-# priority: 800
+# priority: 750
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

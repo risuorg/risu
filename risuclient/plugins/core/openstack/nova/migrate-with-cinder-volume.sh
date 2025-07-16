@@ -19,7 +19,7 @@
 # long_name: Detects attempts to live migrate cinder volumes without being supported
 # description: Checks errors on nova migration with attached volumes
 # bugzilla: https://bugzilla.redhat.com/show_bug.cgi?id=1498831
-# priority: 700
+# priority: 750
 # kb: https://access.redhat.com/solutions/2451541
 
 # Load common functions

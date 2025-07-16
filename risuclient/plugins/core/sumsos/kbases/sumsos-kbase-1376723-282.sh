@@ -25,7 +25,7 @@
 REGEXP="kernel: WARNING: at lib/kref.c:32 kref_get()"
 KCS=1376723
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

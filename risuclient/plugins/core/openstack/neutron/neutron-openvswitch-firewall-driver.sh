@@ -18,7 +18,7 @@
 
 # long_name: Check OSP10 and firewall configuration not supported
 # description: Checks for invalid OSP10 firewall configuration in neutron
-# priority: 200
+# priority: 820
 # kb: https://access.redhat.com/solutions/3298031
 
 # Load common functions

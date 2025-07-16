@@ -25,7 +25,7 @@
 REGEXP="kernel: i8042: probe of i8042 failed with error -5"
 KCS=184883
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

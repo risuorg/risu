@@ -25,7 +25,7 @@
 REGEXP="kernel: device-mapper: table: .*: multipath: error getting device"
 KCS=38538
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

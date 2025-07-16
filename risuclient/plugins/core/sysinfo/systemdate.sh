@@ -17,7 +17,7 @@
 
 # long_name: reports system date
 # description: reports system date
-# priority: 100
+# priority: 890
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

@@ -25,7 +25,7 @@
 REGEXP="kernel: lpfc .*: .*:9064 BLKGRD: lpfc_scsi_prep_dma_buf_s3: Too many sg segments from dma_map_sg.  Config .*, seg_cnt .*"
 KCS=2188091
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

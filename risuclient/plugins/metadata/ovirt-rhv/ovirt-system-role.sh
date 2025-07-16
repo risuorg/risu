@@ -17,7 +17,7 @@
 
 # long_name: returns the role of the system (hosted-engine-host, rhevm, ovirt-host)
 # description: This plugin is used in various functions. It's just a metadata plugin.
-# priority: 0
+# priority: 70
 
 # Load common functions
 [ -f "${RISU_BASE}/common-functions.sh" ] && . "${RISU_BASE}/common-functions.sh"

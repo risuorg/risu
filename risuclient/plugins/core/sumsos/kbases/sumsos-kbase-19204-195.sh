@@ -25,7 +25,7 @@
 REGEXP="kernel: .*: cdrom_decode_status: status=0x51 { DriveReady SeekComplete Error }"
 KCS=19204
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

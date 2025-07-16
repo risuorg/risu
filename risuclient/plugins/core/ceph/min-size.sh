@@ -19,7 +19,7 @@
 
 # long_name: Ceph pool number of replicas
 # description: Checks Ceph min_size
-# priority: 600
+# priority: 400
 
 mktempfile() {
     tmpfile=$(mktemp testsXXXXXX)

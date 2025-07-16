@@ -16,7 +16,7 @@
 
 # long_name: Ring status
 # description: Checks Swift ring status
-# priority: 900
+# priority: 750
 
 if [[ "x$RISU_LIVE" != "x1" ]]; then
     echo "works on live-system only" >&2

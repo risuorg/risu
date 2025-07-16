@@ -25,7 +25,7 @@
 REGEXP="kernel: end_request: critical space allocation error, dev .*, sector .*"
 KCS=1549773
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

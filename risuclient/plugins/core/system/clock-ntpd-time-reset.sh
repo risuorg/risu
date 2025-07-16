@@ -17,7 +17,7 @@
 
 # long_name: NTPd time resets because of time syncs
 # description: Checks for ntpd time resets
-# priority: 500
+# priority: 830
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

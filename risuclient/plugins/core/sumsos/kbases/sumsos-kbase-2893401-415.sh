@@ -25,7 +25,7 @@
 REGEXP="kernel: sd .* Failed to abort cmd ff.*"
 KCS=2893401
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

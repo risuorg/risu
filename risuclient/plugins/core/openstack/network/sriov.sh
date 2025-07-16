@@ -16,9 +16,9 @@
 
 # we can run this against fs snapshot or live system
 
-# long_name: SR-IOV Configuration
-# description: Checks for various SRIOV configuration parameters
-# priority: 300
+# long_name: SR-IOV Network Configuration
+# description: Checks for various SRIOV network configuration parameters
+# priority: 870
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

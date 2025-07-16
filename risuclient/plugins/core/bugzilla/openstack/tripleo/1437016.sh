@@ -17,7 +17,7 @@
 # long_name: Overcloud update stuck in progress
 # description: 'openstack overcloud update' loops on 'IN_PROGRESS' and times out
 # bugzilla: https://bugzilla.redhat.com/show_bug.cgi?id=1437016
-# priority: 600
+# priority: 750
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

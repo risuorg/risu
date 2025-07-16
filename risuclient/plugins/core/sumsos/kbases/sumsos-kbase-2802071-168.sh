@@ -25,7 +25,7 @@
 REGEXP="kernel: blk_cloned_rq_check_limits: over max size limit"
 KCS=2802071
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

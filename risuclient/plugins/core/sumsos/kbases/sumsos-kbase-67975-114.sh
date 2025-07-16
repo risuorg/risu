@@ -25,7 +25,7 @@
 REGEXP="kernel: EXT3-fs error \(device .*\): ext3_journal_start_sb: Detected aborted journal"
 KCS=67975
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

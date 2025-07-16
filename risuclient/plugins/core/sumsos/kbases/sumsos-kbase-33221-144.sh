@@ -25,7 +25,7 @@
 REGEXP="kernel: lpfc .*: .*:1305 Link Down Event .* received Data: .*"
 KCS=33221
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

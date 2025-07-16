@@ -25,7 +25,7 @@
 REGEXP="kernel: NETDEV WATCHDOG: eth.* \(.*\): transmit queue .* timed out"
 KCS=43168
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

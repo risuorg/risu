@@ -16,7 +16,7 @@
 
 # long_name: Checks for fixed rhev-hypervisor7 package
 # description: Checks if package is affected of Spectre/Meltdown
-# priority: 400
+# priority: 810
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

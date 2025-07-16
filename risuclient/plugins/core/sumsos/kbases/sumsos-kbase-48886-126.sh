@@ -25,7 +25,7 @@
 REGEXP="kernel: lpfc .*: .*:0100 FLOGI failure Status:.* TMO:x.*"
 KCS=48886
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

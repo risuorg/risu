@@ -22,7 +22,7 @@
 
 REGEXP="kernel.*cifs_mount failed w/return code = -110"
 
-# priority: 700
+# priority: 830
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

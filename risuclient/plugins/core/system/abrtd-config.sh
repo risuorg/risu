@@ -19,7 +19,7 @@
 
 # long_name: ABRTd configuration
 # description: This plugin check abrtd configuration
-# priority: 100
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

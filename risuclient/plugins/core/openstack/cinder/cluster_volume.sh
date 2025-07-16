@@ -16,7 +16,7 @@
 
 # long_name: CinderVolume Cluster
 # description: Checks if cinder-volume is started with systemd or pacemaker
-# priority: 600
+# priority: 750
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

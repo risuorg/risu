@@ -18,7 +18,7 @@
 
 # long_name: Services debug configuration
 # description: Check OpenStack services debug configuration in containers
-# priority: 200
+# priority: 750
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

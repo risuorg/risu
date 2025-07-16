@@ -16,7 +16,7 @@
 
 # long_name: Check OpenShift Versions
 # description: Checks for different OpenShift versions running on the shame OCP Cluster
-# priority: 500
+# priority: 850
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

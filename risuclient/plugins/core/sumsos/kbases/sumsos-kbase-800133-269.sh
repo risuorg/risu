@@ -25,7 +25,7 @@
 REGEXP="kernel: .*: loading out-of-tree module taints kernel"
 KCS=800133
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

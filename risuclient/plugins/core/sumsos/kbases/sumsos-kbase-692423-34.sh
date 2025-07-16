@@ -25,7 +25,7 @@
 REGEXP="bptm.*: TapeAlert Code: 0x.*, Type: Critical, Flag: .*, from drive .*, Media Id .*"
 KCS=692423
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

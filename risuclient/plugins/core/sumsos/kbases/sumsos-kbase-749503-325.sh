@@ -25,7 +25,7 @@
 REGEXP="kernel: scsi: On host .* channel .* id .* only .* \(max_scsi_report_luns\) of .* luns reported, try increasing max_scsi_report_luns"
 KCS=749503
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

@@ -25,7 +25,7 @@
 REGEXP="kernel: .*: disagrees about version of symbol .*"
 KCS=3400841
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

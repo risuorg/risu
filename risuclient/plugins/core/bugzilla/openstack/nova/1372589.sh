@@ -19,7 +19,7 @@
 # long_name: QEMU configuration max_files and max_processes
 # description: Verify qemu.conf max_files and max_processes
 # bugzilla: https://bugzilla.redhat.com/show_bug.cgi?id=1372589
-# priority: 500
+# priority: 750
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

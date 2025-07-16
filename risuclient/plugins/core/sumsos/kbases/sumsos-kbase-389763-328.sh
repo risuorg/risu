@@ -25,7 +25,7 @@
 REGEXP="kernel: scsi host.*: hdr status = FCPIO_SGL_INVALID"
 KCS=389763
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

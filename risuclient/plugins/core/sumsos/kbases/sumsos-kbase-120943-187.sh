@@ -25,7 +25,7 @@
 REGEXP="kernel: Error:Mpx:Path Bus .* Tgt .* Lun .* to .* is dead"
 KCS=120943
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

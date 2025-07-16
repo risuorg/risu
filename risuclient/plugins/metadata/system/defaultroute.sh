@@ -17,6 +17,7 @@
 
 # long_name: prepares default route metadata
 # description: prepares default route metadata
+# priority: 610
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

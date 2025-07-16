@@ -25,7 +25,7 @@
 REGEXP="kernel: .*: page allocation failure. order:2, mode:.* in bnx2x.*"
 KCS=641323
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

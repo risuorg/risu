@@ -16,7 +16,7 @@
 
 # long_name: Stonith device configuration
 # description: Checks pacemaker stonith devices are configured
-# priority: 300
+# priority: 400
 
 # we can run this against fs snapshot or live system
 

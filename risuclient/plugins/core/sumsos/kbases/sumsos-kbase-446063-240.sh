@@ -25,7 +25,7 @@
 REGEXP="kernel: program bma is using a deprecated SCSI ioctl, please convert it to SG_IO"
 KCS=446063
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

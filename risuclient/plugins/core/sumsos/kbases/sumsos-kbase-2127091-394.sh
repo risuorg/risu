@@ -25,7 +25,7 @@
 REGEXP="kernel: sd .* SCSI Bus reset"
 KCS=2127091
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

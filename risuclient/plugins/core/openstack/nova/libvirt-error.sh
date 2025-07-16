@@ -18,7 +18,7 @@
 
 # long_name: Libvirt errors in nova service
 # description: Report libvirtErrors in Nova OpenStack service
-# priority: 800
+# priority: 750
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

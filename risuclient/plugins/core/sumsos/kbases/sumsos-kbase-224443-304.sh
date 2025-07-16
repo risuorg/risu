@@ -25,7 +25,7 @@
 REGEXP="kernel: qla2xxx .*: \[ERROR\] Failed to load segment .* of firmware"
 KCS=224443
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

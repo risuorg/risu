@@ -25,7 +25,7 @@
 REGEXP="kernel: .*: unknown partition table"
 KCS=1611753
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

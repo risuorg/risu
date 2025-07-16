@@ -25,7 +25,7 @@
 REGEXP="kernel: sfc .* .*: MC command 0x.* inlen .* failed rc=.* \(raw=.*\) arg=.*"
 KCS=2912941
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

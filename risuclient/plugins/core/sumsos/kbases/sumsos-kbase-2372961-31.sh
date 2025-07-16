@@ -25,7 +25,7 @@
 REGEXP="lvm.*: /.*: open failed: Too many open files"
 KCS=2372961
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

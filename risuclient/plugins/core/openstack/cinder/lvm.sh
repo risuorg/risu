@@ -16,7 +16,7 @@
 
 # long_name: Cinder LVM Backend
 # description: Checks if LVM is used as backing storage
-# priority: 600
+# priority: 750
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

@@ -19,7 +19,7 @@
 # long_name: docker 'orphan' error messages
 # description:  Continuous "orphan" and "/proc/.../stat" logs in /var/log/messages
 # bugzilla: https://bugzilla.redhat.com/show_bug.cgi?id=1493523
-# priority: 600
+# priority: 720
 # kb: https://access.redhat.com/solutions/3343541
 
 # Load common functions

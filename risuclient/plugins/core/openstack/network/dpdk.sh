@@ -16,9 +16,9 @@
 
 # we can run this against fs snapshot or live system
 
-# long_name: DPDK Configuration
-# description: Checks for various DPDK configuration parameters
-# priority: 300
+# long_name: DPDK Network Configuration
+# description: Checks for various DPDK network configuration parameters
+# priority: 870
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

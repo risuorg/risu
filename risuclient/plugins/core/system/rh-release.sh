@@ -19,7 +19,7 @@
 
 # long_name: RHEL release
 # description: Detects RHEL release
-# priority: 200
+# priority: 400
 
 if [[ ! -f "${RISU_ROOT}/etc/redhat-release" ]]; then
     echo "this is not RHEL distribution" >&2

@@ -17,7 +17,7 @@
 
 # long_name: reports running kernel
 # description: reports running kernel
-# priority: 100
+# priority: 910
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

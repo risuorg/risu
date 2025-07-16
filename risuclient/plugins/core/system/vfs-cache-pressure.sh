@@ -17,7 +17,7 @@
 
 # long_name: Detects if vfs_cache_pressure is over sane defaults
 # description: Detects if vfs_cache_pressure is over sane defaults
-# priority: 700
+# priority: 400
 # kb: https://access.redhat.com/solutions/16995
 
 # Load common functions

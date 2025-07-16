@@ -16,7 +16,7 @@
 
 # long_name: Checks for KSM enabled on NFV deployment
 # description: Checks for KSM enabled on NFV deployment
-# priority: 500
+# priority: 750
 # kb: https://access.redhat.com/articles/3250261
 
 # Load common functions

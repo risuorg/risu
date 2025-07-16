@@ -17,7 +17,7 @@
 
 # long_name: Reports if system is using dnf or yum's versionlock as it might cause missing upgrades
 # description: Reports if system is using dnf or yum's versionlock as it might cause missing upgrades
-# priority: 100
+# priority: 150
 # kb:
 
 # Load common functions

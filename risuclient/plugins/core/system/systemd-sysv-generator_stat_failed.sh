@@ -17,7 +17,7 @@
 
 # long_name: systemd-sysv-generator failed to read a initscript
 # description: Looks for systemd-sysv-generator "stat failed"
-# priority: 700
+# priority: 890
 # kb: https://access.redhat.com/solutions/3094591
 
 # Load common functions

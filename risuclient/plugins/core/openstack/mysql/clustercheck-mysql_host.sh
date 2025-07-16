@@ -18,7 +18,7 @@
 
 # long_name: Clustercheck configuration
 # description: Checks clustercheck and it's variable $MYSQL_HOST is set to localhost
-# priority: 100
+# priority: 750
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

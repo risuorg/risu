@@ -18,7 +18,7 @@
 
 # long_name: Chronyd configuration in OSP
 # description: Reports if chrony is used on an OpenStack node
-# priority: 400
+# priority: 830
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

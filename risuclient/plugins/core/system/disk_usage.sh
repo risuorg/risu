@@ -20,7 +20,7 @@
 
 # long_name: Disk space usage
 # description: error if disk usage is greater than $RISU_DISK_MAX_PERCENT=75
-# priority: 200
+# priority: 400
 
 : ${RISU_DISK_MAX_PERCENT=75}
 

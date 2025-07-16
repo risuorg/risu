@@ -17,7 +17,7 @@
 
 # long_name: Detects if netifnames is actived on non-KVM systems
 # description: Detects if net.ifnames=0 has been setup for the system. net.ifnames for RHEL7 is only supported for KVM systems.
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

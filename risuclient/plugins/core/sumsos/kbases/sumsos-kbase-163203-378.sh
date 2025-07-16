@@ -25,7 +25,7 @@
 REGEXP="kernel: sd .*: .*Result: hostbyte=DID_TIME_OUT driverbyte=DRIVER_OK"
 KCS=163203
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

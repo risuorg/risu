@@ -20,7 +20,7 @@
 
 # long_name: Debian Stretch doesn't support FTP sources
 # description: Debian hosted mirrors will not provide ftp server
-# priority: 200
+# priority: 400
 # kb: https://www.debian.org/releases/stretch/amd64/release-notes/ch-information.en.html#deprecation-of-ftp-apt-mirrors
 
 OS=$(discover_os)

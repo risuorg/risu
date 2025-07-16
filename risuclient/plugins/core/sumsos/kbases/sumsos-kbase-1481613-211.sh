@@ -25,7 +25,7 @@
 REGEXP="kernel: megasas: \[.*\]waiting for .* commands to complete for .*"
 KCS=1481613
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

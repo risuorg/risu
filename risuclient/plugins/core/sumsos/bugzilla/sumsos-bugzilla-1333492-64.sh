@@ -26,7 +26,7 @@
 REGEXP="multipathd: .*: failed to resize map : Invalid argument"
 BZ=1333492
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

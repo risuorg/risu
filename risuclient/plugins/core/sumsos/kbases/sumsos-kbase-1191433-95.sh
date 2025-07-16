@@ -25,7 +25,7 @@
 REGEXP="kernel: blk_update_request: I/O error, dev fd0, sector 0"
 KCS=1191433
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

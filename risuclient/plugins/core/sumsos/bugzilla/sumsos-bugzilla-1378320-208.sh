@@ -26,7 +26,7 @@
 REGEXP="kernel: libfc: lookup request for XID = .*, indicates invalid CPU .*"
 BZ=1378320
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

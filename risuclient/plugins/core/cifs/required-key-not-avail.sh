@@ -22,7 +22,7 @@
 
 REGEXP="Send error in SessSetup = -126"
 
-# priority: 700
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

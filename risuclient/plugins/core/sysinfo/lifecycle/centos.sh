@@ -21,7 +21,7 @@
 
 # long_name: Check CentOS system Lifecycle status
 # description: Checks CentOS system Lifecycle status
-# priority: 500
+# priority: 150
 # kb: https://wiki.centos.org/FAQ/General#head-fe8a0be91ee3e7dea812e8694491e1dde5b75e6d
 
 OSBRAND=$(discover_osbrand)

@@ -20,7 +20,7 @@
 
 # long_name: Check Fedora system Lifecycle status
 # description: Checks Fedora system Lifecycle status
-# priority: 500
+# priority: 150
 # kb: https://fedoraproject.org/wiki/Fedora_Release_Life_Cycle
 
 # Fedora 27 will be maintained until 1 month after the release of Fedora 29.

@@ -28,7 +28,7 @@ KCS=2162451
 
 BZ=1341298
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

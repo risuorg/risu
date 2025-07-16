@@ -25,7 +25,7 @@
 REGEXP="kernel: lpfc .*: .*:0748 abort handler timed out waiting for abort to complete: ret .*"
 KCS=356243
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

@@ -19,7 +19,7 @@
 
 # long_name: Memory recommendations
 # description: Checks for hypervisor memory vs the recommended values
-# priority: 200
+# priority: 930
 
 # check memory recommendations
 

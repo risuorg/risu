@@ -16,7 +16,7 @@
 
 # long_name: Checks for fixed kernel-rt package
 # description: Checks if package is affected of Spectre/Meltdown
-# priority: 400
+# priority: 910
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

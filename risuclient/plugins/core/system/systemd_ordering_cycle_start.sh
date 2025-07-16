@@ -17,7 +17,7 @@
 
 # long_name: systemd deleted a 'start' job because of an ordering cycle
 # description: Looks for "Breaking ordering cycle .../start" messages
-# priority: 700
+# priority: 890
 # kb: https://access.redhat.com/solutions/3032831
 
 # Load common functions

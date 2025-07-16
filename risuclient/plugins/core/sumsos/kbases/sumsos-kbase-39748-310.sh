@@ -25,7 +25,7 @@
 REGEXP="kernel: qla2xxx .*: vpd r/w failed.  This is likely a firmware bug on this device.  Contact the card vendor for a firmware update"
 KCS=39748
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

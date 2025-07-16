@@ -21,7 +21,7 @@
 
 # long_name: Stopped resources
 # description: Check if there are pacemaker resources stopped
-# priority: 700
+# priority: 400
 
 is_required_file "${RISU_ROOT}/etc/corosync/corosync.conf"
 

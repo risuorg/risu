@@ -17,7 +17,7 @@
 
 # long_name: Hardware issues, over-current detected over the usb internal hub
 # description: Detects over-current hardware issue on internal hub
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
