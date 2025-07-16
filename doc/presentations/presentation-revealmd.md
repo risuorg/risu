@@ -415,7 +415,6 @@ For additional questions, come to #risu on [Libera](https://libera.chat/) or ema
 <small>
 
 1. What sort of logic are scripts using to determine if the check is failed/ok or should be skipped
-
    - Exit status for commands like `grep`, etc
    - Check requirements to run, target environment and matching details
    - bash conditionals
@@ -438,7 +437,6 @@ Note:
 <small>
 
 1. What do I need to do if I want to add my scripts
-
    - Modify risu.py to define new path
    - Use include filter to add it
    - chmod +x the script in the plugins folder
@@ -461,7 +459,6 @@ Note:
 <small>
 
 1. What languages are supported for scripts?
-
    - bash, python, ruby
    - python, bash, c++
    - golang, perl
@@ -480,7 +477,6 @@ Note:
 <small>
 
 1. What are the valid return status for scripts?
-
    - RC_WARNING
    - RC_OKAY
    - RC_SKIPPED

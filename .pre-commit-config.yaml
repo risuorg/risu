@@ -6,7 +6,7 @@ repos:
         stages:
           - commit-msg
     repo: https://github.com/commitizen-tools/commitizen
-    rev: v4.6.0
+    rev: v4.8.3
   - hooks:
       - id: check-useless-excludes
     repo: meta
@@ -51,7 +51,7 @@ repos:
     rev: v5.0.0
   - repo: https://github.com/astral-sh/ruff-pre-commit
     # Ruff version.
-    rev: v0.11.7
+    rev: v0.12.3
     hooks:
       # Run the linter.
       - id: ruff
@@ -61,7 +61,7 @@ repos:
       - id: ruff-format
 
   - repo: https://github.com/scop/pre-commit-shfmt
-    rev: v3.11.0-1
+    rev: v3.12.0-1
     hooks:
       # Choose one of:
       - id: shfmt # native (requires/installs Go to build)

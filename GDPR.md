@@ -28,7 +28,6 @@ So, briefing:
 - For LIVE executions
   - No data is stored
 - For non-LIVE executions
-
   - `risu.json` in sosreport folder or the path you've defined with -o
   - `magui*.json` in the folder where you executed `magui`
 

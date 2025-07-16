@@ -78,7 +78,6 @@ Several changes introduced recently:
 ### 2018-01-24
 
 - Faraday extension
-
   - Some files must be equal or different across sosreports, actually we do have `release` and `ceilometer-yaml` one that rely on this, but this is hard to mantain as each new file will require a new plugin for Risu plus a new plugin for Magui.
 
   - In order to simplify this a new extension has been created so adding a new file to monitor no longer requires new plugins for `risu` or `magui` but just creating a text file with some data within as documented on `risuclient/plugins/faraday/README.md`
