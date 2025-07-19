@@ -537,7 +537,6 @@ def runplugin(plugin):
 
     found = 0
 
-    global progress
     step = progress
 
     # Loop tru extensions to find which one should handle it and run it
