@@ -28,7 +28,7 @@ is_required_file ${RISU_ROOT}/etc/raddb/radiusd.conf
 
 RADDB="${RISU_ROOT}/etc/raddb"
 
-OLD_REGEXP='\\\\\\.'                          # \\.   e.g. "if (&User-Name =~ /\\.\\./ ) {"
+OLD_REGEXP='\\\\\\.'                         # \\.   e.g. "if (&User-Name =~ /\\.\\./ ) {"
 NEW_REGEXP='[^\\]\\.'                        # \.    e.g. "if (&User-Name =~ /\.\./ ) {"
 REGEXP_MODE="^correct_escapes\\s*=\\s*true$" # correct_escapes = true
 
