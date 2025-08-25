@@ -25,7 +25,7 @@
 REGEXP="kernel: lpfc .*: .* READ_FCF_RECORD Indicates empty FCF table"
 KCS=69150
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

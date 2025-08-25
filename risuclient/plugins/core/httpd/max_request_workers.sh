@@ -19,7 +19,7 @@
 # long_name: MaxRequestWorkers limits
 # description: This plugin checks if Apache reaches its MaxRequestWorkers
 # bugzilla: https://bugzilla.redhat.com/show_bug.cgi?id=1406417
-# priority: 800
+# priority: 580
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

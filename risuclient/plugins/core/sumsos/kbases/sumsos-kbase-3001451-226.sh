@@ -25,7 +25,7 @@
 REGEXP="kernel: mpt2sas .*: invalid short VPD tag .* at offset .*"
 KCS=3001451
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

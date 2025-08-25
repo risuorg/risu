@@ -25,7 +25,7 @@
 REGEXP="systemd-logind: Failed to stat\(\) POSIX shared memory segment .*: Permission denied"
 KCS=20622753
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

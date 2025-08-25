@@ -18,7 +18,7 @@
 
 # long_name: Check for running nova-compute
 # description: Reports if nova-compute is not running on compute node
-# priority: 900
+# priority: 750
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

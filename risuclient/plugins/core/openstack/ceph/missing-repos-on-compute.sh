@@ -17,7 +17,7 @@
 
 # long_name: Ceph rhceph repository
 # description: Checks if Ceph repos are not enabled on computes
-# priority: 200
+# priority: 750
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

@@ -20,7 +20,7 @@
 
 # long_name: Validate etcd requirement for openshift
 # description: Validate etcd requirement for openshift
-# priority: 800
+# priority: 850
 
 # We're OCP master
 if is_rpm atomic-openshift-master; then

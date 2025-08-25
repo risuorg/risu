@@ -20,7 +20,7 @@
 
 # long_name: Disk inode usage
 # description: error if disk inode usage is greater than $RISU_INODE_MAX_PERCENT=90
-# priority: 300
+# priority: 400
 
 : ${RISU_INODE_MAX_PERCENT=90}
 

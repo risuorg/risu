@@ -17,7 +17,7 @@
 
 # long_name: Kernel OOM-killer, panic or soft lockup
 # description: Looks for the Kernel Out of Memory, panics and soft locks
-# priority: 700
+# priority: 910
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

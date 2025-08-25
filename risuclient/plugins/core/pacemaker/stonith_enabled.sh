@@ -16,7 +16,7 @@
 
 # long_name: Stonith configuration
 # description: Checks for stonith enabled in cluster
-# priority: 300
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

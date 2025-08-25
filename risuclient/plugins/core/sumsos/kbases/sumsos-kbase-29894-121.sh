@@ -25,7 +25,7 @@
 REGEXP="kernel: EXT4-fs warning \(device .*\): ext4_dx_add_entry: Directory index full!"
 KCS=29894
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

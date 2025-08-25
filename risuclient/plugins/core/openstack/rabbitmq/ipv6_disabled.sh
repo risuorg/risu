@@ -18,7 +18,7 @@
 
 # long_name: Checks whether ipv6 has been disabled via sysctl
 # description: Reports if ipv6 has been disabled via sysctl
-# priority: 900
+# priority: 750
 # kb: https://access.redhat.com/solutions/3357631
 
 # Load common functions

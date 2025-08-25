@@ -25,7 +25,7 @@
 REGEXP="kernel: NFS: nfs4_reclaim_open_state: unhandled error -10026"
 KCS=1291523
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

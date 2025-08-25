@@ -25,7 +25,7 @@
 REGEXP="corosync.*: cman killed by node .* because we were killed by cman_tool or other application"
 KCS=308583
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

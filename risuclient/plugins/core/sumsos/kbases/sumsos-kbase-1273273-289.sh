@@ -25,7 +25,7 @@
 REGEXP="kernel: qla2xxx .*-8802:.*: Aborting from RISC nexus=.* sp=.* cmd=.*"
 KCS=1273273
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

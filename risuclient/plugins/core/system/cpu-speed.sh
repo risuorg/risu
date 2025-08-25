@@ -17,7 +17,7 @@
 
 # long_name: Max CPU speed and C-states
 # description: Checks for CPU speed and C-states
-# priority: 200
+# priority: 920
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

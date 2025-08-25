@@ -17,7 +17,7 @@
 
 # long_name: NTPd services status
 # description: Checks for proper network time sync status
-# priority: 500
+# priority: 830
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

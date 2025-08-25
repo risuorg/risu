@@ -17,7 +17,7 @@
 
 # long_name: Check if pip is installed
 # description: pip can create conflicts and have a hard impact on openstack services
-# priority: 800
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

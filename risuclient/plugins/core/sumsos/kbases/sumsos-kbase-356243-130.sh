@@ -25,7 +25,7 @@
 REGEXP="kernel: lpfc .*: .*:0338 IOCB wait timeout error - no wake response Data x.*"
 KCS=356243
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

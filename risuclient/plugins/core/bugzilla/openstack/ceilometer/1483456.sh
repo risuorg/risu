@@ -19,7 +19,7 @@
 # long_name: Mismatch between nova host and hostname
 # description: Checks missconfigured host in nova vs hostname
 # bugzilla: https://bugzilla.redhat.com/show_bug.cgi?id=1483456
-# priority: 700
+# priority: 750
 # kb: https://access.redhat.com/solutions/3198662
 
 # Load common functions

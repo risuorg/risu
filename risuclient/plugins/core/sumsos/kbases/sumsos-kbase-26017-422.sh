@@ -25,7 +25,7 @@
 REGEXP="kernel: sd .*: lun.* has a LUN larger than allowed by the host adapter"
 KCS=26017
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

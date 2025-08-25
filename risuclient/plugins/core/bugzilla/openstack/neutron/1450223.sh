@@ -22,7 +22,7 @@
 # long_name: Traceback from python-ryu package
 # description: Checks python-ryu tracebacks
 # bugzilla: https://bugzilla.redhat.com/show_bug.cgi?id=1450223
-# priority: 300
+# priority: 750
 # kb: https://access.redhat.com/solutions/3128111
 
 # Load common functions

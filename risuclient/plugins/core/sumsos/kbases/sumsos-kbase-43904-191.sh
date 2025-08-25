@@ -25,7 +25,7 @@
 REGEXP="kernel: EDAC e7xxx: error reporting device not found:vendor 8086 device 0x.* \(broken BIOS\?\)"
 KCS=43904
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

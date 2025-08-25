@@ -18,7 +18,7 @@
 
 # long_name: returns the role of the system (controller, compute, etc) for OpenStack
 # description: This plugin is used in various functions. It's just a metadata plugin.
-# priority: 0
+# priority: 750
 
 # Load common functions
 [ -f "${RISU_BASE}/common-functions.sh" ] && . "${RISU_BASE}/common-functions.sh"

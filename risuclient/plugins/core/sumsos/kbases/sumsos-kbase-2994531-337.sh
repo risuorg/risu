@@ -25,7 +25,7 @@
 REGEXP="kernel: sd .*"
 KCS=2994531
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

@@ -25,7 +25,7 @@
 REGEXP="kernel: ACPI Error: SMBus or IPMI write requires Buffer of length .*, found length .* (.*/exfield-286)"
 KCS=48109
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

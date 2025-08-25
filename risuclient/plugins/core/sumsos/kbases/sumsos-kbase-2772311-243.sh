@@ -25,7 +25,7 @@
 REGEXP="kernel: pci .*: BAR .*: failed to assign \[io  size 0x.*\]"
 KCS=2772311
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

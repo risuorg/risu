@@ -25,7 +25,7 @@
 REGEXP="multipathd: .*: failed in domap for addition of new path .*"
 KCS=2360781
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

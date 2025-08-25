@@ -25,7 +25,7 @@
 REGEXP="kernel: lpfc .*: .*:1309 Link Up Event npiv not supported in loop topology"
 KCS=1268273
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

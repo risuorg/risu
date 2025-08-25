@@ -25,7 +25,7 @@
 REGEXP="kernel: lpfc .*: .*:0203 Devloss timeout on WWPN .* NPort .* Data: .*"
 KCS=45774
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

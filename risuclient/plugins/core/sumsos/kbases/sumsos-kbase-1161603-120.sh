@@ -25,7 +25,7 @@
 REGEXP="kernel: EXT4-fs error \(device .*\): ext4_lookup: deleted inode referenced: .*"
 KCS=1161603
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

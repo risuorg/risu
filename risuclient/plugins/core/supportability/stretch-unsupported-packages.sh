@@ -20,7 +20,7 @@
 
 # long_name: Report obsolete Debian Stretch packages
 # description: Report obsolete Debian Stretch packages
-# priority: 200
+# priority: 400
 # kb: https://www.debian.org/releases/stretch/amd64/release-notes/ch-information.en.html#noteworthy-obsolete-packages
 
 OS=$(discover_os)

@@ -61,7 +61,8 @@ def listplugins(options=None):
         options=options,
     ):
         filename = plugin["plugin"]
-        data = json.load(open(filename, "r"))
+        with open(filename, "r") as f:
+            data = json.load(f)
         if "logPath" in data and "rules" in data:
             path = data["logPath"]
 

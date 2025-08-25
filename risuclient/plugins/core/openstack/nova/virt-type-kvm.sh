@@ -16,7 +16,7 @@
 
 # long_name: Report if virt_type is not set to kvm
 # description: virt_type different to KVM could present performance issues vs kvm
-# priority: 800
+# priority: 750
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

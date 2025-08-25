@@ -21,7 +21,7 @@
 
 # long_name: Failed actions
 # description: Check if there are pacemaker failed actions
-# priority: 800
+# priority: 400
 
 is_required_file "${RISU_ROOT}/etc/corosync/corosync.conf"
 

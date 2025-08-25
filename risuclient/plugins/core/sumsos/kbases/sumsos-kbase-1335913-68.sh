@@ -25,7 +25,7 @@
 REGEXP="multipathd: A dynamic linking error occurred with initprio: \(/lib64/multipath/libpriooraclefspm.so: undefined symbol: initprio\)"
 KCS=1335913
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

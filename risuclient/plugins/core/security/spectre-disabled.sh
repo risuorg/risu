@@ -16,7 +16,8 @@
 
 # long_name: Checks for disabled kernel protection features against Spectre
 # description: Checks if user disabled fix for Spectre
-# priority: 400
+# priority: 920
+# kb: https://access.redhat.com/security/vulnerabilities/speculativeexecution
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

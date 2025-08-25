@@ -18,7 +18,7 @@
 
 # long_name: NUMA Configuration on Compute nodes
 # description: Checks for CPU tuning on compute nodes are as per best practices
-# priority: 300
+# priority: 750
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

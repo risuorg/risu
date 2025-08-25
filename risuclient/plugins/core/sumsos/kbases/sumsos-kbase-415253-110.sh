@@ -25,7 +25,7 @@
 REGEXP="kernel: device-mapper: multipath: Using scsi_dh module scsi_dh_alua for failover/failback and device management."
 KCS=415253
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

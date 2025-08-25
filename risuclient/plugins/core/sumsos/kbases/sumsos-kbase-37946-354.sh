@@ -25,7 +25,7 @@
 REGEXP="kernel: sd .*: SCSI error: return code = 0x06000000"
 KCS=37946
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

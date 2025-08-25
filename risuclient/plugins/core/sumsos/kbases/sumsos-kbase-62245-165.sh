@@ -25,7 +25,7 @@
 REGEXP="kernel: bio too big device .* \(.* > .*\)"
 KCS=62245
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

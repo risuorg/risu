@@ -17,7 +17,7 @@
 
 # long_name: usbfs access to a device closure
 # description: Check if applications are not closing usbfs access to a device properly
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

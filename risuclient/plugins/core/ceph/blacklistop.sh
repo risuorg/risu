@@ -19,7 +19,7 @@
 
 # long_name: Ceph BlackList op detected
 # description: Checks For missing blacklist permission
-# priority: 600
+# priority: 400
 # kb: https://access.redhat.com/solutions/3377231
 
 is_required_file ${RISU_ROOT}/var/log/ceph/ceph.audit.log

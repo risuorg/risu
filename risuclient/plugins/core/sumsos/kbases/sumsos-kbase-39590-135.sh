@@ -25,7 +25,7 @@
 REGEXP="kernel: lpfc .*: .*:0713 SCSI layer issued Device Reset"
 KCS=39590
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

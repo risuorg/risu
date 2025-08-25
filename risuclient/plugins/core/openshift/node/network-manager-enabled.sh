@@ -18,7 +18,7 @@
 
 # long_name: Verify OpenShift Nodes have NetworkManager enabled
 # description: With OpenShift Nodes NetworkManager is required
-# priority: 700
+# priority: 870
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

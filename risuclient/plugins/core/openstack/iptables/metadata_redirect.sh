@@ -18,7 +18,7 @@
 
 # long_name: Undercloud metadata server redirection
 # description: Checks for iptables rules to allow instances to reach metadata server
-# priority: 800
+# priority: 750
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

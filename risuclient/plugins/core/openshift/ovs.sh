@@ -20,7 +20,7 @@
 
 # long_name: Validate ovs requirement for openshift
 # description: Validate ovs requirement for openshift
-# priority: 800
+# priority: 740
 
 # We're OCP node
 if is_rpm atomic-openshift-node; then

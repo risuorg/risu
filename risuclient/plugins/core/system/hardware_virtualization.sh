@@ -17,7 +17,7 @@
 
 # long_name: Hardware Virtualization support
 # description: Checks for HW virtualization support
-# priority: 200
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

@@ -21,7 +21,7 @@
 
 # long_name: Check RH OpenStack system Lifecycle status
 # description: Checks RH OpenStack system Lifecycle status
-# priority: 500
+# priority: 750
 # kb: https://access.redhat.com/support/policy/updates/openstack/platform
 
 OSBRAND=$(discover_osbrand)

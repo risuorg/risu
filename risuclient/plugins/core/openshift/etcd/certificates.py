@@ -13,7 +13,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # long_name: Validate etcd certificates
 # description: Verify etcd certificates are valid for this host
-# priority: 1000
+# priority: 980
 from __future__ import print_function
 
 import os

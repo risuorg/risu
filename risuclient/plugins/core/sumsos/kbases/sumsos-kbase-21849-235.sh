@@ -25,7 +25,7 @@
 REGEXP="kernel: NMI watchdog: BUG: soft lockup - CPU#.* stuck for .*s! .*"
 KCS=21849
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

@@ -16,7 +16,7 @@
 
 # long_name: disk scheduler
 # description: Checks for proper disk scheduler
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

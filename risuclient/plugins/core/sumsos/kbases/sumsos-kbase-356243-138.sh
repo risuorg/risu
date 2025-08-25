@@ -25,7 +25,7 @@
 REGEXP="kernel: lpfc .*: .*:0727 TMF FCP_TARGET_RESET to TGT .* LUN .* failed \(.*\) iocb_flag x.*"
 KCS=356243
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

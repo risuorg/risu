@@ -25,7 +25,7 @@
 REGEXP="kernel: device-mapper: thin: .*: reached low water mark for metadata device: sending event."
 KCS=2136901
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

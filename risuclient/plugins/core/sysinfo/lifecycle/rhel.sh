@@ -21,7 +21,7 @@
 
 # long_name: Check RHEL system Lifecycle status
 # description: Checks RHEL system Lifecycle status
-# priority: 500
+# priority: 150
 # kb: https://access.redhat.com/support/policy/updates/errata
 
 OSBRAND=$(discover_osbrand)

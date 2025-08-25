@@ -19,7 +19,7 @@
 # long_name: Perf events enabled in nova
 # description: Checks if perf events are enabled in nova
 # bugzilla:
-# priority: 900
+# priority: 750
 # kb: https://access.redhat.com/solutions/3408891
 
 # Load common functions

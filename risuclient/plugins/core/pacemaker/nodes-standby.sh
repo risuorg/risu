@@ -16,7 +16,7 @@
 
 # long_name: Checks that nodes are not in standby
 # description: Checks for nodes that are standby in cluster
-# priority: 700
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

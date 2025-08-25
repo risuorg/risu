@@ -25,7 +25,7 @@
 REGEXP="kernel: VxVM vxdmp V-.*-.*-.* memory allocation failed for size =0x.*"
 KCS=1590523
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

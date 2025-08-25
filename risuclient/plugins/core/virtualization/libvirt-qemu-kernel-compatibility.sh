@@ -17,7 +17,7 @@
 
 # long_name: Kernel, QEMU and Libvirt compatibility
 # description: Checks compatibility between libvirt, qemu and kernel packages
-# priority: 700
+# priority: 910
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

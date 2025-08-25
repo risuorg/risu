@@ -25,7 +25,7 @@
 REGEXP="audispd: queue is full - dropping event"
 KCS=25190
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

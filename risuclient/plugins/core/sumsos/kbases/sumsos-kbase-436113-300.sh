@@ -25,7 +25,7 @@
 REGEXP="kernel: qla2xxx .*-.*: \*\*\*\* Failed mbx\[0\]=4005, .* cmd=31 "
 KCS=436113
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

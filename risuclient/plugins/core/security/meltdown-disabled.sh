@@ -16,7 +16,9 @@
 
 # long_name: Checks for disabled kernel protection features against Meltdown
 # description: Checks if user disabled fix for Meltdown
-# priority: 400
+# priority: 920
+# bugzilla: https://bugzilla.redhat.com/show_bug.cgi?id=1519778
+# kb: https://access.redhat.com/security/vulnerabilities/speculativeexecution
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

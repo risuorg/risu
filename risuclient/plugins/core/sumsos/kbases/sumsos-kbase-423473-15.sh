@@ -25,7 +25,7 @@
 REGEXP="iscsid: Kernel reported iSCSI connection .*:.* error \(1020 - ISCSI_ERR_TCP_CONN_CLOSE: TCP connection closed\) state \(.*\).*"
 KCS=423473
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

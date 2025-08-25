@@ -25,7 +25,7 @@
 REGEXP="udevadm settle - timeout of .* seconds reached, the event queue contains:"
 KCS=60087
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

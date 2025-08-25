@@ -16,7 +16,7 @@
 
 # long_name: Checks if nas_secure_file_{operations,permissions} is enabled
 # description: Checks if non recommended nas_secure_file_operation and nas_secure_file_permissions are enabled for NFS and NetApp drivers
-# priority: 600
+# priority: 750
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

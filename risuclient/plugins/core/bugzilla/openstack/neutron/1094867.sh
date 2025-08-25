@@ -17,7 +17,7 @@
 # long_name: soft lockup with _raw_spin_lock in ovs_flow_stats_update
 # description: A deadlock could occur when the system attempts to read ovs flow stats
 # bugzilla: https://bugzilla.redhat.com/show_bug.cgi?id=1094867
-# priority: 100
+# priority: 750
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

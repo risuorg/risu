@@ -33,6 +33,7 @@ lastcontext = None
 RC_OKAY = int(os.environ["RC_OKAY"])
 RC_FAILED = int(os.environ["RC_FAILED"])
 RC_SKIPPED = int(os.environ["RC_SKIPPED"])
+RC_INFO = int(os.environ["RC_INFO"])
 exitCode = RC_OKAY
 errorMsg = ""
 rebootList = ""
@@ -192,15 +193,9 @@ def main():
     """
 
     global lastcontext
-    global events
-    global now
-    global root_path
     global exitCode
     global errorMsg
     global rebootList
-    global RC_OKAY
-    global RC_FAILED
-    global RC_SKIPPED
 
     for filename in [
         os.path.join(root_path, "etc/redhat-release"),
@@ -213,9 +208,14 @@ def main():
 
     if not os.path.isfile(os.path.join(root_path, "etc/redhat-release")):
         exitrisu(code=RC_SKIPPED, msg="Non Red Hat system, skipping")
+
+    release = open(os.path.join(root_path, "etc/redhat-release"), "r").read()
     if (
-        "Red Hat Enterprise Linux Server release 7"
-        not in open(os.path.join(root_path, "etc/redhat-release"), "r").read()
+        not ("Red Hat Enterprise" in release and "7" in release)
+        and not ("Red Hat Enterprise" in release and "8" in release)
+        and not ("CentOS" in release and "7" in release)
+        and not ("CentOS" in release and "8" in release)
+        and ("Fedora release" not in release)
     ):
         exitrisu(
             code=RC_SKIPPED,
@@ -293,7 +293,7 @@ def main():
 
         if e.context == "os" and e.desc == "stop":
             # sets a clean reboot if the system was stopped in the previous 5 minutes
-            if ne.desc == "start" and ne is not None:
+            if ne is not None and ne.desc == "start":
                 duration = (ne.time - e.time).total_seconds()
                 if duration < 300:
                     ne.status = "clean"

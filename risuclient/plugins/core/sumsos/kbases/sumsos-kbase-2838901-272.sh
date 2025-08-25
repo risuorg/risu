@@ -25,7 +25,7 @@
 REGEXP="kernel:.*\[<ffff.*>\] \? fanotify_handle_event+.*"
 KCS=2838901
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

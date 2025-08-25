@@ -18,7 +18,7 @@
 
 # long_name: Check for ovs dead agent (ryu)
 # description: Checks for dead agent blocking the port and failing to start
-# priority: 800
+# priority: 750
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

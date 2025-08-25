@@ -25,7 +25,7 @@
 REGEXP="lvm.*: Snapshot .*-.* changed state to: Invalid"
 KCS=232283
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

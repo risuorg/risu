@@ -16,7 +16,7 @@
 
 # long_name: Validate fstab configuration
 # description: Validate fstab configuration for CCN-STIC-619
-# priority: 900
+# priority: 130
 # bugzilla: https://www.ccn-cert.cni.es/pdf/guias/series-ccn-stic/guias-de-acceso-publico-ccn-stic/3674-ccn-stic-619-implementacion-de-seguridad-sobre-centos7/file.html
 
 # Load common functions

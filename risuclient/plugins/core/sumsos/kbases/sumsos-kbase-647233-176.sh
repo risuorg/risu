@@ -25,7 +25,7 @@
 REGEXP="kernel: cciss: cmd .* has CHECK CONDITION sense key = 0x4"
 KCS=647233
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

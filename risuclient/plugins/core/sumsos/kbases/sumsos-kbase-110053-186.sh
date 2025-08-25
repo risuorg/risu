@@ -25,7 +25,7 @@
 REGEXP="kernel: do_IRQ: .*..* No irq handler for vector \(irq -1\)"
 KCS=110053
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

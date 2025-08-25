@@ -25,7 +25,7 @@
 REGEXP="kernel: EXT3-fs \(.*\): error: remounting filesystem read-only"
 KCS=54790
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

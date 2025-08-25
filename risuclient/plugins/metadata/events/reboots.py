@@ -194,15 +194,8 @@ def main():
     """
 
     global lastcontext
-    global events
-    global now
-    global root_path
     global exitCode
-    global errorMsg
     global rebootList
-    global RC_OKAY
-    global RC_FAILED
-    global RC_SKIPPED
 
     for filename in [
         os.path.join(root_path, "etc/redhat-release"),

@@ -25,7 +25,7 @@
 REGEXP="multipathd: .*: unusable path"
 KCS=969653
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

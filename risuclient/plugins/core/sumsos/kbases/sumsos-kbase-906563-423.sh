@@ -25,7 +25,7 @@
 REGEXP="kernel: sr: Sense Key : Medium Error \[deferred\]"
 KCS=906563
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

@@ -25,7 +25,7 @@
 REGEXP="firmware_helper.*: loading of .* for .* failed .* unexpectedly returned with status 0x0100"
 KCS=206493
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

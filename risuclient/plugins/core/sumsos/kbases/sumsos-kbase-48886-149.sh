@@ -25,7 +25,7 @@
 REGEXP="kernel: lpfc .*: .*:2611 FLOGI failed on FCF \(.*\), status:x.*, tmo:x.*, peform roundrobin FCF failover"
 KCS=48886
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

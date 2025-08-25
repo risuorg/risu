@@ -25,7 +25,7 @@
 REGEXP="corosync.*: .* Corosync main process was not scheduled for .*..* ms \(threshold is .*..* ms\). Consider token timeout increase.*"
 KCS=1217663
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

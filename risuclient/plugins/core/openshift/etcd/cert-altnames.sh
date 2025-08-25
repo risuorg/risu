@@ -18,7 +18,7 @@
 
 # long_name: Etcd alternative names include the fqdn
 # description: OpenShift and etcd versions compiled with golang >= 1.9
-# priority: 400
+# priority: 700
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

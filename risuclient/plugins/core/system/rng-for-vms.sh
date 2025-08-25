@@ -17,7 +17,7 @@
 
 # long_name: Checks if RRNG is enabled for vm's
 # description: Reports vm's with NOT enabled RRNG
-# priority: 100
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

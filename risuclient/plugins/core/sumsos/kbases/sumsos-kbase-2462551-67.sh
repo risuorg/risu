@@ -25,7 +25,7 @@
 REGEXP="multipathd: A dynamic linking error occurred: \(/lib64/multipath/libprio.so: cannot open shared object file: No such file or directory\)"
 KCS=2462551
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

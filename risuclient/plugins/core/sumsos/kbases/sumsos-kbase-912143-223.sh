@@ -25,7 +25,7 @@
 REGEXP="kernel: mptscsih: ioc[0-9]: attempting task abort!"
 KCS=912143
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

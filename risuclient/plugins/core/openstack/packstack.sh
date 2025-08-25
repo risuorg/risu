@@ -18,7 +18,7 @@
 
 # long_name: Packstack installation
 # description: Report OSP version
-# priority: 900
+# priority: 750
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

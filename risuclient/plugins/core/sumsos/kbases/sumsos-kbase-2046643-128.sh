@@ -25,7 +25,7 @@
 REGEXP="kernel: lpfc .*: .*:0127 ELS timeout Data: x.* x.* x.* x.*"
 KCS=2046643
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

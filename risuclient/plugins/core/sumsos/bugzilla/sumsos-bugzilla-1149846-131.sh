@@ -26,7 +26,7 @@
 REGEXP="kernel: lpfc .*: .*:0372 iotag x.* is out off range: max iotag \(x9c0\)"
 BZ=1149846
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

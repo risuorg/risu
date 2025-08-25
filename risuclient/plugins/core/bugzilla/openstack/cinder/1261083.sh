@@ -19,7 +19,7 @@
 # long_name: Check lvm filter in compute nodes
 # description: Verify lvm.conf filter/global_filter
 # bugzilla: https://bugzilla.redhat.com/show_bug.cgi?id=1261083
-# priority: 900
+# priority: 750
 # kb: https://access.redhat.com/solutions/3213311
 
 # Load common functions

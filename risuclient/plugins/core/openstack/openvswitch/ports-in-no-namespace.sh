@@ -19,7 +19,7 @@
 
 # long_name: Check for ovs ports in no namespace
 # description: Checks for ovs ports in no namespace
-# priority: 800
+# priority: 750
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

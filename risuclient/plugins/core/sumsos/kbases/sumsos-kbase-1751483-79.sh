@@ -25,7 +25,7 @@
 REGEXP="systemd: Timed out waiting for device .*"
 KCS=1751483
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

@@ -19,7 +19,7 @@
 # long_name: Mismatch between nova host and hostname
 # description: Checks for wrong host definition on nova.conf
 # bugzilla: https://bugzilla.redhat.com/show_bug.cgi?id=1474092
-# priority: 700
+# priority: 750
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

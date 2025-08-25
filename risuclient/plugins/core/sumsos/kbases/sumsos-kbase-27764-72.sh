@@ -25,7 +25,7 @@
 REGEXP="qdiskd.*: qdiskd on node .* reports hung read\(\)"
 KCS=27764
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

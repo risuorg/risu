@@ -19,7 +19,7 @@
 
 # long_name: Metadata generator for MTU's for nics
 # description: Generates keypairs for MTU's for nics
-# priority: 800
+# priority: 870
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

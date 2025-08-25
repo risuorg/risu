@@ -19,7 +19,7 @@
 # long_name: Verify preallocate images setting in nova.conf
 # description: Verify preallocate images setting
 # bugzilla: https://bugzilla.redhat.com/show_bug.cgi?id=1554265
-# priority: 500
+# priority: 750
 # kb: https://access.redhat.com/solutions/3378041
 
 # Load common functions

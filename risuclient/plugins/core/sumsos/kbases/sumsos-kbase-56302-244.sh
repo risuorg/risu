@@ -25,7 +25,7 @@
 REGEXP="kernel: pcieport .*: AER: Corrected error received: id=.*"
 KCS=56302
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

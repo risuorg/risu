@@ -17,7 +17,7 @@
 
 # long_name: Checks if kernel has been tainted and reports value
 # description: Checks kernel taint value
-# priority: 100
+# priority: 910
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

@@ -17,7 +17,7 @@
 
 # long_name: Detects OCP on OSP
 # description: Detects OCP on OSP
-# priority: 0
+# priority: 740
 
 # Load common functions
 [ -f "${RISU_BASE}/common-functions.sh" ] && . "${RISU_BASE}/common-functions.sh"

@@ -18,7 +18,7 @@
 
 # long_name: Detect duplicate iptables rule warning
 # description: Detects duplicate iptables rule warning
-# priority: 600
+# priority: 750
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

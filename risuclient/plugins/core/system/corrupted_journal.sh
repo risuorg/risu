@@ -17,7 +17,7 @@
 
 # long_name: Detects journal corrupted journal
 # description: Detects corrupted journal file on disk
-# priority: 700
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

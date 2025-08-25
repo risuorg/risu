@@ -20,7 +20,7 @@
 
 # long_name: Check Debian system Lifecycle status
 # description: Checks Debian system Lifecycle status
-# priority: 500
+# priority: 150
 # kb: https://wiki.debian.org/es/DebianReleases
 
 OS=$(discover_os)

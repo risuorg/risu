@@ -19,7 +19,7 @@
 # long_name: Libvirt instance start error
 # description: This plugin checks libvirt affected of multiple instance start error
 # bugzilla: https://bugzilla.redhat.com/show_bug.cgi?id=1172387
-# priority: 800
+# priority: 890
 # kb: https://access.redhat.com/solutions/3024461
 
 # Load common functions

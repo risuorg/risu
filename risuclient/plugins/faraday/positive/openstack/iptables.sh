@@ -21,7 +21,7 @@
 # long_name: Network iptables consistency
 # description: Checks for iptables consitency
 # path: ${RISU_ROOT}/etc/sysconfig/iptables
-# priority: 800
+# priority: 750
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

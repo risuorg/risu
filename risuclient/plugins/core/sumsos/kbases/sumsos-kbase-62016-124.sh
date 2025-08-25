@@ -25,7 +25,7 @@
 REGEXP="kernel: EXT4-fs \(.*\): Unaligned AIO/DIO on inode .* by .*; performance will be poor."
 KCS=62016
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

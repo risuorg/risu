@@ -17,7 +17,7 @@
 
 # long_name: Reports interfaces with errors
 # description: Reports interfaces with errors
-# priority: 900
+# priority: 870
 # kb:
 
 # Load common functions

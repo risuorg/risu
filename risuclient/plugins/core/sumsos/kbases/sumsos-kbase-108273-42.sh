@@ -25,7 +25,7 @@
 REGEXP="mptscsih: ioc0: attempting task abort! \(sc=.*\)"
 KCS=108273
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

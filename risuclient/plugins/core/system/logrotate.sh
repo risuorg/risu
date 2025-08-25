@@ -17,7 +17,7 @@
 
 # long_name: Checks if logrotate is installed and running
 # description: Checks logortate is installed and operating on the system
-# priority: 300
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

@@ -17,7 +17,7 @@
 
 # long_name: reports virt-type or baremetal
 # description: reports virt-type or baremetal
-# priority: 100
+# priority: 150
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

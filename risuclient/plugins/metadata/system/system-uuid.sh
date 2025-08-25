@@ -19,6 +19,7 @@
 
 # long_name: stores system UUID for correlation in webapp
 # description: Sets system UUID
+# priority: 70
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

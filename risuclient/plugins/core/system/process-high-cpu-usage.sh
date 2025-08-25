@@ -20,7 +20,7 @@
 
 # long_name: Process High CPU usage
 # description: error if process cpu usage is greater than $RISU_PROCESS_CPU_USAGE=100
-# priority: 800
+# priority: 920
 
 : ${RISU_PROCESS_CPU_USAGE=100}
 

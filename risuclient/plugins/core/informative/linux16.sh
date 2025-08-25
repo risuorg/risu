@@ -17,7 +17,7 @@
 
 # long_name: Detects if system is using linux16 and/or initd16 instead of regular descriptions
 # description: Reports if system is using linux16 or initrd16
-# priority: 100
+# priority: 150
 # kb:
 
 # Load common functions

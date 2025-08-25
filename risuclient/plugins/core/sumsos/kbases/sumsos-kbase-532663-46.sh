@@ -25,7 +25,7 @@
 REGEXP="XFS: possible memory allocation deadlock in kmem_alloc \(mode:0x.*\)"
 KCS=532663
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

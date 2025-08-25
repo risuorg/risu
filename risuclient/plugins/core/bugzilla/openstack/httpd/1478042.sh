@@ -19,7 +19,7 @@
 # long_name: WSGIApplicationGroup definition in mod_wsgi
 # description: Checks httpd WSGIApplication defined to avoid wrong redirection
 # bugzilla: https://bugzilla.redhat.com/show_bug.cgi?id=1478042
-# priority: 600
+# priority: 750
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

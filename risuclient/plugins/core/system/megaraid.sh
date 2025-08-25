@@ -17,7 +17,7 @@
 
 # long_name: Detects PERC RAID / Megaraid resets
 # description: Detects if PERC RAID Controller or Linux Megaraid Driver resets resulting in intermittent loss of access to all drivers on system
-# priority: 500
+# priority: 400
 # kb: https://access.redhat.com/solutions/3010132
 
 # Load common functions

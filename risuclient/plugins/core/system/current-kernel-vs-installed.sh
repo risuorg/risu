@@ -17,7 +17,7 @@
 
 # long_name: Current kernel vs last installed
 # description: Checks if running kernel is the one last installed
-# priority: 300
+# priority: 910
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

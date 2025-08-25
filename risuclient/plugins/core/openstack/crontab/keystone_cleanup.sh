@@ -18,7 +18,7 @@
 
 # long_name: Keystone clean-up frequency
 # description: Keystone cleanups might not be frequent enough on busy systems, check frequency
-# priority: 700
+# priority: 750
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

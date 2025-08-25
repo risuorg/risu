@@ -18,7 +18,7 @@
 
 # long_name: Swift error with REPLICATE
 # description: Checks Swift log for REPLICATE errors
-# priority: 800
+# priority: 750
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

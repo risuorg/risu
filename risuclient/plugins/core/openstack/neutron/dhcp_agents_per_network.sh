@@ -18,7 +18,7 @@
 
 # long_name: Check OSP11+ and number of DHCP agents
 # description: Checks for invalid OSP11+ dhcp_agents_per_network
-# priority: 500
+# priority: 870
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

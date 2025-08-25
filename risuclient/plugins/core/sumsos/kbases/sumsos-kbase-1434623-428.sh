@@ -25,7 +25,7 @@
 REGEXP="kernel: .*: Current: sense Key : Hardware Error .*"
 KCS=1434623
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

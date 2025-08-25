@@ -17,7 +17,7 @@
 
 # long_name: Checks if sudoers misses the includedir directive and that makes fail vdsm
 # description: Checks if sudoers misses the includedir directive that causes issues with vdsm and others
-# priority: 800
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

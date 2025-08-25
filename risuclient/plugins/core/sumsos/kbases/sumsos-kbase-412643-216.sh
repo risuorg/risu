@@ -25,7 +25,7 @@
 REGEXP="kernel: megaraid_sas: FW detected to be in faultstate, restarting it"
 KCS=412643
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

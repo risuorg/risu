@@ -18,7 +18,7 @@
 
 # long_name: Mismatch between nova host and ceilometer host
 # description: Checks missconfigured host in nova vs ceilometer
-# priority: 500
+# priority: 750
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

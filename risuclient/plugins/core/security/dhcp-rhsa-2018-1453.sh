@@ -16,7 +16,9 @@
 
 # long_name: Checks for fixed dhcp package
 # description: Checks if package dhclient is affected of remote execution flaw
-# priority: 400
+# priority: 810
+# bugzilla: https://bugzilla.redhat.com/show_bug.cgi?id=1568519
+# kb: https://access.redhat.com/security/vulnerabilities/3442151
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

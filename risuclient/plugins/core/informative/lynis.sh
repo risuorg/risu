@@ -18,7 +18,7 @@
 
 # long_name: Provides output of lynis https://github.com/CISOfy/Lynis
 # description: Reports lynis output https://github.com/CISOfy/Lynis
-# priority: 100
+# priority: 150
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

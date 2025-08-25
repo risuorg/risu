@@ -19,7 +19,7 @@
 
 # long_name: Report OCP version
 # description: Report OCP version consitency
-# priority: 800
+# priority: 740
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

@@ -25,7 +25,7 @@
 REGEXP="kernel: sd .*: Warning! Received an indication that the operating parameters on this target have changed.*"
 KCS=276553
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

@@ -16,7 +16,7 @@
 
 # long_name: Checks for OSP repos not for current version
 # description: Checks for OSP repos not for current version
-# priority: 500
+# priority: 750
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

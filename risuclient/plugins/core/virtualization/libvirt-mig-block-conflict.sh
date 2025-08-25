@@ -18,7 +18,7 @@
 # long_name: Live migration issue
 # description: Conflicts with use by a block device
 # bugzilla: https://bugzilla.redhat.com/show_bug.cgi?id=1482478
-# priority: 600
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

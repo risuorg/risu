@@ -25,7 +25,7 @@
 REGEXP="multipathd: .*: hds prio: SCSI error"
 KCS=1335913
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

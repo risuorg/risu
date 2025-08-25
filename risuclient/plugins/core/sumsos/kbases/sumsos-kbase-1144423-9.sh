@@ -25,7 +25,7 @@
 REGEXP="fcoemon: FC_HOST_EVENT .* at .* secs on host.*code 4=lip_reset datalen .* data=.*"
 KCS=1144423
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

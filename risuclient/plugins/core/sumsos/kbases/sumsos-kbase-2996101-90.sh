@@ -25,7 +25,7 @@
 REGEXP="kernel: be2net .*: Please reboot server to recover"
 KCS=2996101
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

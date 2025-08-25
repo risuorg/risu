@@ -22,7 +22,7 @@
 
 # long_name: Check RH OpenShift system Lifecycle status
 # description: Checks RH OpenShift system Lifecycle status
-# priority: 500
+# priority: 150
 # kb: https://access.redhat.com/support/policy/updates/openshift
 
 OSBRAND=$(discover_osbrand)

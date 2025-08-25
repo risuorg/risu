@@ -25,7 +25,7 @@
 REGEXP="kernel: UNSUPPORTED HARDWARE DEVICE: Intel CPU model"
 KCS=722773
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

@@ -17,7 +17,7 @@
 
 # long_name: Physical machine
 # description: Reports hypervisor technology in use
-# priority: 100
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

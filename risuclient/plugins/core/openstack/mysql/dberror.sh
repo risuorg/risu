@@ -18,7 +18,7 @@
 
 # long_name: DBErrors in OpenStack services
 # description: Report any DBErrors in OpenStack services
-# priority: 800
+# priority: 750
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

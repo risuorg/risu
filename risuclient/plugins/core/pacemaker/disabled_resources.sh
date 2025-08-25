@@ -21,7 +21,7 @@
 
 # long_name: Disabled resources
 # description: Check if there are pacemaker resources disabled
-# priority: 600
+# priority: 400
 
 is_required_file "${RISU_ROOT}/etc/corosync/corosync.conf"
 

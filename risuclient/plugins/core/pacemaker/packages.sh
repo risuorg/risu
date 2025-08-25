@@ -16,7 +16,7 @@
 
 # long_name: Outdated pacemaker packages
 # description: Checks for outdated pacemaker packages
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

@@ -25,7 +25,7 @@
 REGEXP="kernel: gsch_get_file_event\(\) open\(.*\(.*\)\) failed: .*"
 KCS=1376133
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

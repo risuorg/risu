@@ -21,7 +21,7 @@
 
 # long_name: OpenStack failed services
 # description: Checks for failed OSP services
-# priority: 1000
+# priority: 890
 
 if [[ "x$RISU_LIVE" == "x1" ]]; then
 

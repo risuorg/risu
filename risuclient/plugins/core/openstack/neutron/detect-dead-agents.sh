@@ -18,7 +18,7 @@
 
 # long_name: Check for reported dead agents
 # description: Verify if Neutron has reported dead agents
-# priority: 900
+# priority: 750
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

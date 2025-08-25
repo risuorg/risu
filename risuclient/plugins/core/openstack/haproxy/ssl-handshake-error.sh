@@ -18,7 +18,7 @@
 
 # long_name: Checks for SSL Handshake errors
 # description: Checks whether there are any SSL Handshake errors
-# priority: 800
+# priority: 780
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

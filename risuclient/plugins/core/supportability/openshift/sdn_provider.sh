@@ -17,7 +17,7 @@
 
 # long_name: reports non supported SDN provider on OCP
 # description: reports non supported SDN provider on OCP
-# priority: 300
+# priority: 870
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

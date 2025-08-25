@@ -25,7 +25,7 @@
 REGEXP="kernel: sd .* Asking for cache data failed"
 KCS=25608
 
-# priority: 500
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

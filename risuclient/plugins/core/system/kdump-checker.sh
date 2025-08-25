@@ -19,7 +19,7 @@
 
 # long_name: KDump configuration
 # description: This plugin check kdump configuration
-# priority: 100
+# priority: 400
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

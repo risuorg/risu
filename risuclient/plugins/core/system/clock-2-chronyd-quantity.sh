@@ -17,7 +17,7 @@
 
 # long_name: ChronyD server quantity
 # description: Checks for chronyd server quantity
-# priority: 500
+# priority: 830
 
 # Load common functions
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"

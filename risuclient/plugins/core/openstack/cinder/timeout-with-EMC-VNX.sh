@@ -16,7 +16,7 @@
 
 # long_name: Checks for timeouts using 'navicli'
 # description: Checks timeouts in navicli usage that might require tuning
-# priority: 600
+# priority: 830
 # kb: https://access.redhat.com/solutions/2720471
 
 # Load common functions
