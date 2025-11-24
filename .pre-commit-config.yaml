@@ -6,7 +6,7 @@ repos:
         stages:
           - commit-msg
     repo: https://github.com/commitizen-tools/commitizen
-    rev: v4.9.1
+    rev: v4.10.0
   - hooks:
       - id: check-useless-excludes
     repo: meta
@@ -18,7 +18,7 @@ repos:
   - hooks:
       - id: black
     repo: https://github.com/python/black
-    rev: 25.9.0
+    rev: 25.11.0
   - hooks:
       - id: check-added-large-files
         args: [--maxkb=10000]
@@ -51,7 +51,7 @@ repos:
     rev: v6.0.0
   - repo: https://github.com/astral-sh/ruff-pre-commit
     # Ruff version.
-    rev: v0.14.1
+    rev: v0.14.5
     hooks:
       # Run the linter.
       - id: ruff
