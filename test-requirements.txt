@@ -1,4 +1,5 @@
 coverage!=4.4,>=4.0 # Apache-2.0
+filelock>=3.20.1 # not directly required, pinned by Snyk to avoid a vulnerability
 flake8
 pre-commit
 pymarkdownlint
