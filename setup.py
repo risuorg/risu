@@ -31,7 +31,7 @@ version = line.split("=")[1].strip()
 
 command = "git tag|sort -V|grep -v ^[a-Z]|grep -v 2017|tail -1"
 proc = subprocess.Popen([command], stdout=subprocess.PIPE, shell=True)
-(out, err) = proc.communicate()
+out, err = proc.communicate()
 
 version = out.strip().decode("utf-8")
 
