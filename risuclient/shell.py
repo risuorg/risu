@@ -35,7 +35,6 @@ import re
 import tempfile
 import sys
 
-
 if sys.version_info >= (3, 4):
     # Handle  imp deprecation towards importlib
 
