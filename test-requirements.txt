@@ -4,7 +4,7 @@ flake8
 pre-commit
 pymarkdownlint
 pytest>=3.2.0 # MIT
-pytest-cov>=2.5.1 # MIT
+pytest-cov>=7.1.0 # MIT
 PyYAML
 requests
 setuptools>=82.0.1
