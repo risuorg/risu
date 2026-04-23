@@ -3,7 +3,7 @@ filelock>=3.29.0 # not directly required, pinned by Snyk to avoid a vulnerabilit
 flake8
 pre-commit
 pymarkdownlint
-pytest>=3.2.0 # MIT
+pytest>=9.0.3 # MIT
 pytest-cov>=7.1.0 # MIT
 PyYAML
 requests
