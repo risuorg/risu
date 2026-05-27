@@ -10,4 +10,4 @@ requests
 setuptools>=82.0.1
 tox
 urllib3>=2.7.0 # not directly required, pinned by Snyk to avoid a vulnerability
-zipp>=3.23.1 # not directly required, pinned by Snyk to avoid a vulnerability
+zipp>=4.1.0 # not directly required, pinned by Snyk to avoid a vulnerability
