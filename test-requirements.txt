@@ -1,4 +1,4 @@
-coverage!=4.4,>=7.14.1 # Apache-2.0
+coverage!=4.4,>=7.14.3 # Apache-2.0
 filelock>=3.29.4 # not directly required, pinned by Snyk to avoid a vulnerability
 flake8
 pre-commit
