@@ -409,7 +409,7 @@ python3 tools/validate_plugin.py <plugin>
 
 **A**: Run this:
 
-```python
+```bash
 python3 -c "from risuclient import shell; print('Active:', shell.HAVE_NEW_MODULES)"
 ```
 
