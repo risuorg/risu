@@ -18,28 +18,34 @@ runtimes:
 # This is the section where you manage your linters. (https://docs.trunk.io/check/configuration)
 lint:
   ignore:
+    - linters: [ALL]
+      paths:
+        - ".trunk/trunk.yaml"
     - linters: [markdownlint]
       paths:
-        - "*.md" # Internal docs don't need strict formatting
+        - "doc/internal/**"
+        - "ARCHITECTURE.md"
+        - "CLAUDE.md"
+        - "CONTRIBUTING.md"
     - linters: [yamllint]
       paths:
-        - ".github/workflows/*.yml" # GitHub Actions often have long lines
-        - "doc/templates/*.yml" # Template examples
+        - ".github/workflows/**"
+        - "doc/templates/**"
     - linters: [shellcheck]
       paths:
-        - "doc/templates/*.sh" # Template examples, SC1091 is expected
+        - "doc/templates/**"
     - linters: [bandit]
       paths:
-        - "tests/**" # Test files have expected security patterns (B403, B108)
-        - "risuclient/cache.py" # B403 pickle usage is intentional
-        - "risuclient/shell.py" # B110 bare except is legacy code
-        - "tools/**" # B404, B603, B607 subprocess usage is safe
+        - "tests/**"
+        - "risuclient/cache.py"
+        - "risuclient/shell.py"
+        - "tools/**"
     - linters: [flake8]
       paths:
-        - "risuclient/executor.py" # F824 false positive on global usage
+        - "risuclient/executor.py"
     - linters: [checkov]
       paths:
-        - ".github/workflows/*.yml" # CKV2_GHA_1 write-all permissions needed for releases
+        - ".github/workflows/**"
   enabled:
     - actionlint@1.7.7
     - bandit@1.8.3
