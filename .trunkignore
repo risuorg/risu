@@ -1,0 +1,24 @@
+# Trunk linting ignore file
+
+# Markdown linting - internal documentation doesn't need strict formatting
+*.md:markdownlint/*
+
+# YAML workflow line length - GitHub Actions often have long command lines
+.github/workflows/*.yml:yamllint/line-length
+.github/workflows/*.yml:yamllint/truthy
+
+# Template files - examples, not production code
+doc/templates/*:shellcheck/SC1091
+doc/templates/*:yamllint/*
+
+# Bandit - low severity warnings in test files and imports
+tests/*:bandit/B403
+tests/*:bandit/B108
+risuclient/cache.py:bandit/B403
+risuclient/shell.py:bandit/B110
+tools/*:bandit/B404
+tools/*:bandit/B603
+tools/*:bandit/B607
+
+# Flake8 - false positive on global usage
+risuclient/executor.py:293:flake8/F824
