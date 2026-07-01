@@ -290,6 +290,6 @@ def _install_signal_handlers():
 
 def _restore_signal_handlers():
     """Restore original signal handlers."""
-    global _original_sigint_handler
+    global _original_sigint_handler  # noqa: F824
     if _original_sigint_handler:
         signal.signal(signal.SIGINT, _original_sigint_handler)
