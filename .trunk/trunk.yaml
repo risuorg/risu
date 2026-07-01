@@ -27,6 +27,8 @@ lint:
         - "ARCHITECTURE.md"
         - "CLAUDE.md"
         - "CONTRIBUTING.md"
+        - "COMMIT_SUMMARY.md"
+        - "NEW_FEATURES_README.md"
     - linters: [yamllint]
       paths:
         - ".github/workflows/**"
