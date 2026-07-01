@@ -22,11 +22,13 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
-        python-version: ["2.7", "3.6", "3.8", "3.9", "3.10", "3.11", "3.12"]
+        # Note: Python 2.7, 3.6, 3.8, 3.9 no longer available on GitHub Actions
+        # Testing on 3.10+ only, maintaining Python 2.7 compatibility in code
+        python-version: ["3.10", "3.11", "3.12", "3.13"]
         include:
           # Test on macOS for latest Python only
           - os: macos-latest
-            python-version: "3.12"
+            python-version: "3.13"
 
     steps:
       - uses: actions/checkout@v4
@@ -64,7 +66,7 @@ jobs:
           pytest --cov=risuclient --cov=maguiclient --cov-report=xml --cov-report=term -v
 
       - name: Upload coverage to Codecov
-        if: matrix.python-version == '3.12' && matrix.os == 'ubuntu-latest'
+        if: matrix.python-version == '3.13' && matrix.os == 'ubuntu-latest'
         uses: codecov/codecov-action@v4
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
@@ -79,7 +81,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["2.7", "3.12"]
+        # Test new modules on oldest and newest supported versions
+        python-version: ["3.10", "3.13"]
 
     steps:
       - uses: actions/checkout@v4
@@ -110,7 +113,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
+          python-version: "3.13"
 
       - name: Install shellcheck
         run: |
@@ -138,7 +141,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
+          python-version: "3.13"
 
       - name: Install dependencies
         run: |
