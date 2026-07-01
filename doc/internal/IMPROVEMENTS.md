@@ -2,8 +2,8 @@
 
 This document outlines optional future enhancements for the Risu codebase. All critical improvements have been completed (see STATUS_SUMMARY.md for details).
 
-**Current Status**: ✅ All planned improvements complete (25/25 tasks)  
-**Code Quality**: Production-ready, 80 tests passing, 0 bare except clauses  
+**Current Status**: ✅ All planned improvements complete (25/25 tasks)
+**Code Quality**: Production-ready, 80 tests passing, 0 bare except clauses
 **This Document**: Optional enhancements for future consideration
 
 ---
@@ -176,7 +176,7 @@ def colorize(text, color, stream=sys.stdout, force=False):
    - Cache full risu results, not just metadata
    - Avoid re-running for autogroups
 
-**Total Effort**: 7 hours  
+**Total Effort**: 7 hours
 **Impact**: Medium (benefits extreme scale scenarios)
 
 **Why Optional**: Current performance is good; these optimize for 50+ sosreports or 5000+ plugins.
@@ -195,7 +195,7 @@ def colorize(text, color, stream=sys.stdout, force=False):
 # Creates plugin file with template, test stub, opens in $EDITOR
 ```
 
-**Estimated Effort**: 3 hours  
+**Estimated Effort**: 3 hours
 **Impact**: Low (templates work well manually)
 
 **Why Optional**: Templates exist and work; this would be convenience automation.
@@ -213,7 +213,7 @@ def colorize(text, color, stream=sys.stdout, force=False):
 - Trend analysis for repeated runs
 - Export to PDF/CSV
 
-**Estimated Effort**: 10+ hours  
+**Estimated Effort**: 10+ hours
 **Impact**: Medium (UX improvements)
 
 **Why Optional**: Current HTML output works; these are nice-to-have UX enhancements.
@@ -233,7 +233,7 @@ def colorize(text, color, stream=sys.stdout, force=False):
 ./tools/visualize-dependencies.py --output deps.svg
 ```
 
-**Estimated Effort**: 4 hours  
+**Estimated Effort**: 4 hours
 **Impact**: Low (plugins are mostly independent)
 
 **Why Optional**: Interesting for visualization but not necessary for operation.

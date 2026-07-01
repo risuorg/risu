@@ -110,9 +110,11 @@ from threading import Timer
 
 sys.path.append(os.path.abspath(os.path.dirname(__file__) + "/" + "../"))
 
+LOG = logging.getLogger("risu")
+
 # Import new modular components
 try:
-    from risuclient import cache, exceptions
+    from risuclient import cache
     from risuclient import executor as risu_executor
 
     HAVE_NEW_MODULES = True
@@ -120,8 +122,6 @@ except ImportError:
     # Fallback if new modules not available
     HAVE_NEW_MODULES = False
     LOG.warning("New modular components not available, using legacy code")
-
-LOG = logging.getLogger("risu")
 
 # Initialize metadata cache if available
 _metadata_cache = None
@@ -819,7 +819,8 @@ def dorisu(
     if HAVE_NEW_MODULES:
         num_processes = options.numproc if options is not None else None
         executor = risu_executor.PluginExecutor(
-            num_processes=num_processes, timeout=30  # 30 second timeout per plugin
+            num_processes=num_processes,
+            timeout=30,  # 30 second timeout per plugin
         )
         LOG.debug("Using PluginExecutor for plugin execution")
     else:

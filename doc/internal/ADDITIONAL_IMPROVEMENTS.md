@@ -1,6 +1,6 @@
 # Risu Framework - Optional Future Enhancements
 
-**Date**: 2026-07-01  
+**Date**: 2026-07-01
 **Status**: All critical improvements complete
 
 ---
@@ -54,6 +54,7 @@ All planned improvements to magui.py, extensions, and architecture have been com
 
 ```python
 from risuclient.extensions.base import BaseExtension
+
 
 class AnsibleExtension(BaseExtension):
     extension_name = "ansible"
@@ -138,7 +139,7 @@ class TestEndToEnd(unittest.TestCase):
    - **Benefit**: Faster autogroup processing
    - **Impact**: Medium (benefits repeated magui runs)
 
-**Total Effort**: 7 hours  
+**Total Effort**: 7 hours
 **Why Optional**: Current performance is good (5-10x from metadata caching); these optimize for extreme scale scenarios.
 
 ---

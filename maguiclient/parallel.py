@@ -95,9 +95,6 @@ def enable_parallel_execution(magui_client, num_processes=None):
     :param num_processes: Number of parallel processes (default: CPU count)
     :return: Enhanced MaguiClient instance
     """
-    # Store original method
-    original_collect = magui_client.collect_risu_results
-
     # Create parallel executor
     executor = ParallelRisuExecutor(num_processes=num_processes)
 

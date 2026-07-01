@@ -25,11 +25,6 @@ try:
 except ImportError:
     import pickle
 
-try:
-    from risuclient import exceptions
-except ImportError:
-    import exceptions
-
 
 LOG = logging.getLogger("risu.cache")
 

@@ -534,8 +534,6 @@ class TestRisuExecution(TestCase):
             plugin_file.close()
 
             try:
-                plugin = {"plugin": plugin_file.name, "backend": "core"}
-
                 # First access - should cache it
                 metadata1 = {"priority": 800, "description": "Test"}
                 test_cache.set(plugin_file.name, metadata1)
@@ -586,7 +584,7 @@ class TestRisuExecution(TestCase):
             folders=[os.path.join(risu.risudir, "plugins", "core")]
         )[:10]
 
-        results = risu.dorisu(
+        risu.dorisu(
             path=self.tmpdir,
             plugins=test_plugins,
             savepath=output_file,
@@ -744,8 +742,6 @@ class TestCachingWorkflow(TestCase):
 
     def test_second_run_uses_cache(self):
         """Test second run reuses cached results"""
-        json_file = os.path.join(self.tmpdir, "risu.json")
-
         test_plugins = risu.findplugins(
             folders=[os.path.join(risu.risudir, "plugins", "core")]
         )[:10]

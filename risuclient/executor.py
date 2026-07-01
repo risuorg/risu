@@ -16,7 +16,6 @@ from __future__ import print_function
 import logging
 import multiprocessing
 import signal
-import sys
 
 # Python 2.7 compatible context manager
 try:

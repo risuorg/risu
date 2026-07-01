@@ -52,7 +52,7 @@ chmod +x risuclient/plugins/core/myarea/myplugin.sh
 
 **Python 2.7 compatible!**
 
-✅ DO: `from __future__ import print_function`, `.format()`, specific exceptions  
+✅ DO: `from __future__ import print_function`, `.format()`, specific exceptions
 ❌ DON'T: f-strings, type hints, bare `except:`
 
 ---

@@ -86,7 +86,7 @@ class TestPluginExecutor(unittest.TestCase):
 
     def test_error_handling_serial(self):
         """Test serial executor handles errors gracefully"""
-        exec_obj = executor.PluginExecutor()
+        # Test that executor doesn't crash on plugin errors
         plugins = [
             {"plugin": "good.sh"},
             {"plugin": "error.sh"},

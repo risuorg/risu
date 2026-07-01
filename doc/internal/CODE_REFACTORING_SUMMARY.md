@@ -1,6 +1,6 @@
 # Risu Code Refactoring Summary
 
-**Date**: 2026-07-01  
+**Date**: 2026-07-01
 **Status**: Major Refactoring Completed ✅
 
 ## Overview
@@ -55,16 +55,16 @@ Comprehensive refactoring of the Risu codebase to improve code quality, maintain
 **Attributes**:
 
 ```python
-- risu_dir, locale_dir, extension_folder, hooks_folder
-- plugins, extensions, extension_triggers, hooks
-- progress_char, progress_colour, progress_start, progress_end
-- is_live, risu_root, risu_tmp
-- num_processes, timeout
-- quiet, verbose, loglevel
-- include, exclude, priority
-- anon, blame, web
-- output_file, extra_plugin_tree
-- config_file, call_home_uri
+-risu_dir, locale_dir, extension_folder, hooks_folder
+-plugins, extensions, extension_triggers, hooks
+-progress_char, progress_colour, progress_start, progress_end
+-is_live, risu_root, risu_tmp
+-num_processes, timeout
+-quiet, verbose, loglevel
+-include, exclude, priority
+-anon, blame, web
+-output_file, extra_plugin_tree
+-config_file, call_home_uri
 ```
 
 **Benefits**:
@@ -571,11 +571,11 @@ python tools/generate_plugin_docs.py \
 
 Successfully created a modular, well-tested, Python 2.7-compatible foundation for Risu:
 
-✅ **7 new modules** providing focused functionality  
-✅ **3 new test modules** with comprehensive coverage  
-✅ **2 new tools** for validation and documentation  
-✅ **1 enhanced CI workflow** testing 7 Python versions  
-✅ **11 custom exceptions** for precise error handling  
+✅ **7 new modules** providing focused functionality
+✅ **3 new test modules** with comprehensive coverage
+✅ **2 new tools** for validation and documentation
+✅ **1 enhanced CI workflow** testing 7 Python versions
+✅ **11 custom exceptions** for precise error handling
 ✅ **0 breaking changes** - fully backward compatible
 
 The refactoring maintains RHEL6/Python 2.7 support while providing a clean, modern, testable architecture for future development.

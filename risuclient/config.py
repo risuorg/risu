@@ -16,7 +16,6 @@ Python 2.7 compatible - no dataclasses, using regular class with __init__.
 from __future__ import print_function
 
 import os
-import sys
 
 try:
     from risuclient import exceptions

@@ -1,6 +1,6 @@
 # Risu Architecture
 
-**Version**: 2.0  
+**Version**: 2.0
 **Date**: 2026-07-01
 
 ---
@@ -540,5 +540,5 @@ mkdir -p risuclient/plugins/myext
 
 ---
 
-**Last Updated**: 2026-07-01  
+**Last Updated**: 2026-07-01
 **Version**: 2.0 (with modular architecture)
