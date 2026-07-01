@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2021-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2021-2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,33 +24,33 @@
 # this can run against live or snapshot
 
 if [[ "x$RISU_LIVE" != "x1" ]]; then
-    FILE="${RISU_ROOT}/sos_commands/mongodb/du_-s_.var.lib.mongodb"
-    is_required_file "${FILE}"
+	FILE="${RISU_ROOT}/sos_commands/mongodb/du_-s_.var.lib.mongodb"
+	is_required_file "${FILE}"
 
-    # as with ONLINE, check for over 10Gb size
-    LINES="$(awk '$1>10*1024*1024*1024 {print $1" "$2}' ${FILE})"
+	# as with ONLINE, check for over 10Gb size
+	LINES="$(awk '$1>10*1024*1024*1024 {print $1" "$2}' ${FILE})"
 
-    if [[ -n ${LINES} ]]; then
-        echo "Databases over 10gb" >&2
-        awk '$1>10*1024*1024*1024 {print $1" "$2}' ${FILE} >&2
-        exit ${RC_FAILED}
-    else
-        exit ${RC_OKAY}
-    fi
+	if [[ -n ${LINES} ]]; then
+		echo "Databases over 10gb" >&2
+		awk '$1>10*1024*1024*1024 {print $1" "$2}' ${FILE} >&2
+		exit ${RC_FAILED}
+	else
+		exit ${RC_OKAY}
+	fi
 
 else
-    # This test requires mysql
-    MONGODB_DIR="/var/lib/mongodb"
-    if [[ -d ${MONGODB_DIR} ]]; then
-        #Db disk usage for ibdata and ib_log kinds - gb unit size kinds could be associate with perfomance degradation and a potential need of table truncate operations
-        (
-            du -h --threshold=10G ${MONGODB_DIR}/* | sort -nr
-        ) >&2
-        exit ${RC_OKAY}
-    else
-        echo "$MONGODB_DIR doesn't exist" >&2
-        exit ${RC_SKIPPED}
-    fi
+	# This test requires mysql
+	MONGODB_DIR="/var/lib/mongodb"
+	if [[ -d ${MONGODB_DIR} ]]; then
+		#Db disk usage for ibdata and ib_log kinds - gb unit size kinds could be associate with perfomance degradation and a potential need of table truncate operations
+		(
+			du -h --threshold=10G ${MONGODB_DIR}/* | sort -nr
+		) >&2
+		exit ${RC_OKAY}
+	else
+		echo "$MONGODB_DIR doesn't exist" >&2
+		exit ${RC_SKIPPED}
+	fi
 fi
 
 echo "Test should have skipped before reaching this point" >&2

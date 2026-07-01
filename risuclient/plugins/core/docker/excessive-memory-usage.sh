@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2021-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2021-2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,10 +27,10 @@
 is_required_rpm docker
 
 if is_rpm_over docker docker-1.12.6-16.el7.x86_64; then
-    if is_rpm_over docker docker-1.12.6-48; then
-        exit ${RC_OKAY}
-    fi
-    echo $"docker might have high memory consumption" >&2
-    exit ${RC_FAILED}
+	if is_rpm_over docker docker-1.12.6-48; then
+		exit ${RC_OKAY}
+	fi
+	echo $"docker might have high memory consumption" >&2
+	exit ${RC_FAILED}
 fi
 exit ${RC_OKAY}

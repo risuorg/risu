@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2021-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2021-2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -28,12 +28,12 @@
 # noibrs noibpb nopti
 
 secdisabled() {
-    echo "This system has Meltdown security features disabled, please do check https://access.redhat.com/security/vulnerabilities/speculativeexecution for guidance" >&2
-    exit ${RC_FAILED}
+	echo "This system has Meltdown security features disabled, please do check https://access.redhat.com/security/vulnerabilities/speculativeexecution for guidance" >&2
+	exit ${RC_FAILED}
 }
 
 if is_lineinfile nopti ${RISU_ROOT}/proc/cmdline; then
-    secdisabled
+	secdisabled
 fi
 
 exit ${RC_OKAY}

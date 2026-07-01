@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright (C) 2018, 2021 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2018, 2021, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,15 +23,15 @@
 [ -f "${RISU_BASE}/common-functions.sh" ] && . "${RISU_BASE}/common-functions.sh"
 
 if is_rpm atomic-openshift-master; then
-    ROLE='master'
+	ROLE='master'
 elif [[ -f ${RISU_ROOT}/etc/origin/master/master-config.yaml ]]; then
-    ROLE='master'
+	ROLE='master'
 elif is_rpm atomic-openshift-node; then
-    ROLE='node'
+	ROLE='node'
 else
-    echo "Couldn't determine OCP role" >&2
-    ROLE='unknown'
-    exit ${RC_SKIPPED}
+	echo "Couldn't determine OCP role" >&2
+	ROLE='unknown'
+	exit ${RC_SKIPPED}
 fi
 
 echo ${ROLE} >&2

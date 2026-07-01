@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2021-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2021-2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -30,17 +30,17 @@ is_required_file "${RISU_ROOT}/etc/nova/nova.conf"
 imagetype="$(iniparser "${RISU_ROOT}/etc/nova/nova.conf" libvirt images_type)"
 
 if [[ "x${imagetype}" == "x" ]]; then
-    imagetype="default"
+	imagetype="default"
 elif [[ "x${imagetype}" == "xqcow2" ]]; then
-    imagetype="default"
+	imagetype="default"
 fi
 
 cowimages="$(iniparser "${RISU_ROOT}/etc/nova/nova.conf" DEFAULT use_cow_images)"
 
 if [[ "x${cowimages}" == "x" ]]; then
-    cowimages='true'
+	cowimages='true'
 elif [[ "x${cowimages}" == "xqcow2" ]]; then
-    cowimages='true'
+	cowimages='true'
 fi
 
 # If imagetype == default, we do use cow_images (other options, raw, qcow2, lvm, rbd)
@@ -49,16 +49,16 @@ fi
 allocation="$(iniparser "${RISU_ROOT}/etc/nova/nova.conf" DEFAULT preallocate_images)"
 
 if [[ ${allocation} == 'space' ]]; then
-    if [[ ${imagetype} == "default" ]]; then
-        if [[ ${cowimages} == "true" ]]; then
-            echo $"https://bugzilla.redhat.com/show_bug.cgi?id=1554265" >&2
-            exit ${RC_FAILED}
-        else
-            exit ${RC_OKAY}
-        fi
-    else
-        exit ${RC_OKAY}
-    fi
+	if [[ ${imagetype} == "default" ]]; then
+		if [[ ${cowimages} == "true" ]]; then
+			echo $"https://bugzilla.redhat.com/show_bug.cgi?id=1554265" >&2
+			exit ${RC_FAILED}
+		else
+			exit ${RC_OKAY}
+		fi
+	else
+		exit ${RC_OKAY}
+	fi
 else
-    exit ${RC_OKAY}
+	exit ${RC_OKAY}
 fi

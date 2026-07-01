@@ -1,5 +1,6 @@
 #!/bin/bash
-# Copyright (C) 2024 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2018 David Valle Delisle <dvd@redhat.com>
+# Copyright (C) 2021, 2024, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,8 +24,8 @@
 
 # Only run on live systems
 if [[ "x$RISU_LIVE" != "x1" ]]; then
-    echo "This plugin only runs on live systems" >&2
-    exit ${RC_SKIPPED}
+	echo "This plugin only runs on live systems" >&2
+	exit ${RC_SKIPPED}
 fi
 
 # Check if curl is available
@@ -32,25 +33,25 @@ is_required_command curl
 
 # Test GCP metadata service availability
 if curl -s --max-time 5 --connect-timeout 3 -H "Metadata-Flavor: Google" "http://metadata.google.internal/computeMetadata/v1/instance/name" >/dev/null 2>&1; then
-    instance_name=$(curl -s --max-time 5 -H "Metadata-Flavor: Google" "http://metadata.google.internal/computeMetadata/v1/instance/name")
-    machine_type=$(curl -s --max-time 5 -H "Metadata-Flavor: Google" "http://metadata.google.internal/computeMetadata/v1/instance/machine-type")
-    zone=$(curl -s --max-time 5 -H "Metadata-Flavor: Google" "http://metadata.google.internal/computeMetadata/v1/instance/zone")
+	instance_name=$(curl -s --max-time 5 -H "Metadata-Flavor: Google" "http://metadata.google.internal/computeMetadata/v1/instance/name")
+	machine_type=$(curl -s --max-time 5 -H "Metadata-Flavor: Google" "http://metadata.google.internal/computeMetadata/v1/instance/machine-type")
+	zone=$(curl -s --max-time 5 -H "Metadata-Flavor: Google" "http://metadata.google.internal/computeMetadata/v1/instance/zone")
 
-    echo "GCP metadata service accessible" >&2
-    echo "Instance Name: $instance_name" >&2
-    echo "Machine Type: ${machine_type##*/}" >&2
-    echo "Zone: ${zone##*/}" >&2
+	echo "GCP metadata service accessible" >&2
+	echo "Instance Name: $instance_name" >&2
+	echo "Machine Type: ${machine_type##*/}" >&2
+	echo "Zone: ${zone##*/}" >&2
 
-    # Check service account
-    if curl -s --max-time 5 -H "Metadata-Flavor: Google" "http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/" >/dev/null 2>&1; then
-        service_account=$(curl -s --max-time 5 -H "Metadata-Flavor: Google" "http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/email")
-        echo "Service Account: $service_account" >&2
-    else
-        echo "No service account configured" >&2
-    fi
+	# Check service account
+	if curl -s --max-time 5 -H "Metadata-Flavor: Google" "http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/" >/dev/null 2>&1; then
+		service_account=$(curl -s --max-time 5 -H "Metadata-Flavor: Google" "http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/email")
+		echo "Service Account: $service_account" >&2
+	else
+		echo "No service account configured" >&2
+	fi
 
-    exit ${RC_OKAY}
+	exit ${RC_OKAY}
 else
-    echo "Not running on GCP Compute Engine or metadata service unreachable" >&2
-    exit ${RC_SKIPPED}
+	echo "Not running on GCP Compute Engine or metadata service unreachable" >&2
+	exit ${RC_SKIPPED}
 fi

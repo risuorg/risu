@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2021-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2021-2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -26,14 +26,14 @@
 is_required_containerized
 
 for log_file in $(ls ${RISU_ROOT}/var/log/containers/*/*.log); do
-    [ -f "$log_file" ] || continue
-    events=$(grep -i 'traceback' ${log_file} | grep -E -o '^([a-Z]+\ [0-9]+)|^([0-9\-]+)' | uniq -c | tail)
-    if [[ -n ${events} ]]; then
-        # to remove the ${RISU_ROOT} from the stderr.
-        log_file=${log_file#${RISU_ROOT}}
-        echo -e "$log_file:\n${events}\n" >&2
-        flag=1
-    fi
+	[ -f "$log_file" ] || continue
+	events=$(grep -i 'traceback' ${log_file} | grep -E -o '^([a-Z]+\ [0-9]+)|^([0-9\-]+)' | uniq -c | tail)
+	if [[ -n ${events} ]]; then
+		# to remove the ${RISU_ROOT} from the stderr.
+		log_file=${log_file#${RISU_ROOT}}
+		echo -e "$log_file:\n${events}\n" >&2
+		flag=1
+	fi
 done
 
 [[ "x$flag" == "x" ]] && exit ${RC_OKAY} || exit ${RC_FAILED}

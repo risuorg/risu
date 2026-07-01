@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2021-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2021-2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -25,11 +25,11 @@
 OSPRELEASE=$(discover_osp_version)
 
 if [[ ${RISU_LIVE} -eq 0 ]]; then
-    FILE="${RISU_ROOT}/sos_commands/yum/yum_-C_repolist "
+	FILE="${RISU_ROOT}/sos_commands/yum/yum_-C_repolist "
 elif [[ ${RISU_LIVE} -eq 1 ]]; then
-    FILE=$(mktemp)
-    trap "rm ${FILE}" EXIT
-    yum -C repolist >${FILE} 2>&1
+	FILE=$(mktemp)
+	trap "rm ${FILE}" EXIT
+	yum -C repolist >${FILE} 2>&1
 fi
 
 is_required_file ${FILE}
@@ -38,9 +38,9 @@ is_required_file ${FILE}
 REPOS=$(cat ${FILE} | grep openstack | awk '{print $1}' | grep -v ${OSPRELEASE})
 
 if [[ -n ${REPOS} ]]; then
-    echo "Non current OSP repos detected:" >&2
-    echo ${REPOS} >&2
-    exit ${RC_FAILED}
+	echo "Non current OSP repos detected:" >&2
+	echo ${REPOS} >&2
+	exit ${RC_FAILED}
 else
-    exit ${RC_OKAY}
+	exit ${RC_OKAY}
 fi

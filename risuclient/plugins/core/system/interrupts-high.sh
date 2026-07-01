@@ -1,6 +1,7 @@
 #!/bin/bash
 
-# Copyright (C) 2024 Pablo Iranzo Gómez (Pablo.Iranzo@gmail.com)
+# Copyright (C) 2018 David Valle Delisle <dvd@redhat.com>
+# Copyright (C) 2021, 2022, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,77 +28,77 @@ WARNING_THRESHOLD=50000
 CRITICAL_THRESHOLD=200000
 
 if [[ "x$RISU_LIVE" == "x1" ]]; then
-    # Get current interrupts
-    if [[ -f "/proc/stat" ]]; then
-        INTERRUPTS=$(grep "^intr" /proc/stat | awk '{print $2}')
+	# Get current interrupts
+	if [[ -f "/proc/stat" ]]; then
+		INTERRUPTS=$(grep "^intr" /proc/stat | awk '{print $2}')
 
-        # Need to sample twice to get rate
-        sleep 1
-        INTERRUPTS_AFTER=$(grep "^intr" /proc/stat | awk '{print $2}')
+		# Need to sample twice to get rate
+		sleep 1
+		INTERRUPTS_AFTER=$(grep "^intr" /proc/stat | awk '{print $2}')
 
-        if [[ -n $INTERRUPTS && -n $INTERRUPTS_AFTER ]]; then
-            INTR_RATE=$((INTERRUPTS_AFTER - INTERRUPTS))
-        else
-            echo "Could not determine interrupt rate" >&2
-            exit $RC_SKIPPED
-        fi
-    else
-        echo "/proc/stat not available" >&2
-        exit $RC_SKIPPED
-    fi
+		if [[ -n $INTERRUPTS && -n $INTERRUPTS_AFTER ]]; then
+			INTR_RATE=$((INTERRUPTS_AFTER - INTERRUPTS))
+		else
+			echo "Could not determine interrupt rate" >&2
+			exit $RC_SKIPPED
+		fi
+	else
+		echo "/proc/stat not available" >&2
+		exit $RC_SKIPPED
+	fi
 else
-    # Check sosreport for interrupts
-    if [[ -f "${RISU_ROOT}/proc/stat" ]]; then
-        INTERRUPTS=$(grep "^intr" "${RISU_ROOT}/proc/stat" | awk '{print $2}')
+	# Check sosreport for interrupts
+	if [[ -f "${RISU_ROOT}/proc/stat" ]]; then
+		INTERRUPTS=$(grep "^intr" "${RISU_ROOT}/proc/stat" | awk '{print $2}')
 
-        # For sosreport, we can't calculate rate, so check absolute value
-        if [[ -n $INTERRUPTS ]]; then
-            # Estimate rate based on uptime
-            if [[ -f "${RISU_ROOT}/proc/uptime" ]]; then
-                UPTIME=$(awk '{print $1}' "${RISU_ROOT}/proc/uptime")
-                INTR_RATE=$(echo "scale=0; $INTERRUPTS / $UPTIME" | bc 2>/dev/null || echo "0")
-            else
-                echo "Cannot determine interrupt rate from sosreport without uptime" >&2
-                exit $RC_SKIPPED
-            fi
-        else
-            echo "Cannot determine interrupts from sosreport" >&2
-            exit $RC_SKIPPED
-        fi
-    else
-        echo "proc/stat file not found in sosreport" >&2
-        exit $RC_SKIPPED
-    fi
+		# For sosreport, we can't calculate rate, so check absolute value
+		if [[ -n $INTERRUPTS ]]; then
+			# Estimate rate based on uptime
+			if [[ -f "${RISU_ROOT}/proc/uptime" ]]; then
+				UPTIME=$(awk '{print $1}' "${RISU_ROOT}/proc/uptime")
+				INTR_RATE=$(echo "scale=0; $INTERRUPTS / $UPTIME" | bc 2>/dev/null || echo "0")
+			else
+				echo "Cannot determine interrupt rate from sosreport without uptime" >&2
+				exit $RC_SKIPPED
+			fi
+		else
+			echo "Cannot determine interrupts from sosreport" >&2
+			exit $RC_SKIPPED
+		fi
+	else
+		echo "proc/stat file not found in sosreport" >&2
+		exit $RC_SKIPPED
+	fi
 fi
 
 # Get top interrupt sources
 TOP_INTERRUPTS=""
 if [[ "x$RISU_LIVE" == "x1" ]]; then
-    if [[ -f "/proc/interrupts" ]]; then
-        TOP_INTERRUPTS=$(grep -v "CPU" /proc/interrupts | sort -k2 -nr | head -3 | awk '{print $1 " " $NF}')
-    fi
+	if [[ -f "/proc/interrupts" ]]; then
+		TOP_INTERRUPTS=$(grep -v "CPU" /proc/interrupts | sort -k2 -nr | head -3 | awk '{print $1 " " $NF}')
+	fi
 else
-    if [[ -f "${RISU_ROOT}/proc/interrupts" ]]; then
-        TOP_INTERRUPTS=$(grep -v "CPU" "${RISU_ROOT}/proc/interrupts" | sort -k2 -nr | head -3 | awk '{print $1 " " $NF}')
-    fi
+	if [[ -f "${RISU_ROOT}/proc/interrupts" ]]; then
+		TOP_INTERRUPTS=$(grep -v "CPU" "${RISU_ROOT}/proc/interrupts" | sort -k2 -nr | head -3 | awk '{print $1 " " $NF}')
+	fi
 fi
 
 # Check interrupt rate against thresholds
 if [[ $INTR_RATE -ge $CRITICAL_THRESHOLD ]]; then
-    echo "CRITICAL: Interrupt rate is $INTR_RATE/sec (threshold: $CRITICAL_THRESHOLD/sec)" >&2
-    if [[ -n $TOP_INTERRUPTS ]]; then
-        echo "Top interrupt sources:" >&2
-        echo "$TOP_INTERRUPTS" >&2
-    fi
-    exit $RC_FAILED
+	echo "CRITICAL: Interrupt rate is $INTR_RATE/sec (threshold: $CRITICAL_THRESHOLD/sec)" >&2
+	if [[ -n $TOP_INTERRUPTS ]]; then
+		echo "Top interrupt sources:" >&2
+		echo "$TOP_INTERRUPTS" >&2
+	fi
+	exit $RC_FAILED
 elif [[ $INTR_RATE -ge $WARNING_THRESHOLD ]]; then
-    echo "WARNING: Interrupt rate is $INTR_RATE/sec (threshold: $WARNING_THRESHOLD/sec)" >&2
-    if [[ -n $TOP_INTERRUPTS ]]; then
-        echo "Top interrupt sources:" >&2
-        echo "$TOP_INTERRUPTS" >&2
-    fi
-    exit $RC_FAILED
+	echo "WARNING: Interrupt rate is $INTR_RATE/sec (threshold: $WARNING_THRESHOLD/sec)" >&2
+	if [[ -n $TOP_INTERRUPTS ]]; then
+		echo "Top interrupt sources:" >&2
+		echo "$TOP_INTERRUPTS" >&2
+	fi
+	exit $RC_FAILED
 else
-    echo "Interrupt rate is normal: $INTR_RATE/sec" >&2
-    exit $RC_OKAY
+	echo "Interrupt rate is normal: $INTR_RATE/sec" >&2
+	exit $RC_OKAY
 fi

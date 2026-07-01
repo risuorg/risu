@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2022, 2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2022, 2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,11 +23,11 @@
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
 if [[ ${RISU_LIVE} -eq 0 ]]; then
-    FILE="${RISU_ROOT}/sos_commands/crypto/update-crypto-policies_--show"
+	FILE="${RISU_ROOT}/sos_commands/crypto/update-crypto-policies_--show"
 elif [[ ${RISU_LIVE} -eq 1 ]]; then
-    FILE=$(mktemp)
-    trap "rm ${FILE}" EXIT
-    LANG=C update-crypto-policies --show >${FILE} 2>&1
+	FILE=$(mktemp)
+	trap "rm ${FILE}" EXIT
+	LANG=C update-crypto-policies --show >${FILE} 2>&1
 fi
 
 is_required_file ${FILE}
@@ -35,13 +35,13 @@ is_required_file ${FILE}
 LEVEL=$(cat ${FILE} | xargs echo)
 
 if [[ ${LEVEL} == "LEGACY" ]]; then
-    echo "Security level for crypto policies is below recommended setting" >&2
-    exit ${RC_FAILED}
+	echo "Security level for crypto policies is below recommended setting" >&2
+	exit ${RC_FAILED}
 fi
 
 if [[ ${LEVEL} == "FUTURE" ]]; then
-    echo "Security level for crypto policies is above recommended setting" >&2
-    exit ${RC_INFO}
+	echo "Security level for crypto policies is above recommended setting" >&2
+	exit ${RC_INFO}
 fi
 
 exit ${RC_OKAY}

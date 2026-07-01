@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2022, 2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2022, 2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -21,8 +21,8 @@
 # this can run against live
 
 if [[ "x$RISU_LIVE" != "x1" ]]; then
-    echo "works on live-system only" >&2
-    exit ${RC_SKIPPED}
+	echo "works on live-system only" >&2
+	exit ${RC_SKIPPED}
 fi
 
 # This test requires mysql
@@ -30,24 +30,24 @@ which mysql >/dev/null 2>&1
 RC=$?
 
 if [[ "x$RC" == "x0" ]]; then
-    # Test connection to the db
-    _test=$(mysql keystone -e "DESC token" 2>&1)
-    RC=$?
-    if [[ "x$RC" == "x0" ]]; then
-        TOKENS=$(mysql keystone -sN -e "select table_rows from information_schema.tables where table_name = 'token'")
-    else
-        echo -e "ERROR connecting to the database\n${_test}" >&2
-        exit ${RC_SKIPPED}
-    fi
+	# Test connection to the db
+	_test=$(mysql keystone -e "DESC token" 2>&1)
+	RC=$?
+	if [[ "x$RC" == "x0" ]]; then
+		TOKENS=$(mysql keystone -sN -e "select table_rows from information_schema.tables where table_name = 'token'")
+	else
+		echo -e "ERROR connecting to the database\n${_test}" >&2
+		exit ${RC_SKIPPED}
+	fi
 else
-    echo "missing mysql binaries" >&2
-    exit ${RC_SKIPPED}
+	echo "missing mysql binaries" >&2
+	exit ${RC_SKIPPED}
 fi
 
 if [[ -n ${TOKENS} ]]; then
-    if [[ ${TOKENS} -ge 1000 ]]; then
-        exit ${RC_FAILED}
-    elif [[ ${TOKENS} -lt 1000 ]]; then
-        exit ${RC_OKAY}
-    fi
+	if [[ ${TOKENS} -ge 1000 ]]; then
+		exit ${RC_FAILED}
+	elif [[ ${TOKENS} -lt 1000 ]]; then
+		exit ${RC_OKAY}
+	fi
 fi

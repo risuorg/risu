@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright (C) 2021-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2021-2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -26,9 +26,9 @@
 REGEXP="systemd-sysv-generator\[[0-9]+\]: stat\(\) failed on "
 
 if is_lineinfile "$REGEXP" ${journalctl_file}; then
-    echo $'>>> systemd-sysv-generator "stat failed" detected' >&2
-    grep -E "$REGEXP" ${journalctl_file} >&2
-    exit ${RC_FAILED}
+	echo $'>>> systemd-sysv-generator "stat failed" detected' >&2
+	grep -E "$REGEXP" ${journalctl_file} >&2
+	exit ${RC_FAILED}
 fi
 
 # If the above conditions did not trigger RC_FAILED we are good.

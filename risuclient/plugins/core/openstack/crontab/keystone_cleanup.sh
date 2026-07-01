@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2021-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2021-2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -29,22 +29,22 @@ RELEASE=$(discover_osp_version)
 is_required_file "${RISU_ROOT}/var/spool/cron/keystone"
 
 if ! awk '/keystone-manage token_flush/ && /^[^#]/ { print $0 }' "${RISU_ROOT}/var/spool/cron/keystone" >/dev/null 2>&1; then
-    echo $"crontab keystone cleanup is not set" >&2
-    exit ${RC_FAILED}
+	echo $"crontab keystone cleanup is not set" >&2
+	exit ${RC_FAILED}
 elif awk '/keystone-manage token_flush/ && /^[^#]/ { print $0 }' "${RISU_ROOT}/var/spool/cron/keystone" >/dev/null 2>&1; then
-    # Skip default crontab of 1 0 * * * as it might miss busy systems and fail to do later cleanups
-    COUNT=$(awk '/keystone-manage token_flush/ && /^[^#]/ { print $0 }' "${RISU_ROOT}/var/spool/cron/keystone" 2>&1 | grep -E '^1 0' -c)
-    if [[ "x$COUNT" == "x1" ]]; then
-        echo -n $"token flush not running every hour " >&2
-        case ${RELEASE} in
-        6) echo "https://bugzilla.redhat.com/show_bug.cgi?id=1470230" >&2 ;;
-        7) echo "https://bugzilla.redhat.com/show_bug.cgi?id=1470227" >&2 ;;
-        8) echo "https://bugzilla.redhat.com/show_bug.cgi?id=1470226" >&2 ;;
-        9) echo "https://bugzilla.redhat.com/show_bug.cgi?id=1470221" >&2 ;;
-        10) echo "https://bugzilla.redhat.com/show_bug.cgi?id=1469457" >&2 ;;
-        *) echo "" >&2 ;;
-        esac
-        exit ${RC_FAILED}
-    fi
-    exit ${RC_OKAY}
+	# Skip default crontab of 1 0 * * * as it might miss busy systems and fail to do later cleanups
+	COUNT=$(awk '/keystone-manage token_flush/ && /^[^#]/ { print $0 }' "${RISU_ROOT}/var/spool/cron/keystone" 2>&1 | grep -E '^1 0' -c)
+	if [[ "x$COUNT" == "x1" ]]; then
+		echo -n $"token flush not running every hour " >&2
+		case ${RELEASE} in
+		6) echo "https://bugzilla.redhat.com/show_bug.cgi?id=1470230" >&2 ;;
+		7) echo "https://bugzilla.redhat.com/show_bug.cgi?id=1470227" >&2 ;;
+		8) echo "https://bugzilla.redhat.com/show_bug.cgi?id=1470226" >&2 ;;
+		9) echo "https://bugzilla.redhat.com/show_bug.cgi?id=1470221" >&2 ;;
+		10) echo "https://bugzilla.redhat.com/show_bug.cgi?id=1469457" >&2 ;;
+		*) echo "" >&2 ;;
+		esac
+		exit ${RC_FAILED}
+	fi
+	exit ${RC_OKAY}
 fi

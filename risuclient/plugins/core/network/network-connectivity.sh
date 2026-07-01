@@ -1,6 +1,7 @@
 #!/bin/bash
 
-# Copyright (C) 2024 Pablo Iranzo Gómez (Pablo.Iranzo@gmail.com)
+# Copyright (C) 2018 David Valle Delisle <dvd@redhat.com>
+# Copyright (C) 2021, 2022, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -25,68 +26,68 @@
 CONNECTIVITY_ISSUES=0
 
 if [[ "x$RISU_LIVE" == "x1" ]]; then
-    # Test network connectivity
-    if command -v ping >/dev/null 2>&1; then
-        # Test ping to common hosts
-        TEST_HOSTS=("8.8.8.8" "1.1.1.1")
+	# Test network connectivity
+	if command -v ping >/dev/null 2>&1; then
+		# Test ping to common hosts
+		TEST_HOSTS=("8.8.8.8" "1.1.1.1")
 
-        for host in "${TEST_HOSTS[@]}"; do
-            if ! ping -c 1 -W 3 "$host" >/dev/null 2>&1; then
-                echo "WARNING: Cannot ping $host" >&2
-                CONNECTIVITY_ISSUES=$((CONNECTIVITY_ISSUES + 1))
-            fi
-        done
-    else
-        echo "ping command not available" >&2
-        exit $RC_SKIPPED
-    fi
+		for host in "${TEST_HOSTS[@]}"; do
+			if ! ping -c 1 -W 3 "$host" >/dev/null 2>&1; then
+				echo "WARNING: Cannot ping $host" >&2
+				CONNECTIVITY_ISSUES=$((CONNECTIVITY_ISSUES + 1))
+			fi
+		done
+	else
+		echo "ping command not available" >&2
+		exit $RC_SKIPPED
+	fi
 
-    # Check default route
-    if command -v ip >/dev/null 2>&1; then
-        if ! ip route show default >/dev/null 2>&1; then
-            echo "WARNING: No default route configured" >&2
-            CONNECTIVITY_ISSUES=$((CONNECTIVITY_ISSUES + 1))
-        fi
-    fi
+	# Check default route
+	if command -v ip >/dev/null 2>&1; then
+		if ! ip route show default >/dev/null 2>&1; then
+			echo "WARNING: No default route configured" >&2
+			CONNECTIVITY_ISSUES=$((CONNECTIVITY_ISSUES + 1))
+		fi
+	fi
 
-    # Check network interfaces
-    if [[ -f "/proc/net/dev" ]]; then
-        ACTIVE_INTERFACES=$(grep -c ":" /proc/net/dev)
-        if [[ $ACTIVE_INTERFACES -lt 2 ]]; then
-            echo "WARNING: Very few network interfaces active ($ACTIVE_INTERFACES)" >&2
-            CONNECTIVITY_ISSUES=$((CONNECTIVITY_ISSUES + 1))
-        fi
-    fi
+	# Check network interfaces
+	if [[ -f "/proc/net/dev" ]]; then
+		ACTIVE_INTERFACES=$(grep -c ":" /proc/net/dev)
+		if [[ $ACTIVE_INTERFACES -lt 2 ]]; then
+			echo "WARNING: Very few network interfaces active ($ACTIVE_INTERFACES)" >&2
+			CONNECTIVITY_ISSUES=$((CONNECTIVITY_ISSUES + 1))
+		fi
+	fi
 else
-    # Check sosreport for network configuration
-    if [[ -f "${RISU_ROOT}/ip_route_show" ]]; then
-        if ! grep -q "default" "${RISU_ROOT}/ip_route_show"; then
-            echo "WARNING: No default route was configured" >&2
-            CONNECTIVITY_ISSUES=$((CONNECTIVITY_ISSUES + 1))
-        fi
-    else
-        echo "WARNING: No routing information found in sosreport" >&2
-        CONNECTIVITY_ISSUES=$((CONNECTIVITY_ISSUES + 1))
-    fi
+	# Check sosreport for network configuration
+	if [[ -f "${RISU_ROOT}/ip_route_show" ]]; then
+		if ! grep -q "default" "${RISU_ROOT}/ip_route_show"; then
+			echo "WARNING: No default route was configured" >&2
+			CONNECTIVITY_ISSUES=$((CONNECTIVITY_ISSUES + 1))
+		fi
+	else
+		echo "WARNING: No routing information found in sosreport" >&2
+		CONNECTIVITY_ISSUES=$((CONNECTIVITY_ISSUES + 1))
+	fi
 
-    # Check network interfaces
-    if [[ -f "${RISU_ROOT}/proc/net/dev" ]]; then
-        ACTIVE_INTERFACES=$(grep -c ":" "${RISU_ROOT}/proc/net/dev")
-        if [[ $ACTIVE_INTERFACES -lt 2 ]]; then
-            echo "WARNING: Very few network interfaces were active ($ACTIVE_INTERFACES)" >&2
-            CONNECTIVITY_ISSUES=$((CONNECTIVITY_ISSUES + 1))
-        fi
-    fi
+	# Check network interfaces
+	if [[ -f "${RISU_ROOT}/proc/net/dev" ]]; then
+		ACTIVE_INTERFACES=$(grep -c ":" "${RISU_ROOT}/proc/net/dev")
+		if [[ $ACTIVE_INTERFACES -lt 2 ]]; then
+			echo "WARNING: Very few network interfaces were active ($ACTIVE_INTERFACES)" >&2
+			CONNECTIVITY_ISSUES=$((CONNECTIVITY_ISSUES + 1))
+		fi
+	fi
 fi
 
 # Check results
 if [[ $CONNECTIVITY_ISSUES -gt 2 ]]; then
-    echo "CRITICAL: Multiple network connectivity issues ($CONNECTIVITY_ISSUES)" >&2
-    exit $RC_FAILED
+	echo "CRITICAL: Multiple network connectivity issues ($CONNECTIVITY_ISSUES)" >&2
+	exit $RC_FAILED
 elif [[ $CONNECTIVITY_ISSUES -gt 0 ]]; then
-    echo "WARNING: Network connectivity issues found ($CONNECTIVITY_ISSUES)" >&2
-    exit $RC_FAILED
+	echo "WARNING: Network connectivity issues found ($CONNECTIVITY_ISSUES)" >&2
+	exit $RC_FAILED
 else
-    echo "Network connectivity appears to be working properly" >&2
-    exit $RC_OKAY
+	echo "Network connectivity appears to be working properly" >&2
+	exit $RC_OKAY
 fi

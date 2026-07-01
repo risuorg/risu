@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2021-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2021-2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -30,10 +30,10 @@ max_files=$(iniparser "${RISU_ROOT}/etc/libvirt/qemu.conf" max_files)
 max_processes=$(iniparser "${RISU_ROOT}/etc/libvirt/qemu.conf" max_processes)
 
 if [[ ${max_files} -ge "32768" ]] || [[ ${max_processes} -ge "131072" ]]; then
-    echo $"max_files is set to ${max_files}" >&2
-    echo $"max_processes is set to ${max_processes}" >&2
-    echo $"https://bugzilla.redhat.com/show_bug.cgi?id=1372589" >&2
-    exit ${RC_FAILED}
+	echo $"max_files is set to ${max_files}" >&2
+	echo $"max_processes is set to ${max_processes}" >&2
+	echo $"https://bugzilla.redhat.com/show_bug.cgi?id=1372589" >&2
+	exit ${RC_FAILED}
 else
-    exit ${RC_OKAY}
+	exit ${RC_OKAY}
 fi

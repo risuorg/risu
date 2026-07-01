@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2021-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2021-2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 # Based on the code of Jean-Francois Saucier (jsaucier@redhat.com)
 
 # This program is free software: you can redistribute it and/or modify
@@ -24,10 +24,10 @@
 
 RELEASE=$(discover_osp_version)
 if [[ ${RELEASE} -ge "12" ]]; then
-    # Sosreport with container support is 3.4-9 or later
-    is_required_rpm_over sos sos-3.4-9
-    exit ${RC_OKAY}
+	# Sosreport with container support is 3.4-9 or later
+	is_required_rpm_over sos sos-3.4-9
+	exit ${RC_OKAY}
 else
-    echo "works only on OSP12 and later" >&2
-    exit ${RC_SKIPPED}
+	echo "works only on OSP12 and later" >&2
+	exit ${RC_SKIPPED}
 fi

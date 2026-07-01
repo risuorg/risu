@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2021-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2021-2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,8 +24,8 @@
 # check if we are running against compute
 
 if ! is_process nova-compute; then
-    echo "works only on compute node" >&2
-    exit ${RC_SKIPPED}
+	echo "works only on compute node" >&2
+	exit ${RC_SKIPPED}
 fi
 
 # this can run against live and also any sort of snapshot of the filesystem
@@ -44,13 +44,13 @@ LIBVIRTOFF=$(awk -F "=" '/^ON_SHUTDOWN/ {gsub (" ", "", $0); print tolower($2)}'
 NOVASTRING=$(awk -F "=" '/^resume_guests_state_on_host_boot/ {gsub (" ", "", $0); print tolower($2)}' ${NOVACONF})
 
 if is_enabled libvirt-guests; then
-    LIBVIRTGUESTS="true"
+	LIBVIRTGUESTS="true"
 fi
 
 if [[ $LIBVIRTBOOT == "ignore" && $LIBVIRTOFF == "shutdown" && $NOVASTRING == "true" && $LIBVIRTGUESTS == "true" ]]; then
-    echo $"compute node is configured to restore guests state at startup" >&2
-    exit ${RC_OKAY}
+	echo $"compute node is configured to restore guests state at startup" >&2
+	exit ${RC_OKAY}
 else
-    echo $"compute node is NOT configured to restore guests state at startup" >&2
-    exit ${RC_FAILED}
+	echo $"compute node is NOT configured to restore guests state at startup" >&2
+	exit ${RC_FAILED}
 fi

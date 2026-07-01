@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright (C) 2021-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2021-2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,8 +23,8 @@
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
 if ! is_rpm logrotate >/dev/null 2>&1; then
-    echo "logrotate is not installed and that could cause issues because of log growth" >&2
-    exit ${RC_FAILED}
+	echo "logrotate is not installed and that could cause issues because of log growth" >&2
+	exit ${RC_FAILED}
 fi
 
 exit ${RC_OKAY}

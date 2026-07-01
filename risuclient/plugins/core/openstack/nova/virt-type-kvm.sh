@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2021-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2021-2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -29,20 +29,20 @@ VTYPE=$(iniparser ${FILE} libvirt virt_type)
 supported=1
 case ${VTYPE} in
 "kvm")
-    # do nothing
-    ;;
+	# do nothing
+	;;
 "")
-    # do nothing
-    ;;
+	# do nothing
+	;;
 *)
-    echo -n $"nova.conf virt_type is not default or kvm performance might be affected: " >&2
-    echo "$VTYPE" >&2
-    supported=0
-    ;;
+	echo -n $"nova.conf virt_type is not default or kvm performance might be affected: " >&2
+	echo "$VTYPE" >&2
+	supported=0
+	;;
 esac
 
 if [[ $supported -ne "1" ]]; then
-    exit ${RC_FAILED}
+	exit ${RC_FAILED}
 fi
 
 exit ${RC_OKAY}

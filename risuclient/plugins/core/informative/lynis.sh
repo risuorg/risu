@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Copyright (C) 2018 David Sastre Medina <d.sastre.medina@gmail.com>
-# Copyright (C) 2018, 2021, 2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2018, 2021, 2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,15 +24,15 @@
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
 if ! which lynis >/dev/null 2>&1; then
-    echo "lynis (https://github.com/CISOfy/Lynis) support not found, exiting" >&2
-    exit ${RC_SKIPPED}
+	echo "lynis (https://github.com/CISOfy/Lynis) support not found, exiting" >&2
+	exit ${RC_SKIPPED}
 fi
 
 if [[ "x$RISU_LIVE" == "x0" ]]; then
-    echo $"Lynis is not supported for non-live operations" >&2
-    exit ${RC_SKIPPED}
+	echo $"Lynis is not supported for non-live operations" >&2
+	exit ${RC_SKIPPED}
 elif [[ "x$RISU_LIVE" == "x1" ]]; then
-    lynis audit system >&2
-    exit ${RC_INFO}
+	lynis audit system >&2
+	exit ${RC_INFO}
 fi
 exit ${RC_OKAY}

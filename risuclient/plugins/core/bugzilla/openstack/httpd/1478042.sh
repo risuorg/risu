@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2021-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2021-2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -26,15 +26,15 @@
 
 is_required_file ${RISU_ROOT}/etc/httpd/conf.d/*-horizon_vhost.conf
 if ! is_lineinfile "WSGIApplicationGroup %{GLOBAL}" ${RISU_ROOT}/etc/httpd/conf.d/*-horizon_vhost.conf; then
-    echo $"https://bugzilla.redhat.com/show_bug.cgi?id=1478042" >&2
-    exit ${RC_FAILED}
+	echo $"https://bugzilla.redhat.com/show_bug.cgi?id=1478042" >&2
+	exit ${RC_FAILED}
 fi
 
 if [[ -f "${RISU_ROOT}/var/log/httpd/horizon_error.log" ]]; then
-    if is_lineinfile "End of script output before headers: django.wsgi" "${RISU_ROOT}/var/log/httpd/horizon_error.log"; then
-        echo $"possible error on WSGIApplicationGroup in horizon, check: https://bugzilla.redhat.com/show_bug.cgi?id=1478042" >&2
-        exit ${RC_FAILED}
-    fi
+	if is_lineinfile "End of script output before headers: django.wsgi" "${RISU_ROOT}/var/log/httpd/horizon_error.log"; then
+		echo $"possible error on WSGIApplicationGroup in horizon, check: https://bugzilla.redhat.com/show_bug.cgi?id=1478042" >&2
+		exit ${RC_FAILED}
+	fi
 fi
 
 exit ${RC_OKAY}

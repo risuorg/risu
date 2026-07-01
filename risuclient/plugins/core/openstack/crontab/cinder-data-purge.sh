@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2021-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2021-2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -25,8 +25,8 @@
 
 is_required_file "${RISU_ROOT}/var/spool/cron/cinder"
 if ! awk '/cinder-manage db purge 30/ && /^[^#]/ { print $0 }' "${RISU_ROOT}/var/spool/cron/cinder" >/dev/null 2>&1; then
-    echo $"crontab cinder db purge is not set" >&2
-    exit ${RC_FAILED}
+	echo $"crontab cinder db purge is not set" >&2
+	exit ${RC_FAILED}
 elif awk '/cinder-manage db purge 30/ && /^[^#]/ { print $0 }' "${RISU_ROOT}/var/spool/cron/cinder" >/dev/null 2>&1; then
-    exit ${RC_OKAY}
+	exit ${RC_OKAY}
 fi

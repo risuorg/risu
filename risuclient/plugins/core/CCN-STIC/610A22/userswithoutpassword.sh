@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2022, 2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2022, 2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,16 +27,16 @@ is_required_file ${FILE}
 flag=0
 
 for user in $(cat ${FILE} | cut -d ":" -f 1,2); do
-    USU=$(echo ${user} | cut -d ":" -f 1)
-    PASS=$(echo ${user} | cut -d ":" -f 2)
-    if [[ "x${PASS}" == "x" ]]; then
-        flag=1
-        echo "User ${USU} has empty password" >&2
-    fi
+	USU=$(echo ${user} | cut -d ":" -f 1)
+	PASS=$(echo ${user} | cut -d ":" -f 2)
+	if [[ "x${PASS}" == "x" ]]; then
+		flag=1
+		echo "User ${USU} has empty password" >&2
+	fi
 done
 
 if [[ ${flag} == "1" ]]; then
-    exit ${RC_FAILED}
+	exit ${RC_FAILED}
 else
-    exit ${RC_OKAY}
+	exit ${RC_OKAY}
 fi

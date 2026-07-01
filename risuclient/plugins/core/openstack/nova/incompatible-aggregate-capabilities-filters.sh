@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2021-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2021-2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -28,8 +28,8 @@ is_required_file ${FILE}
 RC=${RC_OKAY}
 COUNT=$(grep "^scheduler_default_filters" "${FILE}" | grep ComputeCapabilitiesFilter | grep AggregateInstanceExtraSpecsFilter | wc -l)
 if [[ ${COUNT} -ne 0 ]]; then
-    echo $"Incompatible ComputeCapabilitiesFilter and AggregateInstanceExtraSpecsFilter in scheduler_default_filters at nova.conf" >&2
-    RC=${RC_FAILED}
+	echo $"Incompatible ComputeCapabilitiesFilter and AggregateInstanceExtraSpecsFilter in scheduler_default_filters at nova.conf" >&2
+	RC=${RC_FAILED}
 fi
 
 exit ${RC}

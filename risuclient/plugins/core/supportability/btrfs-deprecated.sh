@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright (C) 2021-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2021-2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -29,21 +29,21 @@ RELEASE=$(discover_rhrelease)
 [[ ${RELEASE} -eq '0' ]] && echo "RH release undefined" >&2 && exit ${RC_SKIPPED}
 
 if [[ ${RELEASE} -gt 7 ]]; then
-    echo "test not applicable to EL8 releases or higher" >&2
-    exit ${RC_SKIPPED}
+	echo "test not applicable to EL8 releases or higher" >&2
+	exit ${RC_SKIPPED}
 fi
 
 if [[ ${RISU_LIVE} -eq 0 ]]; then
-    FILE="${RISU_ROOT}/proc/mounts"
+	FILE="${RISU_ROOT}/proc/mounts"
 elif [[ ${RISU_LIVE} -eq 1 ]]; then
-    FILE=$(mktemp)
-    trap "rm ${FILE}" EXIT
-    cat /proc/mounts >${FILE}
+	FILE=$(mktemp)
+	trap "rm ${FILE}" EXIT
+	cat /proc/mounts >${FILE}
 fi
 
 if is_lineinfile "btrfs" "${FILE}"; then
-    echo $"Check RHEL7.5 BTRFS deprecation" >&2
-    exit ${RC_INFO}
+	echo $"Check RHEL7.5 BTRFS deprecation" >&2
+	exit ${RC_INFO}
 fi
 
 exit ${RC_OKAY}

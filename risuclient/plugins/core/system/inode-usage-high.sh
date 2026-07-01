@@ -1,6 +1,7 @@
 #!/bin/bash
 
-# Copyright (C) 2024 Pablo Iranzo Gómez (Pablo.Iranzo@gmail.com)
+# Copyright (C) 2018 David Valle Delisle <dvd@redhat.com>
+# Copyright (C) 2021, 2022, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -29,69 +30,69 @@ INODE_CRITICAL_THRESHOLD=95
 ISSUES_FOUND=0
 
 if [[ "x$RISU_LIVE" == "x1" ]]; then
-    # Get current inode usage
-    if command -v df >/dev/null 2>&1; then
-        # Get inode usage for all mounted filesystems
-        while IFS= read -r line; do
-            # Skip header and special filesystems
-            [[ $line =~ ^Filesystem ]] && continue
-            [[ $line =~ ^tmpfs ]] && continue
-            [[ $line =~ ^devtmpfs ]] && continue
-            [[ $line =~ ^/dev/loop ]] && continue
-            [[ $line =~ ^udev ]] && continue
+	# Get current inode usage
+	if command -v df >/dev/null 2>&1; then
+		# Get inode usage for all mounted filesystems
+		while IFS= read -r line; do
+			# Skip header and special filesystems
+			[[ $line =~ ^Filesystem ]] && continue
+			[[ $line =~ ^tmpfs ]] && continue
+			[[ $line =~ ^devtmpfs ]] && continue
+			[[ $line =~ ^/dev/loop ]] && continue
+			[[ $line =~ ^udev ]] && continue
 
-            USAGE=$(echo "$line" | awk '{print $5}' | tr -d '%')
-            FILESYSTEM=$(echo "$line" | awk '{print $1}')
-            MOUNTPOINT=$(echo "$line" | awk '{print $6}')
+			USAGE=$(echo "$line" | awk '{print $5}' | tr -d '%')
+			FILESYSTEM=$(echo "$line" | awk '{print $1}')
+			MOUNTPOINT=$(echo "$line" | awk '{print $6}')
 
-            if [[ $USAGE =~ ^[0-9]+$ ]]; then
-                if [[ $USAGE -ge $INODE_CRITICAL_THRESHOLD ]]; then
-                    echo "CRITICAL: Inode usage on $FILESYSTEM ($MOUNTPOINT) is ${USAGE}% (threshold: ${INODE_CRITICAL_THRESHOLD}%)" >&2
-                    ISSUES_FOUND=1
-                elif [[ $USAGE -ge $INODE_WARNING_THRESHOLD ]]; then
-                    echo "WARNING: Inode usage on $FILESYSTEM ($MOUNTPOINT) is ${USAGE}% (threshold: ${INODE_WARNING_THRESHOLD}%)" >&2
-                    ISSUES_FOUND=1
-                fi
-            fi
-        done < <(df -i | grep -v "^Filesystem")
-    else
-        echo "df command not available" >&2
-        exit $RC_SKIPPED
-    fi
+			if [[ $USAGE =~ ^[0-9]+$ ]]; then
+				if [[ $USAGE -ge $INODE_CRITICAL_THRESHOLD ]]; then
+					echo "CRITICAL: Inode usage on $FILESYSTEM ($MOUNTPOINT) is ${USAGE}% (threshold: ${INODE_CRITICAL_THRESHOLD}%)" >&2
+					ISSUES_FOUND=1
+				elif [[ $USAGE -ge $INODE_WARNING_THRESHOLD ]]; then
+					echo "WARNING: Inode usage on $FILESYSTEM ($MOUNTPOINT) is ${USAGE}% (threshold: ${INODE_WARNING_THRESHOLD}%)" >&2
+					ISSUES_FOUND=1
+				fi
+			fi
+		done < <(df -i | grep -v "^Filesystem")
+	else
+		echo "df command not available" >&2
+		exit $RC_SKIPPED
+	fi
 else
-    # Check sosreport for inode usage
-    if [[ -f "${RISU_ROOT}/df_-i" ]]; then
-        while IFS= read -r line; do
-            # Skip header and special filesystems
-            [[ $line =~ ^Filesystem ]] && continue
-            [[ $line =~ ^tmpfs ]] && continue
-            [[ $line =~ ^devtmpfs ]] && continue
-            [[ $line =~ ^/dev/loop ]] && continue
-            [[ $line =~ ^udev ]] && continue
+	# Check sosreport for inode usage
+	if [[ -f "${RISU_ROOT}/df_-i" ]]; then
+		while IFS= read -r line; do
+			# Skip header and special filesystems
+			[[ $line =~ ^Filesystem ]] && continue
+			[[ $line =~ ^tmpfs ]] && continue
+			[[ $line =~ ^devtmpfs ]] && continue
+			[[ $line =~ ^/dev/loop ]] && continue
+			[[ $line =~ ^udev ]] && continue
 
-            USAGE=$(echo "$line" | awk '{print $5}' | tr -d '%')
-            FILESYSTEM=$(echo "$line" | awk '{print $1}')
-            MOUNTPOINT=$(echo "$line" | awk '{print $6}')
+			USAGE=$(echo "$line" | awk '{print $5}' | tr -d '%')
+			FILESYSTEM=$(echo "$line" | awk '{print $1}')
+			MOUNTPOINT=$(echo "$line" | awk '{print $6}')
 
-            if [[ $USAGE =~ ^[0-9]+$ ]]; then
-                if [[ $USAGE -ge $INODE_CRITICAL_THRESHOLD ]]; then
-                    echo "CRITICAL: Inode usage on $FILESYSTEM ($MOUNTPOINT) was ${USAGE}% (threshold: ${INODE_CRITICAL_THRESHOLD}%)" >&2
-                    ISSUES_FOUND=1
-                elif [[ $USAGE -ge $INODE_WARNING_THRESHOLD ]]; then
-                    echo "WARNING: Inode usage on $FILESYSTEM ($MOUNTPOINT) was ${USAGE}% (threshold: ${INODE_WARNING_THRESHOLD}%)" >&2
-                    ISSUES_FOUND=1
-                fi
-            fi
-        done <"${RISU_ROOT}/df_-i"
-    else
-        echo "df -i file not found in sosreport" >&2
-        exit $RC_SKIPPED
-    fi
+			if [[ $USAGE =~ ^[0-9]+$ ]]; then
+				if [[ $USAGE -ge $INODE_CRITICAL_THRESHOLD ]]; then
+					echo "CRITICAL: Inode usage on $FILESYSTEM ($MOUNTPOINT) was ${USAGE}% (threshold: ${INODE_CRITICAL_THRESHOLD}%)" >&2
+					ISSUES_FOUND=1
+				elif [[ $USAGE -ge $INODE_WARNING_THRESHOLD ]]; then
+					echo "WARNING: Inode usage on $FILESYSTEM ($MOUNTPOINT) was ${USAGE}% (threshold: ${INODE_WARNING_THRESHOLD}%)" >&2
+					ISSUES_FOUND=1
+				fi
+			fi
+		done <"${RISU_ROOT}/df_-i"
+	else
+		echo "df -i file not found in sosreport" >&2
+		exit $RC_SKIPPED
+	fi
 fi
 
 if [[ $ISSUES_FOUND -eq 1 ]]; then
-    exit $RC_FAILED
+	exit $RC_FAILED
 else
-    echo "All inode usage levels are within acceptable thresholds" >&2
-    exit $RC_OKAY
+	echo "All inode usage levels are within acceptable thresholds" >&2
+	exit $RC_OKAY
 fi

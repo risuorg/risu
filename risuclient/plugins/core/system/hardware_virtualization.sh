@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright (C) 2021-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2021-2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -26,13 +26,13 @@
 
 is_required_file "${RISU_ROOT}/proc/cpuinfo"
 if ! is_enabled libvirtd; then
-    echo $"skipping check for HW virtualization support as libvirtd is not enabled" >&2
-    exit ${RC_SKIPPED}
+	echo $"skipping check for HW virtualization support as libvirtd is not enabled" >&2
+	exit ${RC_SKIPPED}
 fi
 
 if ! is_lineinfile "svm|vmx" "${RISU_ROOT}/proc/cpuinfo"; then
-    echo $"no hardware virt support found in /proc/cpuinfo" >&2
-    exit ${RC_FAILED}
+	echo $"no hardware virt support found in /proc/cpuinfo" >&2
+	exit ${RC_FAILED}
 else
-    exit ${RC_OKAY}
+	exit ${RC_OKAY}
 fi

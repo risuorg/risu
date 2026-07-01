@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2021-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2021-2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -28,24 +28,24 @@ RELEASE=$(discover_rhrelease)
 [[ ${RELEASE} -eq '0' ]] && echo "RH release undefined" >&2 && exit ${RC_SKIPPED}
 
 if [[ ${RISU_LIVE} -eq 0 ]]; then
-    if [[ -f "${RISU_ROOT}/sos_commands/xfs/xfs_info_.var.lib" ]]; then
-        FILE="${RISU_ROOT}/sos_commands/xfs/xfs_info_.var.lib"
-    elif [[ -f "${RISU_ROOT}/sos_commands/xfs/xfs_info_.var" ]]; then
-        FILE="${RISU_ROOT}/sos_commands/xfs/xfs_info_.var"
-    elif [[ -f "${RISU_ROOT}/sos_commands/xfs/xfs_info" ]]; then
-        FILE="${RISU_ROOT}/sos_commands/xfs/xfs_info"
-    else
-        exit ${RC_SKIPPED}
-    fi
+	if [[ -f "${RISU_ROOT}/sos_commands/xfs/xfs_info_.var.lib" ]]; then
+		FILE="${RISU_ROOT}/sos_commands/xfs/xfs_info_.var.lib"
+	elif [[ -f "${RISU_ROOT}/sos_commands/xfs/xfs_info_.var" ]]; then
+		FILE="${RISU_ROOT}/sos_commands/xfs/xfs_info_.var"
+	elif [[ -f "${RISU_ROOT}/sos_commands/xfs/xfs_info" ]]; then
+		FILE="${RISU_ROOT}/sos_commands/xfs/xfs_info"
+	else
+		exit ${RC_SKIPPED}
+	fi
 elif [[ ${RISU_LIVE} -eq 1 ]]; then
-    FILE=$(mktemp)
-    trap "rm ${FILE}" EXIT
-    xfs_info /var/lib >${FILE}
+	FILE=$(mktemp)
+	trap "rm ${FILE}" EXIT
+	xfs_info /var/lib >${FILE}
 fi
 
 if is_lineinfile "ftype=0" "${FILE}"; then
-    echo $"Node not supported for OSP13 - Can't use containers" >&2
-    exit ${RC_FAILED}
+	echo $"Node not supported for OSP13 - Can't use containers" >&2
+	exit ${RC_FAILED}
 fi
 
 exit ${RC_OKAY}

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright (C) 2021-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2021-2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,17 +27,17 @@
 is_required_rpm abrt
 
 if ! is_active abrtd; then
-    echo $"abrtd is not running on this node" >&2
-    exit ${RC_FAILED}
+	echo $"abrtd is not running on this node" >&2
+	exit ${RC_FAILED}
 fi
 
 is_required_file "${RISU_ROOT}/proc/sys/kernel/core_pattern"
 core_pattern=$(cat "${RISU_ROOT}/proc/sys/kernel/core_pattern")
 
 if [[ $core_pattern == "core" ]]; then
-    echo $"core_pattern: core" >&2
-    exit ${RC_FAILED}
+	echo $"core_pattern: core" >&2
+	exit ${RC_FAILED}
 else
-    echo "core_pattern: $core_pattern" >&2
-    exit ${RC_OKAY}
+	echo "core_pattern: $core_pattern" >&2
+	exit ${RC_OKAY}
 fi

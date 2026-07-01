@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2021-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2021-2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,8 +24,8 @@
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
 if ! is_process nova-compute; then
-    echo $"works only on compute node" >&2
-    exit ${RC_SKIPPED}
+	echo $"works only on compute node" >&2
+	exit ${RC_SKIPPED}
 fi
 
 is_required_file "${RISU_ROOT}/etc/nova/nova.conf"
@@ -35,8 +35,8 @@ NOVAHOST=$(awk -F "=" '/^host/ {gsub (" ", "", $0); print $2}' ${RISU_ROOT}/etc/
 CEILOMETERHOST=$(awk -F "=" '/^host/ {gsub (" ", "", $0); print $2}' ${RISU_ROOT}/etc/ceilometer/ceilometer.conf)
 
 if [[ $CEILOMETERHOST != "$NOVAHOST" ]]; then
-    echo $"ceilometer and nova compute host are out of sync." >&2
-    exit ${RC_FAILED}
+	echo $"ceilometer and nova compute host are out of sync." >&2
+	exit ${RC_FAILED}
 else
-    exit ${RC_OKAY}
+	exit ${RC_OKAY}
 fi

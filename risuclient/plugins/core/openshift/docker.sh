@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright (C) 2018, 2021, 2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2018, 2021, 2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,18 +24,18 @@
 
 # We're OCP node
 if is_rpm atomic-openshift-node; then
-    if is_rpm docker; then
-        if is_enabled docker; then
-            if is_active docker; then
-                exit ${RC_OKAY}
-            fi
-        fi
-        echo $"Docker service should be enabled and active" >&2
-        exit ${RC_FAILED}
-    else
-        echo $"Docker service should be installed" >&2
-        exit ${RC_FAILED}
-    fi
+	if is_rpm docker; then
+		if is_enabled docker; then
+			if is_active docker; then
+				exit ${RC_OKAY}
+			fi
+		fi
+		echo $"Docker service should be enabled and active" >&2
+		exit ${RC_FAILED}
+	else
+		echo $"Docker service should be installed" >&2
+		exit ${RC_FAILED}
+	fi
 fi
 echo $"Non Openshift node" >&2
 exit ${RC_SKIPPED}

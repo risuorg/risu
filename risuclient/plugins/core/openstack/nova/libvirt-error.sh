@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2021-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2021-2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,8 +24,8 @@
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
 if ! is_process nova-compute; then
-    echo "works only on compute node" >&2
-    exit ${RC_SKIPPED}
+	echo "works only on compute node" >&2
+	exit ${RC_SKIPPED}
 fi
 
 is_required_file "${RISU_ROOT}/var/log/nova/nova-compute.log"
@@ -33,9 +33,9 @@ log_file="${RISU_ROOT}/var/log/nova/nova-compute.log"
 
 wc=$(grep -i 'libvirtError' ${log_file} | wc -l)
 if [[ ${wc} -gt 0 ]]; then
-    # to remove the ${RISU_ROOT} from the stderr.
-    log_file=${log_file#${RISU_ROOT}}
-    echo "$log_file (${wc} times)" >&2
-    flag=1
+	# to remove the ${RISU_ROOT} from the stderr.
+	log_file=${log_file#${RISU_ROOT}}
+	echo "$log_file (${wc} times)" >&2
+	flag=1
 fi
 [[ "x$flag" == "x" ]] && exit ${RC_OKAY} || exit ${RC_FAILED}

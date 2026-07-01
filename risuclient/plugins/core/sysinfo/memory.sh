@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright (C) 2017, 2018, 2020, 2021, 2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2017, 2018, 2020, 2021, 2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,9 +23,9 @@
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
 if [[ "x$RISU_LIVE" == "x0" ]]; then
-    MEMORY=$(awk '/Mem/ {print $2}' ${RISU_ROOT}/free)
+	MEMORY=$(awk '/Mem/ {print $2}' ${RISU_ROOT}/free)
 else
-    MEMORY=$(LANG=C free | awk '/Mem/ {print $2}')
+	MEMORY=$(LANG=C free | awk '/Mem/ {print $2}')
 fi
 
 echo "$((MEMORY / 1024))" >&2

@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2021-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2021-2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -29,16 +29,16 @@ is_required_rpm openstack-nova-common
 is_required_rpm pacemaker
 
 if [[ ${RISU_LIVE} -eq 0 ]]; then
-    FILE="${RISU_ROOT}/sos_commands/pacemaker/crm_mon_-1_-A_-n_-r_-t"
+	FILE="${RISU_ROOT}/sos_commands/pacemaker/crm_mon_-1_-A_-n_-r_-t"
 elif [[ ${RISU_LIVE} -eq 1 ]]; then
-    FILE=$(mktemp)
-    trap "rm ${FILE}" EXIT
-    crm_mon -1 -A -n -r -t >${FILE} 2>&1
+	FILE=$(mktemp)
+	trap "rm ${FILE}" EXIT
+	crm_mon -1 -A -n -r -t >${FILE} 2>&1
 fi
 
 if is_lineinfile "openstack-nova-compute" "${FILE}"; then
-    echo $"Instance HA is in use in the environment, consider limitations" >&2
-    exit ${RC_FAILED}
+	echo $"Instance HA is in use in the environment, consider limitations" >&2
+	exit ${RC_FAILED}
 fi
 
 exit ${RC_OKAY}

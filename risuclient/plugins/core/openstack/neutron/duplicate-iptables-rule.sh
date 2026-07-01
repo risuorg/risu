@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2021-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2021-2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -26,8 +26,8 @@
 is_required_file "${RISU_ROOT}/var/log/neutron/l3-agent.log"
 
 if is_lineinfile "Duplicate iptables rule detected" "${RISU_ROOT}/var/log/neutron/l3-agent.log"; then
-    grep -i 'Duplicate iptables rule detected' "${RISU_ROOT}/var/log/neutron/l3-agent.log" | grep -oP "^([0-9\-]+)" | uniq -c | tail >&2
-    exit ${RC_FAILED}
+	grep -i 'Duplicate iptables rule detected' "${RISU_ROOT}/var/log/neutron/l3-agent.log" | grep -oP "^([0-9\-]+)" | uniq -c | tail >&2
+	exit ${RC_FAILED}
 fi
 
 exit ${RC_OKAY}

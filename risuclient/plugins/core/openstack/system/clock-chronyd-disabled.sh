@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2021-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2021-2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,20 +24,20 @@
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
 (
-    if is_active chronyd; then
-        chronyd=1
-    fi
+	if is_active chronyd; then
+		chronyd=1
+	fi
 ) >/dev/null 2>&1
 
 if is_rpm openstack-.* >/dev/null 2>&1; then
-    # Node is OSP system
-    if [[ "x$chronyd" == "x1" ]]; then
-        echo $"chrony service is active, and it should not on OSP node" >&2
-        exit ${RC_FAILED}
-    else
-        exit ${RC_OKAY}
-    fi
+	# Node is OSP system
+	if [[ "x$chronyd" == "x1" ]]; then
+		echo $"chrony service is active, and it should not on OSP node" >&2
+		exit ${RC_FAILED}
+	else
+		exit ${RC_OKAY}
+	fi
 else
-    echo "works only on osp node" >&2
-    exit ${RC_SKIPPED}
+	echo "works only on osp node" >&2
+	exit ${RC_SKIPPED}
 fi

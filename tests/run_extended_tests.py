@@ -3,18 +3,18 @@
 #
 # Description: Extended test runner for Risu comprehensive testing
 #
-# Copyright (C) 2024 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2017, 2024, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 
+import argparse
 import os
 import sys
 import time
 import unittest
-import argparse
 from io import StringIO
 
 # Add parent directory to path

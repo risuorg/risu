@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright (C) 2021-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2021-2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -28,83 +28,83 @@ is_required_directory "${RISU_ROOT}/usr/lib/systemd/system"
 
 # Function checking if a file is a 'real' initscript, by searching for various hints
 is_initscript() {
-    local file="$1"
-    local content="$2"
+	local file="$1"
+	local content="$2"
 
-    # If we find 'chkconfig: XYZ' or 'Provides: NAME', assume we have an
-    # iniscript
-    is_lineinfile '^#\s+(chkconfig|Provides):\s+.*$' ${file} && return 0
+	# If we find 'chkconfig: XYZ' or 'Provides: NAME', assume we have an
+	# iniscript
+	is_lineinfile '^#\s+(chkconfig|Provides):\s+.*$' ${file} && return 0
 
-    # Otherwise, check for hints (shebang + presence of start/stop/status
-    # keywords)
-    #
-    # Allocate 1 point for each item found. And declare as valid if confidence
-    # >= 3 (half of the number of items + 1).
-    local confidence=0
-    # Search for shebang on first line
-    if head -1 ${file} | grep -q '^#!'; then
-        let confidence+=1
-    fi
+	# Otherwise, check for hints (shebang + presence of start/stop/status
+	# keywords)
+	#
+	# Allocate 1 point for each item found. And declare as valid if confidence
+	# >= 3 (half of the number of items + 1).
+	local confidence=0
+	# Search for shebang on first line
+	if head -1 ${file} | grep -q '^#!'; then
+		let confidence+=1
+	fi
 
-    local token
-    for token in 'start' 'stop' 'status'; do
-        if echo "$content" | grep -E -qw "$token"; then
-            let confidence+=1
-        fi
-    done
+	local token
+	for token in 'start' 'stop' 'status'; do
+		if echo "$content" | grep -E -qw "$token"; then
+			let confidence+=1
+		fi
+	done
 
-    [[ ${confidence} -ge 3 ]] && return 0
+	[[ ${confidence} -ge 3 ]] && return 0
 
-    # Failure
-    return 1
+	# Failure
+	return 1
 }
 
 files_having_runuser_l=()
 files_having_su=()
 
 for file in $(/bin/ls ${RISU_ROOT}/etc/rc.d/init.d/*); do
-    [[ -f $file ]] || continue
+	[[ -f $file ]] || continue
 
-    content="$(strip_and_trim ${file})"
-    is_initscript "$file" "$content" || continue
+	content="$(strip_and_trim ${file})"
+	is_initscript "$file" "$content" || continue
 
-    su_found=0
-    runuser_found=0
-    runuser_l_found=0
+	su_found=0
+	runuser_found=0
+	runuser_l_found=0
 
-    # Check for 'su'
-    echo "$content" | grep -E -qw "su" && let su_found+=1
+	# Check for 'su'
+	echo "$content" | grep -E -qw "su" && let su_found+=1
 
-    # Check for 'runuser'
-    IFS=$'\n' read -rd '' -a lines <<<"$(echo "$content" | grep -E "runuser")"
-    for line in "${lines[@]}"; do
-        let runuser_found+=1
-        # Check for '-' or '-l', asssuming it will be at the runuser level
-        grep -E -qw -- "(-|-l)" <<<"$line" && let runuser_l_found+=1
-    done
+	# Check for 'runuser'
+	IFS=$'\n' read -rd '' -a lines <<<"$(echo "$content" | grep -E "runuser")"
+	for line in "${lines[@]}"; do
+		let runuser_found+=1
+		# Check for '-' or '-l', asssuming it will be at the runuser level
+		grep -E -qw -- "(-|-l)" <<<"$line" && let runuser_l_found+=1
+	done
 
-    # Finding 'runuser -l' needs a review
-    [[ ${runuser_l_found} -ne 0 ]] && files_having_runuser_l=("${files_having_runuser_l[@]}" "$file")
-    if [[ ${su_found} -ne 0 ]]; then
-        # Finding both 'runuser' and 'su' indicates administrator likely 'fixed' the initscript
-        [[ ${runuser_found} -ne 0 ]] && continue
-        # Finding only 'su' needs a review
-        files_having_su=("${files_having_su[@]}" "$file")
-    fi
+	# Finding 'runuser -l' needs a review
+	[[ ${runuser_l_found} -ne 0 ]] && files_having_runuser_l=("${files_having_runuser_l[@]}" "$file")
+	if [[ ${su_found} -ne 0 ]]; then
+		# Finding both 'runuser' and 'su' indicates administrator likely 'fixed' the initscript
+		[[ ${runuser_found} -ne 0 ]] && continue
+		# Finding only 'su' needs a review
+		files_having_su=("${files_having_su[@]}" "$file")
+	fi
 done
 
 EXIT_STATUS=${RC_OKAY}
 
 if [[ -n $files_having_runuser_l ]]; then
-    echo $">>> 'runuser -l ...' or 'runuser - ...' was detected in some initscripts" >&2
-    printf '%s\n' "${files_having_runuser_l[@]}" | sed "s#^${RISU_ROOT}##g" >&2
-    EXIT_STATUS=${RC_FAILED}
+	echo $">>> 'runuser -l ...' or 'runuser - ...' was detected in some initscripts" >&2
+	printf '%s\n' "${files_having_runuser_l[@]}" | sed "s#^${RISU_ROOT}##g" >&2
+	EXIT_STATUS=${RC_FAILED}
 fi
 
 if [[ -n $files_having_su ]]; then
-    echo $">>> 'su' was detected in some initscripts" >&2
-    printf '%s\n' "${files_having_su[@]}" | sed "s#^${RISU_ROOT}##g" >&2
-    EXIT_STATUS=${RC_FAILED}
+	echo $">>> 'su' was detected in some initscripts" >&2
+	printf '%s\n' "${files_having_su[@]}" | sed "s#^${RISU_ROOT}##g" >&2
+	EXIT_STATUS=${RC_FAILED}
 fi
 
 exit ${EXIT_STATUS}

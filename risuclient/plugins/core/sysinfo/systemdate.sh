@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright (C) 2017, 2022, 2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2017, 2022, 2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,10 +23,10 @@
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
 if [[ "x$RISU_LIVE" == "x0" ]]; then
-    is_required_file ${RISU_ROOT}/date
-    cat ${RISU_ROOT}/date >&2
+	is_required_file ${RISU_ROOT}/date
+	cat ${RISU_ROOT}/date >&2
 else
-    date >&2
+	date >&2
 fi
 
 exit ${RC_INFO}

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright (C) 2018, 2021, 2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2018, 2021, 2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -25,8 +25,8 @@
 OSPVER=$(discover_osp_version)
 
 if [[ ${OSPVER} -gt 0 ]]; then
-    echo "OSP Version: $(discover_osp_version), codename: $(name_osp_version)" >&2
-    exit ${RC_OKAY}
+	echo "OSP Version: $(discover_osp_version), codename: $(name_osp_version)" >&2
+	exit ${RC_OKAY}
 fi
 
 echo "Possible not osp system" >&2

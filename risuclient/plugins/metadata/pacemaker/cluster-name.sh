@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright (C) 2018, 2021, 2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2018, 2021, 2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,11 +23,11 @@
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
 if [[ ${RISU_LIVE} -eq 0 ]]; then
-    FILE="${RISU_ROOT}/sos_commands/pacemaker/pcs_status"
+	FILE="${RISU_ROOT}/sos_commands/pacemaker/pcs_status"
 elif [[ ${RISU_LIVE} -eq 1 ]]; then
-    FILE=$(mktemp)
-    trap "rm ${FILE}" EXIT
-    pcs status >${FILE}
+	FILE=$(mktemp)
+	trap "rm ${FILE}" EXIT
+	pcs status >${FILE}
 fi
 
 is_required_file ${FILE}

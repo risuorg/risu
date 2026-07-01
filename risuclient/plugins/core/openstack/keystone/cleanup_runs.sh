@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2021-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2021-2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -28,8 +28,8 @@ is_required_file "${RISU_ROOT}/var/log/keystone/keystone.log"
 # Check if we've the keystone token manage cleanup job so we asume it's controller
 is_required_file "${RISU_ROOT}/var/spool/cron/keystone"
 if ! is_lineinfile keystone-manage "${RISU_ROOT}/var/spool/cron/keystone"; then
-    echo "Only runs on OSP controller" >&2
-    exit ${RC_SKIPPED}
+	echo "Only runs on OSP controller" >&2
+	exit ${RC_SKIPPED}
 fi
 
 RUNS=$(grep 'Total expired tokens removed' "${RISU_ROOT}/var/log/keystone/keystone.log" | wc -l)
@@ -37,9 +37,9 @@ RUNS=$(grep 'Total expired tokens removed' "${RISU_ROOT}/var/log/keystone/keysto
 [[ "x${RUNS}" == "x" ]] && echo "Non recorded cleanup runs" >&2 && exit ${RC_FAILED}
 
 if [[ ${RUNS} -eq 0 ]]; then
-    echo "Non recorded cleanup runs" >&2
-    exit ${RC_FAILED}
+	echo "Non recorded cleanup runs" >&2
+	exit ${RC_FAILED}
 elif [[ ${RUNS} -ge 1 ]]; then
-    echo "${RUNS}" >&2
-    exit ${RC_OKAY}
+	echo "${RUNS}" >&2
+	exit ${RC_OKAY}
 fi

@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2021-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2021-2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -25,8 +25,8 @@
 # check if we are running against compute
 
 if is_process nova-compute; then
-    echo "works only on controller node" >&2
-    exit ${RC_SKIPPED}
+	echo "works only on controller node" >&2
+	exit ${RC_SKIPPED}
 fi
 
 # Exit if not OSP node
@@ -35,17 +35,17 @@ is_required_rpm openstack-nova-common
 MESSAGE=$"AVC denial for console.log: https://bugzilla.redhat.com/show_bug.cgi?id=1501957 https://bugzilla.redhat.com/show_bug.cgi?id=1491767"
 
 if [[ "x$RISU_LIVE" == "x0" ]]; then
-    if [[ -z ${journalctl_file} ]]; then
-        echo "file /sos_commands/logs/journalctl_--no-pager_--boot not found." >&2
-        echo "file /sos_commands/logs/journalctl_--all_--this-boot_--no-pager not found." >&2
-        exit ${RC_SKIPPED}
-    fi
-    is_lineinfile '.*avc:.*denied.*unlink.*virtlogd.*name="console.log".*' ${journalctl_file} && echo "$MESSAGE" >&2 && exit ${RC_FAILED}
+	if [[ -z ${journalctl_file} ]]; then
+		echo "file /sos_commands/logs/journalctl_--no-pager_--boot not found." >&2
+		echo "file /sos_commands/logs/journalctl_--all_--this-boot_--no-pager not found." >&2
+		exit ${RC_SKIPPED}
+	fi
+	is_lineinfile '.*avc:.*denied.*unlink.*virtlogd.*name="console.log".*' ${journalctl_file} && echo "$MESSAGE" >&2 && exit ${RC_FAILED}
 elif [[ "x$RISU_LIVE" == "x1" ]]; then
-    if journalctl --no-pager --boot | grep -qe '.*avc:.*denied.*unlink.*virtlogd.*name="console.log".*'; then
-        echo "$MESSAGE" >&2
-        exit ${RC_FAILED}
-    fi
+	if journalctl --no-pager --boot | grep -qe '.*avc:.*denied.*unlink.*virtlogd.*name="console.log".*'; then
+		echo "$MESSAGE" >&2
+		exit ${RC_FAILED}
+	fi
 fi
 
 exit ${RC_OKAY}

@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2021-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2021-2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -37,24 +37,24 @@ DRIVER=$(grep -E "$DRIVERMATCH" "${RISU_ROOT}/etc/cinder/cinder.conf" -c)
 
 if [[ "x$DRIVER" != "x0" ]]; then
 
-    OPERATIONS=$(grep ^nas_secure_file_operations "${RISU_ROOT}/etc/cinder/cinder.conf" | cut -d "=" -f2 | sed 's/^[ \t]*//' | tail -n1 | tr '[:upper:]' '[:lower:]')
-    PERMISSIONS=$(grep ^nas_secure_file_permissions "${RISU_ROOT}/etc/cinder/cinder.conf" | cut -d "=" -f2 | sed 's/^[ \t]*//' | tail -n1 | tr '[:upper:]' '[:lower:]')
+	OPERATIONS=$(grep ^nas_secure_file_operations "${RISU_ROOT}/etc/cinder/cinder.conf" | cut -d "=" -f2 | sed 's/^[ \t]*//' | tail -n1 | tr '[:upper:]' '[:lower:]')
+	PERMISSIONS=$(grep ^nas_secure_file_permissions "${RISU_ROOT}/etc/cinder/cinder.conf" | cut -d "=" -f2 | sed 's/^[ \t]*//' | tail -n1 | tr '[:upper:]' '[:lower:]')
 
-    if [[ "x$OPERATIONS" == "xtrue" ]] || [[ "x$PERMISSIONS" == "xtrue" ]]; then
-        echo ${ERRORMSGTRUE} >&2
-        echo ${ERRORMSGNASSECURE} >&2
-        exit ${RC_FAILED}
-    elif [[ "x$OPERATIONS" == "xauto" ]] || [[ "x$PERMISSIONS" == "xauto" ]]; then
-        echo ${ERRORMSGAUTO} >&2
-        echo ${ERRORMSGCINDERFILE} >&2
-        exit ${RC_OKAY}
-    elif [[ "x$OPERATIONS" == "x" ]] || [[ "x$PERMISSIONS" == "x" ]]; then
-        echo ${ERRORMSGNULL} >&2
-        echo ${ERRORMSGCINDERFILE} >&2
-        exit ${RC_OKAY}
-    else
-        exit ${RC_OKAY}
-    fi
+	if [[ "x$OPERATIONS" == "xtrue" ]] || [[ "x$PERMISSIONS" == "xtrue" ]]; then
+		echo ${ERRORMSGTRUE} >&2
+		echo ${ERRORMSGNASSECURE} >&2
+		exit ${RC_FAILED}
+	elif [[ "x$OPERATIONS" == "xauto" ]] || [[ "x$PERMISSIONS" == "xauto" ]]; then
+		echo ${ERRORMSGAUTO} >&2
+		echo ${ERRORMSGCINDERFILE} >&2
+		exit ${RC_OKAY}
+	elif [[ "x$OPERATIONS" == "x" ]] || [[ "x$PERMISSIONS" == "x" ]]; then
+		echo ${ERRORMSGNULL} >&2
+		echo ${ERRORMSGCINDERFILE} >&2
+		exit ${RC_OKAY}
+	else
+		exit ${RC_OKAY}
+	fi
 else
-    exit ${RC_OKAY}
+	exit ${RC_OKAY}
 fi

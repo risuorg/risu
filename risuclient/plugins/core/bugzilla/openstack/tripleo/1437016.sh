@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2021-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2021-2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,25 +23,25 @@
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
 exitoutdated() {
-    echo $"outdated openstack-tripleo-common causes IN_PROGRESS loops: https://bugzilla.redhat.com/show_bug.cgi?id=1437016" >&2
+	echo $"outdated openstack-tripleo-common causes IN_PROGRESS loops: https://bugzilla.redhat.com/show_bug.cgi?id=1437016" >&2
 }
 
 RELEASE=$(discover_osp_version)
 if [[ ${RELEASE} -eq "8" ]]; then
-    exitoutdated
-    # openstack-tripleo-common needs to be 0.3.1-5 or later
-    is_required_rpm_over openstack-tripleo-common openstack-tripleo-common-0.3.1-5.el7ost
+	exitoutdated
+	# openstack-tripleo-common needs to be 0.3.1-5 or later
+	is_required_rpm_over openstack-tripleo-common openstack-tripleo-common-0.3.1-5.el7ost
 elif [[ ${RELEASE} -eq "9" ]]; then
-    exitoutdated
-    # openstack-tripleo-common needs to be 2.0.0-11 or later
-    is_required_rpm_over openstack-tripleo-common openstack-tripleo-common-2.0.0-11.el7ost
+	exitoutdated
+	# openstack-tripleo-common needs to be 2.0.0-11 or later
+	is_required_rpm_over openstack-tripleo-common openstack-tripleo-common-2.0.0-11.el7ost
 elif [[ ${RELEASE} -eq "10" ]]; then
-    exitoutdated
-    # openstack-tripleo-common needs to be 5.4.1-6 or later
-    is_required_rpm_over openstack-tripleo-common openstack-tripleo-common-5.4.1-6.el7ost
+	exitoutdated
+	# openstack-tripleo-common needs to be 5.4.1-6 or later
+	is_required_rpm_over openstack-tripleo-common openstack-tripleo-common-5.4.1-6.el7ost
 else
-    echo "only applies to OSP8, OSP9 and OSP10" >&2
-    exit ${RC_SKIPPED}
+	echo "only applies to OSP8, OSP9 and OSP10" >&2
+	exit ${RC_SKIPPED}
 fi
 
 exit ${RC_OKAY}

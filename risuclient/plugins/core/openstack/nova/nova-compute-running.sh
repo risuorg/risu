@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2021-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2021-2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,10 +27,10 @@ is_required_file "${RISU_ROOT}/var/log/nova/nova-compute.log"
 is_required_rpm openstack-nova-compute
 
 if [[ -f "${RISU_ROOT}/var/log/nova/nova-compute.log" ]]; then
-    if ! is_process nova-compute; then
-        echo "nova-compute process is not running" >&2
-        exit ${RC_FAILED}
-    fi
+	if ! is_process nova-compute; then
+		echo "nova-compute process is not running" >&2
+		exit ${RC_FAILED}
+	fi
 fi
 
 exit ${RC_OKAY}

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright (C) 2022, 2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2022, 2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,19 +20,19 @@
 # priority: 400
 
 if [[ ${RISU_LIVE} == 0 ]]; then
-    echo "works on live-system only" >&2
-    exit ${RC_SKIPPED}
+	echo "works on live-system only" >&2
+	exit ${RC_SKIPPED}
 fi
 
 yum check-update >/dev/null 2>&1
 update_check=$?
 
 if [[ ${update_check} -eq 100 ]]; then
-    echo "there are available uninstalled upgrades" >&2
-    exit ${RC_FAILED}
+	echo "there are available uninstalled upgrades" >&2
+	exit ${RC_FAILED}
 elif [[ ${update_check} -ne 0 ]]; then
-    echo "failed to check available updates" >&2
-    exit ${RC_FAILED}
+	echo "failed to check available updates" >&2
+	exit ${RC_FAILED}
 else
-    exit ${RC_OKAY}
+	exit ${RC_OKAY}
 fi

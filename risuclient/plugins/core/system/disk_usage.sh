@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright (C) 2021-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2021-2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -25,18 +25,18 @@
 : ${RISU_DISK_MAX_PERCENT=75}
 
 if [[ ${RISU_LIVE} == 0 ]]; then
-    is_required_file "${RISU_ROOT}/df"
-    DISK_USE_CMD="cat ${RISU_ROOT}/df"
+	is_required_file "${RISU_ROOT}/df"
+	DISK_USE_CMD="cat ${RISU_ROOT}/df"
 else
-    DISK_USE_CMD="df -P"
+	DISK_USE_CMD="df -P"
 fi
 
 #https://unix.stackexchange.com/a/15083
 result=$(${DISK_USE_CMD} | awk -vdisk_max_percent=${RISU_DISK_MAX_PERCENT} '/^\/dev/ && 0+$5 > disk_max_percent { print $6,$5 }')
 
 if [[ -n $result ]]; then
-    echo "${result}" >&2
-    exit ${RC_FAILED}
+	echo "${result}" >&2
+	exit ${RC_FAILED}
 else
-    exit ${RC_OKAY}
+	exit ${RC_OKAY}
 fi

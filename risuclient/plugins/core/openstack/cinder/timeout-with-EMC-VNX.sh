@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2021-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2021-2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -28,21 +28,21 @@ is_required_file "${RISU_ROOT}/etc/cinder/cinder.conf"
 
 # Check if we're a server with cinder-volume running
 if is_process cinder-volume; then
-    # Get RPC Timeout in cinder
-    TIMEOUT=$(iniparser "${RISU_ROOT}/etc/cinder/cinder.conf" DEFAULT rpc_response_timeout)
+	# Get RPC Timeout in cinder
+	TIMEOUT=$(iniparser "${RISU_ROOT}/etc/cinder/cinder.conf" DEFAULT rpc_response_timeout)
 
-    if [[ "x$TIMEOUT" != "x" ]]; then
-        LINES=$(grep -E 'naviseccli.*returned' "${RISU_ROOT}/var/log/cinder/volume.log" | awk -F'.*/naviseccli.*returned: 0 in |s execute' '$2>$TIMEOUT {print $2}' | wc -l)
-        if [[ "x$LINES" != "x0" ]]; then
-            echo $"Detected possible Navicli timeouts in cinder" >&2
-            exit ${RC_FAILED}
-        fi
-        echo "Not detected cinder rpc_response_timeout" >&2
-        exit ${RC_SKIPPED}
-    fi
+	if [[ "x$TIMEOUT" != "x" ]]; then
+		LINES=$(grep -E 'naviseccli.*returned' "${RISU_ROOT}/var/log/cinder/volume.log" | awk -F'.*/naviseccli.*returned: 0 in |s execute' '$2>$TIMEOUT {print $2}' | wc -l)
+		if [[ "x$LINES" != "x0" ]]; then
+			echo $"Detected possible Navicli timeouts in cinder" >&2
+			exit ${RC_FAILED}
+		fi
+		echo "Not detected cinder rpc_response_timeout" >&2
+		exit ${RC_SKIPPED}
+	fi
 else
-    echo "No cinder-volume running" >&2
-    exit ${RC_SKIPPED}
+	echo "No cinder-volume running" >&2
+	exit ${RC_SKIPPED}
 fi
 
 exit ${RC_OKAY}

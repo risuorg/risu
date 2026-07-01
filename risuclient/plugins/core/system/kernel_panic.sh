@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright (C) 2021-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2021-2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,8 +27,8 @@ is_lineinfile "soft lockup" "${journalctl_file}" && echo "soft lockup detected" 
 is_lineinfile "blocked for more than 120 seconds" "${journalctl_file}" && echo "hung task detected" >&2 && flag=1
 
 if [[ "x$flag" == "x1" ]]; then
-    exit ${RC_FAILED}
+	exit ${RC_FAILED}
 else
-    # If the above conditions did not trigger RC_FAILED we are good.
-    exit ${RC_OKAY}
+	# If the above conditions did not trigger RC_FAILED we are good.
+	exit ${RC_OKAY}
 fi

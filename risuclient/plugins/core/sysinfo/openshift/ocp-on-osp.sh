@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright (C) 2018, 2021, 2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2018, 2021, 2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,10 +23,10 @@
 [ -f "${RISU_BASE}/common-functions.sh" ] && . "${RISU_BASE}/common-functions.sh"
 
 if [[ "$(discover_ocp_version)" != 0 ]]; then
-    if [[ "$(virt_type)" == "OpenStack" ]]; then
-        echo "OCP running on top of OSP" >&2
-        exit ${RC_OKAY}
-    fi
+	if [[ "$(virt_type)" == "OpenStack" ]]; then
+		echo "OCP running on top of OSP" >&2
+		exit ${RC_OKAY}
+	fi
 fi
 echo $"Not running OCP or not on OSP" >&2
 exit ${RC_SKIPPED}

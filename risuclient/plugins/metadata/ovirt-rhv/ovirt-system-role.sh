@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright (C) 2018, 2021 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2018, 2021, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,19 +24,19 @@
 
 ROLE="unknown"
 if is_lineinfile "^vmid" ${RISU_ROOT}/etc/ovirt-hosted-engine/hosted-engine.conf; then
-    ROLE="hosted-engine-host"
+	ROLE="hosted-engine-host"
 elif is_rpm ovirt-engine >/dev/null 2>&1; then
-    ROLE="rhevm"
+	ROLE="rhevm"
 elif is_rpm qemu-kvm-rhev >/dev/null 2>&1; then
-    if [[ "$(discover_ocp_version)" == "0" ]]; then
-        ROLE="ovirt-host"
-    else
-        echo "unknown ovirt role" >&2
-        exit ${RC_SKIPPED}
-    fi
+	if [[ "$(discover_ocp_version)" == "0" ]]; then
+		ROLE="ovirt-host"
+	else
+		echo "unknown ovirt role" >&2
+		exit ${RC_SKIPPED}
+	fi
 else
-    echo "unknown ovirt role" >&2
-    exit ${RC_SKIPPED}
+	echo "unknown ovirt role" >&2
+	exit ${RC_SKIPPED}
 fi
 
 echo ${ROLE} >&2

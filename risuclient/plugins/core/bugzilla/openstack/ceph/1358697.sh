@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2021-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2021-2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -26,37 +26,37 @@
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
 if [[ "x$RISU_LIVE" == "x1" ]]; then
-    VERSIONS=$(rpm -qa ceph-common* python-rbd* librados2* python-rados* | sed -n -r -e 's/.*-0.([0-9]+).([0-9]+)-([0-9]+).*$/\1-\2-\3/p')
+	VERSIONS=$(rpm -qa ceph-common* python-rbd* librados2* python-rados* | sed -n -r -e 's/.*-0.([0-9]+).([0-9]+)-([0-9]+).*$/\1-\2-\3/p')
 elif [[ "x$RISU_LIVE" == "x0" ]]; then
-    is_required_file "${RISU_ROOT}/installed-rpms"
-    VERSIONS=$(grep -E 'ceph-common|python-rbd|librados2|python-rados' "${RISU_ROOT}/installed-rpms" | awk '{print $1}' | sed -n -r -e 's/.*-0.([0-9]+).([0-9]+)-([0-9]+).*$/\1-\2-\3/p')
+	is_required_file "${RISU_ROOT}/installed-rpms"
+	VERSIONS=$(grep -E 'ceph-common|python-rbd|librados2|python-rados' "${RISU_ROOT}/installed-rpms" | awk '{print $1}' | sed -n -r -e 's/.*-0.([0-9]+).([0-9]+)-([0-9]+).*$/\1-\2-\3/p')
 fi
 
 exitoudated() {
-    echo $"outdated ceph packages: https://bugzilla.redhat.com/show_bug.cgi?id=1358697" >&2
-    exit ${RC_FAILED}
+	echo $"outdated ceph packages: https://bugzilla.redhat.com/show_bug.cgi?id=1358697" >&2
+	exit ${RC_FAILED}
 }
 
 if [[ "x$VERSIONS" == "x" ]]; then
-    echo "required packages not found" >&2
-    exit ${RC_SKIPPED}
+	echo "required packages not found" >&2
+	exit ${RC_SKIPPED}
 else
-    # Affected versions are lower than ceph-0.94.5-15
-    for package in ${VERSIONS}; do
-        MAJOR=$(echo ${package} | cut -d "-" -f1)
-        MID=$(echo ${package} | cut -d "-" -f2)
-        MINOR=$(echo ${package} | cut -d "-" -f3)
-        if [[ ${MAJOR} -ge "94" ]]; then
-            if [[ ${MID} -ge "5" ]]; then
-                if [[ ${MINOR} -lt "15" ]]; then
-                    exitoudated
-                fi
-            else
-                exitoudated
-            fi
-        else
-            exitoudated
-        fi
-    done
-    exit ${RC_OKAY}
+	# Affected versions are lower than ceph-0.94.5-15
+	for package in ${VERSIONS}; do
+		MAJOR=$(echo ${package} | cut -d "-" -f1)
+		MID=$(echo ${package} | cut -d "-" -f2)
+		MINOR=$(echo ${package} | cut -d "-" -f3)
+		if [[ ${MAJOR} -ge "94" ]]; then
+			if [[ ${MID} -ge "5" ]]; then
+				if [[ ${MINOR} -lt "15" ]]; then
+					exitoudated
+				fi
+			else
+				exitoudated
+			fi
+		else
+			exitoudated
+		fi
+	done
+	exit ${RC_OKAY}
 fi

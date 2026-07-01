@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright (C) 2021-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2021-2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,8 +27,8 @@
 is_required_file "${RISU_ROOT}/etc/sudoers"
 
 if ! is_lineinfile "^#includedir /etc/sudoers.d" "${RISU_ROOT}/etc/sudoers"; then
-    echo $"sudoers does miss entry for including sudoers.d folder" >&2
-    exit ${RC_FAILED}
+	echo $"sudoers does miss entry for including sudoers.d folder" >&2
+	exit ${RC_FAILED}
 else
-    exit ${RC_OKAY}
+	exit ${RC_OKAY}
 fi

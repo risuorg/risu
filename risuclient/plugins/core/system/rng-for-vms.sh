@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright (C) 2021-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2021-2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -26,18 +26,18 @@
 flag=1 # We're baremetal, so we exit
 
 if ! is_virtual; then
-    echo "Not running on a VM" >&2
-    exit ${RC_SKIPPED}
+	echo "Not running on a VM" >&2
+	exit ${RC_SKIPPED}
 fi
 
 if ! is_pkg rng-tools; then
-    echo $"rng-tools not installed on a VM, Random number requiring apps will stall until enough entropy is generated" >&2
-    exit ${RC_FAILED}
+	echo $"rng-tools not installed on a VM, Random number requiring apps will stall until enough entropy is generated" >&2
+	exit ${RC_FAILED}
 fi
 
 if ! is_active rngd; then
-    echo "$rngd should be active for seeding entropy pool" >&2
-    exit ${RC_FAILED}
+	echo "$rngd should be active for seeding entropy pool" >&2
+	exit ${RC_FAILED}
 fi
 
 exit ${RC_OKAY}

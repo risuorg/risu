@@ -1,6 +1,7 @@
 #!/bin/bash
 
-# Copyright (C) 2024 Pablo Iranzo Gómez (Pablo.Iranzo@gmail.com)
+# Copyright (C) 2018 David Valle Delisle <dvd@redhat.com>
+# Copyright (C) 2018, 2021, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -25,55 +26,55 @@
 DNS_ISSUES=0
 
 if [[ "x$RISU_LIVE" == "x1" ]]; then
-    # Test DNS resolution
-    if command -v nslookup >/dev/null 2>&1; then
-        # Test common DNS lookups
-        TEST_DOMAINS=("google.com" "redhat.com" "github.com")
+	# Test DNS resolution
+	if command -v nslookup >/dev/null 2>&1; then
+		# Test common DNS lookups
+		TEST_DOMAINS=("google.com" "redhat.com" "github.com")
 
-        for domain in "${TEST_DOMAINS[@]}"; do
-            if ! nslookup "$domain" >/dev/null 2>&1; then
-                echo "WARNING: DNS resolution failed for $domain" >&2
-                DNS_ISSUES=$((DNS_ISSUES + 1))
-            fi
-        done
-    else
-        echo "nslookup command not available" >&2
-        exit $RC_SKIPPED
-    fi
+		for domain in "${TEST_DOMAINS[@]}"; do
+			if ! nslookup "$domain" >/dev/null 2>&1; then
+				echo "WARNING: DNS resolution failed for $domain" >&2
+				DNS_ISSUES=$((DNS_ISSUES + 1))
+			fi
+		done
+	else
+		echo "nslookup command not available" >&2
+		exit $RC_SKIPPED
+	fi
 
-    # Check DNS configuration
-    if [[ -f "/etc/resolv.conf" ]]; then
-        NAMESERVERS=$(grep "^nameserver" /etc/resolv.conf | wc -l)
-        if [[ $NAMESERVERS -eq 0 ]]; then
-            echo "WARNING: No nameservers configured in /etc/resolv.conf" >&2
-            DNS_ISSUES=$((DNS_ISSUES + 1))
-        fi
-    else
-        echo "WARNING: /etc/resolv.conf not found" >&2
-        DNS_ISSUES=$((DNS_ISSUES + 1))
-    fi
+	# Check DNS configuration
+	if [[ -f "/etc/resolv.conf" ]]; then
+		NAMESERVERS=$(grep "^nameserver" /etc/resolv.conf | wc -l)
+		if [[ $NAMESERVERS -eq 0 ]]; then
+			echo "WARNING: No nameservers configured in /etc/resolv.conf" >&2
+			DNS_ISSUES=$((DNS_ISSUES + 1))
+		fi
+	else
+		echo "WARNING: /etc/resolv.conf not found" >&2
+		DNS_ISSUES=$((DNS_ISSUES + 1))
+	fi
 else
-    # Check sosreport for DNS configuration
-    if [[ -f "${RISU_ROOT}/etc/resolv.conf" ]]; then
-        NAMESERVERS=$(grep "^nameserver" "${RISU_ROOT}/etc/resolv.conf" | wc -l)
-        if [[ $NAMESERVERS -eq 0 ]]; then
-            echo "WARNING: No nameservers were configured in /etc/resolv.conf" >&2
-            DNS_ISSUES=$((DNS_ISSUES + 1))
-        fi
-    else
-        echo "WARNING: /etc/resolv.conf not found in sosreport" >&2
-        DNS_ISSUES=$((DNS_ISSUES + 1))
-    fi
+	# Check sosreport for DNS configuration
+	if [[ -f "${RISU_ROOT}/etc/resolv.conf" ]]; then
+		NAMESERVERS=$(grep "^nameserver" "${RISU_ROOT}/etc/resolv.conf" | wc -l)
+		if [[ $NAMESERVERS -eq 0 ]]; then
+			echo "WARNING: No nameservers were configured in /etc/resolv.conf" >&2
+			DNS_ISSUES=$((DNS_ISSUES + 1))
+		fi
+	else
+		echo "WARNING: /etc/resolv.conf not found in sosreport" >&2
+		DNS_ISSUES=$((DNS_ISSUES + 1))
+	fi
 fi
 
 # Check results
 if [[ $DNS_ISSUES -gt 2 ]]; then
-    echo "CRITICAL: Multiple DNS issues found ($DNS_ISSUES)" >&2
-    exit $RC_FAILED
+	echo "CRITICAL: Multiple DNS issues found ($DNS_ISSUES)" >&2
+	exit $RC_FAILED
 elif [[ $DNS_ISSUES -gt 0 ]]; then
-    echo "WARNING: DNS issues found ($DNS_ISSUES)" >&2
-    exit $RC_FAILED
+	echo "WARNING: DNS issues found ($DNS_ISSUES)" >&2
+	exit $RC_FAILED
 else
-    echo "DNS resolution appears to be working properly" >&2
-    exit $RC_OKAY
+	echo "DNS resolution appears to be working properly" >&2
+	exit $RC_OKAY
 fi

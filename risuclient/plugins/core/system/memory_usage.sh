@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright (C) 2021-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2021-2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,10 +27,10 @@
 is_required_file "/usr/bin/bc"
 
 if [[ "x$RISU_LIVE" == "x0" ]]; then
-    is_required_file "${RISU_ROOT}/free"
-    MEMORY_USE_CMD=$(grep Mem ${RISU_ROOT}/free | sed 's/[ \t]\+/ /g')
+	is_required_file "${RISU_ROOT}/free"
+	MEMORY_USE_CMD=$(grep Mem ${RISU_ROOT}/free | sed 's/[ \t]\+/ /g')
 elif [[ "x$RISU_LIVE" == "x1" ]]; then
-    MEMORY_USE_CMD=$(free | grep Mem | sed 's/[ \t]\+/ /g')
+	MEMORY_USE_CMD=$(free | grep Mem | sed 's/[ \t]\+/ /g')
 fi
 
 MEMORY_TOTAL=$(echo ${MEMORY_USE_CMD} | cut -d" " -f2)
@@ -40,8 +40,8 @@ MEMORY_USED_PERCENT=$(echo "(($MEMORY_USED / $MEMORY_TOTAL) * 100)" | bc -l)
 RC=$(echo "$MEMORY_USED_PERCENT>${RISU_MEMORY_MAX_PERCENT:-90}" | bc -l)
 
 if [[ "x$RC" == "x1" ]]; then
-    echo "${MEMORY_USED_PERCENT%%.*}%" >&2
-    exit ${RC_FAILED}
+	echo "${MEMORY_USED_PERCENT%%.*}%" >&2
+	exit ${RC_FAILED}
 else
-    exit ${RC_OKAY}
+	exit ${RC_OKAY}
 fi

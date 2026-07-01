@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Copyright (C) 2018 Juan Manuel Parrilla Madrid <jparrill@redhat.com>
-# Copyright (C) 2018, 2020, 2021, 2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2018, 2020, 2021, 2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -26,36 +26,36 @@
 # priority: 820
 
 validate_firewall() {
-    # Check linux firewall to validate if it's running and active
-    if is_active $1; then
-        # True when service is up
-        _SERVICE=0
-    else
-        # False when service is down
-        _SERVICE=1
-    fi
+	# Check linux firewall to validate if it's running and active
+	if is_active $1; then
+		# True when service is up
+		_SERVICE=0
+	else
+		# False when service is down
+		_SERVICE=1
+	fi
 
-    echo ${_SERVICE}
+	echo ${_SERVICE}
 }
 
 OS=$(discover_os)
 
 if [[ $OS == "debian" ]] || [[ $OS == "fedora" ]]; then
-    _FW='firewalld'
+	_FW='firewalld'
 else
-    RH_RELEASE=$(discover_rhrelease)
-    case ${RH_RELEASE} in
-    6) _FW='iptables' ;;
-    7) _FW='firewalld' ;;
-    0) _FW='undef' ;;
-    esac
+	RH_RELEASE=$(discover_rhrelease)
+	case ${RH_RELEASE} in
+	6) _FW='iptables' ;;
+	7) _FW='firewalld' ;;
+	0) _FW='undef' ;;
+	esac
 fi
 
 _STATUS=$(validate_firewall "${_FW}")
 
 if [[ ${_STATUS} -eq 0 ]]; then
-    exit ${RC_OKAY}
+	exit ${RC_OKAY}
 else
-    echo "Service ${_FW} not active: ${_STATUS}" >&2
-    exit ${RC_FAILED}
+	echo "Service ${_FW} not active: ${_STATUS}" >&2
+	exit ${RC_FAILED}
 fi

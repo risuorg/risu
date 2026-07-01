@@ -2,7 +2,8 @@
 # -*- coding: utf-8 -*-
 #
 # Description: MaguiClient class for multi-system analysis
-# Copyright (C) 2026 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2017 Robin Černín <cerninr@gmail.com>
+# Copyright (C) 2017-2021, 2023, 2026 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 from __future__ import print_function
 

@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2021-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2021-2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,19 +24,19 @@
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
 if is_enabled etcd || is_enabled etcd_container; then
-    if openssl x509 -noout -text -in "${RISU_ROOT}"/etc/etcd/server.crt |
-        grep 'X509v3 Subject Alternative Name' -A1 |
-        grep -q DNS:$(cat "${RISU_ROOT}/etc/hostname" | tr '[:upper:]' '[:lower:]'); then
-        echo 'OpenShift and NetworkManager are both enabled' >&2
-        exit ${RC_OKAY}
-    else
-        echo 'The etcd certificate is missing the fqdn in the Subject Alternative names' >&2
-        openssl x509 -noout -text -in "${RISU_ROOT}"/etc/etcd/server.crt |
-            grep 'X509v3 Subject Alternative Name' -A1 >&2
+	if openssl x509 -noout -text -in "${RISU_ROOT}"/etc/etcd/server.crt |
+		grep 'X509v3 Subject Alternative Name' -A1 |
+		grep -q DNS:$(cat "${RISU_ROOT}/etc/hostname" | tr '[:upper:]' '[:lower:]'); then
+		echo 'OpenShift and NetworkManager are both enabled' >&2
+		exit ${RC_OKAY}
+	else
+		echo 'The etcd certificate is missing the fqdn in the Subject Alternative names' >&2
+		openssl x509 -noout -text -in "${RISU_ROOT}"/etc/etcd/server.crt |
+			grep 'X509v3 Subject Alternative Name' -A1 >&2
 
-        exit ${RC_FAILED}
-    fi
+		exit ${RC_FAILED}
+	fi
 else
-    echo 'etcd is not enabled' >&2
-    exit ${RC_SKIPPED}
+	echo 'etcd is not enabled' >&2
+	exit ${RC_SKIPPED}
 fi

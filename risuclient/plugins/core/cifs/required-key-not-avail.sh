@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright (C) 2021-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2021-2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -30,9 +30,9 @@ REGEXP="Send error in SessSetup = -126"
 journal="$journalctl_file"
 
 if is_lineinfile "${REGEXP}" ${journal} ${RISU_ROOT}/var/log/messages; then
-    echo $"CIFS: mount error(126): Required key	not available." >&2
-    echo $"$REGEXP found in logs" >&2
-    exit ${RC_FAILED}
+	echo $"CIFS: mount error(126): Required key	not available." >&2
+	echo $"$REGEXP found in logs" >&2
+	exit ${RC_FAILED}
 else
-    exit ${RC_OKAY}
+	exit ${RC_OKAY}
 fi

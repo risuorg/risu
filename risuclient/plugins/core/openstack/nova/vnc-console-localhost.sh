@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2021-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2021-2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -30,23 +30,23 @@ is_required_file "${RISU_ROOT}/etc/nova/nova.conf"
 RELEASE=$(discover_osp_version)
 
 if [[ ${RELEASE} -ge "8" ]]; then
-    if [[ "$(iniparser "${RISU_ROOT}/etc/nova/nova.conf" vnc vncserver_listen)" == "127.0.0.1" ]]; then
-        flag=1
-    fi
+	if [[ "$(iniparser "${RISU_ROOT}/etc/nova/nova.conf" vnc vncserver_listen)" == "127.0.0.1" ]]; then
+		flag=1
+	fi
 else
-    if [[ "$(iniparser "${RISU_ROOT}/etc/nova/nova.conf" DEFAULT vncserver_listen)" == "127.0.0.1" ]]; then
-        flag=1
-    fi
+	if [[ "$(iniparser "${RISU_ROOT}/etc/nova/nova.conf" DEFAULT vncserver_listen)" == "127.0.0.1" ]]; then
+		flag=1
+	fi
 fi
 
 if ! is_lineinfile "^vncserver_listen" "${RISU_ROOT}/etc/nova/nova.conf"; then
-    flag=1
+	flag=1
 else
-    grep "^vncserver_listen" "${RISU_ROOT}/etc/nova/nova.conf" >&2
-    exit ${RC_OKAY}
+	grep "^vncserver_listen" "${RISU_ROOT}/etc/nova/nova.conf" >&2
+	exit ${RC_OKAY}
 fi
 
 if [[ "x$flag" == "x1" ]]; then
-    echo $"nova's vnc console listening on 127.0.0.1" >&2
-    exit ${RC_FAILED}
+	echo $"nova's vnc console listening on 127.0.0.1" >&2
+	exit ${RC_FAILED}
 fi

@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2021-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2021-2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -28,13 +28,13 @@
 RELEASE=$(discover_osp_version)
 
 if [[ "x$RELEASE" != "x10" ]]; then
-    echo "This affects only OSP10" >&2
-    exit ${RC_SKIPPED}
+	echo "This affects only OSP10" >&2
+	exit ${RC_SKIPPED}
 fi
 
 if [[ "$(iniparser ${RISU_ROOT}/etc/neutron/plugins/ml2/openvswitch_agent.ini securitygroup firewall_driver)" == 'openvswitch' ]]; then
-    echo $"Unsupported firewall_driver = openvswitch in deployment" >&2
-    exit ${RC_FAILED}
+	echo $"Unsupported firewall_driver = openvswitch in deployment" >&2
+	exit ${RC_FAILED}
 fi
 
 exit ${RC_OKAY}

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright (C) 2021-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2021-2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -28,8 +28,8 @@ RELEASE=$(discover_rhrelease)
 [[ ${RELEASE} -eq '0' ]] && echo "RH release undefined" >&2 && exit ${RC_SKIPPED}
 
 if [[ ${RELEASE} -gt "7" ]]; then
-    echo "test not applicable to EL8 releases or higher" >&2
-    exit ${RC_SKIPPED}
+	echo "test not applicable to EL8 releases or higher" >&2
+	exit ${RC_SKIPPED}
 fi
 
 flag=0
@@ -37,12 +37,12 @@ flag=0
 echo "Following packages will be deprecated in RHEL8:" >&2
 
 for package in authconfig pam_pkcs11 pam_krb5 openldap-servers mod_auth_kerb python-kerberos python-krbV python-requests-kerberos hesiod mod_nss mod_revocator ypserv ypbind portmap yp-tools nss-pam-ldapd mesa-private-llvm libdbi libdbi-drivers sendmail dmraid rsyslog-libdbi tcp_wrappers libcxgb3 cxgb3 libvirt-daemon-driver-lxc libvirt-daemon-lxc libvirt-login-shell; do
-    is_rpm ${package} >&2 && flag=1
+	is_rpm ${package} >&2 && flag=1
 done
 
 if [[ $flag -eq "1" ]]; then
-    echo $"Check RHEL7.5 deprecation notice" >&2
-    exit ${RC_INFO}
+	echo $"Check RHEL7.5 deprecation notice" >&2
+	exit ${RC_INFO}
 fi
 
 exit ${RC_OKAY}

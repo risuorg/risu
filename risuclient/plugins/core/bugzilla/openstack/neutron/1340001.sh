@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2021-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2021-2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,15 +27,15 @@
 RELEASE=$(discover_osp_version)
 
 if [[ ${RELEASE} -le "8" ]]; then
-    is_required_file "${RISU_ROOT}/etc/neutron/metadata_agent.ini"
+	is_required_file "${RISU_ROOT}/etc/neutron/metadata_agent.ini"
 
-    if ! is_lineinfile "auth_url.*/v(2.0|3)" "${RISU_ROOT}/etc/neutron/metadata_agent.ini"; then
-        echo $"keystone auth_url set wrongly in metadata_agent.ini https://bugzilla.redhat.com/show_bug.cgi?id=1340001" >&2
-        exit ${RC_FAILED}
-    else
-        exit ${RC_OKAY}
-    fi
+	if ! is_lineinfile "auth_url.*/v(2.0|3)" "${RISU_ROOT}/etc/neutron/metadata_agent.ini"; then
+		echo $"keystone auth_url set wrongly in metadata_agent.ini https://bugzilla.redhat.com/show_bug.cgi?id=1340001" >&2
+		exit ${RC_FAILED}
+	else
+		exit ${RC_OKAY}
+	fi
 else
-    echo "works only on OSP8 and earlier" >&2
-    exit ${RC_SKIPPED}
+	echo "works only on OSP8 and earlier" >&2
+	exit ${RC_SKIPPED}
 fi

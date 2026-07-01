@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Copyright (C) 2021-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2021-2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -25,23 +25,23 @@
 # check if we are running against compute
 
 if ! is_process nova-compute; then
-    echo "works only on compute node" >&2
-    exit ${RC_SKIPPED}
+	echo "works only on compute node" >&2
+	exit ${RC_SKIPPED}
 fi
 OUTDATED=$"librbd1 might be outdated if rhceph repo is not enabled on compute"
 
 if [[ "x$RISU_LIVE" == "x1" ]]; then
-    if [[ "$(yum -C repolist 2>&1 | grep "rhceph.*tools" | wc -l)" -eq "0" ]]; then
-        echo "$OUTDATED" >&2
-        exit ${RC_FAILED}
-    else
-        exit ${RC_OKAY}
-    fi
+	if [[ "$(yum -C repolist 2>&1 | grep "rhceph.*tools" | wc -l)" -eq "0" ]]; then
+		echo "$OUTDATED" >&2
+		exit ${RC_FAILED}
+	else
+		exit ${RC_OKAY}
+	fi
 elif [[ "x$RISU_LIVE" == "x0" ]]; then
-    if [[ "$(cat ${RISU_ROOT}/sos_commands/yum/yum_-C_repolist | grep "rhceph.*tools" | wc -l)" -eq "0" ]]; then
-        echo "$OUTDATED" >&2
-        exit ${RC_FAILED}
-    else
-        exit ${RC_OKAY}
-    fi
+	if [[ "$(cat ${RISU_ROOT}/sos_commands/yum/yum_-C_repolist | grep "rhceph.*tools" | wc -l)" -eq "0" ]]; then
+		echo "$OUTDATED" >&2
+		exit ${RC_FAILED}
+	else
+		exit ${RC_OKAY}
+	fi
 fi

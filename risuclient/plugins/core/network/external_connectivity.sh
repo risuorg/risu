@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2021-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2021-2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,27 +24,27 @@
 : ${REMOTE_PING_TARGET:=8.8.8.8}
 
 if [[ "x$RISU_LIVE" != "x1" ]]; then
-    echo "works on live-system only" >&2
-    exit ${RC_SKIPPED}
+	echo "works on live-system only" >&2
+	exit ${RC_SKIPPED}
 fi
 
 gw=$(ip route | awk '$1 == "default" {print $3}')
 echo "default gateway is: $gw" >&2
 
 if ! ping -c1 ${gw} >/dev/null 2>&1; then
-    echo $"default gateway is unreachable" >&2
-    RC=${RC_FAILED}
+	echo $"default gateway is unreachable" >&2
+	RC=${RC_FAILED}
 else
-    echo "default gateway is reachable" >&2
-    RC=${RC_OKAY}
+	echo "default gateway is reachable" >&2
+	RC=${RC_OKAY}
 fi
 
 if ! ping -c1 ${REMOTE_PING_TARGET} >/dev/null 2>&1; then
-    echo "remote target @ $REMOTE_PING_TARGET is unreachable" >&2
-    RC=${RC_FAILED}
+	echo "remote target @ $REMOTE_PING_TARGET is unreachable" >&2
+	RC=${RC_FAILED}
 else
-    echo "remote target @ $REMOTE_PING_TARGET is reachable" >&2
-    RC=${RC_OKAY}
+	echo "remote target @ $REMOTE_PING_TARGET is reachable" >&2
+	RC=${RC_OKAY}
 fi
 
 exit ${RC}

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright (C) 2018, 2020, 2021, 2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2018, 2020, 2021, 2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -25,11 +25,11 @@
 OCPVERSION=$(discover_ocp_version)
 
 if [[ ${OCPVERSION} == "0" ]]; then
-    echo "Not running on OCP node" >&2
-    exit ${RC_SKIPPED}
+	echo "Not running on OCP node" >&2
+	exit ${RC_SKIPPED}
 else
-    is_required_file ${RISU_ROOT}/etc/origin/master/master-config.yaml
-    NETWORKPLUGIN=$(grep 'networkPluginName' ${RISU_ROOT}/etc/origin/master/master-config.yaml)
-    echo "configured OpenShift network-plugin: ${NETWORKPLUGIN}" >&2
+	is_required_file ${RISU_ROOT}/etc/origin/master/master-config.yaml
+	NETWORKPLUGIN=$(grep 'networkPluginName' ${RISU_ROOT}/etc/origin/master/master-config.yaml)
+	echo "configured OpenShift network-plugin: ${NETWORKPLUGIN}" >&2
 fi
 exit ${RC_OKAY}

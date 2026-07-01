@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2021-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2021-2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -26,17 +26,17 @@
 is_required_file "${RISU_ROOT}/etc/glance/glance-api.conf"
 
 if is_lineinfile "^image_size_cap" "${RISU_ROOT}/etc/glance/glance-api.conf"; then
-    IMAGE_SIZE_DEFAULT="1099511627776"
-    IMAGE_SIZE=$(awk -F "=" '/^image_size_cap/ {gsub (" ", "", $0); print $2}' \
-        "${RISU_ROOT}/etc/glance/glance-api.conf")
+	IMAGE_SIZE_DEFAULT="1099511627776"
+	IMAGE_SIZE=$(awk -F "=" '/^image_size_cap/ {gsub (" ", "", $0); print $2}' \
+		"${RISU_ROOT}/etc/glance/glance-api.conf")
 
-    if [[ ${IMAGE_SIZE} -lt ${IMAGE_SIZE_DEFAULT} ]]; then
-        echo $"image_size_cap is less than 1TiB" >&2
-        exit ${RC_FAILED}
-    fi
-    echo "image_size_cap is more than 1TiB" >&2
-    exit ${RC_OKAY}
+	if [[ ${IMAGE_SIZE} -lt ${IMAGE_SIZE_DEFAULT} ]]; then
+		echo $"image_size_cap is less than 1TiB" >&2
+		exit ${RC_FAILED}
+	fi
+	echo "image_size_cap is more than 1TiB" >&2
+	exit ${RC_OKAY}
 else
-    echo "image_size_cap set to 1 TiB" >&2
-    exit ${RC_OKAY}
+	echo "image_size_cap set to 1 TiB" >&2
+	exit ${RC_OKAY}
 fi

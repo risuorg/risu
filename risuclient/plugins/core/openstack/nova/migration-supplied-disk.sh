@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2021-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2021-2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,8 +27,8 @@
 is_required_file "${RISU_ROOT}/var/log/nova/nova-compute.log"
 
 if is_lineinfile "DestinationDiskExists: The supplied disk path .* already exists, it is expected not to exist." "${RISU_ROOT}/var/log/nova/nova-compute.log"; then
-    echo $"nova supplied disk exists" >&2
-    exit ${RC_FAILED}
+	echo $"nova supplied disk exists" >&2
+	exit ${RC_FAILED}
 fi
 
 exit ${RC_OKAY}

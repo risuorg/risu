@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2021-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2021-2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 # Based on code snippet by Miguel Ángel Ajo Pelayo (majopela@redhat.com)
 
 # This program is free software: you can redistribute it and/or modify
@@ -25,22 +25,22 @@
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
 if [[ ${RISU_LIVE} -eq 0 ]]; then
-    FILE="${RISU_ROOT}/sos_commands/openvswitch/ovsdb-client_-f_list_dump"
-    is_required_directory "${RISU_ROOT}/sos_commands/networking/"
+	FILE="${RISU_ROOT}/sos_commands/openvswitch/ovsdb-client_-f_list_dump"
+	is_required_directory "${RISU_ROOT}/sos_commands/networking/"
 
-    NICS=$(mktemp)
-    trap "rm ${NICS}" EXIT
+	NICS=$(mktemp)
+	trap "rm ${NICS}" EXIT
 
-    ls ${RISU_ROOT}/sos_commands/networking/ >${NICS}
+	ls ${RISU_ROOT}/sos_commands/networking/ >${NICS}
 
 elif [[ ${RISU_LIVE} -eq 1 ]]; then
-    FILE=$(mktemp)
-    trap "rm ${FILE}" EXIT
-    ovsdb-client -f list dump >${FILE}
+	FILE=$(mktemp)
+	trap "rm ${FILE}" EXIT
+	ovsdb-client -f list dump >${FILE}
 
-    NICS=$(mktemp)
-    trap "rm ${NICS}" EXIT
-    ls /proc/sys/net/ipv*/conf | grep -v "sys/net" | sort | uniq >${NICS}
+	NICS=$(mktemp)
+	trap "rm ${NICS}" EXIT
+	ls /proc/sys/net/ipv*/conf | grep -v "sys/net" | sort | uniq >${NICS}
 fi
 
 is_required_file "${FILE}"
@@ -54,15 +54,15 @@ echo "ports not in any router or namespace" >&2
 flag=0
 
 for port in ${PORTS}; do
-    grep ${port} ${NICS} &>/dev/null
-    if [[ $? != "0" ]]; then
-        echo ${port} >&2
-        flag=1
-    fi
+	grep ${port} ${NICS} &>/dev/null
+	if [[ $? != "0" ]]; then
+		echo ${port} >&2
+		flag=1
+	fi
 done
 
 if [[ ${flag} -eq '1' ]]; then
-    exit ${RC_FAILED}
+	exit ${RC_FAILED}
 fi
 
 exit ${RC_OKAY}

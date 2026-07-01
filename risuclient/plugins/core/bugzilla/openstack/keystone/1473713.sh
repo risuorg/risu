@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2021-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2021-2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@
 is_required_file "${RISU_ROOT}/var/log/keystone/keystone.log"
 
 if is_lineinfile "ERROR keystone DBDeadlock: .*pymysql.err.Internal.* try restarting transaction.*DELETE FROM token WHERE token.expires.*" "${RISU_ROOT}/var/log/keystone/keystone.log"; then
-    echo $"errors on token expiration, check: https://bugzilla.redhat.com/show_bug.cgi?id=1473713" >&2
-    exit ${RC_FAILED}
+	echo $"errors on token expiration, check: https://bugzilla.redhat.com/show_bug.cgi?id=1473713" >&2
+	exit ${RC_FAILED}
 fi
 exit ${RC_OKAY}

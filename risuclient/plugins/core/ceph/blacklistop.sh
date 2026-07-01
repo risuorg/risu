@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2021-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2021-2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@
 
 is_required_file ${RISU_ROOT}/var/log/ceph/ceph.audit.log
 if is_lineinfile "osd blacklist.*blacklistop.*access denied" "${RISU_ROOT}/var/log/ceph/ceph.audit.log"; then
-    echo $"ceph blacklistop detected" >&2
-    exit ${RC_FAILED}
+	echo $"ceph blacklistop detected" >&2
+	exit ${RC_FAILED}
 fi
 exit ${RC_OKAY}

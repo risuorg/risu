@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Copyright (C) 2018 Robin Černín <cerninr@gmail.com>
-# Copyright (C) 2018, 2020, 2021, 2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2018, 2020, 2021, 2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,9 +27,9 @@
 RELEASE=$(name_osp_version)
 OSPNUM=$(discover_osp_version)
 if [[ ${OSPNUM} != "0" ]]; then
-    echo $"${RELEASE}" >&2
-    exit ${RC_OKAY}
+	echo $"${RELEASE}" >&2
+	exit ${RC_OKAY}
 else
-    echo "Not recognized or no OSP system" >&2
-    exit ${RC_SKIPPED}
+	echo "Not recognized or no OSP system" >&2
+	exit ${RC_SKIPPED}
 fi

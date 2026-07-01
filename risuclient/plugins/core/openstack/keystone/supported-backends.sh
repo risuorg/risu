@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2021-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2021-2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -31,32 +31,32 @@ backends=$(iniparser "$config_file" identity driver)
 
 supported=1
 for backend in ${backends}; do
-    case ${backend} in
-    "keystone.identity.backends.sql.Identity")
-        # do nothing
-        ;;
-    "keystone.identity.backends.ldap.Identity")
-        # do nothing
-        ;;
-    "ldap")
-        # do nothing
-        ;;
-    "sql")
-        # do nothing
-        ;;
-    "")
-        # do nothing
-        ;;
-    *)
-        echo -n $"Unsupported keystone identity backend found " >&2
-        echo ${backend} >&2
-        supported=0
-        ;;
-    esac
+	case ${backend} in
+	"keystone.identity.backends.sql.Identity")
+		# do nothing
+		;;
+	"keystone.identity.backends.ldap.Identity")
+		# do nothing
+		;;
+	"ldap")
+		# do nothing
+		;;
+	"sql")
+		# do nothing
+		;;
+	"")
+		# do nothing
+		;;
+	*)
+		echo -n $"Unsupported keystone identity backend found " >&2
+		echo ${backend} >&2
+		supported=0
+		;;
+	esac
 done
 
 if [[ $supported -ne "1" ]]; then
-    exit ${RC_FAILED}
+	exit ${RC_FAILED}
 fi
 
 exit ${RC_OKAY}

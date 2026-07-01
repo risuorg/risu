@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2021-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2021-2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,18 +24,18 @@
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
 if ! is_process mysqld; then
-    echo "only runs on controllers" >&2
-    exit ${RC_SKIPPED}
+	echo "only runs on controllers" >&2
+	exit ${RC_SKIPPED}
 fi
 
 is_required_file "${RISU_ROOT}/etc/my.cnf.d/galera.cnf" "${RISU_ROOT}/etc/my.cnf"
 
 if [[ "$(iniparser "${RISU_ROOT}/etc/my.cnf.d/galera.cnf" mysqld innodb_file_per_table)" == "on" ]]; then
-    exit ${RC_OKAY}
+	exit ${RC_OKAY}
 elif [[ "$(iniparser "${RISU_ROOT}/etc/my.cnf" mysqld innodb_file_per_table)" == "on" ]]; then
-    exit ${RC_OKAY}
+	exit ${RC_OKAY}
 else
-    echo $"innodb_file_per_table not set in /etc/my.cnf.d/galera.cnf or /etc/my.cnf" >&2
-    echo $"Check: https://bugzilla.redhat.com/show_bug.cgi?id=1277598" >&2
-    exit ${RC_FAILED}
+	echo $"innodb_file_per_table not set in /etc/my.cnf.d/galera.cnf or /etc/my.cnf" >&2
+	echo $"Check: https://bugzilla.redhat.com/show_bug.cgi?id=1277598" >&2
+	exit ${RC_FAILED}
 fi

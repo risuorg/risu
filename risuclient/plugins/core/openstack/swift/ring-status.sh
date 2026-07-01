@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2022, 2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2022, 2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,8 +19,8 @@
 # priority: 750
 
 if [[ "x$RISU_LIVE" != "x1" ]]; then
-    echo "works on live-system only" >&2
-    exit ${RC_SKIPPED}
+	echo "works on live-system only" >&2
+	exit ${RC_SKIPPED}
 fi
 
 # We are checking swift.conf and rings md5sum against multiple hosts
@@ -30,8 +30,8 @@ fi
 # if swift.conf is ok but rings aren't.
 
 if swift-recon --md5 | grep -q "[^0] error"; then
-    swift-recon --md5 | grep "[^0] error" >&2
-    exit ${RC_FAILED}
+	swift-recon --md5 | grep "[^0] error" >&2
+	exit ${RC_FAILED}
 else
-    exit ${RC_OKAY}
+	exit ${RC_OKAY}
 fi

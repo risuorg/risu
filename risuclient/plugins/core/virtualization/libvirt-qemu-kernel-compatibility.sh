@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright (C) 2021-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2021-2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,27 +27,27 @@
 # check if we are running against compute
 
 if ! is_process nova-compute; then
-    echo "works only on compute node" >&2
-    exit ${RC_SKIPPED}
+	echo "works only on compute node" >&2
+	exit ${RC_SKIPPED}
 fi
 
 # we know the exact kernel versions for RHEL7 from https://access.redhat.com/articles/3078
 
 declare -A kernel_libvirt_qemu
 kernel_libvirt_qemu=(["3.10.0-123"]="1.1.1 1.5.3 7.0"
-    ["3.10.0-229"]="1.2.8 2.1.2 7.1"
-    ["3.10.0-327"]="1.2.17 2.3.0 7.2"
-    ["3.10.0-514"]="2.0.0 2.6.0 7.3"
-    ["3.10.0-693"]="3.2.0 2.9.0 7.4")
+	["3.10.0-229"]="1.2.8 2.1.2 7.1"
+	["3.10.0-327"]="1.2.17 2.3.0 7.2"
+	["3.10.0-514"]="2.0.0 2.6.0 7.3"
+	["3.10.0-693"]="3.2.0 2.9.0 7.4")
 
 redhat_release_version=$(grep -E -o '[0-9]+.[0-9]+' "${RISU_ROOT}/etc/redhat-release")
 
 if [[ "x$RISU_LIVE" == "x0" ]]; then
-    FILE="${RISU_ROOT}/uname"
+	FILE="${RISU_ROOT}/uname"
 elif [[ "x$RISU_LIVE" == "x1" ]]; then
-    FILE=$(mktemp)
-    trap "rm ${FILE}" EXIT
-    uname -a >${FILE}
+	FILE=$(mktemp)
+	trap "rm ${FILE}" EXIT
+	uname -a >${FILE}
 fi
 
 is_required_file "$FILE"
@@ -62,13 +62,13 @@ qemu=$(echo "$version" | cut -d" " -f2)
 redhat_release=$(echo "$version" | cut -d" " -f3)
 
 if [[ $libvirt == "$libvirt_version" && $qemu == "$qemu_version" &&
-    $redhat_release == "$redhat_release_version" ]]; then
-    echo $"compatibility between libvirt, qemu and kernel" >&2
-    exit ${RC_OKAY}
+	$redhat_release == "$redhat_release_version" ]]; then
+	echo $"compatibility between libvirt, qemu and kernel" >&2
+	exit ${RC_OKAY}
 else
-    echo $"detected running kernel: $kernel_version" >&2
-    echo $"libvirt:  $libvirt_version expected $libvirt" >&2
-    echo $"qemu-kvm: $qemu_version expected $qemu" >&2
-    echo $"redhat-release: $redhat_release_version expected $redhat_release" >&2
-    exit ${RC_FAILED}
+	echo $"detected running kernel: $kernel_version" >&2
+	echo $"libvirt:  $libvirt_version expected $libvirt" >&2
+	echo $"qemu-kvm: $qemu_version expected $qemu" >&2
+	echo $"redhat-release: $redhat_release_version expected $redhat_release" >&2
+	exit ${RC_FAILED}
 fi

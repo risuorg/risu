@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Copyright (C) 2019 Mikel Olasagasti Uranga <mikel@olasagasti.info>
-# Copyright (C) 2018, 2019, 2021, 2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2018, 2019, 2021, 2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,9 +24,9 @@
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
 if [[ ${RISU_LIVE} -eq 0 ]]; then
-    sosdate=$(LC_ALL=C LANG=C date -d "$(cat ${RISU_ROOT}/date)" +%Y-%m-%d)
+	sosdate=$(LC_ALL=C LANG=C date -d "$(cat ${RISU_ROOT}/date)" +%Y-%m-%d)
 else
-    sosdate=$(LC_ALL=C LANG=C TZ='UTC' date +%Y-%m-%d)
+	sosdate=$(LC_ALL=C LANG=C TZ='UTC' date +%Y-%m-%d)
 fi
 
 # Fill metadata 'sosreport-date' to value

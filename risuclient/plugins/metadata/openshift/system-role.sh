@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright (C) 2018, 2021 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2018, 2021, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -25,8 +25,8 @@
 ROLE="$(get_ocp_node_type)"
 
 if [[ ${ROLE} == "unknown" ]]; then
-    echo "Couldn't determine OCP role" >&2
-    exit ${RC_SKIPPED}
+	echo "Couldn't determine OCP role" >&2
+	exit ${RC_SKIPPED}
 fi
 
 echo "ocp-role"

@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2021-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2021-2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -35,8 +35,8 @@ RISU_PYTHON_RYU_VERSION=$(is_rpm python-ryu | grep -Po "python-ryu-\K[0-9\.]+")
 
 RISU_PYTHON_RYU_VERSION_VALIDATE=$(echo ${RISU_PYTHON_RYU_VERSION}'<4.9' | bc -l)
 if [[ ${RISU_PYTHON_RYU_VERSION_VALIDATE} -lt 1 ]]; then
-    echo "python-ryu version is $RISU_PYTHON_RYU_VERSION >= 4.9" >&2
-    exit ${RC_SKIPPED}
+	echo "python-ryu version is $RISU_PYTHON_RYU_VERSION >= 4.9" >&2
+	exit ${RC_SKIPPED}
 fi
 
 is_required_file "${RISU_ROOT}/var/log/neutron/openvswitch-agent.log"

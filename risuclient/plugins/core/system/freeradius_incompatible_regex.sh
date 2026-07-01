@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright (C) 2021-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2021-2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -34,20 +34,20 @@ REGEXP_MODE="^correct_escapes\\s*=\\s*true$" # correct_escapes = true
 
 # Function searching for "$INCLUDE <path>" statements and extracting <path> as absolute path
 search_for_INCLUDE() {
-    local file
-    for file in $(awk '$1 ~ /\$INCLUDE/ { print $2 }' $*); do
-        if [[ -d "$RADDB/$file" ]]; then
-            # If file is a directoy, expand to files in that directory
-            file=${file%/} # remove ending /
-            local f
-            for f in $(/bin/ls -1 ${RADDB}/${file}); do
-                [ -f "$RADDB/$file/$f" ] || continue
-                echo "$RADDB/$file/$f" >&2
-            done
-        elif [[ -f "$RADDB/$file" ]]; then
-            echo "$RADDB/$file" >&2
-        fi
-    done
+	local file
+	for file in $(awk '$1 ~ /\$INCLUDE/ { print $2 }' $*); do
+		if [[ -d "$RADDB/$file" ]]; then
+			# If file is a directoy, expand to files in that directory
+			file=${file%/} # remove ending /
+			local f
+			for f in $(/bin/ls -1 ${RADDB}/${file}); do
+				[ -f "$RADDB/$file/$f" ] || continue
+				echo "$RADDB/$file/$f" >&2
+			done
+		elif [[ -f "$RADDB/$file" ]]; then
+			echo "$RADDB/$file" >&2
+		fi
+	done
 }
 
 #
@@ -57,13 +57,13 @@ search_for_INCLUDE() {
 ALL_FILES="$RADDB/radiusd.conf"
 newfiles="$ALL_FILES"
 while [ -n "$newfiles" ]; do
-    files="$newfiles"
-    newfiles=""
-    for file in $(search_for_INCLUDE ${files}); do
-        [[ " $ALL_FILES " != *\ ${file}\ * ]] || continue
-        newfiles="${newfiles:+$newfiles }$file"
-    done
-    ALL_FILES="${ALL_FILES:+$ALL_FILES }$newfiles"
+	files="$newfiles"
+	newfiles=""
+	for file in $(search_for_INCLUDE ${files}); do
+		[[ " $ALL_FILES " != *\ ${file}\ * ]] || continue
+		newfiles="${newfiles:+$newfiles }$file"
+	done
+	ALL_FILES="${ALL_FILES:+$ALL_FILES }$newfiles"
 done
 
 files_using_old_regex=()
@@ -71,16 +71,16 @@ files_using_new_regex=()
 new_regexmode=0
 
 for file in ${ALL_FILES}; do
-    content="$(strip_and_trim ${file})"
-    if echo "$content" | grep -E -q "$OLD_REGEXP"; then
-        files_using_old_regex=("${files_using_old_regex[@]}" "$file")
-    fi
-    if echo "$content" | grep -E -q "$NEW_REGEXP"; then
-        files_using_new_regex=("${files_using_new_regex[@]}" "$file")
-    fi
-    if echo "$content" | grep -E -q "$REGEXP_MODE"; then
-        new_regexmode=1
-    fi
+	content="$(strip_and_trim ${file})"
+	if echo "$content" | grep -E -q "$OLD_REGEXP"; then
+		files_using_old_regex=("${files_using_old_regex[@]}" "$file")
+	fi
+	if echo "$content" | grep -E -q "$NEW_REGEXP"; then
+		files_using_new_regex=("${files_using_new_regex[@]}" "$file")
+	fi
+	if echo "$content" | grep -E -q "$REGEXP_MODE"; then
+		new_regexmode=1
+	fi
 done
 
 # There is an issue if:
@@ -88,13 +88,13 @@ done
 # - 'new style' regex are found but regex mode is 'old style'
 
 if [[ -n $files_using_old_regex ]] && [[ ${new_regexmode} -eq 1 ]]; then
-    echo $">>> new regex mode is used, but old regex style was found in some files" >&2
-    printf '%s\n' "${files_using_old_regex[@]}" | sed "s#^${RISU_ROOT}##g" >&2
-    exit ${RC_FAILED}
+	echo $">>> new regex mode is used, but old regex style was found in some files" >&2
+	printf '%s\n' "${files_using_old_regex[@]}" | sed "s#^${RISU_ROOT}##g" >&2
+	exit ${RC_FAILED}
 elif [[ -n $files_using_new_regex ]] && [[ ${new_regexmode} -eq 0 ]]; then
-    echo $">>> old regex mode is used, but new regex style was found in some files" >&2
-    printf '%s\n' "${files_using_new_regex[@]}" | sed "s#^${RISU_ROOT}##g" >&2
-    exit ${RC_FAILED}
+	echo $">>> old regex mode is used, but new regex style was found in some files" >&2
+	printf '%s\n' "${files_using_new_regex[@]}" | sed "s#^${RISU_ROOT}##g" >&2
+	exit ${RC_FAILED}
 fi
 
 # If the above conditions did not trigger RC_FAILED we are good.

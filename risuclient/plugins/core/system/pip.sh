@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright (C) 2021-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2021-2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,9 +23,9 @@
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
 if is_rpm python*-pip* >/dev/null 2>&1; then
-    echo $"python pip is detected" >&2
-    exit ${RC_FAILED}
+	echo $"python pip is detected" >&2
+	exit ${RC_FAILED}
 else
-    echo "no python pip package detected" >&2
-    exit ${RC_OKAY}
+	echo "no python pip package detected" >&2
+	exit ${RC_OKAY}
 fi

@@ -3,7 +3,7 @@
 #
 # Description: Performance tests for Risu plugins
 #
-# Copyright (C) 2024 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2017-2019, 2021, 2024, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -11,11 +11,11 @@
 # (at your option) any later version.
 
 import os
-import sys
-import time
-import tempfile
 import shutil
 import statistics
+import sys
+import tempfile
+import time
 from unittest import TestCase
 
 sys.path.append(os.path.abspath(os.path.dirname(__file__) + "/" + "../"))

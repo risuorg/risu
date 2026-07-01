@@ -1,6 +1,7 @@
 #!/bin/bash
 
-# Copyright (C) 2024 Pablo Iranzo Gómez (Pablo.Iranzo@gmail.com)
+# Copyright (C) 2018 David Valle Delisle <dvd@redhat.com>
+# Copyright (C) 2021, 2022, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,56 +28,56 @@ SWAP_WARNING_THRESHOLD=50
 SWAP_CRITICAL_THRESHOLD=80
 
 if [[ "x$RISU_LIVE" == "x1" ]]; then
-    # Get current swap usage
-    if command -v free >/dev/null 2>&1; then
-        SWAP_INFO=$(free -m | grep "^Swap:")
-        TOTAL_SWAP=$(echo $SWAP_INFO | awk '{print $2}')
-        USED_SWAP=$(echo $SWAP_INFO | awk '{print $3}')
+	# Get current swap usage
+	if command -v free >/dev/null 2>&1; then
+		SWAP_INFO=$(free -m | grep "^Swap:")
+		TOTAL_SWAP=$(echo $SWAP_INFO | awk '{print $2}')
+		USED_SWAP=$(echo $SWAP_INFO | awk '{print $3}')
 
-        if [[ $TOTAL_SWAP -eq 0 ]]; then
-            echo "No swap space configured" >&2
-            exit $RC_OKAY
-        fi
+		if [[ $TOTAL_SWAP -eq 0 ]]; then
+			echo "No swap space configured" >&2
+			exit $RC_OKAY
+		fi
 
-        SWAP_USAGE=$(echo "scale=2; $USED_SWAP / $TOTAL_SWAP * 100" | bc 2>/dev/null || echo "0")
-    else
-        echo "free command not available" >&2
-        exit $RC_SKIPPED
-    fi
+		SWAP_USAGE=$(echo "scale=2; $USED_SWAP / $TOTAL_SWAP * 100" | bc 2>/dev/null || echo "0")
+	else
+		echo "free command not available" >&2
+		exit $RC_SKIPPED
+	fi
 else
-    # Check sosreport for swap usage
-    if [[ -f "${RISU_ROOT}/proc/meminfo" ]]; then
-        TOTAL_SWAP=$(grep "^SwapTotal:" "${RISU_ROOT}/proc/meminfo" | awk '{print $2}')
-        FREE_SWAP=$(grep "^SwapFree:" "${RISU_ROOT}/proc/meminfo" | awk '{print $2}')
+	# Check sosreport for swap usage
+	if [[ -f "${RISU_ROOT}/proc/meminfo" ]]; then
+		TOTAL_SWAP=$(grep "^SwapTotal:" "${RISU_ROOT}/proc/meminfo" | awk '{print $2}')
+		FREE_SWAP=$(grep "^SwapFree:" "${RISU_ROOT}/proc/meminfo" | awk '{print $2}')
 
-        if [[ $TOTAL_SWAP -eq 0 ]]; then
-            echo "No swap space was configured" >&2
-            exit $RC_OKAY
-        fi
+		if [[ $TOTAL_SWAP -eq 0 ]]; then
+			echo "No swap space was configured" >&2
+			exit $RC_OKAY
+		fi
 
-        USED_SWAP=$(echo "scale=2; ($TOTAL_SWAP - $FREE_SWAP) / 1024" | bc 2>/dev/null || echo "0")
-        TOTAL_SWAP=$(echo "scale=2; $TOTAL_SWAP / 1024" | bc 2>/dev/null || echo "0")
-        SWAP_USAGE=$(echo "scale=2; $USED_SWAP / $TOTAL_SWAP * 100" | bc 2>/dev/null || echo "0")
-    else
-        echo "meminfo file not found in sosreport" >&2
-        exit $RC_SKIPPED
-    fi
+		USED_SWAP=$(echo "scale=2; ($TOTAL_SWAP - $FREE_SWAP) / 1024" | bc 2>/dev/null || echo "0")
+		TOTAL_SWAP=$(echo "scale=2; $TOTAL_SWAP / 1024" | bc 2>/dev/null || echo "0")
+		SWAP_USAGE=$(echo "scale=2; $USED_SWAP / $TOTAL_SWAP * 100" | bc 2>/dev/null || echo "0")
+	else
+		echo "meminfo file not found in sosreport" >&2
+		exit $RC_SKIPPED
+	fi
 fi
 
 # Check swap usage against thresholds
 if [[ -n $SWAP_USAGE ]]; then
-    SWAP_INT=$(echo "$SWAP_USAGE" | cut -d. -f1)
-    if [[ $SWAP_INT -ge $SWAP_CRITICAL_THRESHOLD ]]; then
-        echo "CRITICAL: Swap usage is ${SWAP_USAGE}% (threshold: ${SWAP_CRITICAL_THRESHOLD}%)" >&2
-        exit $RC_FAILED
-    elif [[ $SWAP_INT -ge $SWAP_WARNING_THRESHOLD ]]; then
-        echo "WARNING: Swap usage is ${SWAP_USAGE}% (threshold: ${SWAP_WARNING_THRESHOLD}%)" >&2
-        exit $RC_FAILED
-    else
-        echo "Swap usage is normal: ${SWAP_USAGE}%" >&2
-        exit $RC_OKAY
-    fi
+	SWAP_INT=$(echo "$SWAP_USAGE" | cut -d. -f1)
+	if [[ $SWAP_INT -ge $SWAP_CRITICAL_THRESHOLD ]]; then
+		echo "CRITICAL: Swap usage is ${SWAP_USAGE}% (threshold: ${SWAP_CRITICAL_THRESHOLD}%)" >&2
+		exit $RC_FAILED
+	elif [[ $SWAP_INT -ge $SWAP_WARNING_THRESHOLD ]]; then
+		echo "WARNING: Swap usage is ${SWAP_USAGE}% (threshold: ${SWAP_WARNING_THRESHOLD}%)" >&2
+		exit $RC_FAILED
+	else
+		echo "Swap usage is normal: ${SWAP_USAGE}%" >&2
+		exit $RC_OKAY
+	fi
 else
-    echo "Could not determine swap usage" >&2
-    exit $RC_SKIPPED
+	echo "Could not determine swap usage" >&2
+	exit $RC_SKIPPED
 fi

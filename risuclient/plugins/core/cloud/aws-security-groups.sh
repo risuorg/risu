@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2024 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2018, 2021, 2024, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,8 +23,8 @@
 
 # Only run on live systems
 if [[ "x$RISU_LIVE" != "x1" ]]; then
-    echo "This plugin only runs on live systems" >&2
-    exit ${RC_SKIPPED}
+	echo "This plugin only runs on live systems" >&2
+	exit ${RC_SKIPPED}
 fi
 
 # Check if aws CLI is available
@@ -32,29 +32,29 @@ is_required_command aws
 
 # Check AWS credentials
 if ! aws sts get-caller-identity >/dev/null 2>&1; then
-    echo "AWS credentials not configured" >&2
-    exit ${RC_SKIPPED}
+	echo "AWS credentials not configured" >&2
+	exit ${RC_SKIPPED}
 fi
 
 # Get security groups with overly permissive rules
 flag=0
 aws ec2 describe-security-groups --query 'SecurityGroups[*].[GroupId,GroupName,IpPermissions[?IpRanges[?CidrIp==`0.0.0.0/0`]]]' --output text 2>/dev/null | while IFS=$'\t' read -r group_id group_name permissions; do
-    if [[ -n $permissions && $permissions != "None" ]]; then
-        echo "Security group $group_id ($group_name) has overly permissive rules allowing 0.0.0.0/0" >&2
-        flag=1
-    fi
+	if [[ -n $permissions && $permissions != "None" ]]; then
+		echo "Security group $group_id ($group_name) has overly permissive rules allowing 0.0.0.0/0" >&2
+		flag=1
+	fi
 done
 
 # Check for SSH access from anywhere
 aws ec2 describe-security-groups --query 'SecurityGroups[?IpPermissions[?FromPort==`22` && IpRanges[?CidrIp==`0.0.0.0/0`]]].[GroupId,GroupName]' --output text 2>/dev/null | while IFS=$'\t' read -r group_id group_name; do
-    if [[ -n $group_id ]]; then
-        echo "Security group $group_id ($group_name) allows SSH (port 22) from anywhere" >&2
-        flag=1
-    fi
+	if [[ -n $group_id ]]; then
+		echo "Security group $group_id ($group_name) allows SSH (port 22) from anywhere" >&2
+		flag=1
+	fi
 done
 
 if [[ $flag == "1" ]]; then
-    exit ${RC_FAILED}
+	exit ${RC_FAILED}
 else
-    exit ${RC_OKAY}
+	exit ${RC_OKAY}
 fi

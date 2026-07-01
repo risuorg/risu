@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2021-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2021-2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -33,31 +33,31 @@ MORETHANONCE=$"is listed more than once on file"
 
 # Check that ceilo polling central is listed (controllers only)
 if is_process "polling-namespaces central"; then
-    if [[ ${RELEASE} -gt 7 ]]; then
-        strings="alarm_history_time_to_live event_time_to_live metering_time_to_live"
-    else
-        strings="time_to_live"
-    fi
-    for string in ${strings}; do
-        # check for string
-        if ! is_lineinfile ^${string} ${FILE}; then
-            echo "$string missing on file" >&2
-            RC=${RC_FAILED}
-        elif [[ $(grep -c -e ^${string} ${FILE}) -gt 1 ]]; then
-            echo -n "$string" >&2
-            echo " $MORETHANONCE" >&2
-            RC=${RC_FAILED}
-        else
-            if [[ $(grep -e ^${string} ${FILE} | cut -d "=" -f2) -le 0 ]]; then
-                echo $"ceilometer.conf setting must be updated:" >&2
-                RC=${RC_FAILED}
-                grep -e ^${string} ${FILE} >&2
-            fi
-        fi
-    done
+	if [[ ${RELEASE} -gt 7 ]]; then
+		strings="alarm_history_time_to_live event_time_to_live metering_time_to_live"
+	else
+		strings="time_to_live"
+	fi
+	for string in ${strings}; do
+		# check for string
+		if ! is_lineinfile ^${string} ${FILE}; then
+			echo "$string missing on file" >&2
+			RC=${RC_FAILED}
+		elif [[ $(grep -c -e ^${string} ${FILE}) -gt 1 ]]; then
+			echo -n "$string" >&2
+			echo " $MORETHANONCE" >&2
+			RC=${RC_FAILED}
+		else
+			if [[ $(grep -e ^${string} ${FILE} | cut -d "=" -f2) -le 0 ]]; then
+				echo $"ceilometer.conf setting must be updated:" >&2
+				RC=${RC_FAILED}
+				grep -e ^${string} ${FILE} >&2
+			fi
+		fi
+	done
 else
-    echo "Works only on controllers" >&2
-    RC=${RC_SKIPPED}
+	echo "Works only on controllers" >&2
+	RC=${RC_SKIPPED}
 fi
 
 exit ${RC}

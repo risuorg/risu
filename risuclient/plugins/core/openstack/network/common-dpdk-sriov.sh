@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2021-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2021-2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,37 +27,37 @@
 is_required_file "${RISU_ROOT}/etc/nova/nova.conf"
 
 if is_lineinfile "Intel" "${RISU_ROOT}/proc/cpuinfo"; then
-    if ! grep -qP "intel_iommu=on|iommu=pt" ${RISU_ROOT}/proc/cmdline; then
-        echo $"missing intel_iommu=on or iommu=pt on kernel cmdline" >&2
-        flag=1
-    fi
+	if ! grep -qP "intel_iommu=on|iommu=pt" ${RISU_ROOT}/proc/cmdline; then
+		echo $"missing intel_iommu=on or iommu=pt on kernel cmdline" >&2
+		flag=1
+	fi
 else
-    if ! is_lineinfile "amd_iommu=pt" "${RISU_ROOT}/proc/cmdline"; then
-        echo $"missing amd_iommu=pt on kernel cmdline" >&2
-        flag=1
-    fi
+	if ! is_lineinfile "amd_iommu=pt" "${RISU_ROOT}/proc/cmdline"; then
+		echo $"missing amd_iommu=pt on kernel cmdline" >&2
+		flag=1
+	fi
 fi
 
 if [[ -f "${RISU_ROOT}/etc/nova/nova.conf" ]]; then
-    VCPUPINSET=$(iniparser "${RISU_ROOT}/etc/nova/nova.conf" DEFAULT vcp_pin_set | tr ",\'\"" "\n")
+	VCPUPINSET=$(iniparser "${RISU_ROOT}/etc/nova/nova.conf" DEFAULT vcp_pin_set | tr ",\'\"" "\n")
 else
-    VCPUPINSET=''
+	VCPUPINSET=''
 fi
 
 if [[ -n ${VCPUPINSET} ]]; then
-    if ! is_lineinfile "cpu-partitioning" "${RISU_ROOT}/etc/tuned/active_profile"; then
-        echo $"missing tuned-profiles-cpu-partitioning package. cpu-partitioning tuned profile is recommended for SRIOV/DPDK workload" >&2
-        flag=1
-    fi
+	if ! is_lineinfile "cpu-partitioning" "${RISU_ROOT}/etc/tuned/active_profile"; then
+		echo $"missing tuned-profiles-cpu-partitioning package. cpu-partitioning tuned profile is recommended for SRIOV/DPDK workload" >&2
+		flag=1
+	fi
 fi
 
 if ! is_lineinfile "^enable_isolated_metadata.*rue" "${RISU_ROOT}/etc/neutron/dhcp_agent.ini"; then
-    echo $"missing Isolated metadata in neutron/dhcp_agent.ini" >&2
-    flag=1
+	echo $"missing Isolated metadata in neutron/dhcp_agent.ini" >&2
+	flag=1
 fi
 
 if [[ ${flag} -eq '1' ]]; then
-    exit ${RC_FAILED}
+	exit ${RC_FAILED}
 else
-    exit ${RC_OKAY}
+	exit ${RC_OKAY}
 fi

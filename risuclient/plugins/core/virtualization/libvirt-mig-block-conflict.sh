@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright (C) 2021-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2021-2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -28,16 +28,16 @@
 # check if we are running against compute
 
 if ! is_process nova-compute; then
-    echo "works only on compute node" >&2
-    exit ${RC_SKIPPED}
+	echo "works only on compute node" >&2
+	exit ${RC_SKIPPED}
 fi
 
 # we know the exact kernel versions for RHEL7 from https://access.redhat.com/articles/3078
 
 is_lineinfile "Conflicts with use by a block device" ${RISU_ROOT}/var/log/libvirt/qemu/instance*.log
 if [[ $? -gt 0 ]]; then
-    echo $"https://bugzilla.redhat.com/show_bug.cgi?id=1482478" >&2
-    exit ${RC_OKAY}
+	echo $"https://bugzilla.redhat.com/show_bug.cgi?id=1482478" >&2
+	exit ${RC_OKAY}
 else
-    exit ${RC_FAILED}
+	exit ${RC_FAILED}
 fi

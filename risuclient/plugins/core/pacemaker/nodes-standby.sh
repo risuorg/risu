@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2021-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2021-2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,24 +23,24 @@
 
 # we can run this against fs snapshot or live system
 if [[ ${RISU_LIVE} -eq 0 ]]; then
-    for CLUSTER_DIRECTORY in "pacemaker" "cluster"; do
-        if [[ -d "${RISU_ROOT}/sos_commands/${CLUSTER_DIRECTORY}" ]]; then
-            PCS_DIRECTORY="${RISU_ROOT}/sos_commands/${CLUSTER_DIRECTORY}"
-        fi
-    done
+	for CLUSTER_DIRECTORY in "pacemaker" "cluster"; do
+		if [[ -d "${RISU_ROOT}/sos_commands/${CLUSTER_DIRECTORY}" ]]; then
+			PCS_DIRECTORY="${RISU_ROOT}/sos_commands/${CLUSTER_DIRECTORY}"
+		fi
+	done
 
-    FILE="${PCS_DIRECTORY}/pcs_status"
+	FILE="${PCS_DIRECTORY}/pcs_status"
 elif [[ ${RISU_LIVE} -eq 1 ]]; then
-    is_required_command "pcs"
-    FILE=$(mktemp)
-    trap "rm ${FILE}" EXIT
-    pcs status >${FILE}
+	is_required_command "pcs"
+	FILE=$(mktemp)
+	trap "rm ${FILE}" EXIT
+	pcs status >${FILE}
 fi
 
 is_required_file ${FILE}
 if is_lineinfile "Node.*: standby" ${FILE}; then
-    echo "Nodes found in standby: " >&2
-    grep "Node.*standby" ${FILE} >&2
-    exit ${RC_FAILED}
+	echo "Nodes found in standby: " >&2
+	grep "Node.*standby" ${FILE} >&2
+	exit ${RC_FAILED}
 fi
 exit ${RC_OKAY}

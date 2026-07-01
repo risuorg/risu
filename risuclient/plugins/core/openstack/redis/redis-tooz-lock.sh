@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2021-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2021-2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,13 +27,13 @@
 is_required_file "${RISU_ROOT}/var/log/gnocchi/metricd.log"
 
 if is_lineinfile "ToozError: Cannot extend an unlocked lock" "${RISU_ROOT}/var/log/gnocchi/metricd.log"; then
-    if is_lineinfile "lock_timeout" "${RISU_ROOT}/etc/gnocchi/gnocchi.conf"; then
-        echo $"tooz: configured lock_timeout seems not to be enough" >&2
-        exit ${RC_FAILED}
-    else
-        echo $"tooz https://bugzilla.redhat.com/show_bug.cgi?id=1465385" >&2
-        exit ${RC_FAILED}
-    fi
+	if is_lineinfile "lock_timeout" "${RISU_ROOT}/etc/gnocchi/gnocchi.conf"; then
+		echo $"tooz: configured lock_timeout seems not to be enough" >&2
+		exit ${RC_FAILED}
+	else
+		echo $"tooz https://bugzilla.redhat.com/show_bug.cgi?id=1465385" >&2
+		exit ${RC_FAILED}
+	fi
 fi
 
 exit ${RC_OKAY}

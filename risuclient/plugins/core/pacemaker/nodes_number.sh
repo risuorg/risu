@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2021-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2021-2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,36 +24,36 @@
 # we can run this against fs snapshot or live system
 
 count_nodes() {
-    if [[ ! "$(echo $(((NUM_NODES - 1) % 2)))" -eq "0" ]]; then
-        echo "${NUM_NODES}" >&2
-        exit ${RC_FAILED}
-    elif [[ "x$NUM_NODES" == "x1" ]]; then
-        echo "${NUM_NODES}" >&2
-        exit ${RC_FAILED}
-    else
-        exit ${RC_OKAY}
-    fi
+	if [[ ! "$(echo $(((NUM_NODES - 1) % 2)))" -eq "0" ]]; then
+		echo "${NUM_NODES}" >&2
+		exit ${RC_FAILED}
+	elif [[ "x$NUM_NODES" == "x1" ]]; then
+		echo "${NUM_NODES}" >&2
+		exit ${RC_FAILED}
+	else
+		exit ${RC_OKAY}
+	fi
 }
 
 is_required_file "${RISU_ROOT}/etc/corosync/corosync.conf"
 
 if ! is_active pacemaker; then
-    echo "pacemaker is not running on this node" >&2
-    exit ${RC_SKIPPED}
+	echo "pacemaker is not running on this node" >&2
+	exit ${RC_SKIPPED}
 fi
 
 if [[ "x$RISU_LIVE" == "x1" ]]; then
-    NUM_NODES=$(pcs config | awk '/Pacemaker Nodes/ {getline; print $0}' | wc -w)
-    count_nodes
+	NUM_NODES=$(pcs config | awk '/Pacemaker Nodes/ {getline; print $0}' | wc -w)
+	count_nodes
 elif [[ "x$RISU_LIVE" == "x0" ]]; then
-    if is_active "pacemaker"; then
-        for CLUSTER_DIRECTORY in "pacemaker" "cluster"; do
-            if [[ -d "${RISU_ROOT}/sos_commands/${CLUSTER_DIRECTORY}" ]]; then
-                PCS_DIRECTORY="${RISU_ROOT}/sos_commands/${CLUSTER_DIRECTORY}"
-            fi
-        done
-        is_required_file "${PCS_DIRECTORY}/pcs_config"
-        NUM_NODES=$(awk '/Pacemaker Nodes/ {getline; print $0}' "${PCS_DIRECTORY}/pcs_config" | wc -w)
-        count_nodes
-    fi
+	if is_active "pacemaker"; then
+		for CLUSTER_DIRECTORY in "pacemaker" "cluster"; do
+			if [[ -d "${RISU_ROOT}/sos_commands/${CLUSTER_DIRECTORY}" ]]; then
+				PCS_DIRECTORY="${RISU_ROOT}/sos_commands/${CLUSTER_DIRECTORY}"
+			fi
+		done
+		is_required_file "${PCS_DIRECTORY}/pcs_config"
+		NUM_NODES=$(awk '/Pacemaker Nodes/ {getline; print $0}' "${PCS_DIRECTORY}/pcs_config" | wc -w)
+		count_nodes
+	fi
 fi

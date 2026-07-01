@@ -1,6 +1,7 @@
 #!/bin/bash
 
-# Copyright (C) 2024 Pablo Iranzo Gómez (Pablo.Iranzo@gmail.com)
+# Copyright (C) 2018 David Valle Delisle <dvd@redhat.com>
+# Copyright (C) 2021, 2022, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -29,91 +30,91 @@ DISK_CRITICAL_THRESHOLD=95
 ISSUES_FOUND=0
 
 if [[ "x$RISU_LIVE" == "x1" ]]; then
-    # Get current disk usage with filesystem type information
-    if command -v df >/dev/null 2>&1; then
-        # Get disk usage for all mounted filesystems with type information
-        while IFS= read -r line; do
-            # Skip header and special filesystems
-            [[ $line =~ ^Filesystem ]] && continue
-            [[ $line =~ ^tmpfs ]] && continue
-            [[ $line =~ ^devtmpfs ]] && continue
-            [[ $line =~ ^/dev/loop ]] && continue
-            [[ $line =~ ^udev ]] && continue
+	# Get current disk usage with filesystem type information
+	if command -v df >/dev/null 2>&1; then
+		# Get disk usage for all mounted filesystems with type information
+		while IFS= read -r line; do
+			# Skip header and special filesystems
+			[[ $line =~ ^Filesystem ]] && continue
+			[[ $line =~ ^tmpfs ]] && continue
+			[[ $line =~ ^devtmpfs ]] && continue
+			[[ $line =~ ^/dev/loop ]] && continue
+			[[ $line =~ ^udev ]] && continue
 
-            FILESYSTEM=$(echo "$line" | awk '{print $1}')
-            FSTYPE=$(echo "$line" | awk '{print $2}')
-            USAGE=$(echo "$line" | awk '{print $6}' | tr -d '%')
-            MOUNTPOINT=$(echo "$line" | awk '{print $7}')
+			FILESYSTEM=$(echo "$line" | awk '{print $1}')
+			FSTYPE=$(echo "$line" | awk '{print $2}')
+			USAGE=$(echo "$line" | awk '{print $6}' | tr -d '%')
+			MOUNTPOINT=$(echo "$line" | awk '{print $7}')
 
-            # Skip optical media filesystems (DVDs/CDs) and devices
-            case "$FSTYPE" in
-            "iso9660" | "udf")
-                continue
-                ;;
-            esac
+			# Skip optical media filesystems (DVDs/CDs) and devices
+			case "$FSTYPE" in
+			"iso9660" | "udf")
+				continue
+				;;
+			esac
 
-            # Skip optical drive devices
-            case "$FILESYSTEM" in
-            /dev/sr* | /dev/cdrom* | /dev/dvd*)
-                continue
-                ;;
-            esac
+			# Skip optical drive devices
+			case "$FILESYSTEM" in
+			/dev/sr* | /dev/cdrom* | /dev/dvd*)
+				continue
+				;;
+			esac
 
-            if [[ $USAGE =~ ^[0-9]+$ ]]; then
-                if [[ $USAGE -ge $DISK_CRITICAL_THRESHOLD ]]; then
-                    echo "CRITICAL: Disk usage on $FILESYSTEM ($MOUNTPOINT) is ${USAGE}% (threshold: ${DISK_CRITICAL_THRESHOLD}%)" >&2
-                    ISSUES_FOUND=1
-                elif [[ $USAGE -ge $DISK_WARNING_THRESHOLD ]]; then
-                    echo "WARNING: Disk usage on $FILESYSTEM ($MOUNTPOINT) is ${USAGE}% (threshold: ${DISK_WARNING_THRESHOLD}%)" >&2
-                    ISSUES_FOUND=1
-                fi
-            fi
-        done < <(df -T | grep -v "^Filesystem")
-    else
-        echo "df command not available" >&2
-        exit $RC_SKIPPED
-    fi
+			if [[ $USAGE =~ ^[0-9]+$ ]]; then
+				if [[ $USAGE -ge $DISK_CRITICAL_THRESHOLD ]]; then
+					echo "CRITICAL: Disk usage on $FILESYSTEM ($MOUNTPOINT) is ${USAGE}% (threshold: ${DISK_CRITICAL_THRESHOLD}%)" >&2
+					ISSUES_FOUND=1
+				elif [[ $USAGE -ge $DISK_WARNING_THRESHOLD ]]; then
+					echo "WARNING: Disk usage on $FILESYSTEM ($MOUNTPOINT) is ${USAGE}% (threshold: ${DISK_WARNING_THRESHOLD}%)" >&2
+					ISSUES_FOUND=1
+				fi
+			fi
+		done < <(df -T | grep -v "^Filesystem")
+	else
+		echo "df command not available" >&2
+		exit $RC_SKIPPED
+	fi
 else
-    # Check sosreport for disk usage
-    if [[ -f "${RISU_ROOT}/df" ]]; then
-        while IFS= read -r line; do
-            # Skip header and special filesystems
-            [[ $line =~ ^Filesystem ]] && continue
-            [[ $line =~ ^tmpfs ]] && continue
-            [[ $line =~ ^devtmpfs ]] && continue
-            [[ $line =~ ^/dev/loop ]] && continue
-            [[ $line =~ ^udev ]] && continue
+	# Check sosreport for disk usage
+	if [[ -f "${RISU_ROOT}/df" ]]; then
+		while IFS= read -r line; do
+			# Skip header and special filesystems
+			[[ $line =~ ^Filesystem ]] && continue
+			[[ $line =~ ^tmpfs ]] && continue
+			[[ $line =~ ^devtmpfs ]] && continue
+			[[ $line =~ ^/dev/loop ]] && continue
+			[[ $line =~ ^udev ]] && continue
 
-            USAGE=$(echo "$line" | awk '{print $5}' | tr -d '%')
-            FILESYSTEM=$(echo "$line" | awk '{print $1}')
-            MOUNTPOINT=$(echo "$line" | awk '{print $6}')
+			USAGE=$(echo "$line" | awk '{print $5}' | tr -d '%')
+			FILESYSTEM=$(echo "$line" | awk '{print $1}')
+			MOUNTPOINT=$(echo "$line" | awk '{print $6}')
 
-            # Skip optical drive devices in sosreport mode
-            case "$FILESYSTEM" in
-            /dev/sr* | /dev/cdrom* | /dev/dvd*)
-                continue
-                ;;
-            esac
+			# Skip optical drive devices in sosreport mode
+			case "$FILESYSTEM" in
+			/dev/sr* | /dev/cdrom* | /dev/dvd*)
+				continue
+				;;
+			esac
 
-            if [[ $USAGE =~ ^[0-9]+$ ]]; then
-                if [[ $USAGE -ge $DISK_CRITICAL_THRESHOLD ]]; then
-                    echo "CRITICAL: Disk usage on $FILESYSTEM ($MOUNTPOINT) was ${USAGE}% (threshold: ${DISK_CRITICAL_THRESHOLD}%)" >&2
-                    ISSUES_FOUND=1
-                elif [[ $USAGE -ge $DISK_WARNING_THRESHOLD ]]; then
-                    echo "WARNING: Disk usage on $FILESYSTEM ($MOUNTPOINT) was ${USAGE}% (threshold: ${DISK_WARNING_THRESHOLD}%)" >&2
-                    ISSUES_FOUND=1
-                fi
-            fi
-        done <"${RISU_ROOT}/df"
-    else
-        echo "df file not found in sosreport" >&2
-        exit $RC_SKIPPED
-    fi
+			if [[ $USAGE =~ ^[0-9]+$ ]]; then
+				if [[ $USAGE -ge $DISK_CRITICAL_THRESHOLD ]]; then
+					echo "CRITICAL: Disk usage on $FILESYSTEM ($MOUNTPOINT) was ${USAGE}% (threshold: ${DISK_CRITICAL_THRESHOLD}%)" >&2
+					ISSUES_FOUND=1
+				elif [[ $USAGE -ge $DISK_WARNING_THRESHOLD ]]; then
+					echo "WARNING: Disk usage on $FILESYSTEM ($MOUNTPOINT) was ${USAGE}% (threshold: ${DISK_WARNING_THRESHOLD}%)" >&2
+					ISSUES_FOUND=1
+				fi
+			fi
+		done <"${RISU_ROOT}/df"
+	else
+		echo "df file not found in sosreport" >&2
+		exit $RC_SKIPPED
+	fi
 fi
 
 if [[ $ISSUES_FOUND -eq 1 ]]; then
-    exit $RC_FAILED
+	exit $RC_FAILED
 else
-    echo "All disk usage levels are within acceptable thresholds" >&2
-    exit $RC_OKAY
+	echo "All disk usage levels are within acceptable thresholds" >&2
+	exit $RC_OKAY
 fi

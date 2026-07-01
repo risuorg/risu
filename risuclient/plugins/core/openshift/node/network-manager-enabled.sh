@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2021-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2021-2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,14 +24,14 @@
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
 if is_enabled atomic-openshift-node; then
-    if is_enabled ^NetworkManager.service; then
-        echo 'OpenShift and NetworkManager are both enabled' >&2
-        exit ${RC_OKAY}
-    else
-        echo 'OpenShift nodes require NetworkManager to be enabled' >&2
-        exit ${RC_FAILED}
-    fi
+	if is_enabled ^NetworkManager.service; then
+		echo 'OpenShift and NetworkManager are both enabled' >&2
+		exit ${RC_OKAY}
+	else
+		echo 'OpenShift nodes require NetworkManager to be enabled' >&2
+		exit ${RC_FAILED}
+	fi
 else
-    echo 'atomic-openshift-node is not enabled' >&2
-    exit ${RC_SKIPPED}
+	echo 'atomic-openshift-node is not enabled' >&2
+	exit ${RC_SKIPPED}
 fi

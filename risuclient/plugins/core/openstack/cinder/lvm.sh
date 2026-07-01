@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2021-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2021-2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -25,8 +25,8 @@
 is_required_file ${RISU_ROOT}/ps
 
 if is_process nova-compute; then
-    echo "works only on controller node" >&2
-    exit ${RC_SKIPPED}
+	echo "works only on controller node" >&2
+	exit ${RC_SKIPPED}
 fi
 FILE=${RISU_ROOT}/etc/cinder/cinder.conf
 string=volume_driver
@@ -36,10 +36,10 @@ RC=${RC_OKAY}
 is_required_file ${FILE}
 
 if is_lineinfile ${string} ${FILE}; then
-    if [[ $(grep -e ^${string} ${FILE} | cut -d "=" -f2 | grep ${substring} | wc -l) -gt 0 ]]; then
-        grep -e ^${string} ${FILE} >&2
-        RC=${RC_FAILED}
-    fi
+	if [[ $(grep -e ^${string} ${FILE} | cut -d "=" -f2 | grep ${substring} | wc -l) -gt 0 ]]; then
+		grep -e ^${string} ${FILE} >&2
+		RC=${RC_FAILED}
+	fi
 fi
 
 exit ${RC}

@@ -1,6 +1,7 @@
 #!/bin/bash
 
-# Copyright (C) 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2018 David Valle Delisle <dvd@redhat.com>
+# Copyright (C) 2018, 2021, 2022, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,24 +28,24 @@
 flag=0
 
 if is_lineinfile "Intel" "${RISU_ROOT}/proc/cpuinfo"; then
-    if ! grep -qP "intel_iommu=on|iommu=pt" ${RISU_ROOT}/proc/cmdline; then
-        echo $"missing intel_iommu=on or iommu=pt on kernel cmdline" >&2
-        flag=1
-    fi
+	if ! grep -qP "intel_iommu=on|iommu=pt" ${RISU_ROOT}/proc/cmdline; then
+		echo $"missing intel_iommu=on or iommu=pt on kernel cmdline" >&2
+		flag=1
+	fi
 else
-    if ! is_lineinfile "amd_iommu=pt" "${RISU_ROOT}/proc/cmdline"; then
-        echo $"missing amd_iommu=pt on kernel cmdline" >&2
-        flag=1
-    fi
+	if ! is_lineinfile "amd_iommu=pt" "${RISU_ROOT}/proc/cmdline"; then
+		echo $"missing amd_iommu=pt on kernel cmdline" >&2
+		flag=1
+	fi
 fi
 
 if ! grep -qP "isolcpus=" ${RISU_ROOT}/proc/cmdline; then
-    echo $"missing solcpus on kernel cmdline" >&2
-    flag=1
+	echo $"missing solcpus on kernel cmdline" >&2
+	flag=1
 fi
 
 if [[ ${flag} -eq '1' ]]; then
-    exit ${RC_FAILED}
+	exit ${RC_FAILED}
 else
-    exit ${RC_OKAY}
+	exit ${RC_OKAY}
 fi

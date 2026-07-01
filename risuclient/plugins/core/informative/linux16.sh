@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright (C) 2024 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2024, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -30,11 +30,11 @@ is_required_file ${MYFILE}
 RC=${RC_OKAY}
 
 if is_lineinfile ^linux16.* ${MYFILE}; then
-    RC=${RC_INFO}
-    echo "linux16 entry detected in ${MYFILE}" >&2
+	RC=${RC_INFO}
+	echo "linux16 entry detected in ${MYFILE}" >&2
 fi
 if is_lineinfile ^initrd16.* ${MYFILE}; then
-    RC=${RC_INFO}
-    echo "initrd16 entry detected in ${MYFILE}" >&2
+	RC=${RC_INFO}
+	echo "initrd16 entry detected in ${MYFILE}" >&2
 fi
 exit ${RC}

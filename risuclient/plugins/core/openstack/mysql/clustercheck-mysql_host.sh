@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2021-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2021-2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,15 +24,15 @@
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
 if is_process nova-compute; then
-    echo "works only on controller node" >&2
-    exit ${RC_SKIPPED}
+	echo "works only on controller node" >&2
+	exit ${RC_SKIPPED}
 fi
 
 is_required_file "${RISU_ROOT}/etc/sysconfig/clustercheck"
 if is_lineinfile "^MYSQL_HOST[ \t]*=[ \t]*localhost$" "${RISU_ROOT}/etc/sysconfig/clustercheck"; then
-    exit ${RC_OKAY}
+	exit ${RC_OKAY}
 else
-    echo $"clustercheck variable MYSQL_HOST should be set to localhost." >&2
-    grep "^MYSQL_HOST" "${RISU_ROOT}/etc/sysconfig/clustercheck" >&2
-    exit ${RC_FAILED}
+	echo $"clustercheck variable MYSQL_HOST should be set to localhost." >&2
+	grep "^MYSQL_HOST" "${RISU_ROOT}/etc/sysconfig/clustercheck" >&2
+	exit ${RC_FAILED}
 fi

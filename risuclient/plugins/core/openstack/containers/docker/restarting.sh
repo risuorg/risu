@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (C) 2021-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2021-2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -26,21 +26,21 @@
 is_required_containerized
 
 if [[ ${RISU_LIVE} -eq 0 ]]; then
-    is_required_file "${RISU_ROOT}/sos_commands/docker/docker_ps"
-    FILE="${RISU_ROOT}/sos_commands/docker/docker_ps"
+	is_required_file "${RISU_ROOT}/sos_commands/docker/docker_ps"
+	FILE="${RISU_ROOT}/sos_commands/docker/docker_ps"
 elif [[ ${RISU_LIVE} -eq 1 ]]; then
-    FILE=$(mktemp)
-    trap "rm ${FILE}" EXIT
-    docker ps >${FILE}
+	FILE=$(mktemp)
+	trap "rm ${FILE}" EXIT
+	docker ps >${FILE}
 fi
 
 ncontainers=$(grep -v NAMES "${FILE}" | wc -l)
 restarting_containers=$(grep -i -c restarting "${FILE}")
 if [[ ${restarting_containers} -ge "1" ]]; then
-    echo $"restarting containers detected (${restarting_containers}/${ncontainers}):" >&2
-    grep -i "restarting" "${FILE}" | awk '{print $NF}' >&2
-    exit ${RC_FAILED}
+	echo $"restarting containers detected (${restarting_containers}/${ncontainers}):" >&2
+	grep -i "restarting" "${FILE}" | awk '{print $NF}' >&2
+	exit ${RC_FAILED}
 else
-    echo $"no restarting containers detected" >&2
-    exit ${RC_OKAY}
+	echo $"no restarting containers detected" >&2
+	exit ${RC_OKAY}
 fi

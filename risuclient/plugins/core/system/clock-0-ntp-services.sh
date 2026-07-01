@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright (C) 2021-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2021-2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -28,13 +28,13 @@ is_active ntpd && ntpd=1 || ntpd=0
 is_active chronyd && chronyd=1 || chronyd=0
 
 if [[ ntpd -eq 1 && chronyd -eq 1 ]]; then
-    echo $"both ntpd and chrony are active" >&2
-    exit ${RC_FAILED}
+	echo $"both ntpd and chrony are active" >&2
+	exit ${RC_FAILED}
 elif [[ ntpd -eq 1 || chronyd -eq 1 ]]; then
-    exit ${RC_OKAY}
+	exit ${RC_OKAY}
 else
-    echo $"both chrony or ntpd are not active" >&2
-    exit ${RC_FAILED}
+	echo $"both chrony or ntpd are not active" >&2
+	exit ${RC_FAILED}
 fi
 
 exit ${RC_SKIPPED}

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright (C) 2021-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2021-2023, 2025 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,28 +23,28 @@
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
 if ! is_active chronyd; then
-    echo "chronyd is not running on this node" >&2
-    exit ${RC_SKIPPED}
+	echo "chronyd is not running on this node" >&2
+	exit ${RC_SKIPPED}
 fi
 
 is_required_file "${RISU_ROOT}/etc/chrony.conf"
 ncount=$(grep -c -E '^(peer|server)' "${RISU_ROOT}/etc/chrony.conf")
 
 if [[ $ncount -ge "4" ]]; then
-    echo $"chronyd have a sufficient number of sources to choose from:" >&2
-    flag=0
+	echo $"chronyd have a sufficient number of sources to choose from:" >&2
+	flag=0
 elif [[ $ncount -eq "3" ]]; then
-    echo $"chronyd have minimum number of time sources needed to allow chronyd to detect 'falseticker':" >&2
-    flag=1
+	echo $"chronyd have minimum number of time sources needed to allow chronyd to detect 'falseticker':" >&2
+	flag=1
 elif [[ $ncount -eq "2" ]]; then
-    echo $"chronyd have the worst possible configuration -- you'd be better off using just one ntp server:" >&2
-    flag=1
+	echo $"chronyd have the worst possible configuration -- you'd be better off using just one ntp server:" >&2
+	flag=1
 elif [[ $ncount -eq "1" ]]; then
-    echo $"chronyd configured with one server, if that one goes down, you are toast:" >&2
-    flag=1
+	echo $"chronyd configured with one server, if that one goes down, you are toast:" >&2
+	flag=1
 else
-    echo $"chronyd not configured" >&2
-    exit ${RC_FAILED}
+	echo $"chronyd not configured" >&2
+	exit ${RC_FAILED}
 fi
 grep -E '^(peer|server)' "${RISU_ROOT}/etc/chrony.conf" >&2
 [[ "x$flag" == "x0" ]] && exit ${RC_OKAY} || exit ${RC_FAILED}
