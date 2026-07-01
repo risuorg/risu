@@ -54,7 +54,7 @@ main() {
 	fi
 
 	# Example: Check if a service is running (live mode)
-	if [[ "x${RISU_LIVE}" == "x1" ]]; then
+	if [[ ${RISU_LIVE} == "1" ]]; then
 		if ! is_active "example-service"; then
 			echo "example-service is not active" >&2
 			rc=${RC_FAILED}
@@ -79,7 +79,7 @@ main() {
 	#     rc=${RC_FAILED}
 	# fi
 
-	exit ${rc}
+	exit "${rc}"
 }
 
 # Run main function
