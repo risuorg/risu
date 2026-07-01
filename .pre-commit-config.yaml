@@ -89,8 +89,7 @@ repos:
     rev: 0.2.3 # or other specific tag
     hooks:
       - id: yamlfmt
-        args:
-          [--mapping, "2", --sequence, "4", --offset, "2", "--preserve-quotes"]
+        args: [--mapping, "2", --sequence, "4", --offset, "2", "--preserve-quotes"]
 
   # Risu plugin validation
   - repo: local

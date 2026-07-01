@@ -16,54 +16,54 @@
 # bugzilla: https://bugzilla.redhat.com/show_bug.cgi?id=XXXXX
 # kb: https://access.redhat.com/solutions/XXXXX
 
-- name: "Check example configuration"
-  hosts: localhost
-  gather_facts: yes
-  become: no
-  vars:
+  - name: "Check example configuration"
+    hosts: localhost
+    gather_facts: yes
+    become: no
+    vars:
     # Define return codes
-    RC_OKAY: 10
-    RC_FAILED: 20
-    RC_SKIPPED: 30
-    RC_INFO: 40
+      RC_OKAY: 10
+      RC_FAILED: 20
+      RC_SKIPPED: 30
+      RC_INFO: 40
 
     # Define paths based on mode
-    risu_root: "{{ lookup('env', 'RISU_ROOT') | default('/', true) }}"
-    config_file: "{{ risu_root }}/etc/example/config.conf"
+      risu_root: "{{ lookup('env', 'RISU_ROOT') | default('/', true) }}"
+      config_file: "{{ risu_root }}/etc/example/config.conf"
 
-  tasks:
+    tasks:
     # Check if running in live or snapshot mode
-    - name: "Detect execution mode"
-      set_fact:
-        is_live: "{{ lookup('env', 'RISU_LIVE') == '1' }}"
+      - name: "Detect execution mode"
+        set_fact:
+          is_live: "{{ lookup('env', 'RISU_LIVE') == '1' }}"
 
     # Skip if required file doesn't exist
-    - name: "Check if config file exists"
-      stat:
-        path: "{{ config_file }}"
-      register: config_stat
+      - name: "Check if config file exists"
+        stat:
+          path: "{{ config_file }}"
+        register: config_stat
 
-    - name: "Skip if config file missing"
-      fail:
-        msg: "SKIPPED: Required file {{ config_file }} not found"
-      when: not config_stat.stat.exists
-      ignore_errors: yes
+      - name: "Skip if config file missing"
+        fail:
+          msg: "SKIPPED: Required file {{ config_file }} not found"
+        when: not config_stat.stat.exists
+        ignore_errors: yes
 
     # Perform actual check
-    - name: "Read configuration file"
-      slurp:
-        src: "{{ config_file }}"
-      register: config_content
-      when: config_stat.stat.exists
+      - name: "Read configuration file"
+        slurp:
+          src: "{{ config_file }}"
+        register: config_content
+        when: config_stat.stat.exists
 
-    - name: "Check for problematic settings"
-      set_fact:
-        has_issue: "{{ 'problematic_setting' in (config_content.content | b64decode) }}"
-      when: config_stat.stat.exists
+      - name: "Check for problematic settings"
+        set_fact:
+          has_issue: "{{ 'problematic_setting' in (config_content.content | b64decode) }}"
+        when: config_stat.stat.exists
 
     # Set exit code based on result
-    - name: "Report result"
-      debug:
-        msg: "{{ 'FAILED: Problematic setting found' if has_issue else 'OK: No issues detected' }}"
-      failed_when: has_issue
-      when: config_stat.stat.exists
+      - name: "Report result"
+        debug:
+          msg: "{{ 'FAILED: Problematic setting found' if has_issue else 'OK: No issues detected' }}"
+        failed_when: has_issue
+        when: config_stat.stat.exists
