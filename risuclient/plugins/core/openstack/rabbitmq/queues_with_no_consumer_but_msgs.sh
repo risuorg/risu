@@ -23,47 +23,47 @@
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
 if is_process nova-compute; then
-    echo "works only on controller node" >&2
-    exit ${RC_SKIPPED}
+	echo "works only on controller node" >&2
+	exit ${RC_SKIPPED}
 fi
 
 # Setup the file we'll be using for using similar approach on Live and non-live
 
 if [[ "x$RISU_LIVE" == "x1" ]]; then
-    which rabbitmqctl >/dev/null 2>&1
-    RC=$?
-    if [[ "x$RC" != "x0" ]]; then
-        echo "rabbitmqctl not found" >&2
-        exit ${RC_SKIPPED}
-    fi
-    FILE=$(mktemp)
-    trap "rm ${FILE}" EXIT
+	which rabbitmqctl >/dev/null 2>&1
+	RC=$?
+	if [[ "x$RC" != "x0" ]]; then
+		echo "rabbitmqctl not found" >&2
+		exit ${RC_SKIPPED}
+	fi
+	FILE=$(mktemp)
+	trap "rm ${FILE}" EXIT
 
-    rabbitmqctl report >${FILE}
-    HN=${HOSTNAME}
+	rabbitmqctl report >${FILE}
+	HN=${HOSTNAME}
 
 elif [[ "x$RISU_LIVE" == "x0" ]]; then
-    FILE="${RISU_ROOT}/sos_commands/rabbitmq/rabbitmqctl_report"
-    is_required_file ${FILE}
-    HN=$(cat ${RISU_ROOT}/hostname)
+	FILE="${RISU_ROOT}/sos_commands/rabbitmq/rabbitmqctl_report"
+	is_required_file ${FILE}
+	HN=$(cat ${RISU_ROOT}/hostname)
 fi
 
 if grep -q nodedown "${FILE}"; then
-    echo "rabbitmq down" >&2
-    exit ${RC_FAILED}
+	echo "rabbitmq down" >&2
+	exit ${RC_FAILED}
 fi
 
 # get queue section from rabbitmq report +
 # check if we have queues with no consumer $11 +
 # AND message count > 0 $10
 QUEUES_WITH_NO_MSG=$(sed -n '/^Queues/,/^Exchanges/p' "${FILE}" |
-    awk '$11 == 0 && $10 > 0 { print $2" "$10" "$11; }')
+	awk '$11 == 0 && $10 > 0 { print $2" "$10" "$11; }')
 
 if [[ -n ${QUEUES_WITH_NO_MSG} ]]; then
-    echo "queue with no consumer found!" >&2
-    echo "queue / messages / consumer" >&2
-    echo "${QUEUES_WITH_NO_MSG}" >&2
-    exit ${RC_FAILED}
+	echo "queue with no consumer found!" >&2
+	echo "queue / messages / consumer" >&2
+	echo "${QUEUES_WITH_NO_MSG}" >&2
+	exit ${RC_FAILED}
 fi
 
 exit ${RC_OKAY}

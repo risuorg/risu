@@ -23,25 +23,25 @@ FOLDER=$3
 
 case $2 in
 pass)
-    mkdir -p ${FOLDER}
-    # Touch the systemctl command we check
-    mkdir -p "$FOLDER/var/log/httpd/"
-    echo "" >"$FOLDER/var/log/httpd/error_log"
-    ;;
+	mkdir -p ${FOLDER}
+	# Touch the systemctl command we check
+	mkdir -p "$FOLDER/var/log/httpd/"
+	echo "" >"$FOLDER/var/log/httpd/error_log"
+	;;
 
 fail)
-    mkdir -p ${FOLDER}
-    # Touch the systemctl command we check
-    mkdir -p "$FOLDER/var/log/httpd/"
-    echo "MaxRequestWorkers" >"$FOLDER/var/log/httpd/error_log"
-    ;;
+	mkdir -p ${FOLDER}
+	# Touch the systemctl command we check
+	mkdir -p "$FOLDER/var/log/httpd/"
+	echo "MaxRequestWorkers" >"$FOLDER/var/log/httpd/error_log"
+	;;
 
 skipped)
-    # Do nothing, the folder will be empty and test should be skipped
-    ;;
+	# Do nothing, the folder will be empty and test should be skipped
+	;;
 
 *)
-    echo "Unexpected mode '$2'!"
-    exit 2
-    ;;
+	echo "Unexpected mode '$2'!"
+	exit 2
+	;;
 esac

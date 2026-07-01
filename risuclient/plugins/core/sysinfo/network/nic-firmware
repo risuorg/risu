@@ -23,13 +23,13 @@
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
 if [[ "x$RISU_LIVE" == "x0" ]]; then
-    for interface in $(ls ${RISU_ROOT}/sos_commands/networking/ethtool_-i*); do
-        NIC=$(echo ${interface} | cut -d "_" -f 4-)
-        echo "${NIC}: $(cat ${interface} | grep -E '^(firmware-version)' | cut -d ':' -f 2- | xargs echo)" >&2
-    done
+	for interface in $(ls ${RISU_ROOT}/sos_commands/networking/ethtool_-i*); do
+		NIC=$(echo ${interface} | cut -d "_" -f 4-)
+		echo "${NIC}: $(cat ${interface} | grep -E '^(firmware-version)' | cut -d ':' -f 2- | xargs echo)" >&2
+	done
 else
-    for interface in $(ls -d /sys/class/net/*/device | cut -d/ -f5); do
-        echo "${interface}: $(ethtool -i ${interface} | grep -E '^(firmware-version)' | cut -d ':' -f 2- | xargs echo)" >&2
-    done
+	for interface in $(ls -d /sys/class/net/*/device | cut -d/ -f5); do
+		echo "${interface}: $(ethtool -i ${interface} | grep -E '^(firmware-version)' | cut -d ':' -f 2- | xargs echo)" >&2
+	done
 fi
 exit ${RC_INFO}

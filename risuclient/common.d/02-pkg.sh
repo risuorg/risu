@@ -18,43 +18,43 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 is_pkg() {
-    OSVERSION=$(discover_os)
-    if [ "${OSVERSION}" = "fedora" ]; then
-        is_rpm $*
-    elif [ "${OSVERSION}" = "debian" ]; then
-        is_dpkg $*
-    fi
+	OSVERSION=$(discover_os)
+	if [ "${OSVERSION}" = "fedora" ]; then
+		is_rpm $*
+	elif [ "${OSVERSION}" = "debian" ]; then
+		is_dpkg $*
+	fi
 }
 
 is_required_pkg() {
-    if ! is_pkg $1 >/dev/null 2>&1; then
-        echo "required package $1 not found." >&2
-        exit ${RC_SKIPPED}
-    fi
+	if ! is_pkg $1 >/dev/null 2>&1; then
+		echo "required package $1 not found." >&2
+		exit ${RC_SKIPPED}
+	fi
 }
 
 is_pkg_over() {
-    is_required_pkg $1
-    VERSION=$(is_pkg $1 | sort -V | tail -1)
-    LATEST=$(echo ${VERSION} $2 | tr " " "\n" | sort -V | tail -1)
+	is_required_pkg $1
+	VERSION=$(is_pkg $1 | sort -V | tail -1)
+	LATEST=$(echo ${VERSION} $2 | tr " " "\n" | sort -V | tail -1)
 
-    if [ "$(echo ${VERSION} $2 | tr " " "\n" | sort -V | uniq | wc -l)" == "1" ]; then
-        # Version and $2 are the same (only one line, so we're on latest)
-        return 0
-    fi
+	if [ "$(echo ${VERSION} $2 | tr " " "\n" | sort -V | uniq | wc -l)" == "1" ]; then
+		# Version and $2 are the same (only one line, so we're on latest)
+		return 0
+	fi
 
-    if [ "$VERSION" != "$LATEST" ]; then
-        # "package $1 version $VERSION is lower than required ($2)."
-        return 1
-    fi
-    return 0
+	if [ "$VERSION" != "$LATEST" ]; then
+		# "package $1 version $VERSION is lower than required ($2)."
+		return 1
+	fi
+	return 0
 }
 
 is_required_pkg_over() {
-    is_required_pkg $1
-    VERSION=$(is_pkg $1 2>&1 | sort -V | tail -1)
-    if ! is_pkg_over "${@}"; then
-        echo "package $1 version $VERSION is lower than required ($2)." >&2
-        exit ${RC_SKIPPED}
-    fi
+	is_required_pkg $1
+	VERSION=$(is_pkg $1 2>&1 | sort -V | tail -1)
+	if ! is_pkg_over "${@}"; then
+		echo "package $1 version $VERSION is lower than required ($2)." >&2
+		exit ${RC_SKIPPED}
+	fi
 }

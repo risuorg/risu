@@ -23,27 +23,27 @@ FOLDER=$3
 
 case $2 in
 pass)
-    mkdir -p ${FOLDER}
-    touch ${FOLDER}/installed-rpms
-    # Touch the crontab and populate
-    mkdir -p "$FOLDER/var/spool/cron/"
-    echo "1 * * * * keystone-manage token_flush" >"$FOLDER/var/spool/cron/keystone"
-    ;;
+	mkdir -p ${FOLDER}
+	touch ${FOLDER}/installed-rpms
+	# Touch the crontab and populate
+	mkdir -p "$FOLDER/var/spool/cron/"
+	echo "1 * * * * keystone-manage token_flush" >"$FOLDER/var/spool/cron/keystone"
+	;;
 
 fail)
-    mkdir -p ${FOLDER}
-    touch ${FOLDER}/installed-rpms
-    # Touch the crontab and populate
-    mkdir -p "$FOLDER/var/spool/cron/"
-    echo "1 0 * * * keystone-manage token_flush" >"$FOLDER/var/spool/cron/keystone"
-    ;;
+	mkdir -p ${FOLDER}
+	touch ${FOLDER}/installed-rpms
+	# Touch the crontab and populate
+	mkdir -p "$FOLDER/var/spool/cron/"
+	echo "1 0 * * * keystone-manage token_flush" >"$FOLDER/var/spool/cron/keystone"
+	;;
 
 skipped)
-    # Do nothing, the folder will be empty and test should be skipped
-    ;;
+	# Do nothing, the folder will be empty and test should be skipped
+	;;
 
 *)
-    echo "Unexpected mode '$2'!"
-    exit 2
-    ;;
+	echo "Unexpected mode '$2'!"
+	exit 2
+	;;
 esac

@@ -68,7 +68,7 @@ repos:
         args:
           - -w
           - -i
-          - "4"
+          - "0" # 0 = use tabs (default for shell scripts)
           - -s
         types:
           - shell

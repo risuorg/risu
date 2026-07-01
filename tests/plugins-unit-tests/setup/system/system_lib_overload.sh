@@ -23,9 +23,9 @@ FOLDER=$3
 
 case $2 in
 pass1)
-    # only system libraries
-    mkdir -p ${FOLDER}/sos_commands/libraries
-    cat >"${FOLDER}/sos_commands/libraries/ldconfig_-p_-N_-X" <<EOF
+	# only system libraries
+	mkdir -p ${FOLDER}/sos_commands/libraries
+	cat >"${FOLDER}/sos_commands/libraries/ldconfig_-p_-N_-X" <<EOF
 28 libs found in cache '/etc/ld.so.cache'
         p11-kit-trust.so (libc6,x86-64) => /lib64/p11-kit-trust.so
         libzapojit-0.0.so.0 (libc6,x86-64) => /lib64/libzapojit-0.0.so.0
@@ -56,12 +56,12 @@ pass1)
         ld-linux.so.2 (ELF) => /lib/ld-linux.so.2
         ld-linux-x86-64.so.2 (libc6,x86-64) => /lib64/ld-linux-x86-64.so.2
 EOF
-    ;;
+	;;
 
 pass2)
-    # some non-system libraries but not overloading system libraries (/my/path)
-    mkdir -p ${FOLDER}/sos_commands/libraries
-    cat >"${FOLDER}/sos_commands/libraries/ldconfig_-p_-N_-X" <<EOF
+	# some non-system libraries but not overloading system libraries (/my/path)
+	mkdir -p ${FOLDER}/sos_commands/libraries
+	cat >"${FOLDER}/sos_commands/libraries/ldconfig_-p_-N_-X" <<EOF
 28 libs found in cache '/etc/ld.so.cache'
         p11-kit-trust.so (libc6,x86-64) => /lib64/p11-kit-trust.so
         libzapojit-0.0.so.0 (libc6,x86-64) => /lib64/libzapojit-0.0.so.0
@@ -92,14 +92,14 @@ pass2)
         ld-linux.so.2 (ELF) => /lib/ld-linux.so.2
         ld-linux-x86-64.so.2 (libc6,x86-64) => /lib64/ld-linux-x86-64.so.2
 EOF
-    ;;
+	;;
 
 pass3)
-    # some non-system libraries overloading system libraries but not
-    # shipped by Red Hat (libdchtvm.so.8) but detected as such (may happen
-    # on live system only
-    mkdir -p ${FOLDER}/sos_commands/libraries
-    cat >"${FOLDER}/sos_commands/libraries/ldconfig_-p_-N_-X" <<EOF
+	# some non-system libraries overloading system libraries but not
+	# shipped by Red Hat (libdchtvm.so.8) but detected as such (may happen
+	# on live system only
+	mkdir -p ${FOLDER}/sos_commands/libraries
+	cat >"${FOLDER}/sos_commands/libraries/ldconfig_-p_-N_-X" <<EOF
 28 libs found in cache '/etc/ld.so.cache'
         p11-kit-trust.so (libc6,x86-64) => /lib64/p11-kit-trust.so
         libzapojit-0.0.so.0 (libc6,x86-64) => /lib64/libzapojit-0.0.so.0
@@ -130,16 +130,16 @@ pass3)
         ld-linux.so.2 (ELF) => /lib/ld-linux.so.2
         ld-linux-x86-64.so.2 (libc6,x86-64) => /lib64/ld-linux-x86-64.so.2
 EOF
-    mkdir -p ${FOLDER}/opt/dell/srvadmin/lib64
-    touch ${FOLDER}/opt/dell/srvadmin/lib64/libdchtvm.so.8
-    mkdir -p ${FOLDER}/lib64
-    ln -s /opt/dell/srvadmin/lib64/libdchtvm.so.8 ${FOLDER}/lib64/libdchtvm.so.8
-    ;;
+	mkdir -p ${FOLDER}/opt/dell/srvadmin/lib64
+	touch ${FOLDER}/opt/dell/srvadmin/lib64/libdchtvm.so.8
+	mkdir -p ${FOLDER}/lib64
+	ln -s /opt/dell/srvadmin/lib64/libdchtvm.so.8 ${FOLDER}/lib64/libdchtvm.so.8
+	;;
 
 fail)
-    # some non-system libraries overloading system libraries (libxml2)
-    mkdir -p ${FOLDER}/sos_commands/libraries
-    cat >"${FOLDER}/sos_commands/libraries/ldconfig_-p_-N_-X" <<EOF
+	# some non-system libraries overloading system libraries (libxml2)
+	mkdir -p ${FOLDER}/sos_commands/libraries
+	cat >"${FOLDER}/sos_commands/libraries/ldconfig_-p_-N_-X" <<EOF
 28 libs found in cache '/etc/ld.so.cache'
         p11-kit-trust.so (libc6,x86-64) => /lib64/p11-kit-trust.so
         libzapojit-0.0.so.0 (libc6,x86-64) => /lib64/libzapojit-0.0.so.0
@@ -170,12 +170,12 @@ fail)
         ld-linux.so.2 (ELF) => /lib/ld-linux.so.2
         ld-linux-x86-64.so.2 (libc6,x86-64) => /lib64/ld-linux-x86-64.so.2
 EOF
-    ;;
+	;;
 
 falsepositive)
-    # some non-system libraries overloading system libraries but not shipped by Red Hat (libdchtvm.so.8)
-    mkdir -p ${FOLDER}/sos_commands/libraries
-    cat >"${FOLDER}/sos_commands/libraries/ldconfig_-p_-N_-X" <<EOF
+	# some non-system libraries overloading system libraries but not shipped by Red Hat (libdchtvm.so.8)
+	mkdir -p ${FOLDER}/sos_commands/libraries
+	cat >"${FOLDER}/sos_commands/libraries/ldconfig_-p_-N_-X" <<EOF
 28 libs found in cache '/etc/ld.so.cache'
         p11-kit-trust.so (libc6,x86-64) => /lib64/p11-kit-trust.so
         libzapojit-0.0.so.0 (libc6,x86-64) => /lib64/libzapojit-0.0.so.0
@@ -206,10 +206,10 @@ falsepositive)
         ld-linux.so.2 (ELF) => /lib/ld-linux.so.2
         ld-linux-x86-64.so.2 (libc6,x86-64) => /lib64/ld-linux-x86-64.so.2
 EOF
-    ;;
+	;;
 
 skip)
-    # no ldconfig file
-    ;;
+	# no ldconfig file
+	;;
 
 esac

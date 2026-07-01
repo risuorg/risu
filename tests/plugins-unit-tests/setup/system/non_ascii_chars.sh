@@ -23,9 +23,9 @@ FOLDER=$3
 
 case $2 in
 pass)
-    # Default limits configuration files
-    mkdir -p ${FOLDER}/etc/security/limits.d/
-    cat >"${FOLDER}/etc/security/limits.conf" <<EOF
+	# Default limits configuration files
+	mkdir -p ${FOLDER}/etc/security/limits.d/
+	cat >"${FOLDER}/etc/security/limits.conf" <<EOF
 *               soft    core            0
 *               hard    rss             10000
 @student        hard    nproc           20
@@ -33,46 +33,46 @@ pass)
 @faculty        hard    nproc           50
 ftp             hard    nproc           0
 EOF
-    cat >"${FOLDER}/etc/security/limits.d/90-nofile.conf" <<EOF
+	cat >"${FOLDER}/etc/security/limits.d/90-nofile.conf" <<EOF
 soft    nproc     4096
 root       soft    nproc     unlimited
 EOF
-    ;;
+	;;
 
 fail1)
-    # non ASCII characters in limits.conf
-    mkdir -p ${FOLDER}/etc/security/
-    cat >"${FOLDER}/etc/security/limits.conf" <<EOF
+	# non ASCII characters in limits.conf
+	mkdir -p ${FOLDER}/etc/security/
+	cat >"${FOLDER}/etc/security/limits.conf" <<EOF
 tomcat     soft    nofile      1480
 tomcat     hard    nofile      1480
 tomcat     soft    nproc       1096
 EOF
-    ;;
+	;;
 
 fail2)
-    # non ASCII characters in /etc/security/limits.d/90-nofile.conf
-    mkdir -p ${FOLDER}/etc/security/limits.d/
-    touch "${FOLDER}/etc/security/limits.conf"
-    cat >"${FOLDER}/etc/security/limits.d/90-nofile.conf" <<EOF
+	# non ASCII characters in /etc/security/limits.d/90-nofile.conf
+	mkdir -p ${FOLDER}/etc/security/limits.d/
+	touch "${FOLDER}/etc/security/limits.conf"
+	cat >"${FOLDER}/etc/security/limits.d/90-nofile.conf" <<EOF
 tomcat      soft    nofile      2480
 tomcat      hard    nofile      2480
 tomcat      soft    nproc       1096
 EOF
-    ;;
+	;;
 
 fail3)
-    # non ASCII characters on both limits.conf and  /etc/security/limits.d/90-nofile.conf
-    mkdir -p ${FOLDER}/etc/security/limits.d/
-    cat >"${FOLDER}/etc/security/limits.conf" <<EOF
+	# non ASCII characters on both limits.conf and  /etc/security/limits.d/90-nofile.conf
+	mkdir -p ${FOLDER}/etc/security/limits.d/
+	cat >"${FOLDER}/etc/security/limits.conf" <<EOF
 tomcat      soft    nofile      1480
 tomcat      hard    nofile      1480
 tomcat      soft    nproc       1096
 EOF
-    cat >"${FOLDER}/etc/security/limits.d/90-nofile.conf" <<EOF
+	cat >"${FOLDER}/etc/security/limits.d/90-nofile.conf" <<EOF
 tomcat      soft    nofile      2480
 tomcat      hard    nofile      2480
 tomcat      soft    nproc       1096
 EOF
-    ;;
+	;;
 
 esac

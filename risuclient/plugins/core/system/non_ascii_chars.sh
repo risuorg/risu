@@ -29,11 +29,11 @@ is_required_file "${RISU_ROOT}/etc/security/limits.conf"
 
 bad_files=$(grep -s -l -P -n "[\x80-\xFF]" ${RISU_ROOT}/etc/security/limits.conf ${RISU_ROOT}/etc/security/limits.d/*.conf)
 if [[ -n $bad_files ]]; then
-    for f in ${bad_files}; do
-        echo "file $f contains non ASCII characters." >&2
-    done
-    echo "This makes the system to ignore it." >&2
-    exit ${RC_FAILED}
+	for f in ${bad_files}; do
+		echo "file $f contains non ASCII characters." >&2
+	done
+	echo "This makes the system to ignore it." >&2
+	exit ${RC_FAILED}
 fi
 
 # If the above conditions did not trigger RC_FAILED we are good.

@@ -23,65 +23,65 @@
 [[ -f "${RISU_BASE}/common-functions.sh" ]] && . "${RISU_BASE}/common-functions.sh"
 
 if is_process nova-compute; then
-    echo "works only on controller node" >&2
-    exit ${RC_SKIPPED}
+	echo "works only on controller node" >&2
+	exit ${RC_SKIPPED}
 fi
 
 # Setup the file we'll be using for using similar approach on Live and non-live
 
 if [[ "x$RISU_LIVE" == "x1" ]]; then
-    which rabbitmqctl >/dev/null 2>&1
-    RC=$?
-    if [[ "x$RC" != "x0" ]]; then
-        echo "rabbitmqctl not found" >&2
-        exit ${RC_SKIPPED}
-    fi
-    FILE=$(mktemp)
-    trap "rm ${FILE}" EXIT
+	which rabbitmqctl >/dev/null 2>&1
+	RC=$?
+	if [[ "x$RC" != "x0" ]]; then
+		echo "rabbitmqctl not found" >&2
+		exit ${RC_SKIPPED}
+	fi
+	FILE=$(mktemp)
+	trap "rm ${FILE}" EXIT
 
-    rabbitmqctl report >${FILE}
-    HN=${HOSTNAME}
+	rabbitmqctl report >${FILE}
+	HN=${HOSTNAME}
 
 elif [[ "x$RISU_LIVE" == "x0" ]]; then
-    FILE="${RISU_ROOT}/sos_commands/rabbitmq/rabbitmqctl_report"
-    is_required_file ${FILE}
-    HN=$(cat ${RISU_ROOT}/hostname)
+	FILE="${RISU_ROOT}/sos_commands/rabbitmq/rabbitmqctl_report"
+	is_required_file ${FILE}
+	HN=$(cat ${RISU_ROOT}/hostname)
 fi
 
 if grep -q nodedown "${FILE}"; then
-    echo "rabbitmq down" >&2
-    exit ${RC_FAILED}
+	echo "rabbitmq down" >&2
+	exit ${RC_FAILED}
 fi
 
 FILE_DESCRIPTORS=$(awk -v target="$HN" '$4 ~ target { flag = 1 } \
 flag = 1 && /total_limit/ { print ; exit }' \
-    "${FILE}" | grep -E -o '[0-9]+')
+	"${FILE}" | grep -E -o '[0-9]+')
 
 USED_FILE_DESCRIPTORS=$(awk -v target="$HN" '$4 ~ target { flag = 1 } \
 flag = 1 && /total_used/ { print ; exit }' \
-    "${FILE}" | grep -E -o '[0-9]+')
+	"${FILE}" | grep -E -o '[0-9]+')
 
 if [[ -z ${FILE_DESCRIPTORS} ]]; then
-    echo "couldn't get file descriptors from rabbitmqctl report" >&2
-    exit ${RC_FAILED}
+	echo "couldn't get file descriptors from rabbitmqctl report" >&2
+	exit ${RC_FAILED}
 fi
 
 if [[ -z ${USED_FILE_DESCRIPTORS} ]]; then
-    echo "couldn't get used file descriptors from rabbitmqctl report" >&2
-    exit ${RC_FAILED}
+	echo "couldn't get used file descriptors from rabbitmqctl report" >&2
+	exit ${RC_FAILED}
 fi
 
 if [[ ${FILE_DESCRIPTORS} -lt "65336" ]]; then
-    echo "total ${FILE_DESCRIPTORS}" >&2
-    flag=1
+	echo "total ${FILE_DESCRIPTORS}" >&2
+	flag=1
 fi
 
 AVAILABLE_FILE_DESCRIPTORS=$((FILE_DESCRIPTORS - USED_FILE_DESCRIPTORS))
 
 if [[ ${AVAILABLE_FILE_DESCRIPTORS} -lt "16000" ]]; then
-    echo "total_used ${USED_FILE_DESCRIPTORS}" >&2
-    echo "available ${AVAILABLE_FILE_DESCRIPTORS}" >&2
-    flag=1
+	echo "total_used ${USED_FILE_DESCRIPTORS}" >&2
+	echo "available ${AVAILABLE_FILE_DESCRIPTORS}" >&2
+	flag=1
 fi
 
 [[ "x$flag" == "x" ]] && exit ${RC_OKAY} || exit ${RC_FAILED}

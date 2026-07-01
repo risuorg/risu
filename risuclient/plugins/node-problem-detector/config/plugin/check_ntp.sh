@@ -11,16 +11,16 @@ readonly SERVICE='ntp.service'
 
 # Check systemd cmd present
 if ! command -v systemctl >/dev/null; then
-    echo "Could not find 'systemctl' - require systemd"
-    exit $UNKNOWN
+	echo "Could not find 'systemctl' - require systemd"
+	exit $UNKNOWN
 fi
 
 # Return success if service active (i.e. running)
 if systemctl -q is-active "$SERVICE"; then
-    echo "$SERVICE is running"
-    exit $OK
+	echo "$SERVICE is running"
+	exit $OK
 else
-    # Does not differenciate stopped/failed service from non-existent
-    echo "$SERVICE is not running"
-    exit $NONOK
+	# Does not differenciate stopped/failed service from non-existent
+	echo "$SERVICE is not running"
+	exit $NONOK
 fi
