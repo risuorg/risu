@@ -19,7 +19,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.x] # No longer compatible , 2.x]
+        # Test on latest stable Python version
+        python-version: ["3.13"]
 
     steps:
       - uses: actions/checkout@v7
