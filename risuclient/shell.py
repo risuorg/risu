@@ -32,8 +32,8 @@ import json
 import logging
 import os
 import re
-import tempfile
 import sys
+import tempfile
 
 if sys.version_info >= (3, 4):
     # Handle  imp deprecation towards importlib
@@ -96,7 +96,7 @@ else:
 # Do not require everyone to use requests
 try:
     import requests
-except:
+except ImportError:
     requests = False
 
 import shutil
@@ -110,7 +110,28 @@ from threading import Timer
 
 sys.path.append(os.path.abspath(os.path.dirname(__file__) + "/" + "../"))
 
+# Import new modular components
+try:
+    from risuclient import cache, exceptions
+    from risuclient import executor as risu_executor
+
+    HAVE_NEW_MODULES = True
+except ImportError:
+    # Fallback if new modules not available
+    HAVE_NEW_MODULES = False
+    LOG.warning("New modular components not available, using legacy code")
+
 LOG = logging.getLogger("risu")
+
+# Initialize metadata cache if available
+_metadata_cache = None
+if HAVE_NEW_MODULES:
+    try:
+        _metadata_cache = cache.MetadataCache()
+        LOG.debug("Metadata cache initialized")
+    except Exception as e:
+        LOG.warning("Failed to initialize metadata cache: %s", str(e))
+        _metadata_cache = None
 
 # Where are we?
 global risudir
@@ -195,12 +216,15 @@ def getExtensions(folder=ExtensionFolder):
     """
 
     extensions = []
+    # Files to skip - not actual extensions
+    skip_files = ["__init__.py", "base.py"]
+
     for i in os.listdir(folder):
-        if i != "__init__.py" and os.path.splitext(i)[1] == ".py":
+        if i not in skip_files and os.path.splitext(i)[1] == ".py":
             i = os.path.splitext(i)[0]
         try:
             info = find_module(i, program_paths=[folder])
-        except:
+        except ImportError:
             info = False
         if i and info:
             extensions.append({"name": i, "info": info})
@@ -247,7 +271,7 @@ def getPymodules(options=None, folders=[HooksFolder]):
 
     try:
         hfilter = options.hfilter
-    except:
+    except AttributeError:
         hfilter = []
 
     # Sort hook names so that we can use XX_hook
@@ -270,7 +294,7 @@ def getPymodules(options=None, folders=[HooksFolder]):
         modpath = os.path.dirname(i)
         try:
             info = find_module(module, program_paths=[modpath])
-        except:
+        except ImportError:
             info = False
         if i and info:
             hooks.append({"name": module, "info": info})
@@ -475,7 +499,7 @@ def findplugins(
 
         try:
             category = os.path.normpath(subcategory).split(os.sep)[1]
-        except:
+        except (IndexError, TypeError):
             category = "root"
             subcategory = " "
 
@@ -520,9 +544,22 @@ def runplugin(plugin):
 
     LOG.debug(msg=_("Running plugin: %s") % plugin)
     start_time = time.time()
-    os.environ["PLUGIN_BASEDIR"] = "%s" % os.path.abspath(
-        os.path.dirname(plugin["plugin"])
-    )
+
+    try:
+        os.environ["PLUGIN_BASEDIR"] = "%s" % os.path.abspath(
+            os.path.dirname(plugin["plugin"])
+        )
+    except (KeyError, TypeError, OSError) as e:
+        LOG.error("Failed to set PLUGIN_BASEDIR: %s", str(e))
+        returncode = 3
+        out = ""
+        err = "Error setting plugin environment: %s" % str(e)
+        updates = {
+            "result": {"rc": returncode, "out": out, "err": err},
+            "time": time.time() - start_time,
+        }
+        plugin.update(updates)
+        return plugin
 
     # By default prepare 'error' in case of failed mapping from plugin to extension
     returncode = 3
@@ -532,18 +569,35 @@ def runplugin(plugin):
     # Workaround if calling externally
     global extensions
     if not extensions:
-        extensions = initPymodules()[0]
+        try:
+            extensions = initPymodules()[0]
+        except Exception as e:
+            LOG.error("Failed to initialize extensions: %s", str(e))
+            err = "Failed to initialize extensions: %s" % str(e)
+            updates = {
+                "result": {"rc": returncode, "out": out, "err": err},
+                "time": time.time() - start_time,
+            }
+            plugin.update(updates)
+            return plugin
 
     found = 0
-
     step = progress
 
     # Loop tru extensions to find which one should handle it and run it
-    for extension in extensions:
-        name = extension.__name__.split(".")[-1]
-        if plugin["backend"] == name:
-            returncode, out, err = extension.run(plugin=plugin)
-            found = 1
+    try:
+        for extension in extensions:
+            name = extension.__name__.split(".")[-1]
+            if plugin["backend"] == name:
+                returncode, out, err = extension.run(plugin=plugin)
+                found = 1
+                break
+    except Exception as e:
+        LOG.error("Plugin execution error for %s: %s", plugin.get("plugin"), str(e))
+        returncode = 3
+        out = ""
+        err = "Plugin execution exception: %s" % str(e)
+
     if found == 0:
         LOG.debug("%s : %s" % (err, plugin))
 
@@ -552,8 +606,14 @@ def runplugin(plugin):
         "time": time.time() - start_time,
     }
     plugin.update(updates)
-    sys.stdout.write(step)
-    sys.stdout.flush()
+
+    try:
+        sys.stdout.write(step)
+        sys.stdout.flush()
+    except (IOError, OSError):
+        # Ignore write errors (e.g., broken pipe)
+        pass
+
     return plugin
 
 
@@ -658,7 +718,7 @@ def execonshell(filename, timeout=30):
         returncode = p.returncode
         del p
         timer.cancel()
-    except:
+    except Exception:
         returncode = 3
         out = ""
         err = traceback.format_exc()
@@ -671,11 +731,11 @@ def execonshell(filename, timeout=30):
     else:
         try:
             out = out.decode("utf-8").strip()
-        except:
+        except (UnicodeDecodeError, AttributeError):
             out = out
         try:
             err = err.decode("utf-8").strip()
-        except:
+        except (UnicodeDecodeError, AttributeError):
             err = err
 
     return returncode, out, err
@@ -755,10 +815,20 @@ def dorisu(
     os.environ["CITELLUS_TMP"] = "%s" % tempfile.mkdtemp()
 
     # Set pool for same processes as CPU cores
-    if options is not None:
-        p = Pool(options.numproc)
+    # Use new executor if available, otherwise fall back to Pool
+    if HAVE_NEW_MODULES:
+        num_processes = options.numproc if options is not None else None
+        executor = risu_executor.PluginExecutor(
+            num_processes=num_processes, timeout=30  # 30 second timeout per plugin
+        )
+        LOG.debug("Using PluginExecutor for plugin execution")
     else:
-        p = Pool(cpu_count())
+        # Legacy Pool usage
+        if options is not None:
+            p = Pool(options.numproc)
+        else:
+            p = Pool(cpu_count())
+        executor = None
 
     # We've save path, use it
     if savepath:
@@ -788,7 +858,7 @@ def dorisu(
         try:
             with open(filename, "r") as f:
                 results = json.load(f)["results"]
-        except:
+        except (IOError, OSError, KeyError, ValueError):
             results = {}
 
     # At this point we've 'results' with either empty dict (live, forcerun) or loaded if existing and valid
@@ -820,7 +890,7 @@ def dorisu(
         # We check all plugins in results
         try:
             hash = results[plugin]["hash"]
-        except:
+        except (KeyError, TypeError):
             hash = False
 
         if hash not in hashes and "-" not in results[plugin]["id"]:
@@ -856,12 +926,45 @@ def dorisu(
         progress = ""
 
     # Do the actual execution of plugins
-    execution = p.map(runplugin, pluginstorun)
+    if executor:
+        # Use new PluginExecutor with better error handling
+        try:
+
+            def progress_callback(plugin, result):
+                """Callback to show progress"""
+                if not quiet:
+                    sys.stdout.write(progress)
+                    sys.stdout.flush()
+
+            execution = executor.execute_plugins(
+                pluginstorun,
+                runplugin,
+                progress_callback=progress_callback if not quiet else None,
+            )
+        except KeyboardInterrupt:
+            LOG.warning("Plugin execution interrupted by user")
+            # Save cache before exiting
+            if _metadata_cache:
+                try:
+                    _metadata_cache.save()
+                except Exception:
+                    pass
+            raise
+        except Exception as e:
+            LOG.error("Plugin execution failed: %s", str(e))
+            execution = []
+    else:
+        # Legacy Pool usage
+        execution = p.map(runplugin, pluginstorun)
+        p.close()
+        p.join()
+
     del pluginstorun
 
     # Update back 'results' with the execution of the missing plugins
     for plugin in execution:
-        results[plugin["id"]] = dict(plugin)
+        if plugin and "id" in plugin:
+            results[plugin["id"]] = dict(plugin)
 
     del execution
 
@@ -886,7 +989,7 @@ def dorisu(
         overrides = json.load(
             open(os.path.join(risudir, "plugins/overrides.json"), "r")
         )
-    except:
+    except (IOError, OSError, ValueError):
         overrides = {}
 
     # Update each item with overrides dictionary for overrides
@@ -917,9 +1020,9 @@ def dorisu(
                 serveruri=serveruri,
                 anon=anon,
             )
-        except:
+        except (IOError, OSError) as e:
             # Couldn't write
-            LOG.error("Couldn't write to file %s" % filename)
+            LOG.error("Couldn't write to file %s: %s" % (filename, str(e)))
 
     # We've filters defined, so filter data
     if include or exclude:
@@ -949,6 +1052,14 @@ def dorisu(
                     results[result] = dict(oldresults[result])
             del oldresults
 
+    # Save metadata cache before returning
+    if _metadata_cache:
+        try:
+            _metadata_cache.save()
+            LOG.debug("Metadata cache saved")
+        except Exception as e:
+            LOG.debug("Failed to save metadata cache: %s", str(e))
+
     return results
 
 
@@ -967,7 +1078,7 @@ def formattext(returncode):
 
     try:
         selected = colors[returncode]
-    except:
+    except KeyError:
         selected = ("unknown", "magenta")
 
     return colorize(*selected)
@@ -1335,7 +1446,7 @@ def read_config(options=False):
         if os.path.exists(filename):
             try:
                 config = json.load(open(filename, "r"))
-            except:
+            except (IOError, OSError, ValueError):
                 config = {}
 
     return config
@@ -1382,12 +1493,21 @@ def dump_config(options, path=False):
 
 def generic_get_metadata(plugin, comment="#"):
     """
-    Gets metadata for plugin
+    Gets metadata for plugin (with optional caching)
     :param plugin: plugin object
     :param comment: Character to use as comment in text files
     :return: metadata dict for that plugin
     """
+    plugin_path = plugin.get("plugin", "")
 
+    # Try cache first if available
+    if _metadata_cache and plugin_path:
+        cached_meta = _metadata_cache.get(plugin_path)
+        if cached_meta:
+            LOG.debug("Using cached metadata for %s", plugin_path)
+            return cached_meta
+
+    # Extract metadata (original code)
     offset = len(comment) - 1
 
     path = regexpfile(filename=plugin["plugin"], regexp=r"\A%s path:" % comment)[
@@ -1427,6 +1547,14 @@ def generic_get_metadata(plugin, comment="#"):
         "path": path,
         "kb": kb,
     }
+
+    # Cache the result if caching is available
+    if _metadata_cache and plugin_path:
+        try:
+            _metadata_cache.set(plugin_path, metadata)
+        except Exception as e:
+            LOG.debug("Failed to cache metadata for %s: %s", plugin_path, str(e))
+
     return metadata
 
 
@@ -1535,16 +1663,16 @@ def write_results(
     try:
         with open(filename, "w") as fd:
             json.dump(data, fd, indent=2)
-    except:
-        LOG.debug("Failed to write to file %s" % filename)
+    except (IOError, OSError) as e:
+        LOG.debug("Failed to write to file %s: %s" % (filename, str(e)))
 
     # Code to upload file
     if serveruri and requests:
         newdata = copy.deepcopy(data)
         try:
             requests.post(serveruri, json=anonymize(data=newdata, keeppath=True))
-        except:
-            LOG.debug("Upload to serveruri failed")
+        except Exception as e:
+            LOG.debug("Upload to serveruri failed: %s" % str(e))
         del newdata
 
 
@@ -1565,7 +1693,7 @@ def regexpfile(filename=False, regexp=False):
                 if re.match(regexp, line):
                     # Return earlier if match found
                     return line
-    except:
+    except (IOError, OSError):
         pass
 
     return ""

@@ -35,6 +35,8 @@ import time
 
 sys.path.append(os.path.abspath(os.path.dirname(__file__) + "/" + "../"))
 
+from maguiclient import autogroup as autogroup_module
+from maguiclient import client as magui_client
 from risuclient import shell as risu
 
 LOG = logging.getLogger("magui")
@@ -230,37 +232,21 @@ def callrisu(path=False, plugins=False, forcerun=False, include=None, exclude=No
     :param path: sosreport path
     :param plugins: plugins enabled as provided to risu
     :return: dict with results
+
+    NOTE: This function now delegates to MaguiClient for better maintainability.
+    Kept here for backward compatibility.
     """
 
-    # Call risu normally, if existing prior results those will be loaded or executed + saved
-    results = risu.dorisu(
-        path=os.path.abspath(path),
-        plugins=plugins,
-        forcerun=forcerun,
-        include=include,
-        exclude=exclude,
-        quiet=True,
-    )
+    # Create temporary client for backward compatibility
+    class TempOptions(object):
+        def __init__(self):
+            self.run = forcerun
+            self.include = include
+            self.exclude = exclude
+            self.quiet = True
 
-    # Process plugin output from multiple plugins to be returned as a dictionary of ID's for each plugin
-    new_dict = {}
-    for item in results:
-        name = results[item]["id"]
-        new_dict[name] = dict(results[item])
-    del results
-
-    # cleanup new_dict of unused data
-    # trimmed = {}
-    # for item in new_dict:
-    #     trimmed[item] = {}
-    #     # 'id', 'plugin', 'backend', 'path', 'name',
-    #     for key in ['result']:
-    #         if key in new_dict[item]:
-    #             trimmed[item][key] = new_dict[item][key]
-
-    # del new_dict
-
-    return new_dict
+    client = magui_client.MaguiClient(TempOptions())
+    return client.call_risu(path, plugins)
 
 
 def findtarget(data):
@@ -268,38 +254,12 @@ def findtarget(data):
     Sorts autogroup to find next target to reduce memory usage and data reuse
     :param data: autogroup dictionary
     :return: array made of target, data and elem to del (if any)
+
+    NOTE: This function now delegates to the AutoGroupManager class in
+    maguiclient.autogroup for better maintainability. Kept here for
+    backward compatibility.
     """
-
-    target = ""
-    todel = False
-
-    subitemcount = {}
-    # Find subitems
-
-    for item in data:
-        for subitem in data[item]:
-            if subitem not in subitemcount:
-                subitemcount[subitem] = {"count": 1, "where": [item]}
-            else:
-                subitemcount[subitem]["count"] = 1 + subitemcount[subitem]["count"]
-                subitemcount[subitem]["where"].append(item)
-
-    minitems = len(subitemcount)
-
-    for item in subitemcount:
-        if subitemcount[item]["count"] <= minitems:
-            target = subitemcount[item]["where"][0]
-            minitems = subitemcount[item]["count"]
-            if minitems == 1:
-                todel = item
-                break
-
-    if not target:
-        target = subitemcount[item]["where"][0]
-        subitemcount[item]["where"][0]
-        todel = item
-
-    return target, data, todel
+    return autogroup_module.findtarget(data)
 
 
 def domagui(sosreports, risuplugins, options=False, grouped={}, runhooks=True):
@@ -367,7 +327,7 @@ def domagui(sosreports, risuplugins, options=False, grouped={}, runhooks=True):
                     if "-" not in plugin:
                         try:
                             result[sosreport][plugin]["result"]
-                        except:
+                        except (KeyError, TypeError):
                             rerun = True
 
                 # If we were running against a folder with just json, cancel rerun as it will fail
@@ -376,7 +336,7 @@ def domagui(sosreports, risuplugins, options=False, grouped={}, runhooks=True):
                         access = os.access(
                             os.path.join(sosreport, "version.txt"), os.R_OK
                         )
-                    except:
+                    except (OSError, TypeError):
                         access = False
 
                     if not access:
@@ -437,77 +397,25 @@ def filterresults(data, triggers=[]):
     :param data: full set of data
     :param triggers: set of triggers (plugin ID's) to match
     :return: filtered data of only those plugins
-    """
-    if "*" in triggers:
-        # If plugin processes everything, return all data
-        return data
 
-    ourdata = {}
-    for trigger in triggers:
-        for elem in data:
-            # We do use this approach in case of 'faked' id's like multi-Faraday bundles
-            if "id" in data[elem] and trigger in data[elem]["id"]:
-                ourdata[data[elem]["id"]] = dict(data[elem])
-    return ourdata
+    NOTE: This function now delegates to MaguiClient for better maintainability.
+    Kept here for backward compatibility.
+    """
+    client = magui_client.MaguiClient()
+    return client.filter_results(data, triggers)
 
 
 def autogroups(autodata):
     """
     Based on metadata-outputs plugin generate possible groups for sosreport combination
-    :param autodata: metadata-outputs reults
+    :param autodata: metadata-outputs results
     :return: dict of groups and members
+
+    NOTE: This function now delegates to the AutoGroupManager class in
+    maguiclient.autogroup for better maintainability and testability.
+    Kept here for backward compatibility.
     """
-    # Prefill dict with hosts
-    hostsdict = {}
-    for item in autodata:
-        for elem in iter(item["sosreport"].keys()):
-            if elem not in hostsdict:
-                hostsdict[elem] = {}
-
-        name = item["name"]
-        for host in item["sosreport"]:
-            if item["sosreport"][host]["rc"] == risu.RC_OKAY:
-                value = item["sosreport"][host]["err"]
-            else:
-                value = ""
-            if value != "":
-                update = {name: value}
-                hostsdict[host].update(update)
-
-    # At this point we have a dict of dicts, being at first level the host with the output of the metadata, similar to:
-    # print(hostsdict)={'host1': {'release': 'xxxx', 'UUID': 'YYYYY'}, 'host2': .... }
-
-    groups = {}
-
-    # Precreate groups
-    for element in hostsdict:
-        for item in iter(hostsdict[element].items()):
-            if item[0] not in groups:
-                groups["%s" % item[0]] = {}
-            if item[1] not in groups["%s" % item[0]]:
-                groups["%s" % item[0]]["%s" % item[1]] = [element]
-            else:
-                groups["%s" % item[0]]["%s" % item[1]].append(element)
-
-    results = {}
-    for category in groups:
-        for subcategory in groups[category]:
-            name = "%s-%s" % (category, subcategory)
-            if 1 < len(groups[category][subcategory]) < len(hostsdict):
-                results[name] = groups[category][subcategory]
-
-    # Here we've a list of groups based on 'metadata' plugin name and the hosts in the same group if more than one host.
-    #
-    #  {u'5:system-role-node': ['sosreport-apps1.lab.example.com-20180928160549',
-    #                        'sosreport-infra1.lab.example.com-20180928160443',
-    #                        'sosreport-infra3.lab.example.com-20180928160521',
-    #                        'sosreport-apps2.lab.example.com-20180928160605',
-    #                        'sosreport-infra2.lab.example.com-20180928160506'],
-    #  u'system-role-master': ['sosreport-master1.lab.example.com-20180928155907',
-    #                          'sosreport-master2.lab.example.com-20180928160411',
-    #                          'sosreport-master3.lab.example.com-20180928160415']}
-
-    return results
+    return autogroup_module.autogroups(autodata)
 
 
 def main():

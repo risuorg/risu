@@ -1,0 +1,158 @@
+---
+# Enhanced Python testing with matrix for Python 2.7, 3.x versions
+# Tests on multiple OS and includes coverage reporting
+
+name: Enhanced Python Testing
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Test Python ${{ matrix.python-version }} on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+        python-version: ["2.7", "3.6", "3.8", "3.9", "3.10", "3.11", "3.12"]
+        include:
+          # Test on macOS for latest Python only
+          - os: macos-latest
+            python-version: "3.12"
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Cache pip packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ matrix.python-version }}-${{ hashFiles('**/*requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-${{ matrix.python-version }}-
+            ${{ runner.os }}-pip-
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install flake8 pytest pytest-cov
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          if [ -f test-requirements.txt ]; then pip install -r test-requirements.txt; fi
+
+      - name: Lint with flake8
+        run: |
+          # Stop build on Python syntax errors or undefined names
+          flake8 risuclient maguiclient --count --select=E9,F63,F7,F82 --show-source --statistics
+          # Treat all other errors as warnings
+          flake8 risuclient maguiclient --count --exit-zero --max-complexity=18 --max-line-length=88 --statistics
+
+      - name: Run unit tests with coverage
+        run: |
+          pytest --cov=risuclient --cov=maguiclient --cov-report=xml --cov-report=term -v
+
+      - name: Upload coverage to Codecov
+        if: matrix.python-version == '3.12' && matrix.os == 'ubuntu-latest'
+        uses: codecov/codecov-action@v4
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: ./coverage.xml
+          flags: unittests
+          env_vars: OS,PYTHON
+          name: codecov-umbrella
+          fail_ci_if_error: false
+
+  test-new-modules:
+    name: Test new modules (config, metadata, formatter, etc.)
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["2.7", "3.12"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest pytest-cov
+          if [ -f test-requirements.txt ]; then pip install -r test-requirements.txt; fi
+
+      - name: Test new modules
+        run: |
+          # Test the new modular components
+          pytest tests/test_config.py tests/test_metadata.py tests/test_formatter.py -v
+
+  validate-plugins:
+    name: Validate plugin structure
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install shellcheck
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y shellcheck
+
+      - name: Validate sample plugins
+        run: |
+          # Validate a sample of plugins to ensure quality
+          python tools/validate_plugin.py risuclient/plugins/core/informative -r || true
+
+      - name: Check for plugins using wrong exit codes
+        run: |
+          # Find plugins using exit 0/1 instead of RC_ constants
+          ! grep -r "exit [01]" risuclient/plugins/ --include="*.sh" | grep -v "RC_" | grep -v "test" | head -20
+
+  coverage-report:
+    name: Generate coverage report
+    runs-on: ubuntu-latest
+    needs: [test, test-new-modules]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest pytest-cov coverage
+          if [ -f test-requirements.txt ]; then pip install -r test-requirements.txt; fi
+
+      - name: Run all tests with coverage
+        run: |
+          pytest --cov=risuclient --cov=maguiclient --cov-report=html --cov-report=term
+
+      - name: Upload coverage HTML
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-html
+          path: htmlcov/
+          retention-days: 7

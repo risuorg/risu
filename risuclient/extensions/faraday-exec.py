@@ -6,95 +6,57 @@
 #
 # Author: Pablo Iranzo Gomez (Pablo.Iranzo@gmail.com)
 # Copyright (C) 2018 Robin Černín <cerninr@gmail.com>
-# Copyright (C) 2018-2021, 2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+# Copyright (C) 2018-2021, 2023, 2026 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 from __future__ import print_function
 
 import os
 
 try:
     import risuclient.shell as risu
-except:
+    from risuclient.extensions.base import SimpleShellExtension
+except ImportError:
     import shell as risu
+    from extensions.base import SimpleShellExtension
 
-# Load i18n settings from risu
+# Load i18n settings from risu (for backward compatibility)
 _ = risu._
 
+# Legacy module-level variables (for backward compatibility)
 extension = "faraday-exec"
 # We look for plugins in standard faraday path
 pluginsdir = os.path.join(risu.risudir, "plugins", "faraday")
 
 
-def init():
-    """
-    Initializes module
-    :return: List of triggers for extension
-    """
-    triggers = ["faraday-exec"]
-    return triggers
+class FaradayExecExtension(SimpleShellExtension):
+    """Extension for executing shell-based faraday plugins"""
+
+    extension_name = "faraday-exec"
+    plugins_subdir = "faraday"  # Use faraday subdirectory
+    file_extension = ".sh"
+
+    def get_metadata(self, plugin):
+        """Get metadata for plugin with category/subcategory extraction"""
+        metadata = risu.generic_get_metadata(plugin=plugin)
+
+        subcategory = os.path.split(plugin["plugin"])[0].replace(
+            os.path.join(risu.risudir, "plugins", "faraday"), ""
+        )
+        category = os.path.normpath(subcategory).split(os.sep)[1] or ""
+        metadata.update({"subcategory": subcategory, "category": category})
+
+        return metadata
+
+    def help(self):
+        """Returns help for plugin"""
+        return self._(
+            "This extension creates fake plugins based on affinity/antiaffinity file list for later processing"
+        )
 
 
-def listplugins(options=None):
-    """
-    List available plugins
-    :param options: argparse options provided
-    :return: plugin object generator
-    """
-
-    prio = 0
-    if options:
-        try:
-            prio = options.prio
-        except:
-            pass
-
-    if options and options.extraplugintree:
-        folders = [pluginsdir, os.path.join(options.extraplugintree, extension)]
-    else:
-        folders = [pluginsdir]
-
-    plugins = risu.findplugins(
-        folders=folders,
-        fileextension=".sh",
-        extension=extension,
-        prio=prio,
-        options=options,
-    )
-
-    yield plugins
-
-
-def get_metadata(plugin):
-    """
-    Gets metadata for plugin
-    :param plugin: plugin object
-    :return: metadata dict for that plugin
-    """
-
-    metadata = risu.generic_get_metadata(plugin=plugin)
-
-    subcategory = os.path.split(plugin["plugin"])[0].replace(pluginsdir, "")
-    category = os.path.normpath(subcategory).split(os.sep)[1] or ""
-    metadata.update({"subcategory": subcategory, "category": category})
-
-    return metadata
-
-
-def run(plugin):  # do not edit this line
-    """
-    Executes plugin
-    :return: returncode, out, err
-    """
-
-    return risu.execonshell(filename=plugin["plugin"])
-
-
-def help():  # do not edit this line
-    """
-    Returns help for plugin
-    :return: help text
-    """
-
-    commandtext = _(
-        "This extension creates fake plugins based on affinity/antiaffinity file list for later processing"
-    )
-    return commandtext
+# Create module-level exports for backward compatibility
+_instance = FaradayExecExtension()
+init = _instance.init
+listplugins = _instance.listplugins
+get_metadata = _instance.get_metadata
+run = _instance.run
+help = _instance.help

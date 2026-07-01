@@ -88,7 +88,18 @@ repos:
     rev: 0.2.3 # or other specific tag
     hooks:
       - id: yamlfmt
-        args: [--mapping, "2", --sequence, "4", --offset, "2", "--preserve-quotes"]
+        args:
+          [--mapping, "2", --sequence, "4", --offset, "2", "--preserve-quotes"]
+
+  # Risu plugin validation
+  - repo: local
+    hooks:
+      - id: validate-risu-plugins
+        name: Validate Risu bash plugins
+        entry: python tools/validate_plugin.py
+        language: system
+        files: 'risuclient/plugins/.*\.sh$'
+        pass_filenames: true
 
   # - repo: https://github.com/hcodes/yaspeller.git
   #   rev: v10.0.1

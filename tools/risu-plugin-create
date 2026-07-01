@@ -1,0 +1,220 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+#
+# Description: Interactive plugin scaffolding tool
+# Copyright (C) 2026 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
+
+from __future__ import print_function
+
+import argparse
+import os
+import subprocess
+import sys
+
+TEMPLATES = {
+    "bash": "doc/templates/template_modern.sh",
+    "python": "doc/templates/template_python.py",
+    "ansible": "doc/templates/template_ansible.yml",
+}
+
+
+def find_risu_base():
+    """Find risu base directory"""
+    # Try current directory first
+    if os.path.exists("risuclient"):
+        return os.getcwd()
+
+    # Try parent directory
+    parent = os.path.dirname(os.getcwd())
+    if os.path.exists(os.path.join(parent, "risuclient")):
+        return parent
+
+    # Try following symlinks
+    script_path = os.path.realpath(__file__)
+    script_dir = os.path.dirname(script_path)
+
+    # Go up from tools/ to root
+    base = os.path.dirname(script_dir)
+    if os.path.exists(os.path.join(base, "risuclient")):
+        return base
+
+    return None
+
+
+def validate_priority(priority):
+    """Validate priority is in range 1-999"""
+    try:
+        prio = int(priority)
+        if prio < 1 or prio > 999:
+            raise ValueError("Priority must be between 1 and 999")
+        return prio
+    except ValueError as e:
+        raise ValueError("Invalid priority: %s" % str(e))
+
+
+def create_plugin_from_template(
+    base_dir, name, priority, category, plugin_type, editor=None
+):
+    """
+    Create a new plugin from template.
+
+    :param base_dir: Risu base directory
+    :param name: Plugin name (e.g., "check-cpu-throttling")
+    :param priority: Plugin priority (1-999)
+    :param category: Category path (e.g., "core/system", "openstack/nova")
+    :param plugin_type: Plugin type (bash, python, ansible)
+    :param editor: Editor to open plugin in (optional)
+    """
+    # Validate inputs
+    priority = validate_priority(priority)
+
+    if plugin_type not in TEMPLATES:
+        raise ValueError(
+            "Invalid plugin type: %s (must be bash, python, or ansible)" % plugin_type
+        )
+
+    # Determine paths
+    template_path = os.path.join(base_dir, TEMPLATES[plugin_type])
+
+    # Category is relative to plugins/
+    category_path = os.path.join(base_dir, "risuclient", "plugins", category)
+
+    # Determine file extension
+    extensions = {
+        "bash": ".sh",
+        "python": ".py",
+        "ansible": ".yml",
+    }
+
+    plugin_filename = name + extensions[plugin_type]
+    plugin_path = os.path.join(category_path, plugin_filename)
+
+    # Check if category exists
+    if not os.path.exists(category_path):
+        print("Creating category directory: %s" % category_path)
+        os.makedirs(category_path)
+
+    # Check if plugin already exists
+    if os.path.exists(plugin_path):
+        raise IOError("Plugin already exists: %s" % plugin_path)
+
+    # Read template
+    if not os.path.exists(template_path):
+        raise IOError("Template not found: %s" % template_path)
+
+    with open(template_path, "r") as f:
+        template_content = f.read()
+
+    # Replace placeholders
+    plugin_content = template_content.replace(
+        "# priority: 800", "# priority: %d" % priority
+    )
+
+    # For bash, replace the example long_name
+    if plugin_type == "bash":
+        plugin_content = plugin_content.replace(
+            "# long_name: Example plugin description",
+            "# long_name: %s" % name.replace("-", " ").title(),
+        )
+
+    # Write plugin file
+    with open(plugin_path, "w") as f:
+        f.write(plugin_content)
+
+    # Make executable for bash plugins
+    if plugin_type == "bash":
+        os.chmod(plugin_path, 0o755)
+
+    print("Created plugin: %s" % plugin_path)
+    print("  Type: %s" % plugin_type)
+    print("  Priority: %d" % priority)
+    print("  Category: %s" % category)
+
+    # Create stub test file (optional enhancement for future)
+    # For now, just create the plugin
+
+    # Open in editor if specified
+    if editor:
+        print("\nOpening in %s..." % editor)
+        try:
+            subprocess.call([editor, plugin_path])
+        except (OSError, subprocess.CalledProcessError) as e:
+            print("Warning: Failed to open editor: %s" % str(e))
+    else:
+        print("\nEdit your plugin: %s" % plugin_path)
+        print("Then validate with: ./tools/validate_plugin.py %s" % plugin_path)
+
+
+def main():
+    """Main entry point"""
+    parser = argparse.ArgumentParser(
+        description="Create a new Risu plugin from template",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Examples:
+  %(prog)s --name check-cpu-throttling --priority 870 --category core/system --type bash
+  %(prog)s --name nova-config-check --priority 750 --category openstack/nova --type python
+  %(prog)s -n ovs-setup -p 800 -c core/networking -t ansible -e vim
+
+Priority Guidelines:
+  900-999: Maximum criticality (filesystem corruption, etcd health)
+  800-899: High criticality (network, systemd, node health)
+  600-799: Medium (applications, services)
+  400-599: Medium-low (middleware, support services)
+  200-399: Low (monitoring, logging)
+  100-199: Very low (informational)
+  1-99: Lowest (metadata collection)
+""",
+    )
+
+    parser.add_argument(
+        "-n", "--name", required=True, help="Plugin name (e.g., check-cpu-throttling)"
+    )
+    parser.add_argument(
+        "-p", "--priority", required=True, type=int, help="Plugin priority (1-999)"
+    )
+    parser.add_argument(
+        "-c",
+        "--category",
+        required=True,
+        help="Category path (e.g., core/system, openstack/nova)",
+    )
+    parser.add_argument(
+        "-t",
+        "--type",
+        required=True,
+        choices=["bash", "python", "ansible"],
+        help="Plugin type",
+    )
+    parser.add_argument(
+        "-e", "--editor", help="Editor to open plugin in (e.g., vim, nano, code)"
+    )
+
+    args = parser.parse_args()
+
+    # Find risu base directory
+    base_dir = find_risu_base()
+    if not base_dir:
+        print("Error: Could not find risu base directory", file=sys.stderr)
+        print("Run this tool from the risu repository root", file=sys.stderr)
+        sys.exit(1)
+
+    print("Risu base directory: %s" % base_dir)
+
+    # Create plugin
+    try:
+        create_plugin_from_template(
+            base_dir=base_dir,
+            name=args.name,
+            priority=args.priority,
+            category=args.category,
+            plugin_type=args.type,
+            editor=args.editor,
+        )
+    except (ValueError, IOError, OSError) as e:
+        print("Error: %s" % str(e), file=sys.stderr)
+        sys.exit(1)
+
+
+if __name__ == "__main__":
+    main()
