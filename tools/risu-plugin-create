@@ -123,7 +123,7 @@ def create_plugin_from_template(
 
     # Make executable for bash plugins
     if plugin_type == "bash":
-        os.chmod(plugin_path, 0o755)
+        os.chmod(plugin_path, 0o755)  # nosec B103 - plugins must be executable
 
     print("Created plugin: %s" % plugin_path)
     print("  Type: %s" % plugin_type)

@@ -495,7 +495,7 @@ def main():
 
             # Now check the hosts we got logs from:
             hosts = risu.findplugins(
-                folders=glob.glob("/tmp/risu/hostrun/*"),
+                folders=glob.glob("/tmp/risu/hostrun/*"),  # nosec B108
                 executables=False,
                 fileextension=".json",
             )
