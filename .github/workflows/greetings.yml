@@ -7,7 +7,6 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-
 jobs:
   greeting:
     runs-on: ubuntu-latest
@@ -15,5 +14,5 @@ jobs:
       - uses: actions/first-interaction@v3.1.0
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-          issue-message: 'Thank you for raising this issue'
-          pr-message: 'Thank you for making this first PR'
+          issue-message: "Thank you for raising this issue"
+          pr-message: "Thank you for making this first PR"

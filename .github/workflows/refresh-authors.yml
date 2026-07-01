@@ -56,7 +56,7 @@ jobs:
 
           # Optional. Options used by `git-commit`.
           # See https://git-scm.com/docs/git-commit#_options
-          commit_options: '--no-verify --signoff'
+          commit_options: "--no-verify --signoff"
 
           # Optional. Local file path to the repository.
           # Defaults to the root of the repository.
@@ -67,5 +67,5 @@ jobs:
           # See the `pathspec`-documentation for git
           # - https://git-scm.com/docs/git-add#Documentation/git-add.txt-ltpathspecgt82308203
           # - https://git-scm.com/docs/gitglossary#Documentation/gitglossary.txt-aiddefpathspecapathspec
-          file_pattern: '**/*.py **/*.yml **/*.sh **/*.txt'
+          file_pattern: "**/*.py **/*.yml **/*.sh **/*.txt"
           disable_globbing: true
