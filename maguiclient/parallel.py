@@ -1,10 +1,8 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 #
 # Description: Parallel execution utilities for Magui
 # Copyright (C) 2026 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
-from __future__ import print_function
 
 import logging
 import multiprocessing as mp
@@ -17,7 +15,7 @@ except ImportError:
 LOG = logging.getLogger("magui")
 
 
-class ParallelRisuExecutor(object):
+class ParallelRisuExecutor:
     """
     Execute risu against multiple sosreports in parallel.
 

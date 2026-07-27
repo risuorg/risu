@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 #
 # Description: Configuration management for Risu framework
 # Copyright (C) 2026 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
@@ -13,7 +12,6 @@ global variables and provides better state management.
 Python 2.7 compatible - no dataclasses, using regular class with __init__.
 """
 
-from __future__ import print_function
 
 import os
 
@@ -23,7 +21,7 @@ except ImportError:
     import exceptions
 
 
-class RisuConfig(object):
+class RisuConfig:
     """
     Central configuration object for Risu framework.
 

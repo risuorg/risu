@@ -1,11 +1,9 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 #
 # Copyright (C) 2026 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 """Tests for parallel execution module"""
 
-from __future__ import print_function
 
 import os
 import sys
@@ -80,7 +78,7 @@ class TestEnableParallelExecution(unittest.TestCase):
         """Test enabling parallel execution on a mock MaguiClient"""
 
         # Create a minimal mock MaguiClient
-        class MockMaguiClient(object):
+        class MockMaguiClient:
             def __init__(self):
                 self.forcerun = False
 

@@ -1,13 +1,11 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 # Description: Plugin for reporting back risu metadata from all sosreports
 # Copyright (C) 2018-2021, 2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
-from __future__ import print_function
 
 import os
 
-import maguiclient.magui as magui
 import risuclient.shell as risu
+from maguiclient import magui
 
 # Load i18n settings from risu
 _ = risu._

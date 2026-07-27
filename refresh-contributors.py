@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 #
 # Description: Script to update contributors for each plugin
 # Copyright (C) 2018-2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
@@ -161,7 +160,7 @@ def main():
                 print(
                     "\nERROR: Probably user is not defined in .mailmap. Update .mailmap, rerun python setup.py sdist and then this script"
                 )
-                print("")
+                print()
                 print("FILE: %s" % plugin["plugin"])
                 print("-------")
                 print(newname)
@@ -173,9 +172,7 @@ def main():
 
             lines = []
             for line in (pline.rstrip() for pline in modificatstring.split("\n")):
-                if line != "":
-                    lines.append(line + "\n")
-                elif len(lines) > 0 and lines[-1] != "\n":
+                if line != "" or len(lines) > 0 and lines[-1] != "\n":
                     lines.append(line + "\n")
 
             modificatstring = "".join(lines)

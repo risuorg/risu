@@ -1,10 +1,8 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 #
 # Unit tests for risuclient/executor.py
 # Copyright (C) 2026 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
-from __future__ import print_function
 
 import os
 import sys

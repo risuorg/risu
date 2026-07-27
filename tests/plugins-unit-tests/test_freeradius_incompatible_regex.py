@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# encoding: utf-8
 #
 # Description: This UT run scripts to validate the rules/tests created for risu for $NAME_OF_TEST
 #

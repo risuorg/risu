@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 #
 # Description: Runs set of scripts against system or snapshot to
 #              detect common pitfalls in configuration/status
@@ -19,7 +18,6 @@
 # GNU General Public License for more details.
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-from __future__ import print_function
 
 import argparse
 import copy
@@ -210,7 +208,7 @@ def colorize(text, color, stream=sys.stdout, force=False):
 
     color = getattr(bcolors, color)
 
-    return "{color}{text}{reset}".format(color=color, text=text, reset=bcolors.end)
+    return f"{color}{text}{bcolors.end}"
 
 
 def getExtensions(folder=ExtensionFolder):
@@ -616,7 +614,7 @@ def runplugin(plugin):
     try:
         sys.stdout.write(step)
         sys.stdout.flush()
-    except (IOError, OSError):
+    except OSError:
         # Ignore write errors (e.g., broken pipe)
         pass
 
@@ -865,7 +863,7 @@ def dorisu(
         try:
             with open(filename, "r") as f:
                 results = json.load(f)["results"]
-        except (IOError, OSError, KeyError, ValueError):
+        except (OSError, KeyError, ValueError):
             results = {}
 
     # At this point we've 'results' with either empty dict (live, forcerun) or loaded if existing and valid
@@ -996,7 +994,7 @@ def dorisu(
         overrides = json.load(
             open(os.path.join(risudir, "plugins/overrides.json"), "r")
         )
-    except (IOError, OSError, ValueError):
+    except (OSError, ValueError):
         overrides = {}
 
     # Update each item with overrides dictionary for overrides
@@ -1027,7 +1025,7 @@ def dorisu(
                 serveruri=serveruri,
                 anon=anon,
             )
-        except (IOError, OSError) as e:
+        except OSError as e:
             # Couldn't write
             LOG.error("Couldn't write to file %s: %s" % (filename, str(e)))
 
@@ -1453,7 +1451,7 @@ def read_config(options=False):
         if os.path.exists(filename):
             try:
                 config = json.load(open(filename, "r"))
-            except (IOError, OSError, ValueError):
+            except (OSError, ValueError):
                 config = {}
 
     return config
@@ -1670,7 +1668,7 @@ def write_results(
     try:
         with open(filename, "w") as fd:
             json.dump(data, fd, indent=2)
-    except (IOError, OSError) as e:
+    except OSError as e:
         LOG.debug("Failed to write to file %s: %s" % (filename, str(e)))
 
     # Code to upload file
@@ -1700,7 +1698,7 @@ def regexpfile(filename=False, regexp=False):
                 if re.match(regexp, line):
                     # Return earlier if match found
                     return line
-    except (IOError, OSError):
+    except OSError:
         pass
 
     return ""

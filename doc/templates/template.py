@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 #
 # Copyright (C) 2017, 2018 Pablo Iranzo Gómez <Pablo.Iranzo@redhat.com>
 #
@@ -22,7 +21,6 @@
 # Note a more pythonic way of running 'main' could be implemented by:
 # Running tests as new functions like:
 # def check_nova_debug(root=RISU_ROOT) and calling it inside the live or not live checks (or both)
-from __future__ import print_function
 
 import os
 import sys

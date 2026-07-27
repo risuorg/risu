@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 #
 # Description: Output formatting and colorization for Risu
 # Copyright (C) 2026 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
@@ -14,7 +13,6 @@ This module handles all output formatting including:
 - Text indentation
 """
 
-from __future__ import print_function
 
 import sys
 
@@ -25,7 +23,7 @@ RC_SKIPPED = 30
 RC_INFO = 40
 
 
-class Colors(object):
+class Colors:
     """
     ANSI color codes for terminal output.
 
@@ -80,7 +78,7 @@ def colorize(text, color, stream=sys.stdout, force=False):
         # Unknown color, return plain text
         return text
 
-    return "{color}{text}{reset}".format(color=color_code, text=text, reset=Colors.END)
+    return f"{color_code}{text}{Colors.END}"
 
 
 def format_return_code(returncode):
@@ -148,7 +146,7 @@ def indent_text(text, amount, indent_char=" "):
     return "\n".join(indent + line for line in lines)
 
 
-class ProgressIndicator(object):
+class ProgressIndicator:
     """
     Progress indicator for plugin execution.
 
@@ -231,7 +229,7 @@ def format_plugin_result(plugin, result, verbose=False):
     status = format_result_text(returncode)
 
     # Build output
-    output = "# {path}: {status}".format(path=plugin_path, status=status)
+    output = f"# {plugin_path}: {status}"
 
     # Add error output if present
     err = result.get("err", "")
@@ -274,24 +272,16 @@ def format_summary(total, passed, failed, skipped, info):
     lines = [
         "=" * 60,
         "Execution Summary:",
-        "  Total:   {total:4d}".format(total=total),
+        f"  Total:   {total:4d}",
     ]
 
     if total > 0:
         lines.extend(
             [
-                "  Passed:  {count:4d} ({pct:5.1f}%)".format(
-                    count=passed, pct=100.0 * passed / total
-                ),
-                "  Failed:  {count:4d} ({pct:5.1f}%)".format(
-                    count=failed, pct=100.0 * failed / total
-                ),
-                "  Skipped: {count:4d} ({pct:5.1f}%)".format(
-                    count=skipped, pct=100.0 * skipped / total
-                ),
-                "  Info:    {count:4d} ({pct:5.1f}%)".format(
-                    count=info, pct=100.0 * info / total
-                ),
+                f"  Passed:  {passed:4d} ({100.0 * passed / total:5.1f}%)",
+                f"  Failed:  {failed:4d} ({100.0 * failed / total:5.1f}%)",
+                f"  Skipped: {skipped:4d} ({100.0 * skipped / total:5.1f}%)",
+                f"  Info:    {info:4d} ({100.0 * info / total:5.1f}%)",
             ]
         )
 

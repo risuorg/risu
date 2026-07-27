@@ -1,10 +1,8 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 #
 # Description: Extension for processing core Risu plugins
 # Author: Pablo Iranzo Gomez (Pablo.Iranzo@gmail.com)
 # Copyright (C) 2017, 2018, 2020, 2021, 2026 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
-from __future__ import print_function
 
 import os
 

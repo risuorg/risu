@@ -1,10 +1,8 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 #
 # Description: Interactive plugin scaffolding tool
 # Copyright (C) 2026 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
-from __future__ import print_function
 
 import argparse
 import os
@@ -96,11 +94,11 @@ def create_plugin_from_template(
 
     # Check if plugin already exists
     if os.path.exists(plugin_path):
-        raise IOError("Plugin already exists: %s" % plugin_path)
+        raise OSError("Plugin already exists: %s" % plugin_path)
 
     # Read template
     if not os.path.exists(template_path):
-        raise IOError("Template not found: %s" % template_path)
+        raise OSError("Template not found: %s" % template_path)
 
     with open(template_path, "r") as f:
         template_content = f.read()
@@ -211,7 +209,7 @@ Priority Guidelines:
             plugin_type=args.type,
             editor=args.editor,
         )
-    except (ValueError, IOError, OSError) as e:
+    except (ValueError, OSError) as e:
         print("Error: %s" % str(e), file=sys.stderr)
         sys.exit(1)
 

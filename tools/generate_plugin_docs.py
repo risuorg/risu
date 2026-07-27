@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 #
 # Description: Generate plugin documentation from metadata
 # Copyright (C) 2026 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
@@ -11,7 +10,6 @@ Scans all plugins and generates markdown documentation organized by
 category and priority.
 """
 
-from __future__ import print_function
 
 import argparse
 import os
@@ -76,7 +74,7 @@ def extract_plugin_info(plugin_path):
         return plugin_metadata, None
     except exceptions.PluginMetadataError as e:
         return None, str(e)
-    except (IOError, OSError) as e:
+    except OSError as e:
         return None, "Cannot read file: %s" % str(e)
 
 
@@ -220,7 +218,7 @@ def generate_markdown(grouped_plugins, output_file):
 
         return True
 
-    except (IOError, OSError) as e:
+    except OSError as e:
         print("Error writing to %s: %s" % (output_file, str(e)), file=sys.stderr)
         return False
 

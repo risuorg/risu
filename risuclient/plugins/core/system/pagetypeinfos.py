@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# coding=utf-8
 # Copyright (C) 2022, 2023 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -15,7 +14,6 @@
 # description: Display in a human readable format the content of /proc/pagetypeinfo
 # priority: 0
 # Loading some modules
-from __future__ import print_function
 
 import os
 import re

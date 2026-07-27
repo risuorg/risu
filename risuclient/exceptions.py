@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 #
 # Description: Custom exceptions for Risu framework
 # Copyright (C) 2026 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
@@ -12,7 +11,6 @@ Using specific exception types makes error handling more precise
 and debugging easier.
 """
 
-from __future__ import print_function
 
 
 class RisuError(Exception):
@@ -23,7 +21,6 @@ class RisuError(Exception):
     This allows catching all Risu errors with a single except clause.
     """
 
-    pass
 
 
 class ConfigError(RisuError):
@@ -36,7 +33,6 @@ class ConfigError(RisuError):
     - Configuration value is out of valid range
     """
 
-    pass
 
 
 class PluginError(RisuError):
@@ -46,7 +42,6 @@ class PluginError(RisuError):
     Parent class for all plugin execution and loading errors.
     """
 
-    pass
 
 
 class PluginNotFoundError(PluginError):
@@ -56,7 +51,6 @@ class PluginNotFoundError(PluginError):
     Raised when a requested plugin file does not exist.
     """
 
-    pass
 
 
 class PluginMetadataError(PluginError):
@@ -69,7 +63,6 @@ class PluginMetadataError(PluginError):
     - Metadata cannot be parsed
     """
 
-    pass
 
 
 class PluginExecutionError(PluginError):
@@ -82,7 +75,6 @@ class PluginExecutionError(PluginError):
     - Plugin has syntax errors
     """
 
-    pass
 
 
 class PluginTimeoutError(PluginError):
@@ -93,7 +85,6 @@ class PluginTimeoutError(PluginError):
     to complete execution.
     """
 
-    pass
 
 
 class ExtensionError(RisuError):
@@ -106,7 +97,6 @@ class ExtensionError(RisuError):
     - Extension is missing required methods
     """
 
-    pass
 
 
 class ExtensionNotFoundError(ExtensionError):
@@ -116,7 +106,6 @@ class ExtensionNotFoundError(ExtensionError):
     Raised when a requested extension does not exist.
     """
 
-    pass
 
 
 class HookError(RisuError):
@@ -126,7 +115,6 @@ class HookError(RisuError):
     Raised when a hook fails to execute or returns an error.
     """
 
-    pass
 
 
 class OutputError(RisuError):
@@ -139,7 +127,6 @@ class OutputError(RisuError):
     - Web output generation fails
     """
 
-    pass
 
 
 class ValidationError(RisuError):
@@ -150,4 +137,3 @@ class ValidationError(RisuError):
     components fails.
     """
 
-    pass

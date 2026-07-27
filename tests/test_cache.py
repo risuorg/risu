@@ -1,10 +1,8 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 #
 # Unit tests for risuclient/cache.py
 # Copyright (C) 2026 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
-from __future__ import print_function
 
 import os
 import sys
@@ -185,7 +183,7 @@ class TestMetadataCache(unittest.TestCase):
                 # Save should not crash even if file is read-only
                 try:
                     self.cache.save()
-                except (IOError, OSError):
+                except OSError:
                     pass  # Expected
 
                 os.unlink(plugin_path)

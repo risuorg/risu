@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 # Based on reboot.py from David Vallee Delisle
 # Copyright (C) 2019-2021, 2024 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 # This program is free software: you can redistribute it and/or modify
@@ -16,7 +15,6 @@
 # description: Parses system for events that might be relevant on issue diagnosis
 # priority: 400
 # Loading some modules
-from __future__ import print_function
 
 import os
 import re
@@ -140,7 +138,7 @@ def findevent(context, desc, index, reverse):
     return None
 
 
-class Event(object):
+class Event:
     """
     Defines event object
     """

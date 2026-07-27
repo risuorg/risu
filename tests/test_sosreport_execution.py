@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 """
 Tests specifically for sosreport/snapshot execution mode.
 
@@ -31,7 +30,6 @@ class TestSosreportExecution(unittest.TestCase):
     def test_sosreport_mode_sets_correct_environment(self):
         """Sosreport mode should set RISU_LIVE=0 and RISU_ROOT=<path>."""
         # Verify environment variables are set correctly
-        pass
 
     def test_sosreport_mode_path_prefixing(self):
         """Sosreport mode should prefix all paths with RISU_ROOT."""
@@ -46,12 +44,10 @@ class TestSosreportExecution(unittest.TestCase):
     def test_sosreport_mode_missing_files(self):
         """Sosreport mode should handle missing files gracefully."""
         # Test plugins skip when files don't exist
-        pass
 
     def test_sosreport_mode_no_live_checks(self):
         """Sosreport mode can't check process/service state."""
         # Verify plugins that need live state skip appropriately
-        pass
 
 
 class TestSosreportFormats(unittest.TestCase):
@@ -60,22 +56,18 @@ class TestSosreportFormats(unittest.TestCase):
     def test_rhel7_sosreport_format(self):
         """RHEL 7 sosreport format should be parsed correctly."""
         # Test sosreport-hostname-YYYYMMDD directory structure
-        pass
 
     def test_rhel8_sosreport_format(self):
         """RHEL 8 sosreport format should be parsed correctly."""
         # Test newer sosreport formats
-        pass
 
     def test_compressed_sosreport(self):
         """Compressed sosreports should be extracted automatically."""
         # Test .tar.xz, .tar.gz handling
-        pass
 
     def test_sosreport_with_symlinks(self):
         """Sosreports with symlinks should be handled correctly."""
         # Test symlink resolution
-        pass
 
 
 class TestSosreportPluginExecution(unittest.TestCase):
@@ -84,17 +76,14 @@ class TestSosreportPluginExecution(unittest.TestCase):
     def test_file_based_plugins_work_in_sosreport(self):
         """Plugins that only read files should work in sosreport mode."""
         # Test config file parsing plugins
-        pass
 
     def test_rpm_checks_use_sosreport_rpm_db(self):
         """RPM checks should use sosreport's RPM database."""
         # Test is_rpm uses var/lib/rpm from sosreport
-        pass
 
     def test_command_output_parsing(self):
         """Plugins should parse command output from sosreport."""
         # Test parsing sos_commands/ output
-        pass
 
 
 class TestSosreportMetadata(unittest.TestCase):
@@ -103,22 +92,18 @@ class TestSosreportMetadata(unittest.TestCase):
     def test_extract_hostname(self):
         """Should extract hostname from sosreport."""
         # Test hostname detection
-        pass
 
     def test_extract_os_version(self):
         """Should extract OS version from sosreport."""
         # Test OS version detection from /etc/os-release
-        pass
 
     def test_extract_kernel_version(self):
         """Should extract kernel version from sosreport."""
         # Test kernel version from uname output
-        pass
 
     def test_extract_collection_date(self):
         """Should extract when sosreport was collected."""
         # Test timestamp extraction
-        pass
 
 
 if __name__ == "__main__":

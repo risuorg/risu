@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 #
 # Description: Plugin metadata caching for Risu
 # Copyright (C) 2026 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
@@ -14,7 +13,6 @@ detect when plugins have changed.
 Cache is stored using pickle for Python 2.7 compatibility.
 """
 
-from __future__ import print_function
 
 import logging
 import os
@@ -29,7 +27,7 @@ except ImportError:
 LOG = logging.getLogger("risu.cache")
 
 
-class MetadataCache(object):
+class MetadataCache:
     """
     Cache for plugin metadata.
 
@@ -62,7 +60,7 @@ class MetadataCache(object):
             if not os.path.exists(cache_dir):
                 try:
                     os.makedirs(cache_dir)
-                except (IOError, OSError) as e:
+                except OSError as e:
                     LOG.warning(
                         "Cannot create cache directory %s: %s", cache_dir, str(e)
                     )
@@ -89,7 +87,7 @@ class MetadataCache(object):
             with open(self.cache_file, "rb") as f:
                 self._cache = pickle.load(f)
             LOG.debug("Loaded cache with %d entries", len(self._cache))
-        except (IOError, OSError, pickle.PickleError) as e:
+        except (OSError, pickle.PickleError) as e:
             LOG.warning("Cannot load cache from %s: %s", self.cache_file, str(e))
             self._cache = {}
 
@@ -124,7 +122,7 @@ class MetadataCache(object):
             LOG.debug("Saved cache with %d entries", len(self._cache))
             return True
 
-        except (IOError, OSError, pickle.PickleError) as e:
+        except (OSError, pickle.PickleError) as e:
             LOG.warning("Cannot save cache to %s: %s", self.cache_file, str(e))
             return False
 
@@ -156,7 +154,7 @@ class MetadataCache(object):
         # Check if file has been modified
         try:
             current_mtime = os.path.getmtime(plugin_path)
-        except (IOError, OSError):
+        except OSError:
             return None
 
         if current_mtime != cached_mtime:
@@ -181,7 +179,7 @@ class MetadataCache(object):
         """
         try:
             mtime = os.path.getmtime(plugin_path)
-        except (IOError, OSError) as e:
+        except OSError as e:
             LOG.warning("Cannot get mtime for %s: %s", plugin_path, str(e))
             return False
 

@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 #
 # Description: Integration tests for Risu plugins
 #
@@ -24,8 +23,8 @@ from unittest import TestCase
 sys.path.append(os.path.abspath(os.path.dirname(__file__) + "/" + "../"))
 
 try:
-    import maguiclient.magui as magui
     import risuclient.shell as risu
+    from maguiclient import magui
 except:
     import shell as risu
 

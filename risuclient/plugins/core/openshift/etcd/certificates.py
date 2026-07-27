@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# coding=utf-8
 # Copyright (C) 2022, 2025, 2026 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -14,7 +13,6 @@
 # long_name: Validate etcd certificates
 # description: Verify etcd certificates are valid for this host
 # priority: 980
-from __future__ import print_function
 
 import os
 import re
@@ -58,7 +56,7 @@ def get_names(cert_file):
         c = fd.read()
         fd.close()
 
-    except IOError:
+    except OSError:
         errorprint("Unable to open %s" % cert_file)
 
     crt = None

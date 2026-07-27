@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 #
 # Description: Multiple Analysis Generic Unifier and Interpreter aka Magui
 #              This program processes several snapshoot/sosreport files
@@ -20,7 +19,6 @@
 # GNU General Public License for more details.
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-from __future__ import print_function
 
 import argparse
 import copy
@@ -238,7 +236,7 @@ def callrisu(path=False, plugins=False, forcerun=False, include=None, exclude=No
     """
 
     # Create temporary client for backward compatibility
-    class TempOptions(object):
+    class TempOptions:
         def __init__(self):
             self.run = forcerun
             self.include = include

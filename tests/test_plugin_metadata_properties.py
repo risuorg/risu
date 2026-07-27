@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 """
 Property-based tests for plugin metadata parsing.
 
@@ -10,8 +9,9 @@ invariants in metadata extraction and validation.
 import unittest
 
 try:
-    from hypothesis import given, strategies as st
+    from hypothesis import given
     from hypothesis import settings as hypothesis_settings
+    from hypothesis import strategies as st
 
     HYPOTHESIS_AVAILABLE = True
 except ImportError:
@@ -56,8 +56,8 @@ except ImportError:
 try:
     from risuclient import metadata
 except ImportError:
-    import sys
     import os
+    import sys
 
     sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
     from risuclient import metadata
@@ -193,13 +193,13 @@ class TestMetadataExtractionProperties(unittest.TestCase):
     def _create_plugin_content(self, long_name, description, priority):
         """Helper to create valid plugin content."""
         # Use actual values instead of placeholders to avoid parsing issues
-        return """#!/bin/bash
-# long_name: {}
-# description: {}
-# priority: {}
+        return f"""#!/bin/bash
+# long_name: {long_name}
+# description: {description}
+# priority: {priority}
 
 echo "test"
-""".format(long_name, description, priority)
+"""
 
     @given(
         long_name=st.text(min_size=1, max_size=60).filter(lambda x: "\n" not in x),
