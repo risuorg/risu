@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 #
 # Description: This UT run all scripts to validate the rules/tests created
 #
@@ -24,7 +23,7 @@ import sys
 import tempfile
 from unittest import TestCase
 
-import maguiclient.magui as magui
+from maguiclient import magui
 
 sys.path.append(os.path.abspath(os.path.dirname(__file__) + "/" + "../" + "../"))
 

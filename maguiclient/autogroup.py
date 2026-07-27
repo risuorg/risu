@@ -1,11 +1,9 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 #
 # Description: Autogroup logic for Magui - automatically groups sosreports
 #              based on metadata similarities
 # Copyright (C) 2018, 2019, 2021, 2026 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
-from __future__ import print_function
 
 try:
     import risuclient.shell as risu
@@ -13,7 +11,7 @@ except ImportError:
     import shell as risu
 
 
-class AutoGroupManager(object):
+class AutoGroupManager:
     """
     Manages automatic grouping of sosreports based on metadata.
 

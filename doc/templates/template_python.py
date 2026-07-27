@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 #
 # Copyright (C) 2026 Your Name <your.email@example.com>
 #
@@ -29,7 +28,6 @@ OPTIONAL METADATA:
     kb: https://access.redhat.com/solutions/XXXXX
 """
 
-from __future__ import print_function
 
 import os
 import sys
@@ -75,7 +73,7 @@ def check_file_content(filepath, search_string):
         with open(filepath, "r") as f:
             content = f.read()
             return search_string in content
-    except (IOError, OSError) as e:
+    except OSError as e:
         print("Error reading %s: %s" % (filepath, str(e)), file=sys.stderr)
         return False
 

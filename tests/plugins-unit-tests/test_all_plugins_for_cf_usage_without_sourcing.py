@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 #
 # Description: This UT will check all core scripts to validate that common functions is loaded
 #

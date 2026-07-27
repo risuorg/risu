@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 #
 # Description: Plugin execution with multiprocessing for Risu
 # Copyright (C) 2026 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
@@ -11,7 +10,6 @@ This module handles parallel execution of plugins using multiprocessing
 with proper resource management and error handling.
 """
 
-from __future__ import print_function
 
 import logging
 import multiprocessing
@@ -28,7 +26,7 @@ try:
     from contextlib import closing
 except ImportError:
     # Fallback for very old Python
-    class closing(object):  # type: ignore[no-redef]
+    class closing:  # type: ignore[no-redef]
         def __init__(self, thing):
             self.thing = thing
 
@@ -45,7 +43,7 @@ except ImportError:
 LOG = logging.getLogger("risu.executor")
 
 
-class PluginExecutor(object):
+class PluginExecutor:
     """
     Parallel plugin executor using multiprocessing.
 

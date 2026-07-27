@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 #
 # Description: Plugin metadata extraction and validation
 # Copyright (C) 2026 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
@@ -11,7 +10,6 @@ This module provides functions to extract and validate metadata
 from Risu plugins (bash, Python, Ansible, etc.).
 """
 
-from __future__ import print_function
 
 import os
 import re
@@ -44,7 +42,7 @@ PRIORITY_CATEGORIES = {
 }
 
 
-class PluginMetadata(object):
+class PluginMetadata:
     """
     Container for plugin metadata.
 
@@ -170,7 +168,7 @@ def extract_metadata_from_file(plugin_path, comment_char="#"):
     try:
         with open(plugin_path, "r") as f:
             content = f.read()
-    except (IOError, OSError) as e:
+    except OSError as e:
         raise exceptions.PluginMetadataError(
             "Cannot read plugin %s: %s" % (plugin_path, str(e))
         )

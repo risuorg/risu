@@ -1,11 +1,9 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 #
 # Copyright (C) 2019, 2020, 2026 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 """Tests for streaming output module"""
 
-from __future__ import print_function
 
 import json
 import os
@@ -38,7 +36,7 @@ class TestStreamingJSONWriter(unittest.TestCase):
         """Clean up test files"""
         try:
             os.unlink(self.output_file)
-        except (OSError, IOError):
+        except OSError:
             pass
 
     def test_write_single_result(self):
@@ -125,7 +123,7 @@ class TestStreamingResultCollector(unittest.TestCase):
         """Clean up test files"""
         try:
             os.unlink(self.output_file)
-        except (OSError, IOError):
+        except OSError:
             pass
 
     def test_collector_without_streaming(self):

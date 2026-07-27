@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 #
 # Description: Validates Risu plugin structure and metadata
 # Copyright (C) 2026 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
@@ -14,7 +13,6 @@ Checks bash plugins for:
 - Common-functions loading
 """
 
-from __future__ import print_function
 
 import argparse
 import os
@@ -42,7 +40,7 @@ class PluginValidator:
             with open(self.plugin_path, "r") as f:
                 self.content = f.read()
             return True
-        except (IOError, OSError) as e:
+        except OSError as e:
             self.errors.append("Cannot read file: %s" % str(e))
             return False
 
@@ -138,7 +136,7 @@ class PluginValidator:
                     % self.plugin_path
                 )
 
-        except (OSError, IOError):
+        except OSError:
             # shellcheck not available or error running it
             pass
 

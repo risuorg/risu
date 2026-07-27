@@ -1,12 +1,10 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 #
 # Description: Tests for risuclient.config module
 # Copyright (C) 2026 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 """Tests for RisuConfig class."""
 
-from __future__ import print_function
 
 import os
 import sys
@@ -113,7 +111,7 @@ class TestRisuConfigFromOptions(unittest.TestCase):
         """Test creating config from options."""
 
         # Create mock options object
-        class MockOptions(object):
+        class MockOptions:
             live = True
             quiet = False
             verbose = 2
@@ -135,7 +133,7 @@ class TestRisuConfigFromOptions(unittest.TestCase):
         """Test from_options with missing attributes."""
 
         # Options with only some attributes
-        class MockOptions(object):
+        class MockOptions:
             live = True
 
         options = MockOptions()

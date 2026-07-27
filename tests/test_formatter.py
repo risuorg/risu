@@ -1,12 +1,10 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 #
 # Description: Tests for risuclient.formatter module
 # Copyright (C) 2026 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 """Tests for formatting and colorization."""
 
-from __future__ import print_function
 
 import os
 import sys

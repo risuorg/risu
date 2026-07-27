@@ -1,12 +1,10 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 #
 # Description: Tests for risuclient.metadata module
 # Copyright (C) 2026 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
 """Tests for metadata extraction and validation."""
 
-from __future__ import print_function
 
 import os
 import sys
@@ -117,7 +115,7 @@ class TestExtractMetadata(unittest.TestCase):
         """Clean up temporary file."""
         try:
             os.unlink(self.temp_file.name)
-        except (IOError, OSError):
+        except OSError:
             pass
 
     def test_extract_valid_metadata(self):

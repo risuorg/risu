@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# coding=utf-8
 # Copyright (C) 2021, 2022, 2024-2026 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -15,7 +14,6 @@
 # description: We try to guess if the latest reboot(s) were clean or not
 # priority: 400
 # Loading some modules
-from __future__ import print_function
 
 import os
 import re
@@ -139,7 +137,7 @@ def findevent(context, desc, index, reverse):
     return None
 
 
-class Event(object):
+class Event:
     """
     Defines event object
     """

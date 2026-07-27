@@ -1,10 +1,8 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 #
 # Description: Streaming JSON output for Magui
 # Copyright (C) 2026 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
 
-from __future__ import print_function
 
 import json
 import logging
@@ -12,7 +10,7 @@ import logging
 LOG = logging.getLogger("magui")
 
 
-class StreamingJSONWriter(object):
+class StreamingJSONWriter:
     """
     Stream JSON results to file as they complete.
 
@@ -53,7 +51,7 @@ class StreamingJSONWriter(object):
         :param result: Result dictionary to write
         """
         if not self.file_handle:
-            raise IOError("StreamingJSONWriter not opened (use context manager)")
+            raise OSError("StreamingJSONWriter not opened (use context manager)")
 
         # Add comma separator for all but first item
         if not self.first_item:
@@ -107,7 +105,7 @@ def stream_magui_results(sosreports, magui_client, output_file, risuplugins=None
                 writer.write_result(result_with_host)
                 count += 1
 
-            except (IOError, OSError, KeyError, TypeError) as e:
+            except (OSError, KeyError, TypeError) as e:
                 LOG.error("Failed to process %s: %s", sosreport, str(e))
                 continue
 
@@ -115,7 +113,7 @@ def stream_magui_results(sosreports, magui_client, output_file, risuplugins=None
     return count
 
 
-class StreamingResultCollector(object):
+class StreamingResultCollector:
     """
     Collect results with streaming to reduce memory usage.
 

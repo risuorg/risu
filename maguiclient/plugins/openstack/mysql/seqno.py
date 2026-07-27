@@ -1,8 +1,6 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 # Description: Plugin for checking galera/mysql sequence number across servers
 # Copyright (C) 2018-2021, 2024 Pablo Iranzo Gómez <Pablo.Iranzo@gmail.com>
-from __future__ import print_function
 
 try:
     import risuclient.shell as risu
@@ -54,8 +52,7 @@ def run(data, quiet=False):  # do not edit this line
                 seqno = int(each.split(":")[1])
             except:
                 seqno = 0
-            if seqno > maximum:
-                maximum = seqno
+            maximum = max(maximum, seqno)
 
         host = False
         for sosreport in data[ourdata]["sosreport"]:
