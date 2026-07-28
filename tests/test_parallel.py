@@ -4,7 +4,6 @@
 
 """Tests for parallel execution module"""
 
-
 import os
 import sys
 import unittest

@@ -28,7 +28,6 @@ OPTIONAL METADATA:
     kb: https://access.redhat.com/solutions/XXXXX
 """
 
-
 import os
 import sys
 

@@ -10,7 +10,6 @@ Scans all plugins and generates markdown documentation organized by
 category and priority.
 """
 
-
 import argparse
 import os
 import sys

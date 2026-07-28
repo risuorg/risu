@@ -4,7 +4,6 @@
 
 """Tests for streaming output module"""
 
-
 import json
 import os
 import sys

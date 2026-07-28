@@ -13,7 +13,6 @@ This module handles all output formatting including:
 - Text indentation
 """
 
-
 import sys
 
 # Return codes (must match shell.py and common-functions.sh)

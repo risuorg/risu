@@ -12,7 +12,6 @@ and debugging easier.
 """
 
 
-
 class RisuError(Exception):
     """
     Base exception for all Risu-specific errors.
@@ -20,7 +19,6 @@ class RisuError(Exception):
     All custom exceptions in Risu should inherit from this class.
     This allows catching all Risu errors with a single except clause.
     """
-
 
 
 class ConfigError(RisuError):
@@ -34,7 +32,6 @@ class ConfigError(RisuError):
     """
 
 
-
 class PluginError(RisuError):
     """
     Base exception for plugin-related errors.
@@ -43,14 +40,12 @@ class PluginError(RisuError):
     """
 
 
-
 class PluginNotFoundError(PluginError):
     """
     Plugin file not found.
 
     Raised when a requested plugin file does not exist.
     """
-
 
 
 class PluginMetadataError(PluginError):
@@ -64,7 +59,6 @@ class PluginMetadataError(PluginError):
     """
 
 
-
 class PluginExecutionError(PluginError):
     """
     Plugin execution failed.
@@ -76,7 +70,6 @@ class PluginExecutionError(PluginError):
     """
 
 
-
 class PluginTimeoutError(PluginError):
     """
     Plugin execution timed out.
@@ -84,7 +77,6 @@ class PluginTimeoutError(PluginError):
     Raised when a plugin takes longer than the configured timeout
     to complete execution.
     """
-
 
 
 class ExtensionError(RisuError):
@@ -98,7 +90,6 @@ class ExtensionError(RisuError):
     """
 
 
-
 class ExtensionNotFoundError(ExtensionError):
     """
     Extension not found.
@@ -107,14 +98,12 @@ class ExtensionNotFoundError(ExtensionError):
     """
 
 
-
 class HookError(RisuError):
     """
     Hook execution error.
 
     Raised when a hook fails to execute or returns an error.
     """
-
 
 
 class OutputError(RisuError):
@@ -128,7 +117,6 @@ class OutputError(RisuError):
     """
 
 
-
 class ValidationError(RisuError):
     """
     Validation error.
@@ -136,4 +124,3 @@ class ValidationError(RisuError):
     Raised when validation of plugins, metadata, or other
     components fails.
     """
-
