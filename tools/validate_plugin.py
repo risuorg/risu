@@ -13,7 +13,6 @@ Checks bash plugins for:
 - Common-functions loading
 """
 
-
 import argparse
 import os
 import re

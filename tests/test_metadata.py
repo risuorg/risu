@@ -5,7 +5,6 @@
 
 """Tests for metadata extraction and validation."""
 
-
 import os
 import sys
 import tempfile

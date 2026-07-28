@@ -10,7 +10,6 @@ This module provides functions to extract and validate metadata
 from Risu plugins (bash, Python, Ansible, etc.).
 """
 
-
 import os
 import re
 

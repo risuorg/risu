@@ -12,7 +12,6 @@ global variables and provides better state management.
 Python 2.7 compatible - no dataclasses, using regular class with __init__.
 """
 
-
 import os
 
 try:

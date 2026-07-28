@@ -13,7 +13,6 @@ detect when plugins have changed.
 Cache is stored using pickle for Python 2.7 compatibility.
 """
 
-
 import logging
 import os
 

@@ -5,7 +5,6 @@
 
 """Tests for formatting and colorization."""
 
-
 import os
 import sys
 import unittest

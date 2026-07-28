@@ -10,7 +10,6 @@ This module handles parallel execution of plugins using multiprocessing
 with proper resource management and error handling.
 """
 
-
 import logging
 import multiprocessing
 import signal

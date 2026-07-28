@@ -5,7 +5,6 @@
 
 """Tests for RisuConfig class."""
 
-
 import os
 import sys
 import tempfile
