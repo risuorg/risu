@@ -6,7 +6,7 @@
 coverage!=4.4,>=7.15.0
 
 # Security pins (Snyk)
-filelock>=3.32.0  # Indirect dependency
+filelock>=3.32.2  # Indirect dependency
 
 # Code quality tools
 flake8>=7.0.0
