@@ -20,4 +20,4 @@ PyYAML>=6.0.3
 ruff>=0.15.0
 setuptools>=82.0.1
 tox>=4.0.0
-zipp>=4.1.0  # Indirect dependency
+zipp>=4.1.1  # Indirect dependency
